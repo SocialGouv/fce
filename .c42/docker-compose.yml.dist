@@ -1,0 +1,27 @@
+version: '2'
+services:
+  front:
+    build: .c42/docker/front
+    image: itm_front
+    network_mode: "bridge"
+    ports:
+      - 3000
+    volumes:
+      - ./:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+    environment:
+      VIRTUAL_HOST: app.itm.test
+      VIRTUAL_PORT: 3000
+  builder:
+    build: .c42/docker/builder
+    depends_on:
+      - front
+    volumes:
+      - ./:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+
+volumes:
+  db-data:
+    driver: local

@@ -11,31 +11,6 @@ Le SIREN a la forme suivante : SIRET + NIC (5 chiffres) = 14 chiffres.
 
 ---
 
-## Fichiers
-
-* `SIENE.csv`
-  * 2.044.606 lignes
-  * voir le fichier `format variable SIENE.xls` pour la description
-  * fichier de référence
-* `Base_SESE.xls`
-  * clé : `siret`
-
-### Fichiers Intéractions DIRECCTE
-
-Pour les fichiers suivants, la clé est le `siret` :
-* `EOS.xlsx`
-* `WikiT.xlsx`
-* `SORA.xlsx`
-
-### Fichiers de support
-* `Fiche_etablissement.xlsx`
-  * maquette Excel avec la source des données
-* `Maquette - Prototype FCE_V5.pptx`
-* `nomenclature.xlsx`
-  * lien entre différents codes et leurs libellés : NAF, CJ3, ...
-
----
-
 ## API GOUV
 
 Documentation : https://entreprise.api.gouv.fr/documentation
@@ -183,7 +158,6 @@ Documentation : https://entreprise.api.gouv.fr/documentation
 
 ## Associations
 
-* Table : Interactions_DIRECCTE
 * Endpoint : GET https://entreprise.api.gouv.fr/v2/associations/:id
 
 ```javascript
@@ -220,4 +194,59 @@ Documentation : https://entreprise.api.gouv.fr/documentation
   }
 }
 
+```
+
+## Documents Associations
+
+* Endpoint : GET https://entreprise.api.gouv.fr/v2/documents_associations/:association_id
+
+```javascript
+{
+  nombre_documents: 3,
+  documents: [
+    {
+      type: "Statuts",
+      url:
+        "https://apientreprise.fr/attestations/40ab0b07d434d0417e8997ce7c5afbef/attestation_document_association.pdf",
+      timestamp: "1500660325"
+    }
+  ]
+}
+```
+
+## Attestations AGEFHIP
+
+* Endpoint : GET https://entreprise.api.gouv.fr/v2/attestations_agefiph/:siret
+
+```javascript
+{
+  derniere_annee_de_conformite_connue: "2016",
+  dump_date: 1490693291
+}
+```
+
+## Exercices
+
+* Endpoitn :GET https://entreprise.api.gouv.fr/v2/exercices/:siret
+
+```javascript
+{
+  exercices: [
+    {
+      ca: "648374448",
+      date_fin_exercice: "2016-12-31T00:00:00+01:00",
+      date_fin_exercice_timestamp: 1483138800
+    },
+    {
+      ca: "491463386",
+      date_fin_exercice: "2015-12-31T00:00:00+01:00",
+      date_fin_exercice_timestamp: 1451516400
+    },
+    {
+      ca: "473899061",
+      date_fin_exercice: "2014-12-31T00:00:00+01:00",
+      date_fin_exercice_timestamp: 1419980400
+    }
+  ]
+}
 ```

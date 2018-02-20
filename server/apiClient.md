@@ -27,10 +27,10 @@ dataClient.SORA.get(siret);
 dataClient.wikiT.get(siret);
 
 // Helpers
-dataClient.DIRECCTE.getInterventions(siret)
-.then( interventions ){
+dataClient.DIRECCTE.getInteractions(siret)
+.then( interactions ){
   /*
-      interventions : [
+      interactions : [
         {
           siret: "",
           date: "",
@@ -49,7 +49,7 @@ dataClient.DIRECCTE.getAllInfos(siret)
   /*
       etablissement: { ... },
       SESE: { ... },
-      interventions : [ ... ]
+      interactions : [ ... ]
   */
 };
 

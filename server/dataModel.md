@@ -136,7 +136,7 @@ Documentation : https://entreprise.api.gouv.fr/documentation
 
 ## Intéractions
 
-* Table : Interactions
+* Table : Interactions_DIRECCTE
 
 ```javascript
 {
@@ -178,4 +178,46 @@ Documentation : https://entreprise.api.gouv.fr/documentation
     "pole": "C"
   }
 }
+```
+
+
+## Associations
+
+* Table : Interactions_DIRECCTE
+* Endpoint : GET https://entreprise.api.gouv.fr/v2/associations/:id
+
+```javascript
+{
+  association: {
+    id: "W751135389",
+    titre:
+      "ALLIANCE DU COEUR: UNION NATIONALE DES FEDERATIONS ET ASSOCIATIONS DE MALADES CARDIOVASCULAIRES",
+    objet:
+      "information, soutien, solidarité et accompagnement psycho médico social des personnes malades cardiovasculaires et de leurs proches...",
+    siret: "42135938100025",
+    siret_siege_social: "42135938100033",
+    date_creation: "1993-02-11",
+    date_declaration: "2013-06-28",
+    date_publication: "1993-03-03",
+    date_dissolution: null,
+    adresse_siege: {
+      complement: "  ",
+      numero_voie: "10",
+      type_voie: "RUE",
+      libelle_voie: "Lebouis",
+      distribution: "_",
+      code_insee: "75120",
+      code_postal: "75014",
+      commune: "Paris"
+    },
+    code_civilite_dirigeant: null,
+    civilite_dirigeant: null,
+    code_etat: null,
+    etat: "true",
+    code_groupement: null,
+    groupement: "Simple",
+    mise_a_jour: "2013-06-28"
+  }
+}
+
 ```

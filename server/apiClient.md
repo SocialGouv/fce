@@ -32,8 +32,9 @@ dataClient.DIRECCTE.getInterventions(siret)
   /*
       interventions : [
         {
+          siret: "",
           date: "",
-          unite_controle: "",
+          unite: "",
           type_intervention: "",
           cible_intervention: "",
           pole: ""
@@ -47,17 +48,8 @@ dataClient.DIRECCTE.getAllInfos(siret)
 .then( data ){
   /*
       etablissement: { ... },
-      SESE: { ... }, 
-      interventions : [
-        {
-          date: "",
-          unite_controle: "",
-          type_intervention: "",
-          cible_intervention: "",
-          pole: ""
-        },
-        { ... }
-       ]
+      SESE: { ... },
+      interventions : [ ... ]
   */
 };
 

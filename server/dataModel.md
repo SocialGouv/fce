@@ -133,3 +133,49 @@ Documentation : https://entreprise.api.gouv.fr/documentation
   gateway_error: false
 }
 ```
+
+## Intéractions
+
+* Table : Interactions
+
+```javascript
+{
+  interactionT: {
+    "siret": "79985096100019",
+    "date": "1/2/2017",
+    "objet": null,
+    "unite_controle": "Unité de contrôle n°1 de l'Hérault",
+    "type_intervention": "Enquête",
+    "cible_intervention": "Etablissement"
+    "pole": "T"
+  }
+}
+```
+
+```javascript
+{
+  interaction3E: {
+    "siret": "79985096100019",
+    "date": "10/12/2016",
+    "objet": null,
+    "unite": "TOURISME",
+    "type_intervention": "Entreprise labellisée Tourisme&Handicap",
+    "cible_intervention": null,
+    "pole": "3E"
+  }
+}
+```
+
+```javascript
+{
+  interactionC: {
+    "siret": "79985096100019",
+    "date": "1/12/2017",
+    "objet": null,
+    "unite": "Brigade viticole",
+    "type_intervention": null,
+    "cible_intervention": null,
+    "pole": "C"
+  }
+}
+```

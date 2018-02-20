@@ -1,0 +1,13 @@
+{
+  "name": "direccter-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node src/"
+  },
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}

@@ -9,6 +9,8 @@ Une entreprise est consitutée d'au moins 1 établissement (dit "siège").
 Ces établissements sont identifiés par un SIREN (SIR + ETablissement).
 Le SIREN a la forme suivante : SIRET + NIC (5 chiffres) = 14 chiffres.
 
+---
+
 ## Fichiers
 
 * `SIENE.csv`
@@ -32,6 +34,7 @@ Pour les fichiers suivants, la clé est le `siret` :
 * `nomenclature.xlsx`
   * lien entre différents codes et leurs libellés : NAF, CJ3, ...
 
+---
 
 ## API GOUV
 

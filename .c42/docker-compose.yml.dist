@@ -7,7 +7,7 @@ services:
     ports:
       - 3000
     volumes:
-      - ./:/project
+      - ./client/:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
     environment:

@@ -26,7 +26,9 @@ class Login extends React.Component {
                   type="text"
                   name="username"
                   id="username"
+                  autoComplete="username"
                   required
+                  valid={this.props.hasError ? false : null}
                   onChange={evt => this.props.updateForm(evt)}
                 />
               </FormGroup>
@@ -37,7 +39,9 @@ class Login extends React.Component {
                   type="password"
                   name="password"
                   id="password"
+                  autoComplete="current-password"
                   required
+                  valid={this.props.hasError ? false : null}
                   onChange={evt => this.props.updateForm(evt)}
                 />
               </FormGroup>

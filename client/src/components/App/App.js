@@ -16,6 +16,7 @@ let { store, persistor } = configureStore();
 
 class App extends React.Component {
   render() {
+    console.debug("render app");
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
@@ -38,7 +39,6 @@ class App extends React.Component {
         </PersistGate>
       </Provider>
     );
-    console.debug("render app");
   }
 }
 

@@ -6,6 +6,7 @@ import configureStore from "../../services/Store";
 import PrivateRoute from "../../services/PrivateRoute";
 
 import "./app.css";
+import { Container } from "reactstrap";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -22,7 +23,7 @@ class App extends React.Component {
         <PersistGate loading={null} persistor={persistor}>
           <BrowserRouter>
             <ScrollToTop>
-              <div className="app-container">
+              <Container className="app-container" fluid={true}>
                 <Header />
                 <main className="mainview" role="main">
                   <Switch>
@@ -34,7 +35,7 @@ class App extends React.Component {
                   </Switch>
                 </main>
                 <Footer />
-              </div>
+              </Container>
             </ScrollToTop>
           </BrowserRouter>
         </PersistGate>

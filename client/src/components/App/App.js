@@ -17,14 +17,13 @@ let { store, persistor } = configureStore();
 
 class App extends React.Component {
   render() {
-    console.debug("render app");
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <BrowserRouter>
             <ScrollToTop>
+              <Header />
               <Container className="app-container" fluid={true}>
-                <Header />
                 <main className="mainview" role="main">
                   <Switch>
                     <PrivateRoute exact path="/" component={Home} />
@@ -34,13 +33,14 @@ class App extends React.Component {
                     <Redirect to="/login" />
                   </Switch>
                 </main>
-                <Footer />
               </Container>
+              <Footer />
             </ScrollToTop>
           </BrowserRouter>
         </PersistGate>
       </Provider>
     );
+    console.debug("render app");
   }
 }
 

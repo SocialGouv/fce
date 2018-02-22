@@ -8,7 +8,6 @@ export const loginUser = (username, password) => (dispatch, getState) => {
       dispatch(
         _loginUser({
           username: username,
-          password: password,
           token: "YouTokenToMe?",
           loggedInAt: new Date()
         })

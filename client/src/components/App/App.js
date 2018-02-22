@@ -9,8 +9,8 @@ import "./app.css";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
 import Footer from "./Footer";
-import Login from "../Login";
-import Home from "../Home";
+import Login from "../../containers/Login";
+import Home from "../../containers/Home";
 
 let { store, persistor } = configureStore();
 

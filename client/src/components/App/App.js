@@ -10,7 +10,7 @@ import { Container } from "reactstrap";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
 import Login from "../../containers/Login";
-import Home from "../../containers/Home";
+import Search from "../../containers/Search";
 
 let { store, persistor } = configureStore();
 
@@ -26,7 +26,7 @@ class App extends React.Component {
               <Container className="app-container" fluid={true}>
                 <main className="mainview" role="main">
                   <Switch>
-                    <PrivateRoute exact path="/" component={Home} />
+                    <PrivateRoute exact path="/" component={Search} />
 
                     <Route exact path="/login" render={() => <Login />} />
 

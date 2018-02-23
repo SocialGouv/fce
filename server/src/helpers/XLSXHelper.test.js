@@ -1,3 +1,4 @@
+const XLSX = require("xlsx");
 const XLSXHelper = require("./XLSXHelper");
 
 describe("getReferences()", () => {
@@ -36,4 +37,31 @@ describe("getReferences()", () => {
       }
     });
   });
+});
+
+describe("getAlphabeticalColumns()", () => {
+  test("default", () => {
+    const workSheet = {
+      "!refs": "A1:C56"
+    };
+    const columnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
+    expect(columnNames).toEqual("ABC");
+  });
+
+  test("B to T", () => {
+    const workSheet = {
+      "!refs": "B16:T56"
+    };
+    const columnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
+    expect(columnNames).toEqual("BCDEFGHIJKLMNOPQRST");
+  });
+
+  test.skip("M to AB", () => {
+    const workSheet = {
+      "!refs": "B16:AB55"
+    };
+    const columnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
+    expect(columnNames).toEqual("TO DO");
+  });
+
 });

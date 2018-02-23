@@ -1,4 +1,5 @@
 class XLSXHelper {
+
   static getReferences(workSheet) {
     let references = {};
 
@@ -27,6 +28,18 @@ class XLSXHelper {
     };
     return references;
   }
+
+  static getAlphabeticalColumnNames(workSheet){
+    const refs = XLSXHelper.getReferences(workSheet);
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    const startIndex = alphabet.indexOf(refs.start.column);
+    const endIndex = alphabet.indexOf(refs.end.column);
+
+    const columnNames = alphabet.slice(startIndex, endIndex + 1);
+    return columnNames;
+  }
+
 }
 
 module.exports = XLSXHelper;

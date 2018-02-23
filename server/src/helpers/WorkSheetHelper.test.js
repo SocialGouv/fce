@@ -1,13 +1,13 @@
 const XLSX = require("xlsx");
-const XLSXHelper = require("./XLSXHelper");
+const WorkSheetHelper = require("./WorkSheetHelper");
 
 describe("getReferences()", () => {
   test("default", () => {
     const workSheet = {
       "!ref": "A1:I56"
     };
-
-    const references = XLSXHelper.getReferences(workSheet);
+    const wsh = new WorkSheetHelper(workSheet);
+    const references = wsh.getReferences();
     expect(references).toEqual({
       start: {
         column: "A",
@@ -25,7 +25,8 @@ describe("getReferences()", () => {
       "!ref": "A1:AU56070"
     };
 
-    const references = XLSXHelper.getReferences(workSheet);
+    const wsh = new WorkSheetHelper(workSheet);
+    const references = wsh.getReferences();
     expect(references).toEqual({
       start: {
         column: "A",
@@ -44,7 +45,8 @@ describe("getAlphabeticalColumns()", () => {
     const workSheet = {
       "!ref": "A1:C56"
     };
-    const columnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
+    const wsh = new WorkSheetHelper(workSheet);
+    const columnNames = wsh.getAlphabeticalColumnNames();
     expect(columnNames).toEqual("ABC");
   });
 
@@ -52,7 +54,8 @@ describe("getAlphabeticalColumns()", () => {
     const workSheet = {
       "!ref": "B16:T56"
     };
-    const columnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
+    const wsh = new WorkSheetHelper(workSheet);
+    const columnNames = wsh.getAlphabeticalColumnNames();
     expect(columnNames).toEqual("BCDEFGHIJKLMNOPQRST");
   });
 
@@ -60,7 +63,8 @@ describe("getAlphabeticalColumns()", () => {
     const workSheet = {
       "!ref": "B16:AB55"
     };
-    const columnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
+    const wsh = new WorkSheetHelper(workSheet);
+    const columnNames = wsh.getAlphabeticalColumnNames();
     expect(columnNames).toEqual("TO DO");
   });
 
@@ -74,7 +78,8 @@ describe("getColumnKeys()", () => {
     const sheetName = "wikit";
     const workSheet = workbook.Sheets[sheetName];
 
-    const columnKeys = XLSXHelper.getColumnKeys(workSheet);
+    const wsh = new WorkSheetHelper(workSheet);
+    const columnKeys = wsh.getColumnKeys();
     expect(columnKeys).toEqual(["SIRET", "Etablissement", "Date_intervention_T", "Unite_contrôle_T", "Type_intervention_T", "cible_intervention_T"])
 
   });
@@ -83,7 +88,8 @@ describe("getColumnKeys()", () => {
     const sheetName = "Code_Qualite_siege";
     const workSheet = workbook.Sheets[sheetName];
 
-    const columnKeys = XLSXHelper.getColumnKeys(workSheet);
+    const wsh = new WorkSheetHelper(workSheet);
+    const columnKeys = wsh.getColumnKeys();
     expect(columnKeys).toEqual(["CODE", "LIBELLE"])
 
   });
@@ -91,13 +97,15 @@ describe("getColumnKeys()", () => {
 });
 
 
-describe("getObjectArray()", () => {
+describe("getRowsData()", () => {
   const workbook = XLSX.readFile("./data/example.xls");
   
   test("default", () => {
     const sheetName = "Code_Qualite_siege_2";
     const workSheet = workbook.Sheets[sheetName];
-    const objects = XLSXHelper.getObjectArray(workSheet);
+
+    const wsh = new WorkSheetHelper(workSheet);
+    const objects = wsh.getRowsData();
 
     const exampleObjects = [{
       "CODE": "1",

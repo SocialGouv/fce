@@ -11,4 +11,16 @@
       min-height: 24px;
     }
   }
+
+  .result-list {
+    margin-top: 2rem;
+    list-style: none;
+    padding-left: 0;
+
+    > .result-item {
+      > .description-list {
+        padding: 1rem;
+      }
+    }
+  }
 }

@@ -3,7 +3,7 @@ import React from "react";
 class Terms extends React.Component {
   render() {
     return (
-      <dl className="terms-list row bg-light">
+      <dl className="terms-list row bg-info text-white">
         <dt className="col-md-3">Raison Sociale</dt>
         <dd className="definition col-md-9">
           {this.props.terms.raisonSociale}

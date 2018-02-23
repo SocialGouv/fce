@@ -89,3 +89,29 @@ describe("getColumnKeys()", () => {
   });
 
 });
+
+
+describe("getObjectArray()", () => {
+  const workbook = XLSX.readFile("./data/example.xls");
+  
+  test("default", () => {
+    const sheetName = "Code_Qualite_siege_2";
+    const workSheet = workbook.Sheets[sheetName];
+    const objects = XLSXHelper.getObjectArray(workSheet);
+
+    const exampleObjects = [{
+      "CODE": "1",
+      "LIBELLE": "Siège de direction sans autre activité"
+    },
+    {
+      "CODE": "2",
+      "LIBELLE": "Siège et établissement principal"
+    },
+    {
+      "CODE": "3",
+      "LIBELLE": "Etablissement principal - non siège"
+    }]
+    expect(objects).toEqual(exampleObjects)
+  })
+
+});

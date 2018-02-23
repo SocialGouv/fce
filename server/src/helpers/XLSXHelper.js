@@ -29,7 +29,7 @@ class XLSXHelper {
     return references;
   }
 
-  static getAlphabeticalColumnNames(workSheet){
+  static getAlphabeticalColumnNames(workSheet) {
     const refs = XLSXHelper.getReferences(workSheet);
     const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -40,7 +40,7 @@ class XLSXHelper {
     return columnNames;
   }
 
-  static getColumnKeys(workSheet){
+  static getColumnKeys(workSheet) {
     const alphaColumnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
     let columnKeys = [];
     for (let i = 0; i < alphaColumnNames.length; i++) {
@@ -48,6 +48,33 @@ class XLSXHelper {
       columnKeys.push(workSheet[columnRef + "1"].v);
     }
     return columnKeys;
+  }
+
+  static getObjectArray(workSheet) {
+    const refs = XLSXHelper.getReferences(workSheet);
+    const columnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
+    const columnKeys = XLSXHelper.getColumnKeys(workSheet);
+    
+    let objectArray = [];
+    const start = parseInt(refs.start.row);
+    const end = parseInt(refs.end.row);
+    for (let i = start + 1; i <= end; i++) {
+      
+      let item = {};
+      for (let j = 0; j < columnNames.length; j++) {
+        
+        const columnRef = columnNames[j];
+        const cellRef = columnRef + "" + i;        
+        const cell = workSheet[cellRef];
+        if (cell) {
+          const attributeKey = columnKeys[j];        
+          item[attributeKey] = cell.w;
+        }
+      }
+      objectArray.push(item);
+    }
+    
+    return objectArray
   }
 }
 

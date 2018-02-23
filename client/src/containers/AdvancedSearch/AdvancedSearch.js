@@ -15,24 +15,36 @@ class AdvancedSearch extends React.Component {
         departement: null
       },
       hasError: false,
+      errorMessage: null,
       loading: false,
       redirectTo: false
     };
   }
 
-  updateForm = evt => {
-    const target = evt.target;
-    let form = { ...this.state.form };
-    form[target.name] = target.value;
+  updateForm = (name, value) => {
+    let terms = { ...this.state.terms };
+    terms[name] = value;
 
     this.setState({
-      form
+      terms: terms
     });
   };
 
   search = evt => {
     evt && evt.preventDefault();
-    this.setState({ hasError: false, loading: true });
+    this.setState({ hasError: false, loading: true, errorMessage: null });
+
+    const nbTermsCompleted = () =>
+      Object.keys(this.state.terms).filter(x => this.state.terms[x]).length;
+
+    if (!nbTermsCompleted()) {
+      this.setState({
+        hasError: true,
+        loading: false,
+        errorMessage: "Vous devez renseigner au moins un champ"
+      });
+      return false;
+    }
 
     this.props.advancedSearch(this.state.terms).then(response => {
       this.setState({
@@ -46,7 +58,7 @@ class AdvancedSearch extends React.Component {
 
   render() {
     if (this.state.redirectTo) {
-      return <Redirect to={this.state.redirectTo} />;
+      return <Redirect push to={this.state.redirectTo} />;
     }
 
     return (
@@ -55,13 +67,22 @@ class AdvancedSearch extends React.Component {
         updateForm={this.updateForm}
         loading={this.state.loading}
         hasError={this.state.hasError}
+        errorMessage={this.state.errorMessage}
+        autocompleteData={this.props.autocompleteData}
       />
     );
   }
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    autocompleteData: {
+      naf: state.common.naf,
+      communes: state.common.communes,
+      codePostaux: state.common.codePostaux,
+      departements: state.common.departements
+    }
+  };
 };
 
 const mapDispatchToProps = dispatch => {

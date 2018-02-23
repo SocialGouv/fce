@@ -1,4 +1,4 @@
-FROM node:6.12
+FROM node:9.5
 
 RUN mkdir -p /root/.ssh
 RUN ssh-keyscan -H github.com >> /root/.ssh/known_hosts

@@ -7,18 +7,18 @@ services:
     ports:
       - 3000
     volumes:
-      - ./:/project
+      - ./client/:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
     environment:
-      VIRTUAL_HOST: app.itm.test
+      VIRTUAL_HOST: direccte.test
       VIRTUAL_PORT: 3000
   builder:
     build: .c42/docker/builder
     depends_on:
       - front
     volumes:
-      - ./:/project
+      - ./client/:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
 

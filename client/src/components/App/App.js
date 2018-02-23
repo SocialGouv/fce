@@ -24,15 +24,11 @@ class App extends React.Component {
             <ScrollToTop>
               <Header />
               <Container className="app-container" fluid={true}>
-                <main className="mainview" role="main">
-                  <Switch>
-                    <PrivateRoute exact path="/" component={Search} />
-
-                    <Route exact path="/login" render={() => <Login />} />
-
-                    <Redirect to="/login" />
-                  </Switch>
-                </main>
+                <Switch>
+                  <PrivateRoute exact path="/" component={Search} />
+                  <Route exact path="/login" render={() => <Login />} />
+                  <Redirect to="/login" />
+                </Switch>
               </Container>
             </ScrollToTop>
           </BrowserRouter>

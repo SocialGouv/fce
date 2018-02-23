@@ -1,0 +1,5 @@
+{
+  "direccte.test": "development",
+  "preprod.direccte.com": "preproduction",
+  "direccte.com": "production"
+}

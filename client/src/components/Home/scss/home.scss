@@ -1,0 +1,24 @@
+.settings-page {
+  padding: 10px;
+  & > .settings-section {
+    margin-left: 0.5rem;
+  }
+}
+
+.settings-section {
+  & > .title {
+    margin-bottom: 0.8rem;
+    margin-left: -0.5rem;
+  }
+}
+
+.definition-list {
+  & > .term,
+  & > .definition {
+    margin-bottom: 0.2rem;
+  }
+
+  & > .definition {
+    -webkit-margin-start: 1em;
+  }
+}

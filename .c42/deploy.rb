@@ -6,14 +6,14 @@ set :default_stage, 'preprod'
 server '185.31.40.169', :app, :web, :db, primary: true
 
 set :application, 'itm-pwa'
-set :repository,  'git@github.com:commit42/itm-pwa.git'
+set :repository,  'git@github.com:commit42/direccte.git'
 
 set :scm, :git
 set :git_enable_submodules, 1
 set :deploy_via, :copy
 set :copy_cache, true
 set :copy_exclude, '.git/*'
-set :build_script, 'c42 docker:install && c42 npm:install && c42 npm:build'
+set :build_script, 'c42 docker:install && c42 front:npm:install && c42 front:npm:build'
 set :copy_compression, :bz2
 set :ssh_options, forward_agent: true
 
@@ -24,21 +24,21 @@ after 'deploy:restart', 'deploy:cleanup'
 set :app_path, '/build/'
 
 task :preprod do
-  set :deploy_to, '/home/livraiso/deployment/pwa-preprod'
-  set :branch, 'develop'
-  set :user, 'livraiso'
-  set :webhost, 'https://app.wip.livraisons.pro'
+  # set :deploy_to, '/home/livraiso/deployment/pwa-preprod'
+  # set :branch, 'develop'
+  # set :user, 'livraiso'
+  # set :webhost, 'https://app.wip.livraisons.pro'
 
-  set :http_auth_users, [%w[demo itm2018]]
-  set :http_auth_path, app_path
-  after 'deploy:finalize_update', 'http_auth:protect'
+  # set :http_auth_users, [%w[demo itm2018]]
+  # set :http_auth_path, app_path
+  # after 'deploy:finalize_update', 'http_auth:protect'
 end
 
 task :production do
-  raise 'STOP'
-  set :deploy_to, "/home/livraiso/deployment/pwa-prod"
-  set :branch, "master"
-  set :webhost, "https://app.livraisons.pro"
+  # raise 'STOP'
+  # set :deploy_to, "/home/livraiso/deployment/pwa-prod"
+  # set :branch, "master"
+  # set :webhost, "https://app.livraisons.pro"
 end
 
 # see https://github.com/capistrano/capistrano/blob/master/lib/capistrano/ext/multistage.rb#L22

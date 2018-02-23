@@ -16,17 +16,22 @@ task 'docker:restart' do
 end
 
 # Front
-desc 'npm', 'Lance npm'
-shell_task 'npm', NPM
+package :front do
+  desc 'yarn', 'Lance yarn'
+  shell_task 'yarn', NPM
 
-desc 'npm:install', 'Lance npm install'
-shell_task 'npm:install', "#{NPM} install"
+  desc 'npm', 'Lance npm'
+  shell_task 'npm', NPM
 
-desc 'npm:update', 'Lance npm update'
-shell_task 'npm:update', "#{NPM} update"
+  desc 'npm:install', 'Lance npm install'
+  shell_task 'npm:install', "#{NPM} install"
 
-desc 'npm:build', 'Lance npm run build'
-shell_task 'npm:build', "#{NPM} run build"
+  desc 'npm:update', 'Lance npm update'
+  shell_task 'npm:update', "#{NPM} update"
+
+  desc 'npm:build', 'Lance npm run build'
+  shell_task 'npm:build', "#{NPM} run build"
+end
 
 desc 'docker:install', 'Installe le docker-compose.yml'
 task 'docker:install' do
@@ -49,11 +54,11 @@ desc 'install', 'Installe le projet'
 task :install do
   invoke 'docker:install', []
 
+  info('Yarn install')
+  invoke 'front:yarn', ['install']
+
   info('Starting docker')
   invoke 'docker:run', []
-
-  info('NPM install')
-  invoke 'npm:install', []
 
   info('Restart front')
   invoke 'docker:restart', ['front']

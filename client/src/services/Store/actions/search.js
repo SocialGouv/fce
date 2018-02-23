@@ -1,6 +1,8 @@
 import * as types from "../constants/ActionTypes";
 
 export const search = term => (dispatch, getState) => {
+  dispatch(_setTerms({ raisonSociale: term }));
+
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       let response = {
@@ -112,6 +114,8 @@ export const search = term => (dispatch, getState) => {
 };
 
 export const advancedSearch = terms => (dispatch, getState) => {
+  dispatch(_setTerms(terms));
+
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       let response = {
@@ -225,4 +229,9 @@ export const advancedSearch = terms => (dispatch, getState) => {
 const _setSearchResponses = results => ({
   type: types.SEARCH_RESULTS,
   results
+});
+
+const _setTerms = terms => ({
+  type: types.SEARCH_TERMS,
+  terms
 });

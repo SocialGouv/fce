@@ -3,4 +3,12 @@
     text-align: center;
     margin-bottom: 2rem;
   }
+
+  .terms-list {
+    padding: 1rem;
+
+    .definition {
+      min-height: 24px;
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./search.css";
 import {
   Container,
@@ -48,7 +49,7 @@ class Search extends React.Component {
 
         <Row className="justify-content-md-center">
           <Col xl="6" md="8">
-            <a href="#">Recherche avancée</a>
+            <Link to="/search/advanced">Recherche avancée</Link>
           </Col>
         </Row>
       </div>

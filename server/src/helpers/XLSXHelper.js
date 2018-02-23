@@ -3,7 +3,7 @@ class XLSXHelper {
   static getReferences(workSheet) {
     let references = {};
 
-    const split = workSheet["!refs"].split(":");
+    const split = workSheet["!ref"].split(":");
     const start = split[0];
     const end = split[1];
 
@@ -40,6 +40,15 @@ class XLSXHelper {
     return columnNames;
   }
 
+  static getColumnKeys(workSheet){
+    const alphaColumnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
+    let columnKeys = [];
+    for (let i = 0; i < alphaColumnNames.length; i++) {
+      const columnRef = alphaColumnNames[i];
+      columnKeys.push(workSheet[columnRef + "1"].v);
+    }
+    return columnKeys;
+  }
 }
 
 module.exports = XLSXHelper;

@@ -4,7 +4,7 @@ const XLSXHelper = require("./XLSXHelper");
 describe("getReferences()", () => {
   test("default", () => {
     const workSheet = {
-      "!refs": "A1:I56"
+      "!ref": "A1:I56"
     };
 
     const references = XLSXHelper.getReferences(workSheet);
@@ -22,7 +22,7 @@ describe("getReferences()", () => {
 
   test("Double letters", () => {
     const workSheet = {
-      "!refs": "A1:AU56070"
+      "!ref": "A1:AU56070"
     };
 
     const references = XLSXHelper.getReferences(workSheet);
@@ -42,7 +42,7 @@ describe("getReferences()", () => {
 describe("getAlphabeticalColumns()", () => {
   test("default", () => {
     const workSheet = {
-      "!refs": "A1:C56"
+      "!ref": "A1:C56"
     };
     const columnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
     expect(columnNames).toEqual("ABC");
@@ -50,7 +50,7 @@ describe("getAlphabeticalColumns()", () => {
 
   test("B to T", () => {
     const workSheet = {
-      "!refs": "B16:T56"
+      "!ref": "B16:T56"
     };
     const columnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
     expect(columnNames).toEqual("BCDEFGHIJKLMNOPQRST");
@@ -58,10 +58,34 @@ describe("getAlphabeticalColumns()", () => {
 
   test.skip("M to AB", () => {
     const workSheet = {
-      "!refs": "B16:AB55"
+      "!ref": "B16:AB55"
     };
     const columnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
     expect(columnNames).toEqual("TO DO");
+  });
+
+
+});
+
+describe("getColumnKeys()", () => {
+  const workbook = XLSX.readFile("./data/example.xls");
+  
+  test("default", () => {
+    const sheetName = "wikit";
+    const workSheet = workbook.Sheets[sheetName];
+
+    const columnKeys = XLSXHelper.getColumnKeys(workSheet);
+    expect(columnKeys).toEqual(["SIRET", "Etablissement", "Date_intervention_T", "Unite_contrôle_T", "Type_intervention_T", "cible_intervention_T"])
+
+  });
+
+  test("Sheet 2", () => {
+    const sheetName = "Code_Qualite_siege";
+    const workSheet = workbook.Sheets[sheetName];
+
+    const columnKeys = XLSXHelper.getColumnKeys(workSheet);
+    expect(columnKeys).toEqual(["CODE", "LIBELLE"])
+
   });
 
 });

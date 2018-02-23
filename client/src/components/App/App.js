@@ -9,7 +9,6 @@ import "./app.css";
 import { Container } from "reactstrap";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
-import Footer from "./Footer";
 import Login from "../../containers/Login";
 import Home from "../../containers/Home";
 
@@ -17,6 +16,7 @@ let { store, persistor } = configureStore();
 
 class App extends React.Component {
   render() {
+    console.debug("render app");
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
@@ -34,13 +34,11 @@ class App extends React.Component {
                   </Switch>
                 </main>
               </Container>
-              <Footer />
             </ScrollToTop>
           </BrowserRouter>
         </PersistGate>
       </Provider>
     );
-    console.debug("render app");
   }
 }
 

@@ -14,21 +14,19 @@ class Login extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.loginSuccess !== null) {
-      this.setState({
-        hasError: !nextProps.loginSuccess,
-        loading: false,
-        redirectToReferrer: nextProps.loginSuccess
-      });
-    }
-  }
-
   login = evt => {
     evt && evt.preventDefault();
     this.setState({ hasError: false, loading: true });
 
-    this.props.loginUser(this.state.username, this.state.password);
+    this.props
+      .loginUser(this.state.username, this.state.password)
+      .then(response => {
+        this.setState({
+          hasError: false,
+          loading: false,
+          redirectToReferrer: true
+        });
+      });
   };
 
   updateLogin = evt => {
@@ -62,16 +60,13 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    loginSuccess: state.auth.loginSuccess,
-    loginMessage: state.auth.loginMessage
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     loginUser: user => {
-      dispatch(loginUser(user));
+      return dispatch(loginUser(user));
     }
   };
 };

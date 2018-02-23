@@ -1,30 +1,22 @@
 import * as types from "../constants/ActionTypes";
 
 export const loginUser = (username, password) => (dispatch, getState) => {
-  dispatch(_resetLogin());
-
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      dispatch(
-        _loginUser({
-          username: username,
-          token: "YouTokenToMe?",
-          loggedInAt: new Date()
-        })
-      );
-      resolve();
+      let response = {
+        data: {
+          user: {
+            username: username,
+            token: "YouTokenToMe?",
+            loggedInAt: new Date()
+          }
+        }
+      };
+      dispatch(_loginUser(response.data.user));
+      resolve(response);
     }, 500);
   });
 };
-
-const _resetLogin = () => ({
-  type: types.RESET_LOGIN_USER
-});
-
-const _setLoginFail = message => ({
-  type: types.SET_LOGIN_FAIL,
-  message
-});
 
 const _loginUser = user => ({
   type: types.LOGIN_USER,

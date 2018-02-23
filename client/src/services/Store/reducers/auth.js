@@ -1,15 +1,8 @@
-import {
-  LOGIN_USER,
-  LOGOUT_USER,
-  RESET_LOGIN_USER,
-  SET_LOGIN_FAIL
-} from "../constants/ActionTypes";
+import { LOGIN_USER, LOGOUT_USER } from "../constants/ActionTypes";
 
 const initialState = {
   isAuthenticated: false,
-  user: null,
-  loginSuccess: null,
-  loginMessage: null
+  user: null
 };
 
 const auth = (state = initialState, action) => {
@@ -17,26 +10,12 @@ const auth = (state = initialState, action) => {
     case LOGIN_USER:
       return Object.assign({}, state, {
         isAuthenticated: true,
-        user: action.user,
-        loginSuccess: true,
-        loginMessage: null
+        user: action.user
       });
     case LOGOUT_USER:
       return Object.assign({}, state, {
         isAuthenticated: false,
-        user: null,
-        loginSuccess: null,
-        loginMessage: null
-      });
-    case RESET_LOGIN_USER:
-      return Object.assign({}, state, {
-        loginSuccess: null,
-        loginMessage: null
-      });
-    case SET_LOGIN_FAIL:
-      return Object.assign({}, state, {
-        loginSuccess: false,
-        loginMessage: action.message
+        user: null
       });
     default:
       return state;

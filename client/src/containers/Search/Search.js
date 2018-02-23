@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import SearchView from "../../components/Search";
+import { loginUser, search } from "../../services/Store/actions";
 
 class Search extends Component {
   constructor(props) {
@@ -24,14 +25,12 @@ class Search extends Component {
     evt && evt.preventDefault();
     this.setState({ hasError: false, loading: true });
 
-    /*this.props
-      .loginUser(this.state.term)
-      .then(response => {
-        this.setState({
-          hasError: false,
-          loading: false
-        });
-      });*/
+    this.props.search(this.state.term).then(response => {
+      this.setState({
+        hasError: false,
+        loading: false
+      });
+    });
   };
 
   render() {
@@ -51,7 +50,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    search: term => {
+      return dispatch(search(term));
+    }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

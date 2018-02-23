@@ -41,11 +41,15 @@ class XLSXHelper {
   }
 
   static getColumnKeys(workSheet) {
+    const refs = XLSXHelper.getReferences(workSheet);
+    const startRow = refs.start.row;
     const alphaColumnNames = XLSXHelper.getAlphabeticalColumnNames(workSheet);
+    
     let columnKeys = [];
+
     for (let i = 0; i < alphaColumnNames.length; i++) {
       const columnRef = alphaColumnNames[i];
-      columnKeys.push(workSheet[columnRef + "1"].v);
+      columnKeys.push(workSheet[columnRef + "" + startRow].v);
     }
     return columnKeys;
   }
@@ -73,7 +77,7 @@ class XLSXHelper {
       }
       objectArray.push(item);
     }
-    
+
     return objectArray
   }
 }

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 import SearchView from "../../components/Search";
-import { loginUser, search } from "../../services/Store/actions";
+import { search } from "../../services/Store/actions";
 
 class Search extends Component {
   constructor(props) {
@@ -9,7 +10,8 @@ class Search extends Component {
     this.state = {
       term: "",
       hasError: false,
-      loading: false
+      loading: false,
+      redirectTo: false
     };
   }
 
@@ -28,12 +30,18 @@ class Search extends Component {
     this.props.search(this.state.term).then(response => {
       this.setState({
         hasError: false,
-        loading: false
+        loading: false,
+        redirectTo:
+          response.data.results.length === 1 ? "/enterprise" : "/search/results"
       });
     });
   };
 
   render() {
+    if (this.state.redirectTo) {
+      return <Redirect to={this.state.redirectTo} />;
+    }
+
     return (
       <SearchView
         search={this.search}

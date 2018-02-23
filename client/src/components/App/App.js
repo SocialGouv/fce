@@ -11,6 +11,7 @@ import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
 import Login from "../../containers/Login";
 import Search from "../../containers/Search";
+import SearchResults from "../../containers/SearchResults";
 
 let { store, persistor } = configureStore();
 
@@ -26,6 +27,12 @@ class App extends React.Component {
               <Container className="app-container" fluid={true}>
                 <Switch>
                   <PrivateRoute exact path="/" component={Search} />
+                  <PrivateRoute exact path="/search" component={Search} />
+                  <PrivateRoute
+                    exact
+                    path="/search/results"
+                    component={SearchResults}
+                  />
                   <Route exact path="/login" render={() => <Login />} />
                   <Redirect to="/login" />
                 </Switch>

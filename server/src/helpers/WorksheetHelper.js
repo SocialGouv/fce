@@ -1,4 +1,4 @@
-class WorkSheetHelper {
+class WorksheetHelper {
   constructor(workSheet) {
     this.workSheet = workSheet;
   }
@@ -120,4 +120,4 @@ class WorkSheetHelper {
   }
 }
 
-module.exports = WorkSheetHelper;
+module.exports = WorksheetHelper;

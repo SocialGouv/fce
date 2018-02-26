@@ -1,5 +1,5 @@
 const Ingestor = require("./Ingestor");
-const WorkSheetHelper = require("../helpers/WorkSheetHelper");
+const WorksheetHelper = require("../helpers/WorksheetHelper");
 
 class InteractionsIngestor extends Ingestor {
   constructor(filePath, sheetName, pole) {
@@ -8,7 +8,7 @@ class InteractionsIngestor extends Ingestor {
   }
 
   getInteractions(columnsToKeep) {
-    const wsh = new WorkSheetHelper(this.workSheet);
+    const wsh = new WorksheetHelper(this.workSheet);
 
     let rowsData = wsh.getRowsData(columnsToKeep);
     rowsData = rowsData.map(row => {

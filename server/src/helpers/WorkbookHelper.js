@@ -1,4 +1,4 @@
-const WorkSheetHelper = require("./WorkSheetHelper");
+const WorksheetHelper = require("./WorksheetHelper");
 
 class WorkbookHelper {
   constructor(workbook) {
@@ -10,7 +10,7 @@ class WorkbookHelper {
     let sheetsData = {};
     this.workbook.SheetNames.map(sheetName => {
       const workSheet = this.workbook.Sheets[sheetName];
-      const wsh = new WorkSheetHelper(workSheet);
+      const wsh = new WorksheetHelper(workSheet);
 
       let columnToKeep = null;
       if(sheetsParams && sheetsParams[sheetName]){

@@ -1,4 +1,4 @@
-FROM itm_front
+FROM node_front
 
 ### Install Ruby.
 ENV RUBY_VERSION 2.2.0

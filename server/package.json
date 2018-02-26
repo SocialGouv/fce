@@ -1,15 +1,21 @@
 {
-  "name": "direccter-server",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "private": true,
-  "scripts": {
-    "start": "node src/"
-  },
-  "dependencies": {
-    "express": "^4.16.2",
-    "mongoose": "^5.0.6",
-    "xlsx": "^0.12.1"
-  }
+    "name": "direccter-server",
+    "version": "1.0.0",
+    "main": "server.js",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "nodemon": "nodemon server.js"
+    },
+    "dependencies": {
+        "body-parser": "^1.18.2",
+        "express": "^4.16.2",
+        "frentreprise": "./lib/frentreprise",
+        "mongoose": "^5.0.6",
+        "xlsx": "^0.12.1"
+    },
+    "devDependencies": {
+        "node-debug": "^0.1.0",
+        "nodemon": "^1.15.1"
+    }
 }

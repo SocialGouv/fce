@@ -53,7 +53,6 @@ class Login extends Component {
         updateForm={this.updateLogin}
         loading={loading}
         hasError={hasError}
-        message={this.props.loginMessage}
       />
     );
   }

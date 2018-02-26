@@ -78,16 +78,16 @@ class WorkSheetHelper {
   getRowsData() {
     const refs = this.getReferences(this.workSheet);
 
-    let objectArray = [];
+    let getRowsData = [];
     const startRowNumber = parseInt(refs.start.row);
     const endRowNumber = parseInt(refs.end.row);
     for (let rowNumber = startRowNumber + 1; rowNumber <= endRowNumber; rowNumber++) {
 
       const item = this.getRowData(rowNumber);
-      objectArray.push(item);
+      getRowsData.push(item);
     }
 
-    return objectArray
+    return getRowsData
   }
 }
 

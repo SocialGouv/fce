@@ -18,8 +18,18 @@
     padding-left: 0;
 
     > .result-item {
-      > .description-list {
+      >.link {
+        &:hover {
+          text-decoration: none;
+
+          >.description-list {
+            background-color: #e9ecef !important;
+          }
+        }
+      }
+      .description-list {
         padding: 1rem;
+        color: #212529;
       }
     }
   }

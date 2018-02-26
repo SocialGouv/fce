@@ -1,5 +1,4 @@
 class WorkSheetHelper {
-
   constructor(workSheet) {
     this.workSheet = workSheet;
   }
@@ -35,12 +34,29 @@ class WorkSheetHelper {
 
   getAlphabeticalColumnNames() {
     const refs = this.getReferences(this.workSheet);
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
     const startIndex = alphabet.indexOf(refs.start.column);
-    const endIndex = alphabet.indexOf(refs.end.column);
+    const startLength = refs.start.column.length;
+    const endLength = refs.end.column.length;
 
-    const columnNames = alphabet.slice(startIndex, endIndex + 1);
+    let columnNames = [];
+    // Handle only this specific case for the moment.
+    if (startLength === 1 && endLength === 2) {
+      columnNames = alphabet.slice(startIndex, alphabet.length);
+      const firstEndLetter = refs.end.column[0];
+      if (firstEndLetter === "A") {
+        const secondEndLetter = refs.end.column[1];
+        for (let j = 0; j <= alphabet.indexOf(secondEndLetter); j++) {
+          const letter = firstEndLetter + alphabet[j];
+          columnNames.push(letter);
+        }
+      }
+    } else {
+      const endIndex = alphabet.indexOf(refs.end.column);
+      columnNames = alphabet.slice(startIndex, endIndex + 1);
+    }
+
     return columnNames;
   }
 
@@ -81,13 +97,16 @@ class WorkSheetHelper {
     let getRowsData = [];
     const startRowNumber = parseInt(refs.start.row);
     const endRowNumber = parseInt(refs.end.row);
-    for (let rowNumber = startRowNumber + 1; rowNumber <= endRowNumber; rowNumber++) {
-
+    for (
+      let rowNumber = startRowNumber + 1;
+      rowNumber <= endRowNumber;
+      rowNumber++
+    ) {
       const item = this.getRowData(rowNumber);
       getRowsData.push(item);
     }
 
-    return getRowsData
+    return getRowsData;
   }
 }
 

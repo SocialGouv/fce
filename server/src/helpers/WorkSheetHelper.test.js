@@ -47,41 +47,111 @@ describe("getAlphabeticalColumns()", () => {
     };
     const wsh = new WorkSheetHelper(workSheet);
     const columnNames = wsh.getAlphabeticalColumnNames();
-    expect(columnNames).toEqual("ABC");
+    expect(columnNames).toEqual(["A", "B", "C"]);
   });
 
   test("B to T", () => {
     const workSheet = {
-      "!ref": "B16:T56"
+      "!ref": "B16:J56"
     };
     const wsh = new WorkSheetHelper(workSheet);
     const columnNames = wsh.getAlphabeticalColumnNames();
-    expect(columnNames).toEqual("BCDEFGHIJKLMNOPQRST");
+    expect(columnNames).toEqual([
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J"
+    ]);
   });
 
-  test.skip("M to AB", () => {
+  test("M to AB", () => {
     const workSheet = {
       "!ref": "B16:AB55"
     };
     const wsh = new WorkSheetHelper(workSheet);
     const columnNames = wsh.getAlphabeticalColumnNames();
-    expect(columnNames).toEqual("TO DO");
+    expect(columnNames).toEqual([
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "AA",
+      "AB"
+    ]);
   });
 
-
+  test("M to BD", () => {
+    const workSheet = {
+      "!ref": "M16:AD55"
+    };
+    const wsh = new WorkSheetHelper(workSheet);
+    const columnNames = wsh.getAlphabeticalColumnNames();
+    expect(columnNames).toEqual([
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z",
+      "AA",
+      "AB",
+      "AC",
+      "AD"
+    ]);
+  });
 });
 
 describe("getColumnKeys()", () => {
   const workbook = XLSX.readFile("./data/example.xls");
-  
+
   test("default", () => {
     const sheetName = "wikit";
     const workSheet = workbook.Sheets[sheetName];
 
     const wsh = new WorkSheetHelper(workSheet);
     const columnKeys = wsh.getColumnKeys();
-    expect(columnKeys).toEqual(["SIRET", "Etablissement", "Date_intervention_T", "Unite_contrôle_T", "Type_intervention_T", "cible_intervention_T"])
-
+    expect(columnKeys).toEqual([
+      "SIRET",
+      "Etablissement",
+      "Date_intervention_T",
+      "Unite_contrôle_T",
+      "Type_intervention_T",
+      "cible_intervention_T"
+    ]);
   });
 
   test("Sheet 2", () => {
@@ -90,16 +160,13 @@ describe("getColumnKeys()", () => {
 
     const wsh = new WorkSheetHelper(workSheet);
     const columnKeys = wsh.getColumnKeys();
-    expect(columnKeys).toEqual(["CODE", "LIBELLE"])
-
+    expect(columnKeys).toEqual(["CODE", "LIBELLE"]);
   });
-
 });
-
 
 describe("getRowsData()", () => {
   const workbook = XLSX.readFile("./data/example.xls");
-  
+
   test("default", () => {
     const sheetName = "Code_Qualite_siege_2";
     const workSheet = workbook.Sheets[sheetName];
@@ -107,19 +174,20 @@ describe("getRowsData()", () => {
     const wsh = new WorkSheetHelper(workSheet);
     const objects = wsh.getRowsData();
 
-    const exampleObjects = [{
-      "CODE": "1",
-      "LIBELLE": "Siège de direction sans autre activité"
-    },
-    {
-      "CODE": "2",
-      "LIBELLE": "Siège et établissement principal"
-    },
-    {
-      "CODE": "3",
-      "LIBELLE": "Etablissement principal - non siège"
-    }]
-    expect(objects).toEqual(exampleObjects)
-  })
-
+    const exampleObjects = [
+      {
+        CODE: "1",
+        LIBELLE: "Siège de direction sans autre activité"
+      },
+      {
+        CODE: "2",
+        LIBELLE: "Siège et établissement principal"
+      },
+      {
+        CODE: "3",
+        LIBELLE: "Etablissement principal - non siège"
+      }
+    ];
+    expect(objects).toEqual(exampleObjects);
+  });
 });

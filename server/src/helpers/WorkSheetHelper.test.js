@@ -56,17 +56,7 @@ describe("getAlphabeticalColumns()", () => {
     };
     const wsh = new WorkSheetHelper(workSheet);
     const columnNames = wsh.getAlphabeticalColumnNames();
-    expect(columnNames).toEqual([
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J"
-    ]);
+    expect(columnNames).toEqual(["B", "C", "D", "E", "F", "G", "H", "I", "J"]);
   });
 
   test("M to AB", () => {
@@ -189,5 +179,25 @@ describe("getRowsData()", () => {
       }
     ];
     expect(objects).toEqual(exampleObjects);
+  });
+
+  test("keep only some columns", () => {
+    const sheetName = "wikit";
+    const workSheet = workbook.Sheets[sheetName];
+    const columnsToKeep = {
+      A: "siret",
+      C: "date",
+      D: "unite",
+      E: "type"
+    };
+    const wsh = new WorkSheetHelper(workSheet);
+    const objects = wsh.getRowsData(columnsToKeep);
+
+    expect(objects[0]).toEqual({
+      siret: "1,234,567,890,001",
+      date: "1/2/2017",
+      unite: "Unité de contrôle n°1 de l'Hérault",
+      type: "Enquête"
+    });
   });
 });

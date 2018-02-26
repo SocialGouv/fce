@@ -74,7 +74,7 @@ class WorkSheetHelper {
     return columnKeys;
   }
 
-  getRowData(rowNumber) {
+  getRowData(rowNumber, columnsToKeep) {
     const columnNames = this.getAlphabeticalColumnNames(this.workSheet);
     const columnKeys = this.getColumnKeys(this.workSheet);
     let item = {};
@@ -83,7 +83,15 @@ class WorkSheetHelper {
       const cellRef = columnNames[i] + "" + rowNumber;
       const cell = this.workSheet[cellRef];
       if (cell) {
-        const attributeKey = columnKeys[i];
+        let attributeKey = null;
+        if (!columnsToKeep) {
+          attributeKey = columnKeys[i];
+        }else{
+          if(!columnsToKeep[columnNames[i]]){
+            continue;
+          }
+          attributeKey = columnsToKeep[columnNames[i]];
+        }
         item[attributeKey] = cell.w;
       }
     }
@@ -91,7 +99,7 @@ class WorkSheetHelper {
     return item;
   }
 
-  getRowsData() {
+  getRowsData(columnsToKeep) {
     const refs = this.getReferences(this.workSheet);
 
     let getRowsData = [];
@@ -102,7 +110,7 @@ class WorkSheetHelper {
       rowNumber <= endRowNumber;
       rowNumber++
     ) {
-      const item = this.getRowData(rowNumber);
+      const item = this.getRowData(rowNumber, columnsToKeep);
       getRowsData.push(item);
     }
 

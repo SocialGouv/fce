@@ -6,15 +6,20 @@ class WorkbookHelper {
     // console.log(workbook);
   }
 
-
-  getSheetData(sheetsToKeep) {
-    let sheetData = {};
-    this.workbook.SheetNames.map( sheetName => {
+  getSheetsData(sheetsParams) {
+    let sheetsData = {};
+    this.workbook.SheetNames.map(sheetName => {
       const workSheet = this.workbook.Sheets[sheetName];
-      const wsh = new WorkSheetHelper(workSheet)
-      sheetData[sheetName] = wsh.getRowsData();
-    })
-    return sheetData;
+      const wsh = new WorkSheetHelper(workSheet);
+
+      let columnToKeep = null;
+      if(sheetsParams && sheetsParams[sheetName]){
+        columnToKeep = sheetsParams[sheetName].columnsToKeep;
+      }
+
+      sheetsData[sheetName] = wsh.getRowsData(columnToKeep);
+    });
+    return sheetsData;
   }
 }
 

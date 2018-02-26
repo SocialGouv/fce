@@ -69,7 +69,9 @@ class WorkSheetHelper {
 
     for (let i = 0; i < alphaColumnNames.length; i++) {
       const columnRef = alphaColumnNames[i];
-      columnKeys.push(this.workSheet[columnRef + "" + startRow].v);
+      const cell = this.workSheet[columnRef + "" + startRow];
+      const columnKey = cell ? cell.v : null;
+      columnKeys.push(columnKey);
     }
     return columnKeys;
   }
@@ -86,8 +88,8 @@ class WorkSheetHelper {
         let attributeKey = null;
         if (!columnsToKeep) {
           attributeKey = columnKeys[i];
-        }else{
-          if(!columnsToKeep[columnNames[i]]){
+        } else {
+          if (!columnsToKeep[columnNames[i]]) {
             continue;
           }
           attributeKey = columnsToKeep[columnNames[i]];

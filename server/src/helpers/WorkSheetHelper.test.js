@@ -154,7 +154,7 @@ describe("getColumnKeys()", () => {
   });
 });
 
-describe("getRowsData()", () => {
+describe.only("getRowsData()", () => {
   const workbook = XLSX.readFile("./data/example.xls");
 
   test("default", () => {
@@ -179,6 +179,18 @@ describe("getRowsData()", () => {
       }
     ];
     expect(objects).toEqual(exampleObjects);
+  });
+
+  test("with empty column", () => {
+    const sheetName = "empty_column";
+    const workSheet = workbook.Sheets[sheetName];
+    const wsh = new WorkSheetHelper(workSheet);
+    const objects = wsh.getRowsData();
+
+    expect(objects[0]).toEqual({
+      CODE: "1",
+      LIBELLE: "Siège de direction sans autre activité",
+    });
   });
 
   test("keep only some columns", () => {

@@ -5,7 +5,8 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "nodemon": "nodemon server.js"
+        "nodemon": "nodemon server.js",
+        "test": "./node_modules/.bin/jest src"
     },
     "dependencies": {
         "body-parser": "^1.18.2",
@@ -16,6 +17,7 @@
     },
     "devDependencies": {
         "node-debug": "^0.1.0",
-        "nodemon": "^1.15.1"
+        "nodemon": "^1.15.1",
+        "jest": "^22.4.0"
     }
 }

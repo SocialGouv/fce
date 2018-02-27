@@ -1,4 +1,5 @@
 const XLSX = require("xlsx");
+const NotImplementedError = require("../errors/NotImplementedError");
 
 class Ingestor {
   constructor(filePath, sheetName) {
@@ -9,7 +10,11 @@ class Ingestor {
     }
   }
 
-  getData() {}
+  getData() {
+    throw new NotImplementedError(
+      "You must implement getDate method in child."
+    );
+  }
 
   save() {
     const data = this.getData();

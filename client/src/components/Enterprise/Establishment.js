@@ -3,6 +3,13 @@ import "./enterprise.css";
 import { Row, Col } from "reactstrap";
 import QuickAccess from "./QuickAccess";
 import Establishments from "./Establishments";
+import {
+  EstablishmentActivity,
+  EstablishmentIdentity,
+  Finances,
+  Interventions,
+  Direccte
+} from "./Sections";
 
 class Establishment extends React.Component {
   getSections = () => {
@@ -13,7 +20,7 @@ class Establishment extends React.Component {
       { name: "Dév. Eco", id: "development" },
       { name: "Emploi", id: "job" },
       { name: "Mutat. éco.", id: "mutations" },
-      { name: "DIRECCTE", id: "DIRECCTE" }
+      { name: "DIRECCTE", id: "direccte" }
     ];
   };
 
@@ -26,6 +33,12 @@ class Establishment extends React.Component {
           </Col>
           <Col className="main" md="7">
             <h1 className="title">Fiche Établissement</h1>
+
+            <EstablishmentIdentity className="bg-info" />
+            <EstablishmentActivity />
+            <Finances />
+            <Interventions />
+            <Direccte />
           </Col>
           <Col className="aside-box" md="3">
             <Establishments

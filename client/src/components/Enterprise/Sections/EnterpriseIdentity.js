@@ -3,7 +3,7 @@ import React from "react";
 class EnterpriseIdentity extends React.Component {
   render() {
     return (
-      <section id="identity" className="enterprise-section">
+      <section id="identity" className="enterprise-section bg-info text-white">
         <h1 className="title h4">Identité de l'entreprise</h1>
 
         <dl className="dl row">

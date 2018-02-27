@@ -1,6 +1,8 @@
 import React from "react";
 import "./searchResults.css";
-import { Row, Col } from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faPrint } from "@fortawesome/fontawesome-pro-light";
 import Terms from "./Terms";
 import Item from "./Item";
 
@@ -21,6 +23,14 @@ class SearchResults extends React.Component {
         <Row className="justify-content-md-center">
           <Col xl="6" md="8">
             <Terms terms={this.props.terms} />
+          </Col>
+        </Row>
+
+        <Row className="justify-content-md-center d-print-none">
+          <Col xl="6" md="12" className="text-center">
+            <Button color="primary" onClick={() => window.print()}>
+              <FontAwesomeIcon icon={faPrint} /> Imprimer
+            </Button>
           </Col>
         </Row>
 

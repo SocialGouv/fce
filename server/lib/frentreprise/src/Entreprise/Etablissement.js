@@ -49,7 +49,6 @@ export default class Etablissement {
     ];
 
     export_keys.forEach(key => {
-      console.log(key, data, this);
       data[key] = this[key];
     }, this);
 

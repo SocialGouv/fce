@@ -1,1 +1,60 @@
+.app-enterprise {
 
+  .aside-box {
+    padding: 0;
+
+    >.aside-contain {
+      position: fixed;
+    }
+  }
+
+  .main {
+    >.title {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .enterprise-section {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background-color: #f8f9fa;
+
+      >.title {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      >.dl {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .quick-access-aside {
+    .title {
+      text-align: center;
+    }
+
+    .nav-list {
+      list-style: none;
+      padding-left: 0;
+
+      >.nav-item {
+        text-align: center;
+        border: solid 1px #e9ecef;
+
+        >.link {
+          display: block;
+          padding: 0.5rem;
+          background-color: #f8f9fa;
+          color: #212529;
+          text-decoration: none;
+
+          &:hover {
+            background-color: #e9ecef;
+          }
+        }
+      }
+    }
+  }
+}

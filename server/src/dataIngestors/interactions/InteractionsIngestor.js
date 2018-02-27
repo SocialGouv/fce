@@ -1,6 +1,6 @@
-const Ingestor = require("./Ingestor");
-const WorksheetHelper = require("../helpers/WorksheetHelper");
-const Interaction = require("../models/InteractionModel");
+const Ingestor = require("../Ingestor");
+const WorksheetHelper = require("../../helpers/WorksheetHelper");
+const Interaction = require("../../models/InteractionModel");
 
 class InteractionsIngestor extends Ingestor {
   constructor(filePath, sheetName, pole) {

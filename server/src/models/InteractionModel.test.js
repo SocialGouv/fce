@@ -33,6 +33,7 @@ test("default", () => {
       expect(res.type_intervention).toBe(interactionData.type_intervention);
       expect(res.cible_intervention).toBe(interactionData.cible_intervention);
       expect(res.pole).toBe(interactionData.pole);
+      return;
     });
 });
 

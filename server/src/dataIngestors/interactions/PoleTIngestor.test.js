@@ -1,6 +1,6 @@
-require("../mongo/db");
+require("../../mongo/db");
 const PoleTIngestor = require("./PoleTIngestor");
-const Interaction = require("../models/InteractionModel");
+const Interaction = require("../../models/InteractionModel");
 const filePath = "./data/example.xls";
 const sheetName = "wikit";
 

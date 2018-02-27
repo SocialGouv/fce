@@ -1,6 +1,6 @@
 require("../mongo/db");
 
-const Nomenclature = require("./nomenclatureModel");
+const Nomenclature = require("./NomenclatureModel");
 
 beforeEach(() => {
   return Nomenclature.remove({});

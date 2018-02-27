@@ -4,9 +4,6 @@ class PoleTIngestor extends InteractionsIngestor {
   constructor(filePath, sheetName) {
     const pole = "T";
     super(filePath, sheetName, pole);
-  }
-
-  getInteractions() {
     const columnsToKeep = {
       A: "siret",
       C: "date",
@@ -14,8 +11,7 @@ class PoleTIngestor extends InteractionsIngestor {
       E: "type_intervention",
       F: "cible_intervention"
     };
-    const rowsData = super.getInteractions(columnsToKeep);
-    return rowsData;
+    this.columnsToKeep = columnsToKeep;
   }
 }
 

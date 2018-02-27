@@ -1,5 +1,5 @@
 require("../mongo/db");
-const Interaction = require("./interactionModel");
+const Interaction = require("./InteractionModel");
 
 beforeEach(() => {
   return Interaction.remove({});

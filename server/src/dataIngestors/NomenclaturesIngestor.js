@@ -1,12 +1,14 @@
 const Ingestor = require("./Ingestor");
 const WorkbookHelper = require("../helpers/WorkbookHelper");
+const Nomenclature = require("../models/NomenclatureModel");
 
 class NomenclaturesIngestor extends Ingestor {
   constructor(filePath) {
     super(filePath);
+    this.Model = Nomenclature;
   }
 
-  getNomenclatures() {
+  getData() {
     const wbh = new WorkbookHelper(this.workbook);
 
     const sheetsParams = {
@@ -51,6 +53,10 @@ class NomenclaturesIngestor extends Ingestor {
       });
     }
     return sheetsData;
+  }
+
+  getNomenclatures() {
+    return this.getData();
   }
 }
 

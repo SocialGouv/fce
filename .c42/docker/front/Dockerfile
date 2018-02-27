@@ -8,7 +8,7 @@ ENV SSH_AUTH_SOCK=/ssh-agent
 WORKDIR /project
 VOLUME ["/project"]
 
-RUN npm install
+RUN yarn install
 
 COPY "run.sh" "/run.sh"
 RUN chmod a+x /run.sh

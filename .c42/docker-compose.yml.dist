@@ -13,6 +13,7 @@ services:
     environment:
       VIRTUAL_HOST: direccte.test
       VIRTUAL_PORT: 3000
+
   server:
     build: .c42/docker/server
     image: node_server
@@ -28,11 +29,13 @@ services:
       NODEMON: 1
     links:
       - mongo
+
   mongo:
     image: mongo:3.6
     network_mode: "bridge"
     ports:
       - 27017
+
   frentreprise:
     build: .c42/docker/server
     image: node_server
@@ -41,6 +44,7 @@ services:
       - ./server/lib/frentreprise:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
+
   # builder:
   #   build: .c42/docker/builder
   #   depends_on:

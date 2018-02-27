@@ -9,6 +9,12 @@ var config = require("config");
 var dbConfig = config.get("mongo.host") + "/" + config.get("mongo.db");
 mongoose.connect("mongodb://" + dbConfig);
 
+var DireccteEntreprise = require("./models/Entreprise");
+var DireccteEtablissement = require("./models/Etablissement");
+
+frentreprise.EntrepriseModel = DireccteEntreprise;
+frentreprise.EtablissementModel = DireccteEtablissement;
+
 frentreprise.getDataSource("ApiGouv").source.token = config.get("APIGouv.token");
 
 app.get("/", function(req, res) {

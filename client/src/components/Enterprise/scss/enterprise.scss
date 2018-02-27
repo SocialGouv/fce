@@ -1,1 +1,75 @@
+.app-enterprise {
 
+  .aside-box {
+    padding: 0;
+
+    >.aside-contain {
+      position: fixed;
+    }
+  }
+
+  .main {
+    @media print {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    >.title {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    >.task-bar {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .enterprise-section {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background-color: #f8f9fa;
+
+      >.title {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      >.dl {
+        margin-bottom: 0;
+      }
+
+      .toggle-element {
+        padding: 1rem;
+        background-color: #e9ecef;
+      }
+    }
+  }
+
+  .quick-access-aside {
+    .title {
+      text-align: center;
+    }
+
+    .nav-list {
+      list-style: none;
+      padding-left: 0;
+
+      >.nav-item {
+        text-align: center;
+        border: solid 1px #e9ecef;
+
+        >.link {
+          display: block;
+          padding: 0.5rem;
+          background-color: #f8f9fa;
+          color: #212529;
+          text-decoration: none;
+
+          &:hover {
+            background-color: #e9ecef;
+          }
+        }
+      }
+    }
+  }
+}

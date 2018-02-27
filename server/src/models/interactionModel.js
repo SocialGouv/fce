@@ -10,10 +10,12 @@ const interactionSchema = new Schema({
   pole: String
 });
 
-interactionSchema.statics.findBySIRET = (siret, cb) => {
-  return this.find({ siret: siret }
+interactionSchema.statics.findBySIRET = function(siret, cb) {
+  return this.find({ siret: siret })
     .sort("-date")
     .exec(cb);
 };
 
-module.exports = interactionSchema;
+const Interaction = mongoose.model("Interaction", interactionSchema);
+
+module.exports = Interaction;

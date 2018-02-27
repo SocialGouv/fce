@@ -2,7 +2,7 @@ version: '2'
 services:
   front:
     build: .c42/docker/front
-    image: itm_front
+    image: node_front
     network_mode: "bridge"
     ports:
       - 3000
@@ -13,6 +13,27 @@ services:
     environment:
       VIRTUAL_HOST: direccte.test
       VIRTUAL_PORT: 3000
+  server:
+    build: .c42/docker/server
+    image: node_server
+    network_mode: "bridge"
+    ports:
+      - 80
+    volumes:
+      - ./server/:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+    environment:
+      VIRTUAL_HOST: srv.direccte.test
+      NODEMON: true
+  frentreprise:
+    build: .c42/docker/server
+    image: node_server
+    network_mode: "bridge"
+    volumes:
+      - ./server/lib/frentreprise:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
   builder:
     build: .c42/docker/builder
     depends_on:

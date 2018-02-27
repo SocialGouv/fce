@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { IfLoggedIn } from "../../../helpers/Auth";
@@ -12,7 +13,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
   Form,
   Button
 } from "reactstrap";
@@ -43,9 +43,9 @@ class Header extends React.Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="mr-auto" navbar>
                 <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
-                    Test
-                  </NavLink>
+                  <Link to="/search" className="nav-link">
+                    Rechercher
+                  </Link>
                 </NavItem>
               </Nav>
 

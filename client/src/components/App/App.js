@@ -10,7 +10,11 @@ import { Container } from "reactstrap";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
 import Login from "../../containers/Login";
-import Home from "../../containers/Home";
+import Search from "../../containers/Search";
+import SearchResults from "../../containers/SearchResults";
+import AdvancedSearch from "../../containers/AdvancedSearch";
+import { Enterprise } from "../../containers/Enterprise";
+import { Establishment } from "../../containers/Enterprise";
 
 let { store, persistor } = configureStore();
 
@@ -24,15 +28,32 @@ class App extends React.Component {
             <ScrollToTop>
               <Header />
               <Container className="app-container" fluid={true}>
-                <main className="mainview" role="main">
-                  <Switch>
-                    <PrivateRoute exact path="/" component={Home} />
-
-                    <Route exact path="/login" render={() => <Login />} />
-
-                    <Redirect to="/login" />
-                  </Switch>
-                </main>
+                <Switch>
+                  <PrivateRoute exact path="/" component={Search} />
+                  <PrivateRoute exact path="/search" component={Search} />
+                  <PrivateRoute
+                    exact
+                    path="/search/advanced"
+                    component={AdvancedSearch}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/search/results"
+                    component={SearchResults}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/enterprise/:siren"
+                    component={Enterprise}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/establishment/:siret"
+                    component={Establishment}
+                  />
+                  <Route exact path="/login" render={() => <Login />} />
+                  <Redirect to="/login" />
+                </Switch>
               </Container>
             </ScrollToTop>
           </BrowserRouter>

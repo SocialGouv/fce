@@ -2,6 +2,7 @@ export const LOGIN_USER = "LOGIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
 
 export const SEARCH_RESULTS = "SEARCH_RESULTS";
+export const SEARCH_TERMS = "SEARCH_TERMS";
 
 export const SET_COMMON_NAF = "SET_COMMON_NAF";
 export const SET_COMMON_COMMUNES = "SET_COMMON_COMMUNES";

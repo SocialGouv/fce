@@ -1,7 +1,16 @@
-import { SEARCH_RESULTS } from "../constants/ActionTypes";
+import { SEARCH_RESULTS, SEARCH_TERMS } from "../constants/ActionTypes";
 
 const initialState = {
-  results: []
+  results: [],
+  terms: {
+    siret: null,
+    siren: null,
+    raisonSociale: null,
+    naf: null,
+    commune: null,
+    codePostal: null,
+    departement: null
+  }
 };
 
 const search = (state = initialState, action) => {
@@ -10,6 +19,11 @@ const search = (state = initialState, action) => {
       return {
         ...state,
         results: action.results
+      };
+    case SEARCH_TERMS:
+      return {
+        ...state,
+        terms: { ...initialState.terms, ...action.terms }
       };
     default:
       return state;

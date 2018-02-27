@@ -25,7 +25,7 @@ services:
       - $SSH_AUTH_SOCK:/ssh-agent
     environment:
       VIRTUAL_HOST: srv.direccte.test
-      NODEMON: true
+      NODEMON: "true"
   frentreprise:
     build: .c42/docker/server
     image: node_server

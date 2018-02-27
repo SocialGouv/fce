@@ -3,6 +3,11 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
 
+var DireccteEntreprise = require("./models/Entreprise");
+var DireccteEtablissement = require("./models/Etablissement");
+
+frentreprise.EntrepriseModel = DireccteEntreprise;
+frentreprise.EtablissementModel = DireccteEtablissement;
 frentreprise.getDataSource("ApiGouv").source.token =
   "Wla5Sr8oyktnldY0QK67nlsjgIHqFKul";
 

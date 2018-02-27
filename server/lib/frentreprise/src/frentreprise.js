@@ -1,10 +1,14 @@
 import InvalidIdentifierError from "~/Errors/InvalidIdentifierError";
 import * as Validator from "~/Utils/Validator";
-import Entreprise from "~/Entreprise";
 import ApiGouv from "~/DataSources/ApiGouv";
+
+import Entreprise from "~/Entreprise";
+import Etablissement from "~/Entreprise";
 
 class frentreprise {
   constructor() {
+    this.EntrepriseModel = Entreprise;
+    this.EtablissementModel = Etablissement;
     this.dataSources = [];
     this.addDataSource({
       name: "ApiGouv",
@@ -37,7 +41,7 @@ class frentreprise {
       };
     }
 
-    const entreprise = new Entreprise(etData);
+    const entreprise = new this.EntrepriseModel(etData);
 
     if (gotSIRET) {
       let etsData = {};
@@ -50,7 +54,7 @@ class frentreprise {
         };
       }
 
-      entreprise.importEtablissement(etsData);
+      entreprise.importEtablissement(new this.EtablissementModel(etsData));
     }
 
     return entreprise;
@@ -85,3 +89,5 @@ class frentreprise {
 }
 
 module.exports = new frentreprise();
+module.exports.Entreprise = Entreprise;
+module.exports.Etablissement = Etablissement;

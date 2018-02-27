@@ -9,6 +9,15 @@
         "test": "./node_modules/.bin/jest src"
     },
     "dependencies": {
+        "babel": "^6.23.0",
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.3",
+        "babel-plugin-root-import": "^5.1.0",
+        "babel-plugin-syntax-async-functions": "^6.13.0",
+        "babel-plugin-transform-builtin-extend": "^1.1.2",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
+        "babel-register": "^6.26.0",
         "body-parser": "^1.18.2",
         "express": "^4.16.2",
         "frentreprise": "./lib/frentreprise",
@@ -16,8 +25,8 @@
         "xlsx": "^0.12.1"
     },
     "devDependencies": {
+        "jest": "^22.4.0",
         "node-debug": "^0.1.0",
-        "nodemon": "^1.15.1",
-        "jest": "^22.4.0"
+        "nodemon": "^1.15.1"
     }
 }

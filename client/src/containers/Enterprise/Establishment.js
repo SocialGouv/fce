@@ -5,7 +5,19 @@ import { Establishment as EstablishmentView } from "../../components/Enterprise"
 class Establishment extends React.Component {
   render() {
     console.log(this.props.match.params.siret);
-    return <EstablishmentView />;
+
+    const enterprise = { test: true };
+    const headOffice = { test: true };
+
+    const establishments = [{ test: true }, { test: true }];
+
+    return (
+      <EstablishmentView
+        enterprise={enterprise}
+        headOffice={headOffice}
+        establishments={establishments}
+      />
+    );
   }
 }
 

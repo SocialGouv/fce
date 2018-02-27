@@ -6,8 +6,8 @@ describe("default", () => {
 
   test("default", () => {
 
-    let ingestor = new PoleCIngestor(filePath, sheetName);
-    let data = ingestor.getInteractions();
+    const ingestor = new PoleCIngestor(filePath, sheetName);
+    const data = ingestor.getInteractions();
     expect(data).toEqual([{
       "siret":"09726060400036",
       "date": "1/12/2017",

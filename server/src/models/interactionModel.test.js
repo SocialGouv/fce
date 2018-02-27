@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 var config = require("config");
-const Interaction = require("./interactionSchema");
+const Interaction = require("./interactionModel");
 
 var dbConfig = config.get("mongo.host") + "/" + config.get("mongo.db");
 mongoose.connect("mongodb://" + dbConfig);

@@ -1,9 +1,6 @@
-const mongoose = require("mongoose");
-var config = require("config");
-const Nomenclature = require("./nomenclatureModel");
+require("../mongo/db");
 
-var dbConfig = config.get("mongo.host") + "/" + config.get("mongo.db");
-mongoose.connect("mongodb://" + dbConfig);
+const Nomenclature = require("./nomenclatureModel");
 
 beforeEach(() => {
   return Nomenclature.remove({});

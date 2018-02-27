@@ -1,9 +1,5 @@
-const mongoose = require("mongoose");
-var config = require("config");
+require("../mongo/db");
 const Interaction = require("./interactionModel");
-
-var dbConfig = config.get("mongo.host") + "/" + config.get("mongo.db");
-mongoose.connect("mongodb://" + dbConfig);
 
 beforeEach(() => {
   return Interaction.remove({});

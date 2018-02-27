@@ -4,8 +4,6 @@ import { Enterprise as EnterpriseView } from "../../components/Enterprise";
 
 class Enterprise extends React.Component {
   render() {
-    console.log(this.props.match.params.siren);
-
     const enterprise = { test: true };
     const headOffice = { test: true };
 

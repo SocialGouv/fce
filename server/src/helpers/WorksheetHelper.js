@@ -33,30 +33,30 @@ class WorksheetHelper {
     return references;
   }
 
+  generateAlphabet(indexNumber) {
+    const alphabetLength = indexNumber || 100;
+    const alphabetBase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    let alphabet = [];
+    for (let i = 0; i < alphabetLength; i++) {
+      let letter = alphabetBase[i];
+      if (i > 25) {
+        const q = parseInt(i / 26, 10);
+        const r = i % 26;
+        letter = alphabetBase[q - 1] + alphabetBase[r];
+      }
+      alphabet.push(letter);
+    }
+    return alphabet;
+  }
+
   getAlphabeticalColumnNames() {
     const refs = this.getReferences(this.workSheet);
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const alphabet = this.generateAlphabet();
 
     const startIndex = alphabet.indexOf(refs.start.column);
-    const startLength = refs.start.column.length;
-    const endLength = refs.end.column.length;
+    const endIndex = alphabet.indexOf(refs.end.column);
 
-    let columnNames = [];
-    // Handle only this specific case for the moment.
-    if (startLength === 1 && endLength === 2) {
-      columnNames = alphabet.slice(startIndex, alphabet.length);
-      const firstEndLetter = refs.end.column[0];
-      if (firstEndLetter === "A") {
-        const secondEndLetter = refs.end.column[1];
-        for (let j = 0; j <= alphabet.indexOf(secondEndLetter); j++) {
-          const letter = firstEndLetter + alphabet[j];
-          columnNames.push(letter);
-        }
-      }
-    } else {
-      const endIndex = alphabet.indexOf(refs.end.column);
-      columnNames = alphabet.slice(startIndex, endIndex + 1);
-    }
+    const  columnNames = alphabet.slice(startIndex, endIndex + 1);
 
     return columnNames;
   }
@@ -72,7 +72,7 @@ class WorksheetHelper {
       const columnRef = alphaColumnNames[i];
       const cell = this.workSheet[columnRef + "" + startRow];
       let columnKey = cell ? cell.v : null;
-      if(columnKey && this.params && this.params.keysToLowerCase){
+      if (columnKey && this.params && this.params.keysToLowerCase) {
         columnKey = columnKey.toLowerCase();
       }
       columnKeys.push(columnKey);

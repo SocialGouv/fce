@@ -96,11 +96,21 @@ describe("getAlphabeticalColumns()", () => {
     ]);
   });
 
-  test("M to BD", () => {
+  test("AZ to BD", () => {
     const workSheet = {
-      "!ref": "M16:AD55"
+      "!ref": "AZ16:BD55"
     };
     const wsh = new WorksheetHelper(workSheet);
+    const columnNames = wsh.getAlphabeticalColumnNames();
+    expect(columnNames).toEqual(["AZ", "BA", "BB", "BC", "BD"]);
+  });
+
+  test("M to BD", () => {
+    const workSheet = {
+      "!ref": "M16:BD55"
+    };
+    const wsh = new WorksheetHelper(workSheet);
+
     const columnNames = wsh.getAlphabeticalColumnNames();
     expect(columnNames).toEqual([
       "M",
@@ -120,12 +130,38 @@ describe("getAlphabeticalColumns()", () => {
       "AA",
       "AB",
       "AC",
-      "AD"
+      "AD",
+      "AE",
+      "AF",
+      "AG",
+      "AH",
+      "AI",
+      "AJ",
+      "AK",
+      "AL",
+      "AM",
+      "AN",
+      "AO",
+      "AP",
+      "AQ",
+      "AR",
+      "AS",
+      "AT",
+      "AU",
+      "AV",
+      "AW",
+      "AX",
+      "AY",
+      "AZ",
+      "BA",
+      "BB",
+      "BC",
+      "BD"
     ]);
   });
 });
 
-describe.only("getColumnKeys()", () => {
+describe("getColumnKeys()", () => {
   const workbook = XLSX.readFile("./data/example.xls");
 
   test("default", () => {
@@ -166,7 +202,7 @@ describe.only("getColumnKeys()", () => {
   });
 });
 
-describe.only("getRowsData()", () => {
+describe("getRowsData()", () => {
   const workbook = XLSX.readFile("./data/example.xls");
 
   test("default", () => {
@@ -201,7 +237,7 @@ describe.only("getRowsData()", () => {
 
     expect(objects[0]).toEqual({
       CODE: "1",
-      LIBELLE: "Siège de direction sans autre activité",
+      LIBELLE: "Siège de direction sans autre activité"
     });
   });
 

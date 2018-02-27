@@ -56,7 +56,7 @@ class WorksheetHelper {
     const startIndex = alphabet.indexOf(refs.start.column);
     const endIndex = alphabet.indexOf(refs.end.column);
 
-    const  columnNames = alphabet.slice(startIndex, endIndex + 1);
+    const columnNames = alphabet.slice(startIndex, endIndex + 1);
 
     return columnNames;
   }
@@ -96,9 +96,10 @@ class WorksheetHelper {
           if (!columnsToKeep[columnNames[i]]) {
             continue;
           }
+
           attributeKey = columnsToKeep[columnNames[i]];
         }
-        item[attributeKey] = cell.w;
+        item[attributeKey] = cell.w || cell.v;
       }
     }
 

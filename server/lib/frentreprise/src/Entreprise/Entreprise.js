@@ -111,7 +111,6 @@ export default class Entreprise {
     ];
 
     export_keys.forEach(key => {
-      console.log(key, data, this);
       data[key] = this[key];
     }, this);
 

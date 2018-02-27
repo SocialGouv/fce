@@ -1,14 +1,15 @@
 require("../mongo/db");
 
 const Nomenclature = require("./NomenclatureModel");
+const TIMEOUT = 10000;
 
 beforeEach(() => {
   return Nomenclature.remove({});
-});
+}, TIMEOUT);
 
 afterEach(() => {
   return Nomenclature.remove({});
-});
+}, TIMEOUT);
 
 test("default - Code_activite_NAF", () => {
   const nData = {
@@ -30,7 +31,7 @@ test("default - Code_activite_NAF", () => {
       expect(res.code).toBe(nData.code);
       expect(res.libelle).toBe(nData.libelle);
     });
-});
+}, TIMEOUT);
 
 test("Code_CJ3", () => {
   const nData = {
@@ -55,4 +56,4 @@ test("Code_CJ3", () => {
       expect(res.libelle_CJ3).toBe(nData.libelle_CJ3);
       expect(res.libelle_CJ1).toBe(nData.libelle_CJ1);
     });
-});
+}, TIMEOUT);

@@ -1,7 +1,7 @@
 const NomenclaturesIngestor = require("./NomenclaturesIngestor");
 const TIMEOUT = 10000;
 
-describe.only("default", () => {
+describe("default", () => {
   const filePath = "./data/example.xls";
 
   test(

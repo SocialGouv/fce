@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const etablissementSchema = new Schema({
-  siret: String,
+  siret: { type: String, index: true },
   nic_ministere: String,
   siren: String,
-  code_CJ3: String,
-  libelle_CJ3: String,
+  code_cj3: String,
+  libelle_cj3: String,
   raison_sociale: String,
   nom: String,
   prenom: String,
@@ -60,11 +60,11 @@ const etablissementSchema = new Schema({
   label_idcc: String
 });
 
-etablissementSchema.statics.findBySIRET = (siret, cb) => {
+etablissementSchema.statics.findBySIRET = function(siret, cb) {
   return this.findOne({ siret: siret }, cb);
 };
 
-etablissementSchema.statics.findByRaisonSociale = (raisonSociale, cb) => {
+etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
   return this.find({ raison_sociale: new RegExp(raisonSociale, "i") }, cb);
 };
 

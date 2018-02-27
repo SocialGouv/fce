@@ -35,7 +35,7 @@ class WorksheetHelper {
 
   generateAlphabet(indexNumber) {
     const alphabetLength = indexNumber || 100;
-    const alphabetBase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const alphabetBase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let alphabet = [];
     for (let i = 0; i < alphabetLength; i++) {
       let letter = alphabetBase[i];

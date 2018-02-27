@@ -3,7 +3,6 @@ const WorksheetHelper = require("./WorksheetHelper");
 class WorkbookHelper {
   constructor(workbook) {
     this.workbook = workbook;
-    // console.log(workbook);
   }
 
   getSheetsData(sheetsParams) {

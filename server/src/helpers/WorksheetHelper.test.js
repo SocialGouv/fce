@@ -125,7 +125,7 @@ describe("getAlphabeticalColumns()", () => {
   });
 });
 
-describe("getColumnKeys()", () => {
+describe.only("getColumnKeys()", () => {
   const workbook = XLSX.readFile("./data/example.xls");
 
   test("default", () => {
@@ -151,6 +151,18 @@ describe("getColumnKeys()", () => {
     const wsh = new WorksheetHelper(workSheet);
     const columnKeys = wsh.getColumnKeys();
     expect(columnKeys).toEqual(["CODE", "LIBELLE"]);
+  });
+
+  test("Keys to lower case", () => {
+    const sheetName = "Code_Qualite_siege";
+    const params = {
+      keysToLowerCase: true
+    };
+    const workSheet = workbook.Sheets[sheetName];
+
+    const wsh = new WorksheetHelper(workSheet, params);
+    const columnKeys = wsh.getColumnKeys();
+    expect(columnKeys).toEqual(["code", "libelle"]);
   });
 });
 

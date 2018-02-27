@@ -85,4 +85,4 @@ test("add 3 interactions", () => {
       expect(inter2.pole).toBe("C");
       return;
     });
-});
+}, 10000);

@@ -1,6 +1,7 @@
 class WorksheetHelper {
-  constructor(workSheet) {
+  constructor(workSheet, params) {
     this.workSheet = workSheet;
+    this.params = params;
   }
 
   getReferences() {
@@ -70,7 +71,10 @@ class WorksheetHelper {
     for (let i = 0; i < alphaColumnNames.length; i++) {
       const columnRef = alphaColumnNames[i];
       const cell = this.workSheet[columnRef + "" + startRow];
-      const columnKey = cell ? cell.v : null;
+      let columnKey = cell ? cell.v : null;
+      if(columnKey && this.params && this.params.keysToLowerCase){
+        columnKey = columnKey.toLowerCase();
+      }
       columnKeys.push(columnKey);
     }
     return columnKeys;

@@ -7,9 +7,10 @@ const initialState = {
 const search = (state = initialState, action) => {
   switch (action.type) {
     case SEARCH_RESULTS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         results: action.results
-      });
+      };
     default:
       return state;
   }

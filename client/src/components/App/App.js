@@ -12,6 +12,7 @@ import Header from "./Header";
 import Login from "../../containers/Login";
 import Search from "../../containers/Search";
 import SearchResults from "../../containers/SearchResults";
+import AdvancedSearch from "../../containers/AdvancedSearch";
 
 let { store, persistor } = configureStore();
 
@@ -28,6 +29,11 @@ class App extends React.Component {
                 <Switch>
                   <PrivateRoute exact path="/" component={Search} />
                   <PrivateRoute exact path="/search" component={Search} />
+                  <PrivateRoute
+                    exact
+                    path="/search/advanced"
+                    component={AdvancedSearch}
+                  />
                   <PrivateRoute
                     exact
                     path="/search/results"

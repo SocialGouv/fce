@@ -1,15 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./search.css";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Button
-} from "reactstrap";
+import { Row, Col, Form, FormGroup, Input, Button } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 
@@ -19,7 +11,9 @@ class Search extends React.Component {
       <div className="app-search">
         <Row className="justify-content-md-center">
           <Col xl="6" md="8">
-            <h1 className="title">Recherche</h1>
+            <h1 className="title">
+              Rechercher un établissement ou une entreprise
+            </h1>
             <Form className="search-form" inline onSubmit={this.props.search}>
               <FormGroup className="col-md-9">
                 <Input
@@ -48,7 +42,7 @@ class Search extends React.Component {
 
         <Row className="justify-content-md-center">
           <Col xl="6" md="8">
-            <a href="#">Recherche avancée</a>
+            <Link to="/search/advanced">Recherche avancée</Link>
           </Col>
         </Row>
       </div>

@@ -1,11 +1,11 @@
 load '.c42/recipes/http_auth.rb'
 
-set :stages, %w[production preprod]
+set :stages, %w[preprod]
 set :default_stage, 'preprod'
 
-server '185.31.40.169', :app, :web, :db, primary: true
+server '185.31.40.131', :app, :web, :db, primary: true
 
-set :application, 'itm-pwa'
+set :application, 'direccte'
 set :repository,  'git@github.com:commit42/direccte.git'
 
 set :scm, :git
@@ -21,24 +21,17 @@ set :use_sudo, false
 set :keep_releases, 3
 after 'deploy:restart', 'deploy:cleanup'
 
-set :app_path, '/build/'
+set :app_path, '/client/build/'
 
 task :preprod do
-  # set :deploy_to, '/home/livraiso/deployment/pwa-preprod'
-  # set :branch, 'develop'
-  # set :user, 'livraiso'
-  # set :webhost, 'https://app.wip.livraisons.pro'
+  set :deploy_to, '/home/commit42/direccte'
+  set :branch, 'develop'
+  set :user, 'commit42'
+  set :webhost, 'https://direccte.commit42.fr'
 
-  # set :http_auth_users, [%w[demo itm2018]]
-  # set :http_auth_path, app_path
-  # after 'deploy:finalize_update', 'http_auth:protect'
-end
-
-task :production do
-  # raise 'STOP'
-  # set :deploy_to, "/home/livraiso/deployment/pwa-prod"
-  # set :branch, "master"
-  # set :webhost, "https://app.livraisons.pro"
+  set :http_auth_users, [%w[demo direccte2018]]
+  set :http_auth_path, app_path
+  after 'deploy:finalize_update', 'http_auth:protect'
 end
 
 # see https://github.com/capistrano/capistrano/blob/master/lib/capistrano/ext/multistage.rb#L22

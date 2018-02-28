@@ -8,11 +8,9 @@ var storage = multer.diskStorage({
     cb(null, "./public/uploads");
   },
   filename: function(req, file, cb) {
-    console.log(file);
     const extension = path.extname(file.originalname);
     const baseName = path.basename(file.originalname, extension);
     const fileName = baseName + "-" + Date.now() + extension;
-    console.log(fileName);
     cb(null, fileName);
   }
 });
@@ -20,8 +18,6 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.post("/upload", upload.any(), function(req, res) {
-  console.log(req);
-  console.log("/upload");
   res.send("Uploaded ! ");
 });
 

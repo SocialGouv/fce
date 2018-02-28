@@ -19,8 +19,6 @@ module.exports = {
     umdNamedDefine: true
   },
 
-  mode: "development",
-
   resolve: {
     extensions: [".js"]
   },

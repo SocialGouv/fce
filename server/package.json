@@ -7,12 +7,15 @@
   "scripts": {
     "start": "node build/server.js",
     "watch": "webpack --watch & nodemon",
-    "nodemon": "nodemon build/server.js"
+    "nodemon": "nodemon build/server.js",
+    "build": "NODE_ENV=production webpack",
+    "postbuild": "chown -R --reference=package.json ."
   },
   "dependencies": {
     "body-parser": "^1.18.2",
     "config": "^1.30.0",
     "express": "^4.16.2",
+    "frentreprise": "./lib/frentreprise",
     "mongoose": "^5.0.6",
     "xlsx": "^0.12.1"
   },

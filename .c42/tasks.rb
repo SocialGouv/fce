@@ -46,6 +46,12 @@ end
     end
 end
 
+desc 'build', "Build a release"
+task 'build' do
+    invoke 'server:yarn', ['build']
+    invoke 'front:yarn', ['build']
+end
+
 desc 'docker:install', 'Installe le docker-compose.yml'
 task 'docker:install' do
   if File.exist?('.c42/docker-compose.yml') && File.exist?('docker-compose.yml')

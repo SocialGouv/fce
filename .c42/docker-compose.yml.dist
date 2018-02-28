@@ -26,7 +26,7 @@ services:
       - $SSH_AUTH_SOCK:/ssh-agent
     environment:
       VIRTUAL_HOST: srv.direccte.test
-      NODEMON: 1
+      WATCH: 1
     links:
       - mongo
 
@@ -44,15 +44,6 @@ services:
       - ./server/lib/frentreprise:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
-
-  # builder:
-  #   build: .c42/docker/builder
-  #   depends_on:
-  #     - front
-  #   volumes:
-  #     - ./client/:/project
-  #     - .npm:/.npm
-  #     - $SSH_AUTH_SOCK:/ssh-agent
 
 volumes:
   db-data:

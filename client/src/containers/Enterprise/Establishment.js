@@ -2,9 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Establishment as EstablishmentView } from "../../components/Enterprise";
-import {
-  loadEstablishment
-} from "../../services/Store/actions";
+import { loadEstablishment } from "../../services/Store/actions";
 
 class Establishment extends React.Component {
   constructor(props) {
@@ -54,7 +52,7 @@ class Establishment extends React.Component {
         this.loadEstablishmentByStore(siret);
       } else {
         this.setState({
-          redirectTo: '/404'
+          redirectTo: "/404"
         });
       }
     });
@@ -80,16 +78,13 @@ class Establishment extends React.Component {
     if (this.state.redirectTo) {
       return <Redirect push to={this.state.redirectTo} />;
     }
-    const enterprise = { test: true };
-    const headOffice = { test: true };
-
-    const establishments = [{ test: true }, { test: true }];
 
     return (
       <EstablishmentView
-        enterprise={enterprise}
-        headOffice={headOffice}
-        establishments={establishments}
+        enterprise={this.state.enterprise}
+        headOffice={this.state.headOffice}
+        establishment={this.state.establishment}
+        establishments={this.state.establishments}
         isLoaded={this.state.isLoaded}
       />
     );

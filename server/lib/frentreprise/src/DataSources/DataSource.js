@@ -1,4 +1,4 @@
-import NotImplementedError from "~/Errors/NotImplementedError";
+import NotImplementedError from "../Errors/NotImplementedError";
 
 export default class DataSource {
   async getSIRET() {

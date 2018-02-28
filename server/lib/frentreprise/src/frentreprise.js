@@ -1,9 +1,9 @@
-import InvalidIdentifierError from "~/Errors/InvalidIdentifierError";
-import * as Validator from "~/Utils/Validator";
-import ApiGouv from "~/DataSources/ApiGouv";
+import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
+import * as Validator from "./Utils/Validator";
+import ApiGouv from "./DataSources/ApiGouv";
 
-import Entreprise from "~/Entreprise";
-import Etablissement from "~/Entreprise";
+import Entreprise from "./Entreprise";
+import Etablissement from "./Entreprise";
 
 class frentreprise {
   constructor() {
@@ -91,3 +91,5 @@ class frentreprise {
 module.exports = new frentreprise();
 module.exports.Entreprise = Entreprise;
 module.exports.Etablissement = Etablissement;
+module.exports.isSIRET = Validator.validateSIRET;
+module.exports.isSIREN = Validator.validateSIREN;

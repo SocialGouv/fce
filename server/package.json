@@ -5,8 +5,7 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "nodemon": "nodemon server.js",
-        "test": "./node_modules/.bin/jest src"
+        "nodemon": "nodemon server.js"
     },
     "dependencies": {
         "babel": "^6.23.0",
@@ -19,6 +18,7 @@
         "babel-preset-env": "^1.6.1",
         "babel-register": "^6.26.0",
         "body-parser": "^1.18.2",
+        "config": "^1.30.0",
         "express": "^4.16.2",
         "frentreprise": "./lib/frentreprise",
         "mongoose": "^5.0.6",

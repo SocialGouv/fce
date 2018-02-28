@@ -1,15 +1,21 @@
-var frentreprise = require("frentreprise");
 var express = require("express");
-var bodyParser = require("body-parser");
 var app = express();
+var frentreprise = require("frentreprise");
+var bodyParser = require("body-parser");
+var mongoose = require("mongoose");
+var config = require("config");
+
+//DB setup
+var dbConfig = config.get("mongo.host") + "/" + config.get("mongo.db");
+mongoose.connect("mongodb://" + dbConfig);
 
 var DireccteEntreprise = require("./models/Entreprise");
 var DireccteEtablissement = require("./models/Etablissement");
 
 frentreprise.EntrepriseModel = DireccteEntreprise;
 frentreprise.EtablissementModel = DireccteEtablissement;
-frentreprise.getDataSource("ApiGouv").source.token =
-  "Wla5Sr8oyktnldY0QK67nlsjgIHqFKul";
+
+frentreprise.getDataSource("ApiGouv").source.token = config.get("APIGouv.token");
 
 app.get("/", function(req, res) {
   res.send("Hello World");

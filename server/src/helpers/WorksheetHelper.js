@@ -1,7 +1,7 @@
-class WorkSheetHelper {
-
-  constructor(workSheet) {
+class WorksheetHelper {
+  constructor(workSheet, params) {
     this.workSheet = workSheet;
+    this.params = params;
   }
 
   getReferences() {
@@ -33,14 +33,31 @@ class WorkSheetHelper {
     return references;
   }
 
+  generateAlphabet(indexNumber) {
+    const alphabetLength = indexNumber || 100;
+    const alphabetBase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let alphabet = [];
+    for (let i = 0; i < alphabetLength; i++) {
+      let letter = alphabetBase[i];
+      if (i > 25) {
+        const q = parseInt(i / 26, 10);
+        const r = i % 26;
+        letter = alphabetBase[q - 1] + alphabetBase[r];
+      }
+      alphabet.push(letter);
+    }
+    return alphabet;
+  }
+
   getAlphabeticalColumnNames() {
     const refs = this.getReferences(this.workSheet);
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const alphabet = this.generateAlphabet();
 
     const startIndex = alphabet.indexOf(refs.start.column);
     const endIndex = alphabet.indexOf(refs.end.column);
 
     const columnNames = alphabet.slice(startIndex, endIndex + 1);
+
     return columnNames;
   }
 
@@ -53,12 +70,17 @@ class WorkSheetHelper {
 
     for (let i = 0; i < alphaColumnNames.length; i++) {
       const columnRef = alphaColumnNames[i];
-      columnKeys.push(this.workSheet[columnRef + "" + startRow].v);
+      const cell = this.workSheet[columnRef + "" + startRow];
+      let columnKey = cell ? cell.v : null;
+      if (columnKey && this.params && this.params.keysToLowerCase) {
+        columnKey = columnKey.toLowerCase();
+      }
+      columnKeys.push(columnKey);
     }
     return columnKeys;
   }
 
-  getRowData(rowNumber) {
+  getRowData(rowNumber, columnsToKeep) {
     const columnNames = this.getAlphabeticalColumnNames(this.workSheet);
     const columnKeys = this.getColumnKeys(this.workSheet);
     let item = {};
@@ -67,28 +89,40 @@ class WorkSheetHelper {
       const cellRef = columnNames[i] + "" + rowNumber;
       const cell = this.workSheet[cellRef];
       if (cell) {
-        const attributeKey = columnKeys[i];
-        item[attributeKey] = cell.w;
+        let attributeKey = null;
+        if (!columnsToKeep) {
+          attributeKey = columnKeys[i];
+        } else {
+          if (!columnsToKeep[columnNames[i]]) {
+            continue;
+          }
+
+          attributeKey = columnsToKeep[columnNames[i]];
+        }
+        item[attributeKey] = cell.w || cell.v;
       }
     }
 
     return item;
   }
 
-  getRowsData() {
+  getRowsData(columnsToKeep) {
     const refs = this.getReferences(this.workSheet);
 
     let getRowsData = [];
     const startRowNumber = parseInt(refs.start.row);
     const endRowNumber = parseInt(refs.end.row);
-    for (let rowNumber = startRowNumber + 1; rowNumber <= endRowNumber; rowNumber++) {
-
-      const item = this.getRowData(rowNumber);
+    for (
+      let rowNumber = startRowNumber + 1;
+      rowNumber <= endRowNumber;
+      rowNumber++
+    ) {
+      const item = this.getRowData(rowNumber, columnsToKeep);
       getRowsData.push(item);
     }
 
-    return getRowsData
+    return getRowsData;
   }
 }
 
-module.exports = WorkSheetHelper;
+module.exports = WorksheetHelper;

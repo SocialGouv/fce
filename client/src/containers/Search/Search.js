@@ -28,11 +28,18 @@ class Search extends Component {
     this.setState({ hasError: false, loading: true });
 
     this.props.search(this.state.term).then(response => {
+      const { query, results } = response.data;
+      let redirectTo = "/search/results";
+
+      if (query.isSIRET && results) {
+        redirectTo = `/establishment/${query.q}`;
+      } else if (query.isSIREN && results) {
+        redirectTo = `/enterprise/${query.q}`;
+      }
       this.setState({
         hasError: false,
         loading: false,
-        redirectTo:
-          response.data.results.length === 1 ? "/enterprise" : "/search/results"
+        redirectTo
       });
     });
   };

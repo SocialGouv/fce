@@ -5,6 +5,8 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var config = require("config");
 
+var multer = require('multer');
+
 //DB setup
 var dbConfig = config.get("mongo.host") + "/" + config.get("mongo.db");
 mongoose.connect("mongodb://" + dbConfig);
@@ -32,6 +34,24 @@ app.get("/search", function(req, res) {
     }
   );
 });
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public')
+  },
+  filename: function (req, file, cb) {
+    const fileName = file.fieldname + '-' + Date.now();
+    console.log(fileName);
+    cb(null, fileName);
+  }
+})
+
+var upload = multer({ storage: storage })
+
+app.post('/upload',   upload.any(), function(req, res) {
+  console.log("/upload");
+  res.send("Uploaded ! ");
+})
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies

@@ -7,6 +7,8 @@ const fs = require("fs-extra");
 const buildDir = path.join(__dirname, "build");
 const buildFilename = "server.js";
 
+const PRODUCTION = process.env.NODE_ENV === "production";
+
 module.exports = {
   target: "node",
 
@@ -29,9 +31,11 @@ module.exports = {
     extensions: [".js"]
   },
 
+  mode: PRODUCTION ? "production" : "development",
+
   plugins: [
     new webpack.DefinePlugin({
-      __DIST: true
+      __DIST: JSON.stringify(PRODUCTION)
     }),
     new PostCompile(() => {
       ["config", "lib"].forEach(dir => {

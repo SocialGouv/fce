@@ -2,6 +2,8 @@ var path = require("path");
 var webpack = require("webpack");
 var nodeExternals = require("webpack-node-externals");
 
+const PRODUCTION = process.env.NODE_ENV === "production";
+
 module.exports = {
   target: "node",
 
@@ -23,9 +25,11 @@ module.exports = {
     extensions: [".js"]
   },
 
+  mode: PRODUCTION ? "production" : "development",
+
   plugins: [
     new webpack.DefinePlugin({
-      __DIST: true
+      __DIST: PRODUCTION
     })
   ],
 

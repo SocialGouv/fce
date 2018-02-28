@@ -6,9 +6,9 @@
   "private": true,
   "scripts": {
     "start": "node build/server.js",
-    "watch": "webpack --watch & nodemon",
+    "watch": "webpack --color --watch & nodemon",
     "nodemon": "nodemon build/server.js",
-    "build": "NODE_ENV=production webpack",
+    "build": "NODE_ENV=production webpack --color",
     "postbuild": "chown -R --reference=package.json ."
   },
   "dependencies": {

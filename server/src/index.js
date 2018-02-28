@@ -1,5 +1,7 @@
 var path = require("path");
-var frentreprise = require("../lib/frentreprise/src/frentreprise");
+var frentreprise = __DIST
+  ? require("frentreprise")
+  : require("../lib/frentreprise/src/frentreprise");
 var express = require("express");
 var app = express();
 var frentreprise = require("frentreprise");

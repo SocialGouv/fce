@@ -40,7 +40,7 @@ class Establishment extends React.Component {
           <Col className="main" md="7">
             <h2 className="subtitle">Fiche Établissement</h2>
 
-            <h1 className="title h1">
+            <h1 className="title">
               <Value
                 value={establishment.enseigne}
                 empty={enterprise.raison_sociale}

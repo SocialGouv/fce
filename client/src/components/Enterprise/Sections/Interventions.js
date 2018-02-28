@@ -1,4 +1,5 @@
 import React from "react";
+import Value from "../../../elements/Value";
 
 class Interventions extends React.Component {
   constructor(props) {
@@ -13,6 +14,8 @@ class Interventions extends React.Component {
   };
 
   render() {
+    const { establishment } = this.props;
+
     return (
       <section id="interventions" className="enterprise-section">
         <h1 className="title h4">Interventions publiques</h1>
@@ -22,10 +25,14 @@ class Interventions extends React.Component {
 
           <dl className="dl row">
             <dt className="dt col-md-4">ETI / Pépite</dt>
-            <dd className="dd col-md-8">[ETI / Pépite]</dd>
+            <dd className="dd col-md-8">
+              <Value value={establishment.eti_pepite} empty="-" />
+            </dd>
 
             <dt className="dt col-md-4">Filière stratégique</dt>
-            <dd className="dd definition col-md-8">[Filière stratégique]</dd>
+            <dd className="dd definition col-md-8">
+              <Value value={establishment.filiere_strategique} empty="-" />
+            </dd>
           </dl>
         </section>
 
@@ -37,7 +44,10 @@ class Interventions extends React.Component {
               Structure de l'insertion par l'activité économique
             </dt>
             <dd className="dd col-md-8">
-              [Structure de l'insertion par l'activité économique]
+              <Value
+                value={establishment.structure_insertion_activite_economique}
+                empty="-"
+              />
             </dd>
           </dl>
         </section>

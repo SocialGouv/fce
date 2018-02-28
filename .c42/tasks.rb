@@ -48,8 +48,6 @@ end
 
 desc 'build', "Build a release"
 task 'build' do
-    invoke 'frentreprise:yarn:build', []
-    invoke 'server:yarn' ['upgrade', 'frentreprise']
     invoke 'server:yarn', ['build']
     invoke 'front:yarn', ['build']
 end

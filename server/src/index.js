@@ -1,8 +1,5 @@
-var debug = true;
 var path = require("path");
-var frentreprise = debug
-  ? require("../lib/frentreprise/src/frentreprise")
-  : require("frentreprise");
+var frentreprise = require("../lib/frentreprise/src/frentreprise");
 var express = require("express");
 var app = express();
 var frentreprise = require("frentreprise");

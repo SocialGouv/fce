@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import SearchView from "../../components/Search";
-import { search } from "../../services/Store/actions";
+import { search, setCurrentEnterprise } from "../../services/Store/actions";
 
 class Search extends Component {
   constructor(props) {
@@ -28,11 +28,20 @@ class Search extends Component {
     this.setState({ hasError: false, loading: true });
 
     this.props.search(this.state.term).then(response => {
+      const { query, results } = response.data;
+      let redirectTo = "/search/results";
+
+      if (query.isSIRET && results) {
+        redirectTo = `/establishment/${query.q}`;
+        this.props.setCurrentEnterprise(results[0]);
+      } else if (query.isSIREN && results) {
+        redirectTo = `/enterprise/${query.q}`;
+        this.props.setCurrentEnterprise(results[0]);
+      }
       this.setState({
         hasError: false,
         loading: false,
-        redirectTo:
-          response.data.results.length === 1 ? "/enterprise" : "/search/results"
+        redirectTo
       });
     });
   };
@@ -61,6 +70,9 @@ const mapDispatchToProps = dispatch => {
   return {
     search: term => {
       return dispatch(search(term));
+    },
+    setCurrentEnterprise: enterprise => {
+      return dispatch(setCurrentEnterprise(enterprise));
     }
   };
 };

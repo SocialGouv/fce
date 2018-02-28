@@ -13,8 +13,8 @@ import Login from "../../containers/Login";
 import Search from "../../containers/Search";
 import SearchResults from "../../containers/SearchResults";
 import AdvancedSearch from "../../containers/AdvancedSearch";
-import { Enterprise } from "../../containers/Enterprise";
-import { Establishment } from "../../containers/Enterprise";
+import { Enterprise, Establishment } from "../../containers/Enterprise";
+import { Error404 } from "../../components/Errors";
 
 let { store, persistor } = configureStore();
 
@@ -52,6 +52,7 @@ class App extends React.Component {
                     component={Establishment}
                   />
                   <Route exact path="/login" render={() => <Login />} />
+                  <Route exact path="/404" render={() => <Error404 />} />
                   <Redirect to="/login" />
                 </Switch>
               </Container>

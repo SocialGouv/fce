@@ -1,8 +1,10 @@
 import React from "react";
+import withLoading from "../../services/Loading";
 import "./enterprise.css";
 import { Row, Col, Button } from "reactstrap";
 import QuickAccess from "./QuickAccess";
 import Establishments from "./Establishments";
+import Value from "../../elements/Value";
 import {
   EstablishmentActivity,
   EstablishmentIdentity,
@@ -27,6 +29,8 @@ class Establishment extends React.Component {
   };
 
   render() {
+    const { establishment, enterprise } = this.props;
+
     return (
       <section className="app-enterprise">
         <Row>
@@ -34,7 +38,14 @@ class Establishment extends React.Component {
             <QuickAccess sections={this.getSections()} />
           </Col>
           <Col className="main" md="7">
-            <h1 className="title">Fiche Établissement</h1>
+            <h2 className="subtitle">Fiche Établissement</h2>
+
+            <h1 className="title h1">
+              <Value
+                value={establishment.enseigne}
+                empty={enterprise.raison_sociale}
+              />
+            </h1>
 
             <div className="task-bar d-print-none">
               <Button color="primary" onClick={() => window.print()}>
@@ -42,11 +53,28 @@ class Establishment extends React.Component {
               </Button>
             </div>
 
-            <EstablishmentIdentity className="bg-info" />
-            <EstablishmentActivity />
-            <Finances />
-            <Interventions />
-            <Direccte />
+            <EstablishmentIdentity
+              establishment={this.props.establishment}
+              enterprise={this.props.enterprise}
+              headOffice={this.props.headOffice}
+              className="bg-info"
+            />
+            <EstablishmentActivity
+              establishment={this.props.establishment}
+              enterprise={this.props.enterprise}
+            />
+            <Finances
+              establishment={this.props.establishment}
+              enterprise={this.props.enterprise}
+            />
+            <Interventions
+              establishment={this.props.establishment}
+              enterprise={this.props.enterprise}
+            />
+            <Direccte
+              establishment={this.props.establishment}
+              enterprise={this.props.enterprise}
+            />
           </Col>
           <Col className="aside-box d-print-none" md="3">
             <Establishments
@@ -61,4 +89,4 @@ class Establishment extends React.Component {
   }
 }
 
-export default Establishment;
+export default withLoading(Establishment);

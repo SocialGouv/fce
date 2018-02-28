@@ -1,4 +1,5 @@
 import React from "react";
+import withLoading from "../../services/Loading";
 import "./enterprise.css";
 import { Row, Col, Button } from "reactstrap";
 import QuickAccess from "./QuickAccess";
@@ -47,4 +48,4 @@ class Enterprise extends React.Component {
   }
 }
 
-export default Enterprise;
+export default withLoading(Enterprise);

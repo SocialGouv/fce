@@ -13,7 +13,7 @@ import Login from "../../containers/Login";
 import Search from "../../containers/Search";
 import SearchResults from "../../containers/SearchResults";
 import AdvancedSearch from "../../containers/AdvancedSearch";
-import { Enterprise, Establishment } from "../../containers/Enterprise";
+import Enterprise from "../../containers/Enterprise";
 import { Error404 } from "../../components/Errors";
 
 let { store, persistor } = configureStore();
@@ -49,11 +49,11 @@ class App extends React.Component {
                   <PrivateRoute
                     exact
                     path="/establishment/:siret"
-                    component={Establishment}
+                    component={Enterprise}
                   />
                   <Route exact path="/login" render={() => <Login />} />
                   <Route exact path="/404" render={() => <Error404 />} />
-                  <Redirect to="/login" />
+                  <Redirect to="/404" />
                 </Switch>
               </Container>
             </ScrollToTop>

@@ -1,13 +1,17 @@
+var path = require("path");
+var frentreprise = require("../lib/frentreprise/src/frentreprise");
 var express = require("express");
 var app = express();
 var frentreprise = require("frentreprise");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var config = require("config");
+var apiRouter = require("./api");
 
 //DB setup
-var dbConfig = config.get("mongo.host") + "/" + config.get("mongo.db");
-mongoose.connect("mongodb://" + dbConfig);
+if (config.has("mongo")) {
+  mongoose.connect(config.get("mongodb"));
+}
 
 var DireccteEntreprise = require("./models/Entreprise");
 var DireccteEtablissement = require("./models/Etablissement");
@@ -15,27 +19,21 @@ var DireccteEtablissement = require("./models/Etablissement");
 frentreprise.EntrepriseModel = DireccteEntreprise;
 frentreprise.EtablissementModel = DireccteEtablissement;
 
-frentreprise.getDataSource("ApiGouv").source.token = config.get("APIGouv.token");
+frentreprise.getDataSource("ApiGouv").source.token = config.get(
+  "APIGouv.token"
+);
 
-app.get("/", function(req, res) {
-  res.send("Hello World");
-});
+console.log(__dirname);
+const htdocs_path = path.resolve(__dirname, "./htdocs");
+console.log(`Serving files from: ${htdocs_path}`);
+app.use(express.static(htdocs_path));
 
-app.get("/search", function(req, res) {
-  frentreprise.getEntreprise(req.query["q"]).then(
-    ent => {
-      res.send([ent.export()]);
-    },
-    err => {
-      console.error(err);
-      res.send(err);
-    }
-  );
-});
+app.use("/api", apiRouter);
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-app.listen(80, () => {
-  console.log("Ready.");
+const PORT = 80;
+app.listen(PORT, () => {
+  console.log(`Listening on port: ${PORT}`);
 });

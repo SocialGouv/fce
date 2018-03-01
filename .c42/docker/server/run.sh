@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ -z "${NODEMON}" ]; then
-    npm run nodemon
-else
+if [ -z "${WATCH}" ]; then
     npm run start
+else
+    npm run watch
 fi

@@ -1,8 +1,12 @@
-export function copyKeys(source, keys) {
+export function copyKeys(source, keys, defaultValue) {
   const dest = {};
 
   keys.forEach(key => {
-    dest[key] = source[key];
+    const value =
+      typeof source[key] === "undefined" ? defaultValue : source[key];
+    if (typeof value !== "undefined") {
+      dest[key] = value;
+    }
   });
 
   return dest;

@@ -26,6 +26,16 @@ frentreprise.getDataSource("ApiGouv").source.token = config.get(
 console.log(__dirname);
 const htdocs_path = path.resolve(__dirname, "./htdocs");
 console.log(`Serving files from: ${htdocs_path}`);
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 app.use(express.static(htdocs_path));
 
 app.use("/api", apiRouter);

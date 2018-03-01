@@ -53,7 +53,9 @@ app.use(express.static(htdocs_path));
 app.use("/api", apiRouter);
 
 const port = (config.has("port") && +config.get("port")) || 80;
-const host = (config.has("host") && config.get("host").length > 0) || undefined;
+const host =
+  (config.has("host") && config.get("host").length > 0 && config.get("host")) ||
+  undefined;
 
 app.listen(
   {

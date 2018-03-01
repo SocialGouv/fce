@@ -4,6 +4,8 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const PoleCIngestor = require("../dataIngestors/interactions/PoleCIngestor");
+const PoleTIngestor = require("../dataIngestors/interactions/PoleTIngestor");
+const Pole3EIngestor = require("../dataIngestors/interactions/Pole3EIngestor");
 /*
 WikiT.xls
 EOS.xls
@@ -31,20 +33,57 @@ const storage = multer.diskStorage({
   }
 });
 
+const removeOldFiles = (fieldName, newFileName) => {
+  fs.readdirSync(destinationFolder).forEach(folderFileName => {
+    let regex = new RegExp(fieldName, "i");
+    let match = folderFile.match(regex);
+
+    if (match && folderFileName != newFileName) {
+      fs.unlinkSync(destinationFolder + "/" + folderFile);
+    }
+  });
+  return;
+};
+
 const upload = multer({ storage: storage });
+
+const filesOptions = {
+  sora: {
+    fileName: "sora",
+    sheetName: "v1",
+    ingestorClass: PoleCIngestor
+  },
+  wikit: {
+    fileName: "wikit",
+    sheetName: "wikit",
+    ingestorClass: PoleTIngestor
+  },
+  eos: {
+    fileName: "eos",
+    sheetName: "Sheet1",
+    ingestorClass: Pole3EIngestor
+  }
+};
 
 router.post("/upload", upload.any(), function(req, res) {
   req.files.map(file => {
-    console.log(file);
-    console.log(file.fieldname);
-    if (file.fieldname === "sora") {
+    const fieldName = file.fieldname;
+
+    const keys = Object.keys(filesOptions);
+    const index = keys.indexOf(fieldName);
+    if (index > -1) {
+      const fileOptions = filesOptions[fieldName];
+
       const filePath = file.path;
-      const sheetName = "v1";
-      const ingestor = new PoleCIngestor(filePath, sheetName);
+      const sheetName = fileOptions.sheetName;
+      const ingestor = new fileOptions.ingestorClass(filePath, sheetName);
       ingestor
-        .save()
+        .reset()
         .then(data => {
-          console.log(data);
+          return ingestor.save();
+        })
+        .then(data => {
+          removeOldFiles(fieldName, file.filename);
           res.send("Uploaded and saved ! ");
         })
         .catch(console.error);

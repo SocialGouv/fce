@@ -25,6 +25,12 @@ class Ingestor {
 
     return Promise.all(promises);
   }
+
+  reset() {
+    throw new NotImplementedError(
+      "You must implement getDate method in child."
+    );
+  }
 }
 
 module.exports = Ingestor;

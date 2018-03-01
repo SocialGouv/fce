@@ -52,8 +52,16 @@ app.use(express.static(htdocs_path));
 
 app.use("/api", apiRouter);
 
-const PORT = 80;
-app.listen(PORT, () => {
-  console.log(`Serving files from: ${htdocs_path}`);
-  console.log(`Listening on port: ${PORT}`);
-});
+const port = (config.has("port") && +config.get("port")) || 80;
+const host = (config.has("host") && config.get("host").length > 0) || undefined;
+
+app.listen(
+  {
+    host,
+    port
+  },
+  () => {
+    console.log(`Serving files from: ${htdocs_path}`);
+    console.log(`Listening on port: ${port}`);
+  }
+);

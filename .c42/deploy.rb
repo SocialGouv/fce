@@ -13,7 +13,7 @@ set :git_enable_submodules, 1
 set :deploy_via, :copy
 set :copy_cache, true
 set :copy_exclude, '.git/*'
-set :build_script, 'c42 docker:install && c42 front:npm:install && c42 front:npm:build'
+set :build_script, 'c42 build'
 set :copy_compression, :bz2
 set :ssh_options, forward_agent: true
 
@@ -21,7 +21,7 @@ set :use_sudo, false
 set :keep_releases, 3
 after 'deploy:restart', 'deploy:cleanup'
 
-set :app_path, '/client/build/'
+set :app_path, '/dist/htdocs/'
 
 task :preprod do
   set :deploy_to, '/home/commit42/direccte'
@@ -32,6 +32,14 @@ task :preprod do
   set :http_auth_users, [%w[demo direccte2018]]
   set :http_auth_path, app_path
   after 'deploy:finalize_update', 'http_auth:protect'
+end
+
+after 'deploy:finalize_update' do
+  run "cd #{latest_release} && npm install"
+end
+
+after 'deploy:restart' do
+  run "ps -ef | grep node | grep #{deploy_to} | grep -v grep | awk '{print $2}' | xargs kill -9"
 end
 
 # see https://github.com/capistrano/capistrano/blob/master/lib/capistrano/ext/multistage.rb#L22
@@ -57,6 +65,6 @@ namespace :check do
   before 'deploy:cold', 'check:revision'
 end
 
-after :deploy do
+after 'deploy' do
   run "echo #{latest_revision} > #{File.join(latest_release, app_path, 'rev.txt')}"
 end

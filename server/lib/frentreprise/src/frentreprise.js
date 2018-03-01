@@ -31,27 +31,35 @@ class frentreprise {
 
     const dataSources = this.getDataSources();
 
-    let etData = {};
+    let etData = { _dataSources: {} };
 
     for (let i = 0; i < this.dataSources.length; i++) {
       const dataSource = this.dataSources[i].source;
+
       etData = {
         ...etData,
         ...(await dataSource.getSIREN(SIREN))
       };
+
+      etData._dataSources[this.dataSources[i].name] = true;
     }
 
     const entreprise = new this.EntrepriseModel(etData);
 
-    if (gotSIRET) {
-      let etsData = {};
+    const SIRET = gotSIRET ? SiretOrSiren : "" + entreprise.siret_siege_social;
+
+    if (Validator.validateSIRET(SIRET)) {
+      let etsData = { _dataSources: {} };
 
       for (let i = 0; i < this.dataSources.length; i++) {
         const dataSource = this.dataSources[i].source;
+
         etsData = {
           ...etsData,
-          ...(await dataSource.getSIRET(SiretOrSiren))
+          ...(await dataSource.getSIRET(SIRET))
         };
+
+        etsData._dataSources[this.dataSources[i].name] = true;
       }
 
       entreprise.importEtablissement(new this.EtablissementModel(etsData));

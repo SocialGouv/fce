@@ -1,5 +1,7 @@
 import { copyKeys } from "../utils";
-import { Etablissement } from "frentreprise";
+const { Etablissement } = require(__DIST
+  ? "frentreprise"
+  : "../../lib/frentreprise/src/frentreprise");
 
 class DireccteEtablissement extends Etablissement {
   export(keys) {
@@ -11,6 +13,7 @@ class DireccteEtablissement extends Etablissement {
         "enseigne",
         "categorie_etablissement",
         "adresse",
+        "adresse_components",
         "departement",
         "region",
         "date_creation",
@@ -42,7 +45,8 @@ class DireccteEtablissement extends Etablissement {
         "mutations économiques",
         "activite_partielle_24_derniers_mois",
         "pse_en_projet_ou_en_cours",
-        "direccte"
+        "direccte",
+        "_dataSources"
       ],
       null
     );

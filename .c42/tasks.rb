@@ -48,8 +48,28 @@ end
 
 desc 'build', "Build a release"
 task 'build' do
-    invoke 'server:yarn', ['build']
-    invoke 'front:yarn', ['build']
+    if(File.directory?("dist"))
+        info("Removing old build...")
+        run "rm -rf dist/"
+    end
+
+    info("Installing dependencies...")
+    run 'c42 frentreprise:yarn'
+    run 'c42 server:yarn'
+    run 'c42 front:yarn'
+
+    info("Building...")
+    run 'c42 frentreprise:yarn build'
+    run 'c42 server:yarn upgrade frentreprise'
+    run 'c42 server:yarn build'
+    run 'c42 front:yarn build'
+    
+    info("Packaging...")
+    directory "dist" # copy .c42/dist/ to dist/
+    directory "../server/build", "dist" # copy .c42/../server/build to dist/
+    directory "../client/build", "dist/htdocs" # copy .c42/../client/build to dist/htdocs
+
+    info("Done!")
 end
 
 desc 'docker:install', 'Installe le docker-compose.yml'

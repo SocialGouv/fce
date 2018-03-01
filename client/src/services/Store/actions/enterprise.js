@@ -1,4 +1,5 @@
 import * as types from "../constants/ActionTypes";
+import Http from "../../Http";
 
 export const setCurrentEnterprise = enterprise => (dispatch, getState) => {
   dispatch({
@@ -8,37 +9,27 @@ export const setCurrentEnterprise = enterprise => (dispatch, getState) => {
 };
 
 export const loadEstablishment = siret => (dispatch, getState) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      let response = {
-        data: {
-          query: { q: siret, isSIRET: true, isSIREN: false },
-          results: []
-        }
-      };
-      const enterprise = response.data.results.length
-        ? response.data.results[0]
-        : null;
-      dispatch(setCurrentEnterprise(enterprise));
-      resolve(response);
-    }, 500);
-  });
+  return dispatch(getEnterprise(siret))
 };
 
 export const loadEntreprise = siren => (dispatch, getState) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      let response = {
-        data: {
-          query: { q: siren, isSIRET: false, isSIREN: true },
-          results: []
-        }
-      };
+  return dispatch(getEnterprise(siren))
+};
+
+const getEnterprise = term => (dispatch, getState) => {
+  return Http.get("/search", {
+    params: {
+      q: term
+    }
+  })
+    .then(function(response) {
       const enterprise = response.data.results.length
         ? response.data.results[0]
         : null;
       dispatch(setCurrentEnterprise(enterprise));
-      resolve(response);
-    }, 500);
-  });
-};
+      return response;
+    })
+    .catch(function(error) {
+      return error;
+    });
+}

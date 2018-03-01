@@ -64,9 +64,8 @@ after 'deploy' do
   run "echo #{latest_revision} > #{File.join(latest_release, app_path, 'rev.txt')}"
 end
 
-task 'deploy:restart' do
+task 'restart' do
   run "ps -ef | grep node | grep #{deploy_to} | grep -v grep | awk '{print $2}' | xargs kill -9"
 end
-after 'deploy', 'deploy:restart'
-after 'deploy:restart', 'deploy:cleanup'
-  
+after 'deploy', 'restart'
+after 'restart', 'deploy:cleanup'

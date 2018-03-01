@@ -19,7 +19,7 @@ var apiRouter = require("./api");
 
 //DB setup
 if (config.has("mongo")) {
-  mongoose.connect(config.get("mongodb"));
+  mongoose.connect(config.get("mongo"));
 }
 
 const app = express();

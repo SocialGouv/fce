@@ -15,14 +15,14 @@ const etablissementSchema = new Schema({
   sigle: String,
   code_etat: String,
   libelle_etat: String,
-  date_de_l_etat: Date,
+  date_de_l_etat: String,
 
   code_naf2_10: String,
   code_naf2_38: String,
 
   code_activite: String, // code NAF
   libelle_activite: String,
-  date_debut_activite: Date,
+  date_debut_activite: String,
 
   code_qualite_siege: String,
   libelle_qualite_siege: String,
@@ -31,13 +31,13 @@ const etablissementSchema = new Schema({
   libelle_tranche_eff__insee: String,
   annee_tranche_eff_: String,
   dernier_eff__physique: String,
-  date_der_eff_physique: Date,
+  date_der_eff_physique: String,
   source_dernier_eff_phy: String,
   libelle_source_dernier_eff_phy: String,
 
   code_employeur: String,
-  date_employeur: Date,
-  date_de_creation: Date,
+  date_employeur: String,
+  date_de_creation: String,
   code_modalite_activ_: String,
   libelle_modalite_activ_: String,
   code_marchand: String,
@@ -66,6 +66,30 @@ etablissementSchema.statics.findBySIRET = function(siret, cb) {
 
 etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
   return this.find({ raison_sociale: new RegExp(raisonSociale, "i") }, cb);
+};
+
+/**
+ * @param {object} searchParams = {
+ raison_sociale,
+ code_activite,
+ libelle_commune,
+ code_postal,
+ code_departement
+}
+ */
+etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
+  const raisonSocialParam = searchParams && searchParams.raison_sociale
+    ? new RegExp(searchParams.raison_sociale, "i")
+    : undefined;
+
+  const params = raisonSocialParam ? {
+    ...searchParams,
+    raison_sociale: raisonSocialParam
+  } : searchParams;
+  // DELETE
+  // params.raison_sociale = searchParams && searchParams.raison_sociale && raisonSocialParam
+  console.log(params);
+  return this.find(params, cb);
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);

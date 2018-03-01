@@ -20,10 +20,13 @@ class InteractionsIngestor extends Ingestor {
     return rowsData;
   }
 
-  getInteractions(){
+  getInteractions() {
     return this.getData();
   }
 
+  reset() {
+    return this.Model.remove({ pole: this.pole });
+  }
 }
 
 module.exports = InteractionsIngestor;

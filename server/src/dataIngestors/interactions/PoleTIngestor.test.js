@@ -84,3 +84,46 @@ describe("save()", () => {
     TIMEOUT
   );
 });
+
+describe.only("reset()", () => {
+  beforeEach(() => {
+    return Interaction.remove({});
+  });
+
+  afterEach(() => {
+    return Interaction.remove({});
+  });
+
+  test(
+    "default",
+    () => {
+      const ingestor = new PoleTIngestor(filePath, sheetName);
+      return ingestor.reset().then(data => {
+        expect(data.ok).toBe(1);
+      });
+    },
+    TIMEOUT
+  );
+
+  test(
+    "save and reset",
+    () => {
+      const ingestor = new PoleTIngestor(filePath, sheetName);
+      return ingestor
+        .save()
+        .then(data => {
+          expect(data.length).toBe(19);
+
+          return ingestor.reset();
+        })
+        .then(data => {
+          expect(data.ok).toBe(1);
+          return ingestor.Model.find({ pole: ingestor.pole });
+        })
+        .then(data => {
+          expect(data.length).toBe(0);
+        });
+    },
+    TIMEOUT
+  );
+});

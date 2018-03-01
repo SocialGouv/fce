@@ -1,5 +1,8 @@
 import { copyKeys } from "../utils";
-import { Entreprise } from "frentreprise";
+
+const { Entreprise } = require(__DIST
+  ? "frentreprise"
+  : "../../lib/frentreprise/src/frentreprise");
 
 export default class DireccteEntreprise extends Entreprise {
   export() {
@@ -21,9 +24,8 @@ export default class DireccteEntreprise extends Entreprise {
         "tranche_effectif",
         "annee_tranche_effectif",
         "nombre_etablissements_actifs",
-        "attestation_fiscale_dgfip",
-        "attestation_sociale_acoss",
-        "mandataires_sociaux"
+        "mandataires_sociaux",
+        "_dataSources"
       ],
       null
     );

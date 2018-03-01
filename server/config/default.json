@@ -1,5 +1,6 @@
 {
   "APIGouv": {
     "token": "Wla5Sr8oyktnldY0QK67nlsjgIHqFKul"
-  }
+  },
+  "mongo": "mongodb://mongo/direccte_test"
 }

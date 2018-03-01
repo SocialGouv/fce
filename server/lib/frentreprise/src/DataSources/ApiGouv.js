@@ -11,6 +11,7 @@ const _getAPIParams = self => {
 };
 
 const _convertDate = Symbol("_convertDate");
+const _getCleanAddress = Symbol("_getCleanAddress");
 
 // GET /associations/:id
 // GET /documents_associations/:association_id
@@ -29,25 +30,95 @@ export default class ApiGouv extends DataSource {
   // GET /etablissements_legacy/:siret
   // GET /attestations_agefiph/:siret
   // GET /exercices/:siret
+  // ETABLISSEMENT
   async getSIRET(SIRET) {
-    const api_response = await this.axios.get(
-      `etablissements_legacy/${SIRET}`,
-      {
-        params: _getAPIParams(this)
-      }
-    );
+    let legacy = null;
 
-    return (
-      (api_response &&
-        typeof api_response === "object" &&
-        api_response.data &&
-        typeof api_response.data === "object" &&
-        api_response.data.etablissement) ||
-      {}
-    );
+    try {
+      legacy = await this.axios.get(`etablissements_legacy/${SIRET}`, {
+        params: _getAPIParams(this)
+      });
+    } catch (exception) {
+      console.log(exception);
+    }
+    const out = {};
+
+    if (
+      legacy &&
+      typeof legacy === "object" &&
+      legacy.data &&
+      typeof legacy.data === "object" &&
+      legacy.data.etablissement
+    ) {
+      const legacy_et = legacy.data.etablissement;
+      console.log(legacy_et);
+      [
+        "siret",
+        "siege_social",
+        "enseigne",
+        "nom_commercial",
+        "nom",
+        "prenom",
+        "siret_siege_social"
+      ].forEach(key => {
+        if (typeof legacy_et[key] === "boolean") out[key] = legacy_et[key];
+        else out[key] = legacy_et[key] || null;
+      });
+
+      if (
+        !legacy_et.etat_administratif ||
+        typeof legacy_et.etat_administratif !== "object"
+      ) {
+        legacy_et.etat_administratif = {};
+      }
+
+      out.etat_etablissement = {
+        label: legacy_et.etat_administratif_etablissement.value || "N/A",
+        date: this[_convertDate](
+          legacy_et.etat_administratif_etablissement.date_mise_a_jour
+        )
+      };
+    }
+
+    let etablissement = null;
+
+    try {
+      etablissement = await this.axios.get(`etablissements/${SIRET}`, {
+        params: _getAPIParams(this)
+      });
+    } catch (exception) {
+      console.log(exception);
+    }
+
+    if (
+      etablissement &&
+      typeof etablissement === "object" &&
+      etablissement.data &&
+      typeof etablissement.data === "object" &&
+      etablissement.data.etablissement
+    ) {
+      const et = etablissement.data.etablissement;
+      console.log(et);
+
+      [].forEach(key => {
+        out[key] = et[key];
+      });
+
+      out.date_creation = this[_convertDate](et.date_creation_etablissement);
+
+      if (et.adresse && typeof et.adresse === "object") {
+        out.adresse = this[_getCleanAddress](
+          et.adresse,
+          et.region_implantation
+        );
+        out.adresse_components;
+      }
+    }
+
+    return out;
   }
 
-  // GET /entreprises_legacy/:siren
+  // ENTREPRISE
   async getSIREN(SIREN) {
     let legacy = null;
 
@@ -69,9 +140,17 @@ export default class ApiGouv extends DataSource {
       legacy.data.entreprise
     ) {
       const legacy_ent = legacy.data.entreprise;
-
-      ["siret", "raison_sociale", "categorie_entreprise"].forEach(key => {
-        out[key] = legacy_ent[key];
+      [
+        "siren",
+        "raison_sociale",
+        "nombre_etablissements_actifs",
+        "nom_commercial",
+        "nom",
+        "prenom",
+        "siret_siege_social"
+      ].forEach(key => {
+        if (typeof legacy_ent[key] === "boolean") out[key] = legacy_ent[key];
+        else out[key] = legacy_ent[key] || null;
       });
 
       out.categorie_juridique = legacy_ent.forme_juridique;
@@ -113,6 +192,27 @@ export default class ApiGouv extends DataSource {
       ["categorie_entreprise"].forEach(key => {
         out[key] = ent[key];
       });
+
+      if (
+        ent.tranche_effectif_salarie_entreprise &&
+        typeof ent.tranche_effectif_salarie_entreprise === "object"
+      ) {
+        out.annee_tranche_effectif =
+          +ent.tranche_effectif_salarie_entreprise.date_reference || null;
+        out.tranche_effectif =
+          ent.tranche_effectif_salarie_entreprise.intitule || null;
+      }
+
+      out.mandataires_sociaux = [];
+      if (Array.isArray(ent.mandataires_sociaux)) {
+        ent.mandataires_sociaux.forEach(manso => {
+          out.mandataires_sociaux.push({
+            nom: manso.nom,
+            prenom: manso.prenom,
+            fonction: manso.fonction
+          });
+        });
+      }
     }
 
     return out;
@@ -120,6 +220,19 @@ export default class ApiGouv extends DataSource {
 
   [_convertDate](timestamp) {
     return (timestamp && new Date(timestamp * 1000)) || null;
+  }
+
+  [_getCleanAddress](ad, ri) {
+    return `
+    ${ad.numero_voie || ""} ${ad.type_voie || ""} ${ad.nom_voie || ""}
+    ${ad.complement_adresse || ""} ${ad.code_postal || ""}
+    ${ad.localite || ""}
+    ${(ri && ri.value) || ""}
+    `
+      .trim()
+      .split("\n")
+      .map(l => l.trim())
+      .join("\n");
   }
 
   async search() {

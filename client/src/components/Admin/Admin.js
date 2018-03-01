@@ -8,7 +8,8 @@ import {
   Input,
   Button,
   Alert,
-  Label
+  Label,
+  FormFeedback
 } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
@@ -30,20 +31,32 @@ class Admin extends React.Component {
                 ""
               )}
 
-              {this.props.success ? (
-                <Alert color="success">
-                  Les fichiers ont été importés avec succès
-                </Alert>
-              ) : (
-                ""
-              )}
-
               <FormGroup row>
                 <Label for="siene" md={4}>
                   Fichier base SIENE
                 </Label>
                 <Col md={8}>
-                  <Input type="file" name="file" id="siene" />
+                  <Input
+                    type="file"
+                    name="siene"
+                    id="siene"
+                    className="form-control"
+                    valid={
+                      this.props.importResponses &&
+                      this.props.importResponses.siene &&
+                      this.props.importResponses.siene.success
+                    }
+                    invalid={
+                      this.props.importResponses &&
+                      this.props.importResponses.siene &&
+                      !this.props.importResponses.siene.success
+                    }
+                    onChange={e => this.props.handleFileUpload(e)}
+                  />
+                  <FormFeedback valid>
+                    Les données ont été importées
+                  </FormFeedback>
+                  <FormFeedback>Echec de l'import des données</FormFeedback>
                 </Col>
               </FormGroup>
 
@@ -52,25 +65,85 @@ class Admin extends React.Component {
                   Fichier intéractions pole T (WIKIT)
                 </Label>
                 <Col md={8}>
-                  <Input type="file" name="file" id="wikit" />
+                  <Input
+                    type="file"
+                    name="wikit"
+                    id="wikit"
+                    className="form-control"
+                    valid={
+                      this.props.importResponses &&
+                      this.props.importResponses.wikit &&
+                      this.props.importResponses.wikit.success
+                    }
+                    invalid={
+                      this.props.importResponses &&
+                      this.props.importResponses.wikit &&
+                      !this.props.importResponses.wikit.success
+                    }
+                    onChange={e => this.props.handleFileUpload(e)}
+                  />
+                  <FormFeedback valid>
+                    Les données ont été importées
+                  </FormFeedback>
+                  <FormFeedback>Echec de l'import des données</FormFeedback>
                 </Col>
               </FormGroup>
 
               <FormGroup row>
-                <Label for="sorac" md={4}>
+                <Label for="sora" md={4}>
                   Fichier intéractions pole C (SORA)
                 </Label>
                 <Col md={8}>
-                  <Input type="file" name="file" id="sorac" />
+                  <Input
+                    type="file"
+                    name="sora"
+                    id="sora"
+                    className="form-control"
+                    valid={
+                      this.props.importResponses &&
+                      this.props.importResponses.sora &&
+                      this.props.importResponses.sora.success
+                    }
+                    invalid={
+                      this.props.importResponses &&
+                      this.props.importResponses.sora &&
+                      !this.props.importResponses.sora.success
+                    }
+                    onChange={e => this.props.handleFileUpload(e)}
+                  />
+                  <FormFeedback valid>
+                    Les données ont été importées
+                  </FormFeedback>
+                  <FormFeedback>Echec de l'import des données</FormFeedback>
                 </Col>
               </FormGroup>
 
               <FormGroup row>
-                <Label for="sora3e" md={4}>
-                  Fichier intéractions pole 3E (SORA)
+                <Label for="eos" md={4}>
+                  Fichier intéractions pole 3E (EOS)
                 </Label>
                 <Col md={8}>
-                  <Input type="file" name="file" id="sora3e" />
+                  <Input
+                    type="file"
+                    name="eos"
+                    id="eos"
+                    className="form-control"
+                    valid={
+                      this.props.importResponses &&
+                      this.props.importResponses.eos &&
+                      this.props.importResponses.eos.success
+                    }
+                    invalid={
+                      this.props.importResponses &&
+                      this.props.importResponses.eos &&
+                      !this.props.importResponses.eos.success
+                    }
+                    onChange={e => this.props.handleFileUpload(e)}
+                  />
+                  <FormFeedback valid>
+                    Les données ont été importées
+                  </FormFeedback>
+                  <FormFeedback>Echec de l'import des données</FormFeedback>
                 </Col>
               </FormGroup>
 

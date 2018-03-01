@@ -34,7 +34,7 @@ class Login extends React.Component {
                   id="password"
                   autoComplete="current-password"
                   required
-                  valid={this.props.hasError ? false : null}
+                  invalid={this.props.hasError}
                   onChange={evt => this.props.updateForm(evt)}
                 />
               </FormGroup>

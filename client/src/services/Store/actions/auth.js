@@ -1,6 +1,5 @@
 import * as types from "../constants/ActionTypes";
 import Http from "../../Http";
-import { setCurrentEnterprise } from "./enterprise";
 
 export const loginUser = password => (dispatch, getState) => {
   dispatch(logoutUser());

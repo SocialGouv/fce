@@ -19,8 +19,6 @@ set :ssh_options, forward_agent: true
 
 set :use_sudo, false
 set :keep_releases, 3
-after 'deploy', 'deploy:restart'
-after 'deploy:restart', 'deploy:cleanup'
 
 set :app_path, '/dist/htdocs/'
 
@@ -37,10 +35,6 @@ end
 
 after 'deploy:finalize_update' do
   run "cd #{latest_release}/dist && npm install"
-end
-
-after 'deploy:restart' do
-  run "ps -ef | grep node | grep #{deploy_to} | grep -v grep | awk '{print $2}' | xargs kill -9"
 end
 
 # see https://github.com/capistrano/capistrano/blob/master/lib/capistrano/ext/multistage.rb#L22
@@ -69,3 +63,10 @@ end
 after 'deploy' do
   run "echo #{latest_revision} > #{File.join(latest_release, app_path, 'rev.txt')}"
 end
+
+task 'deploy:restart' do
+  run "ps -ef | grep node | grep #{deploy_to} | grep -v grep | awk '{print $2}' | xargs kill -9"
+end
+after 'deploy', 'deploy:restart'
+after 'deploy:restart', 'deploy:cleanup'
+  

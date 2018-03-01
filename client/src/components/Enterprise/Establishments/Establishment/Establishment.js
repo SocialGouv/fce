@@ -16,7 +16,11 @@ class Establishment extends React.Component {
         <li>
           <Value value={establishment.etat_etablissement} empty="" /> -{" "}
           <Value value={establishment.departement} empty="" /> -{" "}
-          <Value value={establishment.adresse.localite} empty="" /> - Effectif :{" "}
+          <Value
+            value={establishment.adresse && establishment.adresse.localite}
+            empty=""
+          />{" "}
+          - Effectif :{" "}
           <Value value={establishment.dernier_effectif__physique} empty="-" />
         </li>
       </ul>

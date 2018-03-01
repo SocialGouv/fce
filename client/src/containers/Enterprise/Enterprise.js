@@ -111,7 +111,7 @@ class Enterprise extends React.Component {
 
     this.setState({
       enterprise,
-      headOffice,
+      headOffice: headOffice || {},
       establishment,
       establishments: enterprise.etablissements,
       isLoaded: true

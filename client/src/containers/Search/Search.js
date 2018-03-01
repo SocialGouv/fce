@@ -27,23 +27,34 @@ class Search extends Component {
     evt && evt.preventDefault();
     this.setState({ hasError: false, loading: true });
 
-    this.props.search(this.state.term).then(response => {
-      const { query, results } = response.data;
-      let redirectTo = "/search/results";
+    this.props
+      .search(this.state.term)
+      .then(response => {
+        const { query, results } = response.data;
+        let redirectTo = "/search/results";
 
-      if (query.isSIRET && results) {
-        redirectTo = `/establishment/${query.q}`;
-        this.props.setCurrentEnterprise(results[0]);
-      } else if (query.isSIREN && results) {
-        redirectTo = `/enterprise/${query.q}`;
-        this.props.setCurrentEnterprise(results[0]);
-      }
-      this.setState({
-        hasError: false,
-        loading: false,
-        redirectTo
-      });
-    });
+        if (query.isSIRET && results) {
+          redirectTo = `/establishment/${query.q}`;
+          this.props.setCurrentEnterprise(results[0]);
+        } else if (query.isSIREN && results) {
+          redirectTo = `/enterprise/${query.q}`;
+          this.props.setCurrentEnterprise(results[0]);
+        }
+
+        this.setState({
+          hasError: false,
+          loading: false,
+          redirectTo
+        });
+      })
+      .catch(
+        function(error) {
+          this.setState({
+            hasError: true,
+            loading: false
+          });
+        }.bind(this)
+      );
   };
 
   render() {

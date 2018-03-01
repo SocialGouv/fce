@@ -31,13 +31,20 @@ class EnterpriseActivity extends React.Component {
 
           <dt className="dt col-md-4">Etat de l'entreprise</dt>
           <dd className="dd col-md-8">
-            <Value value={enterprise.etat_entreprise.label} empty="-" />
+            <Value
+              value={
+                enterprise.etat_entreprise && enterprise.etat_entreprise.label
+              }
+              empty="-"
+            />
           </dd>
 
           <dt className="dt col-md-4">Date de l'état</dt>
           <dd className="dd col-md-8">
             <Value
-              value={toI18nDate(enterprise.etat_entreprise.date)}
+              value={toI18nDate(
+                enterprise.etat_entreprise && enterprise.etat_entreprise.date
+              )}
               empty="-"
             />
           </dd>

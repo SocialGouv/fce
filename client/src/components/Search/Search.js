@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./search.css";
-import { Row, Col, Form, FormGroup, Input, Button } from "reactstrap";
+import { Row, Col, Form, FormGroup, Input, Button, Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 
@@ -14,6 +14,15 @@ class Search extends React.Component {
             <h1 className="title">
               Rechercher un établissement ou une entreprise
             </h1>
+
+            {this.props.hasError ? (
+              <Alert color="danger">
+                Une erreur est survenue lors de la communication avec l'API
+              </Alert>
+            ) : (
+              ""
+            )}
+
             <Form className="search-form" inline onSubmit={this.props.search}>
               <FormGroup className="col-md-9">
                 <Input

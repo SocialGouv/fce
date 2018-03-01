@@ -7,5 +7,5 @@ export default ({ value, empty, no }) => {
     return empty;
   }
 
-  return value;
+  return typeof value !== "undefined" ? value : null;
 };

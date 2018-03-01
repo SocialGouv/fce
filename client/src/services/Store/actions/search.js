@@ -1,102 +1,21 @@
 import * as types from "../constants/ActionTypes";
+import Http from "../../Http";
 
 export const search = term => (dispatch, getState) => {
   dispatch(_setTerms({ raisonSociale: term }));
 
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      let response = {
-        data: {
-          query: { q: "79418530600014", isSIRET: true, isSIREN: false },
-          results: [
-            {
-              siren: null,
-              raison_sociale: "SIMTIE",
-              nom_commercial: null,
-              nom: null,
-              prenom: null,
-              sigle: null,
-              categorie_juridique:
-                "Société à responsabilité limitée (sans autre indication)",
-              date_immatriculation_rcs: null,
-              date_de_creation: "2013-06-30T22:00:00.000Z",
-              date_de_radiation: "2016-04-11T22:00:00.000Z",
-              etat_entreprise: {
-                label: "Actif",
-                date: "2013-06-30T22:00:00.000Z"
-              },
-              categorie_entreprise: "PME",
-              activite: null,
-              tranche_effectif: null,
-              annee_tranche_effectif: null,
-              nombre_etablissements_actifs: null,
-              attestation_fiscale_dgfip: null,
-              attestation_sociale_acoss: null,
-              mandataires_sociaux: null,
-              etablissements: [
-                {
-                  siege_social: true,
-                  siret: "79418530600014",
-                  enseigne: null,
-                  categorie_etablissement: null,
-                  adresse: {
-                    l1: "SIMTIE",
-                    l2: "6 RUE FRANCOIS ARAGO",
-                    l3: "31830 PLAISANCE DU TOUCH",
-                    l4: null,
-                    l5: null,
-                    l6: null,
-                    l7: null,
-                    numero_voie: "6",
-                    type_voie: "RUE",
-                    nom_voie: "FRANCOIS ARAGO",
-                    complement_adresse: null,
-                    code_postal: "31830",
-                    localite: "PLAISANCE DU TOUCH",
-                    code_insee_localite: "31424"
-                  },
-                  departement: null,
-                  region: null,
-                  date_creation: null,
-                  etat_etablissement: null,
-                  date_etat: null,
-                  activite: null,
-                  date_debut_activite_economique: null,
-                  modalite_activite: null,
-                  marchand: null,
-                  association: null,
-                  lien_status: null,
-                  etablissement_employeur: null,
-                  tranche_effectif_insee: null,
-                  annee_tranche_effectif_insee: null,
-                  dernier_effectif__physique: null,
-                  date_dernier_effectif_physique: null,
-                  source_dernier_effectif_physique: null,
-                  unite_controle_competente: null,
-                  code_idcc: null,
-                  annee_idcc: null,
-                  nombre_idcc: null,
-                  declaration_agefiph: null,
-                  derniere_annee_conformite_connue: null,
-                  date_fin_exercice: null,
-                  chiffre_affaire: null,
-                  eti_pepite: null,
-                  filiere_strategique: null,
-                  structure_insertion_activite_economique: null,
-                  "mutations économiques": null,
-                  activite_partielle_24_derniers_mois: null,
-                  pse_en_projet_ou_en_cours: null,
-                  direccte: null
-                }
-              ]
-            }
-          ]
-        }
-      };
+  return Http.get("/search", {
+    params: {
+      q: term
+    }
+  })
+    .then(function(response) {
       dispatch(_setSearchResponses(response.data.results));
-      resolve(response);
-    }, 500);
-  });
+      return response;
+    })
+    .catch(function(error) {
+      return error;
+    });
 };
 
 export const advancedSearch = terms => (dispatch, getState) => {

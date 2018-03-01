@@ -77,31 +77,49 @@ class Enterprise extends React.Component {
   };
 
   loadEstablishmentByApi = siret => {
-    this.props.loadEstablishment(siret).then(response => {
-      const { results } = response.data;
+    this.props
+      .loadEstablishment(siret)
+      .then(response => {
+        const { results } = response.data;
 
-      if (results.length) {
-        this.loadEstablishmentByStore(siret);
-      } else {
-        this.setState({
-          redirectTo: "/404"
-        });
-      }
-    });
+        if (results.length) {
+          this.loadEstablishmentByStore(siret);
+        } else {
+          this.setState({
+            redirectTo: "/404"
+          });
+        }
+      })
+      .catch(
+        function(error) {
+          this.setState({
+            redirectTo: "/404"
+          });
+        }.bind(this)
+      );
   };
 
   loadEnterpriseByApi = siren => {
-    this.props.loadEntreprise(siren).then(response => {
-      const { results } = response.data;
+    this.props
+      .loadEntreprise(siren)
+      .then(response => {
+        const { results } = response.data;
 
-      if (results.length) {
-        this.loadEnterpriseByStore(siren);
-      } else {
-        this.setState({
-          redirectTo: "/404"
-        });
-      }
-    });
+        if (results.length) {
+          this.loadEnterpriseByStore(siren);
+        } else {
+          this.setState({
+            redirectTo: "/404"
+          });
+        }
+      })
+      .catch(
+        function(error) {
+          this.setState({
+            redirectTo: "/404"
+          });
+        }.bind(this)
+      );
   };
 
   initData = (enterprise, establishment) => {
@@ -111,7 +129,7 @@ class Enterprise extends React.Component {
 
     this.setState({
       enterprise,
-      headOffice,
+      headOffice: headOffice || {},
       establishment,
       establishments: enterprise.etablissements,
       isLoaded: true

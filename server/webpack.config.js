@@ -2,9 +2,12 @@ const path = require("path");
 const webpack = require("webpack");
 const nodeExternals = require("webpack-node-externals");
 const PostCompile = require("post-compile-webpack-plugin");
-const fse = require("fs-extra");
+const fs = require("fs-extra");
 
 const buildDir = path.join(__dirname, "build");
+const buildFilename = "server.js";
+
+const PRODUCTION = process.env.NODE_ENV === "production";
 
 module.exports = {
   target: "node",
@@ -15,7 +18,7 @@ module.exports = {
 
   output: {
     path: buildDir,
-    filename: "server.js"
+    filename: buildFilename
   },
 
   context: __dirname,
@@ -28,19 +31,41 @@ module.exports = {
     extensions: [".js"]
   },
 
+  mode: PRODUCTION ? "production" : "development",
+
   plugins: [
     new webpack.DefinePlugin({
-      __DIST: true
+      __DIST: JSON.stringify(PRODUCTION)
     }),
     new PostCompile(() => {
-      console.log("toto");
-      ["config", "htdocs"].forEach(dir => {
-        console.log("toto : ", dir);
-        fse.copySync(
+      ["config", "lib"].forEach(dir => {
+        fs.copySync(
           path.resolve(__dirname, `./${dir}`),
           path.resolve(buildDir, `./${dir}`)
         );
       });
+
+      const dist_package = {
+        name: "direccte",
+        main: buildFilename,
+        license: "private",
+        private: true,
+        scripts: {
+          start: `node ${buildFilename}`
+        }
+      };
+
+      const self_package = require(path.resolve(__dirname, "./package.json"));
+
+      const release_package = Object.assign({}, self_package, dist_package);
+      if (release_package.devDependencies) {
+        delete release_package.devDependencies;
+      }
+
+      fs.writeFileSync(
+        path.resolve(buildDir, "./package.json"),
+        JSON.stringify(release_package, null, 2)
+      );
     })
   ],
 

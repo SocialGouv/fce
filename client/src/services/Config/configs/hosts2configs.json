@@ -1,5 +1,6 @@
 {
   "direccte.test": "development",
+  "direccte.commit42.fr": "staging",
   "preprod.direccte.com": "preproduction",
   "direccte.com": "production"
 }

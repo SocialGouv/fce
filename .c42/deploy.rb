@@ -13,12 +13,13 @@ set :git_enable_submodules, 1
 set :deploy_via, :copy
 set :copy_cache, true
 set :copy_exclude, '.git/*'
-set :build_script, 'c42 build'
+set :build_script, 'SKIP_QUESTIONS=1 c42 docker:install && c42 build'
 set :copy_compression, :bz2
 set :ssh_options, forward_agent: true
 
 set :use_sudo, false
 set :keep_releases, 3
+after 'deploy', 'deploy:restart'
 after 'deploy:restart', 'deploy:cleanup'
 
 set :app_path, '/dist/htdocs/'
@@ -35,7 +36,7 @@ task :preprod do
 end
 
 after 'deploy:finalize_update' do
-  run "cd #{latest_release} && npm install"
+  run "cd #{latest_release}/dist && npm install"
 end
 
 after 'deploy:restart' do

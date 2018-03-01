@@ -1,5 +1,7 @@
 import { copyKeys } from "../utils";
-import { Etablissement } from "frentreprise";
+const { Etablissement } = require(__DIST
+  ? "frentreprise"
+  : "../../lib/frentreprise/src/frentreprise");
 
 class DireccteEtablissement extends Etablissement {
   export(keys) {

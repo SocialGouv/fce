@@ -33,13 +33,13 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 const htdocs_path = path.resolve(__dirname, "./htdocs");
 app.use(express.static(htdocs_path));
 
 app.use("/api", apiRouter);
-
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 const PORT = 80;
 app.listen(PORT, () => {

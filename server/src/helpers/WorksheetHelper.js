@@ -98,7 +98,7 @@ class WorksheetHelper {
           }
           attributeKey = columnsToKeep[columnNames[i]];
         }
-        item[attributeKey] = cell.w || cell.v;
+        item[attributeKey] = (cell.w || cell.v).trim();
       }
     }
 

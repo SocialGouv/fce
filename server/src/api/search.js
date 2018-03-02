@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var frentreprise = require("frentreprise");
+const frentreprise = __DIST
+  ? require("frentreprise")
+  : require("../../lib/frentreprise/src/frentreprise.js");
 
 router.get("/search", function(req, res) {
   const query = (req.query["q"] || "").trim();

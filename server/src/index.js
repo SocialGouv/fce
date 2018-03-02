@@ -11,9 +11,8 @@ const frentreprise = __DIST
 
 frentreprise.EntrepriseModel = require("./models/Entreprise");
 frentreprise.EtablissementModel = require("./models/Etablissement");
-frentreprise.getDataSource("ApiGouv").source.token = config.get(
-  "APIGouv.token"
-);
+const token = config.get("APIGouv.token");
+frentreprise.getDataSource("ApiGouv").source.token = token;
 
 var apiRouter = require("./api");
 

@@ -86,9 +86,6 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
     ...searchParams,
     raison_sociale: raisonSocialParam
   } : searchParams;
-  // DELETE
-  // params.raison_sociale = searchParams && searchParams.raison_sociale && raisonSocialParam
-  console.log(params);
   return this.find(params, cb);
 };
 

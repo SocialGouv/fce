@@ -312,7 +312,16 @@ describe("Advanced search", () => {
           return Etablissement.findByAdvancedSearch(searchParams);
         })
         .then(data => {
-          expect(data.length).toBe(5);
+          expect(data.length).toBe(2);
+          searchParams = {
+            code_activite: "8110Z",
+            code_postal: "31300",
+            raison_sociale: "SYNDICAT DES COPROPRIETAIRE   RESID"
+          };
+          return Etablissement.findByAdvancedSearch(searchParams);
+        })
+        .then(data => {
+          expect(data.length).toBe(1);
         });
     },
     TIMEOUT

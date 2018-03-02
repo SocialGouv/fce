@@ -34,7 +34,7 @@ describe("save()", () => {
   }, TIMEOUT);
 
   afterEach(() => {
-    // return Etablissement.remove({});
+    return Etablissement.remove({});
   }, TIMEOUT);
 
   test("default", () => {

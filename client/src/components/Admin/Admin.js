@@ -147,6 +147,64 @@ class Admin extends React.Component {
                 </Col>
               </FormGroup>
 
+              <FormGroup row>
+                <Label for="nomenclature" md={4}>
+                  Nomenclature
+                </Label>
+                <Col md={8}>
+                  <Input
+                    type="file"
+                    name="nomenclature"
+                    id="nomenclature"
+                    className="form-control"
+                    valid={
+                      this.props.importResponses &&
+                      this.props.importResponses.nomenclature &&
+                      this.props.importResponses.nomenclature.success
+                    }
+                    invalid={
+                      this.props.importResponses &&
+                      this.props.importResponses.nomenclature &&
+                      !this.props.importResponses.nomenclature.success
+                    }
+                    onChange={e => this.props.handleFileUpload(e)}
+                  />
+                  <FormFeedback valid>
+                    Les données ont été importées
+                  </FormFeedback>
+                  <FormFeedback>Echec de l'import des données</FormFeedback>
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="eos" md={4}>
+                  Base SESE
+                </Label>
+                <Col md={8}>
+                  <Input
+                    type="file"
+                    name="sese"
+                    id="sese"
+                    className="form-control"
+                    valid={
+                      this.props.importResponses &&
+                      this.props.importResponses.sese &&
+                      this.props.importResponses.sese.success
+                    }
+                    invalid={
+                      this.props.importResponses &&
+                      this.props.importResponses.sese &&
+                      !this.props.importResponses.sese.success
+                    }
+                    onChange={e => this.props.handleFileUpload(e)}
+                  />
+                  <FormFeedback valid>
+                    Les données ont été importées
+                  </FormFeedback>
+                  <FormFeedback>Echec de l'import des données</FormFeedback>
+                </Col>
+              </FormGroup>
+
               <div className="d-flex justify-content-center">
                 <Button color="primary">
                   {this.props.loading ? (

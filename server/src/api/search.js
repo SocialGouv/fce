@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
+
 const EtablissementModel = require("../models/EtablissementModel");
-const deleteKeyIfNotDefinedOrEmpty = require("../utils/ObjectManipulations").deleteKeyIfNotDefinedOrEmpty;
+const deleteKeyIfNotDefinedOrEmpty = require("../utils/ObjectManipulations")
+  .deleteKeyIfNotDefinedOrEmpty;
 
 const frentreprise = __DIST
   ? require("frentreprise")
@@ -45,8 +47,6 @@ router.get("/search", function(req, res) {
     res.send(data);
   });
 });
-
-
 
 router.get("/advancedSearch", function(req, res) {
   const code_activite = (req.query["naf"] || "").trim();

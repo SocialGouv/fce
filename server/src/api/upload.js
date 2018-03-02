@@ -82,40 +82,45 @@ router.post("/upload", upload.any(), function(req, res) {
   let responseData = {
     files: {}
   };
-  req.files.map(file => {
-    const fieldName = file.fieldname;
-    responseData.files[fieldName] = { success: null, message: null };
 
-    const keys = Object.keys(filesOptions);
-    const index = keys.indexOf(fieldName);
-    if (index > -1) {
-      const fileOptions = filesOptions[fieldName];
-      const filePath = file.path;
-      const sheetName = fileOptions.sheetName;
-      const shouldSaveAndResetEntities = true;
-      const ingestor = new fileOptions.ingestorClass(filePath, sheetName);
-      ingestor
-        .reset(shouldSaveAndResetEntities)
-        .then(data => {
-          return ingestor.save(shouldSaveAndResetEntities);
-        })
-        .then(data => {
-          removeOldFiles(fieldName, file.filename);
-          responseData.files[fieldName].success = true;
-          responseData.files[fieldName].message = "Uploaded and saved ! ";
-        })
-        .catch(error => {
-          console.error(error);
-          responseData.files[fieldName].success = false;
-          responseData.files[fieldName].message = "Ingestor error";
-        });
-    } else {
-      responseData.files[fieldName].success = true;
-      responseData.files[fieldName].message = "Uploaded ! ";
-    }
+  Promise.all(
+    req.files.map(file => {
+      const fieldName = file.fieldname;
+      responseData.files[fieldName] = { success: null, message: null };
+
+      const keys = Object.keys(filesOptions);
+      const index = keys.indexOf(fieldName);
+      if (index > -1) {
+        const fileOptions = filesOptions[fieldName];
+        const filePath = file.path;
+        const sheetName = fileOptions.sheetName;
+
+        const shouldSaveAndResetEntities = true;
+        const ingestor = new fileOptions.ingestorClass(filePath, sheetName);
+        return ingestor
+          .reset(shouldSaveAndResetEntities)
+          .then(data => {
+            return ingestor.save(shouldSaveAndResetEntities);
+          })
+          .then(data => {
+            removeOldFiles(fieldName, file.filename);
+            responseData.files[fieldName].success = true;
+            responseData.files[fieldName].message = "Uploaded and saved ! ";
+          })
+          .catch(error => {
+            console.error(error);
+            responseData.files[fieldName].success = false;
+            responseData.files[fieldName].message = "Ingestor error";
+          });
+      } else {
+        responseData.files[fieldName].success = true;
+        responseData.files[fieldName].message = "Uploaded ! ";
+        return Promise.resolve();
+      }
+    })
+  ).then(() => {
+    res.send(responseData);
   });
-
-  res.send(responseData);
 });
 
 module.exports = router;

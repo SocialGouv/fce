@@ -1,6 +1,5 @@
 import React from "react";
 import Value from "../../../elements/Value";
-import { buildAddress } from "../../../helpers/Address";
 
 class EstablishmentIdentity extends React.Component {
   render() {
@@ -16,10 +15,23 @@ class EstablishmentIdentity extends React.Component {
             <Value value={establishment.enseigne} empty="-" />
           </dd>
 
-          <dt className="dt col-md-4">Raison Sociale</dt>
-          <dd className="dd definition col-md-8">
-            <Value value={enterprise.raison_sociale} empty="-" />
-          </dd>
+          {enterprise.categorie_juridique
+            ? [
+                <dt className="dt col-md-4">Raison Sociale</dt>,
+                <dd className="dd definition col-md-8">
+                  <Value value={enterprise.raison_sociale} empty="-" />
+                </dd>
+              ]
+            : [
+                <dt className="dt col-md-4">Nom</dt>,
+                <dd className="dd definition col-md-8">
+                  <Value value={enterprise.nom} empty="-" />
+                </dd>,
+                <dt className="dt col-md-4">Prenom</dt>,
+                <dd className="dd definition col-md-8">
+                  <Value value={enterprise.prenom} empty="-" />
+                </dd>
+              ]}
 
           <dt className="dt col-md-4">Nom commercial</dt>
           <dd className="dd definition col-md-8">
@@ -48,7 +60,7 @@ class EstablishmentIdentity extends React.Component {
 
           <dt className="dt col-md-4">Adresse</dt>
           <dd className="dd col-md-8">
-            <Value value={buildAddress(establishment.adresse)} empty="-" />
+            <Value value={establishment.adresse} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Département</dt>

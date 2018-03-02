@@ -25,6 +25,7 @@ export default class DireccteEntreprise extends Entreprise {
         "annee_tranche_effectif",
         "nombre_etablissements_actifs",
         "mandataires_sociaux",
+        "siret_siege_social",
         "_dataSources"
       ],
       null

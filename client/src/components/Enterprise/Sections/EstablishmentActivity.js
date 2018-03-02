@@ -5,7 +5,7 @@ import { toI18nDate } from "../../../helpers/Date";
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
-
+    console.log(establishment.etat_etablissement);
     return (
       <section id="activity" className="enterprise-section">
         <h1 className="title h4">État et activité</h1>

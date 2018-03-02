@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const frentreprise = require("frentreprise");
+const frentreprise = __DIST
+  ? require("frentreprise")
+  : require("../../lib/frentreprise/src/frentreprise.js");
 const EtablissementModel = require("../models/EtablissementModel");
-const deleteKeyIfNotDefinedOrEmpty = require("../utils/ObjectManipulations").deleteKeyIfNotDefinedOrEmpty;
+const deleteKeyIfNotDefinedOrEmpty = require("../utils/ObjectManipulations")
+  .deleteKeyIfNotDefinedOrEmpty;
 
 router.get("/search", function(req, res) {
   const query = (req.query["q"] || "").trim();
@@ -42,8 +45,6 @@ router.get("/search", function(req, res) {
     res.send(data);
   });
 });
-
-
 
 router.get("/advancedSearch", function(req, res) {
   const code_activite = (req.query["naf"] || "").trim();

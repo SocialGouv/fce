@@ -1,8 +1,8 @@
-import { copyKeys } from "../utils";
+import { copyKeys } from "../../utils";
 
 const { Entreprise } = require(__DIST
   ? "frentreprise"
-  : "../../lib/frentreprise/src/frentreprise");
+  : "../../../lib/frentreprise/src/frentreprise");
 
 export default class DireccteEntreprise extends Entreprise {
   export() {

@@ -1,71 +1,69 @@
-const path = require("path");
+import path from "path";
 
-const config = require("config");
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+import config from "config";
+import express from "express";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+
+import Mongo from "./frentreprise/datasources/Mongo";
+
+import apiRouter from "./api";
 
 const frentreprise = __DIST
   ? require("frentreprise")
   : require("../lib/frentreprise/src/frentreprise.js");
 
-frentreprise.EntrepriseModel = require("./models/Entreprise");
-frentreprise.EtablissementModel = require("./models/Etablissement");
-const token = config.get("APIGouv.token");
-frentreprise.getDataSource("ApiGouv").source.token = token;
+const app = express();
+const port = (config.has("port") && +config.get("port")) || 80;
+const host = (config.has("port") && config.get("host")) || undefined;
 
-var apiRouter = require("./api");
+function init() {
+  frentreprise.EntrepriseModel = require("./frentreprise/models/Entreprise");
+  frentreprise.EtablissementModel = require("./frentreprise/models/Etablissement");
+  frentreprise.getDataSource("ApiGouv").source.token = config.get(
+    "APIGouv.token"
+  );
 
-//DB setup
-if (config.has("mongo")) {
-  mongoose.connect(config.get("mongo"));
+  //DB setup
+  if (config.has("mongo")) {
+    mongoose.connect(config.get("mongo"));
+
+    frentreprise.addDataSource({
+      name: "Mongo",
+      priority: 50, // higher prevail
+      source: new Mongo()
+    });
+  }
+
+  app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
+
+  app.use(bodyParser.json()); // support json encoded bodies
+  app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 }
 
-const app = express();
+function run() {
+  const htdocs_path = path.resolve(__dirname, "./htdocs");
+  app.use(express.static(htdocs_path));
+  app.use("/api", apiRouter);
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+  app.listen(
+    {
+      host,
+      port
+    },
+    () => {
+      console.log(`Serving files from: ${htdocs_path}`);
+      console.log(`Listening on ${host || ""}:${port}`);
+    }
   );
-  next();
-});
+}
 
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
-const htdocs_path = path.resolve(__dirname, "./htdocs");
-console.log(`Serving files from: ${htdocs_path}`);
-
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
-app.use(express.static(htdocs_path));
-
-app.use("/api", apiRouter);
-
-const port = (config.has("port") && +config.get("port")) || 80;
-const host =
-  (config.has("host") && config.get("host").length > 0 && config.get("host")) ||
-  undefined;
-
-app.listen(
-  {
-    host,
-    port
-  },
-  () => {
-    console.log(`Serving files from: ${htdocs_path}`);
-    console.log(`Listening on ${host || ""}:${port}`);
-  }
-);
+init();
+run();

@@ -53,7 +53,7 @@ export default class ApiGouv extends DataSource {
         "siret_siege_social"
       ].forEach(key => {
         if (typeof legacy_et[key] === "boolean") out[key] = legacy_et[key];
-        else out[key] = legacy_et[key] || null;
+        else out[key] = legacy_et[key] || undefined;
       });
 
       if (
@@ -106,7 +106,8 @@ export default class ApiGouv extends DataSource {
       }
 
       out.region =
-        (et.region_implementation && et.region_implementation.value) || null;
+        (et.region_implementation && et.region_implementation.value) ||
+        undefined;
 
       out.activite = `${et.naf} - ${et.libelle_naf}`;
 
@@ -116,7 +117,7 @@ export default class ApiGouv extends DataSource {
       out.tranche_effectif_insee =
         et.tranche_effectif_salarie_etablissement.intitule;
       out.annee_tranche_effectif_insee =
-        +et.tranche_effectif_salarie_etablissement.date_reference || null;
+        +et.tranche_effectif_salarie_etablissement.date_reference || undefined;
     }
 
     return out;
@@ -154,7 +155,7 @@ export default class ApiGouv extends DataSource {
         "siret_siege_social"
       ].forEach(key => {
         if (typeof legacy_ent[key] === "boolean") out[key] = legacy_ent[key];
-        else out[key] = legacy_ent[key] || null;
+        else out[key] = legacy_ent[key] || undefined;
       });
 
       out.categorie_juridique = legacy_ent.forme_juridique;
@@ -202,9 +203,9 @@ export default class ApiGouv extends DataSource {
         typeof ent.tranche_effectif_salarie_entreprise === "object"
       ) {
         out.annee_tranche_effectif =
-          +ent.tranche_effectif_salarie_entreprise.date_reference || null;
+          +ent.tranche_effectif_salarie_entreprise.date_reference || undefined;
         out.tranche_effectif =
-          ent.tranche_effectif_salarie_entreprise.intitule || null;
+          ent.tranche_effectif_salarie_entreprise.intitule || undefined;
       }
 
       out.mandataires_sociaux = [];
@@ -223,7 +224,7 @@ export default class ApiGouv extends DataSource {
   }
 
   [_convertDate](timestamp) {
-    return (timestamp && new Date(timestamp * 1000)) || null;
+    return (timestamp && new Date(timestamp * 1000)) || undefined;
   }
 
   [_getCleanAddress](ad) {

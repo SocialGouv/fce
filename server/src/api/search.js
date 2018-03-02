@@ -34,13 +34,9 @@ router.get("/search", function(req, res) {
       data.results = [entreprise.export()];
     }, logError);
   } else {
-    const raisonSociale = data.query.q;
-    freCall = EtablissementModel.findByRaisonSociale(raisonSociale).then(
-      results => {
-        data.results = results;
-      },
-      logError
-    );
+    freCall = frentreprise.search(data.query.q).then(results => {
+      data.results = results.map(ent => ent.export());
+    }, logError);
   }
 
   freCall.then(() => {

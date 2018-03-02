@@ -1,31 +1,36 @@
 const Ingestor = require("./Ingestor");
 const WorkbookHelper = require("../helpers/WorkbookHelper");
-const Nomenclature = require("../models/NomenclatureModel");
+const NomenclatureModel = require("../models/NomenclatureModel");
 
 class NomenclaturesIngestor extends Ingestor {
   constructor(filePath) {
     super(filePath);
-    this.Model = Nomenclature;
+    this.Model = NomenclatureModel;
   }
 
   getData() {
+    const nomenclatures = this.getNomenclatures();
+    const keys = Object.keys(nomenclatures);
+    let data = [];
+
+    keys.map(key => {
+      data = [...data, ...nomenclatures[key]];
+    });
+    return data;
+  }
+
+  getNomenclatures() {
     const wbh = new WorkbookHelper(this.workbook);
-    const defaultColumnsToKeep = {
+    const defaultSheetsParams = {
       columnsToKeep: {
         A: "code",
         B: "libelle"
       }
     };
     const sheetsParams = {
-      Code_activite_NAF: {
-        columnsToKeep: defaultColumnsToKeep
-      },
-      Code_Qualite_siege_2: {
-        columnsToKeep: defaultColumnsToKeep
-      },
-      Code_Qualite_siege: {
-        columnsToKeep: defaultColumnsToKeep
-      },
+      Code_activite_NAF: defaultSheetsParams,
+      Code_Qualite_siege_2: defaultSheetsParams,
+      Code_Qualite_siege: defaultSheetsParams,
       "Source_dernier_eff_phy ": {
         columnsToKeep: {
           A: "code",
@@ -40,24 +45,21 @@ class NomenclaturesIngestor extends Ingestor {
           C: "libelle_CJ1"
         }
       },
-      Tranche_effectif: defaultColumnsToKeep,
-      Code_Modalite_activ_: defaultColumnsToKeep,
-      Codes_IDCC: defaultColumnsToKeep,
-      code_etat: defaultColumnsToKeep,
-      code_région: defaultColumnsToKeep
+      Tranche_effectif: defaultSheetsParams,
+      Code_Modalite_activ_: defaultSheetsParams,
+      Codes_IDCC: defaultSheetsParams,
+      code_etat: defaultSheetsParams,
+      code_région: defaultSheetsParams
     };
 
-    const sheetsData = wbh.getSheetsData(sheetsParams);
+    let sheetsData = wbh.getSheetsData(sheetsParams);
     for (let sheetName in sheetsData) {
-      sheetsData[sheetName].map(nomenclature => {
+      sheetsData[sheetName] = sheetsData[sheetName].map(nomenclature => {
         nomenclature.categorie = sheetName;
+        return nomenclature;
       });
     }
     return sheetsData;
-  }
-
-  getNomenclatures() {
-    return this.getData();
   }
 }
 

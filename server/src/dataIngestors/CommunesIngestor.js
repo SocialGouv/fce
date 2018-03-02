@@ -20,7 +20,7 @@ class CommunesIngestor extends Ingestor {
         libelle_commune: etablissement.libelle_commune,
         code_commune: etablissement.code_commune,
       };
-      if(codes.indexOf(commune.code_commune) < 0){
+      if(!codes.includes(commune.code_commune) ){
         communes.push(commune);
         codes.push(commune.code_commune);
       }

@@ -12,21 +12,20 @@ class CodesPostauxIngestor extends Ingestor {
     return this.getCodesPostauxFromEtablissements(etablissements);
   }
 
-  getCodesPostauxFromEtablissements(etablissements){
+  getCodesPostauxFromEtablissements(etablissements) {
     let postalCodes = [];
-    let codes = []
-    etablissements.map( etablissement => {
+    let codes = [];
+    etablissements.map(etablissement => {
       let postalCode = {
-        code_postal: etablissement.code_postal,
+        code_postal: etablissement.code_postal
       };
-      if(codes.indexOf(postalCode.code_postal) < 0){
+      if (!codes.includes(postalCode.code_postal)) {
         postalCodes.push(postalCode);
         codes.push(postalCode.code_postal);
       }
-    })
+    });
     return postalCodes;
   }
-
 }
 
 module.exports = CodesPostauxIngestor;

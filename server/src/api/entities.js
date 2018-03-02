@@ -25,6 +25,26 @@ const getAllEntities = model => {
     });
 };
 
+router.get("/entities", function(req, res) {
+  let responseData = { results: {} };
+
+  return CommuneModel.find()
+    .then(data => {
+      responseData.results.communes = data;
+      return DepartementModel.find();
+    })
+    .then(data => {
+      responseData.results.departements = data;
+      return CodePostalModel.find();
+    })
+    .then(data => {
+      responseData.results.postalCodes = data;
+      responseData.success = true;
+
+      res.send(responseData);
+    });
+});
+
 router.get("/communes", function(req, res) {
   return getAllEntities(CommuneModel).then(data => {
     res.send(data);

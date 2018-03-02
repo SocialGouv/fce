@@ -37,4 +37,10 @@ router.get("/departements", function(req, res) {
   });
 });
 
+router.get("/postalCodes", function(req, res) {
+  return getAllEntities(CodePostalModel).then(data => {
+    res.send(data);
+  });
+});
+
 module.exports = router;

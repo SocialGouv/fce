@@ -4,6 +4,7 @@ const EtablissementsIngestor = require("./EtablissementsIngestor");
 const Etablissement = require("../models/EtablissementModel");
 const Commune = require("../models/CommuneModel");
 const Departement = require("../models/DepartementModel");
+const CodePostal = require("../models/CodePostalModel");
 
 const filePath = "./data/SIENE_test.csv";
 const TIMEOUT = 15000;
@@ -60,6 +61,9 @@ describe("saveWithEntities()", () => {
         return Commune.remove({});
       })
       .then(() => {
+        return CodePostal.remove({});
+      })
+      .then(() => {
         return Departement.remove({});
       });
   }, TIMEOUT);
@@ -68,6 +72,9 @@ describe("saveWithEntities()", () => {
     return Etablissement.remove({})
       .then(() => {
         return Commune.remove({});
+      })
+      .then(() => {
+        return CodePostal.remove({});
       })
       .then(() => {
         return Departement.remove({});
@@ -84,7 +91,7 @@ describe("saveWithEntities()", () => {
         .then(data => {
           expect(data.etablissements.length).toBe(9);
           expect(data.entities.communes.length).toBe(3);
-          expect(data.entities.codePostaux.length).toBe(0);
+          expect(data.entities.codesPostaux.length).toBe(6);
           expect(data.entities.departements.length).toBe(2);
           return;
         })
@@ -101,6 +108,9 @@ describe("resetWithEntities()", () => {
         return Commune.remove({});
       })
       .then(() => {
+        return CodePostal.remove({});
+      })
+      .then(() => {
         return Departement.remove({});
       });
   }, TIMEOUT);
@@ -109,6 +119,9 @@ describe("resetWithEntities()", () => {
     return Etablissement.remove({})
       .then(() => {
         return Commune.remove({});
+      })
+      .then(() => {
+        return CodePostal.remove({});
       })
       .then(() => {
         return Departement.remove({});
@@ -130,7 +143,7 @@ describe("resetWithEntities()", () => {
           expect(data.etablissements.ok).toBe(1);
 
           expect(data.entities.communes.ok).toBe(1);
-          // expect(data.entities.codePostaux).toBe(0);
+          expect(data.entities.codesPostaux.ok).toBe(1);
           expect(data.entities.departements.ok).toBe(1);
           return;
         })

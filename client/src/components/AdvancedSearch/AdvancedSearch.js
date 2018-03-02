@@ -27,7 +27,9 @@ class AdvancedSearch extends React.Component {
                   <DropdownList
                     data={this.props.autocompleteData.nafCodes}
                     valueField="code"
-                    textField="text"
+                    textField={nafCode =>
+                      `${nafCode.code} - ${nafCode.libelle}`
+                    }
                     filter
                     id="naf"
                     name="naf"

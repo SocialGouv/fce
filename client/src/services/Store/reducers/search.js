@@ -48,22 +48,12 @@ const search = (state = initialState, action) => {
         ...state,
         nomenclatures: {
           ...initialState.nomenclatures,
-          ...formatNomenclatures(action.nomenclatures)
+          ...action.nomenclatures
         }
       };
     default:
       return state;
   }
-};
-
-const formatNomenclatures = nomenclatures => {
-  if (nomenclatures.nafCodes && nomenclatures.nafCodes.length) {
-    nomenclatures.nafCodes = nomenclatures.nafCodes.map(nafCode => {
-      nafCode.text = `${nafCode.code} - ${nafCode.libelle}`;
-      return nafCode;
-    });
-  }
-  return nomenclatures;
 };
 
 export default search;

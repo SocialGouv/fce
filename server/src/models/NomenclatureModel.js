@@ -10,8 +10,12 @@ const nomenclatureSchema = new Schema({
   libelle_CJ1: String,
 });
 
-nomenclatureSchema.statics.findByCode = function(categorie, code, cb) {
-  return this.find({ categorie, code }, cb);
+nomenclatureSchema.statics.findByCategory = function(categorie, cb) {
+  return this.find({ categorie }, cb);
+};
+
+nomenclatureSchema.statics.findOneByCategoryAndCode = function(categorie, code, cb) {
+  return this.findOne({ categorie, code }, cb);
 };
 
 const Nomenclature = mongoose.model("Nomenclature", nomenclatureSchema);

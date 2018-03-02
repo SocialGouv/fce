@@ -75,4 +75,60 @@ describe("save", () => {
     },
     TIMEOUT
   );
+
+  test(
+    "save and findByCategory",
+    () => {
+      const ingestor = new NomenclaturesIngestor(filePath);
+      return ingestor
+        .save()
+        .then(data => {
+          return Nomenclature.findByCategory("Code_activite_NAF");
+        })
+        .then(data => {
+          expect(data.length).toBe(4);
+          return Nomenclature.findByCategory("Code_Qualite_siege");
+        })
+        .then(data => {
+          expect(data.length).toBe(8);
+          return;
+        });
+    },
+    TIMEOUT
+  );
+
+  test(
+    "save and findOneByCategoryAndCode",
+    () => {
+      const ingestor = new NomenclaturesIngestor(filePath);
+      return ingestor
+        .save()
+        .then(data => {
+          return Nomenclature.findOneByCategoryAndCode(
+            "Code_activite_NAF",
+            "0112Z"
+          );
+        })
+        .then(data => {
+          expect(data.categorie).toBe("Code_activite_NAF");
+          expect(data.code).toBe("0112Z");
+          expect(data.libelle).toBe("Culture du riz");
+
+          return Nomenclature.findOneByCategoryAndCode(
+            "Source_dernier_eff_phy ",
+            "110"
+          );
+        })
+        .then(data => {
+          expect(data.categorie).toBe("Source_dernier_eff_phy ");
+          expect(data.code).toBe("110");
+          expect(data.libelle_court).toBe("EFF_CREAT");
+          expect(data.libelle).toBe(
+            "Effectif de l'entreprise à la création (CFE-SIRENE)"
+          );
+          return;
+        });
+    },
+    TIMEOUT
+  );
 });

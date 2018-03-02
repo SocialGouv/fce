@@ -42,7 +42,8 @@ class Enterprise extends React.Component {
 
     if (
       this.props.currentEnterprise &&
-      this.props.currentEnterprise.etablissements
+      this.props.currentEnterprise.etablissements &&
+      this.props.currentEnterprise._dataSources.ApiGouv
     ) {
       establishment = this.props.currentEnterprise.etablissements.find(
         establishment => {
@@ -61,7 +62,8 @@ class Enterprise extends React.Component {
   loadEnterpriseByStore = siren => {
     if (
       this.props.currentEnterprise &&
-      this.props.currentEnterprise.siren === siren
+      this.props.currentEnterprise.siren === siren &&
+      this.props.currentEnterprise._dataSources.ApiGouv
     ) {
       return this.initData(this.props.currentEnterprise, null);
     }

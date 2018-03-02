@@ -45,7 +45,25 @@ class SearchResults extends React.Component {
             ) : (
               ""
             )}
-            <ul className="result-list">{items}</ul>
+
+            {items.length ? (
+              <table className="table table-striped table-hover result-list">
+                <thead>
+                  <tr>
+                    <th>SIRET</th>
+                    <th>SIREN</th>
+                    <th>Raison Sociale</th>
+                    <th>Commune</th>
+                    <th>Code Postal</th>
+                    <th>Département</th>
+                    <th>Activité</th>
+                  </tr>
+                </thead>
+                <tbody>{items}</tbody>
+              </table>
+            ) : (
+              ""
+            )}
           </Col>
         </Row>
       </div>

@@ -43,7 +43,6 @@ export default class ApiGouv extends DataSource {
       legacy.data.etablissement
     ) {
       const legacy_et = legacy.data.etablissement;
-      console.log("legacyET", legacy_et);
       [
         "siret",
         "siege_social",
@@ -90,7 +89,6 @@ export default class ApiGouv extends DataSource {
       etablissement.data.etablissement
     ) {
       const et = etablissement.data.etablissement;
-      console.log("ET", et);
 
       [].forEach(key => {
         out[key] = et[key];

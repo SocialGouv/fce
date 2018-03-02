@@ -4,16 +4,38 @@ import { Route, Redirect } from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   console.debug("rendering private route");
+
+  const checkAuthorization = (auth, isAdminRoute) => {
+    if (!auth || !auth.isAuthenticated) {
+      return {
+        auth: false,
+        redirect: "/login"
+      };
+    }
+
+    if (isAdminRoute && !auth.user.isAdmin) {
+      return {
+        auth: false,
+        redirect: "/403"
+      };
+    }
+
+    return {
+      auth: true
+    };
+  };
+
   return (
     <Route
       {...rest}
       render={props => {
-        return rest.auth && rest.auth.isAuthenticated ? (
+        const authorization = checkAuthorization(rest.auth, rest.isAdmin);
+        return authorization.auth ? (
           <Component {...props} />
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
+              pathname: authorization.redirect,
               state: { from: props.location }
             }}
           />

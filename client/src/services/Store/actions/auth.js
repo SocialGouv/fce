@@ -1,21 +1,21 @@
 import * as types from "../constants/ActionTypes";
+import Http from "../../Http";
 
-export const loginUser = (username, password) => (dispatch, getState) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      let response = {
-        data: {
-          user: {
-            username: username,
-            token: "YouTokenToMe?",
-            loggedInAt: new Date()
-          }
-        }
-      };
-      dispatch(_loginUser(response.data.user));
-      resolve(response);
-    }, 500);
-  });
+export const loginUser = password => (dispatch, getState) => {
+  dispatch(logoutUser());
+
+  return Http.post("/login", {
+    password
+  })
+    .then(function(response) {
+      if (response.data.user) {
+        dispatch(_loginUser(response.data.user));
+      }
+      return response;
+    })
+    .catch(function(error) {
+      return error;
+    });
 };
 
 const _loginUser = user => ({

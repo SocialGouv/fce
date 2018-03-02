@@ -47,6 +47,16 @@ class Header extends React.Component {
                     Rechercher
                   </Link>
                 </NavItem>
+
+                {this.props.user && this.props.user.isAdmin ? (
+                  <NavItem>
+                    <Link to="/admin" className="nav-link">
+                      Admin
+                    </Link>
+                  </NavItem>
+                ) : (
+                  ""
+                )}
               </Nav>
 
               <Nav className="ml-auto" navbar>
@@ -65,7 +75,9 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    user: state.auth.user
+  };
 };
 
 const mapDispatchToProps = dispatch => {

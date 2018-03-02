@@ -14,7 +14,8 @@ import Search from "../../containers/Search";
 import SearchResults from "../../containers/SearchResults";
 import AdvancedSearch from "../../containers/AdvancedSearch";
 import Enterprise from "../../containers/Enterprise";
-import { Error404 } from "../../components/Errors";
+import Admin from "../../containers/Admin";
+import { Error403, Error404 } from "../../components/Errors";
 
 let { store, persistor } = configureStore();
 
@@ -51,7 +52,14 @@ class App extends React.Component {
                     path="/establishment/:siret"
                     component={Enterprise}
                   />
+                  <PrivateRoute
+                    exact
+                    path="/admin"
+                    component={Admin}
+                    isAdmin={true}
+                  />
                   <Route exact path="/login" render={() => <Login />} />
+                  <Route exact path="/403" render={() => <Error403 />} />
                   <Route exact path="/404" render={() => <Error404 />} />
                   <Redirect to="/404" />
                 </Switch>

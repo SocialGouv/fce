@@ -11,9 +11,8 @@ const frentreprise = __DIST
 
 frentreprise.EntrepriseModel = require("./models/Entreprise");
 frentreprise.EtablissementModel = require("./models/Etablissement");
-frentreprise.getDataSource("ApiGouv").source.token = config.get(
-  "APIGouv.token"
-);
+const token = config.get("APIGouv.token");
+frentreprise.getDataSource("ApiGouv").source.token = token;
 
 var apiRouter = require("./api");
 
@@ -38,6 +37,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 const htdocs_path = path.resolve(__dirname, "./htdocs");
 console.log(`Serving files from: ${htdocs_path}`);
+
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");

@@ -2,6 +2,7 @@ require("../mongo/db");
 
 const EtablissementsIngestor = require("./EtablissementsIngestor");
 const Etablissement = require("../models/EtablissementModel");
+const Commune = require("../models/CommuneModel");
 
 const filePath = "./data/SIENE_test.csv";
 const TIMEOUT = 15000;
@@ -53,19 +54,24 @@ describe("save()", () => {
 
 describe("saveWithEntities()", () => {
   beforeEach(() => {
-    return Etablissement.remove({});
+    return Etablissement.remove({}).then(() => {
+      return Commune.remove({});
+    });
   }, TIMEOUT);
 
   afterEach(() => {
-    return Etablissement.remove({});
+    return Etablissement.remove({}).then(() => {
+      return Commune.remove({});
+    });
   }, TIMEOUT);
 
   test(
     "Communes",
     () => {
       const ingestor = new EtablissementsIngestor(filePath);
+      const shouldSaveEntities = true;
       return ingestor
-        .saveWithEntities()
+        .save(shouldSaveEntities)
         .then(data => {
           expect(data.etablissements.length).toBe(9);
           expect(data.entities.communes.length).toBe(3);

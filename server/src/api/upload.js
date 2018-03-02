@@ -96,7 +96,8 @@ router.post("/upload", upload.any(), function(req, res) {
       ingestor
         .reset()
         .then(data => {
-          return ingestor.save();
+          const shouldSaveEntities = true;
+          return ingestor.save(shouldSaveEntities);
         })
         .then(data => {
           removeOldFiles(fieldName, file.filename);

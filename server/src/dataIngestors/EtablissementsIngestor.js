@@ -37,17 +37,45 @@ class EtablissementsIngestor extends Ingestor {
       });
   }
 
-  saveWithEntities(){
-    let responseData = { etablissements: [], entities: {}};
-    return this.save().then( data => {
-      responseData.etablissements = data;
-      return this.saveEntities();
-    })
-    .then( data => {
-      responseData.entities = data;
-      return responseData;
-    })
+  save(shouldSaveEntities){
+    if(shouldSaveEntities){
+      let responseData = { etablissements: [], entities: {}};
+      return super.save().then( data => {
+        responseData.etablissements = data;
+        return this.saveEntities();
+      })
+      .then( data => {
+        responseData.entities = data;
+        return responseData;
+      })
+    }
+    else{
+      return super.save();
+    }
   }
+  //
+  // reset(shouldResetEntities){
+  //   if(shouldResetEntities){
+  //     let responseData = { etablissements: {}, entities: {}};
+  //     return super.reset().then( data => {
+  //       responseData.etablissements = data;
+  //       return this.saveEntities();
+  //     })
+  //     .then( data => {
+  //       responseData.entities = data;
+  //       return responseData;
+  //     })
+  //   }
+  //   else{
+  //     return super.save();
+  //   }
+  // }
+
+  // saveWithEntities(){
+  //
+  // }
+
+
 }
 
 module.exports = EtablissementsIngestor;

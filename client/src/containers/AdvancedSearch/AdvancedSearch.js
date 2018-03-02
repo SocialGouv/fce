@@ -28,6 +28,7 @@ class AdvancedSearch extends React.Component {
 
   loadNomenclatures() {
     if (
+      this.props.autocompleteData &&
       this.props.autocompleteData.naf &&
       this.props.autocompleteData.naf.length
     ) {
@@ -79,14 +80,25 @@ class AdvancedSearch extends React.Component {
       return false;
     }
 
-    this.props.advancedSearch(this.state.terms).then(response => {
-      this.setState({
-        hasError: false,
-        searchLoading: false,
-        redirectTo:
-          response.data.results.length === 1 ? "/enterprise" : "/search/results"
+    this.props
+      .advancedSearch()
+      .then(response => {
+        this.setState({
+          hasError: false,
+          searchLoading: false,
+          redirectTo:
+            response.data.results.length === 1
+              ? `/establishment/`
+              : "/search/results"
+        });
+      })
+      .catch(error => {
+        this.setState({
+          hasError: true,
+          searchLoading: false,
+          errorMessage: "La recherche a échouée"
+        });
       });
-    });
   };
 
   render() {

@@ -2,6 +2,7 @@ const Ingestor = require("./Ingestor");
 const WorksheetHelper = require("../helpers/WorksheetHelper");
 const Etablissement = require("../models/EtablissementModel");
 const CommunesIngestor = require("./CommunesIngestor");
+const DepartementsIngestor = require("./DepartementsIngestor");
 
 class EtablissementsIngestor extends Ingestor {
   constructor(filePath) {
@@ -27,12 +28,16 @@ class EtablissementsIngestor extends Ingestor {
     let entities = { communes: [], codePostaux: [], departements: [] };
     const etablissements = this.getEtablissements();
     const communesIngestor = new CommunesIngestor();
+    const departementsIngestor = new DepartementsIngestor();
+
     return communesIngestor
       .save(etablissements)
       .then(data => {
         entities.communes = data;
+        return departementsIngestor.save(etablissements);
       })
-      .then(() => {
+      .then(data => {
+        entities.departements = data;
         return entities;
       });
   }
@@ -59,30 +64,34 @@ class EtablissementsIngestor extends Ingestor {
     let entities = { communes: {}, codePostaux: {}, departements: {} };
     const etablissements = this.getEtablissements();
     const communesIngestor = new CommunesIngestor();
+    const departementsIngestor = new DepartementsIngestor();
     return communesIngestor
       .reset()
       .then(data => {
         entities.communes = data;
+        return departementsIngestor.reset();
       })
-      .then(() => {
+      .then(data => {
+        entities.departements = data;
+
         return entities;
       });
   }
 
-
-  reset(shouldResetEntities){
-    if(shouldResetEntities){
-      let responseData = { etablissements: {}, entities: {}};
-      return super.reset().then( data => {
-        responseData.etablissements = data;
-        return this.resetEntities();
-      })
-      .then( data => {
-        responseData.entities = data;
-        return responseData;
-      })
-    }
-    else{
+  reset(shouldResetEntities) {
+    if (shouldResetEntities) {
+      let responseData = { etablissements: {}, entities: {} };
+      return super
+        .reset()
+        .then(data => {
+          responseData.etablissements = data;
+          return this.resetEntities();
+        })
+        .then(data => {
+          responseData.entities = data;
+          return responseData;
+        });
+    } else {
       return super.save();
     }
   }

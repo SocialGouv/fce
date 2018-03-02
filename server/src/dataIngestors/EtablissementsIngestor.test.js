@@ -3,6 +3,7 @@ require("../mongo/db");
 const EtablissementsIngestor = require("./EtablissementsIngestor");
 const Etablissement = require("../models/EtablissementModel");
 const Commune = require("../models/CommuneModel");
+const Departement = require("../models/DepartementModel");
 
 const filePath = "./data/SIENE_test.csv";
 const TIMEOUT = 15000;
@@ -54,19 +55,27 @@ describe("save()", () => {
 
 describe("saveWithEntities()", () => {
   beforeEach(() => {
-    return Etablissement.remove({}).then(() => {
-      return Commune.remove({});
-    });
+    return Etablissement.remove({})
+      .then(() => {
+        return Commune.remove({});
+      })
+      .then(() => {
+        return Departement.remove({});
+      });
   }, TIMEOUT);
 
   afterEach(() => {
-    return Etablissement.remove({}).then(() => {
-      return Commune.remove({});
-    });
+    return Etablissement.remove({})
+      .then(() => {
+        return Commune.remove({});
+      })
+      .then(() => {
+        return Departement.remove({});
+      });
   }, TIMEOUT);
 
   test(
-    "Communes",
+    "default",
     () => {
       const ingestor = new EtablissementsIngestor(filePath);
       const shouldSaveEntities = true;
@@ -76,7 +85,7 @@ describe("saveWithEntities()", () => {
           expect(data.etablissements.length).toBe(9);
           expect(data.entities.communes.length).toBe(3);
           expect(data.entities.codePostaux.length).toBe(0);
-          expect(data.entities.departements.length).toBe(0);
+          expect(data.entities.departements.length).toBe(2);
           return;
         })
         .catch(console.error);
@@ -87,19 +96,27 @@ describe("saveWithEntities()", () => {
 
 describe("resetWithEntities()", () => {
   beforeEach(() => {
-    return Etablissement.remove({}).then(() => {
-      return Commune.remove({});
-    });
+    return Etablissement.remove({})
+      .then(() => {
+        return Commune.remove({});
+      })
+      .then(() => {
+        return Departement.remove({});
+      });
   }, TIMEOUT);
 
   afterEach(() => {
-    return Etablissement.remove({}).then(() => {
-      return Commune.remove({});
-    });
+    return Etablissement.remove({})
+      .then(() => {
+        return Commune.remove({});
+      })
+      .then(() => {
+        return Departement.remove({});
+      });
   }, TIMEOUT);
 
   test(
-    "Communes",
+    "Default",
     () => {
       const ingestor = new EtablissementsIngestor(filePath);
       const shouldSaveEntities = true;
@@ -114,7 +131,7 @@ describe("resetWithEntities()", () => {
 
           expect(data.entities.communes.ok).toBe(1);
           // expect(data.entities.codePostaux).toBe(0);
-          // expect(data.entities.departements).toBe(0);
+          expect(data.entities.departements.ok).toBe(1);
           return;
         })
         .catch(console.error);

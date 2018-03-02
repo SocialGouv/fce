@@ -31,4 +31,10 @@ router.get("/communes", function(req, res) {
   });
 });
 
+router.get("/departements", function(req, res) {
+  return getAllEntities(DepartementModel).then(data => {
+    res.send(data);
+  });
+});
+
 module.exports = router;

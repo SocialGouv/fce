@@ -92,12 +92,12 @@ router.post("/upload", upload.any(), function(req, res) {
       const fileOptions = filesOptions[fieldName];
       const filePath = file.path;
       const sheetName = fileOptions.sheetName;
+      const shouldSaveAndResetEntities = true;
       const ingestor = new fileOptions.ingestorClass(filePath, sheetName);
       ingestor
-        .reset()
+        .reset(shouldSaveAndResetEntities)
         .then(data => {
-          const shouldSaveEntities = true;
-          return ingestor.save(shouldSaveEntities);
+          return ingestor.save(shouldSaveAndResetEntities);
         })
         .then(data => {
           removeOldFiles(fieldName, file.filename);

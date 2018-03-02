@@ -37,12 +37,45 @@ class EtablissementsIngestor extends Ingestor {
       });
   }
 
-  save(shouldSaveEntities){
-    if(shouldSaveEntities){
-      let responseData = { etablissements: [], entities: {}};
-      return super.save().then( data => {
+  save(shouldSaveEntities) {
+    if (shouldSaveEntities) {
+      let responseData = { etablissements: [], entities: {} };
+      return super
+        .save()
+        .then(data => {
+          responseData.etablissements = data;
+          return this.saveEntities();
+        })
+        .then(data => {
+          responseData.entities = data;
+          return responseData;
+        });
+    } else {
+      return super.save();
+    }
+  }
+
+  resetEntities() {
+    let entities = { communes: {}, codePostaux: {}, departements: {} };
+    const etablissements = this.getEtablissements();
+    const communesIngestor = new CommunesIngestor();
+    return communesIngestor
+      .reset()
+      .then(data => {
+        entities.communes = data;
+      })
+      .then(() => {
+        return entities;
+      });
+  }
+
+
+  reset(shouldResetEntities){
+    if(shouldResetEntities){
+      let responseData = { etablissements: {}, entities: {}};
+      return super.reset().then( data => {
         responseData.etablissements = data;
-        return this.saveEntities();
+        return this.resetEntities();
       })
       .then( data => {
         responseData.entities = data;
@@ -53,29 +86,10 @@ class EtablissementsIngestor extends Ingestor {
       return super.save();
     }
   }
-  //
-  // reset(shouldResetEntities){
-  //   if(shouldResetEntities){
-  //     let responseData = { etablissements: {}, entities: {}};
-  //     return super.reset().then( data => {
-  //       responseData.etablissements = data;
-  //       return this.saveEntities();
-  //     })
-  //     .then( data => {
-  //       responseData.entities = data;
-  //       return responseData;
-  //     })
-  //   }
-  //   else{
-  //     return super.save();
-  //   }
-  // }
 
   // saveWithEntities(){
   //
   // }
-
-
 }
 
 module.exports = EtablissementsIngestor;

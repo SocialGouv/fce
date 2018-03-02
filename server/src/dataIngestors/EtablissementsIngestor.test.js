@@ -84,3 +84,41 @@ describe("saveWithEntities()", () => {
     TIMEOUT
   );
 });
+
+describe("resetWithEntities()", () => {
+  beforeEach(() => {
+    return Etablissement.remove({}).then(() => {
+      return Commune.remove({});
+    });
+  }, TIMEOUT);
+
+  afterEach(() => {
+    return Etablissement.remove({}).then(() => {
+      return Commune.remove({});
+    });
+  }, TIMEOUT);
+
+  test(
+    "Communes",
+    () => {
+      const ingestor = new EtablissementsIngestor(filePath);
+      const shouldSaveEntities = true;
+      return ingestor
+        .save(shouldSaveEntities)
+        .then(data => {
+          return ingestor.reset(shouldSaveEntities);
+        })
+        .then(data => {
+          expect(data.etablissements.n).toBe(9);
+          expect(data.etablissements.ok).toBe(1);
+
+          expect(data.entities.communes.ok).toBe(1);
+          // expect(data.entities.codePostaux).toBe(0);
+          // expect(data.entities.departements).toBe(0);
+          return;
+        })
+        .catch(console.error);
+    },
+    TIMEOUT
+  );
+});

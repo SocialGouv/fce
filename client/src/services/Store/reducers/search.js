@@ -1,4 +1,8 @@
-import { SEARCH_RESULTS, SEARCH_TERMS } from "../constants/ActionTypes";
+import {
+  SEARCH_RESULTS,
+  SEARCH_TERMS,
+  SEARCH_NOMENCLATURES
+} from "../constants/ActionTypes";
 
 const initialState = {
   results: [],
@@ -10,6 +14,12 @@ const initialState = {
     commune: null,
     codePostal: null,
     departement: null
+  },
+  nomenclatures: {
+    naf: [],
+    communes: [],
+    codePostaux: [],
+    departements: []
   }
 };
 
@@ -31,6 +41,14 @@ const search = (state = initialState, action) => {
       return {
         ...state,
         terms: { ...initialState.terms, ...action.terms }
+      };
+    case SEARCH_NOMENCLATURES:
+      return {
+        ...state,
+        nomenclatures: {
+          ...initialState.nomenclatures,
+          ...action.nomenclatures
+        }
       };
     default:
       return state;

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import AdvancedSearchView from "../../components/AdvancedSearch";
-import { advancedSearch } from "../../services/Store/actions";
+import { advancedSearch, getNomenclatures } from "../../services/Store/actions";
 
 class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -16,9 +16,39 @@ class AdvancedSearch extends React.Component {
       },
       hasError: false,
       errorMessage: null,
-      loading: false,
+      searchLoading: false,
+      isLoadedNomenclatures: false,
       redirectTo: false
     };
+  }
+
+  componentDidMount() {
+    this.loadNomenclatures();
+  }
+
+  loadNomenclatures() {
+    if (
+      this.props.autocompleteData.naf &&
+      this.props.autocompleteData.naf.length
+    ) {
+      this.setState({ isLoadedNomenclatures: true, hasError: false });
+    } else {
+      this.props
+        .getNomenclatures()
+        .then(response => {
+          this.setState({
+            isLoadedNomenclatures: true,
+            hasError: false
+          });
+        })
+        .catch(error => {
+          this.setState({
+            isLoadedNomenclatures: true,
+            hasError: true,
+            errorMessage: "Impossible de charger les nomenclatures"
+          });
+        });
+    }
   }
 
   updateForm = (name, value) => {
@@ -32,7 +62,7 @@ class AdvancedSearch extends React.Component {
 
   search = evt => {
     evt && evt.preventDefault();
-    this.setState({ hasError: false, loading: true, errorMessage: null });
+    this.setState({ hasError: false, searchLoading: true, errorMessage: null });
 
     const nbTermsCompleted = () =>
       Object.keys(this.state.terms).filter(x => this.state.terms[x]).length;
@@ -40,7 +70,7 @@ class AdvancedSearch extends React.Component {
     if (!nbTermsCompleted()) {
       this.setState({
         hasError: true,
-        loading: false,
+        searchLoading: false,
         errorMessage: "Vous devez renseigner au moins un champ"
       });
       return false;
@@ -49,7 +79,7 @@ class AdvancedSearch extends React.Component {
     this.props.advancedSearch(this.state.terms).then(response => {
       this.setState({
         hasError: false,
-        loading: false,
+        searchLoading: false,
         redirectTo:
           response.data.results.length === 1 ? "/enterprise" : "/search/results"
       });
@@ -65,7 +95,8 @@ class AdvancedSearch extends React.Component {
       <AdvancedSearchView
         search={this.search}
         updateForm={this.updateForm}
-        loading={this.state.loading}
+        searchLoading={this.state.searchLoading}
+        isLoaded={this.state.isLoadedNomenclatures}
         hasError={this.state.hasError}
         errorMessage={this.state.errorMessage}
         autocompleteData={this.props.autocompleteData}
@@ -76,12 +107,7 @@ class AdvancedSearch extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    autocompleteData: {
-      naf: state.common.naf,
-      communes: state.common.communes,
-      codePostaux: state.common.codePostaux,
-      departements: state.common.departements
-    }
+    autocompleteData: state.search.nomenclatures
   };
 };
 
@@ -89,6 +115,9 @@ const mapDispatchToProps = dispatch => {
   return {
     advancedSearch: terms => {
       return dispatch(advancedSearch(terms));
+    },
+    getNomenclatures: () => {
+      return dispatch(getNomenclatures());
     }
   };
 };

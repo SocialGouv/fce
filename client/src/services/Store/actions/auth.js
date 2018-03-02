@@ -11,10 +11,10 @@ export const loginUser = password => (dispatch, getState) => {
       if (response.data.user) {
         dispatch(_loginUser(response.data.user));
       }
-      return response;
+      return Promise.resolve(response);
     })
     .catch(function(error) {
-      return error;
+      return Promise.reject(error);
     });
 };
 

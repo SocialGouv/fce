@@ -4,6 +4,7 @@ import { Row, Col, Form, FormGroup, Label, Alert, Button } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 import DropdownList from "react-widgets/lib/DropdownList";
+import withLoading from "../../services/Loading";
 
 class AdvancedSearch extends React.Component {
   render() {
@@ -87,8 +88,8 @@ class AdvancedSearch extends React.Component {
               </FormGroup>
 
               <div className="d-flex justify-content-center">
-                <Button color="primary" disabled={this.props.loading}>
-                  {this.props.loading ? (
+                <Button color="primary" disabled={this.props.searchLoading}>
+                  {this.props.searchLoading ? (
                     <FontAwesomeIcon icon={faSpinner} spin />
                   ) : (
                     "Rechercher"
@@ -103,4 +104,4 @@ class AdvancedSearch extends React.Component {
   }
 }
 
-export default AdvancedSearch;
+export default withLoading(AdvancedSearch);

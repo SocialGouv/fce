@@ -66,7 +66,7 @@ after 'deploy' do
 end
 
 task 'restart' do
-  run "ps -ef | grep node | grep #{deploy_to} | grep -v grep | awk '{print $2}' | xargs kill -9"
+  run "ps -ef | grep node | grep \"#{application}\" | grep -v grep | awk '{print $2}' | xargs kill -9"
 end
 after 'deploy', 'restart'
 after 'restart', 'deploy:cleanup'

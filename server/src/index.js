@@ -63,6 +63,6 @@ app.listen(
   },
   () => {
     console.log(`Serving files from: ${htdocs_path}`);
-    console.log(`Listening on port: ${port}`);
+    console.log(`Listening on ${host || ""}:${port}`);
   }
 );

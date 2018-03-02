@@ -9,4 +9,10 @@ const codePostalSchema = new Schema({
 
 const CodePostal = mongoose.model("CodePostal", codePostalSchema);
 
+
+codePostalSchema.statics.findOneByCode = function(code_postal, cb) {
+  return this.findOne({ code_postal }, cb);
+};
+
+
 module.exports = CodePostal;

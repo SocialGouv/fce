@@ -50,3 +50,31 @@ describe("save()", () => {
     TIMEOUT
   );
 });
+
+describe("saveWithEntities()", () => {
+  beforeEach(() => {
+    return Etablissement.remove({});
+  }, TIMEOUT);
+
+  afterEach(() => {
+    return Etablissement.remove({});
+  }, TIMEOUT);
+
+  test(
+    "Communes",
+    () => {
+      const ingestor = new EtablissementsIngestor(filePath);
+      return ingestor
+        .saveWithEntities()
+        .then(data => {
+          expect(data.etablissements.length).toBe(9);
+          expect(data.entities.communes.length).toBe(3);
+          expect(data.entities.codePostaux.length).toBe(0);
+          expect(data.entities.departements.length).toBe(0);
+          return;
+        })
+        .catch(console.error);
+    },
+    TIMEOUT
+  );
+});

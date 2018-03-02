@@ -79,12 +79,12 @@ const filesOptions = {
 };
 
 router.post("/upload", upload.any(), function(req, res) {
-  let data = {
+  let responseData = {
     files: {}
   };
   req.files.map(file => {
     const fieldName = file.fieldname;
-    data.files[fieldName] = { success: null, message: null };
+    responseData.files[fieldName] = { success: null, message: null };
 
     const keys = Object.keys(filesOptions);
     const index = keys.indexOf(fieldName);
@@ -100,21 +100,21 @@ router.post("/upload", upload.any(), function(req, res) {
         })
         .then(data => {
           removeOldFiles(fieldName, file.filename);
-          data.files[fieldName].success = true;
-          data.files[fieldName].message = "Uploaded and saved ! ";
+          responseData.files[fieldName].success = true;
+          responseData.files[fieldName].message = "Uploaded and saved ! ";
         })
         .catch(error => {
           console.error(error);
-          data.files[fieldName].success = false;
-          data.files[fieldName].message = "Ingestor error";
+          responseData.files[fieldName].success = false;
+          responseData.files[fieldName].message = "Ingestor error";
         });
     } else {
-      data.files[fieldName].success = true;
-      data.files[fieldName].message = "Uploaded ! ";
+      responseData.files[fieldName].success = true;
+      responseData.files[fieldName].message = "Uploaded ! ";
     }
   });
 
-  res.send(data);
+  res.send(responseData);
 });
 
 module.exports = router;

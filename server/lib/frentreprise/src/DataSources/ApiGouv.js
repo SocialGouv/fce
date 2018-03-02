@@ -31,7 +31,7 @@ export default class ApiGouv extends DataSource {
         params: this[_getAPIParams](this)
       });
     } catch (exception) {
-      console.log(exception);
+      console.error(exception);
     }
     const out = {};
 
@@ -43,7 +43,6 @@ export default class ApiGouv extends DataSource {
       legacy.data.etablissement
     ) {
       const legacy_et = legacy.data.etablissement;
-      console.log(legacy_et);
       [
         "siret",
         "siege_social",
@@ -90,7 +89,6 @@ export default class ApiGouv extends DataSource {
       etablissement.data.etablissement
     ) {
       const et = etablissement.data.etablissement;
-      console.log(et);
 
       [].forEach(key => {
         out[key] = et[key];
@@ -99,12 +97,26 @@ export default class ApiGouv extends DataSource {
       out.date_creation = this[_convertDate](et.date_creation_etablissement);
 
       if (et.adresse && typeof et.adresse === "object") {
-        out.adresse = this[_getCleanAddress](
-          et.adresse,
-          et.region_implantation
-        );
-        out.adresse_components;
+        out.adresse = this[_getCleanAddress](et.adresse);
+        out.adresse_components = et.adresse;
+        out.departement =
+          typeof et.adresse.code_insee_localite === "string" &&
+          et.adresse.code_insee_localite.length > 1 &&
+          et.adresse.code_insee_localite.substr(0, 2);
       }
+
+      out.region =
+        (et.region_implementation && et.region_implementation.value) || null;
+
+      out.activite = `${et.naf} - ${et.libelle_naf}`;
+
+      out.etablissement_employeur =
+        +et.tranche_effectif_salarie_etablissement.a > 0;
+
+      out.tranche_effectif_insee =
+        et.tranche_effectif_salarie_etablissement.intitule;
+      out.annee_tranche_effectif_insee =
+        +et.tranche_effectif_salarie_etablissement.date_reference || null;
     }
 
     return out;
@@ -214,12 +226,11 @@ export default class ApiGouv extends DataSource {
     return (timestamp && new Date(timestamp * 1000)) || null;
   }
 
-  [_getCleanAddress](ad, ri) {
+  [_getCleanAddress](ad) {
     return `
     ${ad.numero_voie || ""} ${ad.type_voie || ""} ${ad.nom_voie || ""}
     ${ad.complement_adresse || ""} ${ad.code_postal || ""}
     ${ad.localite || ""}
-    ${(ri && ri.value) || ""}
     `
       .trim()
       .split("\n")

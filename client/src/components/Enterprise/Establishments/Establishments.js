@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Establishment from "./Establishment";
 import Value from "../../../elements/Value";
 
@@ -27,7 +28,9 @@ class Establishments extends React.Component {
 
             <dt className="col-md-4">SIREN</dt>
             <dd className="definition col-md-8">
-              <Value value={enterprise.siren} empty="-" />
+              <Link to={`/enterprise/${enterprise.siren}`}>
+                <Value value={enterprise.siren} empty="-" />
+              </Link>
             </dd>
           </dl>
         </section>

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router";
 import {
   loadEstablishment,
   loadEntreprise
@@ -14,7 +15,7 @@ class Enterprise extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEnterprise: this.props.match.params.hasOwnProperty("siren"),
+      isEnterprise: null,
       enterprise: null,
       headOffice: null,
       establishment: null,
@@ -25,12 +26,34 @@ class Enterprise extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.loadEntityByStore()) {
-      this.loadEntityByApi();
+    this.mountComponent();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match && prevProps.match.url) {
+      if (this.props.match.url !== prevProps.match.url) {
+        this.mountComponent();
+      }
     }
   }
 
+  mountComponent() {
+    console.log("mountComponent");
+    this.setState(
+      {
+        isEnterprise: this.props.match.params.hasOwnProperty("siren"),
+        isLoaded: false
+      },
+      () => {
+        if (!this.loadEntityByStore()) {
+          this.loadEntityByApi();
+        }
+      }
+    );
+  }
+
   loadEntityByStore = () => {
+    console.log("loadEntityByStore", this.state.isEnterprise);
     if (this.state.isEnterprise) {
       return this.loadEnterpriseByStore(this.props.match.params.siren);
     }
@@ -42,7 +65,8 @@ class Enterprise extends React.Component {
 
     if (
       this.props.currentEnterprise &&
-      this.props.currentEnterprise.etablissements
+      this.props.currentEnterprise.etablissements &&
+      this.props.currentEnterprise._dataSources.ApiGouv
     ) {
       establishment = this.props.currentEnterprise.etablissements.find(
         establishment => {
@@ -61,7 +85,8 @@ class Enterprise extends React.Component {
   loadEnterpriseByStore = siren => {
     if (
       this.props.currentEnterprise &&
-      this.props.currentEnterprise.siren === siren
+      this.props.currentEnterprise.siren === siren &&
+      this.props.currentEnterprise._dataSources.ApiGouv
     ) {
       return this.initData(this.props.currentEnterprise, null);
     }
@@ -179,4 +204,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Enterprise);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Enterprise)
+);

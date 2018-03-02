@@ -5,7 +5,6 @@ import { toI18nDate } from "../../../helpers/Date";
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
-
     return (
       <section id="activity" className="enterprise-section">
         <h1 className="title h4">État et activité</h1>
@@ -18,12 +17,24 @@ class EstablishmentActivity extends React.Component {
 
           <dt className="dt col-md-4">Etat de l'établissement</dt>
           <dd className="dd col-md-8">
-            <Value value={establishment.etat_etablissement} empty="-" />
+            <Value
+              value={
+                establishment.etat_etablissement &&
+                establishment.etat_etablissement.label
+              }
+              empty="-"
+            />
           </dd>
 
           <dt className="dt col-md-4">Date de l'état</dt>
           <dd className="dd col-md-8">
-            <Value value={toI18nDate(establishment.date_etat)} empty="-" />
+            <Value
+              value={toI18nDate(
+                establishment.etat_etablissement &&
+                  establishment.etat_etablissement.date
+              )}
+              empty="-"
+            />
           </dd>
 
           <dt className="dt col-md-4">Activité</dt>

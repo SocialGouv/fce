@@ -1,6 +1,5 @@
 import React from "react";
 import Value from "../../../elements/Value";
-import { buildAddress } from "../../../helpers/Address";
 
 class EstablishmentIdentity extends React.Component {
   render() {
@@ -61,7 +60,7 @@ class EstablishmentIdentity extends React.Component {
 
           <dt className="dt col-md-4">Adresse</dt>
           <dd className="dd col-md-8">
-            <Value value={buildAddress(establishment.adresse)} empty="-" />
+            <Value value={establishment.adresse} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Département</dt>

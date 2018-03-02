@@ -17,8 +17,14 @@ class Establishment extends React.Component {
           </Link>
         </li>
         <li>
-          <Value value={establishment.etat_etablissement} empty="" /> -{" "}
-          <Value value={establishment.departement} empty="" /> -{" "}
+          <Value
+            value={
+              establishment.etat_etablissement &&
+              establishment.etat_etablissement.label
+            }
+            empty=""
+          />{" "}
+          - <Value value={establishment.departement} empty="" /> -{" "}
           <Value
             value={establishment.adresse && establishment.adresse.localite}
             empty=""

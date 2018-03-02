@@ -1,11 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const frentreprise = __DIST
-  ? require("frentreprise")
-  : require("../../lib/frentreprise/src/frentreprise.js");
+
 const EtablissementModel = require("../models/EtablissementModel");
 const deleteKeyIfNotDefinedOrEmpty = require("../utils/ObjectManipulations")
   .deleteKeyIfNotDefinedOrEmpty;
+
+const frentreprise = __DIST
+  ? require("frentreprise")
+  : require("../../lib/frentreprise/src/frentreprise.js");
 
 router.get("/search", function(req, res) {
   const query = (req.query["q"] || "").trim();

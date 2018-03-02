@@ -38,6 +38,9 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 const htdocs_path = path.resolve(__dirname, "./htdocs");
 console.log(`Serving files from: ${htdocs_path}`);
 
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -63,6 +66,6 @@ app.listen(
   },
   () => {
     console.log(`Serving files from: ${htdocs_path}`);
-    console.log(`Listening on port: ${port}`);
+    console.log(`Listening on ${host || ""}:${port}`);
   }
 );

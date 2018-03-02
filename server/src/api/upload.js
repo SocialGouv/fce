@@ -7,6 +7,7 @@ const PoleCIngestor = require("../dataIngestors/interactions/PoleCIngestor");
 const PoleTIngestor = require("../dataIngestors/interactions/PoleTIngestor");
 const Pole3EIngestor = require("../dataIngestors/interactions/Pole3EIngestor");
 const EtablissementsIngestor = require("../dataIngestors/EtablissementsIngestor");
+const NomenclaturesIngestor = require("../dataIngestors/NomenclaturesIngestor");
 /*
 WikiT.xls
 EOS.xls
@@ -70,12 +71,20 @@ const filesOptions = {
     fileName: "siene",
     sheetName: "Sheet1",
     ingestorClass: EtablissementsIngestor
+  },
+  nomenclature: {
+    fileName: "nomenclature",
+    ingestorClass: NomenclaturesIngestor
   }
 };
 
 router.post("/upload", upload.any(), function(req, res) {
+  let data = {
+    files: {}
+  };
   req.files.map(file => {
     const fieldName = file.fieldname;
+    data.files[fieldName] = { success: null, message: null };
 
     const keys = Object.keys(filesOptions);
     const index = keys.indexOf(fieldName);
@@ -91,13 +100,21 @@ router.post("/upload", upload.any(), function(req, res) {
         })
         .then(data => {
           removeOldFiles(fieldName, file.filename);
-          res.send("Uploaded and saved ! ");
+          data.files[fieldName].success = true;
+          data.files[fieldName].message = "Uploaded and saved ! ";
         })
-        .catch(console.error);
+        .catch(error => {
+          console.error(error);
+          data.files[fieldName].success = false;
+          data.files[fieldName].message = "Ingestor error";
+        });
     } else {
-      res.send("Uploaded ! ");
+      data.files[fieldName].success = true;
+      data.files[fieldName].message = "Uploaded ! ";
     }
   });
+
+  res.send(data);
 });
 
 module.exports = router;

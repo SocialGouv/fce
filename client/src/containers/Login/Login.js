@@ -8,9 +8,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
       password: "",
-      redirectToReferrer: false
+      redirectTo: false
     };
   }
 
@@ -19,14 +18,39 @@ class Login extends Component {
     this.setState({ hasError: false, loading: true });
 
     this.props
-      .loginUser(this.state.username, this.state.password)
+      .loginUser(this.state.password)
       .then(response => {
-        this.setState({
-          hasError: false,
-          loading: false,
-          redirectToReferrer: true
-        });
-      });
+        if (response.data.user) {
+          this._loginSuccess(response.data.user);
+        } else {
+          this._loginFail();
+        }
+      })
+      .catch(
+        function(error) {
+          this._loginFail();
+        }.bind(this)
+      );
+  };
+
+  _loginSuccess = user => {
+    const { from } = (this.props.location && this.props.location.state) || {
+      from: { pathname: "/" }
+    };
+
+    this.setState({
+      hasError: false,
+      loading: false,
+      redirectTo: user.isAdmin ? "/admin" : from
+    });
+  };
+
+  _loginFail = () => {
+    this.setState({
+      hasError: true,
+      loading: false,
+      redirectTo: false
+    });
   };
 
   updateLogin = evt => {
@@ -38,13 +62,10 @@ class Login extends Component {
   };
 
   render() {
-    const { from } = (this.props.location && this.props.location.state) || {
-      from: { pathname: "/" }
-    };
-    const { redirectToReferrer, hasError, loading } = this.state;
+    const { redirectTo, hasError, loading } = this.state;
 
-    if (redirectToReferrer) {
-      return <Redirect to={from} />;
+    if (redirectTo) {
+      return <Redirect to={redirectTo} />;
     }
 
     return (

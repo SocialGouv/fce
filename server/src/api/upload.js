@@ -6,6 +6,8 @@ const multer = require("multer");
 const PoleCIngestor = require("../dataIngestors/interactions/PoleCIngestor");
 const PoleTIngestor = require("../dataIngestors/interactions/PoleTIngestor");
 const Pole3EIngestor = require("../dataIngestors/interactions/Pole3EIngestor");
+const EtablissementsIngestor = require("../dataIngestors/EtablissementsIngestor");
+const NomenclaturesIngestor = require("../dataIngestors/NomenclaturesIngestor");
 /*
 WikiT.xls
 EOS.xls
@@ -27,7 +29,6 @@ const storage = multer.diskStorage({
     cb(null, destinationFolder);
   },
   filename: function(req, file, cb) {
-    console.log(file);
     const extension = path.extname(file.originalname);
     let baseName = path.basename(file.originalname, extension);
     baseName = baseName.toLowerCase();
@@ -39,10 +40,10 @@ const storage = multer.diskStorage({
 const removeOldFiles = (fieldName, newFileName) => {
   fs.readdirSync(destinationFolder).forEach(folderFileName => {
     let regex = new RegExp(fieldName, "i");
-    let match = folderFile.match(regex);
+    let match = folderFileName.match(regex);
 
     if (match && folderFileName != newFileName) {
-      fs.unlinkSync(destinationFolder + "/" + folderFile);
+      fs.unlinkSync(destinationFolder + "/" + folderFileName);
     }
   });
   return;
@@ -65,18 +66,30 @@ const filesOptions = {
     fileName: "eos",
     sheetName: "Sheet1",
     ingestorClass: Pole3EIngestor
+  },
+  siene: {
+    fileName: "siene",
+    sheetName: "Sheet1",
+    ingestorClass: EtablissementsIngestor
+  },
+  nomenclature: {
+    fileName: "nomenclature",
+    ingestorClass: NomenclaturesIngestor
   }
 };
 
 router.post("/upload", upload.any(), function(req, res) {
+  let data = {
+    files: {}
+  };
   req.files.map(file => {
     const fieldName = file.fieldname;
+    data.files[fieldName] = { success: null, message: null };
 
     const keys = Object.keys(filesOptions);
     const index = keys.indexOf(fieldName);
     if (index > -1) {
       const fileOptions = filesOptions[fieldName];
-
       const filePath = file.path;
       const sheetName = fileOptions.sheetName;
       const ingestor = new fileOptions.ingestorClass(filePath, sheetName);
@@ -87,13 +100,21 @@ router.post("/upload", upload.any(), function(req, res) {
         })
         .then(data => {
           removeOldFiles(fieldName, file.filename);
-          res.send("Uploaded and saved ! ");
+          data.files[fieldName].success = true;
+          data.files[fieldName].message = "Uploaded and saved ! ";
         })
-        .catch(console.error);
+        .catch(error => {
+          console.error(error);
+          data.files[fieldName].success = false;
+          data.files[fieldName].message = "Ingestor error";
+        });
     } else {
-      res.send("Uploaded ! ");
+      data.files[fieldName].success = true;
+      data.files[fieldName].message = "Uploaded ! ";
     }
   });
+
+  res.send(data);
 });
 
 module.exports = router;

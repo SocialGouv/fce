@@ -27,10 +27,11 @@ const search = (state = initialState, action) => {
   switch (action.type) {
     case SEARCH_RESULTS:
       if (action.results) {
-        action.results.map(result => {
+        action.results = action.results.map(result => {
           if (!result._dataSources) {
             result._dataSources = {};
           }
+          return result;
         });
       }
       return {

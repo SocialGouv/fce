@@ -289,7 +289,6 @@ describe("Advanced search", () => {
       return ingestor
         .save()
         .then(data => {
-          // data.map(d=>console.log(d.code_activite));
           return Etablissement.findByAdvancedSearch(searchParams);
         })
         .then(data => {

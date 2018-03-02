@@ -3,10 +3,12 @@ const NotImplementedError = require("../errors/NotImplementedError");
 
 class Ingestor {
   constructor(filePath, sheetName) {
-    const workbook = XLSX.readFile(filePath);
-    this.workbook = workbook;
-    if (sheetName) {
-      this.workSheet = workbook.Sheets[sheetName];
+    if (filePath) {
+      const workbook = XLSX.readFile(filePath);
+      this.workbook = workbook;
+      if (sheetName) {
+        this.workSheet = workbook.Sheets[sheetName];
+      }
     }
   }
 
@@ -16,8 +18,8 @@ class Ingestor {
     );
   }
 
-  save() {
-    const data = this.getData();
+  save(params) {
+    const data = this.getData(params);
     const promises = data.map(item => {
       const model = new this.Model(item);
       return model.save();
@@ -27,10 +29,10 @@ class Ingestor {
   }
 
   reset(params) {
-    if(this.Model){
+    if (this.Model) {
       const p = params || {};
       return this.Model.remove(p);
-    }else{
+    } else {
       throw new NotImplementedError(
         "You must implement reset method in child or define a Model."
       );

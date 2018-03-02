@@ -23,13 +23,12 @@ test("default - Code_activite_NAF", () => {
   return nomenclature
     .save()
     .then(() => {
-      return Nomenclature.findByCode(nData.categorie, nData.code);
+      return Nomenclature.findOneByCategoryAndCode(nData.categorie, nData.code);
     })
     .then(data => {
-      const res = data[0];
-      expect(res.categorie).toBe(nData.categorie);
-      expect(res.code).toBe(nData.code);
-      expect(res.libelle).toBe(nData.libelle);
+      expect(data.categorie).toBe(nData.categorie);
+      expect(data.code).toBe(nData.code);
+      expect(data.libelle).toBe(nData.libelle);
     });
 }, TIMEOUT);
 
@@ -46,14 +45,13 @@ test("Code_CJ3", () => {
   return nomenclature
     .save()
     .then(() => {
-      return Nomenclature.findByCode(nData.categorie, nData.code);
+      return Nomenclature.findOneByCategoryAndCode(nData.categorie, nData.code);
     })
     .then(data => {
-      const res = data[0];
-      expect(res.categorie).toBe(nData.categorie);
-      expect(res.code).toBe(nData.code);
-      expect(res.libelle).toBeUndefined();
-      expect(res.libelle_CJ3).toBe(nData.libelle_CJ3);
-      expect(res.libelle_CJ1).toBe(nData.libelle_CJ1);
+      expect(data.categorie).toBe(nData.categorie);
+      expect(data.code).toBe(nData.code);
+      expect(data.libelle).toBeUndefined();
+      expect(data.libelle_CJ3).toBe(nData.libelle_CJ3);
+      expect(data.libelle_CJ1).toBe(nData.libelle_CJ1);
     });
 }, TIMEOUT);

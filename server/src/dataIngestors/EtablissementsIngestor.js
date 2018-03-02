@@ -1,6 +1,9 @@
 const Ingestor = require("./Ingestor");
 const WorksheetHelper = require("../helpers/WorksheetHelper");
 const Etablissement = require("../models/EtablissementModel");
+const CommunesIngestor = require("./CommunesIngestor");
+const DepartementsIngestor = require("./DepartementsIngestor");
+const CodesPostauxIngestor = require("./CodesPostauxIngestor");
 
 class EtablissementsIngestor extends Ingestor {
   constructor(filePath) {
@@ -18,10 +21,92 @@ class EtablissementsIngestor extends Ingestor {
     return rowsData;
   }
 
-  getEtablissements(){
+  getEtablissements() {
     return this.getData();
   }
 
+  saveEntities() {
+    let entities = { communes: [], codesPostaux: [], departements: [] };
+    const etablissements = this.getEtablissements();
+    const communesIngestor = new CommunesIngestor();
+    const departementsIngestor = new DepartementsIngestor();
+    const codesPostauxIngestor = new CodesPostauxIngestor();
+
+    return communesIngestor
+      .save(etablissements)
+      .then(data => {
+        entities.communes = data;
+        return departementsIngestor.save(etablissements);
+      })
+      .then(data => {
+        entities.departements = data;
+        return codesPostauxIngestor.save(etablissements);
+      })
+      .then(data => {
+        entities.codesPostaux = data;
+        return entities;
+      });
+  }
+
+  save(shouldSaveEntities) {
+    if (shouldSaveEntities) {
+      let responseData = { etablissements: [], entities: {} };
+      return super
+        .save()
+        .then(data => {
+          responseData.etablissements = data;
+          return this.saveEntities();
+        })
+        .then(data => {
+          responseData.entities = data;
+          return responseData;
+        });
+    } else {
+      return super.save();
+    }
+  }
+
+  resetEntities() {
+    let entities = { communes: {}, codesPostaux: {}, departements: {} };
+    const etablissements = this.getEtablissements();
+    const communesIngestor = new CommunesIngestor();
+    const departementsIngestor = new DepartementsIngestor();
+    const codesPostauxIngestor = new CodesPostauxIngestor();
+
+    return communesIngestor
+      .reset()
+      .then(data => {
+        entities.communes = data;
+        return departementsIngestor.reset();
+      })
+      .then(data => {
+        entities.departements = data;
+        return codesPostauxIngestor.reset();
+      })
+      .then(data => {
+        entities.codesPostaux = data;
+
+        return entities;
+      });
+  }
+
+  reset(shouldResetEntities) {
+    if (shouldResetEntities) {
+      let responseData = { etablissements: {}, entities: {} };
+      return super
+        .reset()
+        .then(data => {
+          responseData.etablissements = data;
+          return this.resetEntities();
+        })
+        .then(data => {
+          responseData.entities = data;
+          return responseData;
+        });
+    } else {
+      return super.save();
+    }
+  }
 }
 
 module.exports = EtablissementsIngestor;

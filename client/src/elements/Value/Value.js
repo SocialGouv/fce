@@ -1,4 +1,8 @@
 export default ({ value, empty, no }) => {
+  if (value && typeof value === "object") {
+    return "error";
+  }
+
   if (value === false && no) {
     return no;
   }

@@ -40,6 +40,8 @@ class SearchResults extends React.Component {
           <Col xl="6" md="8">
             {!Array.isArray(this.props.results) ? (
               <Alert color="danger">Une erreur est survenue</Alert>
+            ) : !this.props.results.length ? (
+              <Alert color="info">Aucun résultat</Alert>
             ) : (
               ""
             )}

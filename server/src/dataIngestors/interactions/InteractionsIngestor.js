@@ -25,7 +25,12 @@ class InteractionsIngestor extends Ingestor {
   }
 
   reset() {
-    return super.reset({ pole: this.pole });
+    const params = {
+      removeParams: {
+        pole: this.pole
+      }
+    };
+    return super.reset(params);
   }
 }
 

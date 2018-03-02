@@ -24,6 +24,7 @@ router.get("/:siret", function(req, res) {
   return InteractionModel.findBySIRET(siret)
     .then(results => {
       responseData.results = results;
+      responseData.success = true;
     }, logError)
     .then(() => {
       res.send(responseData);

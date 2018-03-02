@@ -96,7 +96,6 @@ class WorksheetHelper {
           if (!columnsToKeep[columnNames[i]]) {
             continue;
           }
-
           attributeKey = columnsToKeep[columnNames[i]];
         }
         item[attributeKey] = cell.w || cell.v;

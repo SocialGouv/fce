@@ -6,12 +6,12 @@ const Etablissement = require("../models/EtablissementModel");
 const filePath = "./data/SIENE_test.csv";
 const TIMEOUT = 15000;
 
-describe.only("default", () => {
+describe("default", () => {
   test("default", () => {
     const ingestor = new EtablissementsIngestor(filePath);
     const data = ingestor.getEtablissements();
 
-    expect(data[0].siret).toEqual("01765005200016");
+    expect(data[0].siret).toEqual("1765005200016");
     expect(data[0].code_cj3).toEqual("9110");
     expect(data[0].raison_sociale).toEqual("COPROPRIETAIRES");
 
@@ -37,9 +37,9 @@ describe("save()", () => {
         .then(data => {
           expect(data.length).toBe(9);
 
-          expect(data[0].siret).toBe("01765005200016");
+          expect(data[0].siret).toBe("1765005200016");
           expect(data[0].code_cj3).toEqual("9110");
-          expect(data[0].siren).toEqual("017650052");
+          expect(data[0].siren).toEqual("17650052");
           expect(data[0].raison_sociale).toEqual("COPROPRIETAIRES");
 
           expect(data[8].nom_commercial).toEqual("CABINET FICAT MOULAS");

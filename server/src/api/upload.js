@@ -6,6 +6,8 @@ const multer = require("multer");
 const PoleCIngestor = require("../dataIngestors/interactions/PoleCIngestor");
 const PoleTIngestor = require("../dataIngestors/interactions/PoleTIngestor");
 const Pole3EIngestor = require("../dataIngestors/interactions/Pole3EIngestor");
+const EtablissementsIngestor = require("../dataIngestors/EtablissementsIngestor");
+const NomenclaturesIngestor = require("../dataIngestors/NomenclaturesIngestor");
 /*
 WikiT.xls
 EOS.xls
@@ -27,7 +29,6 @@ const storage = multer.diskStorage({
     cb(null, destinationFolder);
   },
   filename: function(req, file, cb) {
-    console.log(file);
     const extension = path.extname(file.originalname);
     let baseName = path.basename(file.originalname, extension);
     baseName = baseName.toLowerCase();
@@ -39,10 +40,10 @@ const storage = multer.diskStorage({
 const removeOldFiles = (fieldName, newFileName) => {
   fs.readdirSync(destinationFolder).forEach(folderFileName => {
     let regex = new RegExp(fieldName, "i");
-    let match = folderFile.match(regex);
+    let match = folderFileName.match(regex);
 
     if (match && folderFileName != newFileName) {
-      fs.unlinkSync(destinationFolder + "/" + folderFile);
+      fs.unlinkSync(destinationFolder + "/" + folderFileName);
     }
   });
   return;
@@ -65,6 +66,15 @@ const filesOptions = {
     fileName: "eos",
     sheetName: "Sheet1",
     ingestorClass: Pole3EIngestor
+  },
+  siene: {
+    fileName: "siene",
+    sheetName: "Sheet1",
+    ingestorClass: EtablissementsIngestor
+  },
+  nomenclature: {
+    fileName: "nomenclature",
+    ingestorClass: NomenclaturesIngestor
   }
 };
 
@@ -80,7 +90,6 @@ router.post("/upload", upload.any(), function(req, res) {
     const index = keys.indexOf(fieldName);
     if (index > -1) {
       const fileOptions = filesOptions[fieldName];
-
       const filePath = file.path;
       const sheetName = fileOptions.sheetName;
       const ingestor = new fileOptions.ingestorClass(filePath, sheetName);

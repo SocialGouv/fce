@@ -26,10 +26,15 @@ class Ingestor {
     return Promise.all(promises);
   }
 
-  reset() {
-    throw new NotImplementedError(
-      "You must implement getDate method in child."
-    );
+  reset(params) {
+    if(this.Model){
+      const p = params || {};
+      return this.Model.remove(p);
+    }else{
+      throw new NotImplementedError(
+        "You must implement reset method in child or define a Model."
+      );
+    }
   }
 }
 

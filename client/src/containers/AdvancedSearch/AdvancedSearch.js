@@ -29,8 +29,8 @@ class AdvancedSearch extends React.Component {
   loadNomenclatures() {
     if (
       this.props.autocompleteData &&
-      this.props.autocompleteData.naf &&
-      this.props.autocompleteData.naf.length
+      this.props.autocompleteData.nafCodes &&
+      this.props.autocompleteData.nafCodes.length
     ) {
       this.setState({ isLoadedNomenclatures: true, hasError: false });
     } else {
@@ -81,7 +81,7 @@ class AdvancedSearch extends React.Component {
     }
 
     this.props
-      .advancedSearch()
+      .advancedSearch(this.state.terms)
       .then(response => {
         this.setState({
           hasError: false,

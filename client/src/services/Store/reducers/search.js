@@ -16,7 +16,7 @@ const initialState = {
     departement: null
   },
   nomenclatures: {
-    naf: [],
+    nafCodes: [],
     communes: [],
     postalCodes: [],
     departements: []
@@ -57,19 +57,10 @@ const search = (state = initialState, action) => {
 };
 
 const formatNomenclatures = nomenclatures => {
-  if (nomenclatures.communes && nomenclatures.communes.length) {
-    nomenclatures.communes = nomenclatures.communes.map(commune => {
-      return commune && commune.libelle_commune;
-    });
-  }
-  if (nomenclatures.departements && nomenclatures.departements.length) {
-    nomenclatures.departements = nomenclatures.departements.map(departement => {
-      return departement && departement.code_departement;
-    });
-  }
-  if (nomenclatures.postalCodes && nomenclatures.postalCodes.length) {
-    nomenclatures.postalCodes = nomenclatures.postalCodes.map(postalCode => {
-      return postalCode && postalCode.code_postal;
+  if (nomenclatures.nafCodes && nomenclatures.nafCodes.length) {
+    nomenclatures.nafCodes = nomenclatures.nafCodes.map(nafCode => {
+      nafCode.text = `${nafCode.code} - ${nafCode.libelle}`;
+      return nafCode;
     });
   }
   return nomenclatures;

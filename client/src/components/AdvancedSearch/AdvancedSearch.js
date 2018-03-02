@@ -25,12 +25,14 @@ class AdvancedSearch extends React.Component {
                 </Label>
                 <Col md={9}>
                   <DropdownList
-                    data={this.props.autocompleteData.naf}
+                    data={this.props.autocompleteData.nafCodes}
+                    valueField="code"
+                    textField="text"
                     filter
                     id="naf"
                     name="naf"
                     placeholder="Code NAF"
-                    onChange={value => this.props.updateForm("naf", value)}
+                    onChange={value => this.props.updateForm("naf", value.code)}
                   />
                 </Col>
               </FormGroup>
@@ -42,11 +44,15 @@ class AdvancedSearch extends React.Component {
                 <Col md={9}>
                   <DropdownList
                     data={this.props.autocompleteData.communes}
+                    valueField="libelle_commune"
+                    textField="libelle_commune"
                     filter
                     id="commune"
                     name="commune"
                     placeholder="Commune"
-                    onChange={value => this.props.updateForm("commune", value)}
+                    onChange={value =>
+                      this.props.updateForm("commune", value.libelle_commune)
+                    }
                   />
                 </Col>
               </FormGroup>
@@ -58,12 +64,14 @@ class AdvancedSearch extends React.Component {
                 <Col md={9}>
                   <DropdownList
                     data={this.props.autocompleteData.postalCodes}
+                    valueField="code_postal"
+                    textField="code_postal"
                     filter
                     id="codePostal"
                     name="codePostal"
                     placeholder="Code postal"
                     onChange={value =>
-                      this.props.updateForm("codePostal", value)
+                      this.props.updateForm("codePostal", value.code_postal)
                     }
                   />
                 </Col>
@@ -76,12 +84,17 @@ class AdvancedSearch extends React.Component {
                 <Col md={9}>
                   <DropdownList
                     data={this.props.autocompleteData.departements}
+                    valueField="code_departement"
+                    textField="code_departement"
                     filter
                     id="departement"
                     name="departement"
                     placeholder="Département"
                     onChange={value =>
-                      this.props.updateForm("departement", value)
+                      this.props.updateForm(
+                        "departement",
+                        value.code_departement
+                      )
                     }
                   />
                 </Col>

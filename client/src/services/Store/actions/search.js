@@ -23,7 +23,7 @@ export const advancedSearch = terms => (dispatch, getState) => {
 
   return Http.get("/advancedSearch", {
     params: {
-      terms
+      ...terms
     }
   })
     .then(function(response) {

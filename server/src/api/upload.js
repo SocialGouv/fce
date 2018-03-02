@@ -79,42 +79,45 @@ const filesOptions = {
 };
 
 router.post("/upload", upload.any(), function(req, res) {
-  let data = {
+  let responseData = {
     files: {}
   };
-  req.files.map(file => {
-    const fieldName = file.fieldname;
-    data.files[fieldName] = { success: null, message: null };
+  Promise.all(
+    req.files.map(file => {
+      const fieldName = file.fieldname;
+      responseData.files[fieldName] = { success: null, message: null };
 
-    const keys = Object.keys(filesOptions);
-    const index = keys.indexOf(fieldName);
-    if (index > -1) {
-      const fileOptions = filesOptions[fieldName];
-      const filePath = file.path;
-      const sheetName = fileOptions.sheetName;
-      const ingestor = new fileOptions.ingestorClass(filePath, sheetName);
-      ingestor
-        .reset()
-        .then(data => {
-          return ingestor.save();
-        })
-        .then(data => {
-          removeOldFiles(fieldName, file.filename);
-          data.files[fieldName].success = true;
-          data.files[fieldName].message = "Uploaded and saved ! ";
-        })
-        .catch(error => {
-          console.error(error);
-          data.files[fieldName].success = false;
-          data.files[fieldName].message = "Ingestor error";
-        });
-    } else {
-      data.files[fieldName].success = true;
-      data.files[fieldName].message = "Uploaded ! ";
-    }
+      const keys = Object.keys(filesOptions);
+      const index = keys.indexOf(fieldName);
+      if (index > -1) {
+        const fileOptions = filesOptions[fieldName];
+        const filePath = file.path;
+        const sheetName = fileOptions.sheetName;
+        const ingestor = new fileOptions.ingestorClass(filePath, sheetName);
+        return ingestor
+          .reset()
+          .then(data => {
+            return ingestor.save();
+          })
+          .then(data => {
+            removeOldFiles(fieldName, file.filename);
+            responseData.files[fieldName].success = true;
+            responseData.files[fieldName].message = "Uploaded and saved ! ";
+          })
+          .catch(error => {
+            console.error(error);
+            responseData.files[fieldName].success = false;
+            responseData.files[fieldName].message = "Ingestor error";
+          });
+      } else {
+        responseData.files[fieldName].success = true;
+        responseData.files[fieldName].message = "Uploaded ! ";
+        return Promise.resolve();
+      }
+    })
+  ).then(() => {
+    res.send(responseData);
   });
-
-  res.send(data);
 });
 
 module.exports = router;

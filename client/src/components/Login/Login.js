@@ -10,7 +10,8 @@ import {
   FormGroup,
   Label,
   Input,
-  Button
+  Button,
+  Alert
 } from "reactstrap";
 
 class Login extends React.Component {
@@ -20,28 +21,20 @@ class Login extends React.Component {
         <Row className="justify-content-md-center">
           <Col xl="3" md="4">
             <Form className="login-form bg-light" onSubmit={this.props.login}>
+              {this.props.hasError ? (
+                <Alert color="danger">Connexion refusée</Alert>
+              ) : (
+                ""
+              )}
               <FormGroup>
-                <Label for="username">Identifiant</Label>
-                <Input
-                  type="text"
-                  name="username"
-                  id="username"
-                  autoComplete="username"
-                  required
-                  valid={this.props.hasError ? false : null}
-                  onChange={evt => this.props.updateForm(evt)}
-                />
-              </FormGroup>
-
-              <FormGroup>
-                <Label for="password">Mot de passe</Label>
+                <Label for="password">Code d'accès</Label>
                 <Input
                   type="password"
                   name="password"
                   id="password"
                   autoComplete="current-password"
                   required
-                  valid={this.props.hasError ? false : null}
+                  invalid={this.props.hasError}
                   onChange={evt => this.props.updateForm(evt)}
                 />
               </FormGroup>

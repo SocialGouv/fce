@@ -18,7 +18,7 @@ const initialState = {
   nomenclatures: {
     naf: [],
     communes: [],
-    codePostaux: [],
+    postalCodes: [],
     departements: []
   }
 };
@@ -47,12 +47,31 @@ const search = (state = initialState, action) => {
         ...state,
         nomenclatures: {
           ...initialState.nomenclatures,
-          ...action.nomenclatures
+          ...formatNomenclatures(action.nomenclatures)
         }
       };
     default:
       return state;
   }
+};
+
+const formatNomenclatures = nomenclatures => {
+  if (nomenclatures.communes && nomenclatures.communes.length) {
+    nomenclatures.communes = nomenclatures.communes.map(commune => {
+      return commune && commune.libelle_commune;
+    });
+  }
+  if (nomenclatures.departements && nomenclatures.departements.length) {
+    nomenclatures.departements = nomenclatures.departements.map(departement => {
+      return departement && departement.code_departement;
+    });
+  }
+  if (nomenclatures.postalCodes && nomenclatures.postalCodes.length) {
+    nomenclatures.postalCodes = nomenclatures.postalCodes.map(postalCode => {
+      return postalCode && postalCode.code_postal;
+    });
+  }
+  return nomenclatures;
 };
 
 export default search;

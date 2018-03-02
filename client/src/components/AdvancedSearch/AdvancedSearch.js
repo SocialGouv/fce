@@ -57,7 +57,7 @@ class AdvancedSearch extends React.Component {
                 </Label>
                 <Col md={9}>
                   <DropdownList
-                    data={this.props.autocompleteData.codePostaux}
+                    data={this.props.autocompleteData.postalCodes}
                     filter
                     id="codePostal"
                     name="codePostal"

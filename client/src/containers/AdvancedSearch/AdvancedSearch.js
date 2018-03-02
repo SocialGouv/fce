@@ -65,13 +65,16 @@ class AdvancedSearch extends React.Component {
     this.setState({ hasError: false, searchLoading: true, errorMessage: null });
 
     const nbTermsCompleted = () =>
-      Object.keys(this.state.terms).filter(x => this.state.terms[x]).length;
+      Object.keys(this.state.terms).filter(
+        term => term !== "naf" && this.state.terms[term]
+      ).length;
 
-    if (!nbTermsCompleted()) {
+    if (!this.state.terms.naf || !nbTermsCompleted()) {
       this.setState({
         hasError: true,
         searchLoading: false,
-        errorMessage: "Vous devez renseigner au moins un champ"
+        errorMessage:
+          "Vous devez renseigner un code NAF ainsi qu'un champ supplémentaire"
       });
       return false;
     }

@@ -131,4 +131,69 @@ describe("save", () => {
     },
     TIMEOUT
   );
+
+  test(
+    "reset",
+    () => {
+      const ingestor = new NomenclaturesIngestor(filePath);
+      return ingestor
+        .save()
+        .then(data => {
+          return ingestor.reset();
+        })
+        .then(data => {
+          expect(data.ok).toBe(1);
+          return;
+        });
+    },
+    TIMEOUT
+  );
+
+  test("Upload", () =>{
+    const dbParams = {
+      shouldSaveEntities: true,
+      shouldResetEntities: true
+    };
+    const ingestor = new NomenclaturesIngestor(filePath);
+    return ingestor
+      .save(dbParams)
+      .then(data => {
+        expect(data.length).toBe(40);
+        return ingestor.reset(dbParams);
+      })
+      .then(data => {
+        expect(data.ok).toBe(1);
+        return;
+      });
+  })
+
+  test("Upload with reset", () =>{
+    const dbParams = {
+      shouldSaveEntities: true,
+      shouldResetEntities: true
+    };
+    const ingestor = new NomenclaturesIngestor(filePath);
+    return ingestor
+      .save(dbParams)
+      .then(data => {
+        expect(data.length).toBe(40);
+        return Nomenclature.find({});
+      })
+      .then(data => {
+        expect(data.length).toBe(40);
+        return ingestor.reset(dbParams);
+      })
+      .then(data => {
+        expect(data.ok).toBe(1);
+        return Nomenclature.find();
+      })
+      .then(data => {
+        expect(data.length).toBe(0);
+        return ingestor.save(dbParams);
+      })
+      .then(data => {
+        expect(data.length).toBe(40);
+        return;
+      });
+  })
 });

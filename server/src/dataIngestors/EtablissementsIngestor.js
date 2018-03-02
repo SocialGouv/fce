@@ -90,8 +90,8 @@ class EtablissementsIngestor extends Ingestor {
       });
   }
 
-  reset(shouldResetEntities) {
-    if (shouldResetEntities) {
+  reset(params) {
+    if (params && params.shouldResetEntities) {
       let responseData = { etablissements: {}, entities: {} };
       return super
         .reset()
@@ -104,7 +104,7 @@ class EtablissementsIngestor extends Ingestor {
           return responseData;
         });
     } else {
-      return super.save();
+      return super.reset();
     }
   }
 }

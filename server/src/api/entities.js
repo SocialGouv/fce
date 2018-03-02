@@ -3,6 +3,7 @@ const router = express.Router();
 const CommuneModel = require("../models/CommuneModel");
 const DepartementModel = require("../models/DepartementModel");
 const CodePostalModel = require("../models/CodePostalModel");
+const NomenclatureModel = require("../models/NomenclatureModel");
 
 const getAllEntities = model => {
   let responseData = {};
@@ -60,6 +61,16 @@ router.get("/departements", function(req, res) {
 router.get("/postalCodes", function(req, res) {
   return getAllEntities(CodePostalModel).then(data => {
     res.send(data);
+  });
+});
+
+router.get("/nafCodes", function(req, res) {
+  let responseData = { results: {} };
+
+  return NomenclatureModel.findByCategory("Code_activite_NAF").then(data => {
+    responseData.results = data;
+    responseData.success = true;
+    res.send(responseData);
   });
 });
 

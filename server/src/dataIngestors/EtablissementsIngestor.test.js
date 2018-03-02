@@ -85,9 +85,12 @@ describe("saveWithEntities()", () => {
     "default",
     () => {
       const ingestor = new EtablissementsIngestor(filePath);
-      const shouldSaveEntities = true;
+      const params = {
+        shouldSaveEntities: true
+      };
+
       return ingestor
-        .save(shouldSaveEntities)
+        .save(params)
         .then(data => {
           expect(data.etablissements.length).toBe(9);
           expect(data.entities.communes.length).toBe(3);
@@ -132,11 +135,14 @@ describe("resetWithEntities()", () => {
     "Default",
     () => {
       const ingestor = new EtablissementsIngestor(filePath);
-      const shouldSaveEntities = true;
+      const params = {
+        shouldSaveEntities: true,
+        shouldResetEntities: true
+      };
       return ingestor
-        .save(shouldSaveEntities)
+        .save(params)
         .then(data => {
-          return ingestor.reset(shouldSaveEntities);
+          return ingestor.reset(params);
         })
         .then(data => {
           expect(data.etablissements.n).toBe(9);

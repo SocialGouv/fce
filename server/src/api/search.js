@@ -1,7 +1,8 @@
-var express = require("express");
-var router = express.Router();
-var frentreprise = require("frentreprise");
-var Etablissement = require("../models/Etablissement");
+const express = require("express");
+const router = express.Router();
+const frentreprise = require("frentreprise");
+const EtablissementModel = require("../models/EtablissementModel");
+const deleteKeyIfNotDefinedOrEmpty = require("../utils/ObjectManipulations").deleteKeyIfNotDefinedOrEmpty;
 
 router.get("/search", function(req, res) {
   const query = (req.query["q"] || "").trim();
@@ -29,9 +30,12 @@ router.get("/search", function(req, res) {
     }, logError);
   } else {
     const raisonSociale = data.query.q;
-    freCall = Etablissement.findByRaisonSociale(raisonSociale).then(results => {
-      data.results = results;
-    }, logError);
+    freCall = EtablissementModel.findByRaisonSociale(raisonSociale).then(
+      results => {
+        data.results = results;
+      },
+      logError
+    );
   }
 
   freCall.then(() => {
@@ -39,19 +43,28 @@ router.get("/search", function(req, res) {
   });
 });
 
+
+
 router.get("/advancedSearch", function(req, res) {
   const code_activite = (req.query["naf"] || "").trim();
   const libelle_commune = (req.query["commune"] || "").trim();
   const code_postal = (req.query["codePostal"] || "").trim();
   const code_departement = (req.query["departement"] || "").trim();
 
+  let query = {
+    code_activite,
+    libelle_commune,
+    code_postal,
+    code_departement
+  };
+
+  deleteKeyIfNotDefinedOrEmpty(query, "code_activite");
+  deleteKeyIfNotDefinedOrEmpty(query, "libelle_commune");
+  deleteKeyIfNotDefinedOrEmpty(query, "code_postal");
+  deleteKeyIfNotDefinedOrEmpty(query, "code_departement");
+
   const data = {
-    query: {
-      code_activite,
-      libelle_commune,
-      code_postal,
-      code_departement
-    }
+    query
   };
 
   const logError = err => {
@@ -62,7 +75,7 @@ router.get("/advancedSearch", function(req, res) {
     } catch (Exception) {}
   };
 
-  Etablissement.findByRaisonSociale(data.query)
+  EtablissementModel.findByAdvancedSearch(data.query)
     .then(results => {
       data.results = results;
     }, logError)

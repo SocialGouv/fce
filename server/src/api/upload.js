@@ -6,6 +6,7 @@ const multer = require("multer");
 const PoleCIngestor = require("../dataIngestors/interactions/PoleCIngestor");
 const PoleTIngestor = require("../dataIngestors/interactions/PoleTIngestor");
 const Pole3EIngestor = require("../dataIngestors/interactions/Pole3EIngestor");
+const EtablissementsIngestor = require("../dataIngestors/EtablissementsIngestor");
 /*
 WikiT.xls
 EOS.xls
@@ -27,7 +28,6 @@ const storage = multer.diskStorage({
     cb(null, destinationFolder);
   },
   filename: function(req, file, cb) {
-    console.log(file);
     const extension = path.extname(file.originalname);
     let baseName = path.basename(file.originalname, extension);
     baseName = baseName.toLowerCase();
@@ -65,6 +65,11 @@ const filesOptions = {
     fileName: "eos",
     sheetName: "Sheet1",
     ingestorClass: Pole3EIngestor
+  },
+  siene: {
+    fileName: "siene",
+    sheetName: "Sheet1",
+    ingestorClass: EtablissementsIngestor
   }
 };
 
@@ -76,7 +81,6 @@ router.post("/upload", upload.any(), function(req, res) {
     const index = keys.indexOf(fieldName);
     if (index > -1) {
       const fileOptions = filesOptions[fieldName];
-
       const filePath = file.path;
       const sheetName = fileOptions.sheetName;
       const ingestor = new fileOptions.ingestorClass(filePath, sheetName);

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const deleteKeyIfNotDefinedOrEmpty = require("../utils/ObjectManipulations")
+  .deleteKeyIfNotDefinedOrEmpty;
 
 const etablissementSchema = new Schema({
   siret: { type: String, index: true },
@@ -78,14 +80,22 @@ etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
 }
  */
 etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
-  const raisonSocialParam = searchParams && searchParams.raison_sociale
-    ? new RegExp(searchParams.raison_sociale, "i")
-    : undefined;
+  const raisonSocialParam =
+    searchParams && searchParams.raison_sociale
+      ? new RegExp(searchParams.raison_sociale, "i")
+      : null;
 
-  const params = raisonSocialParam ? {
+  const params = {
     ...searchParams,
     raison_sociale: raisonSocialParam
-  } : searchParams;
+  };
+
+  deleteKeyIfNotDefinedOrEmpty(params, "code_activite");
+  deleteKeyIfNotDefinedOrEmpty(params, "libelle_commune");
+  deleteKeyIfNotDefinedOrEmpty(params, "code_postal");
+  deleteKeyIfNotDefinedOrEmpty(params, "departement");
+  deleteKeyIfNotDefinedOrEmpty(params, "raison_sociale");
+
   return this.find(params, cb);
 };
 

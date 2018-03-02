@@ -25,7 +25,7 @@ class InteractionsIngestor extends Ingestor {
   }
 
   reset() {
-    return this.Model.remove({ pole: this.pole });
+    return super.reset({ pole: this.pole });
   }
 }
 

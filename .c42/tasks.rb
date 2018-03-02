@@ -123,7 +123,7 @@ task :deploy do |dep_env = 'preprod'|
 
   # exec remplace le process actuel
   exec({
-         'NPM' => NPM.gsub("%container%", ctr),
+         'NPM' => NPM.gsub("%container%", "server"),
          'SKIP_QUESTIONS' => '1'
        }, %(bundle exec cap #{dep_env} deploy))
 end

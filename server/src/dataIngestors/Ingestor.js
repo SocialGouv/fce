@@ -30,7 +30,8 @@ class Ingestor {
 
   reset(params) {
     if (this.Model) {
-      const p = params || {};
+      let p = params && params.removeParams || {};
+
       return this.Model.remove(p);
     } else {
       throw new NotImplementedError(

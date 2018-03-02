@@ -27,3 +27,22 @@ describe("default", () => {
     TIMEOUT
   );
 });
+
+describe("save", () => {
+  const filePath = "./data/nomenclature.xlsx";
+
+  test(
+    "default",
+    () => {
+      const ingestor = new NomenclaturesIngestor(filePath);
+      const data = ingestor.getNomenclatures();
+      // console.log(data);
+      expect(data["code_région"][0]).toEqual({
+        categorie: "code_région",
+        code: "1",
+        libelle: "GUADELOUPE"
+      });
+    },
+    TIMEOUT
+  );
+});

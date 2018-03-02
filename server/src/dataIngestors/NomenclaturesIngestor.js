@@ -10,25 +10,21 @@ class NomenclaturesIngestor extends Ingestor {
 
   getData() {
     const wbh = new WorkbookHelper(this.workbook);
-
+    const defaultColumnsToKeep = {
+      columnsToKeep: {
+        A: "code",
+        B: "libelle"
+      }
+    };
     const sheetsParams = {
       Code_activite_NAF: {
-        columnsToKeep: {
-          A: "code",
-          B: "libelle"
-        }
+        columnsToKeep: defaultColumnsToKeep
       },
       Code_Qualite_siege_2: {
-        columnsToKeep: {
-          A: "code",
-          B: "libelle"
-        }
+        columnsToKeep: defaultColumnsToKeep
       },
       Code_Qualite_siege: {
-        columnsToKeep: {
-          A: "code",
-          B: "libelle"
-        }
+        columnsToKeep: defaultColumnsToKeep
       },
       "Source_dernier_eff_phy ": {
         columnsToKeep: {
@@ -43,7 +39,12 @@ class NomenclaturesIngestor extends Ingestor {
           B: "libelle_CJ3",
           C: "libelle_CJ1"
         }
-      }
+      },
+      Tranche_effectif: defaultColumnsToKeep,
+      Code_Modalite_activ_: defaultColumnsToKeep,
+      Codes_IDCC: defaultColumnsToKeep,
+      code_etat: defaultColumnsToKeep,
+      code_région: defaultColumnsToKeep
     };
 
     const sheetsData = wbh.getSheetsData(sheetsParams);

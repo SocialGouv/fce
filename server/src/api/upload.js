@@ -7,6 +7,7 @@ const PoleCIngestor = require("../dataIngestors/interactions/PoleCIngestor");
 const PoleTIngestor = require("../dataIngestors/interactions/PoleTIngestor");
 const Pole3EIngestor = require("../dataIngestors/interactions/Pole3EIngestor");
 const EtablissementsIngestor = require("../dataIngestors/EtablissementsIngestor");
+const NomenclaturesIngestor = require("../dataIngestors/NomenclaturesIngestor");
 /*
 WikiT.xls
 EOS.xls
@@ -70,6 +71,10 @@ const filesOptions = {
     fileName: "siene",
     sheetName: "Sheet1",
     ingestorClass: EtablissementsIngestor
+  },
+  nomenclature: {
+    fileName: "nomenclature",
+    ingestorClass: NomenclaturesIngestor
   }
 };
 

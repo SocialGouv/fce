@@ -39,10 +39,10 @@ const storage = multer.diskStorage({
 const removeOldFiles = (fieldName, newFileName) => {
   fs.readdirSync(destinationFolder).forEach(folderFileName => {
     let regex = new RegExp(fieldName, "i");
-    let match = folderFile.match(regex);
+    let match = folderFileName.match(regex);
 
     if (match && folderFileName != newFileName) {
-      fs.unlinkSync(destinationFolder + "/" + folderFile);
+      fs.unlinkSync(destinationFolder + "/" + folderFileName);
     }
   });
   return;

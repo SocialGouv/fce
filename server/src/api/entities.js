@@ -40,6 +40,10 @@ router.get("/entities", function(req, res) {
     })
     .then(data => {
       responseData.results.postalCodes = data;
+      return NomenclatureModel.findByCategory("Code_activite_NAF");
+    })
+    .then(data => {
+      responseData.results.nafCodes = data;
       responseData.success = true;
 
       res.send(responseData);

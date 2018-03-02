@@ -98,7 +98,6 @@ class WorksheetHelper {
           }
           attributeKey = columnsToKeep[columnNames[i]];
         }
-        // console.log(attributeKey, cell);
         item[attributeKey] = cell.w || cell.v;
       }
     }

@@ -38,7 +38,6 @@ class Mongo extends DataSource {
 
     if (siene_sese && typeof siene_sese === "object") {
       const attr_map = {
-        ...attr_map,
         raison_sociale_entreprise: "raison_sociale",
         enseigne: "enseigne",
         siret: "siret",
@@ -137,14 +136,15 @@ class Mongo extends DataSource {
         },
         pse_en_projet_ou_en_cours: obj => {
           const pse = {};
-
-          for (let i = 0; i < 10; i++) {
-            const year = +obj.sese[`pse_annee${i}`];
-            if (year > 0) {
-              pse[year] = {
-                etat: obj.sese[`pse_etat${i}`],
-                poste: obj.sese[`pse_poste${i}`]
-              };
+          if (typeof obj.sese === "object") {
+            for (let i = 0; i < 10; i++) {
+              const year = +obj.sese[`pse_annee${i}`];
+              if (year > 0) {
+                pse[year] = {
+                  etat: obj.sese[`pse_etat${i}`],
+                  poste: obj.sese[`pse_poste${i}`]
+                };
+              }
             }
           }
 

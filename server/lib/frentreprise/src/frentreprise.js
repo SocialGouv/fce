@@ -171,6 +171,20 @@ class frentreprise {
       const etablissements = Object.values(etData.etablissements);
       delete etData.etablissements;
 
+      if (
+        (etablissements.length > 0 &&
+          typeof etData.raison_sociale !== "string") ||
+        etData.raison_sociale.trim().length < 1
+      ) {
+        etData.raison_sociale = etablissements
+          .map(ets => ets.raison_sociale_entreprise)
+          .filter(Boolean) // Remove falsey values
+          .filter(Boolean) // Remove falsey values
+          .reduce((prev, curr) => {
+            return prev || curr;
+          });
+      }
+
       const ent = new this.EntrepriseModel(etData);
       etablissements.forEach(etsData => {
         ent.importEtablissement(new this.EtablissementModel(etsData));

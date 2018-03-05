@@ -179,7 +179,6 @@ class frentreprise {
         etData.raison_sociale = etablissements
           .map(ets => ets.raison_sociale_entreprise)
           .filter(Boolean) // Remove falsey values
-          .filter(Boolean) // Remove falsey values
           .reduce((prev, curr) => {
             return prev || curr;
           });

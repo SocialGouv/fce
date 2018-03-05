@@ -9,6 +9,14 @@ const frentreprise = __DIST
   ? require("frentreprise")
   : require("../../lib/frentreprise/src/frentreprise.js");
 
+const logError = err => {
+  console.error(err);
+  data.error = true;
+  try {
+    data.message = err.toString();
+  } catch (Exception) {}
+};
+
 router.get("/search", function(req, res) {
   const query = (req.query["q"] || "").trim();
   const data = {
@@ -17,14 +25,6 @@ router.get("/search", function(req, res) {
       isSIRET: frentreprise.isSIRET(query),
       isSIREN: frentreprise.isSIREN(query)
     }
-  };
-
-  const logError = err => {
-    console.error(err);
-    data.error = true;
-    try {
-      data.message = err.toString();
-    } catch (Exception) {}
   };
 
   let freCall;
@@ -50,37 +50,22 @@ router.get("/advancedSearch", function(req, res) {
   const code_postal = (req.query["codePostal"] || "").trim();
   const code_departement = (req.query["departement"] || "").trim();
 
-  let query = {
-    code_activite,
-    libelle_commune,
-    code_postal,
-    code_departement
-  };
-
-  deleteKeyIfNotDefinedOrEmpty(query, "code_activite");
-  deleteKeyIfNotDefinedOrEmpty(query, "libelle_commune");
-  deleteKeyIfNotDefinedOrEmpty(query, "code_postal");
-  deleteKeyIfNotDefinedOrEmpty(query, "code_departement");
-
   const data = {
-    query
+    query: {
+      code_activite,
+      libelle_commune,
+      code_postal,
+      code_departement
+    }
   };
 
-  const logError = err => {
-    console.error(err);
-    data.error = true;
-    try {
-      data.message = err.toString();
-    } catch (Exception) {}
-  };
+  let freCall = frentreprise.search(data.query).then(results => {
+    data.results = results.map(ent => ent.export());
+  }, logError);
 
-  EtablissementModel.findByAdvancedSearch(data.query)
-    .then(results => {
-      data.results = results;
-    }, logError)
-    .then(() => {
-      res.send(data);
-    });
+  freCall.then(() => {
+    res.send(data);
+  });
 });
 
 module.exports = router;

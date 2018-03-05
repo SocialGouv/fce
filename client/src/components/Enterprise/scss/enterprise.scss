@@ -3,14 +3,24 @@
   .aside-box {
     padding: 0;
 
+    @media print {
+      flex: 0 0 25%;
+      max-width: 100%;
+    }
+
     >.aside-contain {
       position: fixed;
+
+      @media print {
+        position: static;
+        max-width: 100%;
+      }
     }
   }
 
   .main {
     @media print {
-      flex: 0 0 100%;
+      flex: 0 0 75%;
       max-width: 100%;
     }
 

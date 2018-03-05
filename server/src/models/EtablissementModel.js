@@ -59,7 +59,9 @@ const etablissementSchema = new Schema({
   libelle_commune: String,
   annee_idcc: String,
   codes_idcc: String,
-  label_idcc: String
+  label_idcc: String,
+
+  sese: Object
 });
 
 etablissementSchema.statics.findBySIRET = function(siret, cb) {

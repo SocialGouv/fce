@@ -31,7 +31,6 @@ class Ingestor {
   reset(params) {
     if (this.Model) {
       let p = params && params.removeParams || {};
-
       return this.Model.remove(p);
     } else {
       throw new NotImplementedError(

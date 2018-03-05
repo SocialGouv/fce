@@ -179,7 +179,6 @@ class frentreprise {
       return ent;
     });
 
-    console.log(results_final);
     return results_final;
   }
 

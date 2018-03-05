@@ -42,7 +42,7 @@ class Enterprise extends React.Component {
             <EnterpriseIdentity enterprise={enterprise} />
             <EnterpriseActivity enterprise={enterprise} />
           </Col>
-          <Col className="aside-box d-print-none" md="3">
+          <Col className="aside-box" md="3">
             <Establishments
               enterprise={this.props.enterprise}
               headOffice={this.props.headOffice}

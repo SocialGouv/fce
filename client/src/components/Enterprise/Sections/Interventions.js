@@ -1,5 +1,6 @@
 import React from "react";
 import Value from "../../../elements/Value";
+import classNames from "classnames";
 
 class Interventions extends React.Component {
   constructor(props) {
@@ -61,6 +62,7 @@ class Interventions extends React.Component {
             </dt>
             <dd className="dd col-md-8">
               <a
+                className="d-print-none"
                 href="#mutation-activity"
                 onClick={() => this.toggleElement("mutation-activity")}
               >
@@ -69,33 +71,36 @@ class Interventions extends React.Component {
             </dd>
           </dl>
 
-          {this.state["mutation-activity"] ? (
-            <div id="mutation-activity" className="toggle-element">
-              <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th />
-                    <th>2016</th>
-                    <th>2017</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Nombre d'heures demandées</th>
-                    <td>xxx</td>
-                    <td>xxx</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Nombre d'heures consommées</th>
-                    <td>xxx</td>
-                    <td>xxx</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            ""
-          )}
+          <div
+            id="mutation-activity"
+            className={classNames({
+              "toggle-element": true,
+              "d-none": !this.state["mutation-activity"],
+              "d-print-block": true
+            })}
+          >
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th />
+                  <th>2016</th>
+                  <th>2017</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Nombre d'heures demandées</th>
+                  <td>xxx</td>
+                  <td>xxx</td>
+                </tr>
+                <tr>
+                  <th scope="row">Nombre d'heures consommées</th>
+                  <td>xxx</td>
+                  <td>xxx</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <dl className="dl row">
             <dt className="dt col-md-4">
@@ -103,6 +108,7 @@ class Interventions extends React.Component {
             </dt>
             <dd className="dd col-md-8">
               <a
+                className="d-print-none"
                 href="#mutation-job"
                 onClick={() => this.toggleElement("mutation-job")}
               >
@@ -111,39 +117,42 @@ class Interventions extends React.Component {
             </dd>
           </dl>
 
-          {this.state["mutation-job"] ? (
-            <div id="mutation-job" className="toggle-element">
-              <dl className="dl row">
-                <dt className="dt col-md-4">Année d'ouverture du PSE</dt>
-                <dd className="dd col-md-8">[Année d'ouverture du PSE]</dd>
+          <div
+            id="mutation-job"
+            className={classNames({
+              "toggle-element": true,
+              "d-none": !this.state["mutation-job"],
+              "d-print-block": true
+            })}
+          >
+            <dl className="dl row">
+              <dt className="dt col-md-4">Année d'ouverture du PSE</dt>
+              <dd className="dd col-md-8">[Année d'ouverture du PSE]</dd>
 
-                <dt className="dt col-md-4">État de l'établissement</dt>
-                <dd className="dd col-md-8">[État de l'établissement]</dd>
+              <dt className="dt col-md-4">État de l'établissement</dt>
+              <dd className="dd col-md-8">[État de l'établissement]</dd>
 
-                <dt className="dt col-md-4">
-                  Nombre de postes indicatifs au PSE
-                </dt>
-                <dd className="dd col-md-8">
-                  [Nombre de postes indicatifs au PSE]
-                </dd>
+              <dt className="dt col-md-4">
+                Nombre de postes indicatifs au PSE
+              </dt>
+              <dd className="dd col-md-8">
+                [Nombre de postes indicatifs au PSE]
+              </dd>
 
-                <dt className="dt col-md-4">Année d'ouverture du PSE</dt>
-                <dd className="dd col-md-8">[Année d'ouverture du PSE]</dd>
+              <dt className="dt col-md-4">Année d'ouverture du PSE</dt>
+              <dd className="dd col-md-8">[Année d'ouverture du PSE]</dd>
 
-                <dt className="dt col-md-4">État de l'établissement</dt>
-                <dd className="dd col-md-8">[État de l'établissement]</dd>
+              <dt className="dt col-md-4">État de l'établissement</dt>
+              <dd className="dd col-md-8">[État de l'établissement]</dd>
 
-                <dt className="dt col-md-4">
-                  Nombre de postes indicatifs au PSE
-                </dt>
-                <dd className="dd col-md-8">
-                  [Nombre de postes indicatifs au PSE]
-                </dd>
-              </dl>
-            </div>
-          ) : (
-            ""
-          )}
+              <dt className="dt col-md-4">
+                Nombre de postes indicatifs au PSE
+              </dt>
+              <dd className="dd col-md-8">
+                [Nombre de postes indicatifs au PSE]
+              </dd>
+            </dl>
+          </div>
         </section>
       </section>
     );

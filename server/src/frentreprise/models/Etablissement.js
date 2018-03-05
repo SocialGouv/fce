@@ -1,7 +1,7 @@
-import { copyKeys } from "../utils";
+import { copyKeys } from "../../utils";
 const { Etablissement } = require(__DIST
   ? "frentreprise"
-  : "../../lib/frentreprise/src/frentreprise");
+  : "../../../lib/frentreprise/src/frentreprise");
 
 class DireccteEtablissement extends Etablissement {
   export(keys) {
@@ -23,8 +23,6 @@ class DireccteEtablissement extends Etablissement {
         "date_debut_activite_economique",
         "modalite_activite",
         "marchand",
-        "association",
-        "lien_status",
         "etablissement_employeur",
         "tranche_effectif_insee",
         "annee_tranche_effectif_insee",
@@ -32,7 +30,7 @@ class DireccteEtablissement extends Etablissement {
         "date_dernier_effectif_physique",
         "source_dernier_effectif_physique",
         "unite_controle_competente",
-        "code_idcc",
+        "codes_idcc",
         "annee_idcc",
         "nombre_idcc",
         "declaration_agefiph",

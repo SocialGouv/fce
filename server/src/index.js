@@ -53,6 +53,10 @@ function run() {
   app.use(express.static(htdocs_path));
   app.use("/api", apiRouter);
 
+  app.get("*", function(req, res) {
+    res.sendFile("index.html", { root: htdocs_path });
+  });
+
   app.listen(
     {
       host,

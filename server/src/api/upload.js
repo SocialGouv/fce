@@ -15,14 +15,11 @@ EOS.xls
 SORA.xls
 */
 
-const rootDestinationFolder = path.resolve(
+const destinationFolder = path.resolve(
   __dirname,
-  (__DIST ? "." : "../..") + "/public"
+  (__DIST ? "." : "..") + "/uploads"
 );
-const subDestinationFolder = "/uploads";
-const destinationFolder = rootDestinationFolder + subDestinationFolder;
 
-fs.existsSync(rootDestinationFolder) || fs.mkdirSync(rootDestinationFolder);
 fs.existsSync(destinationFolder) || fs.mkdirSync(destinationFolder);
 
 const storage = multer.diskStorage({

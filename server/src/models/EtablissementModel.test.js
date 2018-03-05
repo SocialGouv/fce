@@ -9,7 +9,7 @@ beforeEach(() => {
 }, TIMEOUT);
 
 afterEach(() => {
-  return Etablissement.remove({});
+ return Etablissement.remove({});
 }, TIMEOUT);
 
 test(
@@ -325,4 +325,17 @@ describe("Advanced search", () => {
     },
     TIMEOUT
   );
+});
+
+describe("Insert many", () => {
+  const filePath = "./data/SIENE_test.csv";
+  test("default", () => {
+    const ingestor = new EtablissementsIngestor(filePath);
+
+    const etablissements = ingestor.getEtablissements();
+    return Etablissement.insertMany(etablissements.concat(etablissements))
+    .then( (data) => {
+      expect(data.length).toBe(18);
+    })
+  });
 });

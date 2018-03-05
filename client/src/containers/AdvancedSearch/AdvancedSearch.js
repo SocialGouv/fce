@@ -87,8 +87,11 @@ class AdvancedSearch extends React.Component {
           hasError: false,
           searchLoading: false,
           redirectTo:
-            response.data.results.length === 1
-              ? `/establishment/`
+            response.data.results.length === 1 &&
+            response.data.results[0].etablissements.length === 1
+              ? `/establishment/${
+                  response.data.results.etablissements[0].siret
+                }`
               : "/search/results"
         });
       })

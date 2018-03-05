@@ -121,9 +121,7 @@ class Mongo extends DataSource {
 
     try {
       if (typeof query === "object") {
-        console.log("advanced", query);
         mongo = await EtablissementModel.findByAdvancedSearch(query);
-        console.log(mongo);
       } else {
         mongo = await EtablissementModel.findByRaisonSociale(query);
       }

@@ -4,6 +4,7 @@ import { Row, Col, Form, FormGroup, Label, Alert, Button } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 import DropdownList from "react-widgets/lib/DropdownList";
+import withLoading from "../../services/Loading";
 
 class AdvancedSearch extends React.Component {
   render() {
@@ -24,12 +25,16 @@ class AdvancedSearch extends React.Component {
                 </Label>
                 <Col md={9}>
                   <DropdownList
-                    data={this.props.autocompleteData.naf}
+                    data={this.props.autocompleteData.nafCodes}
+                    valueField="code"
+                    textField={nafCode =>
+                      `${nafCode.code} - ${nafCode.libelle}`
+                    }
                     filter
                     id="naf"
                     name="naf"
                     placeholder="Code NAF"
-                    onChange={value => this.props.updateForm("naf", value)}
+                    onChange={value => this.props.updateForm("naf", value.code)}
                   />
                 </Col>
               </FormGroup>
@@ -41,11 +46,15 @@ class AdvancedSearch extends React.Component {
                 <Col md={9}>
                   <DropdownList
                     data={this.props.autocompleteData.communes}
+                    valueField="libelle_commune"
+                    textField="libelle_commune"
                     filter
                     id="commune"
                     name="commune"
                     placeholder="Commune"
-                    onChange={value => this.props.updateForm("commune", value)}
+                    onChange={value =>
+                      this.props.updateForm("commune", value.libelle_commune)
+                    }
                   />
                 </Col>
               </FormGroup>
@@ -56,13 +65,15 @@ class AdvancedSearch extends React.Component {
                 </Label>
                 <Col md={9}>
                   <DropdownList
-                    data={this.props.autocompleteData.codePostaux}
+                    data={this.props.autocompleteData.postalCodes}
+                    valueField="code_postal"
+                    textField="code_postal"
                     filter
                     id="codePostal"
                     name="codePostal"
                     placeholder="Code postal"
                     onChange={value =>
-                      this.props.updateForm("codePostal", value)
+                      this.props.updateForm("codePostal", value.code_postal)
                     }
                   />
                 </Col>
@@ -75,20 +86,25 @@ class AdvancedSearch extends React.Component {
                 <Col md={9}>
                   <DropdownList
                     data={this.props.autocompleteData.departements}
+                    valueField="code_departement"
+                    textField="code_departement"
                     filter
                     id="departement"
                     name="departement"
                     placeholder="Département"
                     onChange={value =>
-                      this.props.updateForm("departement", value)
+                      this.props.updateForm(
+                        "departement",
+                        value.code_departement
+                      )
                     }
                   />
                 </Col>
               </FormGroup>
 
               <div className="d-flex justify-content-center">
-                <Button color="primary" disabled={this.props.loading}>
-                  {this.props.loading ? (
+                <Button color="primary" disabled={this.props.searchLoading}>
+                  {this.props.searchLoading ? (
                     <FontAwesomeIcon icon={faSpinner} spin />
                   ) : (
                     "Rechercher"
@@ -103,4 +119,4 @@ class AdvancedSearch extends React.Component {
   }
 }
 
-export default AdvancedSearch;
+export default withLoading(AdvancedSearch);

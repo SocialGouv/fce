@@ -14,27 +14,9 @@
 
   .result-list {
     margin-top: 2rem;
-    list-style: none;
-    padding-left: 0;
 
-    > .result-item {
-      >.link {
-        @media print {
-          text-decoration: none;
-        }
-
-        &:hover {
-          text-decoration: none;
-
-          >.description-list {
-            background-color: #e9ecef !important;
-          }
-        }
-      }
-      .description-list {
-        padding: 1rem;
-        color: #212529;
-      }
+    .result-item {
+      cursor: pointer;
     }
   }
 }

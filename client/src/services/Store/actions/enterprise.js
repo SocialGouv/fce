@@ -9,11 +9,11 @@ export const setCurrentEnterprise = enterprise => (dispatch, getState) => {
 };
 
 export const loadEstablishment = siret => (dispatch, getState) => {
-  return dispatch(getEnterprise(siret))
+  return dispatch(getEnterprise(siret));
 };
 
 export const loadEntreprise = siren => (dispatch, getState) => {
-  return dispatch(getEnterprise(siren))
+  return dispatch(getEnterprise(siren));
 };
 
 const getEnterprise = term => (dispatch, getState) => {
@@ -27,9 +27,9 @@ const getEnterprise = term => (dispatch, getState) => {
         ? response.data.results[0]
         : null;
       dispatch(setCurrentEnterprise(enterprise));
-      return response;
+      return Promise.resolve(response);
     })
     .catch(function(error) {
-      return error;
+      return Promise.reject(error);
     });
-}
+};

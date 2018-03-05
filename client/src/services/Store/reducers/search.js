@@ -26,17 +26,9 @@ const initialState = {
 const search = (state = initialState, action) => {
   switch (action.type) {
     case SEARCH_RESULTS:
-      if (action.results) {
-        action.results = action.results.map(result => {
-          if (!result._dataSources) {
-            result._dataSources = {};
-          }
-          return result;
-        });
-      }
       return {
         ...state,
-        results: action.results
+        results: flattenResults(action.results)
       };
     case SEARCH_TERMS:
       return {
@@ -54,6 +46,24 @@ const search = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+const flattenResults = results => {
+  if (!Array.isArray(results)) {
+    return [];
+  }
+
+  let flattenResults = [];
+
+  results.forEach(enterprise => {
+    if (Array.isArray(enterprise.etablissements)) {
+      enterprise.etablissements.forEach(establishment => {
+        flattenResults.push({ ...enterprise, etablissement: establishment });
+      });
+    }
+  });
+
+  return flattenResults;
 };
 
 export default search;

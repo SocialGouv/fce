@@ -92,11 +92,9 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
     raison_sociale: raisonSocialParam
   };
 
-  deleteKeyIfNotDefinedOrEmpty(params, "code_activite");
-  deleteKeyIfNotDefinedOrEmpty(params, "libelle_commune");
-  deleteKeyIfNotDefinedOrEmpty(params, "code_postal");
-  deleteKeyIfNotDefinedOrEmpty(params, "departement");
-  deleteKeyIfNotDefinedOrEmpty(params, "raison_sociale");
+  Object.keys(params).forEach(field => {
+    deleteKeyIfNotDefinedOrEmpty(params, field);
+  });
 
   return this.find(params, cb);
 };

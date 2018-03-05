@@ -7,7 +7,6 @@ class SESEParamsIngestor extends Ingestor {
     super(filePath);
     const sheetName = this.workbook.SheetNames[0];
     this.workSheet = this.workbook.Sheets[sheetName];
-    // this.Model = Etablissement;
   }
 
   getData() {

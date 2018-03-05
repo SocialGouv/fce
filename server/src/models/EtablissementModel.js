@@ -72,8 +72,6 @@ etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
   return this.find({ raison_sociale: new RegExp(raisonSociale, "i") }, cb);
 };
 
-
-
 /**
  * @param {object} searchParams = {
  raison_sociale,
@@ -104,10 +102,5 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);
-
-etablissementSchema.statics.insertMany = function(etablissements, cb) {
-  return Etablissement.colletions(etablissements, cb);
-};
-
 
 module.exports = Etablissement;

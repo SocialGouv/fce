@@ -115,6 +115,7 @@ class AdvancedSearch extends React.Component {
         hasError={this.state.hasError}
         errorMessage={this.state.errorMessage}
         autocompleteData={this.props.autocompleteData}
+        terms={this.state.terms}
       />
     );
   }

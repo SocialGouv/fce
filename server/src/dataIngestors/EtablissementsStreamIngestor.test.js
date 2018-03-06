@@ -14,11 +14,11 @@ beforeEach(() => {
 }, TIMEOUT);
 
 afterEach(() => {
-  // return Etablissement.remove({});
+  return Etablissement.remove({});
 }, TIMEOUT);
 
 describe("default", () => {
-  test.skip("10k", () => {
+  test("10k", () => {
     const filePath = "./data/SIENE_10k.csv";
 
     const ingestor = new EtablissementsStreamIngestor(filePath);
@@ -48,7 +48,7 @@ describe("default", () => {
     })
   }, TIMEOUT);
 
-  test("FULL BASE", () => {
+  test.skip("FULL BASE", () => {
     const filePath = "./data/SIENE_201801_76.csv";
 
     const ingestor = new EtablissementsStreamIngestor(filePath);

@@ -113,6 +113,7 @@ router.post("/upload", upload.any(), function(req, res) {
           })
           .catch(error => {
             console.error(error);
+            console.error(error.stack);
             responseData.files[fieldName].success = false;
             responseData.files[fieldName].message = "Ingestor error";
           });

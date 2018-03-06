@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const deleteKeyIfNotDefinedOrEmpty = require("../utils/ObjectManipulations")
-  .deleteKeyIfNotDefinedOrEmpty;
+const ObjectManipulations = require("../utils/ObjectManipulations");
 
 const etablissementSchema = new Schema({
   siret: { type: String, index: true },
@@ -92,9 +91,7 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
     raison_sociale: raisonSocialParam
   };
 
-  Object.keys(params).forEach(field => {
-    deleteKeyIfNotDefinedOrEmpty(params, field);
-  });
+  ObjectManipulations.clean(params);
 
   return this.find(params, cb);
 };

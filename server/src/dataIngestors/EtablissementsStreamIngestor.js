@@ -8,27 +8,19 @@ const CommunesIngestor = require("./CommunesIngestor");
 const DepartementsIngestor = require("./DepartementsIngestor");
 const CodesPostauxIngestor = require("./CodesPostauxIngestor");
 var csv = require("fast-csv");
+// var CsvReader = require("promised-csv");
+const readline = require("readline");
+const Queue = require("promise-queue");
 
 class EtablissementsStreamIngestor extends Ingestor {
   constructor(filePath) {
-    // const defaultSheetName = "Sheet1";
-    // super(filePath, defaultSheetName);
     super();
     this.filePath = filePath;
     this.Model = Etablissement;
-  }
-
-  getData() {
-    const wsh = new WorksheetHelper(this.workSheet, {
-      keysToLowerCase: true
-    });
-
-    const rowsData = wsh.getRowsData();
-    return rowsData;
-  }
-
-  getEtablissements() {
-    return this.getData();
+    this.bufferItems = [];
+    this.nbItemsSaved = 0;
+    this.promiseQueue = new Queue(50, Infinity);
+    this.intervalId = null;
   }
 
   saveEntities() {
@@ -54,76 +46,68 @@ class EtablissementsStreamIngestor extends Ingestor {
       });
   }
 
-  save(shouldSaveEntities) {
-    if (shouldSaveEntities) {
-      let responseData = { etablissements: [], entities: {} };
-      return super
-        .save()
-        .then(data => {
-          responseData.etablissements = data;
-          return this.saveEntities();
-        })
-        .then(data => {
-          responseData.entities = data;
-          return responseData;
+  flushBuffer(force) {
+    const length = this.bufferItems.length;
+    if (length >= 10000 || force) {
+      const items = [...this.bufferItems];
+      this.promiseQueue.add(() => {
+        return this.Model.insertMany(items).then(() => {
+          this.nbItemsSaved += items.length;
         });
-    } else {
-      // return super.save();
-      const promise = new Promise((resolve, reject) => {
-        let index = 0;
-        let nbSaved = 0;
-        let bufferItems = [];
-        csv
-          .fromPath(this.filePath, { headers: true })
-          .on(
-            "data",
-            function(data) {
-              let keys = Object.keys(data);
-              let item = {};
-              item = keys.reduce((acc, key) => {
-                acc[key.toLowerCase()] = data[key];
-                return acc;
-              }, {});
-              ObjectManipulations.clean(item);
-              // console.log(item);
-              // bufferItems.push(item);
-
-              if (index % 1000 === 0) {
-                console.log(index);
-              }
-                const model = new this.Model(item);
-                // (async function() {
-                  const data = await model.save().then( data => {
-                    nbSaved++;
-                  });
-                  // await this.Model.insertMany(bufferItems).then( data => {
-                    // console.log(data);
-                  // });
-                  // bufferItems = [];
-                // }.bind(this)());
-
-              index++;
-              //   const model = new this.Model(item);
-              //
-              //   (async  function() {
-              //     const data = await model.save();
-              //     console.log(data);
-              //   }()  ) ;
-            }.bind(this)
-          )
-          .on("end", function() {
-            console.log("done");
-            const responseData = { nb: index };
-            resolve(responseData);
-          });
       });
-      return promise;
+
+      this.bufferItems = [];
     }
+  }
+
+  save(shouldSaveEntities) {
+    const promise = new Promise((resolve, reject) => {
+      let index = 0;
+      csv
+        .fromPath(this.filePath, { headers: true })
+        .on(
+          "data",
+          function(data) {
+            let keys = Object.keys(data);
+            let item = {};
+            item = keys.reduce((acc, key) => {
+              acc[key.toLowerCase()] = data[key];
+              return acc;
+            }, {});
+            ObjectManipulations.clean(item);
+
+            this.bufferItems.push(item);
+            this.flushBuffer();
+            index++;
+          }.bind(this)
+        )
+        .on(
+          "end",
+          function() {
+            this.flushBuffer(true);
+
+            this.intervalId = setInterval(() => {
+              if (
+                this.promiseQueue.getQueueLength() === 0 &&
+                this.promiseQueue.getPendingLength() === 0
+              ) {
+                const responseData = {
+                  nb: index,
+                  nbItemsSaved: this.nbItemsSaved
+                };
+
+                resolve(responseData);
+                clearInterval(this.intervalId);
+              }
+            }, 600);
+          }.bind(this)
+        );
+    });
+    return promise;
   }
 
   resetEntities() {
     let entities = { communes: {}, codesPostaux: {}, departements: {} };
-    const etablissements = this.getEtablissements();
     const communesIngestor = new CommunesIngestor();
     const departementsIngestor = new DepartementsIngestor();
     const codesPostauxIngestor = new CodesPostauxIngestor();

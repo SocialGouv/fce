@@ -9,7 +9,7 @@ beforeEach(() => {
 }, TIMEOUT);
 
 afterEach(() => {
- return Etablissement.remove({});
+  return Etablissement.remove({});
 }, TIMEOUT);
 
 test(
@@ -333,9 +333,74 @@ describe("Insert many", () => {
     const ingestor = new EtablissementsIngestor(filePath);
 
     const etablissements = ingestor.getEtablissements();
-    return Etablissement.insertMany(etablissements.concat(etablissements))
-    .then( (data) => {
-      expect(data.length).toBe(18);
-    })
+    return Etablissement.insertMany(etablissements.concat(etablissements)).then(
+      data => {
+        expect(data.length).toBe(18);
+      }
+    );
   });
+});
+
+describe("Find entities", () => {
+  const filePath = "./data/SIENE_test.csv";
+  test(
+    "findDisctinctCommunes",
+    () => {
+      const ingestor = new EtablissementsIngestor(filePath);
+
+      return ingestor
+        .save()
+        .then(data => {
+          return Etablissement.findDisctinctCommunes();
+        })
+        .then(data => {
+          expect(data.length).toBe(3);
+          expect(data).toEqual(["COLOMIERS", "NIMES", "TOULOUSE"]);
+        });
+    },
+    TIMEOUT
+  );
+
+  test(
+    "findDisctinctCodesPostaux",
+    () => {
+      const ingestor = new EtablissementsIngestor(filePath);
+
+      return ingestor
+        .save()
+        .then(data => {
+          return Etablissement.findDisctinctCodesPostaux();
+        })
+        .then(data => {
+          expect(data.length).toBe(6);
+          expect(data).toEqual([
+            "30000",
+            "31000",
+            "31100",
+            "31300",
+            "31500",
+            "31770"
+          ]);
+        });
+    },
+    TIMEOUT
+  );
+
+  test(
+    "findDisctinctDepartements",
+    () => {
+      const ingestor = new EtablissementsIngestor(filePath);
+
+      return ingestor
+        .save()
+        .then(data => {
+          return Etablissement.findDisctinctDepartements();
+        })
+        .then(data => {
+          expect(data.length).toBe(2);
+          expect(data).toEqual(["30", "31"]);
+        });
+    },
+    TIMEOUT
+  );
 });

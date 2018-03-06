@@ -98,4 +98,22 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);
 
+Etablissement.findDisctinct = function(entity){
+  return Etablissement.distinct(entity).then( data => {
+    return data.sort();
+  });
+}
+
+Etablissement.findDisctinctCommunes = function(){
+  return Etablissement.findDisctinct("libelle_commune");
+}
+
+Etablissement.findDisctinctCodesPostaux = function(){
+  return Etablissement.findDisctinct("code_postal");
+}
+
+Etablissement.findDisctinctDepartements = function(){
+  return Etablissement.findDisctinct("code_departement");
+}
+
 module.exports = Etablissement;

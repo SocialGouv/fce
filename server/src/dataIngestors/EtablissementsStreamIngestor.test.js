@@ -23,7 +23,7 @@ afterEach(() => {
 }, TIMEOUT);
 
 describe("default", () => {
-  test.skip(
+  test(
     "10k",
     () => {
       const filePath = "./data/SIENE_10k.csv";
@@ -114,7 +114,6 @@ describe("saveWithEntities()", () => {
   test(
     "default",
     () => {
-      // const filePath = "./data/SIENE_test.csv";
       const filePath = "./data/SIENE_10k.csv";
 
       const ingestor = new EtablissementsStreamIngestor(filePath);

@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const deleteKeyIfNotDefinedOrEmpty = require("../utils/ObjectManipulations")
-  .deleteKeyIfNotDefinedOrEmpty;
+const ObjectManipulations = require("../utils/ObjectManipulations");
 
 const etablissementSchema = new Schema({
   siret: { type: String, index: true },
@@ -92,13 +91,29 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
     raison_sociale: raisonSocialParam
   };
 
-  Object.keys(params).forEach(field => {
-    deleteKeyIfNotDefinedOrEmpty(params, field);
-  });
+  ObjectManipulations.clean(params);
 
   return this.find(params, cb);
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);
+
+Etablissement.findDisctinct = function(entity){
+  return Etablissement.distinct(entity).then( data => {
+    return data.sort();
+  });
+}
+
+Etablissement.findDisctinctCommunes = function(){
+  return Etablissement.findDisctinct("libelle_commune");
+}
+
+Etablissement.findDisctinctCodesPostaux = function(){
+  return Etablissement.findDisctinct("code_postal");
+}
+
+Etablissement.findDisctinctDepartements = function(){
+  return Etablissement.findDisctinct("code_departement");
+}
 
 module.exports = Etablissement;

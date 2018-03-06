@@ -10,7 +10,7 @@ const filePathSIENE = "./data/SIENE_test.csv";
 
 const TIMEOUT = 10000;
 
-describe("default", () => {
+describe("default ingestor", () => {
   test("default", () => {
     const ingestor = new SESEParamsIngestor(filePath);
     const data = ingestor.getSESEParams();
@@ -61,7 +61,7 @@ describe("save()", () => {
         expect(data.sese.eos_filiere).toBe("Automobile");
         return;
       });
-  });
+  }, TIMEOUT);
 
   test("reset()", () => {
     const etablissementIngestor = new EtablissementsIngestor(filePathSIENE);
@@ -90,5 +90,5 @@ describe("save()", () => {
         expect(data.sese).toBeUndefined();
         return;
       });
-  });
+  }, TIMEOUT);
 });

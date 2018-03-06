@@ -31,16 +31,18 @@ class EtablissementsIngestor extends Ingestor {
     const communesIngestor = new CommunesIngestor();
     const departementsIngestor = new DepartementsIngestor();
     const codesPostauxIngestor = new CodesPostauxIngestor();
-
+    const saveParams = {
+      etablissements
+    }
     return communesIngestor
-      .save(etablissements)
+      .save(saveParams)
       .then(data => {
         entities.communes = data;
-        return departementsIngestor.save(etablissements);
+        return departementsIngestor.save(saveParams);
       })
       .then(data => {
         entities.departements = data;
-        return codesPostauxIngestor.save(etablissements);
+        return codesPostauxIngestor.save(saveParams);
       })
       .then(data => {
         entities.codesPostaux = data;
@@ -48,8 +50,8 @@ class EtablissementsIngestor extends Ingestor {
       });
   }
 
-  save(shouldSaveEntities) {
-    if (shouldSaveEntities) {
+  save(params) {
+    if (params && params.shouldSaveEntities) {
       let responseData = { etablissements: [], entities: {} };
       return super
         .save()

@@ -6,7 +6,7 @@ const multer = require("multer");
 const PoleCIngestor = require("../dataIngestors/interactions/PoleCIngestor");
 const PoleTIngestor = require("../dataIngestors/interactions/PoleTIngestor");
 const Pole3EIngestor = require("../dataIngestors/interactions/Pole3EIngestor");
-const EtablissementsIngestor = require("../dataIngestors/EtablissementsIngestor");
+const EtablissementsStreamIngestor = require("../dataIngestors/EtablissementsStreamIngestor");
 const NomenclaturesIngestor = require("../dataIngestors/NomenclaturesIngestor");
 const SESEParamsIngestor = require("../dataIngestors/SESEParamsIngestor");
 /*
@@ -67,8 +67,7 @@ const filesOptions = {
   },
   siene: {
     fileName: "siene",
-    sheetName: "Sheet1",
-    ingestorClass: EtablissementsIngestor
+    ingestorClass: EtablissementsStreamIngestor
   },
   nomenclature: {
     fileName: "nomenclature",
@@ -102,7 +101,7 @@ router.post("/upload", upload.any(), function(req, res) {
           shouldResetEntities: true
         };
         const ingestor = new fileOptions.ingestorClass(filePath, sheetName);
-        return ingestor
+        const ingestorPromise = ingestor
           .reset(dbParams)
           .then(data => {
             return ingestor.save(dbParams);
@@ -117,11 +116,18 @@ router.post("/upload", upload.any(), function(req, res) {
             responseData.files[fieldName].success = false;
             responseData.files[fieldName].message = "Ingestor error";
           });
-      } else {
-        responseData.files[fieldName].success = true;
-        responseData.files[fieldName].message = "Uploaded ! ";
-        return Promise.resolve();
+
+        if (fileOptions.fileName === "siene") {
+          responseData.files[fieldName].success = true;
+          responseData.files[fieldName].message = "Processing upload...";
+          return Promise.resolve();
+        }
+
+        return ingestorPromise;
       }
+      responseData.files[fieldName].success = true;
+      responseData.files[fieldName].message = "Uploaded ! ";
+      return Promise.resolve();
     })
   ).then(() => {
     res.send(responseData);

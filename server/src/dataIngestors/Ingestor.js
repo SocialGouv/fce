@@ -19,18 +19,25 @@ class Ingestor {
   }
 
   save(params) {
-    const data = this.getData(params);
-    const promises = data.map(item => {
-      const model = new this.Model(item);
-      return model.save();
-    });
-
+    let promises = [];
+    if (params && params.mongo) {
+      let promise = this.getData(params).then(data => {
+        return this.Model.insertMany(data);
+      });
+      promises.push(promise);
+    } else {
+      const data = this.getData(params);
+      promises = data.map(item => {
+        const model = new this.Model(item);
+        return model.save();
+      });
+    }
     return Promise.all(promises);
   }
 
   reset(params) {
     if (this.Model) {
-      let p = params && params.removeParams || {};
+      let p = (params && params.removeParams) || {};
       return this.Model.remove(p);
     } else {
       throw new NotImplementedError(

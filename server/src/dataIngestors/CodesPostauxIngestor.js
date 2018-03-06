@@ -34,8 +34,7 @@ class CodesPostauxIngestor extends Ingestor {
 
   getCodesPostauxFromMongo() {
     let postalCodes = [];
-    return Etablissement.findDisctinctCodesPostaux().then(data => {
-      const codes = data;
+    return Etablissement.findDisctinctCodesPostaux().then(codes => {
       codes.map(code => {
         let postalCode = {
           code_postal: code

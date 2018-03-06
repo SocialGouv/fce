@@ -1,16 +1,13 @@
-const Ingestor = require("./Ingestor");
-const WorksheetHelper = require("../helpers/WorksheetHelper");
+const csv = require("fast-csv");
+const Queue = require("promise-queue");
 
+const Ingestor = require("./Ingestor");
 const ObjectManipulations = require("../utils/ObjectManipulations");
 
 const Etablissement = require("../models/EtablissementModel");
 const CommunesIngestor = require("./CommunesIngestor");
 const DepartementsIngestor = require("./DepartementsIngestor");
 const CodesPostauxIngestor = require("./CodesPostauxIngestor");
-var csv = require("fast-csv");
-// var CsvReader = require("promised-csv");
-const readline = require("readline");
-const Queue = require("promise-queue");
 
 class EtablissementsStreamIngestor extends Ingestor {
   constructor(filePath) {
@@ -67,53 +64,47 @@ class EtablissementsStreamIngestor extends Ingestor {
       let index = 0;
       csv
         .fromPath(this.filePath, { headers: true })
-        .on(
-          "data",
-          function(data) {
-            let keys = Object.keys(data);
-            let item = {};
-            item = keys.reduce((acc, key) => {
-              acc[key.toLowerCase()] = data[key];
-              return acc;
-            }, {});
-            ObjectManipulations.clean(item);
+        .on("data", data => {
+          let keys = Object.keys(data);
+          let item = {};
+          item = keys.reduce((acc, key) => {
+            acc[key.toLowerCase()] = data[key];
+            return acc;
+          }, {});
+          ObjectManipulations.clean(item);
 
-            this.bufferItems.push(item);
-            this.flushBuffer();
-            index++;
-          }.bind(this)
-        )
-        .on(
-          "end",
-          function() {
-            this.flushBuffer(true);
+          this.bufferItems.push(item);
+          this.flushBuffer();
+          index++;
+        })
+        .on("end", () => {
+          this.flushBuffer(true);
 
-            this.intervalId = setInterval(() => {
-              if (
-                this.promiseQueue.getQueueLength() === 0 &&
-                this.promiseQueue.getPendingLength() === 0
-              ) {
-                let responseData = {
-                  nb: index,
-                  nbItemsSaved: this.nbItemsSaved
-                };
-                if (params && params.shouldSaveEntities) {
-                  this.saveEntities()
-                    .then(data => {
-                      responseData.entities = data;
-                      resolve(responseData);
-                    })
-                    .catch(err => {
-                      reject(err);
-                    });
-                } else {
-                  resolve(responseData);
-                }
-                clearInterval(this.intervalId);
+          this.intervalId = setInterval(() => {
+            if (
+              this.promiseQueue.getQueueLength() === 0 &&
+              this.promiseQueue.getPendingLength() === 0
+            ) {
+              let responseData = {
+                nb: index,
+                nbItemsSaved: this.nbItemsSaved
+              };
+              if (params && params.shouldSaveEntities) {
+                this.saveEntities()
+                  .then(data => {
+                    responseData.entities = data;
+                    resolve(responseData);
+                  })
+                  .catch(err => {
+                    reject(err);
+                  });
+              } else {
+                resolve(responseData);
               }
-            }, 600);
-          }.bind(this)
-        );
+              clearInterval(this.intervalId);
+            }
+          }, 600);
+        });
     });
     return promise;
   }

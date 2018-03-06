@@ -35,8 +35,7 @@ class CommunesIngestor extends Ingestor {
 
   getCommunesFromMongo() {
     let communes = [];
-    return Etablissement.findDisctinctCommunes().then(data => {
-      const codes = data;
+    return Etablissement.findDisctinctCommunes().then(codes => {
       codes.map(code => {
         let commune = {
           libelle_commune: code

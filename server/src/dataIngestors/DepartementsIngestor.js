@@ -34,8 +34,7 @@ class DepartementsIngestor extends Ingestor {
 
   getDepartementsFromMongo() {
     let departements = [];
-    return Etablissement.findDisctinctDepartements().then(data => {
-      const codes = data;
+    return Etablissement.findDisctinctDepartements().then(codes => {
       codes.map(code => {
         let departement = {
           code_departement: code

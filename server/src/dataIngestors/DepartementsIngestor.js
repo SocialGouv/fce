@@ -1,6 +1,7 @@
 const Ingestor = require("./Ingestor");
 const WorksheetHelper = require("../helpers/WorksheetHelper");
 const Departement = require("../models/DepartementModel");
+const Etablissement = require("../models/EtablissementModel");
 
 class DepartementsIngestor extends Ingestor {
   constructor() {
@@ -8,8 +9,12 @@ class DepartementsIngestor extends Ingestor {
     this.Model = Departement;
   }
 
-  getData(etablissements) {
-    return this.getDepartementsFromEtablissements(etablissements);
+  getData(params) {
+    if (params && params.etablissements) {
+      return this.getDepartementsFromEtablissements(params.etablissements);
+    } else if (params && params.mongo) {
+      return this.getDepartementsFromMongo();
+    }
   }
 
   getDepartementsFromEtablissements(etablissements) {
@@ -25,6 +30,20 @@ class DepartementsIngestor extends Ingestor {
       }
     });
     return departements;
+  }
+
+  getDepartementsFromMongo() {
+    let departements = [];
+    return Etablissement.findDisctinctDepartements().then(data => {
+      const codes = data;
+      codes.map(code => {
+        let departement = {
+          code_departement: code
+        };
+        departements.push(departement);
+      });
+      return departements;
+    });
   }
 }
 

@@ -101,7 +101,7 @@ router.post("/upload", upload.any(), function(req, res) {
           shouldResetEntities: true
         };
         const ingestor = new fileOptions.ingestorClass(filePath, sheetName);
-        return ingestor
+        const ingestorPromise = ingestor
           .reset(dbParams)
           .then(data => {
             return ingestor.save(dbParams);
@@ -116,11 +116,18 @@ router.post("/upload", upload.any(), function(req, res) {
             responseData.files[fieldName].success = false;
             responseData.files[fieldName].message = "Ingestor error";
           });
-      } else {
-        responseData.files[fieldName].success = true;
-        responseData.files[fieldName].message = "Uploaded ! ";
-        return Promise.resolve();
+
+        if (fileOptions.fileName === "siene") {
+          responseData.files[fieldName].success = true;
+          responseData.files[fieldName].message = "Processing upload...";
+          return Promise.resolve();
+        }
+
+        return ingestorPromise;
       }
+      responseData.files[fieldName].success = true;
+      responseData.files[fieldName].message = "Uploaded ! ";
+      return Promise.resolve();
     })
   ).then(() => {
     res.send(responseData);

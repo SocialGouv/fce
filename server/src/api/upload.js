@@ -6,7 +6,7 @@ const multer = require("multer");
 const PoleCIngestor = require("../dataIngestors/interactions/PoleCIngestor");
 const PoleTIngestor = require("../dataIngestors/interactions/PoleTIngestor");
 const Pole3EIngestor = require("../dataIngestors/interactions/Pole3EIngestor");
-const EtablissementsIngestor = require("../dataIngestors/EtablissementsIngestor");
+const EtablissementsStreamIngestor = require("../dataIngestors/EtablissementsStreamIngestor");
 const NomenclaturesIngestor = require("../dataIngestors/NomenclaturesIngestor");
 const SESEParamsIngestor = require("../dataIngestors/SESEParamsIngestor");
 /*
@@ -67,8 +67,7 @@ const filesOptions = {
   },
   siene: {
     fileName: "siene",
-    sheetName: "Sheet1",
-    ingestorClass: EtablissementsIngestor
+    ingestorClass: EtablissementsStreamIngestor
   },
   nomenclature: {
     fileName: "nomenclature",

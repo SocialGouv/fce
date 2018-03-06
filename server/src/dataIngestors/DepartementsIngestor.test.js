@@ -50,7 +50,7 @@ describe("save()", () => {
       expect(data[0].code_departement).toEqual("30");
       expect(data[1].code_departement).toEqual("31");
     });
-  });
+  }, TIMEOUT);
 });
 
 describe("getDepartementsFromMongo()", () => {

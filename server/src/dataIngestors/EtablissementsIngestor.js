@@ -50,8 +50,8 @@ class EtablissementsIngestor extends Ingestor {
       });
   }
 
-  save(shouldSaveEntities) {
-    if (shouldSaveEntities) {
+  save(params) {
+    if (params && params.shouldSaveEntities) {
       let responseData = { etablissements: [], entities: {} };
       return super
         .save()

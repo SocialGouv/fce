@@ -25,23 +25,25 @@ class EtablissementsStreamIngestor extends Ingestor {
 
   saveEntities() {
     let entities = { communes: [], codesPostaux: [], departements: [] };
-    const etablissements = this.getEtablissements();
     const communesIngestor = new CommunesIngestor();
     const departementsIngestor = new DepartementsIngestor();
     const codesPostauxIngestor = new CodesPostauxIngestor();
 
+    const saveParams = {
+      mongo: true
+    };
     return communesIngestor
-      .save(etablissements)
+      .save(saveParams)
       .then(data => {
-        entities.communes = data;
-        return departementsIngestor.save(etablissements);
+        entities.communes = data[0];
+        return departementsIngestor.save(saveParams);
       })
       .then(data => {
-        entities.departements = data;
-        return codesPostauxIngestor.save(etablissements);
+        entities.departements = data[0];
+        return codesPostauxIngestor.save(saveParams);
       })
       .then(data => {
-        entities.codesPostaux = data;
+        entities.codesPostaux = data[0];
         return entities;
       });
   }
@@ -60,7 +62,7 @@ class EtablissementsStreamIngestor extends Ingestor {
     }
   }
 
-  save(shouldSaveEntities) {
+  save(params) {
     const promise = new Promise((resolve, reject) => {
       let index = 0;
       csv
@@ -91,12 +93,22 @@ class EtablissementsStreamIngestor extends Ingestor {
                 this.promiseQueue.getQueueLength() === 0 &&
                 this.promiseQueue.getPendingLength() === 0
               ) {
-                const responseData = {
+                let responseData = {
                   nb: index,
                   nbItemsSaved: this.nbItemsSaved
                 };
-
-                resolve(responseData);
+                if (params && params.shouldSaveEntities) {
+                  this.saveEntities()
+                    .then(data => {
+                      responseData.entities = data;
+                      resolve(responseData);
+                    })
+                    .catch(err => {
+                      reject(err);
+                    });
+                } else {
+                  resolve(responseData);
+                }
                 clearInterval(this.intervalId);
               }
             }, 600);

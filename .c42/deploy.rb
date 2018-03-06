@@ -61,7 +61,7 @@ namespace :check do
 end
 
 after 'deploy' do
-  run %{echo '{"host":"127.2.47.171","port":8101,mongo:"mongodb://localhost/direccte"}' > #{File.join(latest_release, '/dist/config/local.json')}}
+  run %(echo '{"host":"127.2.47.171","port":8101,mongo:"mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte"}' > #{File.join(latest_release, '/dist/config/local.json')})
   run "echo #{latest_revision} > #{File.join(latest_release, app_path, 'rev.txt')}"
 end
 

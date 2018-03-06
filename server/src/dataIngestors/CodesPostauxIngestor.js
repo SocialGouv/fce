@@ -1,6 +1,7 @@
 const Ingestor = require("./Ingestor");
 const WorksheetHelper = require("../helpers/WorksheetHelper");
 const CodePostal = require("../models/CodePostalModel");
+const Etablissement = require("../models/EtablissementModel");
 
 class CodesPostauxIngestor extends Ingestor {
   constructor() {
@@ -8,8 +9,12 @@ class CodesPostauxIngestor extends Ingestor {
     this.Model = CodePostal;
   }
 
-  getData(etablissements) {
-    return this.getCodesPostauxFromEtablissements(etablissements);
+  getData(params) {
+    if (params && params.etablissements) {
+      return this.getCodesPostauxFromEtablissements(params.etablissements);
+    } else if (params && params.mongo) {
+      return this.getCodesPostauxFromMongo();
+    }
   }
 
   getCodesPostauxFromEtablissements(etablissements) {
@@ -25,6 +30,20 @@ class CodesPostauxIngestor extends Ingestor {
       }
     });
     return postalCodes;
+  }
+
+  getCodesPostauxFromMongo() {
+    let postalCodes = [];
+    return Etablissement.findDisctinctCodesPostaux().then(data => {
+      const codes = data;
+      codes.map(code => {
+        let postalCode = {
+          code_postal: code
+        };
+        postalCodes.push(postalCode);
+      });
+      return postalCodes;
+    });
   }
 }
 

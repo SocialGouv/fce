@@ -55,7 +55,7 @@ class NomenclaturesIngestor extends Ingestor {
     let sheetsData = wbh.getSheetsData(sheetsParams);
     for (let sheetName in sheetsData) {
       sheetsData[sheetName] = sheetsData[sheetName].map(nomenclature => {
-        nomenclature.categorie = sheetName;
+        nomenclature.categorie = sheetName.toLowerCase().trim();
         return nomenclature;
       });
     }

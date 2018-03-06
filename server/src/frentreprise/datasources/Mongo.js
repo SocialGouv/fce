@@ -1,17 +1,25 @@
 import EtablissementModel from "../../models/EtablissementModel";
 import InteractionModel from "../../models/InteractionModel";
+import NomenclatureModel from "../../models/NomenclatureModel";
 
 const { DataSource } = require(__DIST
   ? "frentreprise"
   : "../../../lib/frentreprise/src/frentreprise");
 
-const _mongoToCleanModel = Symbol("_mongoToCleanModel");
-const _getCleanYear = Symbol("_getCleanYear");
-const _getCleanBool = Symbol("_getCleanBool");
-const _getCleanDate = Symbol("_getCleanDate");
-const _getCleanAddress = Symbol("_getCleanAddress");
-const _getObjectKey = Symbol("_getObjectKey");
-const _runAttrMap = Symbol("_runAttrMap");
+// PrivateMethods
+const _ = {};
+[
+  "mongoToCleanModel",
+  "getCleanYear",
+  "getCleanBool",
+  "getCleanDate",
+  "getCleanAddress",
+  "getObjectKey",
+  "runAttrMap",
+  "getNomenclatureValue"
+].forEach(key => {
+  _[key] = Symbol(key);
+}, this);
 
 class Mongo extends DataSource {
   async getSIRET(siret) {
@@ -30,10 +38,10 @@ class Mongo extends DataSource {
       console.error(exception);
     }
 
-    return await this[_mongoToCleanModel](siene_sese, interactions);
+    return await this[_.mongoToCleanModel](siene_sese, interactions);
   }
 
-  async [_mongoToCleanModel](siene_sese, interactions) {
+  async [_.mongoToCleanModel](siene_sese, interactions) {
     const out = {};
 
     if (siene_sese && typeof siene_sese === "object") {
@@ -41,8 +49,12 @@ class Mongo extends DataSource {
         raison_sociale_entreprise: "raison_sociale",
         enseigne: "enseigne",
         siret: "siret",
-        categorie_etablissement: "code_qualite_siege",
-        adresse: this[_getCleanAddress],
+        categorie_etablissement: this[_.getNomenclatureValue].bind(
+          this,
+          "code_qualite_siege",
+          "code_qualite_siege"
+        ),
+        adresse: this[_.getCleanAddress],
         adresse_components: obj => {
           return {
             numero_voie: obj.numero_voie,
@@ -54,61 +66,95 @@ class Mongo extends DataSource {
           };
         },
         departement: "code_departement",
-        region: "code_region",
-        date_creation: this[_getCleanDate].bind(this, "date_de_creation"),
-        etat_etablissement: obj => {
+        region: this[_.getNomenclatureValue].bind(
+          this,
+          "code_region",
+          "code_region"
+        ),
+        date_creation: this[_.getCleanDate].bind(this, "date_de_creation"),
+        etat_etablissement: async obj => {
           return {
-            label: obj["code_etat"],
-            date: this[_getCleanDate]("date_de_l_etat", obj)
+            label: await this[_.getNomenclatureValue](
+              "code_etat",
+              "code_etat",
+              obj
+            ),
+            date: this[_.getCleanDate]("date_de_l_etat", obj)
           };
         },
-        activite: "code_activite",
-        date_debut_activite_economique: this[_getCleanDate].bind(
+        activite: async obj => {
+          return (
+            this[_.getObjectKey]("code_activite", obj) +
+            " - " +
+            (await this[_.getNomenclatureValue](
+              "code_activite_naf",
+              "code_activite",
+              obj
+            ))
+          );
+        },
+        date_debut_activite_economique: this[_.getCleanDate].bind(
           this,
           "date_debut_activite"
         ),
-        modalite_activite: "code_modalite_activ_",
+        modalite_activite: this[_.getNomenclatureValue].bind(
+          this,
+          "code_modalite_activ_",
+          "code_modalite_activ_"
+        ),
         marchand: "code_marchand",
-        etablissement_employeur: this[_getCleanBool].bind(
+        etablissement_employeur: this[_.getCleanBool].bind(
           this,
           "code_employeur"
         ),
-        tranche_effectif_insee: "tranche_eff__insee",
-        annee_tranche_effectif_insee: this[_getCleanYear].bind(
+        tranche_effectif_insee: this[_.getNomenclatureValue].bind(
+          this,
+          "tranche_effectif",
+          "tranche_eff__insee"
+        ),
+        annee_tranche_effectif_insee: this[_.getCleanYear].bind(
           this,
           "annee_tranche_eff_"
         ),
         dernier_effectif_physique: "dernier_eff__physique",
-        date_dernier_effectif_physique: this[_getCleanYear].bind(
+        date_dernier_effectif_physique: this[_.getCleanYear].bind(
           this,
           "date_der_eff_physique"
         ),
-        source_dernier_effectif_physique: "source_dernier_eff_phy",
+        source_dernier_effectif_physique: this[_.getNomenclatureValue].bind(
+          this,
+          "source_dernier_eff_phy",
+          "source_dernier_eff_phy"
+        ),
         unite_controle_competente: "code_section",
         annee_idcc: "annee_idcc",
-        codes_idcc: "codes_idcc",
+        codes_idcc: this[_.getNomenclatureValue].bind(
+          this,
+          "codes_idcc",
+          "codes_idcc"
+        ),
         eti_pepite: "sese.eos_eti_pepite_",
         filiere_strategique: obj => {
           return (
             obj.sese && ("" + obj.sese.eos_filiere).replace("\n", " ").trim()
           );
         },
-        structure_insertion_activite_economique: this[_getCleanBool].bind(
+        structure_insertion_activite_economique: this[_.getCleanBool].bind(
           this,
           "sese.siae"
         ),
         structure_insertion_activite_economique_types: obj => {
           return obj["sese"]
             ? {
-                aci: this[_getCleanBool]("aci", obj["sese"]),
-                ai: this[_getCleanBool]("ai", obj["sese"]),
-                ei: this[_getCleanBool]("ei", obj["sese"]),
-                etti: this[_getCleanBool]("etti", obj["sese"])
+                aci: this[_.getCleanBool]("aci", obj["sese"]),
+                ai: this[_.getCleanBool]("ai", obj["sese"]),
+                ei: this[_.getCleanBool]("ei", obj["sese"]),
+                etti: this[_.getCleanBool]("etti", obj["sese"])
               }
             : {};
         },
         activite_partielle_24_derniers_mois: obj => {
-          if (this[_getCleanBool]("sese.acp", obj)) {
+          if (this[_.getCleanBool]("sese.acp", obj)) {
             const yearKeys = [];
 
             for (let i = 0; i < 10; i++) {
@@ -152,7 +198,7 @@ class Mongo extends DataSource {
         }
       };
 
-      await this[_runAttrMap](siene_sese, attr_map, out);
+      await this[_.runAttrMap](siene_sese, attr_map, out);
     }
 
     if (interactions && typeof interactions === "object") {
@@ -162,14 +208,14 @@ class Mongo extends DataSource {
     return out;
   }
 
-  async [_runAttrMap](source, attrMap, out) {
+  async [_.runAttrMap](source, attrMap, out) {
     var keys = Object.keys(attrMap);
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
       const mapping = attrMap[key];
 
       if (typeof mapping === "string") {
-        out[key] = this[_getObjectKey](mapping, source);
+        out[key] = this[_.getObjectKey](mapping, source);
       }
 
       if (typeof mapping === "function") {
@@ -178,7 +224,7 @@ class Mongo extends DataSource {
     }
   }
 
-  [_getObjectKey](key, obj) {
+  [_.getObjectKey](key, obj) {
     const path = key.split(".");
 
     let result = obj;
@@ -196,23 +242,23 @@ class Mongo extends DataSource {
     return result;
   }
 
-  [_getCleanYear](key, obj) {
-    const date = new Date(); // this[_getCleanDate](key, obj);
+  [_.getCleanYear](key, obj) {
+    const date = new Date(); // this[_.getCleanDate](key, obj);
     return (date && date.getFullYear()) || null;
   }
 
-  [_getCleanDate](key, obj) {
+  [_.getCleanDate](key, obj) {
     return new Date().toISOString();
   }
 
-  [_getCleanBool](key, obj) {
+  [_.getCleanBool](key, obj) {
     return !!(
       obj[key] === true ||
-      /^(1|true|O)$/.test(("" + this[_getObjectKey](key, obj)).trim())
+      /^(1|true|O)$/.test(("" + this[_.getObjectKey](key, obj)).trim())
     );
   }
 
-  [_getCleanAddress](obj) {
+  [_.getCleanAddress](obj) {
     return `
     ${obj.numero_voie || ""} ${obj.code_type_de_voie ||
       ""} ${obj.libelle_voie || ""}
@@ -223,6 +269,23 @@ class Mongo extends DataSource {
       .split("\n")
       .map(l => l.trim())
       .join("\n");
+  }
+
+  [_.getNomenclatureValue](category, key, obj) {
+    const val = this[_.getObjectKey](key, obj);
+
+    let nomKey = "libelle";
+    let cat = category;
+    if (typeof category === "object") {
+      cat = category.category;
+      if (category.key === "string") {
+        nomKey = category.key;
+      }
+    }
+
+    return NomenclatureModel.findOneByCategoryAndCode(cat, val).then(
+      nom => (nom && nom[nomKey]) || val
+    );
   }
 
   async getSIREN() {
@@ -246,7 +309,7 @@ class Mongo extends DataSource {
 
     if (mongo && Array.isArray(mongo)) {
       for (let i = 0; i < mongo.length; i++) {
-        const model = await this[_mongoToCleanModel](mongo[i]);
+        const model = await this[_.mongoToCleanModel](mongo[i]);
         if (
           model &&
           typeof model === "object" &&

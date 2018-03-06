@@ -7,14 +7,18 @@ const nomenclatureSchema = new Schema({
   libelle: String,
   libelle_court: String,
   libelle_CJ3: String,
-  libelle_CJ1: String,
+  libelle_CJ1: String
 });
 
 nomenclatureSchema.statics.findByCategory = function(categorie, cb) {
   return this.find({ categorie }, cb);
 };
 
-nomenclatureSchema.statics.findOneByCategoryAndCode = function(categorie, code, cb) {
+nomenclatureSchema.statics.findOneByCategoryAndCode = function(
+  categorie,
+  code,
+  cb
+) {
   return this.findOne({ categorie, code }, cb);
 };
 

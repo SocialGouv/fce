@@ -40,7 +40,7 @@ router.get("/entities", function(req, res) {
     })
     .then(data => {
       responseData.results.postalCodes = data;
-      return NomenclatureModel.findByCategory("Code_activite_NAF");
+      return NomenclatureModel.findByCategory("code_activite_naf");
     })
     .then(data => {
       responseData.results.nafCodes = data;
@@ -71,7 +71,7 @@ router.get("/postalCodes", function(req, res) {
 router.get("/nafCodes", function(req, res) {
   let responseData = { results: {} };
 
-  return NomenclatureModel.findByCategory("Code_activite_NAF").then(data => {
+  return NomenclatureModel.findByCategory("code_activite_naf").then(data => {
     responseData.results = data;
     responseData.success = true;
     res.send(responseData);

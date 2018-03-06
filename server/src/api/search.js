@@ -9,11 +9,11 @@ const frentreprise = __DIST
   ? require("frentreprise")
   : require("../../lib/frentreprise/src/frentreprise.js");
 
-const logError = err => {
+const logError = (data, err) => {
   console.error(err);
   data.error = true;
   try {
-    data.message = err.toString();
+    this.data.message = err.toString();
   } catch (Exception) {}
 };
 
@@ -32,11 +32,11 @@ router.get("/search", function(req, res) {
   if (data.query.isSIREN || data.query.isSIRET) {
     freCall = frentreprise.getEntreprise(data.query.q).then(entreprise => {
       data.results = [entreprise.export()];
-    }, logError);
+    }, logError.bind(this, data));
   } else {
     freCall = frentreprise.search(data.query.q).then(results => {
       data.results = results.map(ent => ent.export());
-    }, logError);
+    }, logError.bind(this, data));
   }
 
   freCall.then(() => {
@@ -50,7 +50,7 @@ router.get("/advancedSearch", function(req, res) {
   const code_postal = (req.query["codePostal"] || "").trim();
   const code_departement = (req.query["departement"] || "").trim();
 
-  const data = {
+  let data = {
     query: {
       code_activite,
       libelle_commune,
@@ -61,7 +61,7 @@ router.get("/advancedSearch", function(req, res) {
 
   let freCall = frentreprise.search(data.query).then(results => {
     data.results = results.map(ent => ent.export());
-  }, logError);
+  }, logError.bind(this, data));
 
   freCall.then(() => {
     res.send(data);

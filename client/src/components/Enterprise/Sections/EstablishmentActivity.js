@@ -58,19 +58,28 @@ class EstablishmentActivity extends React.Component {
           <dt className="dt col-md-4">Marchand</dt>
           <dd className="dd col-md-8">
             <Value
-              value={(establishment.marchand && "Oui") || "Non"}
-              empty="-"
+              value={establishment.marchand && "Oui"}
+              no="Non"
+              empty="Non"
             />
           </dd>
 
           <dt className="dt col-md-4">Association</dt>
           <dd className="dd col-md-8">
-            <Value value={establishment.association} empty="-" />
+            <Value
+              value={establishment.association && "Oui"}
+              no="Non"
+              empty="-"
+            />
           </dd>
 
           <dt className="dt col-md-4">Etablissement employeur</dt>
           <dd className="dd col-md-8">
-            <Value value={establishment.etablissement_employeur} empty="-" />
+            <Value
+              value={establishment.etablissement_employeur && "Oui"}
+              no="Non"
+              empty="-"
+            />
           </dd>
 
           <dt className="dt col-md-4">Tranche Effectif INSEE</dt>

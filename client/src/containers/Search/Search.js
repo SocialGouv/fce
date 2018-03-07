@@ -40,7 +40,7 @@ class Search extends Component {
           redirectTo = `/enterprise/${query.q}`;
           this.props.setCurrentEnterprise(results[0]);
         } else if (results && results.length === 1) {
-          redirectTo = `/enterprise/${results[0].siren}`;
+          redirectTo = `/establishment/${results[0].etablissements[0].siret}`;
         }
 
         this.setState({

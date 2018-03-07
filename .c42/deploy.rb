@@ -61,12 +61,16 @@ namespace :check do
 end
 
 after 'deploy' do
-  run %(echo '{"host":"127.2.47.171","port":8101,mongo:"mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte"}' > #{File.join(latest_release, '/dist/config/local.json')})
   run "echo #{latest_revision} > #{File.join(latest_release, app_path, 'rev.txt')}"
 end
 
+task 'local_config' do
+  run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte" }' > #{File.join(latest_release, '/dist/config/local.json')})
+end
+after 'deploy', 'local_config'
+
 task 'restart' do
-  run 'ps -ef | grep node | grep "#{application}" | grep -v grep | awk "{print $2}" | xargs kill -9'
+  run %(ps -ef | grep node | grep "#{application}" | grep -v grep | awk "{print \\$2}" | xargs kill -9)
 end
 after 'deploy', 'restart'
 after 'restart', 'deploy:cleanup'

@@ -1,5 +1,7 @@
 import React from "react";
 import classNames from "classnames";
+import Value from "../../../elements/Value";
+import { toI18nDate } from "../../../helpers/Date";
 
 class Direccte extends React.Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class Direccte extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <section id="direccte" className="enterprise-section">
         <h1 className="title h4">Intéractions DIRECCTE</h1>
@@ -36,7 +39,7 @@ class Direccte extends React.Component {
             "d-print-block": true
           })}
         >
-          <table className="table table-striped">
+          <table className="table table-striped direccte-interactions">
             <thead>
               <tr>
                 <th>Date</th>
@@ -47,20 +50,28 @@ class Direccte extends React.Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>15/10/2017</td>
-                <td>C</td>
-                <td>Brigade viticole</td>
-                <td>enquête</td>
-                <td>test</td>
-              </tr>
-              <tr>
-                <td>15/11/2017</td>
-                <td>3E</td>
-                <td>SEI</td>
-                <td>enquête</td>
-                <td>test</td>
-              </tr>
+              {this.props.establishment.direccte.map(dirvis => {
+                console.log(dirvis);
+                return (
+                  <tr>
+                    <td>
+                      <Value value={toI18nDate(dirvis.date)} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={dirvis.pole} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={dirvis.unite} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={dirvis.type_intervention} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={dirvis.cible_intervention} empty="-" />
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

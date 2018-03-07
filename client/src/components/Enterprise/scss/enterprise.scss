@@ -1,5 +1,4 @@
 .app-enterprise {
-
   .aside-box {
     padding: 0;
 
@@ -8,7 +7,7 @@
       max-width: 100%;
     }
 
-    >.aside-contain {
+    > .aside-contain {
       position: fixed;
 
       @media print {
@@ -24,12 +23,13 @@
       max-width: 100%;
     }
 
-    >.title, .subtitle {
+    > .title,
+    .subtitle {
       text-align: center;
       margin-bottom: 1rem;
     }
 
-    >.task-bar {
+    > .task-bar {
       margin-bottom: 1rem;
       text-align: center;
     }
@@ -39,12 +39,12 @@
       margin-bottom: 1rem;
       background-color: #f8f9fa;
 
-      >.title {
+      > .title {
         text-align: center;
         margin-bottom: 1rem;
       }
 
-      >.dl {
+      > .dl {
         margin-bottom: 0;
       }
 
@@ -64,11 +64,11 @@
       list-style: none;
       padding-left: 0;
 
-      >.nav-item {
+      > .nav-item {
         text-align: center;
         border: solid 1px #e9ecef;
 
-        >.link {
+        > .link {
           display: block;
           padding: 0.5rem;
           background-color: #f8f9fa;

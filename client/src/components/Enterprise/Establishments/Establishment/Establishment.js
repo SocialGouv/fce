@@ -26,11 +26,23 @@ class Establishment extends React.Component {
           />{" "}
           - <Value value={establishment.departement} empty="" /> -{" "}
           <Value
-            value={establishment.adresse && establishment.adresse.localite}
+            value={
+              establishment.adresse_components &&
+              establishment.adresse_components.localite
+            }
             empty=""
           />{" "}
-          - Effectif :{" "}
-          <Value value={establishment.dernier_effectif_physique} empty="-" />
+          {this.props.effectif !== false ? (
+            <span>
+              - Effectif :{" "}
+              <Value
+                value={establishment.dernier_effectif_physique}
+                empty="-"
+              />
+            </span>
+          ) : (
+            ""
+          )}
         </li>
       </ul>
     );

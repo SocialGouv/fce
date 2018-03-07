@@ -5,7 +5,12 @@ import { Row, Col, Button } from "reactstrap";
 import QuickAccess from "./QuickAccess";
 import Establishments from "./Establishments";
 import Value from "../../elements/Value";
-import { EnterpriseIdentity, EnterpriseActivity } from "./Sections";
+import {
+  EnterpriseIdentity,
+  EnterpriseActivity,
+  EnterpriseHeadOffice,
+  Mandataires
+} from "./Sections";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/fontawesome-pro-light";
 
@@ -13,12 +18,14 @@ class Enterprise extends React.Component {
   getSections = () => {
     return [
       { name: "Identité", id: "identity" },
-      { name: "État", id: "activity" }
+      { name: "État", id: "activity" },
+      { name: "Siège social", id: "headoffice" },
+      { name: "Mandataires", id: "mandataire" }
     ];
   };
 
   render() {
-    const { enterprise } = this.props;
+    const { enterprise, headOffice } = this.props;
 
     return (
       <section className="app-enterprise">
@@ -41,6 +48,8 @@ class Enterprise extends React.Component {
 
             <EnterpriseIdentity enterprise={enterprise} />
             <EnterpriseActivity enterprise={enterprise} />
+            <EnterpriseHeadOffice headOffice={headOffice} />
+            <Mandataires enterprise={enterprise} />
           </Col>
           <Col className="aside-box" md="3">
             <Establishments

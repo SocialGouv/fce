@@ -8,9 +8,12 @@ import Value from "../../elements/Value";
 import {
   EstablishmentActivity,
   EstablishmentIdentity,
+  EstablishmentEnterpriseIdentity,
   Finances,
   Interventions,
-  Direccte
+  Direccte,
+  Mandataires,
+  Relation
 } from "./Sections";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/fontawesome-pro-light";
@@ -18,8 +21,11 @@ import { faPrint } from "@fortawesome/fontawesome-pro-light";
 class Establishment extends React.Component {
   getSections = () => {
     return [
-      { name: "Identité", id: "identity" },
+      { name: "Identité Ent.", id: "identity-en" },
+      { name: "Identité Eta.", id: "identity-et" },
       { name: "État", id: "activity" },
+      { name: "Mandataires", id: "mandataire" },
+      { name: "Relation travail", id: "relation" },
       { name: "Eco & Fina.", id: "finances" },
       { name: "Dév. Eco", id: "development" },
       { name: "Emploi", id: "job" },
@@ -53,6 +59,10 @@ class Establishment extends React.Component {
               </Button>
             </div>
 
+            <EstablishmentEnterpriseIdentity
+              enterprise={this.props.enterprise}
+              headOffice={this.props.headOffice}
+            />
             <EstablishmentIdentity
               establishment={this.props.establishment}
               enterprise={this.props.enterprise}
@@ -63,10 +73,9 @@ class Establishment extends React.Component {
               establishment={this.props.establishment}
               enterprise={this.props.enterprise}
             />
-            <Finances
-              establishment={this.props.establishment}
-              enterprise={this.props.enterprise}
-            />
+            <Mandataires enterprise={this.props.enterprise} />
+            <Relation establishment={this.props.establishment} />
+            <Finances establishment={this.props.establishment} />
             <Interventions
               establishment={this.props.establishment}
               enterprise={this.props.enterprise}

@@ -24,7 +24,8 @@
     "reactstrap": "^5.0.0-beta",
     "redux": "^3.7.2",
     "redux-persist": "^5.5.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "smoothscroll-polyfill": "^0.4.3"
   },
   "scripts": {
     "start": "react-scripts start",

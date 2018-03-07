@@ -9,7 +9,7 @@ class Establishments extends React.Component {
 
     let establishmentsItems = establishments.map((establishment, index) => (
       <article key={index}>
-        <Establishment establishment={establishment} />
+        <Establishment establishment={establishment} effectif={false} />
       </article>
     ));
 

@@ -37,8 +37,8 @@ class EstablishmentActivity extends React.Component {
             />
           </dd>
 
-          <dt className="dt col-md-4">Activité</dt>
-          <dd className="dd col-md-8">
+          <dt className="dt col-md-4 mt-4">Activité</dt>
+          <dd className="dd col-md-8 mt-4">
             <Value value={establishment.activite} empty="-" />
           </dd>
 
@@ -55,8 +55,8 @@ class EstablishmentActivity extends React.Component {
             <Value value={establishment.modalite_activite} empty="-" />
           </dd>
 
-          <dt className="dt col-md-4">Marchand</dt>
-          <dd className="dd col-md-8">
+          <dt className="dt col-md-4 mt-4">Marchand</dt>
+          <dd className="dd col-md-8 mt-4">
             <Value
               value={establishment.marchand && "Oui"}
               no="Non"
@@ -73,8 +73,8 @@ class EstablishmentActivity extends React.Component {
             />
           </dd>
 
-          <dt className="dt col-md-4">Etablissement employeur</dt>
-          <dd className="dd col-md-8">
+          <dt className="dt col-md-4 mt-4">Etablissement employeur</dt>
+          <dd className="dd col-md-8 mt-4">
             <Value
               value={establishment.etablissement_employeur && "Oui"}
               no="Non"

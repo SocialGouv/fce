@@ -57,7 +57,10 @@ class EstablishmentActivity extends React.Component {
 
           <dt className="dt col-md-4">Marchand</dt>
           <dd className="dd col-md-8">
-            <Value value={establishment.marchand} empty="-" />
+            <Value
+              value={(establishment.marchand && "Oui") || "Non"}
+              empty="-"
+            />
           </dd>
 
           <dt className="dt col-md-4">Association</dt>

@@ -181,7 +181,7 @@ class frentreprise {
           .filter(Boolean) // Remove falsey values
           .reduce((prev, curr) => {
             return prev || curr;
-          });
+          }, null);
       }
 
       const ent = new this.EntrepriseModel(etData);

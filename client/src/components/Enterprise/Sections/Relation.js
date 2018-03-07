@@ -25,11 +25,6 @@ class Relation extends React.Component {
             <Value value={establishment.annee_idcc} empty="-" />
           </dd>
 
-          <dt className="dt col-md-4">Nombre IDCC</dt>
-          <dd className="dd col-md-8">
-            <Value value={establishment.nombre_idcc} empty="-" />
-          </dd>
-
           <dt className="dt col-md-4">Déclaration AGEFIPH</dt>
           <dd className="dd col-md-8" />
 

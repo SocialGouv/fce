@@ -9,6 +9,7 @@ import "./app.css";
 import { Container } from "reactstrap";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
+import Footer from "./Footer";
 import Login from "../../containers/Login";
 import Search from "../../containers/Search";
 import SearchResults from "../../containers/SearchResults";
@@ -64,6 +65,7 @@ class App extends React.Component {
                   <Redirect to="/404" />
                 </Switch>
               </Container>
+              <Footer />
             </ScrollToTop>
           </BrowserRouter>
         </PersistGate>

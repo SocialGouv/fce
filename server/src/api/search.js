@@ -1,4 +1,5 @@
 const express = require("express");
+const Json2csvParser = require("json2csv").Parser;
 const router = express.Router();
 
 const EtablissementModel = require("../models/EtablissementModel");
@@ -17,10 +18,12 @@ const logError = (data, err) => {
   } catch (Exception) {}
 };
 
-router.get("/search", function(req, res) {
+router.get("/search(.:format)?", function(req, res) {
   const query = (req.query["q"] || "").trim();
   const data = {
     query: {
+      search: "simple",
+      format: req.param("format", "json"),
       q: query,
       isSIRET: frentreprise.isSIRET(query),
       isSIREN: frentreprise.isSIREN(query)
@@ -40,11 +43,12 @@ router.get("/search", function(req, res) {
   }
 
   freCall.then(() => {
-    res.send(data);
+    data.size = data.results.length;
+    sendResult(data, res);
   });
 });
 
-router.get("/advancedSearch", function(req, res) {
+router.get("/advancedSearch(.:format)?", function(req, res) {
   const code_activite = (req.query["naf"] || "").trim();
   const libelle_commune = (req.query["commune"] || "").trim();
   const code_postal = (req.query["codePostal"] || "").trim();
@@ -52,6 +56,8 @@ router.get("/advancedSearch", function(req, res) {
 
   let data = {
     query: {
+      search: "advanced",
+      format: req.param("format", "json"),
       code_activite,
       libelle_commune,
       code_postal,
@@ -62,8 +68,35 @@ router.get("/advancedSearch", function(req, res) {
   frentreprise.search(data.query).then(results => {
     data.results = results.map(ent => ent.export());
     data.size = data.results.length;
-    res.send(data);
+    sendResult(data, res);
   }, logError.bind(this, data));
 });
+
+const sendResult = (data, response) => {
+  if (data.query.format === "csv") {
+    const json2csvParser = new Json2csvParser();
+
+    const fields = [];
+
+    if (data.query.isSIREN && data.query.isSIRET) {
+      // Common etablissement and entreprise fields
+
+      if (data.query.isSIREN) {
+        // Entreprise fields
+      } else if (data.query.isSIRET) {
+        // Etablissement fields
+      }
+    } else {
+      // Search results
+      
+    }
+
+    const csv = json2csvParser.parse(data.results);
+
+    response.send(csv);
+  } else {
+    response.send(data);
+  }
+};
 
 module.exports = router;

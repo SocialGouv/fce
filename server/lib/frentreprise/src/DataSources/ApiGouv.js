@@ -120,6 +120,47 @@ export default class ApiGouv extends DataSource {
         +et.tranche_effectif_salarie_etablissement.date_reference || undefined;
     }
 
+    let age = null;
+
+    try {
+      age = await this.axios.get(`attestations_agefiph/${SIRET}`, {
+        params: this[_getAPIParams](this)
+      });
+    } catch (exception) {
+      console.log(exception);
+    }
+
+    if (age && typeof age === "object") {
+      out.agefiph_derniere_annee_conformite_connue =
+        age.derniere_annee_de_conformite_connue;
+    }
+
+    let exercices = null;
+
+    try {
+      exercices = await this.axios.get(`exercices/${SIRET}`, {
+        params: this[_getAPIParams](this)
+      });
+    } catch (exception) {
+      console.log(exception);
+    }
+
+    if (
+      exercices &&
+      typeof exercices === "object" &&
+      exercices.exercices &&
+      Array.isArray(exercices.exercices) &&
+      exercices.exercices
+    ) {
+      out.donnees_ecofi = {};
+      exercices.exercices.forEach(decofi => {
+        out.donnees_ecofi[
+          this[_convertDate](decofi.date_fin_exercice_timestamp).toISOString()
+        ] =
+          +decofi.ca || null;
+      });
+    }
+
     return out;
   }
 
@@ -208,8 +249,8 @@ export default class ApiGouv extends DataSource {
           ent.tranche_effectif_salarie_entreprise.intitule || undefined;
       }
 
-      out.mandataires_sociaux = [];
       if (Array.isArray(ent.mandataires_sociaux)) {
+        out.mandataires_sociaux = [];
         ent.mandataires_sociaux.forEach(manso => {
           out.mandataires_sociaux.push({
             nom: manso.nom,

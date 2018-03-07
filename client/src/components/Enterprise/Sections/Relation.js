@@ -36,7 +36,7 @@ class Relation extends React.Component {
           <dt className="dt col-md-4">Dernière année de conformité connue</dt>
           <dd className="dd col-md-8">
             <Value
-              value={establishment.derniere_annee_conformite_connue}
+              value={establishment.agefiph_derniere_annee_conformite_connue}
               empty="-"
             />
           </dd>

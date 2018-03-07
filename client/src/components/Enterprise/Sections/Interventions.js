@@ -16,7 +16,19 @@ class Interventions extends React.Component {
 
   render() {
     const { establishment } = this.props;
-
+    let structure_insertion_activite_economique =
+      establishment.structure_insertion_activite_economique;
+    if (establishment.structure_insertion_activite_economique) {
+      if (establishment.structure_insertion_activite_economique_types.aci) {
+        structure_insertion_activite_economique = "Entreprise insertion";
+      } else if (
+        establishment.structure_insertion_activite_economique_types.ai ||
+        establishment.structure_insertion_activite_economique_types.ei ||
+        establishment.structure_insertion_activite_economique_types.etti
+      ) {
+        structure_insertion_activite_economique = "Chantier insertion";
+      }
+    }
     return (
       <section id="interventions" className="enterprise-section">
         <h1 className="title h4">Interventions publiques</h1>
@@ -46,7 +58,8 @@ class Interventions extends React.Component {
             </dt>
             <dd className="dd col-md-8">
               <Value
-                value={establishment.structure_insertion_activite_economique}
+                value={structure_insertion_activite_economique}
+                no="Non"
                 empty="-"
               />
             </dd>

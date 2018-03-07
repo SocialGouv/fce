@@ -68,7 +68,7 @@ class Mongo extends DataSource {
         departement: "code_departement",
         region: this[_.getNomenclatureValue].bind(
           this,
-          "code_region",
+          "code_région",
           "code_region"
         ),
         date_creation: this[_.getCleanDate].bind(this, "date_de_creation"),

@@ -26,7 +26,7 @@ class DireccteEtablissement extends Etablissement {
         "etablissement_employeur",
         "tranche_effectif_insee",
         "annee_tranche_effectif_insee",
-        "dernier_effectif__physique",
+        "dernier_effectif_physique",
         "date_dernier_effectif_physique",
         "source_dernier_effectif_physique",
         "unite_controle_competente",

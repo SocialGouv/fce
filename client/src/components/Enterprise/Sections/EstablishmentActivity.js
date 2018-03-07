@@ -85,7 +85,7 @@ class EstablishmentActivity extends React.Component {
 
           <dt className="dt col-md-4">Dernier effectif physique</dt>
           <dd className="dd col-md-8">
-            <Value value={establishment.dernier_effectif__physique} empty="-" />
+            <Value value={establishment.dernier_effectif_physique} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Date dernier effectif physique</dt>

@@ -1,6 +1,10 @@
-export default ({ value, empty, no }) => {
+export default ({ value, empty, no = "Non", yes = "Oui" }) => {
   if (value && typeof value === "object") {
     return "error";
+  }
+
+  if (value === true && yes) {
+    return yes;
   }
 
   if (value === false && no) {

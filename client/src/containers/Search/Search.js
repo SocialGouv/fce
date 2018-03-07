@@ -39,6 +39,8 @@ class Search extends Component {
         } else if (query.isSIREN && results) {
           redirectTo = `/enterprise/${query.q}`;
           this.props.setCurrentEnterprise(results[0]);
+        } else if (results && results.length === 1) {
+          redirectTo = `/enterprise/${results[0].siren}`;
         }
 
         this.setState({

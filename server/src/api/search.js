@@ -59,13 +59,11 @@ router.get("/advancedSearch", function(req, res) {
     }
   };
 
-  let freCall = frentreprise.search(data.query).then(results => {
+  frentreprise.search(data.query).then(results => {
     data.results = results.map(ent => ent.export());
-  }, logError.bind(this, data));
-
-  freCall.then(() => {
+    data.size = data.results.length;
     res.send(data);
-  });
+  }, logError.bind(this, data));
 });
 
 module.exports = router;

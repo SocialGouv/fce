@@ -130,9 +130,14 @@ export default class ApiGouv extends DataSource {
       console.log(exception);
     }
 
-    if (age && typeof age === "object") {
+    if (
+      age &&
+      typeof age === "object" &&
+      age.data &&
+      typeof age.data === "object"
+    ) {
       out.agefiph_derniere_annee_conformite_connue =
-        age.derniere_annee_de_conformite_connue;
+        age.data.derniere_annee_de_conformite_connue || null;
     }
 
     let exercices = null;
@@ -148,12 +153,13 @@ export default class ApiGouv extends DataSource {
     if (
       exercices &&
       typeof exercices === "object" &&
-      exercices.exercices &&
-      Array.isArray(exercices.exercices) &&
-      exercices.exercices
+      exercices.data &&
+      typeof exercices.data === "object" &&
+      exercices.data.exercices &&
+      Array.isArray(exercices.data.exercices)
     ) {
       out.donnees_ecofi = {};
-      exercices.exercices.forEach(decofi => {
+      exercices.data.exercices.forEach(decofi => {
         out.donnees_ecofi[
           this[_convertDate](decofi.date_fin_exercice_timestamp).toISOString()
         ] =

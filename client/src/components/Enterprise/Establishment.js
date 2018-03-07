@@ -10,7 +10,8 @@ import {
   EstablishmentIdentity,
   Finances,
   Interventions,
-  Direccte
+  Direccte,
+  Mandataires
 } from "./Sections";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/fontawesome-pro-light";
@@ -63,6 +64,7 @@ class Establishment extends React.Component {
               establishment={this.props.establishment}
               enterprise={this.props.enterprise}
             />
+            <Mandataires enterprise={this.props.enterprise} />
             <Finances
               establishment={this.props.establishment}
               enterprise={this.props.enterprise}

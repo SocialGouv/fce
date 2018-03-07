@@ -53,7 +53,6 @@ class Enterprise extends React.Component {
   }
 
   loadEntityByStore = () => {
-    console.log("loadEntityByStore", this.state.isEnterprise);
     if (this.state.isEnterprise) {
       return this.loadEnterpriseByStore(this.props.match.params.siren);
     }

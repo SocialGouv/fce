@@ -1,6 +1,5 @@
 import React from "react";
 import Value from "../../../elements/Value";
-import { toI18nDate } from "../../../helpers/Date";
 
 class EnterpriseActivity extends React.Component {
   render() {
@@ -13,20 +12,17 @@ class EnterpriseActivity extends React.Component {
         <dl className="dl row">
           <dt className="dt col-md-4">Date immatriculation RCS</dt>
           <dd className="dd col-md-8">
-            <Value
-              value={toI18nDate(enterprise.date_immatriculation_rcs)}
-              empty="-"
-            />
+            <Value value={enterprise.date_immatriculation_rcs} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Date de création</dt>
           <dd className="dd col-md-8">
-            <Value value={toI18nDate(enterprise.date_de_creation)} empty="-" />
+            <Value value={enterprise.date_de_creation} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Date de radiation</dt>
           <dd className="dd col-md-8">
-            <Value value={toI18nDate(enterprise.date_de_radiation)} empty="-" />
+            <Value value={enterprise.date_de_radiation} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Etat de l'entreprise</dt>
@@ -42,9 +38,9 @@ class EnterpriseActivity extends React.Component {
           <dt className="dt col-md-4">Date de l'état</dt>
           <dd className="dd col-md-8">
             <Value
-              value={toI18nDate(
+              value={
                 enterprise.etat_entreprise && enterprise.etat_entreprise.date
-              )}
+              }
               empty="-"
             />
           </dd>

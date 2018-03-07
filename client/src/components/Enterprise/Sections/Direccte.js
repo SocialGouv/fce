@@ -1,7 +1,6 @@
 import React from "react";
 import classNames from "classnames";
 import Value from "../../../elements/Value";
-import { toI18nDate } from "../../../helpers/Date";
 
 class Direccte extends React.Component {
   constructor(props) {
@@ -56,14 +55,12 @@ class Direccte extends React.Component {
                 return (
                   <tr>
                     <td>
-                      <Value value={toI18nDate(dirvis.date)} empty="-" />
+                      <Value value={dirvis.date} empty="-" />
                     </td>
                     <td>
                       <Value value={dirvis.pole} empty="-" />
                     </td>
-                    <td>
-                      -
-                    </td>
+                    <td>-</td>
                     <td>
                       <Value value={dirvis.unite} empty="-" />
                     </td>

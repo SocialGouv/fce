@@ -245,8 +245,6 @@ class Mongo extends DataSource {
 
   [_.getCleanYear](key, obj) {
     return this[_.getCleanDate](key, obj);
-    // const date = new Date(); // this[_.getCleanDate](key, obj);
-    // return (date && date.getFullYear()) || null;
   }
 
   [_.getCleanDate](key, obj) {

@@ -68,7 +68,7 @@ class Mongo extends DataSource {
         departement: "code_departement",
         region: this[_.getNomenclatureValue].bind(
           this,
-          "code_region",
+          "code_région",
           "code_region"
         ),
         date_creation: this[_.getCleanDate].bind(this, "date_de_creation"),
@@ -139,7 +139,8 @@ class Mongo extends DataSource {
         eti_pepite: "sese.eos_eti_pepite_",
         filiere_strategique: obj => {
           return (
-            obj.sese && ("" + obj.sese.eos_filiere).replace("\n", " ").trim()
+            obj.sese &&
+            ("" + (obj.sese.eos_filiere || "")).replace("\n", " ").trim()
           );
         },
         structure_insertion_activite_economique: this[_.getCleanBool].bind(
@@ -177,7 +178,6 @@ class Mongo extends DataSource {
                   heures_consommees: +obj.sese[`acp_nbh_conso_${year}`] || null
                 }
               };
-              return acp;
             }, {});
           }
 
@@ -185,6 +185,7 @@ class Mongo extends DataSource {
         },
         pse_en_projet_ou_en_cours: obj => {
           const pse = {};
+
           if (typeof obj.sese === "object") {
             for (let i = 0; i < 10; i++) {
               const year = +obj.sese[`pse_annee${i}`];
@@ -197,7 +198,7 @@ class Mongo extends DataSource {
             }
           }
 
-          return pse;
+          return Object.keys(pse).length ? pse : null;
         }
       };
 
@@ -246,12 +247,11 @@ class Mongo extends DataSource {
   }
 
   [_.getCleanYear](key, obj) {
-    const date = new Date(); // this[_.getCleanDate](key, obj);
-    return (date && date.getFullYear()) || null;
+    return this[_.getCleanDate](key, obj);
   }
 
   [_.getCleanDate](key, obj) {
-    return new Date().toISOString();
+    return this[_.getObjectKey](key, obj);
   }
 
   [_.getCleanBool](key, obj) {

@@ -30,7 +30,7 @@ class Establishment extends React.Component {
             empty=""
           />{" "}
           - Effectif :{" "}
-          <Value value={establishment.dernier_effectif__physique} empty="-" />
+          <Value value={establishment.dernier_effectif_physique} empty="-" />
         </li>
       </ul>
     );

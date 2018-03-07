@@ -1,6 +1,5 @@
 import React from "react";
 import Value from "../../../elements/Value";
-import { toI18nDate } from "../../../helpers/Date";
 
 class EstablishmentActivity extends React.Component {
   render() {
@@ -12,7 +11,7 @@ class EstablishmentActivity extends React.Component {
         <dl className="dl row">
           <dt className="dt col-md-4">Date de création</dt>
           <dd className="dd col-md-8">
-            <Value value={toI18nDate(establishment.date_creation)} empty="-" />
+            <Value value={establishment.date_creation} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Etat de l'établissement</dt>
@@ -29,10 +28,10 @@ class EstablishmentActivity extends React.Component {
           <dt className="dt col-md-4">Date de l'état</dt>
           <dd className="dd col-md-8">
             <Value
-              value={toI18nDate(
+              value={
                 establishment.etat_etablissement &&
-                  establishment.etat_etablissement.date
-              )}
+                establishment.etat_etablissement.date
+              }
               empty="-"
             />
           </dd>
@@ -45,7 +44,7 @@ class EstablishmentActivity extends React.Component {
           <dt className="dt col-md-4">Activité économique depuis le</dt>
           <dd className="dd col-md-8">
             <Value
-              value={toI18nDate(establishment.date_debut_activite_economique)}
+              value={establishment.date_debut_activite_economique}
               empty="-"
             />
           </dd>
@@ -103,7 +102,7 @@ class EstablishmentActivity extends React.Component {
           <dt className="dt col-md-4">Date dernier effectif physique</dt>
           <dd className="dd col-md-8">
             <Value
-              value={toI18nDate(establishment.date_dernier_effectif_physique)}
+              value={establishment.date_dernier_effectif_physique}
               empty="-"
             />
           </dd>

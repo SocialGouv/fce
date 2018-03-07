@@ -12,11 +12,22 @@
     }
   }
 
-  .result-list {
-    margin-top: 2rem;
+  .result-row {
+    @media print {
+      justify-content: left;
 
-    .result-item {
-      cursor: pointer;
+      >div {
+        flex: 0 0 100%;
+        max-width: 100%;
+      }
+    }
+
+    .result-list {
+      margin-top: 2rem;
+
+      .result-item {
+        cursor: pointer;
+      }
     }
   }
 }

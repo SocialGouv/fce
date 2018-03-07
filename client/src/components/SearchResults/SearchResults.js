@@ -36,7 +36,7 @@ class SearchResults extends React.Component {
           </Col>
         </Row>
 
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-md-center result-row">
           <Col xl="6" md="8">
             {!Array.isArray(this.props.results) ? (
               <Alert color="danger">Une erreur est survenue</Alert>

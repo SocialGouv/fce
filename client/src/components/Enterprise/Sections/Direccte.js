@@ -62,7 +62,7 @@ class Direccte extends React.Component {
                       <Value value={dirvis.pole} empty="-" />
                     </td>
                     <td>
-                      <Value empty="-" />
+                      -
                     </td>
                     <td>
                       <Value value={dirvis.unite} empty="-" />

@@ -44,6 +44,7 @@ class Direccte extends React.Component {
               <tr>
                 <th>Date</th>
                 <th>Pôle</th>
+                <th>Objet</th>
                 <th>Unité de contrôle</th>
                 <th>Type</th>
                 <th>Notes</th>
@@ -59,6 +60,9 @@ class Direccte extends React.Component {
                     </td>
                     <td>
                       <Value value={dirvis.pole} empty="-" />
+                    </td>
+                    <td>
+                      -
                     </td>
                     <td>
                       <Value value={dirvis.unite} empty="-" />

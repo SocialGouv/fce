@@ -26,8 +26,8 @@ class Item extends React.Component {
         <td>
           <Value
             value={
-              enterprise.adresse_components &&
-              enterprise.adresse_components.localite
+              establishment.adresse_components &&
+              establishment.adresse_components.localite
             }
             empty="-"
           />
@@ -35,8 +35,8 @@ class Item extends React.Component {
         <td>
           <Value
             value={
-              enterprise.adresse_components &&
-              enterprise.adresse_components.code_postal
+              establishment.adresse_components &&
+              establishment.adresse_components.code_postal
             }
             empty="-"
           />
@@ -44,9 +44,9 @@ class Item extends React.Component {
         <td>
           <Value
             value={
-              enterprise.adresse_components &&
-              enterprise.adresse_components.code_postal &&
-              enterprise.adresse_components.code_postal.substr(0, 2)
+              establishment.adresse_components &&
+              establishment.adresse_components.code_postal &&
+              establishment.adresse_components.code_postal.substr(0, 2)
             }
             empty="-"
           />

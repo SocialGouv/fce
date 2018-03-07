@@ -168,19 +168,21 @@ class Mongo extends DataSource {
               }
             }
 
-            yearKeys.sort((a, b) => a - b);
+            if (yearKeys.length > 0) {
+              yearKeys.sort((a, b) => a - b);
 
-            return yearKeys.reduce((acp, year) => {
-              return {
-                ...acp,
-                [year]: {
-                  heures_demandees: +obj.sese[`acp_nbh_auto_${year}`] || null,
-                  heures_consommees: +obj.sese[`acp_nbh_conso_${year}`] || null
-                }
-              };
-            }, {});
+              return yearKeys.reduce((acp, year) => {
+                return {
+                  ...acp,
+                  [year]: {
+                    heures_demandees: +obj.sese[`acp_nbh_auto_${year}`] || null,
+                    heures_consommees:
+                      +obj.sese[`acp_nbh_conso_${year}`] || null
+                  }
+                };
+              }, {});
+            }
           }
-
           return null;
         },
         pse_en_projet_ou_en_cours: obj => {

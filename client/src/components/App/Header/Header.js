@@ -37,8 +37,8 @@ class Header extends React.Component {
     return (
       <IfLoggedIn>
         <header className="app-header">
-          <Navbar color="primary" dark fixed="top" expand="md">
-            <NavbarBrand href="/">Direccte</NavbarBrand>
+          <Navbar className="gradient-color-direccte" dark fixed="top" expand="md">
+            <NavbarBrand href="/">FCE | Direccte</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="mr-auto" navbar>

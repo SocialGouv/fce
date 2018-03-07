@@ -5,3 +5,24 @@
     margin-bottom: 1rem;
   }
 }
+
+.gradient-color-direccte {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5cd2d6+0,b4df6b+100 */
+  background: #5cd2d6; /* Old browsers */
+  background: -moz-linear-gradient(
+    left,
+    #5cd2d6 0%,
+    #b4df6b 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    left,
+    #5cd2d6 0%,
+    #b4df6b 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to right,
+    #5cd2d6 0%,
+    #b4df6b 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5cd2d6', endColorstr='#b4df6b',GradientType=1 ); /* IE6-9 */
+}

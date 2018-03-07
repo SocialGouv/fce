@@ -18,7 +18,9 @@ class Enterprise extends React.Component {
   getSections = () => {
     return [
       { name: "Identité", id: "identity" },
-      { name: "État", id: "activity" }
+      { name: "État", id: "activity" },
+      { name: "Siège social", id: "headoffice" },
+      { name: "Mandataires", id: "mandataire" }
     ];
   };
 

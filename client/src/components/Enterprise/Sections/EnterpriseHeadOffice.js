@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Value from "../../../elements/Value";
-import { toI18nDate } from "../../../helpers/Date";
 
 class EnterpriseHeadOffice extends React.Component {
   render() {
     const { headOffice } = this.props;
 
     return (
-      <section id="identity" className="enterprise-section">
+      <section id="headoffice" className="enterprise-section">
         <h1 className="title h4">Siège social de l'entreprise</h1>
 
         <dl className="dl row">
@@ -26,7 +25,7 @@ class EnterpriseHeadOffice extends React.Component {
 
           <dt className="dt col-md-4">Date de création</dt>
           <dd className="dd col-md-8">
-            <Value value={toI18nDate(headOffice.date_creation)} empty="-" />
+            <Value value={headOffice.date_creation} empty="-" />
           </dd>
         </dl>
       </section>

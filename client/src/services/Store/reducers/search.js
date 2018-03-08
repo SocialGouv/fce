@@ -1,7 +1,8 @@
 import {
   SEARCH_RESULTS,
   SEARCH_TERMS,
-  SEARCH_NOMENCLATURES
+  SEARCH_NOMENCLATURES,
+  RESET_STORE
 } from "../constants/ActionTypes";
 
 const initialState = {
@@ -40,9 +41,13 @@ const search = (state = initialState, action) => {
         ...state,
         nomenclatures: {
           ...initialState.nomenclatures,
-          ...action.nomenclatures
+          ...action.nomenclatures,
+          updated_at: +new Date()
         }
       };
+    case RESET_STORE:
+      return {};
+
     default:
       return state;
   }

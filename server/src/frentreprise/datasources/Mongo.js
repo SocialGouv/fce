@@ -84,7 +84,7 @@ class Mongo extends DataSource {
         },
         activite: async obj => {
           if (!this[_.getObjectKey]("code_activite", obj)) {
-            return "N/A";
+            return null;
           }
           return (
             this[_.getObjectKey]("code_activite", obj) +

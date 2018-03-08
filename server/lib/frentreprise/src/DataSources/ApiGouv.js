@@ -109,7 +109,8 @@ export default class ApiGouv extends DataSource {
         (et.region_implementation && et.region_implementation.value) ||
         undefined;
 
-      out.activite = `${et.naf} - ${et.libelle_naf}`;
+      out.activite =
+        et.naf && et.libelle_naf ? `${et.naf} - ${et.libelle_naf}` : null;
 
       out.etablissement_employeur =
         +et.tranche_effectif_salarie_etablissement.a > 0;

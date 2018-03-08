@@ -4,6 +4,8 @@ import { Redirect } from "react-router-dom";
 import AdvancedSearchView from "../../components/AdvancedSearch";
 import { advancedSearch, getNomenclatures } from "../../services/Store/actions";
 
+const NOMENCLATURE_TIMEOUT = 5 * 60 * 1000; // 5 minutes
+
 class AdvancedSearch extends React.Component {
   constructor(props) {
     super(props);
@@ -27,10 +29,12 @@ class AdvancedSearch extends React.Component {
   }
 
   loadNomenclatures() {
+    const { autocompleteData: nomenclatures } = this.props;
     if (
-      this.props.autocompleteData &&
-      this.props.autocompleteData.nafCodes &&
-      this.props.autocompleteData.nafCodes.length
+      nomenclatures &&
+      nomenclatures.nafCodes &&
+      nomenclatures.nafCodes.length &&
+      (nomenclatures.updated_at || 0) + NOMENCLATURE_TIMEOUT > +new Date()
     ) {
       this.setState({ isLoadedNomenclatures: true, hasError: false });
     } else {

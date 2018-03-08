@@ -12,11 +12,19 @@
     }
   }
 
+  .export-buttons {
+    .btn {
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+    margin-bottom: 20px;
+  }
+
   .result-row {
     @media print {
       justify-content: left;
 
-      >div {
+      > div {
         flex: 0 0 100%;
         max-width: 100%;
       }

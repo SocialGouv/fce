@@ -27,4 +27,7 @@ export const logoutUser = () => (dispatch, getState) => {
   dispatch({
     type: types.LOGOUT_USER
   });
+  dispatch({
+    type: types.RESET_STORE
+  });
 };

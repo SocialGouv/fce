@@ -23,7 +23,7 @@ router.get("/search(.:format)?", function(req, res) {
   const data = {
     query: {
       search: "simple",
-      format: req.param("format", "json"),
+      format: req.params["format"] || "json",
       q: query,
       isSIRET: frentreprise.isSIRET(query),
       isSIREN: frentreprise.isSIREN(query)
@@ -57,7 +57,7 @@ router.get("/advancedSearch(.:format)?", function(req, res) {
   let data = {
     query: {
       search: "advanced",
-      format: req.param("format", "json"),
+      format: req.params["format"] || "json",
       code_activite,
       libelle_commune,
       code_postal,
@@ -74,11 +74,20 @@ router.get("/advancedSearch(.:format)?", function(req, res) {
 
 const sendResult = (data, response) => {
   if (data.query.format === "csv") {
-    const json2csvParser = new Json2csvParser();
+    let flattenResults = [];
+
+    data.results.forEach(enterprise => {
+      if (Array.isArray(enterprise.etablissements)) {
+        enterprise.etablissements.forEach(establishment => {
+          flattenResults.push({ ...enterprise, etablissement: establishment });
+        });
+      }
+    });
 
     const fields = [];
+    let filename = "export";
 
-    if (data.query.isSIREN && data.query.isSIRET) {
+    if (data.query.isSIREN || data.query.isSIRET) {
       // Common etablissement and entreprise fields
 
       if (data.query.isSIREN) {
@@ -87,12 +96,74 @@ const sendResult = (data, response) => {
         // Etablissement fields
       }
     } else {
-      // Search results
-      
+      // Search
+      filename = "recherche";
+      if (data.query.search === "advanced") {
+        filename += "_avancee";
+      }
+
+      fields.push(
+        {
+          label: "SIRET",
+          value: "etablissement.siret",
+          default: "NULL"
+        },
+        {
+          label: "SIREN",
+          value: "siren",
+          default: "NULL"
+        },
+        {
+          label: "Raison Sociale",
+          value: "raison_sociale",
+          default: "NULL"
+        },
+        {
+          label: "Commune",
+          value: "etablissement.adresse_components.localite",
+          default: "NULL"
+        },
+        {
+          label: "Code Postal",
+          value: "etablissement.adresse_components.code_postal",
+          default: "NULL"
+        },
+        {
+          label: "Département",
+          value: row => {
+            return (
+              row.etablissement &&
+              row.etablissement.adresse_components &&
+              row.etablissement.adresse_components.code_postal &&
+              row.etablissement.adresse_components.code_postal.substr(0, 2)
+            );
+          },
+          default: "NULL"
+        },
+        {
+          label: "Activité",
+          value: "etablissement.activite",
+          default: "NULL"
+        }
+      );
     }
 
-    const csv = json2csvParser.parse(data.results);
+    const json2csvParser = new Json2csvParser({ fields });
+    const csv = json2csvParser.parse(
+      flattenResults.length ? flattenResults : {}
+    );
 
+    const date = new Date()
+      .toISOString()
+      .replace(/T/, "_")
+      .replace(/\..+/, "")
+      .replace(/:/g, "-");
+
+    response.setHeader(
+      "Content-Disposition",
+      `attachment; filename=${filename}_${date}.csv`
+    );
+    response.setHeader("Content-type", "text/csv");
     response.send(csv);
   } else {
     response.send(data);

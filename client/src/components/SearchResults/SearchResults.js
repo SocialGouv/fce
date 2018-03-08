@@ -2,7 +2,7 @@ import React from "react";
 import "./searchResults.css";
 import { Row, Col, Button, Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/fontawesome-pro-light";
+import { faFileExcel, faPrint } from "@fortawesome/fontawesome-pro-light";
 import Terms from "./Terms";
 import Item from "./Item";
 
@@ -29,10 +29,19 @@ class SearchResults extends React.Component {
         </Row>
 
         <Row className="justify-content-md-center d-print-none">
-          <Col xl="6" md="12" className="text-center">
+          <Col xl="6" md="12" className="text-center export-buttons">
             <Button color="primary" onClick={() => window.print()}>
               <FontAwesomeIcon icon={faPrint} /> Imprimer
             </Button>
+            {this.props.terms.csvURL ? (
+              <Button
+                outline
+                color="secondary"
+                onClick={e => window.open(this.props.terms.csvURL, "_blank")}
+              >
+                <FontAwesomeIcon icon={faFileExcel} /> Export Excel
+              </Button>
+            ) : null}
           </Col>
         </Row>
 

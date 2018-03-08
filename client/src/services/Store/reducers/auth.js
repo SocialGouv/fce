@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER } from "../constants/ActionTypes";
+import { LOGIN_USER, LOGOUT_USER, RESET_STORE } from "../constants/ActionTypes";
 
 const initialState = {
   isAuthenticated: false,
@@ -17,6 +17,8 @@ const auth = (state = initialState, action) => {
         isAuthenticated: false,
         user: null
       });
+    case RESET_STORE:
+      return {};
     default:
       return state;
   }

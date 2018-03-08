@@ -1,4 +1,5 @@
 import axios from "axios";
+import buildURL from "axios/lib/helpers/buildURL";
 import Config from "../Config";
 
 const Http = axios.create({
@@ -18,5 +19,7 @@ Http.formData = data => {
   Object.keys(data).forEach(key => formData.append(key, data[key]));
   return formData;
 };
+
+Http.buildURL = buildURL;
 
 export default Http;

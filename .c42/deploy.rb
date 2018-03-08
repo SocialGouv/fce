@@ -10,7 +10,8 @@ set :repository,  'git@github.com:commit42/direccte.git'
 
 set :scm, :git
 set :git_enable_submodules, 1
-set :deploy_via, :copy
+set :deploy_via, :copy_partial
+set :copy_partial, "dist/"
 set :copy_cache, true
 set :copy_exclude, '.git/*'
 set :build_script, 'SKIP_QUESTIONS=1 c42 docker:install && c42 build'

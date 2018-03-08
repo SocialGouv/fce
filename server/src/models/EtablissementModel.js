@@ -67,6 +67,10 @@ etablissementSchema.statics.findBySIRET = function(siret, cb) {
   return this.findOne({ siret: siret }, cb);
 };
 
+etablissementSchema.statics.findSIRETsBySIREN = function(siren, cb) {
+  return this.find({ siren }).distinct("siret", cb);
+};
+
 etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
   return this.find({ raison_sociale: new RegExp(raisonSociale, "i") }, cb);
 };
@@ -98,22 +102,22 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);
 
-Etablissement.findDisctinct = function(entity){
-  return Etablissement.distinct(entity).then( data => {
+Etablissement.findDisctinct = function(entity) {
+  return Etablissement.distinct(entity).then(data => {
     return data.sort();
   });
-}
+};
 
-Etablissement.findDisctinctCommunes = function(){
+Etablissement.findDisctinctCommunes = function() {
   return Etablissement.findDisctinct("libelle_commune");
-}
+};
 
-Etablissement.findDisctinctCodesPostaux = function(){
+Etablissement.findDisctinctCodesPostaux = function() {
   return Etablissement.findDisctinct("code_postal");
-}
+};
 
-Etablissement.findDisctinctDepartements = function(){
+Etablissement.findDisctinctDepartements = function() {
   return Etablissement.findDisctinct("code_departement");
-}
+};
 
 module.exports = Etablissement;

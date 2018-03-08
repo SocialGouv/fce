@@ -404,3 +404,22 @@ describe("Find entities", () => {
     TIMEOUT
   );
 });
+
+describe("findSIRETsBySIREN", () => {
+  const filePath = "./data/SIENE_test.csv";
+
+  test("findBySIREN", () => {
+    const ingestor = new EtablissementsIngestor(filePath);
+    const siren = "35217611";
+    return ingestor
+      .save()
+      .then(data => {
+        return Etablissement.findSIRETsBySIREN(siren);
+      })
+      .then(data => {
+        expect(data.length).toBe(2);
+      });
+  },
+  TIMEOUT
+);
+})

@@ -50,6 +50,7 @@ class frentreprise {
 
     const entreprise = new this.EntrepriseModel(etData);
 
+
     const SIRET = gotSIRET ? SiretOrSiren : "" + entreprise.siret_siege_social;
 
     if (Validator.validateSIRET(SIRET)) {

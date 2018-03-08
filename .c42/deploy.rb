@@ -1,5 +1,6 @@
 load '.c42/recipes/http_auth.rb'
 
+
 set :stages, %w[preprod]
 set :default_stage, 'preprod'
 
@@ -10,10 +11,10 @@ set :repository,  'git@github.com:commit42/direccte.git'
 
 set :scm, :git
 set :git_enable_submodules, 1
-set :deploy_via, :copy_partial
-set :copy_partial, "dist/"
+set :deploy_via, :copy
 set :copy_cache, true
-set :copy_exclude, '.git/*'
+set :copy_only, ["README.md", "version.txt", "dist"]
+set :copy_exclude, Dir.glob("*") - copy_only
 set :build_script, 'SKIP_QUESTIONS=1 c42 docker:install && c42 build'
 set :copy_compression, :bz2
 set :ssh_options, forward_agent: true
@@ -28,10 +29,6 @@ task :preprod do
   set :branch, 'develop'
   set :user, 'commit42'
   set :webhost, 'https://direccte.commit42.fr'
-
-  set :http_auth_users, [%w[demo direccte2018]]
-  set :http_auth_path, app_path
-  after 'deploy:finalize_update', 'http_auth:protect'
 end
 
 after 'deploy:finalize_update' do

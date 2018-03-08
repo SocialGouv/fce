@@ -9,7 +9,6 @@ import {
   EstablishmentActivity,
   EstablishmentIdentity,
   EstablishmentEnterpriseIdentity,
-  Finances,
   Interventions,
   Direccte,
   Mandataires,

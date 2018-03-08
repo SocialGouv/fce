@@ -8,7 +8,7 @@ docker-compose.yml
 /coverage
 
 # production
-/build
+/dist
 
 # misc
 .DS_Store

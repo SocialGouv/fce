@@ -26,7 +26,6 @@ class Establishment extends React.Component {
       { name: "État", id: "activity" },
       { name: "Mandataires", id: "mandataire" },
       { name: "Relation travail", id: "relation" },
-      { name: "Eco & Fina.", id: "finances" },
       { name: "Dév. Eco", id: "development" },
       { name: "Emploi", id: "job" },
       { name: "Mutat. éco.", id: "mutations" },
@@ -75,7 +74,6 @@ class Establishment extends React.Component {
             />
             <Mandataires enterprise={this.props.enterprise} />
             <Relation establishment={this.props.establishment} />
-            <Finances establishment={this.props.establishment} />
             <Interventions
               establishment={this.props.establishment}
               enterprise={this.props.enterprise}

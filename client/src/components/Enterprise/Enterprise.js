@@ -9,7 +9,8 @@ import {
   EnterpriseIdentity,
   EnterpriseActivity,
   EnterpriseHeadOffice,
-  Mandataires
+  Mandataires,
+  Finances
 } from "./Sections";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/fontawesome-pro-light";
@@ -20,6 +21,7 @@ class Enterprise extends React.Component {
       { name: "Identité", id: "identity" },
       { name: "État", id: "activity" },
       { name: "Siège social", id: "headoffice" },
+      { name: "Eco & Fina.", id: "finances" },
       { name: "Mandataires", id: "mandataire" }
     ];
   };
@@ -49,6 +51,7 @@ class Enterprise extends React.Component {
             <EnterpriseIdentity enterprise={enterprise} />
             <EnterpriseActivity enterprise={enterprise} />
             <EnterpriseHeadOffice headOffice={headOffice} />
+            <Finances establishment={headOffice} />
             <Mandataires enterprise={enterprise} />
           </Col>
           <Col className="aside-box" md="3">

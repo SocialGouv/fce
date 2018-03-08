@@ -261,7 +261,8 @@ export default class ApiGouv extends DataSource {
           out.mandataires_sociaux.push({
             nom: manso.nom,
             prenom: manso.prenom,
-            fonction: manso.fonction
+            fonction: manso.fonction,
+            raison_sociale: manso.raison_sociale
           });
         });
       }

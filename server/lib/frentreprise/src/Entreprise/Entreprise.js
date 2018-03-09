@@ -1,6 +1,7 @@
 import BaseModel, { _protected } from "./BaseModel";
 import Etablissement from ".";
 import { validateSIRET } from "../Utils/Validator";
+import { cleanObject } from "../Utils";
 
 const _ets = Symbol("_ets");
 const _etsModel = Symbol("_etsModel");
@@ -24,7 +25,9 @@ export default class Entreprise extends BaseModel {
       ets.forEach(etsData => {
         if (etsData && typeof etsData === "object") {
           if (validateSIRET(etsData.siret)) {
-            this.getEtablissement(etsData.siret).updateData(etsData);
+            this.getEtablissement(etsData.siret).updateData(
+              cleanObject(etsData)
+            );
           }
         }
       });

@@ -16,6 +16,7 @@ class DireccteEtablissement extends Etablissement {
         "adresse_components",
         "departement",
         "region",
+        "code_region",
         "date_creation",
         "etat_etablissement",
         "activite",

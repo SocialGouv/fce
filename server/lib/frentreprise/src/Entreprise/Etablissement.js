@@ -1,4 +1,5 @@
 import BaseModel, { _protected } from "./BaseModel";
+import { cleanObject } from "../Utils";
 
 const _entreprise = Symbol("_entreprise");
 
@@ -13,7 +14,7 @@ export default class Etablissement extends BaseModel {
     if (this[_entreprise]) {
       const etData = data && data["_etData"];
       if (etData && typeof etData === "object") {
-        this[_entreprise].updateData(etData);
+        this[_entreprise].updateData(cleanObject(etData));
         // Merge datasources since we used our data source to get datas
         this[_entreprise].updateData({
           _dataSources: {

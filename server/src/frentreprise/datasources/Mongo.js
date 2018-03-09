@@ -85,6 +85,9 @@ class Mongo extends DataSource {
           "code_région",
           "code_region"
         ),
+        code_region: obj => {
+          return +this[_.getObjectKey]("code_region", obj) || 0;
+        },
         date_creation: this[_.getCleanDate].bind(this, "date_de_creation"),
         etat_etablissement: async obj => {
           return {

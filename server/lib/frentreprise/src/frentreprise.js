@@ -5,9 +5,9 @@ import ApiGouv from "./DataSources/ApiGouv";
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
 import { Etablissement } from "./Entreprise";
+import { cleanObject } from "./Utils";
 
 const _dataSources = Symbol("_dataSources");
-const _cleanObject = Symbol("_cleanObject");
 
 class frentreprise {
   constructor() {
@@ -43,8 +43,16 @@ class frentreprise {
     for (let i = 0; i < dataSources.length; i++) {
       const dataSource = dataSources[i].source;
 
+      console.log(
+        `Asking dataSource named ${dataSources[i].name} about SIREN : ${SIREN}`
+      );
       const data = await dataSource.getSIREN(SIREN);
       const cleanedData = this[_cleanObject](data);
+      console.log(
+        `Got response from dataSource named ${
+          dataSources[i].name
+        } about SIREN : ${SIREN}`
+      );
 
       entreprise.updateData(cleanedData);
 
@@ -56,24 +64,44 @@ class frentreprise {
       });
     }
 
-
     const SIRET = gotSIRET ? SiretOrSiren : "" + entreprise.siret_siege_social;
 
-    if (Validator.validateSIRET(SIRET)) {
-      let etsData = { _dataSources: {} };
+    const etablissementsLookup = Object.keys({
+      [SIRET]: true,
+      [entreprise.siret_siege_social]: true
+    });
 
-      for (let i = 0; i < dataSources.length; i++) {
-        const dataSource = dataSources[i].source;
+    for (let i = 0; i < etablissementsLookup.length; i++) {
+      const lookSIRET = etablissementsLookup[i];
+      if (Validator.validateSIRET(lookSIRET)) {
+        let etsData = { _dataSources: {} };
 
-        etsData = {
-          ...etsData,
-          ...this[_cleanObject](await dataSource.getSIRET(SIRET))
-        };
+        for (let i = 0; i < dataSources.length; i++) {
+          const dataSource = dataSources[i].source;
 
-        etsData._dataSources[dataSources[i].name] = true;
+          console.log(
+            `Asking dataSource named ${
+              dataSources[i].name
+            } about SIRET : ${lookSIRET}`
+          );
+          const data = await dataSource.getSIRET(lookSIRET);
+          const cleanedData = cleanObject(data);
+          console.log(
+            `Got response from dataSource named ${
+              dataSources[i].name
+            } about SIRET : ${lookSIRET}`
+          );
+
+          entreprise.getEtablissement(lookSIRET).updateData(cleanedData);
+
+          entreprise.getEtablissement(lookSIRET).updateData({
+            _dataSources: {
+              ...entreprise._dataSources,
+              [dataSources[i].name]: true // Add current data source
+            }
+          });
+        }
       }
-
-      entreprise.getEtablissement(etsData.siret).updateData(etsData);
     }
 
     return entreprise;
@@ -86,6 +114,11 @@ class frentreprise {
     for (let i = 0; i < dataSources.length; i++) {
       const dataSource = dataSources[i].source;
       const sourceName = dataSources[i].name;
+
+      console.log(
+        `Searching dataSource named ${sourceName} with query: `,
+        query
+      );
 
       const source_results = await dataSource.search(query);
 
@@ -104,6 +137,11 @@ class frentreprise {
         continue;
       }
 
+      console.log(
+        `Got response from dataSource named ${sourceName} about query: `,
+        query
+      );
+
       source_results.forEach(result => {
         const SIREN =
           (Validator.validateSIREN(result.siren) && result.siren) ||
@@ -112,90 +150,30 @@ class frentreprise {
 
         if (Validator.validateSIREN(SIREN)) {
           if (!results[SIREN]) {
-            results[SIREN] = { siren: SIREN, _dataSources: {} };
+            results[SIREN] = new this.EntrepriseModel(
+              { siren: SIREN, _dataSources: {} },
+              this.EtablissementModel
+            );
           }
 
           if (SIRET) {
-            // ETABLISSEMENT
-            if (!Array.isArray(results[SIREN].etablissements)) {
-              results[SIREN].etablissements = {};
-            }
-
-            results[SIREN].etablissements[SIRET] = {
-              ...(results[SIREN].etablissements[SIRET] || { _dataSources: {} }),
-              ...this[_cleanObject](result)
-            };
-
-            results[SIREN].etablissements[SIRET]._dataSources[
-              sourceName
-            ] = true;
-          } else {
-            // ENTREPRISE
-            // Support arrays, who knows why
-            if (Array.isArray(result.etablissements)) {
-              result.etablissements = result.etablissements.reduce(
-                (map, et) => {
-                  if (Validator.validateSIRET(et.siret)) {
-                    map[et.siret] = et;
-                  }
-                },
-                {}
-              );
-            }
-
-            // Merge-copy etablissements first
-            if (!results[SIREN].etablissements) {
-              results[SIREN].etablissements = {};
-            }
-
-            Object.keys(result.etablissements || {}).forEach(siret => {
-              results[SIREN].etablissements[siret] = {
-                ...(results[SIREN].etablissements[siret] || {
-                  _dataSources: {}
-                }),
-                ...this[_cleanObject](result.etablissements[siret])
-              };
-
-              results[SIREN].etablissements[siret]._dataSources[
-                sourceName
-              ] = true;
+            results[SIREN].getEtablissement(SIRET).updateData(
+              cleanObject(result)
+            );
+            results[SIREN].getEtablissement(SIRET).updateData({
+              _dataSources: {
+                ...results[SIREN].getEtablissement(SIRET)._dataSources,
+                [sourceName]: true
+              }
             });
-
-            delete result.etablissements; // We already copied them
-
-            results[SIREN] = {
-              ...results[SIREN],
-              ...this[_cleanObject](result)
-            };
-
-            results[SIREN]._dataSources[sourceName] = true;
+          } else {
+            results[SIREN].updateData(cleanObject(result));
           }
         }
       });
     }
 
-    const results_final = Object.values(results).map(etData => {
-      const etablissements = Object.values(etData.etablissements);
-      delete etData.etablissements;
-
-      const ent = new this.EntrepriseModel(etData, this.EtablissementModel);
-      etablissements.forEach(etsData => {
-        ent.getEtablissement(etsData).updateData(etsData);
-      });
-
-      return ent;
-    });
-
-    return results_final;
-  }
-
-  [_cleanObject](object) {
-    Object.keys(object || {}).forEach(key => {
-      if (object[key] === null || typeof object[key] === "undefined") {
-        delete object[key];
-      }
-    });
-    return object;
+    return Object.values(results);
   }
 
   getDataSources() {

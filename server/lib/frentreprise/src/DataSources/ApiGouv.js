@@ -105,9 +105,11 @@ export default class ApiGouv extends DataSource {
           et.adresse.code_insee_localite.substr(0, 2);
       }
 
+      out.code_region =
+        (et.region_implantation && +et.region_implantation.code) || 0;
+
       out.region =
-        (et.region_implementation && et.region_implementation.value) ||
-        undefined;
+        (et.region_implantation && et.region_implantation.value) || undefined;
 
       out.activite =
         et.naf && et.libelle_naf ? `${et.naf} - ${et.libelle_naf}` : null;

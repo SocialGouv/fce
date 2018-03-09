@@ -70,7 +70,9 @@ class Enterprise extends React.Component {
       establishment = this.props.currentEnterprise.etablissements.find(
         establishment => {
           return (
-            establishment.siret === siret && (establishment._dataSources && establishment._dataSources.ApiGouv)
+            establishment.siret === siret &&
+            establishment._dataSources &&
+            establishment._dataSources.ApiGouv
           );
         }
       );

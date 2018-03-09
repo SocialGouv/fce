@@ -46,6 +46,10 @@ class Mongo extends DataSource {
     const out = {};
 
     if (siene_sese && typeof siene_sese === "object") {
+      const siret_siege =
+        this[_.getObjectKey]("siren", obj) +
+          this[_.getObjectKey]("nic_du_siege", obj) || null;
+
       const attr_map = {
         _etData: obj => {
           return {
@@ -56,6 +60,9 @@ class Mongo extends DataSource {
         },
         enseigne: "enseigne",
         siret: "siret",
+        siege_social: obj => {
+          return siret_siege === this[_.getObjectKey]("siret", obj);
+        },
         categorie_etablissement: this[_.getNomenclatureValue].bind(
           this,
           "code_qualite_siege",

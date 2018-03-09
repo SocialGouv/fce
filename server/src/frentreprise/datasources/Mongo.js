@@ -319,13 +319,10 @@ class Mongo extends DataSource {
   async search(query) {
     let mongo = null;
 
-    const searchMethod =
-      typeof query === "object"
-        ? EtablissementModel.findByAdvancedSearch
-        : EtablissementModel.findByRaisonSociale;
-
     try {
-      mongo = await searchMethod(query);
+      mongo = await (typeof query === "object"
+        ? EtablissementModel.findByAdvancedSearch(query)
+        : EtablissementModel.findByRaisonSociale(query));
     } catch (exception) {
       console.error(exception);
     }

@@ -1,6 +1,7 @@
 import EtablissementModel from "../../models/EtablissementModel";
 import InteractionModel from "../../models/InteractionModel";
 import NomenclatureModel from "../../models/NomenclatureModel";
+import { validateSIREN } from "../../../lib/frentreprise/src/Utils/Validator";
 
 const { DataSource } = require(__DIST
   ? "frentreprise"
@@ -46,7 +47,13 @@ class Mongo extends DataSource {
 
     if (siene_sese && typeof siene_sese === "object") {
       const attr_map = {
-        raison_sociale_entreprise: "raison_sociale",
+        _etData: obj => {
+          return {
+            raison_sociale: this[_.getObjectKey]("raison_sociale", obj),
+            nom: this[_.getObjectKey]("nom", obj),
+            prenom: this[_.getObjectKey]("prenom", obj)
+          };
+        },
         enseigne: "enseigne",
         siret: "siret",
         categorie_etablissement: this[_.getNomenclatureValue].bind(
@@ -293,19 +300,32 @@ class Mongo extends DataSource {
     );
   }
 
-  async getSIREN() {
-    return {}; // Unsupported in this data source
+  async getSIREN(SIREN) {
+    if (!validateSIREN(SIREN)) return {};
+
+    const sirets = await EtablissementModel.findSIRETsBySIREN(SIREN);
+
+    const etablissements = [];
+    for (let i = 0; i < sirets.length; i++) {
+      etablissements.push(await this.getSIRET(sirets[i]));
+    }
+
+    return {
+      siren: SIREN,
+      _ets: etablissements
+    };
   }
 
   async search(query) {
     let mongo = null;
 
+    const searchMethod =
+      typeof query === "object"
+        ? EtablissementModel.findByAdvancedSearch
+        : EtablissementModel.findByRaisonSociale;
+
     try {
-      if (typeof query === "object") {
-        mongo = await EtablissementModel.findByAdvancedSearch(query);
-      } else {
-        mongo = await EtablissementModel.findByRaisonSociale(query);
-      }
+      mongo = await searchMethod(query);
     } catch (exception) {
       console.error(exception);
     }

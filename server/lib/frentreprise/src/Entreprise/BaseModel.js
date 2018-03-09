@@ -2,7 +2,7 @@ const _importData = Symbol("_importData");
 const _data = Symbol("_data");
 
 export default class BaseModel {
-  constructor(data) {
+  constructor(data = {}) {
     this[_importData](data, true);
   }
 
@@ -34,3 +34,7 @@ export default class BaseModel {
     }, this);
   }
 }
+
+export const _protected = {
+  _importData
+};

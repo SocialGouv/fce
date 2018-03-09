@@ -1,10 +1,15 @@
 import { copyKeys } from "../../utils";
+import DireccteEtablissement from "./Etablissement";
 
 const { Entreprise } = require(__DIST
   ? "frentreprise"
   : "../../../lib/frentreprise/src/frentreprise");
 
 export default class DireccteEntreprise extends Entreprise {
+  constructor(data, etsModel = DireccteEtablissement) {
+    super(data, etsModel);
+  }
+
   export() {
     const data = copyKeys(
       this,
@@ -31,7 +36,9 @@ export default class DireccteEntreprise extends Entreprise {
       null
     );
 
-    data["etablissements"] = this.etablissements.map(ets => ets.export());
+    data["etablissements"] = this.etablissements.map(ets => {
+      return ets.export();
+    });
 
     return data;
   }

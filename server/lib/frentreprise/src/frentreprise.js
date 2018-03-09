@@ -3,8 +3,8 @@ import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
 
 import DataSource from "./DataSources/DataSource";
-import Entreprise from "./Entreprise";
-import Etablissement from "./Entreprise";
+import { Entreprise } from "./Entreprise";
+import { Etablissement } from "./Entreprise";
 
 const _dataSources = Symbol("_dataSources");
 const _cleanObject = Symbol("_cleanObject");
@@ -35,20 +35,27 @@ class frentreprise {
 
     const dataSources = this.getDataSources();
 
-    let etData = { _dataSources: {} };
+    const entreprise = new this.EntrepriseModel(
+      { _dataSources: {} },
+      this.EtablissementModel
+    );
 
     for (let i = 0; i < dataSources.length; i++) {
       const dataSource = dataSources[i].source;
 
-      etData = {
-        ...etData,
-        ...this[_cleanObject](await dataSource.getSIREN(SIREN))
-      };
+      const data = await dataSource.getSIREN(SIREN);
+      const cleanedData = this[_cleanObject](data);
 
-      etData._dataSources[dataSources[i].name] = true;
+      entreprise.updateData(cleanedData);
+
+      entreprise.updateData({
+        _dataSources: {
+          ...entreprise._dataSources,
+          [dataSources[i].name]: true // Add current data source
+        }
+      });
     }
 
-    const entreprise = new this.EntrepriseModel(etData);
 
     const SIRET = gotSIRET ? SiretOrSiren : "" + entreprise.siret_siege_social;
 
@@ -66,7 +73,7 @@ class frentreprise {
         etsData._dataSources[dataSources[i].name] = true;
       }
 
-      entreprise.importEtablissement(new this.EtablissementModel(etsData));
+      entreprise.getEtablissement(etsData.siret).updateData(etsData);
     }
 
     return entreprise;
@@ -171,22 +178,9 @@ class frentreprise {
       const etablissements = Object.values(etData.etablissements);
       delete etData.etablissements;
 
-      if (
-        (etablissements.length > 0 &&
-          typeof etData.raison_sociale !== "string") ||
-        etData.raison_sociale.trim().length < 1
-      ) {
-        etData.raison_sociale = etablissements
-          .map(ets => ets.raison_sociale_entreprise)
-          .filter(Boolean) // Remove falsey values
-          .reduce((prev, curr) => {
-            return prev || curr;
-          }, null);
-      }
-
-      const ent = new this.EntrepriseModel(etData);
+      const ent = new this.EntrepriseModel(etData, this.EtablissementModel);
       etablissements.forEach(etsData => {
-        ent.importEtablissement(new this.EtablissementModel(etsData));
+        ent.getEtablissement(etsData).updateData(etsData);
       });
 
       return ent;

@@ -22,6 +22,11 @@
         height: initial;
       }
     }
+
+    > .aside-contain.establishments-aside {
+      height: 80%;
+      border: #b4df6b 0.5px solid;
+    }
   }
 
   .main {

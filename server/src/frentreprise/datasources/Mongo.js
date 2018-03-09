@@ -47,8 +47,8 @@ class Mongo extends DataSource {
 
     if (siene_sese && typeof siene_sese === "object") {
       const siret_siege =
-        this[_.getObjectKey]("siren", obj) +
-          this[_.getObjectKey]("nic_du_siege", obj) || null;
+        this[_.getObjectKey]("siren", siene_sese) +
+          this[_.getObjectKey]("nic_du_siege", siene_sese) || null;
 
       const attr_map = {
         _etData: obj => {

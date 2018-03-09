@@ -410,7 +410,7 @@ describe("findSIRETsBySIREN", () => {
 
   test("findBySIREN", () => {
     const ingestor = new EtablissementsIngestor(filePath);
-    const siren = "35217611";
+    const siren = "035217611";
     return ingestor
       .save()
       .then(data => {

@@ -42,6 +42,7 @@ class DireccteEtablissement extends Etablissement {
         "activite_partielle_24_derniers_mois",
         "pse_en_projet_ou_en_cours",
         "direccte",
+        "association",
         "_dataSources"
       ],
       null

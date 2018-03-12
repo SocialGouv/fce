@@ -62,7 +62,7 @@ class EstablishmentActivity extends React.Component {
           <dt className="dt col-md-4">Association</dt>
           <dd className="dd col-md-8">
             <Value
-              value={establishment.association && "Oui"}
+              value={establishment.association && "Oui : "+ establishment.association.id}
               no="Non"
               empty="-"
             />

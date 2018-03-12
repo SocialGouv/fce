@@ -5,7 +5,6 @@ const _getAPIParams = Symbol("_getAPIParams");
 const _convertDate = Symbol("_convertDate");
 const _getCleanAddress = Symbol("_getCleanAddress");
 
-// GET /associations/:id
 // GET /documents_associations/:association_id
 // Unknown calls
 
@@ -22,6 +21,7 @@ export default class ApiGouv extends DataSource {
   // GET /etablissements_legacy/:siret
   // GET /attestations_agefiph/:siret
   // GET /exercices/:siret
+  // GET /associations/:id
   // ETABLISSEMENT
   async getSIRET(SIRET) {
     let legacy = null;
@@ -168,6 +168,25 @@ export default class ApiGouv extends DataSource {
         ] =
           +decofi.ca || null;
       });
+    }
+
+    let association = null;
+    try {
+      association = await this.axios.get(`associations/${SIRET}`, {
+        params: this[_getAPIParams](this)
+      });
+    } catch (exception) {
+      console.log(exception);
+    }
+
+    if (
+      association &&
+      typeof association === "object" &&
+      association.data &&
+      typeof association.data === "object" &&
+      association.data.association && association.data.association.etat
+    ) {
+      out.association = association.data.association || null;
     }
 
     return out;

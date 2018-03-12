@@ -9,12 +9,12 @@ class EstablishmentActivity extends React.Component {
     let codeMarchandStr = null;
     if (codeMarchand === "MARCH") {
       codeMarchandStr = "Marchand (MARCH)";
-    } else if (code_marchand === "NMPRI") {
+    } else if (codeMarchand === "NMPRI") {
       codeMarchandStr = "Non marchand, ressources du privé (NMPRI)";
-    } else if (code_marchand === "NMPUB") {
+    } else if (codeMarchand === "NMPUB") {
       codeMarchandStr = "Non marchand, ressources du public (NMPUB)";
     } else if (codeMarchand) {
-      codeMarchandStr = `(${code_marchand})`;
+      codeMarchandStr = `(${codeMarchand})`;
     }
 
     return (

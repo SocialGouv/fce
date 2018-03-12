@@ -5,7 +5,6 @@ const _getAPIParams = Symbol("_getAPIParams");
 const _convertDate = Symbol("_convertDate");
 const _getCleanAddress = Symbol("_getCleanAddress");
 
-// GET /associations/:id
 // GET /documents_associations/:association_id
 // Unknown calls
 
@@ -22,6 +21,7 @@ export default class ApiGouv extends DataSource {
   // GET /etablissements_legacy/:siret
   // GET /attestations_agefiph/:siret
   // GET /exercices/:siret
+  // GET /associations/:id
   // ETABLISSEMENT
   async getSIRET(SIRET) {
     let legacy = null;
@@ -168,6 +168,61 @@ export default class ApiGouv extends DataSource {
         ] =
           +decofi.ca || null;
       });
+    }
+
+    let association = null;
+    try {
+      association = await this.axios.get(`associations/${SIRET}`, {
+        params: this[_getAPIParams](this)
+      });
+    } catch (exception) {
+      console.log(exception);
+    }
+
+    if (
+      association &&
+      typeof association === "object" &&
+      association.data &&
+      typeof association.data === "object" &&
+      association.data.association &&
+      typeof association.data.association === "object" &&
+      association.data.association.etat
+    ) {
+      out.association = association.data.association;
+    }
+
+    if (out.association) {
+      let documents_associations = null;
+      try {
+        documents_associations = await this.axios.get(
+          `documents_associations/${SIRET}`,
+          {
+            params: this[_getAPIParams](this)
+          }
+        );
+      } catch (exception) {
+        console.log(exception);
+      }
+
+      if (
+        documents_associations &&
+        typeof documents_associations === "object" &&
+        documents_associations.data &&
+        typeof documents_associations.data === "object" &&
+        Array.isArray(documents_associations.data.documents)
+      ) {
+        const documents = documents_associations.data.documents;
+        const lastDocument = documents.reduce(
+          (acc, curr) =>
+            (curr.type === "Statuts" &&
+              +curr.timestamp > +acc.timestamp &&
+              curr) ||
+            acc,
+          { timestamp: 0 }
+        );
+
+        out.documents_associations = [lastDocument];
+      }
     }
 
     return out;

@@ -63,10 +63,25 @@ class EstablishmentActivity extends React.Component {
           <dt className="dt col-md-4">Association</dt>
           <dd className="dd col-md-8">
             <Value
-              value={establishment.association && "Oui"}
-              no="Non"
+              value={
+                establishment.association && establishment.association.id &&
+                `Oui : ${establishment.association.id}.`
+              }
               empty="-"
             />
+            {establishment.association && establishment.documents_associations ? (
+              <span>
+                &nbsp;Télécharger&nbsp;
+                <a
+                  href={establishment.documents_associations[0].url}
+                  target="_blank"
+                >
+                  les derniers statuts
+                </a>.
+              </span>
+            ) : (
+              ""
+            )}
           </dd>
 
           <dt className="dt col-md-4 mt-4">Etablissement employeur</dt>

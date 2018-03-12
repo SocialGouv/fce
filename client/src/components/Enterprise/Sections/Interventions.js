@@ -16,20 +16,27 @@ class Interventions extends React.Component {
 
   render() {
     const { establishment } = this.props;
-    let strActEco =
-      establishment.structure_insertion_activite_economique;
-    if (strActEco) {
-      const actEcoTypes = establishment.structure_insertion_activite_economique_types;
-      if (actEcoTypes.aci) {
-        strActEco = "Entreprise insertion";
-      } else if (
-        actEcoTypes.ai ||
-        actEcoTypes.ei ||
-        actEcoTypes.etti
-      ) {
-        strActEco = "Chantier insertion";
+    const actEcoTypes =
+      establishment.structure_insertion_activite_economique_types;
+
+    let strActEco = "";
+    if (actEcoTypes) {
+      let actEco = [];
+      if (actEcoTypes.ei) {
+        actEco.push("Entreprise d'insertion");
       }
+      if (actEcoTypes.ai) {
+        actEco.push("Association intermédiaire");
+      }
+      if (actEcoTypes.aci) {
+        actEco.push("Atelier et chantier d'insertion");
+      }
+      if (actEcoTypes.etti) {
+        actEco.push("Entreprise de travail temporaire d'insteration");
+      }
+      strActEco = actEco.join(", ");
     }
+
     return (
       <section id="interventions" className="enterprise-section">
         <h1 className="title h4">Interventions publiques</h1>
@@ -58,10 +65,7 @@ class Interventions extends React.Component {
               Structure de l'insertion par l'activité économique
             </dt>
             <dd className="dd col-md-8">
-              <Value
-                value={strActEco}
-                empty="-"
-              />
+              <Value value={strActEco} empty="-" />
             </dd>
           </dl>
         </section>

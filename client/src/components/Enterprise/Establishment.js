@@ -22,13 +22,12 @@ class Establishment extends React.Component {
     return [
       { name: "Identité Ent.", id: "identity-en" },
       { name: "Identité Eta.", id: "identity-et" },
-      { name: "État", id: "activity" },
-      { name: "Mandataires", id: "mandataire" },
+      { name: "État et activité", id: "activity" },
       { name: "Relation travail", id: "relation" },
       { name: "Dév. Eco", id: "development" },
       { name: "Emploi", id: "job" },
       { name: "Mutat. éco.", id: "mutations" },
-      { name: "DIRECCTE", id: "direccte" }
+      { name: "Intéractions DIRECCTE", id: "direccte" }
     ];
   };
 
@@ -71,7 +70,6 @@ class Establishment extends React.Component {
               establishment={this.props.establishment}
               enterprise={this.props.enterprise}
             />
-            <Mandataires enterprise={this.props.enterprise} />
             <Relation establishment={this.props.establishment} />
             <Interventions
               establishment={this.props.establishment}

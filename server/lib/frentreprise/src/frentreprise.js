@@ -47,7 +47,7 @@ class frentreprise {
         `Asking dataSource named ${dataSources[i].name} about SIREN : ${SIREN}`
       );
       const data = await dataSource.getSIREN(SIREN);
-      const cleanedData = this[_cleanObject](data);
+      const cleanedData = cleanObject(data);
       console.log(
         `Got response from dataSource named ${
           dataSources[i].name

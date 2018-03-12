@@ -5,18 +5,6 @@ class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
 
-    const codeMarchand = establishment.marchand;
-    let codeMarchandStr = null;
-    if (codeMarchand === "MARCH") {
-      codeMarchandStr = "Marchand (MARCH)";
-    } else if (codeMarchand === "NMPRI") {
-      codeMarchandStr = "Non marchand, ressources du privé (NMPRI)";
-    } else if (codeMarchand === "NMPUB") {
-      codeMarchandStr = "Non marchand, ressources du public (NMPUB)";
-    } else if (codeMarchand) {
-      codeMarchandStr = `(${codeMarchand})`;
-    }
-
     return (
       <section id="activity" className="enterprise-section">
         <h1 className="title h4">État et activité</h1>
@@ -69,7 +57,7 @@ class EstablishmentActivity extends React.Component {
 
           <dt className="dt col-md-4 mt-4">Marchand</dt>
           <dd className="dd col-md-8 mt-4">
-            <Value value={codeMarchandStr} empty="-" />
+            <Value value={establishment.marchand} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Association</dt>

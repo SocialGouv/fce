@@ -184,9 +184,51 @@ export default class ApiGouv extends DataSource {
       typeof association === "object" &&
       association.data &&
       typeof association.data === "object" &&
-      association.data.association && association.data.association.etat
+      association.data.association &&
+      association.data.association.etat
     ) {
       out.association = association.data.association || null;
+    }
+
+    let documents_associations = null;
+    if (out.association) {
+      try {
+        documents_associations = await this.axios.get(
+          `documents_associations/${SIRET}`,
+          {
+            params: this[_getAPIParams](this)
+          }
+        );
+      } catch (exception) {
+        console.log(exception);
+      }
+    }
+
+    if (
+      documents_associations &&
+      typeof documents_associations === "object" &&
+      documents_associations.data &&
+      typeof documents_associations.data === "object" &&
+      documents_associations.data.documents
+    ) {
+      const documents = documents_associations.data.documents;
+      const timestamps = documents.map(doc => {
+        if (doc.type === "Statuts") {
+          return parseInt(doc.timestamp, 10);
+        }
+        return 0;
+      });
+      const maxTimestamp = Math.max(...timestamps);
+
+      const earlierDocuments = documents.reduce((acc, cur) => {
+        let ts = parseInt(cur.timestamp, 10);
+        if (ts === maxTimestamp && cur.type === "Statuts") {
+          acc.push(cur);
+        }
+        return acc;
+      }, []);
+
+      out.documents_associations = earlierDocuments;
     }
 
     return out;

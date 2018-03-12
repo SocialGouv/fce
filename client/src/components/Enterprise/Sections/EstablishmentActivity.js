@@ -4,6 +4,7 @@ import Value from "../../../elements/Value";
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
+
     return (
       <section id="activity" className="enterprise-section">
         <h1 className="title h4">État et activité</h1>
@@ -56,7 +57,7 @@ class EstablishmentActivity extends React.Component {
 
           <dt className="dt col-md-4 mt-4">Marchand</dt>
           <dd className="dd col-md-8 mt-4">
-            <Value value={establishment.marchand && "Oui"} no="Non" empty="-" />
+            <Value value={establishment.marchand} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Association</dt>

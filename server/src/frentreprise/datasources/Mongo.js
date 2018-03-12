@@ -122,7 +122,21 @@ class Mongo extends DataSource {
           "code_modalite_activ_",
           "code_modalite_activ_"
         ),
-        marchand: "code_marchand",
+        marchand: (obj) => {
+          const codeMarchand = obj.code_marchand;
+          let codeMarchandStr = null;
+
+          if (codeMarchand === "MARCH") {
+            codeMarchandStr = "Marchand (MARCH)";
+          } else if (codeMarchand === "NMPRI") {
+            codeMarchandStr = "Non marchand, ressources du privé (NMPRI)";
+          } else if (codeMarchand === "NMPUB") {
+            codeMarchandStr = "Non marchand, ressources du public (NMPUB)";
+          } else if (codeMarchand) {
+            codeMarchandStr = `(${codeMarchand})`;
+          }
+          return codeMarchandStr;
+        },
         etablissement_employeur: this[_.getCleanBool].bind(
           this,
           "code_employeur"

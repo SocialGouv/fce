@@ -32,17 +32,6 @@ class Establishment extends React.Component {
             }
             empty=""
           />{" "}
-          {this.props.effectif !== false ? (
-            <span>
-              - Effectif :{" "}
-              <Value
-                value={establishment.dernier_effectif_physique}
-                empty="-"
-              />
-            </span>
-          ) : (
-            ""
-          )}
         </li>
       </ul>
     );

@@ -15,12 +15,12 @@ class Relation extends React.Component {
             <Value value={establishment.unite_controle_competente} empty="-" />
           </dd>
 
-          <dt className="dt col-md-4">Code IDCC</dt>
+          <dt className="dt col-md-4">Code convention collective (IDCC)</dt>
           <dd className="dd col-md-8">
             <Value value={establishment.codes_idcc} empty="-" />
           </dd>
 
-          <dt className="dt col-md-4">Année IDCC</dt>
+          <dt className="dt col-md-4">Année convention collective (IDCC)</dt>
           <dd className="dd col-md-8">
             <Value value={establishment.annee_idcc} empty="-" />
           </dd>

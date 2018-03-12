@@ -96,7 +96,6 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
   };
 
   ObjectManipulations.clean(params);
-
   return this.find(params, cb);
 };
 

@@ -18,24 +18,23 @@ class Interventions extends React.Component {
     const { establishment } = this.props;
     const actEcoTypes =
       establishment.structure_insertion_activite_economique_types;
-    let strActEco = "";
 
+    let strActEco = "";
     if (actEcoTypes) {
+      let actEco = [];
       if (actEcoTypes.ei) {
-        strActEco += "Entreprise d'insertion, ";
+        actEco.push("Entreprise d'insertion");
       }
       if (actEcoTypes.ai) {
-        strActEco += "Association intermédiaire, ";
+        actEco.push("Association intermédiaire");
       }
       if (actEcoTypes.aci) {
-        strActEco += "Atelier et chantier d'insertion, ";
+        actEco.push("Atelier et chantier d'insertion");
       }
       if (actEcoTypes.etti) {
-        strActEco += "Entreprise de travail temporaire d'insteration,  ";
+        actEco.push("Entreprise de travail temporaire d'insteration");
       }
-      if (strActEco.length > 0) {
-        strActEco = strActEco.slice(0, strActEco.length - 2);
-      }
+      strActEco = actEco.join(", ");
     }
 
     return (

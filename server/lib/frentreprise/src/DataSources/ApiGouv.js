@@ -185,13 +185,14 @@ export default class ApiGouv extends DataSource {
       association.data &&
       typeof association.data === "object" &&
       association.data.association &&
+      typeof association.data.association === "object" &&
       association.data.association.etat
     ) {
-      out.association = association.data.association || null;
+      out.association = association.data.association;
     }
 
-    let documents_associations = null;
     if (out.association) {
+      let documents_associations = null;
       try {
         documents_associations = await this.axios.get(
           `documents_associations/${SIRET}`,
@@ -202,33 +203,26 @@ export default class ApiGouv extends DataSource {
       } catch (exception) {
         console.log(exception);
       }
-    }
 
-    if (
-      documents_associations &&
-      typeof documents_associations === "object" &&
-      documents_associations.data &&
-      typeof documents_associations.data === "object" &&
-      documents_associations.data.documents
-    ) {
-      const documents = documents_associations.data.documents;
-      const timestamps = documents.map(doc => {
-        if (doc.type === "Statuts") {
-          return parseInt(doc.timestamp, 10);
-        }
-        return 0;
-      });
-      const maxTimestamp = Math.max(...timestamps);
+      if (
+        documents_associations &&
+        typeof documents_associations === "object" &&
+        documents_associations.data &&
+        typeof documents_associations.data === "object" &&
+        Array.isArray(documents_associations.data.documents)
+      ) {
+        const documents = documents_associations.data.documents;
+        const lastDocument = documents.reduce(
+          (acc, curr) =>
+            (curr.type === "Statuts" &&
+              +curr.timestamp > +acc.timestamp &&
+              curr) ||
+            acc,
+          { timestamp: 0 }
+        );
 
-      const earlierDocuments = documents.reduce((acc, cur) => {
-        let ts = parseInt(cur.timestamp, 10);
-        if (ts === maxTimestamp && cur.type === "Statuts") {
-          acc.push(cur);
-        }
-        return acc;
-      }, []);
-
-      out.documents_associations = earlierDocuments;
+        out.documents_associations = [lastDocument];
+      }
     }
 
     return out;

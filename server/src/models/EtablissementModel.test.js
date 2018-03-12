@@ -17,7 +17,7 @@ test(
   () => {
     const nData = {
       siret: "01234",
-      code_cj3: "0112Z",
+      code_activite: "0112Z",
       nic_ministere: "0",
       raison_sociale: "entreprise AA"
     };
@@ -31,7 +31,7 @@ test(
       })
       .then(data => {
         expect(data.siret).toBe(nData.siret);
-        expect(data.code_cj3).toBe(nData.code_cj3);
+        expect(data.code_activite).toBe(nData.code_activite);
         expect(data.raison_sociale).toBe(nData.raison_sociale);
       });
   },
@@ -44,13 +44,13 @@ test(
     const nData = [
       {
         siret: "01234",
-        code_cj3: "0112Z",
+        code_activite: "0112Z",
         nic_ministere: "0",
         raison_sociale: "entreprise AA"
       },
       {
         siret: "01235",
-        code_cj3: "0112Z",
+        code_activite: "0112Z",
         nic_ministere: "0",
         raison_sociale: "entreprise AB"
       }
@@ -79,13 +79,13 @@ test(
     const nData = [
       {
         siret: "01234",
-        code_cj3: "0112Z",
+        code_activite: "0112Z",
         nic_ministere: "0",
         raison_sociale: "entreprise AA"
       },
       {
         siret: "01235",
-        code_cj3: "0112Z",
+        code_activite: "0112Z",
         nic_ministere: "0",
         raison_sociale: "entreprise AB"
       }
@@ -103,7 +103,7 @@ test(
         expect(data.length).toBe(1);
 
         expect(data[0].siret).toBe(nData[0].siret);
-        expect(data[0].code_cj3).toBe(nData[0].code_cj3);
+        expect(data[0].code_activite).toBe(nData[0].code_activite);
         expect(data[0].raison_sociale).toBe(nData[0].raison_sociale);
         return;
       });
@@ -117,13 +117,13 @@ test(
     const nData = [
       {
         siret: "01234",
-        code_cj3: "0112Z",
+        code_activite: "0112Z",
         nic_ministere: "0",
         raison_sociale: "entreprise AA"
       },
       {
         siret: "01235",
-        code_cj3: "0112Z",
+        code_activite: "0112Z",
         nic_ministere: "0",
         raison_sociale: "entreprise AB"
       }

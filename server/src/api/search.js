@@ -58,14 +58,16 @@ router.get("/advancedSearch(.:format)?", function(req, res) {
     query: {
       search: "advanced",
       format: req.params["format"] || "json",
-      code_activite,
-      libelle_commune,
-      code_postal,
-      code_departement
+      params: {
+        code_activite,
+        libelle_commune,
+        code_postal,
+        code_departement
+      }
     }
   };
 
-  frentreprise.search(data.query).then(results => {
+  frentreprise.search(data.query.params).then(results => {
     data.results = results.map(ent => ent.export());
     data.size = data.results.length;
     sendResult(data, res);

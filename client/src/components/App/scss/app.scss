@@ -17,4 +17,9 @@ body {
   @media print {
     padding-top: 1rem;
   }
+
+  .bg-info a {
+    color: white;
+    text-decoration: underline;
+  }
 }

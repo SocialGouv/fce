@@ -17,7 +17,13 @@ if ("serviceWorker" in navigator) {
           worker.unregister &&
           console.log(
             "Removing service worker :",
-            worker.unregister().then(console.log, console.error) && worker
+            worker
+              .unregister()
+              .then(
+                (...args) =>
+                  document.location.reload(true) && console.log(...args),
+                console.error
+              ) && worker
           )
       );
   }, console.error);

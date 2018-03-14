@@ -39,10 +39,9 @@ class Interventions extends React.Component {
 
     return (
       <section id="interventions" className="enterprise-section">
-        <h1 className="title h4">Interventions publiques</h1>
 
         <section id="development">
-          <h2 className="h5">Développement économique</h2>
+          <h2 className="subtitle h4">Développement économique</h2>
 
           <dl className="dl row">
             <dt className="dt col-md-4">ETI / Pépite</dt>
@@ -58,7 +57,7 @@ class Interventions extends React.Component {
         </section>
 
         <section id="job">
-          <h2 className="h5">Emploi et insertion professionnelle</h2>
+          <h2 className="subtitle h4">Emploi et insertion professionnelle</h2>
 
           <dl className="dl row">
             <dt className="dt col-md-4">
@@ -71,7 +70,7 @@ class Interventions extends React.Component {
         </section>
 
         <section id="mutations">
-          <h2 className="h5">Mutations économiques</h2>
+          <h2 className="subtitle h4">Mutations économiques</h2>
 
           <dl className="dl row">
             <dt className="dt col-md-4">

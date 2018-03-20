@@ -19,7 +19,7 @@ RUN chmod a+x /entrypoint.sh
 ENV NODE_ENV=production
 
 EXPOSE 80
-VOLUME [ "/data" ]
+VOLUME [ "/var/lib/mongodb" ]
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD node server.js

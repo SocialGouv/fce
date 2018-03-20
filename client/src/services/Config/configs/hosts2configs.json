@@ -2,6 +2,6 @@
   "direccte.test": "development",
   "direccte.commit42.fr": "staging",
   "preprod.direccte.com": "preproduction",
-  "ce.gouv.fr": "production",
+  "fce.gouv.fr": "production",
   "localhost": "production-local"
 }

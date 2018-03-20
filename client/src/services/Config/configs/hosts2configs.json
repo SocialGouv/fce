@@ -3,5 +3,6 @@
   "direccte.commit42.fr": "staging",
   "preprod.direccte.com": "preproduction",
   "fce.gouv.fr": "production",
-  "localhost": "production-local"
+  "localhost": "production-local",
+  "10.31.24.127": "production"
 }

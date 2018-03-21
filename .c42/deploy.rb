@@ -63,7 +63,7 @@ after 'deploy' do
 end
 
 task 'local_config' do
-  run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte" }' > #{File.join(latest_release, '/dist/config/local.json')})
+  run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte", proxy: false }' > #{File.join(latest_release, '/dist/config/local.json')})
 end
 after 'deploy', 'local_config'
 

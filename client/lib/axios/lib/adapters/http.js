@@ -104,7 +104,8 @@ module.exports = function httpAdapter(config) {
         var parsedProxyUrl = url.parse(proxyUrl);
         proxy = {
           host: parsedProxyUrl.hostname,
-          port: parsedProxyUrl.port
+          port: parsedProxyUrl.port,
+          protocol: (parsedProxyUrl.protocol || protocol).slice(0, -1)
         };
 
         if (parsedProxyUrl.auth) {

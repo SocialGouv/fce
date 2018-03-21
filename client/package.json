@@ -9,7 +9,7 @@
     "@fortawesome/fontawesome-pro-regular": "^5.0.6",
     "@fortawesome/fontawesome-pro-solid": "^5.0.6",
     "@fortawesome/react-fontawesome": "0.0.17",
-    "axios": "^0.17.1",
+    "axios": "./lib/axios",
     "bootstrap": "^4.0.0",
     "classnames": "^2.2.5",
     "json2csv": "^4.0.0",

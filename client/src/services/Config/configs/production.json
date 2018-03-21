@@ -1,3 +1,4 @@
 {
-  "api_endpoint": "/api"
+  "api_endpoint": "/api",
+  "proxy": "proxyweb.intranet.social.gouv.fr:8080"
 }

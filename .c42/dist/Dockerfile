@@ -17,6 +17,8 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod a+x /entrypoint.sh
 
 ENV NODE_ENV=production
+ENV HTTP_PROXY "http://proxyweb.intranet.social.gouv.fr:8080"
+ENV HTTPS_PROXY "http://proxyweb.intranet.social.gouv.fr:8080"
 
 EXPOSE 80
 VOLUME [ "/var/lib/mongodb" ]

@@ -8,7 +8,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "./lib/axios"
   },
   "scripts": {
     "build": "NODE_ENV=production webpack --color"

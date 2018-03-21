@@ -3,8 +3,7 @@ import buildURL from "axios/lib/helpers/buildURL";
 import Config from "../Config";
 
 const Http = axios.create({
-  baseURL: Config.get("api_endpoint"),
-  proxy: Config.get("proxy") || false
+  baseURL: Config.get("api_endpoint")
 });
 
 Http.defaults.headers.post["Content-Type"] =

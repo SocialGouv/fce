@@ -18,11 +18,14 @@ const port = (config.has("port") && +config.get("port")) || 80;
 const host = (config.has("port") && config.get("host")) || undefined;
 
 function init() {
+  frentreprise;
   frentreprise.EntrepriseModel = require("./frentreprise/models/Entreprise");
   frentreprise.EtablissementModel = require("./frentreprise/models/Etablissement");
-  frentreprise.getDataSource("ApiGouv").source.token = config.get(
-    "APIGouv.token"
-  );
+
+  const apiGouv = frentreprise.getDataSource("ApiGouv").source;
+  apiGouv.token = config.get("APIGouv.token");
+  apiGouv.axios.defaults.proxy =
+    (config.has("proxy") && config.get("proxy")) || false;
 
   //DB setup
   if (config.has("mongo")) {

@@ -1,7 +1,3 @@
 {
   "api_endpoint": "/api",
-  "proxy": {
-    "host":"proxyweb.intranet.social.gouv.fr",
-    "port":"8080"
-  }
 }

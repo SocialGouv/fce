@@ -24,8 +24,9 @@ function init() {
 
   const apiGouv = frentreprise.getDataSource("ApiGouv").source;
   apiGouv.token = config.get("APIGouv.token");
-  apiGouv.axios.defaults.proxy =
-    (config.has("proxy") && config.get("proxy")) || false;
+  apiGouv.axiosConfig = {
+    proxy: (config.has("proxy") && config.get("proxy")) || false
+  };
 
   //DB setup
   if (config.has("mongo")) {

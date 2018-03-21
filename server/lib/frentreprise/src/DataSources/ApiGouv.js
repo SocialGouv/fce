@@ -1,21 +1,24 @@
-import axios from "axios";
 import DataSource from "./DataSource";
+
+const axios = require("../../lib/axios");
 
 const _getAPIParams = Symbol("_getAPIParams");
 const _convertDate = Symbol("_convertDate");
 const _getCleanAddress = Symbol("_getCleanAddress");
+const _axios = Symbol("_axios");
 
 // GET /documents_associations/:association_id
 // Unknown calls
 
 export default class ApiGouv extends DataSource {
-  constructor(baseURL) {
+  constructor(baseURL, axiosConfig = {}) {
     super();
     this.token = null;
-    this.axios = axios.create({
+    this[_axios] = axios.create({
       baseURL: baseURL,
       timeout: 30000
     });
+    this.axiosConfig = axiosConfig;
   }
 
   // GET /etablissements_legacy/:siret
@@ -27,9 +30,10 @@ export default class ApiGouv extends DataSource {
     let legacy = null;
 
     try {
-      legacy = await this.axios.get(`etablissements_legacy/${SIRET}`, {
-        params: this[_getAPIParams](this)
-      });
+      legacy = await this[_axios].get(
+        `etablissements_legacy/${SIRET}`,
+        this[_getAPIParams](this)
+      );
     } catch (exception) {
       console.error(exception);
     }
@@ -74,9 +78,10 @@ export default class ApiGouv extends DataSource {
     let etablissement = null;
 
     try {
-      etablissement = await this.axios.get(`etablissements/${SIRET}`, {
-        params: this[_getAPIParams](this)
-      });
+      etablissement = await this[_axios].get(
+        `etablissements/${SIRET}`,
+        this[_getAPIParams](this)
+      );
     } catch (exception) {
       console.log(exception);
     }
@@ -126,9 +131,10 @@ export default class ApiGouv extends DataSource {
     let age = null;
 
     try {
-      age = await this.axios.get(`attestations_agefiph/${SIRET}`, {
-        params: this[_getAPIParams](this)
-      });
+      age = await this[_axios].get(
+        `attestations_agefiph/${SIRET}`,
+        this[_getAPIParams](this)
+      );
     } catch (exception) {
       console.log(exception);
     }
@@ -146,9 +152,10 @@ export default class ApiGouv extends DataSource {
     let exercices = null;
 
     try {
-      exercices = await this.axios.get(`exercices/${SIRET}`, {
-        params: this[_getAPIParams](this)
-      });
+      exercices = await this[_axios].get(
+        `exercices/${SIRET}`,
+        this[_getAPIParams](this)
+      );
     } catch (exception) {
       console.log(exception);
     }
@@ -172,9 +179,10 @@ export default class ApiGouv extends DataSource {
 
     let association = null;
     try {
-      association = await this.axios.get(`associations/${SIRET}`, {
-        params: this[_getAPIParams](this)
-      });
+      association = await this[_axios].get(
+        `associations/${SIRET}`,
+        this[_getAPIParams](this)
+      );
     } catch (exception) {
       console.log(exception);
     }
@@ -194,7 +202,7 @@ export default class ApiGouv extends DataSource {
     if (out.association) {
       let documents_associations = null;
       try {
-        documents_associations = await this.axios.get(
+        documents_associations = await this[_axios].get(
           `documents_associations/${SIRET}`,
           {
             params: this[_getAPIParams](this)
@@ -233,9 +241,10 @@ export default class ApiGouv extends DataSource {
     let legacy = null;
 
     try {
-      legacy = await this.axios.get(`entreprises_legacy/${SIREN}`, {
-        params: this[_getAPIParams](this)
-      });
+      legacy = await this[_axios].get(
+        `entreprises_legacy/${SIREN}`,
+        this[_getAPIParams](this)
+      );
     } catch (exception) {
       console.log(exception);
     }
@@ -283,9 +292,10 @@ export default class ApiGouv extends DataSource {
     let entreprise = null;
 
     try {
-      entreprise = await this.axios.get(`entreprises/${SIREN}`, {
-        params: this[_getAPIParams](this)
-      });
+      entreprise = await this[_axios].get(
+        `entreprises/${SIREN}`,
+        this[_getAPIParams](this)
+      );
     } catch (exception) {
       console.log(exception);
     }
@@ -347,10 +357,13 @@ export default class ApiGouv extends DataSource {
 
   [_getAPIParams]() {
     return {
-      token: this.token,
-      context: "Tiers",
-      recipient: "Direccte Occitanie",
-      object: "FCEE - Direccte Occitanie"
+      ...this.axiosConfig,
+      params: {
+        token: this.token,
+        context: "Tiers",
+        recipient: "Direccte Occitanie",
+        object: "FCEE - Direccte Occitanie"
+      }
     };
   }
 

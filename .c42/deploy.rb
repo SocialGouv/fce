@@ -1,6 +1,5 @@
 load '.c42/recipes/http_auth.rb'
 
-
 set :stages, %w[preprod]
 set :default_stage, 'preprod'
 
@@ -13,8 +12,8 @@ set :scm, :git
 set :git_enable_submodules, 1
 set :deploy_via, :copy
 set :copy_cache, true
-set :copy_only, ["README.md", "version.txt", "dist"]
-set :copy_exclude, Dir.glob("*") - copy_only
+set :copy_only, ['README.md', 'version.txt', 'dist']
+set :copy_exclude, Dir.glob('*') - copy_only
 set :build_script, 'SKIP_QUESTIONS=1 c42 docker:install && c42 build'
 set :copy_compression, :bz2
 set :ssh_options, forward_agent: true
@@ -24,11 +23,24 @@ set :keep_releases, 3
 
 set :app_path, '/dist/htdocs/'
 
-task :preprod do
+task :dev do
   set :deploy_to, '/home/commit42/direccte'
   set :branch, 'develop'
   set :user, 'commit42'
+  set :webhost, 'https://dev.direccte.commit42.fr'
+  after 'deploy' do
+    run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte_dev", "proxy": false }' > #{File.join(latest_release, '/dist/config/local.json')})
+  end
+end
+
+task :preprod do
+  set :deploy_to, '/home/commit42/direccte'
+  set :branch, 'master'
+  set :user, 'commit42'
   set :webhost, 'https://direccte.commit42.fr'
+  after 'deploy' do
+    run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte", "proxy": false }' > #{File.join(latest_release, '/dist/config/local.json')})
+  end
 end
 
 after 'deploy:finalize_update' do
@@ -61,7 +73,6 @@ end
 after 'deploy' do
   run "echo #{latest_revision} > #{File.join(latest_release, app_path, 'rev.txt')}"
 end
-
 task 'local_config' do
   run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte", "proxy": false }' > #{File.join(latest_release, '/dist/config/local.json')})
 end

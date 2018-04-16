@@ -72,7 +72,19 @@ etablissementSchema.statics.findSIRETsBySIREN = function(siren, cb) {
 };
 
 etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
-  return this.find({ raison_sociale: new RegExp(raisonSociale, "i") }, cb);
+  return this.aggregate([
+    {
+      $match: { raison_sociale: new RegExp(raisonSociale, "i") }
+    },
+    {
+      $lookup: {
+        from: "interactions",
+        localField: "siret",
+        foreignField: "siret",
+        as: "interactions"
+      }
+    }
+  ]);
 };
 
 /**

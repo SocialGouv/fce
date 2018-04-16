@@ -22,11 +22,11 @@ set :use_sudo, false
 set :keep_releases, 3
 
 set :app_path, '/dist/htdocs/'
+set :user, 'commit42'
 
 task :dev do
-  set :deploy_to, '/home/commit42/direccte'
+  set :deploy_to, '/home/commit42/direccte-dev'
   set :branch, 'develop'
-  set :user, 'commit42'
   set :webhost, 'https://dev.direccte.commit42.fr'
   after 'deploy' do
     run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte_dev", "proxy": false }' > #{File.join(latest_release, '/dist/config/local.json')})
@@ -36,7 +36,6 @@ end
 task :preprod do
   set :deploy_to, '/home/commit42/direccte'
   set :branch, 'master'
-  set :user, 'commit42'
   set :webhost, 'https://direccte.commit42.fr'
   after 'deploy' do
     run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte", "proxy": false }' > #{File.join(latest_release, '/dist/config/local.json')})

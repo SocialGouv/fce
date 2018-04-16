@@ -72,7 +72,8 @@ etablissementSchema.statics.findSIRETsBySIREN = function(siren, cb) {
 };
 
 etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
-  return this.find({ raison_sociale: new RegExp(raisonSociale, "i") }, cb);
+  const regex = new RegExp(raisonSociale, "i");
+  return this.find({ $or: [{ raison_sociale: regex }, { nom: regex }] }, cb);
 };
 
 /**
@@ -91,9 +92,15 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
       : null;
 
   const params = {
-    ...searchParams,
-    raison_sociale: raisonSocialParam
+    ...searchParams
   };
+
+  if (raisonSocialParam) {
+    params["$or"] = [
+      { raison_sociale: raisonSocialParam },
+      { nom: raisonSocialParam }
+    ];
+  }
 
   ObjectManipulations.clean(params);
   return this.find(params, cb);

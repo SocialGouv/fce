@@ -116,7 +116,20 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
   }
 
   ObjectManipulations.clean(params);
-  return this.find(params, cb);
+
+  return this.aggregate([
+    {
+      $match: params
+    },
+    {
+      $lookup: {
+        from: "interactions",
+        localField: "siret",
+        foreignField: "siret",
+        as: "interactions"
+      }
+    }
+  ]);
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);

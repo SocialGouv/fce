@@ -4,7 +4,6 @@ import {
   SEARCH_NOMENCLATURES,
   RESET_STORE
 } from "../constants/ActionTypes";
-import Moment from "../../Moment";
 
 const initialState = {
   results: [],
@@ -64,29 +63,12 @@ const flattenResults = results => {
   results.forEach(enterprise => {
     if (Array.isArray(enterprise.etablissements)) {
       enterprise.etablissements.forEach(establishment => {
-        establishment.date_debut_activite_economique_timestamp = null;
-        try {
-          establishment.date_debut_activite_economique_timestamp = Moment(
-            establishment.date_debut_activite_economique,
-            "DD/MM/YYYY"
-          ).unix();
-        } catch (e) {
-          console.debug(e);
-        }
-
         flattenResults.push({ ...enterprise, etablissement: establishment });
       });
     }
   });
 
-  return flattenResults.sort(sortByDateDebutActiviteDesc);
-};
-
-const sortByDateDebutActiviteDesc = (a, b) => {
-  return (
-    b.etablissement.date_debut_activite_economique_timestamp -
-    a.etablissement.date_debut_activite_economique_timestamp
-  );
+  return flattenResults;
 };
 
 export default search;

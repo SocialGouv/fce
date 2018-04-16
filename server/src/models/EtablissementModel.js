@@ -85,6 +85,9 @@ etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
         foreignField: "siret",
         as: "interactions"
       }
+    },
+    {
+      $sort: { raison_sociale: 1, code_etat: 1 }
     }
   ]);
 };
@@ -128,6 +131,9 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
         foreignField: "siret",
         as: "interactions"
       }
+    },
+    {
+      $sort: { raison_sociale: 1, code_etat: 1 }
     }
   ]);
 };

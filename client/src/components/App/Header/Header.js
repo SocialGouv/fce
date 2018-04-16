@@ -37,14 +37,33 @@ class Header extends React.Component {
     return (
       <IfLoggedIn>
         <header className="app-header">
-          <Navbar className="gradient-color-direccte" dark fixed="top" expand="md">
+          <Navbar
+            className="gradient-color-direccte"
+            dark
+            fixed="top"
+            expand="md"
+          >
             <NavbarBrand href="/">FCE | Direccte</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="mr-auto" navbar>
                 <NavItem>
-                  <Link to="/search" className="nav-link">
-                    Rechercher
+                  <Link
+                    to="/search"
+                    className="nav-link"
+                    title="Rechercher un établissement ou une entreprise"
+                  >
+                    Recherche
+                  </Link>
+                </NavItem>
+
+                <NavItem>
+                  <Link
+                    to="/search/advanced"
+                    className="nav-link"
+                    title="Rechercher une liste d'établissements"
+                  >
+                    Recherche avancée
                   </Link>
                 </NavItem>
 

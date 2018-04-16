@@ -21,7 +21,10 @@ class Item extends React.Component {
           <Value value={enterprise.siren} empty="-" />
         </td>
         <td>
-          <Value value={enterprise.raison_sociale} empty="-" />
+          <Value
+            value={enterprise.raison_sociale || enterprise.nom}
+            empty="-"
+          />
         </td>
         <td>
           <Value

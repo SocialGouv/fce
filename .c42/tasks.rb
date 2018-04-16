@@ -107,7 +107,7 @@ task :install do
   invoke 'docker:restart', ['server']
 end
 
-depenvs = %w[preprod]
+depenvs = %w[dev preprod]
 desc 'deploy DEPLOY_ENV', "deploy to DEPLOY_ENV (#{depenvs.join(', ')})"
 task :deploy do |dep_env = 'preprod'|
   unless depenvs.include?(dep_env)

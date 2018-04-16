@@ -4,6 +4,7 @@ import {
   SEARCH_NOMENCLATURES,
   RESET_STORE
 } from "../constants/ActionTypes";
+import Config from "../../Config";
 
 const initialState = {
   results: [],
@@ -63,12 +64,32 @@ const flattenResults = results => {
   results.forEach(enterprise => {
     if (Array.isArray(enterprise.etablissements)) {
       enterprise.etablissements.forEach(establishment => {
+        establishment = addCountInteractionsToEstablishment(establishment);
         flattenResults.push({ ...enterprise, etablissement: establishment });
       });
     }
   });
 
   return flattenResults;
+};
+
+const addCountInteractionsToEstablishment = establishment => {
+  let interractions = {};
+  Config.get("interractions").forEach(pole => {
+    try {
+      interractions[pole] = establishment.direccte.filter(
+        interraction => interraction.pole === pole
+      ).length;
+    } catch (e) {
+      if (Array.isArray(interractions[pole])) {
+        console.error(e);
+      }
+      interractions[pole] = 0;
+    }
+  });
+
+  establishment.interractions = interractions;
+  return establishment;
 };
 
 export default search;

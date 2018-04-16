@@ -54,6 +54,39 @@ class Item extends React.Component {
         <td>
           <Value value={establishment.activite} empty="-" />
         </td>
+        <td>
+          <Value
+            value={
+              establishment.etat_etablissement &&
+              establishment.etat_etablissement.label
+            }
+            empty="-"
+          />
+        </td>
+        <td>
+          <Value
+            value={
+              establishment.interractions && establishment.interractions["C"]
+            }
+            empty="-"
+          />
+        </td>
+        <td>
+          <Value
+            value={
+              establishment.interractions && establishment.interractions["3E"]
+            }
+            empty="-"
+          />
+        </td>
+        <td>
+          <Value
+            value={
+              establishment.interractions && establishment.interractions["T"]
+            }
+            empty="-"
+          />
+        </td>
       </tr>
     );
   }

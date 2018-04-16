@@ -92,9 +92,15 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
       : null;
 
   const params = {
-    ...searchParams,
-    raison_sociale: raisonSocialParam
+    ...searchParams
   };
+
+  if (raisonSocialParam) {
+    params["$or"] = [
+      { raison_sociale: raisonSocialParam },
+      { nom: raisonSocialParam }
+    ];
+  }
 
   ObjectManipulations.clean(params);
   return this.find(params, cb);

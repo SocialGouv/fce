@@ -11,7 +11,6 @@ import {
   EstablishmentEnterpriseIdentity,
   Interventions,
   Direccte,
-  Mandataires,
   Relation
 } from "./Sections";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";

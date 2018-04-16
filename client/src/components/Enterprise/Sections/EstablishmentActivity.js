@@ -64,12 +64,14 @@ class EstablishmentActivity extends React.Component {
           <dd className="dd col-md-8">
             <Value
               value={
-                establishment.association && establishment.association.id &&
+                establishment.association &&
+                establishment.association.id &&
                 `Oui : ${establishment.association.id}.`
               }
               empty="-"
             />
-            {establishment.association && establishment.documents_associations ? (
+            {establishment.association &&
+            establishment.documents_associations ? (
               <span>
                 &nbsp;Télécharger&nbsp;
                 <a

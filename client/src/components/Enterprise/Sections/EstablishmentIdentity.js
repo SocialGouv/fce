@@ -3,7 +3,7 @@ import Value from "../../../elements/Value";
 
 class EstablishmentIdentity extends React.Component {
   render() {
-    const { establishment, enterprise, headOffice } = this.props;
+    const { establishment } = this.props;
 
     return (
       <section id="identity-et" className="enterprise-section">

@@ -2,14 +2,19 @@ require("../mongo/db");
 
 const EtablissementsIngestor = require("../dataIngestors/EtablissementsIngestor");
 const Etablissement = require("./EtablissementModel");
+const Interaction = require("./InteractionModel");
 const TIMEOUT = 15000;
 
 beforeEach(() => {
-  return Etablissement.remove({});
+  return Etablissement.remove({}).then(() => {
+    return Interaction.remove({});
+  });
 }, TIMEOUT);
 
 afterEach(() => {
-  return Etablissement.remove({});
+  return Etablissement.remove({}).then(() => {
+    return Interaction.remove({});
+  });
 }, TIMEOUT);
 
 test(
@@ -148,6 +153,68 @@ test(
   TIMEOUT
 );
 
+test(
+  "findByRaisonSociale - contain interactions",
+  () => {
+    const nData = [
+      {
+        siret: "0123456789",
+        code_activite: "0112Z",
+        nic_ministere: "0",
+        raison_sociale: "entreprise AA"
+      },
+      {
+        siret: "01235",
+        code_activite: "0112Z",
+        nic_ministere: "0",
+        raison_sociale: "entreprise AB"
+      }
+    ];
+    const interactionsData = [
+      {
+        siret: "0123456789",
+        unite: "Unité 3",
+        type_intervention: "Enquête",
+        cible_intervention: "Chantier",
+        pole: "C",
+        date: new Date()
+      },
+      {
+        siret: "01235",
+        unite: "Unité 666",
+        type_intervention: "Ecouter",
+        cible_intervention: "Chanson",
+        pole: "3E",
+        date: new Date()
+      }
+    ];
+
+    return new Etablissement(nData[0])
+      .save()
+      .then(() => {
+        return new Etablissement(nData[1]).save();
+      })
+      .then(() => {
+        return new Interaction(interactionsData[0]).save();
+      })
+      .then(() => {
+        return new Interaction(interactionsData[1]).save();
+      })
+      .then(() => {
+        return Etablissement.findByRaisonSociale("entreprise AA");
+      })
+      .then(data => {
+        expect(data[0].interactions.length).toBe(1);
+        expect(data[0].interactions[0].type_intervention).toBe(
+          interactionsData[0].type_intervention
+        );
+        expect(data[0].interactions[0].pole).toBe(interactionsData[0].pole);
+        return;
+      });
+  },
+  TIMEOUT
+);
+
 describe("Advanced search", () => {
   test("default", () => {
     const searchParams = {
@@ -271,6 +338,68 @@ describe("Advanced search", () => {
           expect(data.length).toEqual(2);
           expect(data[0].raison_sociale).toEqual("ENTREPRISE 1");
           expect(data[1].raison_sociale).toEqual("ENTREPRISE 10");
+        });
+    },
+    TIMEOUT
+  );
+
+  test(
+    "findByAdvancedSearch - contain interactions",
+    () => {
+      const nData = [
+        {
+          siret: "0123456789",
+          code_activite: "8110Z"
+        },
+        {
+          siret: "01235",
+          code_activite: "8111Z"
+        }
+      ];
+
+      const interactionsData = [
+        {
+          siret: "0123456789",
+          unite: "Unité 3",
+          type_intervention: "Enquête",
+          cible_intervention: "Chantier",
+          pole: "C",
+          date: new Date()
+        },
+        {
+          siret: "01235",
+          unite: "Unité 666",
+          type_intervention: "Ecouter",
+          cible_intervention: "Chanson",
+          pole: "3E",
+          date: new Date()
+        }
+      ];
+
+      const searchParams = {
+        code_activite: "8110Z"
+      };
+
+      return new Etablissement(nData[0])
+        .save()
+        .then(() => {
+          return new Etablissement(nData[1]).save();
+        })
+        .then(() => {
+          return new Interaction(interactionsData[0]).save();
+        })
+        .then(() => {
+          return new Interaction(interactionsData[1]).save();
+        })
+        .then(() => {
+          return Etablissement.findByAdvancedSearch(searchParams);
+        })
+        .then(data => {
+          expect(data[0].interactions.length).toBe(1);
+          expect(data[0].interactions[0].type_intervention).toBe(
+            interactionsData[0].type_intervention
+          );
+          expect(data[0].interactions[0].pole).toBe(interactionsData[0].pole);
         });
     },
     TIMEOUT
@@ -408,18 +537,20 @@ describe("Find entities", () => {
 describe("findSIRETsBySIREN", () => {
   const filePath = "./data/SIENE_test.csv";
 
-  test("findBySIREN", () => {
-    const ingestor = new EtablissementsIngestor(filePath);
-    const siren = "035217611";
-    return ingestor
-      .save()
-      .then(data => {
-        return Etablissement.findSIRETsBySIREN(siren);
-      })
-      .then(data => {
-        expect(data.length).toBe(2);
-      });
-  },
-  TIMEOUT
-);
-})
+  test(
+    "findBySIREN",
+    () => {
+      const ingestor = new EtablissementsIngestor(filePath);
+      const siren = "035217611";
+      return ingestor
+        .save()
+        .then(data => {
+          return Etablissement.findSIRETsBySIREN(siren);
+        })
+        .then(data => {
+          expect(data.length).toBe(2);
+        });
+    },
+    TIMEOUT
+  );
+});

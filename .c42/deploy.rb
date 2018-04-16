@@ -1,44 +1,38 @@
 load '.c42/recipes/http_auth.rb'
 
-set :stages, %w[production preprod]
+
+set :stages, %w[preprod]
 set :default_stage, 'preprod'
 
-server '185.31.40.169', :app, :web, :db, primary: true
+server '185.31.40.131', :app, :web, :db, primary: true
 
-set :application, 'itm-pwa'
-set :repository,  'git@github.com:commit42/itm-pwa.git'
+set :application, 'direccte'
+set :repository,  'git@github.com:commit42/direccte.git'
 
 set :scm, :git
 set :git_enable_submodules, 1
 set :deploy_via, :copy
 set :copy_cache, true
-set :copy_exclude, '.git/*'
-set :build_script, 'c42 docker:install && c42 npm:install && c42 npm:build'
+set :copy_only, ["README.md", "version.txt", "dist"]
+set :copy_exclude, Dir.glob("*") - copy_only
+set :build_script, 'SKIP_QUESTIONS=1 c42 docker:install && c42 build'
 set :copy_compression, :bz2
 set :ssh_options, forward_agent: true
 
 set :use_sudo, false
 set :keep_releases, 3
-after 'deploy:restart', 'deploy:cleanup'
 
-set :app_path, '/build/'
+set :app_path, '/dist/htdocs/'
 
 task :preprod do
-  set :deploy_to, '/home/livraiso/deployment/pwa-preprod'
+  set :deploy_to, '/home/commit42/direccte'
   set :branch, 'develop'
-  set :user, 'livraiso'
-  set :webhost, 'https://app.wip.livraisons.pro'
-
-  set :http_auth_users, [%w[demo itm2018]]
-  set :http_auth_path, app_path
-  after 'deploy:finalize_update', 'http_auth:protect'
+  set :user, 'commit42'
+  set :webhost, 'https://direccte.commit42.fr'
 end
 
-task :production do
-  raise 'STOP'
-  set :deploy_to, "/home/livraiso/deployment/pwa-prod"
-  set :branch, "master"
-  set :webhost, "https://app.livraisons.pro"
+after 'deploy:finalize_update' do
+  run "cd #{latest_release}/dist && npm install"
 end
 
 # see https://github.com/capistrano/capistrano/blob/master/lib/capistrano/ext/multistage.rb#L22
@@ -64,6 +58,17 @@ namespace :check do
   before 'deploy:cold', 'check:revision'
 end
 
-after :deploy do
+after 'deploy' do
   run "echo #{latest_revision} > #{File.join(latest_release, app_path, 'rev.txt')}"
 end
+
+task 'local_config' do
+  run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte", "proxy": false }' > #{File.join(latest_release, '/dist/config/local.json')})
+end
+after 'deploy', 'local_config'
+
+task 'restart' do
+  run %(ps -ef | grep node | grep "#{application}" | grep -v grep | awk "{print \\$2}" | xargs kill -9)
+end
+after 'deploy', 'restart'
+after 'restart', 'deploy:cleanup'

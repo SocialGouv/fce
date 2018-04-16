@@ -1,0 +1,9 @@
+# editors
+.idea/
+.vscode/
+
+# dist
+/dist/
+
+# docker
+docker-compose.yml

@@ -2,23 +2,46 @@ version: '2'
 services:
   front:
     build: .c42/docker/front
-    image: itm_front
+    image: node_front
     network_mode: "bridge"
     ports:
       - 3000
     volumes:
-      - ./:/project
+      - ./client/:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
     environment:
-      VIRTUAL_HOST: app.itm.test
+      VIRTUAL_HOST: direccte.test
       VIRTUAL_PORT: 3000
-  builder:
-    build: .c42/docker/builder
-    depends_on:
-      - front
+
+  server:
+    build: .c42/docker/server
+    image: node_server
+    network_mode: "bridge"
+    ports:
+      - 80
     volumes:
-      - ./:/project
+      - ./server/:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+    environment:
+      VIRTUAL_HOST: srv.direccte.test
+      WATCH: 1
+    links:
+      - mongo
+
+  mongo:
+    image: mongo:3.6
+    network_mode: "bridge"
+    ports:
+      - 27017
+
+  frentreprise:
+    build: .c42/docker/server
+    image: node_server
+    network_mode: "bridge"
+    volumes:
+      - ./server/lib/frentreprise:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
 

@@ -80,6 +80,7 @@ class Mongo extends DataSource {
           };
         },
         departement: "code_departement",
+        direccte: "interactions",
         region: this[_.getNomenclatureValue].bind(
           this,
           "code_région",
@@ -122,7 +123,7 @@ class Mongo extends DataSource {
           "code_modalite_activ_",
           "code_modalite_activ_"
         ),
-        marchand: (obj) => {
+        marchand: obj => {
           const codeMarchand = obj.code_marchand;
           let codeMarchandStr = null;
 

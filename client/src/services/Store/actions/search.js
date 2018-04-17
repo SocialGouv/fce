@@ -5,7 +5,7 @@ export const search = term => (dispatch, getState) => {
   dispatch(
     _setTerms({
       raisonSociale: term,
-      csvURL: Http.buildURL(`${Http.defaults.baseURL}/search.csv`, {
+      csvURL: Http.buildURL(`${Http.defaults.baseURL}/search.xlsx`, {
         q: term
       })
     })
@@ -35,7 +35,7 @@ export const advancedSearch = terms => (dispatch, getState) => {
     _setTerms({
       ...terms,
       csvURL: Http.buildURL(
-        `${Http.defaults.baseURL}/advancedSearch.csv`,
+        `${Http.defaults.baseURL}/advancedSearch.xlsx`,
         terms
       )
     })

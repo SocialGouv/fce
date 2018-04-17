@@ -75,7 +75,7 @@ router.get("/advancedSearch(.:format)?", function(req, res) {
 });
 
 const sendResult = (data, response) => {
-  if (data.query.format === "csv") {
+  if (data.query.format === "xlsx") {
     let flattenResults = [];
 
     data.results.forEach(enterprise => {
@@ -163,9 +163,9 @@ const sendResult = (data, response) => {
 
     response.setHeader(
       "Content-Disposition",
-      `attachment; filename=${filename}_${date}.csv`
+      `attachment; filename=${filename}_${date}.xlsx`
     );
-    response.setHeader("Content-type", "text/csv");
+    response.setHeader("Content-type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     response.send(csv);
   } else {
     response.send(data);

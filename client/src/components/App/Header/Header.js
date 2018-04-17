@@ -53,7 +53,7 @@ class Header extends React.Component {
                     className="nav-link"
                     title="Rechercher un établissement ou une entreprise"
                   >
-                    Recherche
+                    Recherche simple
                   </Link>
                 </NavItem>
 

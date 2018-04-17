@@ -70,12 +70,11 @@ class EstablishmentActivity extends React.Component {
               }
               empty="-"
             />
-            {establishment.association &&
-            establishment.documents_associations ? (
+            {establishment.association && establishment.document_association ? (
               <span>
                 &nbsp;Télécharger&nbsp;
                 <a
-                  href={establishment.documents_associations[0].url}
+                  href={establishment.document_association.url}
                   target="_blank"
                 >
                   les derniers statuts

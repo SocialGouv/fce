@@ -43,7 +43,7 @@ class DireccteEtablissement extends Etablissement {
         "pse_en_projet_ou_en_cours",
         "direccte",
         "association",
-        "documents_associations",
+        "document_association",
         "_dataSources"
       ],
       null

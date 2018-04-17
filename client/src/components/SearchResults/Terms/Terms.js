@@ -9,6 +9,9 @@ class Terms extends React.Component {
           {this.props.terms.raisonSociale}
         </dd>
 
+        <dt className="col-md-3">SIREN</dt>
+        <dd className="definition col-md-9">{this.props.terms.siren}</dd>
+
         <dt className="col-md-3">Code NAF</dt>
         <dd className="definition col-md-9">{this.props.terms.naf}</dd>
 
@@ -20,6 +23,15 @@ class Terms extends React.Component {
 
         <dt className="col-md-3">Département</dt>
         <dd className="definition col-md-9">{this.props.terms.departement}</dd>
+
+        <dt className="col-md-3">Interactions</dt>
+        <dd className="definition col-md-9">
+          {this.props.terms.interactions && this.props.terms.interactions.length
+            ? this.props.terms.interactions
+                .map(interaction => interaction.label)
+                .join(", ")
+            : ""}
+        </dd>
       </dl>
     );
   }

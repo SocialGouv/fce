@@ -53,6 +53,11 @@ class Interventions extends React.Component {
             <dd className="dd definition col-md-8">
               <Value value={establishment.filiere_strategique} empty="-" />
             </dd>
+
+            <dt className="dt col-md-4">Labels obtenus</dt>
+            <dd className="dd definition col-md-8">
+              Non-disponible
+            </dd>
           </dl>
         </section>
 
@@ -65,6 +70,11 @@ class Interventions extends React.Component {
             </dt>
             <dd className="dd col-md-8">
               <Value value={strActEco} empty="-" />
+            </dd>
+
+            <dt className="dt col-md-4">Signataire de convention(s) FNE</dt>
+            <dd className="dd definition col-md-8">
+              Non-disponible
             </dd>
           </dl>
         </section>
@@ -86,7 +96,7 @@ class Interventions extends React.Component {
                   Voir le détail
                 </a>
               ) : (
-                "Pas d'informations"
+                "Pas d'information"
               )}
             </dd>
           </dl>
@@ -163,7 +173,7 @@ class Interventions extends React.Component {
                   Voir le détail
                 </a>
               ) : (
-                "Pas d'informations"
+                "Pas d'information"
               )}
             </dd>
           </dl>

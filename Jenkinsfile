@@ -57,7 +57,7 @@ pipeline {
                 -e BUNDLE_APP_CONFIG=/project/.bundle \
                 -w /project \
                 builder \
-                bash -c \
+                sh -c \
                 'bundle install --clean --path=vendors/bundle'
               '''
           }
@@ -101,7 +101,7 @@ pipeline {
                   -e BUNDLE_APP_CONFIG=/project/.bundle \
                   -w /project \
                   builder \
-                  bash -c \
+                  sh -c \
                   'bundle exec c42 deploy dev'
                   '''
               }
@@ -127,7 +127,7 @@ pipeline {
                   -e BUNDLE_APP_CONFIG=/project/.bundle \
                   -w /project \
                   builder \
-                  bash -c \
+                  sh -c \
                   'bundle exec c42 deploy preprod'
                 '''
             }

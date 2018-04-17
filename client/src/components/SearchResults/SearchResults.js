@@ -4,16 +4,11 @@ import { Row, Col, Button, Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faFileExcel, faPrint } from "@fortawesome/fontawesome-pro-light";
 import Terms from "./Terms";
-import Item from "./Item";
+import ReactTable from "react-table";
+import Value from "../../elements/Value";
 
 class SearchResults extends React.Component {
   render() {
-    let items = Array.isArray(this.props.results)
-      ? this.props.results.map((item, index) => (
-          <Item item={item} key={index} />
-        ))
-      : [];
-
     return (
       <div className="app-searchResults">
         <Row className="justify-content-md-center">
@@ -55,24 +50,131 @@ class SearchResults extends React.Component {
               ""
             )}
 
-            {items.length ? (
-              <table className="table table-striped table-hover result-list">
-                <thead>
-                  <tr>
-                    <th>SIRET</th>
-                    <th>SIREN</th>
-                    <th>Raison Sociale / Nom</th>
-                    <th>Code postal</th>
-                    <th>Département</th>
-                    <th>Activité</th>
-                    <th>État</th>
-                    <th>Int. p. C</th>
-                    <th>Int. p. 3E</th>
-                    <th>Int. p. T</th>
-                  </tr>
-                </thead>
-                <tbody>{items}</tbody>
-              </table>
+            {Array.isArray(this.props.results) && this.props.results.length ? (
+              <ReactTable
+                data={this.props.results}
+                columns={[
+                  {
+                    Header: "SIRET",
+                    id: "siret",
+                    accessor: e => (
+                      <Value value={e.etablissement.siret} empty="-" />
+                    )
+                  },
+                  {
+                    Header: "SIREN",
+                    id: "siren",
+                    accessor: e => <Value value={e.siren} empty="-" />
+                  },
+                  {
+                    Header: "Raison Sociale / Nom",
+                    id: "nom",
+                    accessor: e => (
+                      <Value value={e.raison_sociale || e.nom} empty="-" />
+                    )
+                  },
+                  {
+                    Header: "Code postal",
+                    id: "code_postal",
+                    accessor: e => (
+                      <Value
+                        value={
+                          e.etablissement.adresse_components &&
+                          e.etablissement.adresse_components.code_postal &&
+                          `${
+                            e.etablissement.adresse_components.code_postal
+                          }\u00A0(${
+                            e.etablissement.adresse_components.localite
+                          })`
+                        }
+                        empty="-"
+                      />
+                    )
+                  },
+                  {
+                    Header: "Département",
+                    id: "departement",
+                    accessor: e => (
+                      <Value
+                        value={
+                          e.etablissement.adresse_components &&
+                          e.etablissement.adresse_components.code_postal &&
+                          e.etablissement.adresse_components.code_postal.substr(
+                            0,
+                            2
+                          )
+                        }
+                        empty="-"
+                      />
+                    )
+                  },
+                  {
+                    Header: "Activité",
+                    id: "activite",
+                    accessor: e => (
+                      <Value value={e.etablissement.activite} empty="-" />
+                    )
+                  },
+                  {
+                    Header: "État",
+                    id: "etat",
+                    accessor: e => (
+                      <Value
+                        value={
+                          e.etablissement.etat_etablissement &&
+                          e.etablissement.etat_etablissement.label
+                        }
+                        empty="-"
+                      />
+                    )
+                  },
+                  {
+                    Header: "Pole C",
+                    id: "pole-c",
+                    accessor: e => (
+                      <Value
+                        value={
+                          e.etablissement.interactions &&
+                          e.etablissement.interactions["C"]
+                        }
+                        empty="-"
+                      />
+                    )
+                  },
+                  {
+                    Header: "Pole 3E",
+                    id: "pole-3e",
+                    accessor: e => (
+                      <Value
+                        value={
+                          e.etablissement.interactions &&
+                          e.etablissement.interactions["3E"]
+                        }
+                        empty="-"
+                      />
+                    )
+                  },
+                  {
+                    Header: "Pole T",
+                    id: "pole-t",
+                    accessor: e => (
+                      <Value
+                        value={
+                          e.etablissement.interactions &&
+                          e.etablissement.interactions["T"]
+                        }
+                        empty="-"
+                      />
+                    )
+                  }
+                ]}
+                defaultPageSize={
+                  this.props.results.length >= 25
+                    ? 25
+                    : this.props.results.length
+                }
+                className="-striped -highlight"
+              />
             ) : (
               ""
             )}

@@ -23,8 +23,6 @@ pipeline {
         }
       }
       steps {
-        wrap([$class: 'BuildUser']) { script { env.USER_ID = "${BUILD_USER_ID}" } }
-
         notifyBuild()
         echo "Init $BRANCH_NAME on $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
@@ -172,7 +170,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
     emoji = ":ok_hand:"
   }
 
-  def subject = "${emoji} *${buildStatus}*\n ${env.JOB_NAME} [${env.BUILD_NUMBER}]\nStarted by: ${env.USER_ID}"
+  def subject = "${emoji} *${buildStatus}* - ${env.JOB_NAME} [${env.BUILD_NUMBER}]"
   def summary = "${subject}\n\n${env.BUILD_URL}"
 
   slackSend (color: colorCode, message: summary, channel: "${params.SLACK_CHANNEL}")

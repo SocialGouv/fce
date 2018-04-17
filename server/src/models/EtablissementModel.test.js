@@ -391,6 +391,44 @@ describe("Advanced search", () => {
   );
 
   test(
+    "findByAdvancedSearch - only siege",
+    () => {
+      const nData = [
+        {
+          raison_sociale: "Youloulou",
+          siret: "01234",
+          siren: "012",
+          nic_du_siege: "34"
+        },
+        {
+          raison_sociale: "Polololo",
+          siret: "01234",
+          siren: "012",
+          nic_du_siege: "66"
+        }
+      ];
+
+      const searchParams = {
+        siege_social: true
+      };
+
+      return new Etablissement(nData[0])
+        .save()
+        .then(() => {
+          return new Etablissement(nData[1]).save();
+        })
+        .then(() => {
+          return Etablissement.findByAdvancedSearch(searchParams);
+        })
+        .then(data => {
+          expect(data.length).toEqual(1);
+          expect(data[0].raison_sociale).toEqual("Youloulou");
+        });
+    },
+    TIMEOUT
+  );
+
+  test(
     "findByAdvancedSearch - contain interactions",
     () => {
       const nData = [

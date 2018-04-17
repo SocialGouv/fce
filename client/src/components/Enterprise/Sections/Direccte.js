@@ -52,9 +52,9 @@ class Direccte extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.establishment.direccte.map(dirvis => {
+                  {this.props.establishment.direccte.map((dirvis, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td>
                           <Value value={dirvis.date} empty="-" />
                         </td>

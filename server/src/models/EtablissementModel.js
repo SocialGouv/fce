@@ -109,7 +109,10 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
     searchParams && searchParams.raison_sociale
       ? new RegExp(searchParams.raison_sociale, "i")
       : null;
+  const onlySiegeSocial = searchParams.siege_social;
+
   delete searchParams.raison_sociale;
+  delete searchParams.siege_social;
 
   const params = {
     ...searchParams
@@ -123,25 +126,37 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
   }
   ObjectManipulations.clean(params);
 
-  return this.aggregate(
-    [
-      {
-        $match: params
-      },
-      {
-        $lookup: {
-          from: "interactions",
-          localField: "siret",
-          foreignField: "siret",
-          as: "interactions"
-        }
-      },
-      {
-        $sort: { raison_sociale: 1, code_etat: 1 }
+  let aggregateConfig = [
+    {
+      $match: params
+    },
+    {
+      $addFields: {
+        siretSiege: { $concat: ["$siren", "$nic_du_siege"] }
       }
-    ],
-    cb
-  );
+    },
+    {
+      $lookup: {
+        from: "interactions",
+        localField: "siret",
+        foreignField: "siret",
+        as: "interactions"
+      }
+    },
+    {
+      $sort: { raison_sociale: 1, code_etat: 1 }
+    }
+  ];
+
+  if (onlySiegeSocial) {
+    aggregateConfig.push({
+      $redact: {
+        $cond: [{ $eq: ["$siret", "$siretSiege"] }, "$$KEEP", "$$PRUNE"]
+      }
+    });
+  }
+
+  return this.aggregate(aggregateConfig, cb);
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);

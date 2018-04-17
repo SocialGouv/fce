@@ -2,18 +2,11 @@ FROM docker
 
 ENV SSH_AUTH_SOCK=/ssh-agent
 
-RUN apk add --no-cache curl
+RUN apk add --no-cache --update alpine-sdk
+RUN apk add --no-cache --update curl
+RUN apk add --no-cache --update ruby
 
-ENV RUBY_VERSION 2.2.0
-RUN \
-    curl -O http://ftp.ruby-lang.org/pub/ruby/ruby-$RUBY_VERSION.tar.gz && \
-    tar zvxf ruby-$RUBY_VERSION.tar.gz && \
-    cd ruby-$RUBY_VERSION && \
-    ./configure && \
-    make && \
-    make install && \
-    cd .. && \
-    rm -rf ruby-$RUBY_VERSION.tar.gz ruby-$RUBY_VERSION
+RUN echo "gem: --no-rdoc --no-ri" >> /etc/gemrc
 
 RUN gem update --system
 

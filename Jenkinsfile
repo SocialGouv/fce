@@ -28,6 +28,7 @@ pipeline {
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
             cp .c42/docker-compose.yml.dist docker-compose.yml
+            docker-compose build builder # rebuild builder
             docker-compose up -d # build and start builder containers
           '''
           script {

@@ -35,6 +35,11 @@ class Relation extends React.Component {
               empty="-"
             />
           </dd>
+
+          <dt className="dt col-md-4">Instances représentatives du personnel</dt>
+          <dd className="dd col-md-8">
+            Non-disponible
+          </dd>
         </dl>
       </section>
     );

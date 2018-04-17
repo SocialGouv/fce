@@ -12,13 +12,17 @@ export function copyKeys(source, keys, defaultValue) {
   return dest;
 }
 
-
 export function deleteKeyIfNotDefinedOrEmpty(object, key) {
   let attribute = object[key];
-  if (attribute === null || attribute === undefined || (typeof attribute == "string" && attribute.length === 0)) {
+  if (
+    attribute === null ||
+    attribute === undefined ||
+    (typeof attribute === "string" && attribute.length === 0) ||
+    (Array.isArray(attribute) && attribute.length === 0)
+  ) {
     delete object[key];
   }
-};
+}
 
 export function clean(obj) {
   for (var propName in obj) {

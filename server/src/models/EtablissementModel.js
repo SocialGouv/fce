@@ -109,6 +109,7 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
     searchParams && searchParams.raison_sociale
       ? new RegExp(searchParams.raison_sociale, "i")
       : null;
+  delete searchParams.raison_sociale;
 
   const params = {
     ...searchParams
@@ -120,7 +121,6 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
       { nom: raisonSocialParam }
     ];
   }
-
   ObjectManipulations.clean(params);
 
   return this.aggregate(

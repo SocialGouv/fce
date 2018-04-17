@@ -53,6 +53,12 @@ router.get("/advancedSearch(.:format)?", function(req, res) {
   const libelle_commune = (req.query["commune"] || "").trim();
   const code_postal = (req.query["codePostal"] || "").trim();
   const code_departement = (req.query["departement"] || "").trim();
+  const raison_sociale = (req.query["raisonSociale"] || "").trim();
+  const siren = (req.query["siren"] || "").trim();
+  const siege_social = (req.query["siegeSocial"] || "").trim();
+  const interactions = (req.query["interactions"] || []).map(
+    interaction => interaction.value
+  );
 
   let data = {
     query: {
@@ -62,7 +68,11 @@ router.get("/advancedSearch(.:format)?", function(req, res) {
         code_activite,
         libelle_commune,
         code_postal,
-        code_departement
+        code_departement,
+        raison_sociale,
+        siren,
+        siege_social,
+        interactions
       }
     }
   };
@@ -165,7 +175,10 @@ const sendResult = (data, response) => {
       "Content-Disposition",
       `attachment; filename=${filename}_${date}.xlsx`
     );
-    response.setHeader("Content-type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    response.setHeader(
+      "Content-type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
     response.send(csv);
   } else {
     response.send(data);

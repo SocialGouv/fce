@@ -86,14 +86,13 @@ etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
           foreignField: "siret",
           as: "interactions"
         }
+      },
+      {
+        $sort: { raison_sociale: 1, code_etat: 1 }
       }
-    },
-    {
-      $sort: { raison_sociale: 1, code_etat: 1 }
-    }
-  ],
-  cb
- );
+    ],
+    cb
+  );
 };
 
 /**
@@ -136,14 +135,13 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
           foreignField: "siret",
           as: "interactions"
         }
+      },
+      {
+        $sort: { raison_sociale: 1, code_etat: 1 }
       }
-    },
-    {
-      $sort: { raison_sociale: 1, code_etat: 1 }
-    }
-  ],
-  cb
- );
+    ],
+    cb
+  );
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);

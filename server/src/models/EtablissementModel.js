@@ -74,19 +74,22 @@ etablissementSchema.statics.findSIRETsBySIREN = function(siren, cb) {
 etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
   const regex = new RegExp(raisonSociale, "i");
 
-  return this.aggregate([
-    {
-      $match: { $or: [{ raison_sociale: regex }, { nom: regex }] }
-    },
-    {
-      $lookup: {
-        from: "interactions",
-        localField: "siret",
-        foreignField: "siret",
-        as: "interactions"
+  return this.aggregate(
+    [
+      {
+        $match: { $or: [{ raison_sociale: regex }, { nom: regex }] }
+      },
+      {
+        $lookup: {
+          from: "interactions",
+          localField: "siret",
+          foreignField: "siret",
+          as: "interactions"
+        }
       }
-    }
-  ]);
+    ],
+    cb
+  );
 };
 
 /**
@@ -117,19 +120,22 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
 
   ObjectManipulations.clean(params);
 
-  return this.aggregate([
-    {
-      $match: params
-    },
-    {
-      $lookup: {
-        from: "interactions",
-        localField: "siret",
-        foreignField: "siret",
-        as: "interactions"
+  return this.aggregate(
+    [
+      {
+        $match: params
+      },
+      {
+        $lookup: {
+          from: "interactions",
+          localField: "siret",
+          foreignField: "siret",
+          as: "interactions"
+        }
       }
-    }
-  ]);
+    ],
+    cb
+  );
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);

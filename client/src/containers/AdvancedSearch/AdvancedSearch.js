@@ -69,21 +69,6 @@ class AdvancedSearch extends React.Component {
     evt && evt.preventDefault();
     this.setState({ hasError: false, searchLoading: true, errorMessage: null });
 
-    const nbTermsCompleted = () =>
-      Object.keys(this.state.terms).filter(
-        term => term !== "naf" && this.state.terms[term]
-      ).length;
-
-    if (!this.state.terms.naf || !nbTermsCompleted()) {
-      this.setState({
-        hasError: true,
-        searchLoading: false,
-        errorMessage:
-          "Vous devez renseigner un code NAF ainsi qu'un champ supplémentaire"
-      });
-      return false;
-    }
-
     this.props
       .advancedSearch(this.state.terms)
       .then(response => {

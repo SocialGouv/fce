@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Value from "../../../elements/Value";
-import Address from "../../../elements/Address";
 
 class EnterpriseHeadOffice extends React.Component {
   render() {
@@ -21,7 +20,7 @@ class EnterpriseHeadOffice extends React.Component {
 
           <dt className="dt col-md-4">Adresse</dt>
           <dd className="dd col-md-8">
-            <Address address_components={headOffice.adresse_components} />
+            <Value value={headOffice.adresse} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Date de création</dt>

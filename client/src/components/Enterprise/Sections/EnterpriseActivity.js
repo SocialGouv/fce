@@ -70,7 +70,9 @@ class EnterpriseActivity extends React.Component {
             <Value value={enterprise.annee_tranche_effectif} empty="-" />
           </dd>
 
-          <dt className="dt col-md-4">Nombre d'établissements actifs</dt>
+          <dt className="dt col-md-4">
+            Nombre d'établissements actifs<br />(France entière)
+          </dt>
           <dd className="dd col-md-8">
             <Value value={enterprise.nombre_etablissements_actifs} empty="-" />
           </dd>

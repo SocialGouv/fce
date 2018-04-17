@@ -1,5 +1,8 @@
 export default {
   convertDate(timestamp) {
+    // If timestamp is too high, it probably is using miliseconds already
+    if (timestamp > 100000000000) timestamp /= 1000;
+
     return (timestamp && new Date(timestamp * 1000)) || undefined;
   },
 

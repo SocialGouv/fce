@@ -44,8 +44,7 @@ services:
     environment:
       DOCKER_HOST: tcp://docker-in-docker:2375
     volumes:
-      - ./:/project
-      - .npm:/.npm
+      - .:/project
       - $SSH_AUTH_SOCK:/ssh-agent
 
   mongo:

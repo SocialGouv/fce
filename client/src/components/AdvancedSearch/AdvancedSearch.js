@@ -1,10 +1,19 @@
 import React from "react";
 import "./advancedSearch.css";
-import { Row, Col, Form, FormGroup, Label, Alert, Button } from "reactstrap";
+import {
+  Row,
+  Col,
+  Form,
+  FormGroup,
+  Label,
+  Alert,
+  Button,
+  Input
+} from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 import { faTimes } from "@fortawesome/fontawesome-pro-light";
-import DropdownList from "react-widgets/lib/DropdownList";
+import { DropdownList, Multiselect } from "react-widgets/lib";
 import withLoading from "../../services/Loading";
 
 class AdvancedSearch extends React.Component {
@@ -54,6 +63,44 @@ class AdvancedSearch extends React.Component {
                   )}
                 </Col>
               </FormGroup>
+
+              <Row>
+                <Label for="raisonSociale" md={3}>
+                  Raison Sociale / Nom
+                </Label>
+                <Col md={8}>
+                  <FormGroup>
+                    <Input
+                      type="text"
+                      name="raisonSociale"
+                      id="raisonSociale"
+                      placeholder="Raison sociale ou Nom"
+                      onChange={evt =>
+                        this.props.updateForm("raisonSociale", evt.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Label for="siren" md={3}>
+                  SIREN
+                </Label>
+                <Col md={8}>
+                  <FormGroup>
+                    <Input
+                      type="text"
+                      name="siren"
+                      id="siren"
+                      placeholder="SIREN de l'entreprise"
+                      onChange={evt =>
+                        this.props.updateForm("siren", evt.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
 
               <FormGroup row>
                 <Label for="commune" md={3}>
@@ -154,6 +201,41 @@ class AdvancedSearch extends React.Component {
                       color="link"
                       title="Supprimer la valeur"
                       onClick={e => this.props.updateForm("departement", null)}
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+                </Col>
+              </FormGroup>
+
+              <FormGroup row>
+                <Label for="interactions" md={3}>
+                  Interactions
+                </Label>
+                <Col md={8}>
+                  <Multiselect
+                    data={this.props.autocompleteData.polesInteractions}
+                    value={this.props.terms.interactions}
+                    valueField="value"
+                    textField="label"
+                    filter
+                    id="interactions"
+                    name="interactions"
+                    placeholder="Interactions avec la Direccte"
+                    onChange={value =>
+                      this.props.updateForm("interactions", value)
+                    }
+                  />
+                </Col>
+                <Col className="dropdown-close" md={1}>
+                  {this.props.terms.interactions.length ? (
+                    <Button
+                      className="button"
+                      color="link"
+                      title="Supprimer la valeur"
+                      onClick={e => this.props.updateForm("interactions", [])}
                     >
                       <FontAwesomeIcon icon={faTimes} />
                     </Button>

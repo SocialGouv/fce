@@ -1,5 +1,6 @@
 import * as types from "../constants/ActionTypes";
 import Http from "../../Http";
+import Config from "../../Config";
 
 export const search = term => (dispatch, getState) => {
   dispatch(
@@ -60,6 +61,16 @@ export const getNomenclatures = terms => (dispatch, getState) => {
 
   return Http.get("/entities")
     .then(function(response) {
+      if (typeof response.data.results === "object") {
+        response.data.results.polesInteractions = Config.get(
+          "interactions"
+        ).map(interaction => {
+          return {
+            value: interaction,
+            label: `Pôle ${interaction}`
+          };
+        });
+      }
       dispatch(_setNomenclatures(response.data.results));
       return Promise.resolve(response);
     })

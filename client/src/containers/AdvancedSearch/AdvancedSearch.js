@@ -14,7 +14,11 @@ class AdvancedSearch extends React.Component {
         naf: null,
         commune: null,
         codePostal: null,
-        departement: null
+        departement: null,
+        siren: null,
+        raisonSociale: null,
+        interactions: [],
+        siegeSocial: null
       },
       hasError: false,
       errorMessage: null,

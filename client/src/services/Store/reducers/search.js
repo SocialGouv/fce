@@ -18,6 +18,7 @@ const initialState = {
     departement: null
   },
   nomenclatures: {
+    polesInteractions: [],
     nafCodes: [],
     communes: [],
     postalCodes: [],

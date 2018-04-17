@@ -28,8 +28,8 @@ pipeline {
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
             cp .c42/docker-compose.yml.dist docker-compose.yml
-            docker-compose build builder # rebuild builder
-            docker-compose up -d # build and start builder containers
+            gem install bundler
+
           '''
           script {
             TO_DEPLOY = false
@@ -48,17 +48,8 @@ pipeline {
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
           sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
-              docker-compose up -d # build and start builder containers
-              docker-compose run --rm \
-                -v `pwd`:/project \
-                -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                -e SSH_AUTH_SOCK=/run/ssh_agent \
-                -e BUNDLE_APP_CONFIG=/project/.bundle \
-                builder \
-                sh -c \
-                'bundle install --clean --path=vendors/bundle'
-              '''
+              bundle install --clean
+            '''
           }
       }
     }
@@ -91,18 +82,8 @@ pipeline {
             echo "Deploying $BRANCH_NAME into on https://dev.direccte.commit42.fr/ from $JENKINS_URL ..."
               sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
                 sh '''
-                  docker-compose up -d # build and start builder containers
-                  docker-compose run --rm \
-                  -v `pwd`:/project \
-                  -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                  -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                  -e SSH_AUTH_SOCK=/run/ssh_agent \
-                  -e BUNDLE_APP_CONFIG=/project/.bundle \
-                  -w /project \
-                  builder \
-                  sh -c \
-                  'bundle exec c42 deploy dev'
-                  '''
+                  bundle exec c42 deploy dev
+                '''
               }
           }
         }
@@ -117,17 +98,7 @@ pipeline {
             echo "Deploying $BRANCH_NAME on https://direccte.commit42.fr/ from $JENKINS_URL ..."
             sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
                 sh '''
-                  docker-compose up -d # build and start builder containers
-                  docker-compose run --rm \
-                  -v `pwd`:/project \
-                  -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                  -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                  -e SSH_AUTH_SOCK=/run/ssh_agent \
-                  -e BUNDLE_APP_CONFIG=/project/.bundle \
-                  -w /project \
-                  builder \
-                  sh -c \
-                  'bundle exec c42 deploy preprod'
+                  bundle exec c42 deploy preprod
                 '''
             }
           }

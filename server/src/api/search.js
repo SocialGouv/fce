@@ -56,9 +56,13 @@ router.get("/advancedSearch(.:format)?", function(req, res) {
   const raison_sociale = (req.query["raisonSociale"] || "").trim();
   const siren = (req.query["siren"] || "").trim();
   const siege_social = (req.query["siegeSocial"] || "").trim();
-  const interactions = (req.query["interactions"] || []).map(
-    interaction => interaction.value
-  );
+  const interactions = (req.query["interactions"] || []).map(interaction => {
+    try {
+      return JSON.parse(interaction).value;
+    } catch (e) {
+      console.error(e);
+    }
+  });
 
   let data = {
     query: {

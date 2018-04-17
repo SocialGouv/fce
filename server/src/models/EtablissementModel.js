@@ -110,13 +110,15 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
       ? new RegExp(searchParams.raison_sociale, "i")
       : null;
   const onlySiegeSocial = searchParams.siege_social;
-
-  delete searchParams.raison_sociale;
-  delete searchParams.siege_social;
+  const interactions = searchParams.interactions;
 
   const params = {
     ...searchParams
   };
+
+  delete params.raison_sociale;
+  delete params.siege_social;
+  delete params.interactions;
 
   if (raisonSocialParam) {
     params["$or"] = [
@@ -152,6 +154,29 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
     aggregateConfig.push({
       $redact: {
         $cond: [{ $eq: ["$siret", "$siretSiege"] }, "$$KEEP", "$$PRUNE"]
+      }
+    });
+  }
+
+  if (interactions && interactions.length) {
+    aggregateConfig.push({
+      $addFields: {
+        nbInteractionsFiltered: {
+          $size: {
+            $filter: {
+              input: "$interactions",
+              as: "i",
+              cond: {
+                $in: ["$$i.pole", interactions]
+              }
+            }
+          }
+        }
+      }
+    });
+    aggregateConfig.push({
+      $redact: {
+        $cond: [{ $gt: ["$nbInteractionsFiltered", 0] }, "$$KEEP", "$$PRUNE"]
       }
     });
   }

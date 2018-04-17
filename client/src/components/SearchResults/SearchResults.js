@@ -65,13 +65,15 @@ class SearchResults extends React.Component {
                     <th>SIRET</th>
                     <th>SIREN</th>
                     <th>Raison Sociale / Nom</th>
+                    <th>État</th>
                     <th>Commune</th>
                     <th>Département</th>
                     <th>Activité</th>
-                    <th>État</th>
-                    <th>Int. p. C</th>
-                    <th>Int. p. 3E</th>
-                    <th>Int. p. T</th>
+                    <th>Cat. Etablissement</th>
+                    <th>Interactions</th>
+                    <th>Pole C</th>
+                    <th>Pole 3E</th>
+                    <th>Pole T</th>
                   </tr>
                 </thead>
                 <tbody>{items}</tbody>

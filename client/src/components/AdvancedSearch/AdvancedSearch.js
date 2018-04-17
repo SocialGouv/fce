@@ -245,6 +245,27 @@ class AdvancedSearch extends React.Component {
                 </Col>
               </FormGroup>
 
+              <Row>
+                <Col md={{ size: 9, offset: 3 }}>
+                  <FormGroup check>
+                    <Label check>
+                      <Input
+                        type="checkbox"
+                        name="siegeSocial"
+                        id="siegeSocial"
+                        onChange={evt =>
+                          this.props.updateForm(
+                            "siegeSocial",
+                            evt.target.checked
+                          )
+                        }
+                      />
+                      Uniquement les établissements principaux
+                    </Label>
+                  </FormGroup>
+                </Col>
+              </Row>
+
               <div className="d-flex justify-content-center">
                 <Button color="primary" disabled={this.props.searchLoading}>
                   {this.props.searchLoading ? (

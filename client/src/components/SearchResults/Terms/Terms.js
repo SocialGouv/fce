@@ -32,6 +32,11 @@ class Terms extends React.Component {
                 .join(", ")
             : ""}
         </dd>
+
+        <dt className="col-md-3">Etablissements principaux uniquement ?</dt>
+        <dd className="definition col-md-9">
+          {this.props.terms.siegeSocial ? "oui" : "non"}
+        </dd>
       </dl>
     );
   }

@@ -215,6 +215,53 @@ test(
   TIMEOUT
 );
 
+test(
+  "findByRaisonSociale - sort by raison_sociale and code_etat",
+  () => {
+    const nData = [
+      {
+        siret: "01234",
+        code_activite: "0112Z",
+        nic_ministere: "0",
+        raison_sociale: "entreprise AA",
+        code_etat: "3"
+      },
+      {
+        siret: "01235",
+        code_activite: "0112Z",
+        nic_ministere: "0",
+        raison_sociale: "entreprise AB",
+        code_etat: "1"
+      },
+      {
+        siret: "01236",
+        code_activite: "0112Z",
+        nic_ministere: "0",
+        raison_sociale: "entreprise AA",
+        code_etat: "1"
+      }
+    ];
+
+    return new Etablissement(nData[0])
+      .save()
+      .then(() => {
+        return new Etablissement(nData[1]).save();
+      })
+      .then(() => {
+        return new Etablissement(nData[2]).save();
+      })
+      .then(() => {
+        return Etablissement.findByRaisonSociale("entreprise A");
+      })
+      .then(data => {
+        expect(["01236", "01234", "01235"]).toEqual(
+          data.map(line => line.siret)
+        );
+      });
+  },
+  TIMEOUT
+);
+
 describe("Advanced search", () => {
   test("default", () => {
     const searchParams = {
@@ -400,6 +447,67 @@ describe("Advanced search", () => {
             interactionsData[0].type_intervention
           );
           expect(data[0].interactions[0].pole).toBe(interactionsData[0].pole);
+        });
+    },
+    TIMEOUT
+  );
+
+  test(
+    "findByAdvancedSearch - sort by raison_sociale and code_etat",
+    () => {
+      const nData = [
+        {
+          siret: "01234",
+          code_activite: "0112Z",
+          nic_ministere: "0",
+          raison_sociale: "entreprise AA",
+          code_etat: "3"
+        },
+        {
+          siret: "01235",
+          code_activite: "0112Z",
+          nic_ministere: "0",
+          raison_sociale: "entreprise AB",
+          code_etat: "1"
+        },
+        {
+          siret: "01236",
+          code_activite: "0112Z",
+          nic_ministere: "0",
+          raison_sociale: "entreprise AA",
+          code_etat: "1"
+        },
+        {
+          siret: "01237",
+          code_activite: "9999A",
+          nic_ministere: "0",
+          raison_sociale: "entreprise AA",
+          code_etat: "1"
+        }
+      ];
+
+      const searchParams = {
+        code_activite: "0112Z"
+      };
+
+      return new Etablissement(nData[0])
+        .save()
+        .then(() => {
+          return new Etablissement(nData[1]).save();
+        })
+        .then(() => {
+          return new Etablissement(nData[2]).save();
+        })
+        .then(() => {
+          return new Etablissement(nData[3]).save();
+        })
+        .then(() => {
+          return Etablissement.findByAdvancedSearch(searchParams);
+        })
+        .then(data => {
+          expect(["01236", "01234", "01235"]).toEqual(
+            data.map(line => line.siret)
+          );
         });
     },
     TIMEOUT

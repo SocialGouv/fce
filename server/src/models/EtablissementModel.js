@@ -87,9 +87,13 @@ etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
           as: "interactions"
         }
       }
-    ],
-    cb
-  );
+    },
+    {
+      $sort: { raison_sociale: 1, code_etat: 1 }
+    }
+  ],
+  cb
+ );
 };
 
 /**
@@ -133,9 +137,13 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
           as: "interactions"
         }
       }
-    ],
-    cb
-  );
+    },
+    {
+      $sort: { raison_sociale: 1, code_etat: 1 }
+    }
+  ],
+  cb
+ );
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);

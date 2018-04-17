@@ -64,9 +64,8 @@ class SearchResults extends React.Component {
                   <tr>
                     <th>SIRET</th>
                     <th>SIREN</th>
-                    <th>Raison Sociale</th>
+                    <th>Raison Sociale / Nom</th>
                     <th>Commune</th>
-                    <th>Code Postal</th>
                     <th>Département</th>
                     <th>Activité</th>
                     <th>État</th>

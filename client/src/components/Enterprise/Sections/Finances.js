@@ -6,6 +6,7 @@ class Finances extends React.Component {
     const { establishment } = this.props;
     let dates = [];
     let caList = [];
+    let emptyList = [];
 
     if (establishment.donnees_ecofi) {
       dates = Object.keys(establishment.donnees_ecofi).map((date, index) => {
@@ -20,6 +21,12 @@ class Finances extends React.Component {
           <td key={index}>
             <Value value={ca} empty="-" />€
           </td>
+        );
+      });
+
+      emptyList = Object.values(establishment.donnees_ecofi).map((ca, index) => {
+        return (
+          <td key={index}></td>
         );
       });
     }
@@ -40,6 +47,18 @@ class Finances extends React.Component {
               <tr>
                 <th scope="row">Chiffre d'affaires</th>
                 {caList}
+              </tr>
+              <tr>
+                <th scope="row">CA sur 5 ans</th>
+                {emptyList}
+              </tr>
+              <tr>
+                <th scope="row">Résultats sur 5 ans</th>
+                {emptyList}
+              </tr>
+              <tr>
+                <th scope="row">Capitaux propres sur 5 ans</th>
+                {emptyList}
               </tr>
             </tbody>
           </table>

@@ -1,40 +1,63 @@
 pipeline {
   agent any
-    options {
-      buildDiscarder(logRotator(numToKeepStr: '20'))
-    }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '20'))
+  }
+  parameters {
+    string(name: 'SLACK_CHANNEL',
+           description: 'Slack channel to send messages to',
+           defaultValue: '#jvf')
+  }
+  environment {
+    SLACK_COLOR_DANGER  = '#E01563'
+    SLACK_COLOR_INFO    = '#6ECADC'
+    SLACK_COLOR_WARNING = '#FFC300'
+    SLACK_COLOR_GOOD    = '#3EB991'
+  }
   stages {
     stage('Init') {
+      when {
+        anyOf {
+          branch 'develop';
+          branch 'master'
+        }
+      }
       steps {
         notifyBuild()
-          echo "Init $BRANCH_NAME on $JENKINS_URL ..."
-          sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
-            sh '''
-              cp .c42/docker-compose.yml.dist docker-compose.yml
-              docker-compose up -d # build and start builder containers
-              '''
-              script {
-                TO_DEPLOY = false
-              }
+        echo "Init $BRANCH_NAME on $JENKINS_URL ..."
+        sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
+          sh '''
+            cp .c42/docker-compose.yml.dist docker-compose.yml
+            docker-compose build builder # rebuild builder
+            docker-compose up -d # build and start builder containers
+          '''
+          script {
+            TO_DEPLOY = false
           }
+        }
       }
     }
     stage('Build') {
+      when {
+        anyOf {
+          branch 'develop';
+          branch 'master'
+        }
+      }
       steps {
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
           sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
               docker-compose up -d # build and start builder containers
               docker-compose run --rm \
-              -v `pwd`:/app \
-              -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-              -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-              -e SSH_AUTH_SOCK=/run/ssh_agent \
-              -e BUNDLE_APP_CONFIG=/app/.bundle \
-              -w /app \
-              builder \
-              bash -c \
-              'bundle install --clean --path=vendors/bundle'
+                -v `pwd`:/project \
+                -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
+                -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
+                -e SSH_AUTH_SOCK=/run/ssh_agent \
+                -e BUNDLE_APP_CONFIG=/project/.bundle \
+                builder \
+                sh -c \
+                'bundle install --clean --path=vendors/bundle'
               '''
           }
       }
@@ -70,15 +93,15 @@ pipeline {
                 sh '''
                   docker-compose up -d # build and start builder containers
                   docker-compose run --rm \
-                  -v `pwd`:/app \
+                  -v `pwd`:/project \
                   -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
                   -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
                   -e SSH_AUTH_SOCK=/run/ssh_agent \
-                  -e BUNDLE_APP_CONFIG=/app/.bundle \
-                  -w /app \
+                  -e BUNDLE_APP_CONFIG=/project/.bundle \
+                  -w /project \
                   builder \
-                  bash -c \
-                  'NPM=npm bundle exec c42 deploy dev'
+                  sh -c \
+                  'bundle exec c42 deploy dev'
                   '''
               }
           }
@@ -94,17 +117,17 @@ pipeline {
             echo "Deploying $BRANCH_NAME on https://direccte.commit42.fr/ from $JENKINS_URL ..."
             sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
                 sh '''
-                docker-compose up -d # build and start builder containers
-                docker-compose run --rm \
-                -v `pwd`:/app \
-                -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                -e SSH_AUTH_SOCK=/run/ssh_agent \
-                -e BUNDLE_APP_CONFIG=/app/.bundle \
-                -w /app \
-                builder \
-                bash -c \
-                'NPM=npm bundle exec c42 deploy preprod'
+                  docker-compose up -d # build and start builder containers
+                  docker-compose run --rm \
+                  -v `pwd`:/project \
+                  -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
+                  -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
+                  -e SSH_AUTH_SOCK=/run/ssh_agent \
+                  -e BUNDLE_APP_CONFIG=/project/.bundle \
+                  -w /project \
+                  builder \
+                  sh -c \
+                  'bundle exec c42 deploy preprod'
                 '''
             }
           }
@@ -133,21 +156,22 @@ def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
-    // Default values
-    def colorName = 'RED'
-    def colorCode = '#FF0000'
-    def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-    def summary = "${subject} (${env.BUILD_URL})"
+  def colorCode = "${env.SLACK_COLOR_DANGER}"
+  def emoji = ":x:"
 
-    if (buildStatus == 'STARTED') {
-      colorCode = '#FFFF00'
-    } else if (buildStatus == 'WAITING') {
-      colorCode = '#FFA500'
-    } else if (buildStatus == 'SUCCESSFUL') {
-      colorCode = '#00FF00'
-    } else {
-      colorCode = '#FF0000'
-    }
+  if (buildStatus == 'STARTED') {
+    colorCode = "${env.SLACK_COLOR_INFO}"
+    emoji = ":checkered_flag:"
+  } else if (buildStatus == 'WAITING') {
+    colorCode = "${env.SLACK_COLOR_WARNING}"
+    emoji = ":double_vertical_bar:"
+  } else if (buildStatus == 'SUCCESSFUL') {
+    colorCode = "${env.SLACK_COLOR_GOOD}"
+    emoji = ":ok_hand:"
+  }
 
-  slackSend (color: colorCode, message: summary, channel:"#jvf")
+  def subject = "${emoji} *${buildStatus}* - ${env.JOB_NAME} [${env.BUILD_NUMBER}]"
+  def summary = "${subject}\n\n${env.BUILD_URL}"
+
+  slackSend (color: colorCode, message: summary, channel: "${params.SLACK_CHANNEL}")
 }

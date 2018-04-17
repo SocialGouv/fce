@@ -30,16 +30,10 @@ class Item extends React.Component {
           <Value
             value={
               establishment.adresse_components &&
-              establishment.adresse_components.localite
-            }
-            empty="-"
-          />
-        </td>
-        <td>
-          <Value
-            value={
-              establishment.adresse_components &&
-              establishment.adresse_components.code_postal
+              establishment.adresse_components.code_postal &&
+              `${establishment.adresse_components.code_postal}\u00A0(${
+                establishment.adresse_components.localite
+              })`
             }
             empty="-"
           />

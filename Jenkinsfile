@@ -28,8 +28,6 @@ pipeline {
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
             cp .c42/docker-compose.yml.dist docker-compose.yml
-            gem install bundler
-
           '''
           script {
             TO_DEPLOY = false

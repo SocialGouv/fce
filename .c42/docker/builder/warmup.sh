@@ -13,9 +13,11 @@ echo "#!/bin/sh" > /bin/bundle
 echo "exec docker run --rm -v \"\`pwd\`\":/usr/src/app -w /usr/src/app ruby:2.5 bundle \"\$@\"" > /bin/bundle
 chmod a+x /bin/bundle
 
-rm -rf /build
-mkdir /build
-cp -Rf /project /build
+if [ ! -d "/build" ]; then
+    mkdir /build
+    cp -Rf /project/* /build
+fi
+
 cd /build
 
 exec "$@"

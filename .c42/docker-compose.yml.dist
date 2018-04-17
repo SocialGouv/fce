@@ -33,6 +33,8 @@ services:
   docker-in-docker:
     image: docker:dind
     privileged: true
+    volumes:
+      - ./:/project
     expose:
       - 2375
       - 2376

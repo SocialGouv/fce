@@ -66,6 +66,10 @@ class SearchResults extends React.Component {
                     <th>Code Postal</th>
                     <th>Département</th>
                     <th>Activité</th>
+                    <th>État</th>
+                    <th>Int. p. C</th>
+                    <th>Int. p. 3E</th>
+                    <th>Int. p. T</th>
                   </tr>
                 </thead>
                 <tbody>{items}</tbody>

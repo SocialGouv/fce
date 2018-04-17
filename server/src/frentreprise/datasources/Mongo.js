@@ -80,6 +80,7 @@ class Mongo extends DataSource {
           };
         },
         departement: "code_departement",
+        direccte: "interactions",
         region: this[_.getNomenclatureValue].bind(
           this,
           "code_région",

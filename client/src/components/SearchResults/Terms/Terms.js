@@ -37,6 +37,9 @@ class Terms extends React.Component {
         <dd className="definition col-md-8">
           {this.props.terms.siegeSocial ? "oui" : "non"}
         </dd>
+
+        <dt className="col-md-4">Nombre de résultats</dt>
+        <dd className="definition col-md-8">{this.props.nbResults}</dd>
       </dl>
     );
   }

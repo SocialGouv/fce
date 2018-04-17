@@ -24,7 +24,10 @@ class SearchResults extends React.Component {
 
         <Row className="justify-content-md-center">
           <Col md="10">
-            <Terms terms={this.props.terms} />
+            <Terms
+              terms={this.props.terms}
+              nbResults={this.props.results.length}
+            />
           </Col>
         </Row>
 

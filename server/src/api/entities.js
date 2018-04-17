@@ -31,15 +31,27 @@ router.get("/entities", function(req, res) {
 
   return CommuneModel.find()
     .then(data => {
-      responseData.results.communes = data;
+      const cleanData = data.filter(commune => {
+        return commune.libelle_commune.match(/^[a-zA-Z]/g);
+      });
+      responseData.results.communes = cleanData;
       return DepartementModel.find();
     })
     .then(data => {
-      responseData.results.departements = data;
+      const cleanData = data.filter(departement => {
+        return departement.code_departement.match(/[0-9]{2}/g);
+      });
+      responseData.results.departements = cleanData;
       return CodePostalModel.find();
     })
     .then(data => {
-      responseData.results.postalCodes = data;
+      const cleanData = data.filter(postalCode => {
+        if(postalCode.code_postal === "00000"){
+          return false;
+        }
+        return postalCode.code_postal.match(/[0-9]{5}/g);
+      });
+      responseData.results.postalCodes = cleanData;
       return NomenclatureModel.findByCategory("code_activite_naf");
     })
     .then(data => {

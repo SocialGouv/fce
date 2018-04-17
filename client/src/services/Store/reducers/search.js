@@ -74,21 +74,21 @@ const flattenResults = results => {
 };
 
 const addCountInteractionsToEstablishment = establishment => {
-  let interractions = {};
-  Config.get("interractions").forEach(pole => {
+  let interactions = {};
+  Config.get("interactions").forEach(pole => {
     try {
-      interractions[pole] = establishment.direccte.filter(
-        interraction => interraction.pole === pole
+      interactions[pole] = establishment.direccte.filter(
+        interaction => interaction.pole === pole
       ).length;
     } catch (e) {
-      if (Array.isArray(interractions[pole])) {
+      if (Array.isArray(interactions[pole])) {
         console.error(e);
       }
-      interractions[pole] = 0;
+      interactions[pole] = 0;
     }
   });
 
-  establishment.interractions = interractions;
+  establishment.interactions = interactions;
   return establishment;
 };
 

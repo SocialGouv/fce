@@ -3,7 +3,7 @@ const hosts2config = require("./configs/hosts2configs.json");
 let config = null;
 const log = console.warning || console.error || console.log;
 const globalConfig = {
-  interractions: ["C", "3E", "T"]
+  interactions: ["C", "3E", "T"]
 };
 
 function initConfig() {

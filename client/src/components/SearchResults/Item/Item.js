@@ -69,7 +69,7 @@ class Item extends React.Component {
         <td>
           <Value
             value={
-              establishment.interractions && establishment.interractions["C"]
+              establishment.interactions && establishment.interactions["C"]
             }
             empty="-"
           />
@@ -77,7 +77,7 @@ class Item extends React.Component {
         <td>
           <Value
             value={
-              establishment.interractions && establishment.interractions["3E"]
+              establishment.interactions && establishment.interactions["3E"]
             }
             empty="-"
           />
@@ -85,7 +85,7 @@ class Item extends React.Component {
         <td>
           <Value
             value={
-              establishment.interractions && establishment.interractions["T"]
+              establishment.interactions && establishment.interactions["T"]
             }
             empty="-"
           />

@@ -76,13 +76,23 @@ class SearchResults extends React.Component {
                     }
                   };
                 }}
-                defaultFilterMethod={(filter, row, column) => {
+                defaultFilterMethod={(filter, row) => {
                   const id = filter.pivotId || filter.id;
                   const filterValue = filter.value.toLowerCase();
-                  const rowValue =
-                    typeof row[id] === "string"
-                      ? row[id].toLowerCase()
-                      : row[id];
+                  let rowValue = row[id];
+
+                  if (
+                    typeof rowValue === "object" &&
+                    rowValue.props &&
+                    rowValue.props.children
+                  ) {
+                    // If is a component not rendered
+                    rowValue = rowValue.props.children;
+                  }
+
+                  if (typeof rowValue === "string") {
+                    rowValue = rowValue.toLowerCase();
+                  }
 
                   return rowValue !== undefined
                     ? String(rowValue).includes(filterValue)

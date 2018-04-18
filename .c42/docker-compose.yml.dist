@@ -50,7 +50,7 @@ services:
       - $SSH_AUTH_SOCK:/ssh-agent
 
   mongo:
-    image: mongo:3.6
+    image: mongo:3.2
     network_mode: "bridge"
     ports:
       - 27017

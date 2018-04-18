@@ -10,18 +10,24 @@ class Mandataire extends React.Component {
         <dl className="dl row">
           {mandataire.raison_sociale
             ? [
-                <dt className="dt col-md-4">Raison Sociale</dt>,
-                <dd className="dd col-md-8">
+                <dt className="dt col-md-4" key="rs_label">
+                  Raison Sociale
+                </dt>,
+                <dd className="dd col-md-8" key="rs_value">
                   <Value value={mandataire.raison_sociale} empty="-" />
                 </dd>
               ]
             : [
-                <dt className="dt col-md-4">Nom</dt>,
-                <dd className="dd col-md-8">
+                <dt className="dt col-md-4" key="name_label">
+                  Nom
+                </dt>,
+                <dd className="dd col-md-8" key="name_value">
                   <Value value={mandataire.nom} empty="-" />
                 </dd>,
-                <dt className="dt col-md-4">Prenom</dt>,
-                <dd className="dd col-md-8">
+                <dt className="dt col-md-4" key="firstname_label">
+                  Prenom
+                </dt>,
+                <dd className="dd col-md-8" key="firstname_value">
                   <Value value={mandataire.prenom} empty="-" />
                 </dd>
               ]}

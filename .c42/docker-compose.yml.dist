@@ -30,23 +30,11 @@ services:
     links:
       - mongo
 
-  docker-in-docker:
-    image: docker:dind
+  builder:
+    build: .c42/docker/builder
     privileged: true
     volumes:
       - ./:/project
-    expose:
-      - 2375
-      - 2376
-
-  builder:
-    build: .c42/docker/builder
-    links:
-      - docker-in-docker
-    environment:
-      DOCKER_HOST: tcp://docker-in-docker:2375
-    volumes:
-      - .:/project
       - $SSH_AUTH_SOCK:/ssh-agent
 
   mongo:

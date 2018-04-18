@@ -1,16 +1,19 @@
-FROM docker
+FROM docker:stable-dind
 
-ENV SSH_AUTH_SOCK=/ssh-agent
+RUN apk add --no-cache --update alpine-sdk curl git openssh zip tar ruby ruby-dev zlib python python-dev py-pip bash docker
 
-RUN apk add --no-cache --update alpine-sdk
-RUN apk add --no-cache --update curl
-RUN apk add --no-cache --update ruby
+RUN pip install docker-compose
 
 RUN echo "gem: --no-rdoc --no-ri" >> /etc/gemrc
+RUN gem update --system > /dev/null
 
-RUN gem update --system
-
+ENV SSH_AUTH_SOCK=/ssh-agent
 ENV BUNDLE_APP_CONFIG=/project/.bundle
 
 VOLUME [ "/project" ]
 WORKDIR /project
+
+COPY builder-entrypoint.sh /usr/local/bin/
+RUN chmod a+x /usr/local/bin/builder-entrypoint.sh
+
+ENTRYPOINT [ "builder-entrypoint.sh" ]

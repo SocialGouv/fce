@@ -109,10 +109,16 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
     searchParams && searchParams.raison_sociale
       ? new RegExp(searchParams.raison_sociale, "i")
       : null;
+  const onlySiegeSocial = searchParams.siege_social;
+  const interactions = searchParams.interactions;
 
   const params = {
     ...searchParams
   };
+
+  delete params.raison_sociale;
+  delete params.siege_social;
+  delete params.interactions;
 
   if (raisonSocialParam) {
     params["$or"] = [
@@ -120,28 +126,58 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
       { nom: raisonSocialParam }
     ];
   }
-
   ObjectManipulations.clean(params);
 
-  return this.aggregate(
-    [
-      {
-        $match: params
-      },
-      {
-        $lookup: {
-          from: "interactions",
-          localField: "siret",
-          foreignField: "siret",
-          as: "interactions"
-        }
-      },
-      {
-        $sort: { raison_sociale: 1, code_etat: 1 }
+  let aggregateConfig = [
+    {
+      $match: params
+    },
+    {
+      $project: {
+        root: "$$ROOT",
+        siretSiege: { $concat: ["$siren", "$nic_du_siege"] }
       }
-    ],
-    cb
-  );
+    },
+    {
+      $lookup: {
+        from: "interactions",
+        localField: "root.siret",
+        foreignField: "siret",
+        as: "interactions"
+      }
+    },
+    {
+      $sort: { "root.raison_sociale": 1, "root.code_etat": 1 }
+    }
+  ];
+
+  if (onlySiegeSocial) {
+    aggregateConfig.push({
+      $redact: {
+        $cond: [{ $eq: ["$root.siret", "$siretSiege"] }, "$$KEEP", "$$PRUNE"]
+      }
+    });
+  }
+
+  return this.aggregate(aggregateConfig, cb).then(result => {
+    if (Array.isArray(result)) {
+      result = result.map(line => {
+        return {
+          ...line,
+          ...line.root
+        };
+      });
+
+      if (interactions && interactions.length) {
+        result = result.filter(line => {
+          return line.interactions.filter(interaction => {
+            return interactions.includes(interaction.pole);
+          }).length;
+        });
+      }
+    }
+    return result;
+  });
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);

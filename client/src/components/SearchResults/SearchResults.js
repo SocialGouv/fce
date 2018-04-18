@@ -12,19 +12,22 @@ class SearchResults extends React.Component {
     return (
       <div className="app-searchResults">
         <Row className="justify-content-md-center">
-          <Col xl="6" md="8">
+          <Col md="12">
             <h1 className="title">Résultats de recherche</h1>
           </Col>
         </Row>
 
         <Row className="justify-content-md-center">
-          <Col xl="6" md="8">
-            <Terms terms={this.props.terms} />
+          <Col md="10">
+            <Terms
+              terms={this.props.terms}
+              nbResults={this.props.results.length}
+            />
           </Col>
         </Row>
 
         <Row className="justify-content-md-center d-print-none">
-          <Col xl="6" md="12" className="text-center export-buttons">
+          <Col md="12" className="text-center export-buttons">
             <Button color="primary" onClick={() => window.print()}>
               <FontAwesomeIcon icon={faPrint} /> Imprimer
             </Button>
@@ -41,7 +44,7 @@ class SearchResults extends React.Component {
         </Row>
 
         <Row className="justify-content-md-center result-row">
-          <Col xl="6" md="8">
+          <Col md="12">
             {!Array.isArray(this.props.results) ? (
               <Alert color="danger">Une erreur est survenue</Alert>
             ) : !this.props.results.length ? (
@@ -71,6 +74,19 @@ class SearchResults extends React.Component {
                     id: "nom",
                     accessor: e => (
                       <Value value={e.raison_sociale || e.nom} empty="-" />
+                    )
+                  },
+                  {
+                    Header: "État",
+                    id: "etat",
+                    accessor: e => (
+                      <Value
+                        value={
+                          e.etablissement.etat_etablissement &&
+                          e.etablissement.etat_etablissement.label
+                        }
+                        empty="-"
+                      />
                     )
                   },
                   {
@@ -116,14 +132,21 @@ class SearchResults extends React.Component {
                     )
                   },
                   {
-                    Header: "État",
+                    Header: "Cat. Etablissement",
                     id: "etat",
                     accessor: e => (
                       <Value
-                        value={
-                          e.etablissement.etat_etablissement &&
-                          e.etablissement.etat_etablissement.label
-                        }
+                        value={e.etablissement.categorie_etablissement}
+                        empty="-"
+                      />
+                    )
+                  },
+                  {
+                    Header: "Interactions",
+                    id: "etat",
+                    accessor: e => (
+                      <Value
+                        value={e.etablissement.totalInteractions}
                         empty="-"
                       />
                     )

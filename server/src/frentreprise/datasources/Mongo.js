@@ -298,13 +298,16 @@ class Mongo extends DataSource {
   [_.getCleanAddress](obj) {
     return `
     ${obj.numero_voie || ""} ${obj.code_type_de_voie ||
-      ""} ${obj.libelle_voie || ""}
-    ${obj.complement_adresse || ""} ${obj.code_postal || ""}
-    ${obj.libelle_commune || ""}
+      ""} ${obj.libelle_voie || obj.nom_voie || ""}
+    ${obj.complement_adresse || ""}
+    ${obj.cedex ? `(${obj.cedex})` : ""}
+    ${obj.code_postal || ""}
+    ${obj.libelle_commune || obj.localite || ""}
     `
       .trim()
       .split("\n")
       .map(l => l.trim())
+      .filter(l => l.length)
       .join("\n");
   }
 

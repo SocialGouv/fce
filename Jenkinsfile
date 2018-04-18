@@ -22,7 +22,7 @@ pipeline {
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
             cp .c42/docker-compose.yml.dist docker-compose.yml
-            docker-compose build builder
+            gem install --user-install bundler
           '''
           script {
             TO_DEPLOY = false
@@ -41,13 +41,7 @@ pipeline {
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
           sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
-              docker-compose \
-                run --rm \
-                -v `pwd`:/project \
-                -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                builder \
-                sh -c \
-                'bundle install --clean --path=vendors/bundle'
+              $(gem env | grep "USER INSTALLATION DIRECTORY" | awk '{print $NF}')/bin/bundle install --clean
             '''
           }
       }
@@ -81,13 +75,7 @@ pipeline {
             echo "Deploying $BRANCH_NAME into on https://dev.direccte.commit42.fr/ from $JENKINS_URL ..."
               sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
                 sh '''
-                    docker-compose \
-                        run --rm \
-                        -v `pwd`:/project \
-                        -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                        builder \
-                        sh -c \
-                        'bundle exec c42 deploy dev'
+                  $(gem env | grep "USER INSTALLATION DIRECTORY" | awk '{print $NF}')/bin/bundle exec c42 deploy dev
                 '''
               }
           }
@@ -103,13 +91,7 @@ pipeline {
             echo "Deploying $BRANCH_NAME on https://direccte.commit42.fr/ from $JENKINS_URL ..."
             sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
                 sh '''
-                    docker-compose \
-                        run --rm \
-                        -v `pwd`:/project \
-                        -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                        builder \
-                        sh -c \
-                        'bundle exec c42 deploy preprod'
+                  $(gem env | grep "USER INSTALLATION DIRECTORY" | awk '{print $NF}')/bin/bundle exec c42 deploy preprod
                 '''
             }
           }

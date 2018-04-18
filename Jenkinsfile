@@ -46,7 +46,7 @@ pipeline {
                 -v `pwd`:/project \
                 -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
                 builder \
-                bash -c \
+                sh -c \
                 'bundle install --clean --path=vendors/bundle'
             '''
           }
@@ -86,7 +86,7 @@ pipeline {
                         -v `pwd`:/project \
                         -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
                         builder \
-                        bash -c \
+                        sh -c \
                         'bundle exec c42 deploy dev'
                 '''
               }
@@ -108,7 +108,7 @@ pipeline {
                         -v `pwd`:/project \
                         -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
                         builder \
-                        bash -c \
+                        sh -c \
                         'bundle exec c42 deploy preprod'
                 '''
             }

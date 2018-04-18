@@ -46,7 +46,8 @@ pipeline {
                     -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
                     -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
                     builder \
-                    bundle install --clean --path=vendors/bundle
+                    bash -c \
+                    "bundle install --clean --path=vendors/bundle && docker-compose build"
             '''
           }
       }

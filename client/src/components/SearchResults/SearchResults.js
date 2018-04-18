@@ -67,6 +67,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "SIRET",
                     id: "siret",
+                    minWidth: 150,
                     accessor: e =>
                       Value({ value: e.etablissement.siret, empty: "-" })
                   },
@@ -78,6 +79,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "Raison Sociale / Nom",
                     id: "nom",
+                    minWidth: 300,
                     accessor: e =>
                       Value({ value: e.raison_sociale || e.nom, empty: "-" })
                   },
@@ -95,6 +97,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "Code postal",
                     id: "code_postal",
+                    minWidth: 200,
                     accessor: e =>
                       Value({
                         value:
@@ -102,9 +105,8 @@ class SearchResults extends React.Component {
                           e.etablissement.adresse_components.code_postal &&
                           `${
                             e.etablissement.adresse_components.code_postal
-                          }\u00A0(${
-                            e.etablissement.adresse_components.localite
-                          })`,
+                          }\u00A0(${e.etablissement.adresse_components
+                            .localite || ""})`,
                         empty: "-"
                       })
                   },
@@ -126,12 +128,14 @@ class SearchResults extends React.Component {
                   {
                     Header: "Activité",
                     id: "activite",
+                    minWidth: 300,
                     accessor: e =>
                       Value({ value: e.etablissement.activite, empty: "-" })
                   },
                   {
                     Header: "Cat. Etablissement",
                     id: "categorie_etablissement",
+                    minWidth: 200,
                     accessor: e =>
                       Value({
                         value: e.etablissement.categorie_etablissement,
@@ -141,6 +145,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "Interactions",
                     id: "total-interactions",
+                    minWidth: 80,
                     accessor: e =>
                       Value({
                         value: e.etablissement.totalInteractions,
@@ -150,6 +155,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "Pole C",
                     id: "pole-c",
+                    minWidth: 80,
                     accessor: e =>
                       Value({
                         value:
@@ -161,6 +167,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "Pole 3E",
                     id: "pole-3e",
+                    minWidth: 80,
                     accessor: e =>
                       Value({
                         value:
@@ -172,6 +179,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "Pole T",
                     id: "pole-t",
+                    minWidth: 80,
                     accessor: e =>
                       Value({
                         value:

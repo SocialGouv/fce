@@ -4,8 +4,8 @@ class Terms extends React.Component {
   render() {
     return (
       <dl className="terms-list row bg-info text-white">
-        <dt className="col-md-3">Raison Sociale / Nom</dt>
-        <dd className="definition col-md-9">
+        <dt className="col-md-4">Raison Sociale / Nom</dt>
+        <dd className="definition col-md-8">
           {this.props.terms.raisonSociale}
         </dd>
 

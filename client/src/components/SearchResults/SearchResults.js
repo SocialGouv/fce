@@ -113,6 +113,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "SIREN",
                     id: "siren",
+                    minWidth: 120,
                     accessor: e =>
                       Value({
                         value: e.siren,
@@ -123,13 +124,14 @@ class SearchResults extends React.Component {
                   {
                     Header: "Raison Sociale / Nom",
                     id: "nom",
-                    minWidth: 300,
+                    minWidth: 350,
                     accessor: e =>
                       Value({ value: e.raison_sociale || e.nom, empty: "-" })
                   },
                   {
                     Header: "État",
                     id: "etat",
+                    minWidth: 80,
                     accessor: e =>
                       Value({
                         value:

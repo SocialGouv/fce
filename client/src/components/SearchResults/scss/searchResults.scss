@@ -43,5 +43,19 @@
     .rt-tr {
       cursor: pointer;
     }
+
+    .rt-th, .rt-td {
+      padding: .75rem;
+      border-top: 1px solid #dee2e6;
+    }
+    .rt-th {
+      font-weight: bold;
+    }
+
+    .rt-thead {
+      .rt-th {
+        border-bottom: 2px solid #dee2e6;
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import { toI18nDate } from "../../helpers/Date";
 
 export default ({
@@ -8,7 +8,8 @@ export default ({
   no = "Non",
   yes = "Oui",
   dateFormat = "L",
-  breakLines = false
+  breakLines = false,
+  link = false
 }) => {
   if (value && typeof value === "object") {
     return "error";
@@ -38,6 +39,14 @@ export default ({
 
   if (typeof value === "string" && breakLines) {
     return value.split("\n").map((l, i) => <div key={`line_${i}`}>{l}</div>);
+  }
+
+  if (link) {
+    return (
+      <Link to={link} onClick={e => e && e.stopPropagation()}>
+        {value}
+      </Link>
+    );
   }
 
   return value || null;

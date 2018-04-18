@@ -6,6 +6,7 @@ import { faFileExcel, faPrint } from "@fortawesome/fontawesome-pro-light";
 import Terms from "./Terms";
 import ReactTable from "react-table";
 import Value from "../../elements/Value";
+import { withRouter } from "react-router-dom";
 
 class SearchResults extends React.Component {
   render() {
@@ -61,20 +62,53 @@ class SearchResults extends React.Component {
                     ? 25
                     : this.props.results.length
                 }
-                className="-striped -highlight"
+                className="table -striped -highlight"
                 filterable={true}
+                showPagination={this.props.results.length > 25}
+                pageSizeOptions={[25, 50, 100]}
+                getTrProps={(state, rowInfo) => {
+                  return {
+                    onClick: e => {
+                      e && e.preventDefault();
+                      this.props.history.push(
+                        "/establishment/" + rowInfo.original.etablissement.siret
+                      );
+                    }
+                  };
+                }}
+                defaultFilterMethod={(filter, row, column) => {
+                  const id = filter.pivotId || filter.id;
+                  const filterValue = filter.value.toLowerCase();
+                  const rowValue =
+                    typeof row[id] === "string"
+                      ? row[id].toLowerCase()
+                      : row[id];
+
+                  return rowValue !== undefined
+                    ? String(rowValue).includes(filterValue)
+                    : true;
+                }}
                 columns={[
                   {
                     Header: "SIRET",
                     id: "siret",
                     minWidth: 150,
                     accessor: e =>
-                      Value({ value: e.etablissement.siret, empty: "-" })
+                      Value({
+                        value: e.etablissement.siret,
+                        empty: "-",
+                        link: `/enterprise/${e.etablissement.siret}`
+                      })
                   },
                   {
                     Header: "SIREN",
                     id: "siren",
-                    accessor: e => Value({ value: e.siren, empty: "-" })
+                    accessor: e =>
+                      Value({
+                        value: e.siren,
+                        empty: "-",
+                        link: `/enterprise/${e.siren}`
+                      })
                   },
                   {
                     Header: "Raison Sociale / Nom",
@@ -189,6 +223,13 @@ class SearchResults extends React.Component {
                       })
                   }
                 ]}
+                previousText="Précédent"
+                nextText="Suivant"
+                loadingText="Chargement..."
+                noDataText="Aucune données"
+                pageText="Page"
+                ofText="/"
+                rowsText="lignes"
               />
             ) : (
               ""
@@ -200,4 +241,4 @@ class SearchResults extends React.Component {
   }
 }
 
-export default SearchResults;
+export default withRouter(SearchResults);

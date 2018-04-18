@@ -12,5 +12,7 @@ RUN gem update --system
 
 ENV BUNDLE_APP_CONFIG=/project/.bundle
 
+VOLUME [ "/var/run/docker.sock" ]
+
 VOLUME [ "/project" ]
 WORKDIR /project

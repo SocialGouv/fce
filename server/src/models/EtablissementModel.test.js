@@ -391,6 +391,44 @@ describe("Advanced search", () => {
   );
 
   test(
+    "findByAdvancedSearch - only siege",
+    () => {
+      const nData = [
+        {
+          raison_sociale: "Youloulou",
+          siret: "01234",
+          siren: "012",
+          nic_du_siege: "34"
+        },
+        {
+          raison_sociale: "Polololo",
+          siret: "01234",
+          siren: "012",
+          nic_du_siege: "66"
+        }
+      ];
+
+      const searchParams = {
+        siege_social: true
+      };
+
+      return new Etablissement(nData[0])
+        .save()
+        .then(() => {
+          return new Etablissement(nData[1]).save();
+        })
+        .then(() => {
+          return Etablissement.findByAdvancedSearch(searchParams);
+        })
+        .then(data => {
+          expect(data.length).toEqual(1);
+          expect(data[0].raison_sociale).toEqual("Youloulou");
+        });
+    },
+    TIMEOUT
+  );
+
+  test(
     "findByAdvancedSearch - contain interactions",
     () => {
       const nData = [
@@ -425,6 +463,65 @@ describe("Advanced search", () => {
 
       const searchParams = {
         code_activite: "8110Z"
+      };
+
+      return new Etablissement(nData[0])
+        .save()
+        .then(() => {
+          return new Etablissement(nData[1]).save();
+        })
+        .then(() => {
+          return new Interaction(interactionsData[0]).save();
+        })
+        .then(() => {
+          return new Interaction(interactionsData[1]).save();
+        })
+        .then(() => {
+          return Etablissement.findByAdvancedSearch(searchParams);
+        })
+        .then(data => {
+          expect(data.length).toEqual(1);
+          expect(data[0].siret).toEqual("0123456789");
+        });
+    },
+    TIMEOUT
+  );
+
+  test(
+    "findByAdvancedSearch - filter by interactions",
+    () => {
+      const nData = [
+        {
+          siret: "0123456789",
+          code_activite: "8110Z"
+        },
+        {
+          siret: "01235",
+          code_activite: "8111Z"
+        }
+      ];
+
+      const interactionsData = [
+        {
+          siret: "0123456789",
+          unite: "Unité 3",
+          type_intervention: "Enquête",
+          cible_intervention: "Chantier",
+          pole: "C",
+          date: new Date()
+        },
+        {
+          siret: "01235",
+          unite: "Unité 666",
+          type_intervention: "Ecouter",
+          cible_intervention: "Chanson",
+          pole: "3E",
+          date: new Date()
+        }
+      ];
+
+      const searchParams = {
+        interactions: ["C", "T"]
       };
 
       return new Etablissement(nData[0])

@@ -17,19 +17,22 @@ class SearchResults extends React.Component {
     return (
       <div className="app-searchResults">
         <Row className="justify-content-md-center">
-          <Col xl="6" md="8">
+          <Col md="12">
             <h1 className="title">Résultats de recherche</h1>
           </Col>
         </Row>
 
         <Row className="justify-content-md-center">
-          <Col xl="6" md="8">
-            <Terms terms={this.props.terms} />
+          <Col md="10">
+            <Terms
+              terms={this.props.terms}
+              nbResults={this.props.results.length}
+            />
           </Col>
         </Row>
 
         <Row className="justify-content-md-center d-print-none">
-          <Col xl="6" md="12" className="text-center export-buttons">
+          <Col md="12" className="text-center export-buttons">
             <Button color="primary" onClick={() => window.print()}>
               <FontAwesomeIcon icon={faPrint} /> Imprimer
             </Button>
@@ -46,7 +49,7 @@ class SearchResults extends React.Component {
         </Row>
 
         <Row className="justify-content-md-center result-row">
-          <Col xl="6" md="8">
+          <Col md="12">
             {!Array.isArray(this.props.results) ? (
               <Alert color="danger">Une erreur est survenue</Alert>
             ) : !this.props.results.length ? (
@@ -62,13 +65,15 @@ class SearchResults extends React.Component {
                     <th>SIRET</th>
                     <th>SIREN</th>
                     <th>Raison Sociale / Nom</th>
+                    <th>État</th>
                     <th>Code postal</th>
                     <th>Département</th>
                     <th>Activité</th>
-                    <th>État</th>
-                    <th>Int. p. C</th>
-                    <th>Int. p. 3E</th>
-                    <th>Int. p. T</th>
+                    <th>Cat. Etablissement</th>
+                    <th>Interactions</th>
+                    <th>Pole C</th>
+                    <th>Pole 3E</th>
+                    <th>Pole T</th>
                   </tr>
                 </thead>
                 <tbody>{items}</tbody>

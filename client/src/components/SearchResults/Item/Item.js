@@ -29,11 +29,20 @@ class Item extends React.Component {
         <td>
           <Value
             value={
+              establishment.etat_etablissement &&
+              establishment.etat_etablissement.label
+            }
+            empty="-"
+          />
+        </td>
+        <td>
+          <Value
+            value={
               establishment.adresse_components &&
               establishment.adresse_components.code_postal &&
-              `${establishment.adresse_components.code_postal}\u00A0(${
-                establishment.adresse_components.localite
-              })`
+              `${
+                establishment.adresse_components.code_postal
+              }\u00A0(${establishment.adresse_components.localite || "-"})`
             }
             empty="-"
           />
@@ -52,13 +61,10 @@ class Item extends React.Component {
           <Value value={establishment.activite} empty="-" />
         </td>
         <td>
-          <Value
-            value={
-              establishment.etat_etablissement &&
-              establishment.etat_etablissement.label
-            }
-            empty="-"
-          />
+          <Value value={establishment.categorie_etablissement} empty="-" />
+        </td>
+        <td>
+          <Value value={establishment.totalInteractions} empty="-" />
         </td>
         <td>
           <Value

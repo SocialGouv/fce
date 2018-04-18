@@ -54,9 +54,9 @@ class EstablishmentView extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {establishment.direccte.map(dirvis => {
+                  {establishment.direccte.map((dirvis, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td>
                           <Value value={dirvis.date} empty="-" />
                         </td>

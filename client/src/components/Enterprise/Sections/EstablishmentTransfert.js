@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Value from "../../../../elements/Value";
+import Value from "../../../elements/Value";
 
-const Transfert = ({ predecesseur, successeur, data }) => {
+const EstablishmentTransfert = ({ predecesseur, successeur, data }) => {
   return data
     ? [
         <dt className="dt col-md-4" key="transfert_label">
@@ -23,4 +23,4 @@ const Transfert = ({ predecesseur, successeur, data }) => {
     : null;
 };
 
-export default Transfert;
+export default EstablishmentTransfert;

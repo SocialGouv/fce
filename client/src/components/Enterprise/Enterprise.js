@@ -6,11 +6,13 @@ import QuickAccess from "./QuickAccess";
 import Establishments from "./Establishments";
 import Value from "../../elements/Value";
 import {
+  Direccte,
   EnterpriseIdentity,
   EnterpriseActivity,
   EnterpriseHeadOffice,
   Mandataires,
-  Finances
+  Finances,
+  Attestations
 } from "./Sections";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/fontawesome-pro-light";
@@ -22,7 +24,9 @@ class Enterprise extends React.Component {
       { name: "État et activité", id: "activity" },
       { name: "Siège social", id: "headoffice" },
       { name: "Eco & Fina.", id: "finances" },
-      { name: "Mandataires", id: "mandataire" }
+      { name: "Attestations", id: "attestations" },
+      { name: "Mandataires", id: "mandataire" },
+      { name: "DIRECCTE", id: "direccte" }
     ];
   };
 
@@ -52,7 +56,9 @@ class Enterprise extends React.Component {
             <EnterpriseActivity enterprise={enterprise} />
             <EnterpriseHeadOffice headOffice={headOffice} />
             <Finances establishment={headOffice} />
+            <Attestations enterprise={enterprise} />
             <Mandataires enterprise={enterprise} />
+            <Direccte enterprise={enterprise} />
           </Col>
           <Col className="aside-box" md="3">
             <Establishments

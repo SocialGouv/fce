@@ -28,6 +28,8 @@ export default class ApiGouv extends DataSource {
       EtablissementsAPI.agefiph,
       EtablissementsAPI.exercices,
       EtablissementsAPI.association,
+      EtablissementsAPI.predecesseur,
+      EtablissementsAPI.successeur,
       EtablissementsAPI.document_association
     );
   }
@@ -37,7 +39,9 @@ export default class ApiGouv extends DataSource {
     return await this[_.requestAPIs](
       SIREN,
       EntreprisesAPI.getLegacy,
-      EntreprisesAPI.getEntreprise
+      EntreprisesAPI.getEntreprise,
+      EntreprisesAPI.attestation_acoss,
+      EntreprisesAPI.attestation_dgfip
     );
   }
 
@@ -63,11 +67,8 @@ export default class ApiGouv extends DataSource {
       });
 
     await Promise.all(requests).then(results => {
-      console.log("results", results);
       Object.assign(out, ...results);
     });
-
-    console.log("out", out);
 
     return out;
   }

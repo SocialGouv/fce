@@ -1,3 +1,5 @@
+import React from "react";
+
 import { toI18nDate } from "../../helpers/Date";
 
 export default ({
@@ -5,7 +7,8 @@ export default ({
   empty,
   no = "Non",
   yes = "Oui",
-  dateFormat = "L"
+  dateFormat = "L",
+  breakLines = false
 }) => {
   if (value && typeof value === "object") {
     return "error";
@@ -31,6 +34,10 @@ export default ({
 
   if (!value && empty) {
     return empty;
+  }
+
+  if (typeof value === "string" && breakLines) {
+    return value.split("\n").map((l, i) => <div key={`line_${i}`}>{l}</div>);
   }
 
   return value || null;

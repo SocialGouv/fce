@@ -1,8 +1,8 @@
 import React from "react";
 import classNames from "classnames";
-import Value from "../../../elements/Value";
+import Value from "../../../../elements/Value";
 
-class Direccte extends React.Component {
+class EstablishmentView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -15,12 +15,12 @@ class Direccte extends React.Component {
   };
 
   render() {
+    const { establishment } = this.props;
     return (
       <section id="direccte" className="enterprise-section">
-        <h1 className="title h4">Intéractions DIRECCTE</h1>
+        <h1 className="title h4">Interactions DIRECCTE</h1>
 
-        {this.props.establishment.direccte &&
-        this.props.establishment.direccte.length ? (
+        {establishment.direccte && establishment.direccte.length ? (
           <div>
             <div className="text-center">
               <a
@@ -54,7 +54,7 @@ class Direccte extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.establishment.direccte.map((dirvis, index) => {
+                  {establishment.direccte.map((dirvis, index) => {
                     return (
                       <tr key={index}>
                         <td>
@@ -90,4 +90,4 @@ class Direccte extends React.Component {
   }
 }
 
-export default Direccte;
+export default EstablishmentView;

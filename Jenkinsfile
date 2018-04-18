@@ -8,12 +8,6 @@ pipeline {
            description: 'Slack channel to send messages to',
            defaultValue: '#jvf')
   }
-  environment {
-    SLACK_COLOR_DANGER  = '#E01563'
-    SLACK_COLOR_INFO    = '#6ECADC'
-    SLACK_COLOR_WARNING = '#FFC300'
-    SLACK_COLOR_GOOD    = '#3EB991'
-  }
   stages {
     stage('Init') {
       when {
@@ -28,8 +22,7 @@ pipeline {
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
             cp .c42/docker-compose.yml.dist docker-compose.yml
-            docker-compose build builder # rebuild builder
-            docker-compose up -d # build and start builder containers
+            gem install --user-install bundler
           '''
           script {
             TO_DEPLOY = false
@@ -48,17 +41,8 @@ pipeline {
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
           sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
-              docker-compose up -d # build and start builder containers
-              docker-compose run --rm \
-                -v `pwd`:/project \
-                -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                -e SSH_AUTH_SOCK=/run/ssh_agent \
-                -e BUNDLE_APP_CONFIG=/project/.bundle \
-                builder \
-                sh -c \
-                'bundle install --clean --path=vendors/bundle'
-              '''
+              $(gem env | grep "USER INSTALLATION DIRECTORY" | awk '{print $NF}')/bin/bundle install --clean
+            '''
           }
       }
     }
@@ -91,18 +75,8 @@ pipeline {
             echo "Deploying $BRANCH_NAME into on https://dev.direccte.commit42.fr/ from $JENKINS_URL ..."
               sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
                 sh '''
-                  docker-compose up -d # build and start builder containers
-                  docker-compose run --rm \
-                  -v `pwd`:/project \
-                  -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                  -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                  -e SSH_AUTH_SOCK=/run/ssh_agent \
-                  -e BUNDLE_APP_CONFIG=/project/.bundle \
-                  -w /project \
-                  builder \
-                  sh -c \
-                  'bundle exec c42 deploy dev'
-                  '''
+                  $(gem env | grep "USER INSTALLATION DIRECTORY" | awk '{print $NF}')/bin/bundle exec c42 deploy dev
+                '''
               }
           }
         }
@@ -117,17 +91,7 @@ pipeline {
             echo "Deploying $BRANCH_NAME on https://direccte.commit42.fr/ from $JENKINS_URL ..."
             sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
                 sh '''
-                  docker-compose up -d # build and start builder containers
-                  docker-compose run --rm \
-                  -v `pwd`:/project \
-                  -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                  -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                  -e SSH_AUTH_SOCK=/run/ssh_agent \
-                  -e BUNDLE_APP_CONFIG=/project/.bundle \
-                  -w /project \
-                  builder \
-                  sh -c \
-                  'bundle exec c42 deploy preprod'
+                  $(gem env | grep "USER INSTALLATION DIRECTORY" | awk '{print $NF}')/bin/bundle exec c42 deploy preprod
                 '''
             }
           }
@@ -156,17 +120,17 @@ def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
-  def colorCode = "${env.SLACK_COLOR_DANGER}"
+  def colorCode = "#E01563"
   def emoji = ":x:"
 
   if (buildStatus == 'STARTED') {
-    colorCode = "${env.SLACK_COLOR_INFO}"
+    colorCode = "#6ECADC"
     emoji = ":checkered_flag:"
   } else if (buildStatus == 'WAITING') {
-    colorCode = "${env.SLACK_COLOR_WARNING}"
+    colorCode = "#FFC300"
     emoji = ":double_vertical_bar:"
   } else if (buildStatus == 'SUCCESSFUL') {
-    colorCode = "${env.SLACK_COLOR_GOOD}"
+    colorCode = "#3EB991"
     emoji = ":ok_hand:"
   }
 

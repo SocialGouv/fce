@@ -16,24 +16,24 @@ class EstablishmentEnterpriseIdentity extends React.Component {
         <dl className="dl row">
           {enterprise.categorie_juridique
             ? [
-                <dt className="dt col-md-4" key={0}>
+                <dt className="dt col-md-4" key="rs_label">
                   Raison Sociale
                 </dt>,
-                <dd className="dd definition col-md-8" key={1}>
+                <dd className="dd definition col-md-8" key="rs_value">
                   <Value value={enterprise.raison_sociale} empty="-" />
                 </dd>
               ]
             : [
-                <dt className="dt col-md-4" key={0}>
+                <dt className="dt col-md-4" key="name_label">
                   Nom
                 </dt>,
-                <dd className="dd definition col-md-8" key={1}>
+                <dd className="dd definition col-md-8" key="name_value">
                   <Value value={enterprise.nom} empty="-" />
                 </dd>,
-                <dt className="dt col-md-4" key={2}>
+                <dt className="dt col-md-4" key="firstname_label">
                   Prenom
                 </dt>,
-                <dd className="dd definition col-md-8" key={3}>
+                <dd className="dd definition col-md-8" key="firstname_value">
                   <Value value={enterprise.prenom} empty="-" />
                 </dd>
               ]}

@@ -133,7 +133,7 @@ class SearchResults extends React.Component {
                   },
                   {
                     Header: "Cat. Etablissement",
-                    id: "etat",
+                    id: "categorie_etablissement",
                     accessor: e => (
                       <Value
                         value={e.etablissement.categorie_etablissement}
@@ -143,7 +143,7 @@ class SearchResults extends React.Component {
                   },
                   {
                     Header: "Interactions",
-                    id: "etat",
+                    id: "total-interactions",
                     accessor: e => (
                       <Value
                         value={e.etablissement.totalInteractions}

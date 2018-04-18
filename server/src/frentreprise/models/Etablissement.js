@@ -46,6 +46,8 @@ class DireccteEtablissement extends Etablissement {
         "document_association",
         "predecesseur",
         "successeur",
+        "caractere_saisonnier",
+        "caractere_auxiliaire",
         "_dataSources"
       ],
       null

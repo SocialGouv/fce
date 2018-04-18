@@ -10,7 +10,7 @@ const exercices = async (SIRET, Axios, params) => {
         out.donnees_ecofi = {};
         data.exercices.forEach(decofi => {
           out.donnees_ecofi[
-            this[_convertDate](decofi.date_fin_exercice_timestamp).toISOString()
+            utils.convertDate(decofi.date_fin_exercice_timestamp).toISOString()
           ] =
             +decofi.ca || null;
         });

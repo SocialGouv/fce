@@ -123,6 +123,16 @@ class Mongo extends DataSource {
           "code_modalite_activ_",
           "code_modalite_activ_"
         ),
+        caractere_saisonnier: this[_.getNomenclatureValue].bind(
+          this,
+          "caractere_saisonnier",
+          "code_car__saisonnier"
+        ),
+        caractere_auxiliaire: this[_.getNomenclatureValue].bind(
+          this,
+          "caractere_auxiliaire",
+          "code_car__auxiliaire"
+        ),
         marchand: obj => {
           const codeMarchand = obj.code_marchand;
           let codeMarchandStr = null;
@@ -321,6 +331,16 @@ class Mongo extends DataSource {
       if (category.key === "string") {
         nomKey = category.key;
       }
+    }
+
+    if (category === "caractere_saisonnier") {
+      const table = { P: "Permanente", S: "Saisonnière", NR: "Non renseignée" };
+      if (typeof val === "string" && table[val]) return table[val];
+    }
+
+    if (category === "caractere_auxiliaire") {
+      const table = { P: "Auxiliaire", N: "Non auxiliaire" };
+      if (typeof val === "string" && table[val]) return table[val];
     }
 
     return NomenclatureModel.findOneByCategoryAndCode(cat, val).then(

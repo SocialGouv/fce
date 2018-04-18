@@ -46,6 +46,9 @@ const etablissementSchema = new Schema({
   label_region: String,
   code_departement: String,
 
+  code_car__saisonnier: String,
+  code_car__auxiliaire: String,
+
   code_section: String,
 
   numero_voie: String,

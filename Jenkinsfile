@@ -47,7 +47,7 @@ pipeline {
                     -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
                     builder \
                     bash -c \
-                    "bundle install --clean --path=vendors/bundle && docker-compose build"
+                    "bundle install --clean --path=vendors/bundle"
             '''
           }
       }

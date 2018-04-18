@@ -63,7 +63,7 @@ task 'build' do
     run 'c42 server:yarn upgrade frentreprise'
     run 'c42 server:yarn build'
     run 'c42 front:yarn build'
-    
+
     info("Packaging...")
     directory "dist" # copy .c42/dist/ to dist/
     directory "../server/build", "dist" # copy .c42/../server/build to dist/
@@ -86,6 +86,7 @@ task 'docker:install' do
       end
     end
   end
+  system("docker-compose build")
 end
 
 # Install

@@ -4,16 +4,12 @@ import { Row, Col, Button, Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faFileExcel, faPrint } from "@fortawesome/fontawesome-pro-light";
 import Terms from "./Terms";
-import Item from "./Item";
+import ReactTable from "react-table";
+import Value from "../../elements/Value";
+import { withRouter } from "react-router-dom";
 
 class SearchResults extends React.Component {
   render() {
-    let items = Array.isArray(this.props.results)
-      ? this.props.results.map((item, index) => (
-          <Item item={item} key={index} />
-        ))
-      : [];
-
     return (
       <div className="app-searchResults">
         <Row className="justify-content-md-center">
@@ -58,26 +54,195 @@ class SearchResults extends React.Component {
               ""
             )}
 
-            {items.length ? (
-              <table className="table table-striped table-hover result-list">
-                <thead>
-                  <tr>
-                    <th>SIRET</th>
-                    <th>SIREN</th>
-                    <th>Raison Sociale / Nom</th>
-                    <th>État</th>
-                    <th>Code postal</th>
-                    <th>Département</th>
-                    <th>Activité</th>
-                    <th>Cat. Etablissement</th>
-                    <th>Interactions</th>
-                    <th>Pole C</th>
-                    <th>Pole 3E</th>
-                    <th>Pole T</th>
-                  </tr>
-                </thead>
-                <tbody>{items}</tbody>
-              </table>
+            {Array.isArray(this.props.results) && this.props.results.length ? (
+              <ReactTable
+                data={this.props.results}
+                defaultPageSize={
+                  this.props.results.length >= 25
+                    ? 25
+                    : this.props.results.length
+                }
+                className="table -striped -highlight"
+                filterable={true}
+                showPagination={this.props.results.length > 25}
+                pageSizeOptions={[25, 50, 100]}
+                getTrProps={(state, rowInfo) => {
+                  return {
+                    onClick: e => {
+                      e && e.preventDefault();
+                      this.props.history.push(
+                        "/establishment/" + rowInfo.original.etablissement.siret
+                      );
+                    }
+                  };
+                }}
+                defaultFilterMethod={(filter, row) => {
+                  const id = filter.pivotId || filter.id;
+                  const filterValue = filter.value.toLowerCase();
+                  let rowValue = row[id];
+
+                  if (
+                    typeof rowValue === "object" &&
+                    rowValue.props &&
+                    rowValue.props.children
+                  ) {
+                    // If is a component not rendered
+                    rowValue = rowValue.props.children;
+                  }
+
+                  if (typeof rowValue === "string") {
+                    rowValue = rowValue.toLowerCase();
+                  }
+
+                  return rowValue !== undefined
+                    ? String(rowValue).includes(filterValue)
+                    : true;
+                }}
+                columns={[
+                  {
+                    Header: "SIRET",
+                    id: "siret",
+                    minWidth: 150,
+                    accessor: e =>
+                      Value({
+                        value: e.etablissement.siret,
+                        empty: "-",
+                        link: `/enterprise/${e.etablissement.siret}`
+                      })
+                  },
+                  {
+                    Header: "SIREN",
+                    id: "siren",
+                    minWidth: 120,
+                    accessor: e =>
+                      Value({
+                        value: e.siren,
+                        empty: "-",
+                        link: `/enterprise/${e.siren}`
+                      })
+                  },
+                  {
+                    Header: "Raison Sociale / Nom",
+                    id: "nom",
+                    minWidth: 350,
+                    accessor: e =>
+                      Value({ value: e.raison_sociale || e.nom, empty: "-" })
+                  },
+                  {
+                    Header: "État",
+                    id: "etat",
+                    minWidth: 80,
+                    accessor: e =>
+                      Value({
+                        value:
+                          e.etablissement.etat_etablissement &&
+                          e.etablissement.etat_etablissement.label,
+                        empty: "-"
+                      })
+                  },
+                  {
+                    Header: "Code postal",
+                    id: "code_postal",
+                    minWidth: 200,
+                    accessor: e =>
+                      Value({
+                        value:
+                          e.etablissement.adresse_components &&
+                          e.etablissement.adresse_components.code_postal &&
+                          `${
+                            e.etablissement.adresse_components.code_postal
+                          }\u00A0(${e.etablissement.adresse_components
+                            .localite || ""})`,
+                        empty: "-"
+                      })
+                  },
+                  {
+                    Header: "Département",
+                    id: "departement",
+                    accessor: e =>
+                      Value({
+                        value:
+                          e.etablissement.adresse_components &&
+                          e.etablissement.adresse_components.code_postal &&
+                          e.etablissement.adresse_components.code_postal.substr(
+                            0,
+                            2
+                          ),
+                        empty: "-"
+                      })
+                  },
+                  {
+                    Header: "Activité",
+                    id: "activite",
+                    minWidth: 300,
+                    accessor: e =>
+                      Value({ value: e.etablissement.activite, empty: "-" })
+                  },
+                  {
+                    Header: "Cat. Etablissement",
+                    id: "categorie_etablissement",
+                    minWidth: 200,
+                    accessor: e =>
+                      Value({
+                        value: e.etablissement.categorie_etablissement,
+                        empty: "-"
+                      })
+                  },
+                  {
+                    Header: "Interactions",
+                    id: "total-interactions",
+                    minWidth: 80,
+                    accessor: e =>
+                      Value({
+                        value: e.etablissement.totalInteractions,
+                        empty: ""
+                      })
+                  },
+                  {
+                    Header: "Pole C",
+                    id: "pole-c",
+                    minWidth: 80,
+                    accessor: e =>
+                      Value({
+                        value:
+                          e.etablissement.interactions &&
+                          e.etablissement.interactions["C"],
+                        empty: ""
+                      })
+                  },
+                  {
+                    Header: "Pole 3E",
+                    id: "pole-3e",
+                    minWidth: 80,
+                    accessor: e =>
+                      Value({
+                        value:
+                          e.etablissement.interactions &&
+                          e.etablissement.interactions["3E"],
+                        empty: ""
+                      })
+                  },
+                  {
+                    Header: "Pole T",
+                    id: "pole-t",
+                    minWidth: 80,
+                    accessor: e =>
+                      Value({
+                        value:
+                          e.etablissement.interactions &&
+                          e.etablissement.interactions["T"],
+                        empty: ""
+                      })
+                  }
+                ]}
+                previousText="Précédent"
+                nextText="Suivant"
+                loadingText="Chargement..."
+                noDataText="Aucune données"
+                pageText="Page"
+                ofText="/"
+                rowsText="lignes"
+              />
             ) : (
               ""
             )}
@@ -88,4 +253,4 @@ class SearchResults extends React.Component {
   }
 }
 
-export default SearchResults;
+export default withRouter(SearchResults);

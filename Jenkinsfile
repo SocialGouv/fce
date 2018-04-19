@@ -21,7 +21,6 @@ pipeline {
       steps {
         script {
           TO_DEPLOY = false
-          STARTED = true
         }
         notifyBuild()
         echo "Init $BRANCH_NAME on $JENKINS_URL ..."
@@ -124,7 +123,7 @@ pipeline {
   post {
     always {
       sh '''
-        docker-compose down
+        [ -f docker-compose.yml ] && docker-compose down
         sudo chown -R $(id -u):$(id -g) ./
       '''
       deleteDir()
@@ -148,6 +147,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
   if (buildStatus == 'STARTED') {
     colorCode = "#6ECADC"
     emoji = ":checkered_flag:"
+    STARTED = true;
   } else if (buildStatus == 'WAITING') {
     colorCode = "#FFC300"
     emoji = ":double_vertical_bar:"

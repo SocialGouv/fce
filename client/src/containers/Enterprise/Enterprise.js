@@ -176,6 +176,7 @@ class Enterprise extends React.Component {
         enterprise={this.state.enterprise}
         headOffice={this.state.headOffice}
         establishments={this.state.establishments}
+        hasSearchResults={this.props.hasSearchResults}
         isLoaded={this.state.isLoaded}
       />
     ) : (
@@ -184,6 +185,7 @@ class Enterprise extends React.Component {
         headOffice={this.state.headOffice}
         establishment={this.state.establishment}
         establishments={this.state.establishments}
+        hasSearchResults={this.props.hasSearchResults}
         isLoaded={this.state.isLoaded}
       />
     );
@@ -192,7 +194,8 @@ class Enterprise extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentEnterprise: state.enterprise.current
+    currentEnterprise: state.enterprise.current,
+    hasSearchResults: state.search.results && state.search.results.length
   };
 };
 

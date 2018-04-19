@@ -133,6 +133,65 @@ class Mongo extends DataSource {
           "caractere_auxiliaire",
           "code_car__auxiliaire"
         ),
+        accords: obj => {
+          const sese = typeof obj.sese === "object" ? obj.sese : {};
+          const intVal = val => +val || 0;
+          return {
+            nb_accords: intVal(sese.nb_accord),
+            details: {
+              "Épargne salariale": intVal(sese.obs1),
+              "Salaires / rémunérations": intVal(sese.obs2),
+              "Durée du travail / repos": intVal(sese.obs3),
+              "Égalité professionnelle femmes-hommes": intVal(sese.obs4),
+              "Droit syndical et représentation du personnel": intVal(
+                sese.obs5
+              ),
+              "Emploi / GPEC": intVal(sese.obs6),
+              "Conditions de travail": intVal(sese.obs7),
+              "Prévoyance / protection sociale complémentaire": intVal(
+                sese.obs8
+              ),
+              Autres: intVal(sese.obs9)
+            }
+          };
+        },
+        pole_competitivite: obj => {
+          const sese = typeof obj.sese === "object" ? obj.sese : {};
+          if (+sese.pole_compet) {
+            const poles = [];
+            for (let i = 1; i <= 10; i++) {
+              const pole = sese[`pole${i}`];
+              if (typeof pole === "string" && pole.trim().length) {
+                poles.push(pole);
+              }
+            }
+            return poles;
+          }
+          return undefined;
+        },
+        ea: obj => {
+          const sese = obj.sese || {};
+          return !!sese.ea
+            ? {
+                nb_postes_2017: +sese.nb_postes_2017
+              }
+            : undefined;
+        },
+        alternance: obj => {
+          const sese = typeof obj.sese === "object" ? obj.sese : {};
+
+          if (+sese.alternance) {
+            return {
+              apprentisage: +sese.appr_tot || 0,
+              professionnalisation: +sese.ct_pro_tot || 0
+            };
+          }
+
+          return undefined;
+        },
+        prime_embauche_pme: obj => {
+          return +(obj.sese || {}).emb_pme;
+        },
         marchand: obj => {
           const codeMarchand = obj.code_marchand;
           let codeMarchandStr = null;

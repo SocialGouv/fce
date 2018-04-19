@@ -28,7 +28,46 @@ export default {
         await Promise.resolve(callback(out, request.data));
       }
     } catch (exception) {
-      console.error(exception);
+      if (exception && "request" in exception) {
+        let { message, request, response, config } = exception;
+
+        if (typeof config !== "object") request = {};
+        if (typeof request !== "object") request = {};
+        if (typeof request.res !== "object") request.res = {};
+        if (typeof response !== "object") response = {};
+        if (!response.data) response.data = "(no data)";
+
+        let { responseUrl } = request.res;
+        responseUrl =
+          responseUrl ||
+          request._currentUrl ||
+          typeof request._currentRequest === "object"
+            ? `${("" + (config.baseURL || "")).replace(
+                /^(https?:\/\/[^\/]*).*$/i,
+                "$1"
+              )}${request._currentRequest && request._currentRequest.path}`
+            : "unknown";
+
+        const bodyData =
+          typeof response.data === "object"
+            ? JSON.stringify(response.data, true, 2)
+            : response.data;
+
+        const proxy = JSON.stringify(config.proxy || false, true, 2);
+        console.error(
+          `
+--
+⚠️  ${message}
+${responseUrl}
+Proxy: ${proxy}
+--
+${bodyData}
+--
+`.trim()
+        );
+      } else {
+        console.error(exception);
+      }
     }
 
     return out;

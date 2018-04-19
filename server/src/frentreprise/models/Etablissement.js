@@ -48,6 +48,11 @@ class DireccteEtablissement extends Etablissement {
         "successeur",
         "caractere_saisonnier",
         "caractere_auxiliaire",
+        "accords",
+        "pole_competitivite",
+        "ea",
+        "alternance",
+        "prime_embauche_pme",
         "_dataSources"
       ],
       null

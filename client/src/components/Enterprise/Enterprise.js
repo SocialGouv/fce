@@ -4,6 +4,7 @@ import "./enterprise.css";
 import { Row, Col, Button } from "reactstrap";
 import QuickAccess from "./QuickAccess";
 import Establishments from "./Establishments";
+import MailTo from "./MailTo";
 import Value from "../../elements/Value";
 import {
   Direccte,
@@ -50,6 +51,7 @@ class Enterprise extends React.Component {
               <Button color="primary" onClick={() => window.print()}>
                 <FontAwesomeIcon icon={faPrint} /> Imprimer
               </Button>
+              <MailTo type="enterprise" enterprise={enterprise} />
             </div>
 
             <EnterpriseIdentity enterprise={enterprise} />

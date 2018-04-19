@@ -3,7 +3,11 @@ const hosts2config = require("./configs/hosts2configs.json");
 let config = null;
 const log = console.warning || console.error || console.log;
 const globalConfig = {
-  interactions: ["C", "3E", "T"]
+  interactions: ["C", "3E", "T"],
+  emailInformation: {
+    to: "oc.documentation@direccte.gouv.fr",
+    subject: "FCE - demande d’informations complémentaires"
+  }
 };
 
 function initConfig() {

@@ -18,6 +18,11 @@ import withLoading from "../../services/Loading";
 
 class AdvancedSearch extends React.Component {
   render() {
+    const interactionsOptions = [
+      { value: true, label: "N'importe quel pôle" },
+      ...this.props.autocompleteData.polesInteractions
+    ];
+
     return (
       <div className="app-advancedSearch">
         <Row className="justify-content-md-center">
@@ -29,6 +34,44 @@ class AdvancedSearch extends React.Component {
               ) : (
                 ""
               )}
+              <Row>
+                <Label for="siren" md={3}>
+                  SIREN
+                </Label>
+                <Col md={8}>
+                  <FormGroup>
+                    <Input
+                      type="text"
+                      name="siren"
+                      id="siren"
+                      placeholder="SIREN de l'entreprise"
+                      onChange={evt =>
+                        this.props.updateForm("siren", evt.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
+              <Row>
+                <Label for="raisonSociale" md={3}>
+                  Raison Sociale / Nom
+                </Label>
+                <Col md={8}>
+                  <FormGroup>
+                    <Input
+                      type="text"
+                      name="raisonSociale"
+                      id="raisonSociale"
+                      placeholder="Raison sociale ou Nom"
+                      onChange={evt =>
+                        this.props.updateForm("raisonSociale", evt.target.value)
+                      }
+                    />
+                  </FormGroup>
+                </Col>
+              </Row>
+
               <FormGroup row>
                 <Label for="naf" md={3}>
                   Code NAF
@@ -64,47 +107,9 @@ class AdvancedSearch extends React.Component {
                 </Col>
               </FormGroup>
 
-              <Row>
-                <Label for="raisonSociale" md={3}>
-                  Raison Sociale / Nom
-                </Label>
-                <Col md={8}>
-                  <FormGroup>
-                    <Input
-                      type="text"
-                      name="raisonSociale"
-                      id="raisonSociale"
-                      placeholder="Raison sociale ou Nom"
-                      onChange={evt =>
-                        this.props.updateForm("raisonSociale", evt.target.value)
-                      }
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-
-              <Row>
-                <Label for="siren" md={3}>
-                  SIREN
-                </Label>
-                <Col md={8}>
-                  <FormGroup>
-                    <Input
-                      type="text"
-                      name="siren"
-                      id="siren"
-                      placeholder="SIREN de l'entreprise"
-                      onChange={evt =>
-                        this.props.updateForm("siren", evt.target.value)
-                      }
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-
               <FormGroup row>
                 <Label for="commune" md={3}>
-                  Nom commune
+                  Commune
                 </Label>
                 <Col md={8}>
                   <DropdownList
@@ -212,21 +217,31 @@ class AdvancedSearch extends React.Component {
 
               <FormGroup row>
                 <Label for="interactions" md={3}>
-                  Interactions
+                  Interactions Direccte
                 </Label>
                 <Col md={8}>
-                  <Multiselect
-                    data={this.props.autocompleteData.polesInteractions}
-                    value={this.props.terms.interactions}
+                  <DropdownList
+                    data={interactionsOptions}
+                    value={
+                      this.props.terms.interactions &&
+                      this.props.terms.interactions.length ===
+                        this.props.autocompleteData.polesInteractions.length
+                        ? interactionsOptions[0]
+                        : this.props.terms.interactions[0]
+                    }
                     valueField="value"
                     textField="label"
                     filter
                     id="interactions"
                     name="interactions"
                     placeholder="Interactions avec la Direccte"
-                    onChange={value =>
-                      this.props.updateForm("interactions", value)
-                    }
+                    onChange={option => {
+                      const value =
+                        option.value === true
+                          ? this.props.autocompleteData.polesInteractions
+                          : [option];
+                      return this.props.updateForm("interactions", value);
+                    }}
                   />
                 </Col>
                 <Col className="dropdown-close" md={1}>

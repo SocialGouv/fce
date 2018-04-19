@@ -39,7 +39,6 @@ class Interventions extends React.Component {
 
     return (
       <section id="interventions" className="enterprise-section">
-
         <section id="development">
           <h2 className="subtitle h4">Développement économique</h2>
 
@@ -55,9 +54,7 @@ class Interventions extends React.Component {
             </dd>
 
             <dt className="dt col-md-4">Labels obtenus</dt>
-            <dd className="dd definition col-md-8">
-              Non-disponible
-            </dd>
+            <dd className="dd definition col-md-8">Non-disponible</dd>
           </dl>
         </section>
 
@@ -73,9 +70,7 @@ class Interventions extends React.Component {
             </dd>
 
             <dt className="dt col-md-4">Signataire de convention(s) FNE</dt>
-            <dd className="dd definition col-md-8">
-              Non-disponible
-            </dd>
+            <dd className="dd definition col-md-8">Non-disponible</dd>
           </dl>
         </section>
 
@@ -93,7 +88,8 @@ class Interventions extends React.Component {
                   href="#mutation-activity"
                   onClick={() => this.toggleElement("mutation-activity")}
                 >
-                  Voir le détail
+                  {this.state["mutation-activity"] ? "Masquer" : "Voir"} le
+                  détail
                 </a>
               ) : (
                 "Pas d'information"
@@ -170,7 +166,7 @@ class Interventions extends React.Component {
                   href="#mutation-job"
                   onClick={() => this.toggleElement("mutation-job")}
                 >
-                  Voir le détail
+                  {this.state["mutation-job"] ? "Masquer" : "Voir"} le détail
                 </a>
               ) : (
                 "Pas d'information"

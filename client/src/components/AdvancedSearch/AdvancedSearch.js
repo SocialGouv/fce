@@ -18,6 +18,11 @@ import withLoading from "../../services/Loading";
 
 class AdvancedSearch extends React.Component {
   render() {
+    const interactionsOptions = [
+      { value: true, label: "N'importe quel pôle" },
+      ...this.props.autocompleteData.polesInteractions
+    ];
+
     return (
       <div className="app-advancedSearch">
         <Row className="justify-content-md-center">
@@ -215,18 +220,28 @@ class AdvancedSearch extends React.Component {
                   Interactions Direccte
                 </Label>
                 <Col md={8}>
-                  <Multiselect
-                    data={this.props.autocompleteData.polesInteractions}
-                    value={this.props.terms.interactions}
+                  <DropdownList
+                    data={interactionsOptions}
+                    value={
+                      this.props.terms.interactions &&
+                      this.props.terms.interactions.length ===
+                        this.props.autocompleteData.polesInteractions.length
+                        ? interactionsOptions[0]
+                        : this.props.terms.interactions[0]
+                    }
                     valueField="value"
                     textField="label"
                     filter
                     id="interactions"
                     name="interactions"
                     placeholder="Interactions avec la Direccte"
-                    onChange={value =>
-                      this.props.updateForm("interactions", value)
-                    }
+                    onChange={option => {
+                      const value =
+                        option.value === true
+                          ? this.props.autocompleteData.polesInteractions
+                          : [option];
+                      return this.props.updateForm("interactions", value);
+                    }}
                   />
                 </Col>
                 <Col className="dropdown-close" md={1}>

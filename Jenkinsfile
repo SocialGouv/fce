@@ -1,3 +1,5 @@
+def STARTED = false
+
 pipeline {
   agent any
   options {
@@ -17,6 +19,10 @@ pipeline {
         }
       }
       steps {
+        script {
+          TO_DEPLOY = false
+          STARTED = true
+        }
         notifyBuild()
         echo "Init $BRANCH_NAME on $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
@@ -24,9 +30,6 @@ pipeline {
             cp .c42/docker-compose.yml.dist docker-compose.yml
             docker-compose build builder
           '''
-          script {
-            TO_DEPLOY = false
-          }
         }
       }
     }
@@ -156,5 +159,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
   def subject = "${emoji} *${buildStatus}* - ${env.JOB_NAME} [${env.BUILD_NUMBER}]"
   def summary = "${subject}\n\n${env.BUILD_URL}"
 
-  slackSend (color: colorCode, message: summary, channel: "${params.SLACK_CHANNEL}")
+  if(STARTED) {
+    slackSend (color: colorCode, message: summary, channel: "${params.SLACK_CHANNEL}")
+  }
 }

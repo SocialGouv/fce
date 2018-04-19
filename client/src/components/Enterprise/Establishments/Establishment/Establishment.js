@@ -5,6 +5,9 @@ import Value from "../../../../elements/Value";
 class Establishment extends React.Component {
   render() {
     const { establishment } = this.props;
+    const nbInteractions = Array.isArray(establishment.direccte)
+      ? establishment.direccte.length
+      : 0;
 
     return (
       <ul className="list-unstyled">
@@ -31,7 +34,11 @@ class Establishment extends React.Component {
               establishment.adresse_components.localite
             }
             empty=""
-          />{" "}
+          />
+          {" - "}
+          {nbInteractions > 1
+            ? `${nbInteractions} interactions`
+            : `${nbInteractions} interaction`}
         </li>
       </ul>
     );

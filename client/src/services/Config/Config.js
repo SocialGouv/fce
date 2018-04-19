@@ -4,6 +4,9 @@ let config = null;
 const log = console.warning || console.error || console.log;
 const globalConfig = {
   interactions: ["C", "3E", "T"],
+  region: {
+    occitanie: 76
+  },
   emailInformation: {
     to: "oc.documentation@direccte.gouv.fr",
     subject: "FCE - demande d’informations complémentaires"

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import withLoading from "../../services/Loading";
 import "./enterprise.css";
 import { Row, Col, Button } from "reactstrap";
@@ -15,7 +16,7 @@ import {
   Relation
 } from "./Sections";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/fontawesome-pro-light";
+import { faPrint, faArrowAltLeft } from "@fortawesome/fontawesome-pro-light";
 
 class Establishment extends React.Component {
   getSections = () => {
@@ -51,6 +52,13 @@ class Establishment extends React.Component {
             </h1>
 
             <div className="task-bar d-print-none">
+              {this.props.hasSearchResults ? (
+                <Link className="btn btn-secondary" to={`/search/results`}>
+                  <FontAwesomeIcon icon={faArrowAltLeft} /> Retour aux résultats
+                </Link>
+              ) : (
+                ""
+              )}
               <Button color="primary" onClick={() => window.print()}>
                 <FontAwesomeIcon icon={faPrint} /> Imprimer
               </Button>

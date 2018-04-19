@@ -19,9 +19,49 @@ class EstablishmentView extends React.Component {
     return (
       <section id="direccte" className="enterprise-section">
         <h1 className="title h4">Interactions DIRECCTE</h1>
-
+        <p>
+          <small>
+            Visite / Contrôle / suivi de la DIRECCTE (selon données disponibles
+            dans le prototype)
+          </small>
+        </p>
         {establishment.direccte && establishment.direccte.length ? (
           <div>
+            <div className="row justify-content-md-center">
+              <div className="col-xs-12 col-sm-8 col-md-6">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Pole</th>
+                      <th className="text-center">Nombre d'interactions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {establishment.direccte
+                      .reduce(
+                        (ints, dirvis) => {
+                          ints.counts[dirvis.pole]++;
+                          ints.table = Object.keys(ints.counts).map(key => ({
+                            key,
+                            value: ints.counts[key]
+                          }));
+                          return ints;
+                        },
+                        {
+                          counts: { T: 0, C: 0, "3E": 0 },
+                          table: []
+                        }
+                      )
+                      .table.map(pole => (
+                        <tr>
+                          <th>{pole.key}</th>
+                          <td className="text-center">{pole.value}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
             <div className="text-center">
               <a
                 className="d-print-none"
@@ -31,7 +71,6 @@ class EstablishmentView extends React.Component {
                 {this.state["direccte-detail"] ? "Masquer" : "Voir"} le détail
               </a>
             </div>
-
             <div
               id="direccte-detail"
               className={classNames({

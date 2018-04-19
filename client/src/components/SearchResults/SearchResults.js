@@ -197,42 +197,6 @@ class SearchResults extends React.Component {
                         value: e.etablissement.totalInteractions,
                         empty: ""
                       })
-                  },
-                  {
-                    Header: "Pole C",
-                    id: "pole-c",
-                    minWidth: 80,
-                    accessor: e =>
-                      Value({
-                        value:
-                          e.etablissement.interactions &&
-                          e.etablissement.interactions["C"],
-                        empty: ""
-                      })
-                  },
-                  {
-                    Header: "Pole 3E",
-                    id: "pole-3e",
-                    minWidth: 80,
-                    accessor: e =>
-                      Value({
-                        value:
-                          e.etablissement.interactions &&
-                          e.etablissement.interactions["3E"],
-                        empty: ""
-                      })
-                  },
-                  {
-                    Header: "Pole T",
-                    id: "pole-t",
-                    minWidth: 80,
-                    accessor: e =>
-                      Value({
-                        value:
-                          e.etablissement.interactions &&
-                          e.etablissement.interactions["T"],
-                        empty: ""
-                      })
                   }
                 ]}
                 previousText="Précédent"

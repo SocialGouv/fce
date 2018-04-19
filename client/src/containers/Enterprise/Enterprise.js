@@ -6,6 +6,7 @@ import {
   loadEstablishment,
   loadEntreprise
 } from "../../services/Store/actions";
+import Config from "../../services/Config";
 import {
   Establishment as EstablishmentView,
   Enterprise as EnterpriseView
@@ -155,11 +156,15 @@ class Enterprise extends React.Component {
       return establishment.siege_social === true;
     });
 
+    const establishments = enterprise.etablissements.filter(establishment => {
+      return establishment.code_region === Config.get("region").occitanie;
+    });
+
     this.setState({
       enterprise,
       headOffice: headOffice || {},
       establishment,
-      establishments: enterprise.etablissements,
+      establishments,
       isLoaded: true
     });
 
@@ -176,6 +181,7 @@ class Enterprise extends React.Component {
         enterprise={this.state.enterprise}
         headOffice={this.state.headOffice}
         establishments={this.state.establishments}
+        hasSearchResults={this.props.hasSearchResults}
         isLoaded={this.state.isLoaded}
       />
     ) : (
@@ -184,6 +190,7 @@ class Enterprise extends React.Component {
         headOffice={this.state.headOffice}
         establishment={this.state.establishment}
         establishments={this.state.establishments}
+        hasSearchResults={this.props.hasSearchResults}
         isLoaded={this.state.isLoaded}
       />
     );
@@ -192,7 +199,8 @@ class Enterprise extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentEnterprise: state.enterprise.current
+    currentEnterprise: state.enterprise.current,
+    hasSearchResults: state.search.results && state.search.results.length
   };
 };
 

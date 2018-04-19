@@ -136,55 +136,51 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
       $match: params
     },
     {
-      $addFields: {
+      $project: {
+        root: "$$ROOT",
         siretSiege: { $concat: ["$siren", "$nic_du_siege"] }
       }
     },
     {
       $lookup: {
         from: "interactions",
-        localField: "siret",
+        localField: "root.siret",
         foreignField: "siret",
         as: "interactions"
       }
     },
     {
-      $sort: { raison_sociale: 1, code_etat: 1 }
+      $sort: { "root.raison_sociale": 1, "root.code_etat": 1 }
     }
   ];
 
   if (onlySiegeSocial) {
     aggregateConfig.push({
       $redact: {
-        $cond: [{ $eq: ["$siret", "$siretSiege"] }, "$$KEEP", "$$PRUNE"]
+        $cond: [{ $eq: ["$root.siret", "$siretSiege"] }, "$$KEEP", "$$PRUNE"]
       }
     });
   }
 
-  if (interactions && interactions.length) {
-    aggregateConfig.push({
-      $addFields: {
-        nbInteractionsFiltered: {
-          $size: {
-            $filter: {
-              input: "$interactions",
-              as: "i",
-              cond: {
-                $in: ["$$i.pole", interactions]
-              }
-            }
-          }
-        }
-      }
-    });
-    aggregateConfig.push({
-      $redact: {
-        $cond: [{ $gt: ["$nbInteractionsFiltered", 0] }, "$$KEEP", "$$PRUNE"]
-      }
-    });
-  }
+  return this.aggregate(aggregateConfig, cb).then(result => {
+    if (Array.isArray(result)) {
+      result = result.map(line => {
+        return {
+          ...line,
+          ...line.root
+        };
+      });
 
-  return this.aggregate(aggregateConfig, cb);
+      if (interactions && interactions.length) {
+        result = result.filter(line => {
+          return line.interactions.filter(interaction => {
+            return interactions.includes(interaction.pole);
+          }).length;
+        });
+      }
+    }
+    return result;
+  });
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);

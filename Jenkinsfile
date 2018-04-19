@@ -22,7 +22,7 @@ pipeline {
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
             cp .c42/docker-compose.yml.dist docker-compose.yml
-            gem install --user-install bundler
+            docker-compose build builder
           '''
           script {
             TO_DEPLOY = false
@@ -41,7 +41,14 @@ pipeline {
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
           sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
-              $(gem env | grep "USER INSTALLATION DIRECTORY" | awk '{print $NF}')/bin/bundle install --clean
+                docker-compose run --rm \
+                    -v `pwd`:/project \
+                    -v `pwd`/.docker:/var/lib/docker \
+                    -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
+                    -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
+                    builder \
+                    bash -c \
+                    "bundle install --clean --path=vendors/bundle"
             '''
           }
       }
@@ -73,11 +80,17 @@ pipeline {
           }
           steps {
             echo "Deploying $BRANCH_NAME into on https://dev.direccte.commit42.fr/ from $JENKINS_URL ..."
-              sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
-                sh '''
-                  $(gem env | grep "USER INSTALLATION DIRECTORY" | awk '{print $NF}')/bin/bundle exec c42 deploy dev
-                '''
-              }
+            sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
+              sh '''
+                  docker-compose run --rm \
+                      -v `pwd`:/project \
+                      -v `pwd`/.docker:/var/lib/docker \
+                      -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
+                      -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
+                      builder \
+                      bundle exec c42 deploy dev
+              '''
+            }
           }
         }
         stage('Preproduction') {
@@ -90,9 +103,15 @@ pipeline {
           steps {
             echo "Deploying $BRANCH_NAME on https://direccte.commit42.fr/ from $JENKINS_URL ..."
             sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
-                sh '''
-                  $(gem env | grep "USER INSTALLATION DIRECTORY" | awk '{print $NF}')/bin/bundle exec c42 deploy preprod
-                '''
+              sh '''
+                  docker-compose run --rm \
+                      -v `pwd`:/project \
+                      -v `pwd`/.docker:/var/lib/docker \
+                      -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
+                      -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
+                      builder \
+                      bundle exec c42 deploy preprod
+              '''
             }
           }
         }

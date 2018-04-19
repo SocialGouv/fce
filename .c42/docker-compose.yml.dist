@@ -32,8 +32,8 @@ services:
 
   builder:
     build: .c42/docker/builder
+    privileged: true
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - ./:/project
       - $SSH_AUTH_SOCK:/ssh-agent
 

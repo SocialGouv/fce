@@ -6,6 +6,7 @@ import {
   loadEstablishment,
   loadEntreprise
 } from "../../services/Store/actions";
+import Config from "../../services/Config";
 import {
   Establishment as EstablishmentView,
   Enterprise as EnterpriseView
@@ -155,11 +156,15 @@ class Enterprise extends React.Component {
       return establishment.siege_social === true;
     });
 
+    const establishments = enterprise.etablissements.filter(establishment => {
+      return establishment.code_region === Config.get("region").occitanie;
+    });
+
     this.setState({
       enterprise,
       headOffice: headOffice || {},
       establishment,
-      establishments: enterprise.etablissements,
+      establishments,
       isLoaded: true
     });
 

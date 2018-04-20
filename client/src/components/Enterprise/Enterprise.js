@@ -46,7 +46,16 @@ class Enterprise extends React.Component {
             <h2 className="subtitle">Fiche Entreprise</h2>
 
             <h1 className="title">
-              <Value value={enterprise.raison_sociale} empty="-" />
+              <Value
+                value={
+                  enterprise.raison_sociale ||
+                  enterprise.sigle ||
+                  enterprise.nom_commercial ||
+                  `${enterprise.nom || ""} ${enterprise.prenom || ""}`.trim() ||
+                  null
+                }
+                empty="-"
+              />
             </h1>
 
             <div className="task-bar d-print-none">

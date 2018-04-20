@@ -20,7 +20,7 @@ class EnterpriseHeadOffice extends React.Component {
           </dd>
           <dt className="dt col-md-4">Adresse</dt>
           <dd className="dd col-md-8">
-            <Value value={headOffice.address} breakLines={true} empty="-" />
+            <Value value={headOffice.adresse} breakLines={true} empty="-" />
           </dd>
           <dt className="dt col-md-4">Date de création</dt>
           <dd className="dd col-md-8">

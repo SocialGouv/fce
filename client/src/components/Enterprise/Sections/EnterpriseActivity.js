@@ -19,16 +19,16 @@ class EnterpriseActivity extends React.Component {
           <dd className="dd col-md-8">
             <Value value={enterprise.date_de_creation} empty="-" />
           </dd>
-          {enterprise.date_de_radiation ? (
-            <div>
-              <dt className="dt col-md-4">Date de radiation</dt>
-              <dd className="dd col-md-8">
-                <Value value={enterprise.date_de_radiation} empty="-" />
-              </dd>
-            </div>
-          ) : (
-            ""
-          )}
+          {enterprise.date_de_radiation
+            ? [
+                <dt className="dt col-md-4" key="date_rad_label">
+                  Date de radiation
+                </dt>,
+                <dd className="dd col-md-8" key="date_rad_value">
+                  <Value value={enterprise.date_de_radiation} empty="-" />
+                </dd>
+              ]
+            : ""}
 
           <dt className="dt col-md-4">Etat de l'entreprise</dt>
           <dd className="dd col-md-8">

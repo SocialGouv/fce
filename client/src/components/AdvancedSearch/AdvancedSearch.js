@@ -13,7 +13,7 @@ import {
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 import { faTimes } from "@fortawesome/fontawesome-pro-light";
-import { DropdownList, Multiselect } from "react-widgets/lib";
+import { DropdownList } from "react-widgets/lib";
 import withLoading from "../../services/Loading";
 
 class AdvancedSearch extends React.Component {

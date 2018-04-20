@@ -32,8 +32,21 @@ Suite à la consultation de la fiche  « ${
 
 ${
       this.props.type === "enterprise"
-        ? `l'entreprise « ${this.props.enterprise.raison_sociale || this.props.enterprise.nom + " " + this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${this.props.enterprise.siren} ») et ses établissements.`
-        : `l'entreprise  « ${this.props.enterprise.raison_sociale || this.props.enterprise.nom + " " + this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${this.props.enterprise.siren} ») et plus spécifiquement sur son  établissement  ( « Numéro SIRET= ${this.props.establishment.siret} » ) situé à « ${this.props.establishment.adresse_components && this.props.establishment.adresse_components.localite} ».`
+        ? `l'entreprise « ${this.props.enterprise.raison_sociale ||
+            this.props.enterprise.nom +
+              " " +
+              this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${
+            this.props.enterprise.siren
+          } ») et ses établissements.`
+        : `l'entreprise  « ${this.props.enterprise.raison_sociale ||
+            this.props.enterprise.nom +
+              " " +
+              this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${
+            this.props.enterprise.siren
+          } ») et plus spécifiquement sur son  établissement  ( « Numéro SIRET= ${
+            this.props.establishment.siret
+          } » ) situé à « ${this.props.establishment.adresse_components &&
+            this.props.establishment.adresse_components.localite} ».`
     }
 
 Vous me remerciant pour les éléments que vous  pourrez m’apporter.
@@ -46,7 +59,6 @@ Cordialement`);
       <a
         className="btn btn-primary"
         href={`mailto:${this.getTo()}?subject=${this.getSubject()}&body=${this.getBody()}`}
-        target="_blank"
       >
         <FontAwesomeIcon icon={faEnvelope} /> Demande d'informations
       </a>

@@ -145,16 +145,17 @@ class SearchResults extends React.Component {
                     id: "code_postal",
                     minWidth: 200,
                     accessor: e =>
-                      Value({
+                      `${Value({
                         value:
                           e.etablissement.adresse_components &&
-                          e.etablissement.adresse_components.code_postal &&
-                          `${
-                            e.etablissement.adresse_components.code_postal
-                          }\u00A0(${e.etablissement.adresse_components
-                            .localite || ""})`,
+                          e.etablissement.adresse_components.code_postal,
                         empty: "-"
-                      })
+                      })}\u00A0(${Value({
+                        value:
+                          e.etablissement.adresse_components &&
+                          e.etablissement.adresse_components.localite,
+                        empty: "-"
+                      })})`
                   },
                   {
                     Header: "Département",

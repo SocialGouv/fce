@@ -107,7 +107,7 @@ class SearchResults extends React.Component {
                       Value({
                         value: e.etablissement.siret,
                         empty: "-",
-                        link: `/enterprise/${e.etablissement.siret}`
+                        link: `/establishment/${e.etablissement.siret}`
                       })
                   },
                   {

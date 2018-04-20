@@ -21,17 +21,24 @@ class EstablishmentView extends React.Component {
       enterprise.etablissements.reduce((data, etab) => {
         (etab.direccte || []).forEach(dirvis => {
           const { siret } = etab;
-          if (!data[siret]) data[siret] = { siret, count: 0 };
+          const etat = etab.etat_etablissement && etab.etat_etablissement.label;
+          const dep =
+            etab.adresse_components &&
+            etab.adresse_components.code_postal &&
+            etab.adresse_components.code_postal.substr(0, 2);
+          const commune =
+            etab.adresse_components && etab.adresse_components.localite;
+          if (!data[siret])
+            data[siret] = { siret, etat, dep, commune, count: 0 };
 
           data[siret].count++;
         });
-
         return data;
       }, {})
     );
 
     const total = direccte.reduce((acc, etab) => (acc += etab.count), 0);
-
+    console.log(direccte);
     return (
       <section id="direccte" className="enterprise-section">
         <h1 className="title h4">Interactions avec la DIRECCTE</h1>
@@ -45,18 +52,24 @@ class EstablishmentView extends React.Component {
         </dl>
         <table className="table table-striped direccte-interactions">
           <thead>
-            <tr className="row">
-              <th className="col-md-9">SIRET</th>
-              <th className="col-md-3">Nombre d'interactions</th>
+            <tr>
+              <th>SIRET</th>
+              <th>Etat</th>
+              <th>Département</th>
+              <th>Commune</th>
+              <th>Nombre d'interactions</th>
             </tr>
           </thead>
           <tbody>
             {direccte.map(etab => (
-              <tr key={etab.siret} className="row">
-                <td className="col-md-9">
+              <tr key={etab.siret}>
+                <td>
                   <Link to={`/establishment/${etab.siret}`}>{etab.siret}</Link>
                 </td>
-                <td className="col-md-3">{etab.count}</td>
+                <td>{etab.etat}</td>
+                <td>{etab.dep}</td>
+                <td>{etab.commune}</td>
+                <td>{etab.count}</td>
               </tr>
             ))}
           </tbody>

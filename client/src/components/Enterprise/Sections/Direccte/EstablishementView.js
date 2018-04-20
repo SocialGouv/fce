@@ -29,7 +29,7 @@ class EstablishmentView extends React.Component {
           <div>
             <div className="row justify-content-md-center">
               <div className="col-xs-12 col-sm-8 col-md-6">
-                <table class="table table-striped">
+                <table className="table table-striped">
                   <thead>
                     <tr>
                       <th>Pole</th>
@@ -52,8 +52,8 @@ class EstablishmentView extends React.Component {
                           table: []
                         }
                       )
-                      .table.map(pole => (
-                        <tr>
+                      .table.map((pole, index) => (
+                        <tr key={index}>
                           <th>{pole.key}</th>
                           <td className="text-center">{pole.value}</td>
                         </tr>

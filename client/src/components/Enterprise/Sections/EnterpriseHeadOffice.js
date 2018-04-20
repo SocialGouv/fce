@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Value from "../../../../elements/Value";
-import Transfert from "./Transfert";
+import Value from "../../../elements/Value";
+import EstablishmentTransfert from "./EstablishmentTransfert";
 
 class EnterpriseHeadOffice extends React.Component {
   render() {
@@ -35,8 +35,14 @@ class EnterpriseHeadOffice extends React.Component {
             />
           </dd>
 
-          <Transfert predecesseur={true} data={headOffice.predecesseur} />
-          <Transfert successeur={true} data={headOffice.successeur} />
+          <EstablishmentTransfert
+            predecesseur={true}
+            data={headOffice.predecesseur}
+          />
+          <EstablishmentTransfert
+            successeur={true}
+            data={headOffice.successeur}
+          />
         </dl>
       </section>
     );

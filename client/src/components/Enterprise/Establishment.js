@@ -11,6 +11,7 @@ import {
   EstablishmentActivity,
   EstablishmentIdentity,
   EstablishmentEnterpriseIdentity,
+  EstablishmentPredesSucce,
   Interventions,
   Direccte,
   Relation
@@ -24,6 +25,7 @@ class Establishment extends React.Component {
       { name: "Identité Ent.", id: "identity-en" },
       { name: "Identité Eta.", id: "identity-et" },
       { name: "État et activité", id: "activity" },
+      { name: "Prédécesseur / Successeur", id: "predessucce" },
       { name: "Relation travail", id: "relation" },
       { name: "Dév. Eco", id: "development" },
       { name: "Emploi", id: "job" },
@@ -82,6 +84,9 @@ class Establishment extends React.Component {
             <EstablishmentActivity
               establishment={this.props.establishment}
               enterprise={this.props.enterprise}
+            />
+            <EstablishmentPredesSucce
+              establishment={this.props.establishment}
             />
             <Relation establishment={this.props.establishment} />
             <Interventions

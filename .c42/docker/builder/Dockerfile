@@ -9,6 +9,7 @@ RUN gem update --system > /dev/null
 
 ENV SSH_AUTH_SOCK=/ssh-agent
 ENV BUNDLE_APP_CONFIG=/project/.bundle
+ENV SSH_AUTH_SOCK=/ssh-agent
 
 VOLUME [ "/project" ]
 WORKDIR /project

@@ -43,7 +43,7 @@ router.get("/search(.:format)?", function(req, res) {
   }
 
   freCall.then(() => {
-    data.size = data.results.length;
+    data.size = (data.results && data.results.length) || 0;
     sendResult(data, res);
   });
 });
@@ -83,7 +83,7 @@ router.get("/advancedSearch(.:format)?", function(req, res) {
 
   frentreprise.search(data.query.params).then(results => {
     data.results = results.map(ent => ent.export());
-    data.size = data.results.length;
+    data.size = data.results && data.results.length;
     sendResult(data, res);
   }, logError.bind(this, data));
 });

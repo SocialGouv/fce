@@ -46,6 +46,13 @@ class DireccteEtablissement extends Etablissement {
         "document_association",
         "predecesseur",
         "successeur",
+        "caractere_saisonnier",
+        "caractere_auxiliaire",
+        "accords",
+        "pole_competitivite",
+        "ea",
+        "alternance",
+        "prime_embauche_pme",
         "_dataSources"
       ],
       null

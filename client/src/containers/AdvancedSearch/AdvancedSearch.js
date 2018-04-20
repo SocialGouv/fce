@@ -73,6 +73,52 @@ class AdvancedSearch extends React.Component {
     evt && evt.preventDefault();
     this.setState({ hasError: false, searchLoading: true, errorMessage: null });
 
+    const nbTermsCompleted = () =>
+      Object.keys(this.state.terms).filter(
+        term =>
+          Array.isArray(this.state.terms[term])
+            ? this.state.terms[term].length
+            : this.state.terms[term]
+      ).length;
+
+    const isValidSearch = () => {
+      const nbTerms = nbTermsCompleted();
+      const { terms } = { ...this.state };
+
+      if (nbTerms === 1) {
+        return !(
+          terms.siegeSocial ||
+          terms.interactions.length ||
+          terms.departement
+        );
+      }
+      if (nbTerms === 2) {
+        return !(
+          (terms.siegeSocial && terms.interactions.length) ||
+          (terms.siegeSocial && terms.departement) ||
+          (terms.interactions.length && terms.departement)
+        );
+      }
+      if (nbTerms === 3) {
+        return !(
+          terms.siegeSocial &&
+          terms.interactions.length &&
+          terms.departement
+        );
+      }
+      return true;
+    };
+
+    if (!isValidSearch()) {
+      this.setState({
+        hasError: true,
+        searchLoading: false,
+        errorMessage:
+          "Votre recherche n'est pas assez précise, veuillez choisir d'autres filtres"
+      });
+      return false;
+    }
+
     this.props
       .advancedSearch(this.state.terms)
       .then(response => {

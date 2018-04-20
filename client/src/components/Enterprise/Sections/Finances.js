@@ -17,18 +17,23 @@ class Finances extends React.Component {
         );
       });
       caList = Object.values(establishment.donnees_ecofi).map((ca, index) => {
+        ca = new Intl.NumberFormat("fr-FR", {
+          style: "currency",
+          currency: "EUR",
+          minimumFractionDigits: 0
+        }).format(ca);
         return (
           <td key={index}>
-            <Value value={ca} empty="-" />€
+            <Value value={ca} empty="-" />
           </td>
         );
       });
 
-      emptyList = Object.values(establishment.donnees_ecofi).map((ca, index) => {
-        return (
-          <td key={index}></td>
-        );
-      });
+      emptyList = Object.values(establishment.donnees_ecofi).map(
+        (ca, index) => {
+          return <td key={index} />;
+        }
+      );
     }
 
     return (

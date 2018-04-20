@@ -1,6 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Value from "../../../elements/Value";
 import EstablishmentTransfert from "./EstablishmentTransfert";
 
 class EstablishmentPredesSucce extends React.Component {

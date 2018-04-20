@@ -108,8 +108,15 @@ class Interventions extends React.Component {
                 </table>
               </div>
             ) : null}
-            <dt className="dt col-md-8 mt-4">Labels obtenus</dt>
-            <dd className="dd definition col-md-4 mt-4">Non-disponible</dd>
+            <dt className="dt col-md-12 mt-4">Labels obtenus</dt>
+            <dt className="dt col-md-4">EPV</dt>
+            <dd className="dd definition col-md-8">Non disponible</dd>
+
+            <dt className="dt col-md-4">Destination pour tous</dt>
+            <dd className="dd definition col-md-8">Non disponible</dd>
+
+            <dt className="dt col-md-4">Tourisme et handicap</dt>
+            <dd className="dd definition col-md-8">Non disponible</dd>
           </dl>
         </section>
         <section id="job">
@@ -193,11 +200,6 @@ class Interventions extends React.Component {
               </dd>
             </dl>
           ) : null}
-
-          <dl className="dl row mt-4">
-            <dt className="dt col-md-4">Signataire de convention(s) FNE</dt>
-            <dd className="dd definition col-md-8">Non-disponible</dd>
-          </dl>
         </section>
 
         <section id="mutations">
@@ -340,6 +342,11 @@ class Interventions extends React.Component {
               </dl>
             </div>
           ) : null}
+
+          <dl className="dl row mt-4">
+            <dt className="dt col-md-4">Signataire de convention(s) FNE</dt>
+            <dd className="dd definition col-md-8">Non-disponible</dd>
+          </dl>
         </section>
       </section>
     );

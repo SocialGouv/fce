@@ -38,7 +38,7 @@ class EstablishmentView extends React.Component {
     );
 
     const total = direccte.reduce((acc, etab) => (acc += etab.count), 0);
-    console.log(direccte);
+
     return (
       <section id="direccte" className="enterprise-section">
         <h1 className="title h4">Interactions avec la DIRECCTE</h1>

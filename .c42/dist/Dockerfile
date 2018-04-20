@@ -1,10 +1,16 @@
 FROM node:9.7.1
 
+ENV NODE_ENV=production
+
+ENV HTTP_PROXY "http://intervenant.fce:Sh%40rk811@proxyweb.intranet.social.gouv.fr:8080"
+ENV HTTPS_PROXY "http://intervenant.fce:Sh%40rk811@proxyweb.intranet.social.gouv.fr:8080"
+
 RUN curl -o- -L https://yarnpkg.com/install.sh | bash
 
 ADD . /app/
 
 WORKDIR /app/
+VOLUME [ "/app/config" ]
 
 RUN yarn install
 
@@ -15,10 +21,6 @@ RUN apt-get install -y mongodb-org
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod a+x /entrypoint.sh
-
-ENV NODE_ENV=production
-ENV HTTP_PROXY "http://proxyweb.intranet.social.gouv.fr:8080"
-ENV HTTPS_PROXY "http://proxyweb.intranet.social.gouv.fr:8080"
 
 EXPOSE 80
 VOLUME [ "/var/lib/mongodb" ]

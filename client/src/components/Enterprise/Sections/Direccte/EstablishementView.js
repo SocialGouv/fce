@@ -102,18 +102,18 @@ class EstablishmentView extends React.Component {
                         <td>
                           <Value value={dirvis.pole} empty="-" />
                         </td>
-                        <td>-</td>
+                        <td>ND</td>
                         <td>
                           <Value value={dirvis.unite} empty="-" />
                         </td>
-                        <td>-</td>
+                        <td>ND</td>
                         <td>
                           <Value value={dirvis.type_intervention} empty="-" />
                         </td>
                         <td>
                           <Value value={dirvis.cible_intervention} empty="-" />
                         </td>
-                        <td>-</td>
+                        <td>ND</td>
                       </tr>
                     );
                   })}

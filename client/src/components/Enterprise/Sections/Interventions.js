@@ -143,7 +143,7 @@ class Interventions extends React.Component {
               Structure de l'insertion par l'activité économique
             </dt>
             <dd className="dd col-md-8">
-              <Value value={strActEco} empty="-" />
+              <Value value={strActEco} empty="Non disponible" />
             </dd>
             <dt className="dt col-md-12 mt-4">Prime embauche PME</dt>
             <dd className="dt col-md-4">

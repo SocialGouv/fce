@@ -49,6 +49,14 @@ class EstablishmentActivity extends React.Component {
           <dd className="dd col-md-8">
             <Value value={establishment.modalite_activite} empty="-" />
           </dd>
+          <dt className="dt col-md-4">Caractère Saisonner</dt>
+          <dd className="dd col-md-8">
+            <Value value={establishment.caractere_saisonnier} empty="-" />
+          </dd>
+          <dt className="dt col-md-4">Caractère auxiliaire</dt>
+          <dd className="dd col-md-8">
+            <Value value={establishment.caractere_auxiliaire} empty="-" />
+          </dd>
           <dt className="dt col-md-4 mt-4">Marchand</dt>
           <dd className="dd col-md-8 mt-4">
             <Value value={establishment.marchand} empty="-" />

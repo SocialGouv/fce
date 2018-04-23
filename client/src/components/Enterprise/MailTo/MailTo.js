@@ -25,10 +25,10 @@ class MailTo extends React.Component {
 
   getBody = () => {
     return encodeURIComponent(`Bonjour,
-    
+
 Suite à la consultation de la fiche  « ${
       this.props.type === "enterprise" ? "Entreprise" : "Etablissement"
-    } » sur la FCE, je souhaiterai obtenir de la documentation sur : 
+    } » sur la FCE, je souhaiterais obtenir de la documentation sur :
 
 ${
       this.props.type === "enterprise"
@@ -49,7 +49,7 @@ ${
             this.props.establishment.adresse_components.localite} ».`
     }
 
-Vous me remerciant pour les éléments que vous  pourrez m’apporter.
+En vous remerciant pour les éléments que vous  pourrez m’apporter.
 
 Cordialement`);
   };

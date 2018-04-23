@@ -35,7 +35,7 @@ class Relation extends React.Component {
             <Value value={establishment.annee_idcc} empty="-" />
           </dd>
           <dt className="dt col-md-4">Déclaration AGEFIPH</dt>
-          <dd className="dd col-md-8" />
+          <dd className="dd col-md-8">Non disponible</dd>
           <dt className="dt col-md-4">Dernière année de conformité connue</dt>
           <dd className="dd col-md-8">
             <Value

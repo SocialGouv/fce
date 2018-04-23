@@ -77,8 +77,8 @@ class Enterprise extends React.Component {
             <EnterpriseHeadOffice headOffice={headOffice} />
             <Finances establishment={headOffice} />
             <Attestations enterprise={enterprise} />
-            <Mandataires enterprise={enterprise} />
             <Direccte enterprise={enterprise} />
+            <Mandataires enterprise={enterprise} />
           </Col>
           <Col className="aside-box" md="3">
             <Establishments

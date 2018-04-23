@@ -31,7 +31,7 @@ class Finances extends React.Component {
 
       emptyList = Object.values(establishment.donnees_ecofi).map(
         (ca, index) => {
-          return <td key={index} />;
+          return <td key={index}>Non disponible</td>;
         }
       );
     }
@@ -54,15 +54,11 @@ class Finances extends React.Component {
                 {caList}
               </tr>
               <tr>
-                <th scope="row">CA sur 5 ans</th>
+                <th scope="row">Résultats</th>
                 {emptyList}
               </tr>
               <tr>
-                <th scope="row">Résultats sur 5 ans</th>
-                {emptyList}
-              </tr>
-              <tr>
-                <th scope="row">Capitaux propres sur 5 ans</th>
+                <th scope="row">Capitaux propres</th>
                 {emptyList}
               </tr>
             </tbody>

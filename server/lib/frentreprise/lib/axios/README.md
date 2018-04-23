@@ -74,7 +74,7 @@ axios.get('/user', {
   .catch(function (error) {
     console.log(error);
   });
-  
+
 // Want to use async/await? Add the `async` keyword to your outer function/method.
 async function getUser() {
   try {
@@ -86,7 +86,7 @@ async function getUser() {
 }
 ```
 
-> **NOTE:** `async/await` is part of ECMAScript 2017 and is not supported in Internet 
+> **NOTE:** `async/await` is part of ECMAScript 2017 and is not supported in Internet
 > Explorer and older browsers, so use with caution.
 
 Performing a `POST` request
@@ -188,7 +188,7 @@ You can create a new instance of axios with a custom config.
 ##### axios.create([config])
 
 ```js
-var instance = axios.create({
+const instance = axios.create({
   baseURL: 'https://some-domain.com/api/',
   timeout: 1000,
   headers: {'X-Custom-Header': 'foobar'}
@@ -315,7 +315,7 @@ These are the available config options for making requests. Only the `url` is re
     // Do whatever you want with the native progress event
   },
 
-  // `maxContentLength` defines the max size of the http response content allowed
+  // `maxContentLength` defines the max size of the http response content in bytes allowed
   maxContentLength: 2000,
 
   // `validateStatus` defines whether to resolve or reject the promise for a given
@@ -424,7 +424,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 
 ```js
 // Set config defaults when creating the instance
-var instance = axios.create({
+const instance = axios.create({
   baseURL: 'https://api.example.com'
 });
 
@@ -439,10 +439,10 @@ Config will be merged with an order of precedence. The order is library defaults
 ```js
 // Create an instance using the config defaults provided by the library
 // At this point the timeout config value is `0` as is the default for the library
-var instance = axios.create();
+const instance = axios.create();
 
 // Override timeout default for the library
-// Now all requests will wait 2.5 seconds before timing out
+// Now all requests using this instance will wait 2.5 seconds before timing out
 instance.defaults.timeout = 2500;
 
 // Override timeout for this request as it's known to take a long time
@@ -478,14 +478,14 @@ axios.interceptors.response.use(function (response) {
 If you may need to remove an interceptor later you can.
 
 ```js
-var myInterceptor = axios.interceptors.request.use(function () {/*...*/});
+const myInterceptor = axios.interceptors.request.use(function () {/*...*/});
 axios.interceptors.request.eject(myInterceptor);
 ```
 
 You can add interceptors to a custom instance of axios.
 
 ```js
-var instance = axios.create();
+const instance = axios.create();
 instance.interceptors.request.use(function () {/*...*/});
 ```
 
@@ -532,8 +532,8 @@ You can cancel a request using a *cancel token*.
 You can create a cancel token using the `CancelToken.source` factory as shown below:
 
 ```js
-var CancelToken = axios.CancelToken;
-var source = CancelToken.source();
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 
 axios.get('/user/12345', {
   cancelToken: source.token
@@ -558,8 +558,8 @@ source.cancel('Operation canceled by the user.');
 You can also create a cancel token by passing an executor function to the `CancelToken` constructor:
 
 ```js
-var CancelToken = axios.CancelToken;
-var cancel;
+const CancelToken = axios.CancelToken;
+let cancel;
 
 axios.get('/user/12345', {
   cancelToken: new CancelToken(function executor(c) {
@@ -583,7 +583,7 @@ By default, axios serializes JavaScript objects to `JSON`. To send data in the `
 In a browser, you can use the [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) API as follows:
 
 ```js
-var params = new URLSearchParams();
+const params = new URLSearchParams();
 params.append('param1', 'value1');
 params.append('param2', 'value2');
 axios.post('/foo', params);
@@ -594,8 +594,22 @@ axios.post('/foo', params);
 Alternatively, you can encode data using the [`qs`](https://github.com/ljharb/qs) library:
 
 ```js
-var qs = require('qs');
+const qs = require('qs');
 axios.post('/foo', qs.stringify({ 'bar': 123 }));
+```
+
+Or in another way (ES6),
+
+```js
+import qs from 'qs';
+const data = { 'bar': 123 };
+const options = {
+  method: 'POST',
+  headers: { 'content-type': 'application/x-www-form-urlencoded' },
+  data: qs.stringify(data),
+  url,
+};
+axios(options);
 ```
 
 ### Node.js
@@ -603,7 +617,7 @@ axios.post('/foo', qs.stringify({ 'bar': 123 }));
 In node.js, you can use the [`querystring`](https://nodejs.org/api/querystring.html) module as follows:
 
 ```js
-var querystring = require('querystring');
+const querystring = require('querystring');
 axios.post('http://something.com/', querystring.stringify({ foo: 'bar' }));
 ```
 

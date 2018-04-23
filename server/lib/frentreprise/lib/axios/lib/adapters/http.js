@@ -13,8 +13,6 @@ var pkg = require('./../../package.json');
 var createError = require('../core/createError');
 var enhanceError = require('../core/enhanceError');
 
-var isHttps = /https:?/;
-
 /*eslint consistent-return:0*/
 module.exports = function httpAdapter(config) {
   return new Promise(function dispatchHttpRequest(resolvePromise, rejectPromise) {
@@ -78,8 +76,8 @@ module.exports = function httpAdapter(config) {
       delete headers.Authorization;
     }
 
-    var isHttpsRequest = isHttps.test(protocol);
-    var agent = isHttpsRequest ? config.httpsAgent : config.httpAgent;
+    var isHttps = protocol === 'https:';
+    var agent = isHttps ? config.httpsAgent : config.httpAgent;
 
     var options = {
       path: buildURL(parsed.path, config.params, config.paramsSerializer).replace(/^\?/, ''),
@@ -104,8 +102,7 @@ module.exports = function httpAdapter(config) {
         var parsedProxyUrl = url.parse(proxyUrl);
         proxy = {
           host: parsedProxyUrl.hostname,
-          port: parsedProxyUrl.port,
-          protocol: (parsedProxyUrl.protocol || protocol).slice(0, -1)
+          port: parsedProxyUrl.port
         };
 
         if (parsedProxyUrl.auth) {
@@ -133,16 +130,15 @@ module.exports = function httpAdapter(config) {
     }
 
     var transport;
-    var isHttpsProxy = isHttpsRequest && (proxy ? isHttps.test(proxy.protocol) : true);
     if (config.transport) {
       transport = config.transport;
     } else if (config.maxRedirects === 0) {
-      transport = isHttpsProxy ? https : http;
+      transport = isHttps ? https : http;
     } else {
       if (config.maxRedirects) {
         options.maxRedirects = config.maxRedirects;
       }
-      transport = isHttpsProxy ? httpsFollow : httpFollow;
+      transport = isHttps ? httpsFollow : httpFollow;
     }
 
     if (config.maxContentLength && config.maxContentLength > -1) {
@@ -237,7 +233,9 @@ module.exports = function httpAdapter(config) {
 
     // Send the request
     if (utils.isStream(data)) {
-      data.pipe(req);
+      data.on('error', function handleStreamError(err) {
+        reject(enhanceError(err, config, null, req));
+      }).pipe(req);
     } else {
       req.end(data);
     }

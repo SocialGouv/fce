@@ -243,6 +243,10 @@ module.exports = {
         test.equal(resp.status, 200);
         test.equal(resp.statusText, 'OK');
         test.done();
+      })
+      .catch(function (error) {
+        test.ifError(error);
+        test.done();
       });
     });
   },
@@ -264,6 +268,21 @@ module.exports = {
           test.equal(string, fs.readFileSync(__filename, 'utf8'));
           test.done();
         });
+      });
+    });
+  },
+
+  testFailedStream: function(test) {
+    server = http.createServer(function (req, res) {
+      req.pipe(res);
+    }).listen(4444, function () {
+      axios.post('http://localhost:4444/',
+        fs.createReadStream('/does/not/exist')
+      ).then(function (res) {
+        test.fail();
+      }).catch(function (err) {
+        test.equal(err.message, 'ENOENT: no such file or directory, open \'/does/not/exist\'');
+        test.done();
       });
     });
   },

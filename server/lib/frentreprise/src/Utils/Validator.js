@@ -1,6 +1,8 @@
-export function validateSIREN(SIREN) {
+export function validateSIREN(SIREN, strict = false) {
   // SIREN is 9 numeric characters only
   if (!/^[0-9]{9}$/.test(SIREN)) return false;
+
+  if (!strict) return true;
 
   // SIREN verification works as following :
   // we reduce digits one by one, respecting the following rules
@@ -26,9 +28,11 @@ export function validateSIREN(SIREN) {
   return summed % 10 === 0;
 }
 
-export function validateSIRET(SIRET) {
+export function validateSIRET(SIRET, strict = false) {
   // SIREN is 14 numeric characters only
   if (!/^[0-9]{14}$/.test(SIRET)) return false;
+
+  if (!strict) return true;
 
   // SIREN verification works as following :
   // we reduce digits one by one, respecting the following rules

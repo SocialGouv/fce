@@ -46,6 +46,9 @@ const etablissementSchema = new Schema({
   label_region: String,
   code_departement: String,
 
+  code_car__saisonnier: String,
+  code_car__auxiliaire: String,
+
   code_section: String,
 
   numero_voie: String,
@@ -72,7 +75,27 @@ etablissementSchema.statics.findSIRETsBySIREN = function(siren, cb) {
 };
 
 etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
-  return this.find({ raison_sociale: new RegExp(raisonSociale, "i") }, cb);
+  const regex = new RegExp(raisonSociale, "i");
+
+  return this.aggregate(
+    [
+      {
+        $match: { $or: [{ raison_sociale: regex }, { nom: regex }] }
+      },
+      {
+        $lookup: {
+          from: "interactions",
+          localField: "siret",
+          foreignField: "siret",
+          as: "interactions"
+        }
+      },
+      {
+        $sort: { raison_sociale: 1, code_etat: 1 }
+      }
+    ],
+    cb
+  );
 };
 
 /**
@@ -89,14 +112,75 @@ etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
     searchParams && searchParams.raison_sociale
       ? new RegExp(searchParams.raison_sociale, "i")
       : null;
+  const onlySiegeSocial = searchParams.siege_social;
+  const interactions = searchParams.interactions;
 
   const params = {
-    ...searchParams,
-    raison_sociale: raisonSocialParam
+    ...searchParams
   };
 
+  delete params.raison_sociale;
+  delete params.siege_social;
+  delete params.interactions;
+
+  if (raisonSocialParam) {
+    params["$or"] = [
+      { raison_sociale: raisonSocialParam },
+      { nom: raisonSocialParam }
+    ];
+  }
   ObjectManipulations.clean(params);
-  return this.find(params, cb);
+
+  let aggregateConfig = [
+    {
+      $match: params
+    },
+    {
+      $project: {
+        root: "$$ROOT",
+        siretSiege: { $concat: ["$siren", "$nic_du_siege"] }
+      }
+    },
+    {
+      $lookup: {
+        from: "interactions",
+        localField: "root.siret",
+        foreignField: "siret",
+        as: "interactions"
+      }
+    },
+    {
+      $sort: { "root.raison_sociale": 1, "root.code_etat": 1 }
+    }
+  ];
+
+  if (onlySiegeSocial) {
+    aggregateConfig.push({
+      $redact: {
+        $cond: [{ $eq: ["$root.siret", "$siretSiege"] }, "$$KEEP", "$$PRUNE"]
+      }
+    });
+  }
+
+  return this.aggregate(aggregateConfig, cb).then(result => {
+    if (Array.isArray(result)) {
+      result = result.map(line => {
+        return {
+          ...line,
+          ...line.root
+        };
+      });
+
+      if (interactions && interactions.length) {
+        result = result.filter(line => {
+          return line.interactions.filter(interaction => {
+            return interactions.includes(interaction.pole);
+          }).length;
+        });
+      }
+    }
+    return result;
+  });
 };
 
 const Etablissement = mongoose.model("Etablissement", etablissementSchema);

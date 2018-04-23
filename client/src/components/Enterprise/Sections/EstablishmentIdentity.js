@@ -3,7 +3,7 @@ import Value from "../../../elements/Value";
 
 class EstablishmentIdentity extends React.Component {
   render() {
-    const { establishment, enterprise, headOffice } = this.props;
+    const { establishment } = this.props;
 
     return (
       <section id="identity-et" className="enterprise-section">
@@ -27,7 +27,7 @@ class EstablishmentIdentity extends React.Component {
 
           <dt className="dt col-md-4">Adresse</dt>
           <dd className="dd col-md-8">
-            <Value value={establishment.adresse} empty="-" />
+            <Value value={establishment.adresse} breakLines={true} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Département</dt>

@@ -1,21 +1,23 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import withLoading from "../../services/Loading";
 import "./enterprise.css";
 import { Row, Col, Button } from "reactstrap";
 import QuickAccess from "./QuickAccess";
 import Establishments from "./Establishments";
+import MailTo from "./MailTo";
 import Value from "../../elements/Value";
 import {
   EstablishmentActivity,
   EstablishmentIdentity,
   EstablishmentEnterpriseIdentity,
+  EstablishmentPredesSucce,
   Interventions,
   Direccte,
-  Mandataires,
   Relation
 } from "./Sections";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/fontawesome-pro-light";
+import { faPrint, faArrowAltLeft } from "@fortawesome/fontawesome-pro-light";
 
 class Establishment extends React.Component {
   getSections = () => {
@@ -23,6 +25,7 @@ class Establishment extends React.Component {
       { name: "Identité Ent.", id: "identity-en" },
       { name: "Identité Eta.", id: "identity-et" },
       { name: "État et activité", id: "activity" },
+      { name: "Prédécesseur / Successeur", id: "predessucce" },
       { name: "Relation travail", id: "relation" },
       { name: "Dév. Eco", id: "development" },
       { name: "Emploi", id: "job" },
@@ -51,9 +54,21 @@ class Establishment extends React.Component {
             </h1>
 
             <div className="task-bar d-print-none">
+              {this.props.hasSearchResults ? (
+                <Link className="btn btn-secondary" to={`/search/results`}>
+                  <FontAwesomeIcon icon={faArrowAltLeft} /> Retour aux résultats
+                </Link>
+              ) : (
+                ""
+              )}
               <Button color="primary" onClick={() => window.print()}>
                 <FontAwesomeIcon icon={faPrint} /> Imprimer
               </Button>
+              <MailTo
+                type="establishment"
+                enterprise={enterprise}
+                establishment={establishment}
+              />
             </div>
 
             <EstablishmentEnterpriseIdentity
@@ -69,6 +84,9 @@ class Establishment extends React.Component {
             <EstablishmentActivity
               establishment={this.props.establishment}
               enterprise={this.props.enterprise}
+            />
+            <EstablishmentPredesSucce
+              establishment={this.props.establishment}
             />
             <Relation establishment={this.props.establishment} />
             <Interventions

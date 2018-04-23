@@ -31,7 +31,7 @@ class Search extends React.Component {
                   id="term"
                   className="field"
                   required
-                  placeholder="SIRET, SIREN, raison sociale"
+                  placeholder="SIRET, SIREN, raison sociale, nom"
                   onChange={evt => this.props.updateForm(evt)}
                 />
               </FormGroup>

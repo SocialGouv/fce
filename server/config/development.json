@@ -1,3 +1,4 @@
 {
-  "mongo": "mongodb://mongo/direccte_dev"
+  "mongo": "mongodb://mongo/direccte_dev",
+  "proxy": false
 }

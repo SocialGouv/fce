@@ -14,7 +14,11 @@ class AdvancedSearch extends React.Component {
         naf: null,
         commune: null,
         codePostal: null,
-        departement: null
+        departement: null,
+        siren: null,
+        raisonSociale: null,
+        interactions: [],
+        siegeSocial: null
       },
       hasError: false,
       errorMessage: null,
@@ -71,15 +75,46 @@ class AdvancedSearch extends React.Component {
 
     const nbTermsCompleted = () =>
       Object.keys(this.state.terms).filter(
-        term => term !== "naf" && this.state.terms[term]
+        term =>
+          Array.isArray(this.state.terms[term])
+            ? this.state.terms[term].length
+            : this.state.terms[term]
       ).length;
 
-    if (!this.state.terms.naf || !nbTermsCompleted()) {
+    const isValidSearch = () => {
+      const nbTerms = nbTermsCompleted();
+      const { terms } = { ...this.state };
+
+      if (nbTerms === 1) {
+        return !(
+          terms.siegeSocial ||
+          terms.interactions.length ||
+          terms.departement
+        );
+      }
+      if (nbTerms === 2) {
+        return !(
+          (terms.siegeSocial && terms.interactions.length) ||
+          (terms.siegeSocial && terms.departement) ||
+          (terms.interactions.length && terms.departement)
+        );
+      }
+      if (nbTerms === 3) {
+        return !(
+          terms.siegeSocial &&
+          terms.interactions.length &&
+          terms.departement
+        );
+      }
+      return true;
+    };
+
+    if (!isValidSearch()) {
       this.setState({
         hasError: true,
         searchLoading: false,
         errorMessage:
-          "Vous devez renseigner un code NAF ainsi qu'un champ supplémentaire"
+          "Votre recherche n'est pas assez précise, veuillez choisir d'autres filtres"
       });
       return false;
     }
@@ -94,12 +129,13 @@ class AdvancedSearch extends React.Component {
             response.data.results.length === 1 &&
             response.data.results[0].etablissements.length === 1
               ? `/establishment/${
-                  response.data.results.etablissements[0].siret
+                  response.data.results[0].etablissements[0].siret
                 }`
               : "/search/results"
         });
       })
       .catch(error => {
+        console.error(error);
         this.setState({
           hasError: true,
           searchLoading: false,

@@ -4,12 +4,8 @@
   },
   "mongo": "mongodb://localhost/direccte",
   "proxy": {
-    "host":"proxyweb.intranet.social.gouv.fr",
-    "port":"8080",
-    "protocol": "http",
-    "auth": {
-      "username":"intervenant.fce",
-      "password": "Sh@rk811"
-    }
+    "host": "127.17.0.1",
+    "port": 3128
+
   }
 }

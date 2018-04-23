@@ -1,11 +1,12 @@
 import * as types from "../constants/ActionTypes";
 import Http from "../../Http";
+import Config from "../../Config";
 
 export const search = term => (dispatch, getState) => {
   dispatch(
     _setTerms({
       raisonSociale: term,
-      csvURL: Http.buildURL(`${Http.defaults.baseURL}/search.csv`, {
+      csvURL: Http.buildURL(`${Http.defaults.baseURL}/search.xlsx`, {
         q: term
       })
     })
@@ -35,7 +36,7 @@ export const advancedSearch = terms => (dispatch, getState) => {
     _setTerms({
       ...terms,
       csvURL: Http.buildURL(
-        `${Http.defaults.baseURL}/advancedSearch.csv`,
+        `${Http.defaults.baseURL}/advancedSearch.xlsx`,
         terms
       )
     })
@@ -60,6 +61,16 @@ export const getNomenclatures = terms => (dispatch, getState) => {
 
   return Http.get("/entities")
     .then(function(response) {
+      if (typeof response.data.results === "object") {
+        response.data.results.polesInteractions = Config.get(
+          "interactions"
+        ).map(interaction => {
+          return {
+            value: interaction,
+            label: `Pôle ${interaction}`
+          };
+        });
+      }
       dispatch(_setNomenclatures(response.data.results));
       return Promise.resolve(response);
     })

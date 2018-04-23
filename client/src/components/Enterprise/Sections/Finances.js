@@ -6,6 +6,7 @@ class Finances extends React.Component {
     const { establishment } = this.props;
     let dates = [];
     let caList = [];
+    let emptyList = [];
 
     if (establishment.donnees_ecofi) {
       dates = Object.keys(establishment.donnees_ecofi).map((date, index) => {
@@ -16,12 +17,23 @@ class Finances extends React.Component {
         );
       });
       caList = Object.values(establishment.donnees_ecofi).map((ca, index) => {
+        ca = new Intl.NumberFormat("fr-FR", {
+          style: "currency",
+          currency: "EUR",
+          minimumFractionDigits: 0
+        }).format(ca);
         return (
           <td key={index}>
-            <Value value={ca} empty="-" />€
+            <Value value={ca} empty="-" />
           </td>
         );
       });
+
+      emptyList = Object.values(establishment.donnees_ecofi).map(
+        (ca, index) => {
+          return <td key={index}>Non disponible</td>;
+        }
+      );
     }
 
     return (
@@ -40,6 +52,14 @@ class Finances extends React.Component {
               <tr>
                 <th scope="row">Chiffre d'affaires</th>
                 {caList}
+              </tr>
+              <tr>
+                <th scope="row">Résultats</th>
+                {emptyList}
+              </tr>
+              <tr>
+                <th scope="row">Capitaux propres</th>
+                {emptyList}
               </tr>
             </tbody>
           </table>

@@ -63,11 +63,13 @@ task 'build' do
     run 'c42 server:yarn upgrade frentreprise'
     run 'c42 server:yarn build'
     run 'c42 front:yarn build'
-    
+
     info("Packaging...")
     directory "dist" # copy .c42/dist/ to dist/
     directory "../server/build", "dist" # copy .c42/../server/build to dist/
     directory "../client/build", "dist/htdocs" # copy .c42/../client/build to dist/htdocs
+    chmod "dist/run.sh", 0755
+    chmod "dist/install.sh", 0755
 
     info("Done!")
 end
@@ -86,6 +88,7 @@ task 'docker:install' do
       end
     end
   end
+  system("docker-compose build")
 end
 
 # Install
@@ -107,7 +110,7 @@ task :install do
   invoke 'docker:restart', ['server']
 end
 
-depenvs = %w[preprod]
+depenvs = %w[dev preprod]
 desc 'deploy DEPLOY_ENV', "deploy to DEPLOY_ENV (#{depenvs.join(', ')})"
 task :deploy do |dep_env = 'preprod'|
   unless depenvs.include?(dep_env)

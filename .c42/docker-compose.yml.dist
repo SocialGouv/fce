@@ -30,6 +30,13 @@ services:
     links:
       - mongo
 
+  builder:
+    build: .c42/docker/builder
+    privileged: true
+    volumes:
+      - ./:/project
+      - $SSH_AUTH_SOCK:/ssh-agent
+
   mongo:
     image: mongo:3.6
     network_mode: "bridge"

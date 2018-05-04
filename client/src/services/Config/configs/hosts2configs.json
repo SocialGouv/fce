@@ -4,6 +4,7 @@
   "dev.direccte.commit42.fr": "staging-dev",
   "preprod.direccte.com": "preproduction",
   "fce.gouv.fr": "production",
+  "fce.direccte.gouv.fr": "production",
   "localhost": "production-local",
   "0.0.0.0": "production",
   "10.31.24.127": "production"

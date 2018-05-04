@@ -67,7 +67,7 @@ class Interventions extends React.Component {
               <dd className="dd definition col-md-8">
                 <a
                   className="d-print-none"
-                  href="#interventions-competitivite"
+                  href="#interventions"
                   onClick={() =>
                     this.toggleElement("interventions-competitivite")
                   }
@@ -143,13 +143,17 @@ class Interventions extends React.Component {
               Structure de l'insertion par l'activité économique
             </dt>
             <dd className="dd col-md-8">
-              <Value value={strActEco} empty="Non disponible" />
+              <Value
+                value={strActEco}
+                empty="Non disponible"
+                no="Non disponible"
+              />
             </dd>
             <dt className="dt col-md-12 mt-4">Prime embauche PME</dt>
-            <dd className="dt col-md-4">
+            <dd className="dt col-md-6">
               Nombre d'embauches effectuées dans le cadre du dispositif:
             </dd>
-            <dt className="dt col-md-8">{establishment.prime_embauche_pme}</dt>
+            <dt className="dt col-md-6">{establishment.prime_embauche_pme}</dt>
             <dd className="dt col-md-4">
               (entre le 18 janvier 2016 et le 30 juin 2017)
             </dd>
@@ -168,7 +172,7 @@ class Interventions extends React.Component {
               <dd className="dt col-md-4">
                 <a
                   className="d-print-none"
-                  href="#interventions-alternance"
+                  href="#interventions"
                   onClick={() => this.toggleElement("interventions-alternance")}
                 >
                   {this.state["interventions-alternance"] ? "Masquer" : "Voir"}{" "}
@@ -213,7 +217,7 @@ class Interventions extends React.Component {
               {establishment.activite_partielle_24_derniers_mois ? (
                 <a
                   className="d-print-none"
-                  href="#mutation-activity"
+                  href="#mutations"
                   onClick={() => this.toggleElement("mutation-activity")}
                 >
                   {this.state["mutation-activity"] ? "Masquer" : "Voir"} le
@@ -291,7 +295,7 @@ class Interventions extends React.Component {
               {establishment.pse_en_projet_ou_en_cours ? (
                 <a
                   className="d-print-none"
-                  href="#mutation-job"
+                  href="#mutations"
                   onClick={() => this.toggleElement("mutation-job")}
                 >
                   {this.state["mutation-job"] ? "Masquer" : "Voir"} le détail

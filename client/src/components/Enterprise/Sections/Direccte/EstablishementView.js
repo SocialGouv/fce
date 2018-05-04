@@ -65,7 +65,7 @@ class EstablishmentView extends React.Component {
             <div className="text-center">
               <a
                 className="d-print-none"
-                href="#direccte-detail"
+                href="#direccte"
                 onClick={() => this.toggleElement("direccte-detail")}
               >
                 {this.state["direccte-detail"] ? "Masquer" : "Voir"} le détail

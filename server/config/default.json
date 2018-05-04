@@ -2,10 +2,5 @@
   "APIGouv": {
     "token": "Wla5Sr8oyktnldY0QK67nlsjgIHqFKul"
   },
-  "mongo": "mongodb://localhost/direccte",
-  "proxy": {
-    "host": "127.17.0.1",
-    "port": 3128
-
-  }
+  "mongo": "mongodb://localhost/direccte"
 }

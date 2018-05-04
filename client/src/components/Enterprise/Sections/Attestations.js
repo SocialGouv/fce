@@ -14,6 +14,7 @@ class Attestations extends React.Component {
             <Value
               value={!!enterprise.attestation_dgfip}
               empty="Non Disponible"
+              no="Non Disponible"
             />
           </dd>
           {enterprise.attestation_dgfip ? (
@@ -30,6 +31,7 @@ class Attestations extends React.Component {
             <Value
               value={!!enterprise.attestation_acoss}
               empty="Non Disponible"
+              no="Non Disponible"
             />
           </dd>
           {enterprise.attestation_acoss ? (

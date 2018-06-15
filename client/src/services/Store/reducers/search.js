@@ -59,7 +59,7 @@ const search = (state = initialState, action) => {
 
 const flattenResults = (results, terms) => {
   if (!Array.isArray(results)) {
-    return [];
+    return false;
   }
 
   let flattenResults = [];

@@ -96,6 +96,7 @@ class frentreprise {
 
   async search(query) {
     const results = {};
+    let hasError = false;
 
     await this[_.askDataSource]("search", query, searchResult => {
       const source_results = searchResult.data;
@@ -107,6 +108,13 @@ class frentreprise {
           } doesn't support search. (it returned false)`
         );
       } else if (!Array.isArray(source_results)) {
+        if (
+          typeof source_results === "object" &&
+          source_results.hasOwnProperty("error") &&
+          source_results.error === true
+        ) {
+          hasError = true;
+        }
         console.error(
           `Source named ${
             searchResult.source.name
@@ -150,7 +158,9 @@ class frentreprise {
       }
     });
 
-    return Object.values(results);
+    let resultsValues = Object.values(results);
+
+    return !resultsValues.length && hasError ? false : resultsValues;
   }
 
   getDataSources() {
@@ -184,7 +194,7 @@ class frentreprise {
         console.log(
           `Asking [${method}] to dataSource named ${
             dataSource.name
-          } with request : ${request}`
+          } with request : ${JSON.stringify(request)}`
         );
 
         return dataSource.source[method](request).then(data => {
@@ -193,7 +203,7 @@ class frentreprise {
           console.log(
             `Got response for [${method}] from dataSource named ${
               dataSource.name
-            } about request : ${request}`
+            } about request : ${JSON.stringify(request)}`
           );
 
           return Promise.resolve({

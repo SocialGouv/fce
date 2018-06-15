@@ -431,7 +431,8 @@ class Mongo extends DataSource {
         ? EtablissementModel.findByAdvancedSearch(query)
         : EtablissementModel.findByRaisonSociale(query));
     } catch (exception) {
-      console.error(exception);
+      console.error(`Mongo::search() failed : ${exception}`);
+      return { error: true, message: exception };
     }
 
     const results = [];

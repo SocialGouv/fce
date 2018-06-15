@@ -82,7 +82,12 @@ router.get("/advancedSearch(.:format)?", function(req, res) {
   };
 
   frentreprise.search(data.query.params).then(results => {
-    data.results = results.map(ent => ent.export());
+    try {
+      results = results.map(ent => ent.export());
+    } catch (e) {
+      results = false;
+    }
+    data.results = results;
     data.size = data.results && data.results.length;
     sendResult(data, res);
   }, logError.bind(this, data));

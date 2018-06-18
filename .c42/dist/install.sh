@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-mkdir -p data && \
+mkdir data && \
 docker build -t direccte . && \
 (docker rm -f direccte; exit 0) && \
-exec $PWD/run.sh
+exec $(pwd)/run.sh

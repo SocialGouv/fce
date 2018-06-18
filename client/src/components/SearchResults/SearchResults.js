@@ -47,7 +47,11 @@ class SearchResults extends React.Component {
         <Row className="justify-content-md-center result-row">
           <Col md="12">
             {!Array.isArray(this.props.results) ? (
-              <Alert color="danger">Une erreur est survenue</Alert>
+              <Alert color="danger">
+                Une erreur est survenue, il est propable que la recherche est
+                échouée car celle-ci n'est pas assez précise et retourne une
+                trop grande quantité de résultat.
+              </Alert>
             ) : !this.props.results.length ? (
               <Alert color="info">Aucun résultat</Alert>
             ) : (

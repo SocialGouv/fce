@@ -13,6 +13,11 @@ sudo apt-get update
 sudo apt-get install docker-ce
 ```
 
+# Installer ou mettre à jour le projet
+```shell
+./install.sh
+```
+
 # Lancer le projet
 ```shell
 ./run.sh

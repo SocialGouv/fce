@@ -150,11 +150,11 @@ class Interventions extends React.Component {
               />
             </dd>
             <dt className="dt col-md-12 mt-4">Prime embauche PME</dt>
-            <dd className="dt col-md-6">
+            <dd className="dt col-md-9">
               Nombre d'embauches effectuées dans le cadre du dispositif:
             </dd>
-            <dt className="dt col-md-6">{establishment.prime_embauche_pme}</dt>
-            <dd className="dt col-md-4">
+            <dt className="dt col-md-3">{establishment.prime_embauche_pme}</dt>
+            <dd className="dt col-md-12">
               (entre le 18 janvier 2016 et le 30 juin 2017)
             </dd>
           </dl>

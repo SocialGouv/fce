@@ -154,7 +154,7 @@ class Enterprise extends React.Component {
   initData = (enterprise, establishment) => {
     const headOffice =
       enterprise.etablissements.find(establishment => {
-        return establishment.siret === entreprise.siret_siege_social;
+        return establishment.siret === enterprise.siret_siege_social;
       }) ||
       enterprise.etablissements.find(establishment => {
         return establishment.siege_social === true;

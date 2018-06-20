@@ -12,7 +12,7 @@ class WorkbookHelper {
       const wsh = new WorksheetHelper(workSheet);
 
       let columnToKeep = null;
-      if(sheetsParams && sheetsParams[sheetName]){
+      if (sheetsParams && sheetsParams[sheetName]) {
         columnToKeep = sheetsParams[sheetName].columnsToKeep;
       }
 

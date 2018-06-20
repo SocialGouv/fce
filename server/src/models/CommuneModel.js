@@ -8,5 +8,4 @@ const communeSchema = new Schema({
 
 const Commune = mongoose.model("Commune", communeSchema);
 
-
 module.exports = Commune;

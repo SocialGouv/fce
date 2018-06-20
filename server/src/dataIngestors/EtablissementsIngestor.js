@@ -33,7 +33,7 @@ class EtablissementsIngestor extends Ingestor {
     const codesPostauxIngestor = new CodesPostauxIngestor();
     const saveParams = {
       etablissements
-    }
+    };
     return communesIngestor
       .save(saveParams)
       .then(data => {

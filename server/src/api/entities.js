@@ -46,7 +46,7 @@ router.get("/entities", function(req, res) {
     })
     .then(data => {
       const cleanData = data.filter(postalCode => {
-        if(postalCode.code_postal === "00000"){
+        if (postalCode.code_postal === "00000") {
           return false;
         }
         return postalCode.code_postal.match(/[0-9]{5}/g);

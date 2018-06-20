@@ -34,23 +34,27 @@ describe("save()", () => {
     return Departement.remove({});
   }, TIMEOUT);
 
-  test("default", () => {
-    const etablissementsIngestor = new EtablissementsIngestor(filePath);
-    const etablissements = etablissementsIngestor.getEtablissements();
+  test(
+    "default",
+    () => {
+      const etablissementsIngestor = new EtablissementsIngestor(filePath);
+      const etablissements = etablissementsIngestor.getEtablissements();
 
-    const departementsIngestor = new DepartementsIngestor();
-    const data = departementsIngestor.getDepartementsFromEtablissements(
-      etablissements
-    );
-    const saveParams = {
-      etablissements
-    };
-    return departementsIngestor.save(saveParams).then(data => {
-      expect(data.length).toEqual(2);
-      expect(data[0].code_departement).toEqual("30");
-      expect(data[1].code_departement).toEqual("31");
-    });
-  }, TIMEOUT);
+      const departementsIngestor = new DepartementsIngestor();
+      const data = departementsIngestor.getDepartementsFromEtablissements(
+        etablissements
+      );
+      const saveParams = {
+        etablissements
+      };
+      return departementsIngestor.save(saveParams).then(data => {
+        expect(data.length).toEqual(2);
+        expect(data[0].code_departement).toEqual("30");
+        expect(data[1].code_departement).toEqual("31");
+      });
+    },
+    TIMEOUT
+  );
 });
 
 describe("getDepartementsFromMongo()", () => {

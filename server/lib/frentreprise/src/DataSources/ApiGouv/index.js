@@ -1,3 +1,4 @@
+import tunnel from "tunnel";
 import DataSource from "../DataSource";
 import EtablissementsAPI from "./EtablissementsAPI";
 import EntreprisesAPI from "./EntreprisesAPI";
@@ -12,6 +13,7 @@ export default class ApiGouv extends DataSource {
   constructor(baseURL, axiosConfig = {}) {
     super();
     this.token = null;
+
     this[_.axios] = axios.create({
       baseURL: baseURL,
       timeout: 30000
@@ -52,18 +54,40 @@ export default class ApiGouv extends DataSource {
   async [_.requestAPIs](identifier, ...apiCalls) {
     let out = {};
 
+    const axiosConfig = {
+      ...this.axiosConfig,
+      params: {
+        token: this.token,
+        context: "Tiers",
+        recipient: "Direccte Occitanie",
+        object: "FCEE - Direccte Occitanie"
+      }
+    };
+
+    if(axiosConfig.proxy && axiosConfig.proxy.tunnel === true) {
+     
+      const agentConfig = { proxy: {} };
+      
+      if(axiosConfig.proxy.host) {
+        agentConfig.proxy.host = axiosConfig.proxy.host;
+      }
+      
+      if(axiosConfig.proxy.host) {
+        agentConfig.proxy.port = axiosConfig.proxy.port;
+      }
+
+      if(axiosConfig.proxy.auth) {
+        agentConfig.proxy.proxyAuth = `${axiosConfig.proxy.auth.username||''}:${axiosConfig.proxy.auth.password||''}`;
+      }
+
+      axiosConfig.proxy = false;
+      axiosConfig.httpsAgent = tunnel.httpsOverHttp(agentConfig);
+    }
+
     const requests = (Array.isArray(apiCalls) ? apiCalls : [apiCalls])
       .filter(fn => typeof fn === "function")
       .map(fn => {
-        return fn(identifier, this[_.axios], {
-          ...this.axiosConfig,
-          params: {
-            token: this.token,
-            context: "Tiers",
-            recipient: "Direccte Occitanie",
-            object: "FCEE - Direccte Occitanie"
-          }
-        });
+        return fn(identifier, this[_.axios], axiosConfig);
       });
 
     await Promise.all(requests).then(results => {

@@ -64,20 +64,20 @@ export default class ApiGouv extends DataSource {
       }
     };
 
-    if(axiosConfig.proxy && axiosConfig.proxy.tunnel === true) {
-     
+    if (axiosConfig.proxy && axiosConfig.proxy.tunnel === true) {
       const agentConfig = { proxy: {} };
-      
-      if(axiosConfig.proxy.host) {
+
+      if (axiosConfig.proxy.host) {
         agentConfig.proxy.host = axiosConfig.proxy.host;
       }
-      
-      if(axiosConfig.proxy.host) {
+
+      if (axiosConfig.proxy.host) {
         agentConfig.proxy.port = axiosConfig.proxy.port;
       }
 
-      if(axiosConfig.proxy.auth) {
-        agentConfig.proxy.proxyAuth = `${axiosConfig.proxy.auth.username||''}:${axiosConfig.proxy.auth.password||''}`;
+      if (axiosConfig.proxy.auth) {
+        agentConfig.proxy.proxyAuth = `${axiosConfig.proxy.auth.username ||
+          ""}:${axiosConfig.proxy.auth.password || ""}`;
       }
 
       axiosConfig.proxy = false;

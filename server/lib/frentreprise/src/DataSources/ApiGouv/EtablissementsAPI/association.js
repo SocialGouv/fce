@@ -9,7 +9,8 @@ const association = async (SIRET, Axios, params) => {
       if (
         data.association &&
         typeof data.association === "object" &&
-        data.association.etat
+        data.association.etat &&
+        data.association.id
       ) {
         out.association = data.association;
       }

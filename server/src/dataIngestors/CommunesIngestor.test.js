@@ -51,8 +51,6 @@ describe("save()", () => {
   });
 });
 
-
-
 describe("getCommunesFromMongo()", () => {
   beforeEach(() => {
     return Commune.remove({}).then(() => {

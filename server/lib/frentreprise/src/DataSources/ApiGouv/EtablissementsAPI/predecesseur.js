@@ -9,7 +9,7 @@ const predecesseur = async (SIRET, Axios, params) => {
       if (data && data.predecesseur) {
         const predecesseur = data.predecesseur;
 
-        if (predecesseur && predecesseur.transfert_siege) {
+        if (predecesseur) {
           out.predecesseur = {
             siret: predecesseur.predecesseur_siret,
             date_transfert: utils.convertDate(

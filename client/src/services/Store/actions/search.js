@@ -19,6 +19,38 @@ export const search = term => (dispatch, getState) => {
   })
     .then(function(response) {
       dispatch(_setSearchResponses(response.data.results));
+
+      let terms = {};
+
+      if (response.data.query.isSIRET) {
+        terms = {
+          siren: response.data.results && response.data.results[0].siren
+        };
+        dispatch(
+          _setTerms({
+            ...terms,
+            csvURL: Http.buildURL(
+              `${Http.defaults.baseURL}/advancedSearch.xlsx`,
+              terms
+            )
+          })
+        );
+      } else if (response.data.query.isSIREN) {
+        terms = {
+          siren: response.data.query.q
+        };
+
+        dispatch(
+          _setTerms({
+            ...terms,
+            csvURL: Http.buildURL(
+              `${Http.defaults.baseURL}/advancedSearch.xlsx`,
+              terms
+            )
+          })
+        );
+      }
+
       return Promise.resolve(response);
     })
     .catch(function(error) {

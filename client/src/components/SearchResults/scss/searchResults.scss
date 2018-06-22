@@ -1,4 +1,14 @@
+@media print{
+  @page {
+    size: landscape;
+  }
+}
+
 .app-searchResults {
+  @media print {
+    zoom: 40%;
+  }
+
   .title {
     text-align: center;
     margin-bottom: 2rem;
@@ -63,39 +73,39 @@
         overflow: hidden;
       }
 
-      .rt-th, .rt-td {
+      /*.rt-th, .rt-td {
         flex: none !important;
         padding: .75rem 2px;
 
-        &:nth-child(1) { /* SIRET */
+        &:nth-child(1) { !* SIRET *!
           width: 130px !important;
         }
-        &:nth-child(2) { /* SIREN */
+        &:nth-child(2) { !* SIREN *!
           width: 90px !important;
         }
-        &:nth-child(3) { /* RS */
+        &:nth-child(3) { !* RS *!
           width: 250px !important;
         }
-        &:nth-child(4) { /* Etat */
+        &:nth-child(4) { !* Etat *!
           width: 55px !important;
         }
-        &:nth-child(5) { /* CP */
+        &:nth-child(5) { !* CP *!
           width: 150px !important;
         }
-        &:nth-child(6) { /* DEP */
+        &:nth-child(6) { !* DEP *!
           display: none;
           width: 0 !important;
         }
-        &:nth-child(7) { /* ACTIVITE */
+        &:nth-child(7) { !* ACTIVITE *!
           width: 90px !important;
         }
-        &:nth-child(8) { /* CATEGORIE */
+        &:nth-child(8) { !* CATEGORIE *!
           width: 210px !important;
         }
-        &:nth-child(9) { /* INTERACTIONS */
+        &:nth-child(9) { !* INTERACTIONS *!
           width: 40px !important;
         }
-      }
+      }*/
     }
   }
 }

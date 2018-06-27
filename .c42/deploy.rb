@@ -29,7 +29,7 @@ task :dev do
   set :branch, 'develop'
   set :webhost, 'https://dev.direccte.commit42.fr'
   after 'deploy' do
-    run %(echo '{ "host": "127.2.47.171", "port": 8102, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte_dev", "proxy": false }' > #{File.join(latest_release, '/dist/config/local.json')})
+    run %(echo '{ "host": "127.2.47.171", "port": 8102, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte_dev", "proxy": false, "oldMongoVersion": true }' > #{File.join(latest_release, '/dist/config/local.json')})
   end
 end
 
@@ -38,7 +38,7 @@ task :preprod do
   set :branch, 'master'
   set :webhost, 'https://direccte.commit42.fr'
   after 'deploy' do
-    run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte", "proxy": false }' > #{File.join(latest_release, '/dist/config/local.json')})
+    run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte", "proxy": false, "oldMongoVersion": true }' > #{File.join(latest_release, '/dist/config/local.json')})
   end
 end
 

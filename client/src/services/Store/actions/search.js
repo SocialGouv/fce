@@ -24,9 +24,7 @@ export const search = term => (dispatch, getState) => {
 
       if (response.data.query.isSIRET || response.data.query.isSIREN) {
         terms = {
-          siren: response.data.query.isSIRET
-            ? response.data.results && response.data.results[0].siren
-            : response.data.query.q
+          siren: response.data.results && response.data.results[0].siren
         };
         dispatch(
           _setTerms({

@@ -24,22 +24,17 @@ set :keep_releases, 3
 set :app_path, '/dist/htdocs/'
 set :user, 'commit42'
 
-task :dev do
-  set :deploy_to, '/home/commit42/direccte-dev'
-  set :branch, 'develop'
-  set :webhost, 'https://dev.direccte.commit42.fr'
-  after 'deploy' do
-    run %(echo '{ "host": "127.2.47.171", "port": 8102, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte_dev", "proxy": false, "oldMongoVersion": true }' > #{File.join(latest_release, '/dist/config/local.json')})
-  end
-end
-
 task :preprod do
   set :deploy_to, '/home/commit42/direccte'
-  set :branch, 'master'
+  set :branch, 'develop'
   set :webhost, 'https://direccte.commit42.fr'
   after 'deploy' do
     run %(echo '{ "host": "127.2.47.171", "port": 8101, "mongo": "mongodb://commit42_direccte:5501HrwVReoC@mongodb-commit42.occitech.eu/commit42_direccte", "proxy": false, "oldMongoVersion": true }' > #{File.join(latest_release, '/dist/config/local.json')})
   end
+
+  set :http_auth_users, [%w[demo direccte2018]]
+  set :http_auth_path, app_path
+  after 'deploy:finalize_update', 'http_auth:protect'
 end
 
 after 'deploy:finalize_update' do

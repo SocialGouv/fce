@@ -1,3 +1,5 @@
+import config from "config";
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ObjectManipulations = require("../utils/ObjectManipulations");
@@ -108,6 +110,96 @@ etablissementSchema.statics.findByRaisonSociale = function(raisonSociale, cb) {
 }
  */
 etablissementSchema.statics.findByAdvancedSearch = function(searchParams, cb) {
+  return config.has("oldMongoVersion") && config.get("oldMongoVersion")
+    ? this._findByAdvancedSearchPolyfill(searchParams, cb)
+    : this._findByAdvancedSearch(searchParams, cb);
+};
+
+etablissementSchema.statics._findByAdvancedSearch = function(searchParams, cb) {
+  const raisonSocialParam =
+    searchParams && searchParams.raison_sociale
+      ? new RegExp(searchParams.raison_sociale, "i")
+      : null;
+  const onlySiegeSocial = searchParams.siege_social;
+  const interactions = searchParams.interactions;
+
+  const params = {
+    ...searchParams
+  };
+
+  delete params.raison_sociale;
+  delete params.siege_social;
+  delete params.interactions;
+
+  if (raisonSocialParam) {
+    params["$or"] = [
+      { raison_sociale: raisonSocialParam },
+      { nom: raisonSocialParam }
+    ];
+  }
+  ObjectManipulations.clean(params);
+
+  let aggregateConfig = [
+    {
+      $match: params
+    },
+    {
+      $addFields: {
+        siretSiege: { $concat: ["$siren", "$nic_du_siege"] }
+      }
+    },
+    {
+      $lookup: {
+        from: "interactions",
+        localField: "siret",
+        foreignField: "siret",
+        as: "interactions"
+      }
+    },
+    {
+      $sort: { raison_sociale: 1, code_etat: 1 }
+    }
+  ];
+
+  if (onlySiegeSocial) {
+    aggregateConfig.push({
+      $redact: {
+        $cond: [{ $eq: ["$siret", "$siretSiege"] }, "$$KEEP", "$$PRUNE"]
+      }
+    });
+  }
+
+  if (interactions && interactions.length) {
+    aggregateConfig.push({
+      $addFields: {
+        nbInteractionsFiltered: {
+          $size: {
+            $filter: {
+              input: "$interactions",
+              as: "i",
+              cond: {
+                $in: ["$$i.pole", interactions]
+              }
+            }
+          }
+        }
+      }
+    });
+    aggregateConfig.push({
+      $redact: {
+        $cond: [{ $gt: ["$nbInteractionsFiltered", 0] }, "$$KEEP", "$$PRUNE"]
+      }
+    });
+  }
+
+  return this.aggregate(aggregateConfig, cb);
+};
+
+etablissementSchema.statics._findByAdvancedSearchPolyfill = function(
+  searchParams,
+  cb
+) {
+  console.log("use polyfill aggregate");
   const raisonSocialParam =
     searchParams && searchParams.raison_sociale
       ? new RegExp(searchParams.raison_sociale, "i")

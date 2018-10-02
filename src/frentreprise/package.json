@@ -13,7 +13,11 @@
     "tunnel": "^0.0.5"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --color"
+    "build": "NODE_ENV=production webpack --color",
+    "test": "NODE_ENV=test jest",
+    "watch": "npm run test -- --watchAll",
+    "coverage":
+      "rm -rf coverage/ && npm run test -- --coverage --coverageDirectory=coverage"
   },
   "devDependencies": {
     "babel": "^6.23.0",
@@ -25,8 +29,20 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "jest": "^23.6.0",
+    "jest-babel": "^1.0.1",
+    "jest-html-reporter": "^2.4.2",
     "webpack": "^4.0.0",
     "webpack-cli": "^2.0.9",
     "webpack-node-externals": "^1.6.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": ["<rootDir>/config/", "<rootDir>/lib/axios"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!<rootDir>/config/",
+      "!<rootDir>/lib/axios"
+    ],
+    "coverageReporters": ["text", "lcov", "html"]
   }
 }

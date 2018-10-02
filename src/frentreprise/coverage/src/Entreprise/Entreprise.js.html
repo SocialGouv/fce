@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/Entreprise/Entreprise.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/Entreprise</a> Entreprise.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/19</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/24</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import BaseModel, { _protected } from "./BaseModel";</span>
+<span class="cstat-no" title="statement not covered" >import Etablissement from ".";</span>
+<span class="cstat-no" title="statement not covered" >import { validateSIRET } from "../Utils/Validator";</span>
+<span class="cstat-no" title="statement not covered" >import { cleanObject } from "../Utils";</span>
+&nbsp;
+const _ets = <span class="cstat-no" title="statement not covered" >Symbol("_ets");</span>
+const _etsModel = <span class="cstat-no" title="statement not covered" >Symbol("_etsModel");</span>
+&nbsp;
+export default class Entreprise extends BaseModel {
+<span class="fstat-no" title="function not covered" >  constructor(</span>data, <span class="branch-0 cbranch-no" title="branch not covered" >etsModel = Etablissement) {</span>
+<span class="cstat-no" title="statement not covered" >    super();</span>
+<span class="cstat-no" title="statement not covered" >    this[_ets] = [];</span>
+<span class="cstat-no" title="statement not covered" >    this[_etsModel] = etsModel;</span>
+<span class="cstat-no" title="statement not covered" >    this.replaceData(data);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  [_</span>protected._importData](data, replace) {
+    const ets = <span class="cstat-no" title="statement not covered" >data &amp;&amp; data["_ets"];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (ets) {</span>
+<span class="cstat-no" title="statement not covered" >      if (!Array.isArray(ets)) {</span>
+<span class="cstat-no" title="statement not covered" >        ets = [ets];</span>
+      }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      ets.forEach(<span class="fstat-no" title="function not covered" >etsData =&gt; </span>{</span>
+<span class="cstat-no" title="statement not covered" >        if (etsData &amp;&amp; typeof etsData === "object") {</span>
+<span class="cstat-no" title="statement not covered" >          if (validateSIRET(etsData.siret)) {</span>
+<span class="cstat-no" title="statement not covered" >            this.getEtablissement(etsData.siret).updateData(</span>
+              cleanObject(etsData)
+            );
+          }
+        }
+      });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      delete data._ets;</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    super[_protected._importData](data, replace);</span>
+  }
+&nbsp;
+  /**
+   * Get the Etablissements
+   * @returns {Array[Etablissement]} Etablissements
+   */
+<span class="fstat-no" title="function not covered" >  get </span>etablissements() {
+<span class="cstat-no" title="statement not covered" >    return this[_ets];</span>
+  }
+&nbsp;
+  /**
+   * Returns if the Etablissement exists
+   * @returns {boolean} true if the Etablissement exists
+   */
+<span class="fstat-no" title="function not covered" >  hasEtablissement(</span>SIRET) {
+<span class="cstat-no" title="statement not covered" >    return !!this.getEtablissement(SIRET, false);</span>
+  }
+&nbsp;
+  /**
+   * Returns the Etablissement with the given SIRET
+   * @param {string} SIRET
+   * @param {boolean} createIfMissing If set to true, the function will create the Etablissement if it is not existing
+   * @returns {(Etablissement|null)} Etablissement with given SIRET or null if not created upon missing
+   */
+<span class="fstat-no" title="function not covered" >  getEtablissement(</span>SIRET, createIfMissing = <span class="branch-0 cbranch-no" title="branch not covered" >true) {</span>
+<span class="cstat-no" title="statement not covered" >    return (</span>
+      this[_ets].find(<span class="fstat-no" title="function not covered" >ets =&gt; <span class="cstat-no" title="statement not covered" ></span>ets.siret === SIRET) || // Search for SIRET</span>
+      (createIfMissing &amp;&amp; // If not present create it
+      this[_ets].push(new this[_etsModel]({ siret: SIRET }, this)) &amp;&amp; // Add it to our list
+        this.getEtablissement(SIRET)) || // Call back itself to get created model
+      null
+    );
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Oct 02 2018 16:14:42 GMT+0000 (UTC)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

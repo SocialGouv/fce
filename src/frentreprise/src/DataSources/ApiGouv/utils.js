@@ -31,7 +31,7 @@ export default {
       if (exception && "request" in exception) {
         let { message, request, response, config } = exception;
 
-        if (typeof config !== "object") request = {};
+        if (typeof config !== "object") config = {};
         if (typeof request !== "object") request = {};
         if (typeof request.res !== "object") request.res = {};
         if (typeof response !== "object") response = {};
@@ -41,13 +41,13 @@ export default {
         responseUrl =
           responseUrl ||
           request._currentUrl ||
-          typeof request._currentRequest === "object"
+          (typeof request._currentRequest === "object"
             ? `${("" + (config.baseURL || "")).replace(
                 /^(https?:\/\/[^\/]*).*$/i,
                 "$1"
               )}${(request._currentRequest && request._currentRequest.path) ||
                 request.path}`
-            : "unknown";
+            : "unknown");
 
         const bodyData =
           typeof response.data === "object"

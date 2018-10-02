@@ -3,6 +3,8 @@
 
 # testing
 /coverage
+/cypress/screenshots/
+/.Trash-0/
 
 # production
 /build

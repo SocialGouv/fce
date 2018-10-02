@@ -14,6 +14,16 @@ services:
       VIRTUAL_HOST: direccte.test
       VIRTUAL_PORT: 3000
 
+  cypress:
+    build: .c42/docker/cypress
+    network_mode: "bridge"
+    links:
+      - front
+    volumes:
+      - ./client/:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+
   server:
     build: .c42/docker/server
     image: node_server

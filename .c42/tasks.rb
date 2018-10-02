@@ -4,6 +4,7 @@ SHELL = '/bin/bash'.freeze
 NPM = ENV['NPM'] || 'docker-compose run --rm %container% npm'
 YARN = ENV['YARN'] || 'docker-compose run --rm %container% yarn'
 NODE = ENV['NODE'] || 'docker-compose run --rm %container% node'
+CYPRESS = 'docker-compose run --rm cypress'
 
 desc 'docker:run', 'Lance docker-compose up'
 task 'docker:run' do
@@ -43,6 +44,9 @@ end
 
         desc 'npm:build', 'Lance npm run build'
         shell_task 'npm:build', "#{ctr_npm} run build"
+
+        desc 'cypress:run', 'Lance les tests de cypress'
+        shell_task 'cypress:run', "#{CYPRESS}"
     end
 end
 

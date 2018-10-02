@@ -23,7 +23,7 @@ ou, si vous utilisez zsh :
 - Installez Bundler si nécessaire : `sudo gem install bundler`
 - Sinon Assurez-vous que qu'il est à jour `sudo gem update bundler`
 - Installer le bundle : `bundle` ou `bundle install` à la racine du projet
-- `c42 install`
+- `bundle exec c42 install`
 - Configurer pettier sur son IDE : https://prettier.io/docs/en/vim.html
 
 

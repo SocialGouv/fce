@@ -7,7 +7,7 @@ services:
     ports:
       - 3000
     volumes:
-      - ./client/:/project
+      - ./src/client/:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
     environment:
@@ -21,7 +21,8 @@ services:
     ports:
       - 80
     volumes:
-      - ./server/:/project
+      - ./src/server/:/project
+      - ./src/frentreprise/:/frentreprise
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
     environment:
@@ -48,7 +49,7 @@ services:
     image: node_server
     network_mode: "bridge"
     volumes:
-      - ./server/lib/frentreprise:/project
+      - ./src/frentreprise:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
 

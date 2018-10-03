@@ -25,9 +25,9 @@
         <span class='fraction'>26/26</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">70.59% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>12/17</span>
+        <span class='fraction'>15/15</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>26/26</span>
+        <span class='fraction'>25/25</span>
       </div>
     </div>
   </div>
@@ -140,9 +140,7 @@
 95
 96
 97
-98
-99
-100</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+98</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -196,11 +194,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -208,37 +204,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import tunnel from "tunnel";
@@ -310,28 +306,26 @@ export default class ApiGouv extends DataSource {
     if (axiosConfig.proxy &amp;&amp; axiosConfig.proxy.tunnel === true) {
       const agentConfig = { proxy: {} };
 &nbsp;
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (axiosConfig.proxy.host) {
+      if (axiosConfig.proxy.host) {
         agentConfig.proxy.host = axiosConfig.proxy.host;
       }
 &nbsp;
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (axiosConfig.proxy.host) {
+      if (axiosConfig.proxy.port) {
         agentConfig.proxy.port = axiosConfig.proxy.port;
       }
 &nbsp;
       if (axiosConfig.proxy.auth) {
         agentConfig.proxy.proxyAuth = `${axiosConfig.proxy.auth.username ||
-<span class="branch-1 cbranch-no" title="branch not covered" >          ""}</span>:${axiosConfig.proxy.auth.password || <span class="branch-1 cbranch-no" title="branch not covered" >""}</span>`;
+          ""}:${axiosConfig.proxy.auth.password || ""}`;
       }
 &nbsp;
       axiosConfig.proxy = false;
       axiosConfig.httpsAgent = tunnel.httpsOverHttp(agentConfig);
     }
 &nbsp;
-    const requests = (Array.isArray(apiCalls) ? apiCalls : <span class="branch-1 cbranch-no" title="branch not covered" >[apiCalls])</span>
-      .filter(fn =&gt; typeof fn === "function")
-      .map(fn =&gt; {
-        return fn(identifier, this[_.axios], axiosConfig);
-      });
+    const requests = apiCalls.filter(fn =&gt; typeof fn === "function").map(fn =&gt; {
+      return fn(identifier, this[_.axios], axiosConfig);
+    });
 &nbsp;
     await Promise.all(requests).then(results =&gt; {
       Object.assign(out, ...results);
@@ -346,7 +340,7 @@ export default class ApiGouv extends DataSource {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Oct 02 2018 16:14:42 GMT+0000 (UTC)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Oct 03 2018 14:45:44 GMT+0000 (UTC)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">7.69% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>1/13</span>
+        <span class='fraction'>14/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">87.5% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/14</span>
+        <span class='fraction'>14/16</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">7.69% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>1/13</span>
+        <span class='fraction'>14/14</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -86,36 +86,40 @@
 41
 42
 43
-44</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+44
+45
+46</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -131,34 +135,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import utils from "../utils";
 &nbsp;
-const getEntreprise = <span class="fstat-no" title="function not covered" >as</span>ync (SIREN, Axios, params) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return await utils.requestAPI(</span>
+const getEntreprise = async (SIREN, Axios, params) =&gt; {
+  return await utils.requestAPI(
     Axios,
     `entreprises/${SIREN}`,
     params,
-<span class="fstat-no" title="function not covered" >    (o</span>ut, data) =&gt; {
-<span class="cstat-no" title="statement not covered" >      if (data &amp;&amp; data.entreprise) {</span>
-        const ent = <span class="cstat-no" title="statement not covered" >data.entreprise;</span>
+    (out, data) =&gt; {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (data &amp;&amp; data.entreprise) {
+        const ent = data.entreprise;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        ["categorie_entreprise"].forEach(<span class="fstat-no" title="function not covered" >ke</span>y =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >          out[key] = ent[key];</span>
+        ["categorie_entreprise"].forEach(key =&gt; {
+          if (typeof ent[key] !== "undefined") {
+            out[key] = ent[key];
+          }
         });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (</span>
+        if (
           ent.tranche_effectif_salarie_entreprise &amp;&amp;
           typeof ent.tranche_effectif_salarie_entreprise === "object"
         ) {
-<span class="cstat-no" title="statement not covered" >          out.annee_tranche_effectif =</span>
+          out.annee_tranche_effectif =
             +ent.tranche_effectif_salarie_entreprise.date_reference ||
-            undefined;
-<span class="cstat-no" title="statement not covered" >          out.tranche_effectif =</span>
+<span class="branch-1 cbranch-no" title="branch not covered" >            undefined;</span>
+          out.tranche_effectif =
             ent.tranche_effectif_salarie_entreprise.intitule || undefined;
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (Array.isArray(ent.mandataires_sociaux)) {</span>
-<span class="cstat-no" title="statement not covered" >          out.mandataires_sociaux = [];</span>
-<span class="cstat-no" title="statement not covered" >          ent.mandataires_sociaux.forEach(<span class="fstat-no" title="function not covered" >ma</span>nso =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >            out.mandataires_sociaux.push({</span>
+        if (Array.isArray(ent.mandataires_sociaux)) {
+          out.mandataires_sociaux = [];
+          ent.mandataires_sociaux.forEach(manso =&gt; {
+            out.mandataires_sociaux.push({
               nom: manso.nom,
               prenom: manso.prenom,
               fonction: manso.fonction,
@@ -178,7 +184,7 @@ export default getEntreprise;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Oct 02 2018 16:14:42 GMT+0000 (UTC)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Oct 03 2018 14:45:44 GMT+0000 (UTC)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

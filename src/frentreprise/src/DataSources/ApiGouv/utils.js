@@ -3,7 +3,7 @@ export default {
     // If timestamp is too high, it probably is using miliseconds already
     if (timestamp > 100000000000) timestamp /= 1000;
 
-    return (timestamp && new Date(timestamp * 1000)) || undefined;
+    return (+timestamp && new Date(timestamp * 1000)) || undefined;
   },
 
   getCleanAddress(ad) {
@@ -14,7 +14,8 @@ export default {
     `
       .trim()
       .split("\n")
-      .map(l => l.trim())
+      .map(l => l.trim().replace(/\s+/g, " "))
+      .filter(l => l.length > 0)
       .join("\n");
   },
 
@@ -32,7 +33,6 @@ export default {
         let { message, request, response, config } = exception;
 
         if (typeof config !== "object") config = {};
-        if (typeof request !== "object") request = {};
         if (typeof request.res !== "object") request.res = {};
         if (typeof response !== "object") response = {};
         if (!response.data) response.data = "(no data)";
@@ -41,13 +41,14 @@ export default {
         responseUrl =
           responseUrl ||
           request._currentUrl ||
-          (typeof request._currentRequest === "object"
-            ? `${("" + (config.baseURL || "")).replace(
+          (typeof request._currentRequest === "object" ||
+          typeof request.path === "string"
+            ? `${("" + (config.baseURL || "(unknown host)")).replace(
                 /^(https?:\/\/[^\/]*).*$/i,
                 "$1"
               )}${(request._currentRequest && request._currentRequest.path) ||
                 request.path}`
-            : "unknown");
+            : "unknown url");
 
         const bodyData =
           typeof response.data === "object"

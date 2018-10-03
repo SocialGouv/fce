@@ -71,7 +71,7 @@ export default class ApiGouv extends DataSource {
         agentConfig.proxy.host = axiosConfig.proxy.host;
       }
 
-      if (axiosConfig.proxy.host) {
+      if (axiosConfig.proxy.port) {
         agentConfig.proxy.port = axiosConfig.proxy.port;
       }
 
@@ -84,11 +84,9 @@ export default class ApiGouv extends DataSource {
       axiosConfig.httpsAgent = tunnel.httpsOverHttp(agentConfig);
     }
 
-    const requests = (Array.isArray(apiCalls) ? apiCalls : [apiCalls])
-      .filter(fn => typeof fn === "function")
-      .map(fn => {
-        return fn(identifier, this[_.axios], axiosConfig);
-      });
+    const requests = apiCalls.filter(fn => typeof fn === "function").map(fn => {
+      return fn(identifier, this[_.axios], axiosConfig);
+    });
 
     await Promise.all(requests).then(results => {
       Object.assign(out, ...results);

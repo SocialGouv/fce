@@ -164,7 +164,69 @@ test("DataSources/ApiGouv", () => {
       );
     });
 
-    it("tunnel proxy with auth", async () => {
+    it("tunnel proxy without port", async () => {
+      const spy = jest.fn(() => Promise.resolve(testingResult));
+
+      expect(
+        await testRequestWithConfig(
+          {
+            proxy: {
+              tunnel: true,
+              host: "proxy"
+            }
+          },
+          spy
+        )
+      ).toEqual(testingResult);
+
+      expect(spy).toHaveBeenCalledWith(
+        id,
+        expect.anything(),
+        expect.objectContaining({
+          proxy: false,
+          httpsAgent: expect.objectContaining({
+            options: expect.objectContaining({
+              proxy: {
+                host: "proxy"
+              }
+            })
+          })
+        })
+      );
+    });
+
+    it("tunnel proxy without host", async () => {
+      const spy = jest.fn(() => Promise.resolve(testingResult));
+
+      expect(
+        await testRequestWithConfig(
+          {
+            proxy: {
+              tunnel: true,
+              port: 1234
+            }
+          },
+          spy
+        )
+      ).toEqual(testingResult);
+
+      expect(spy).toHaveBeenCalledWith(
+        id,
+        expect.anything(),
+        expect.objectContaining({
+          proxy: false,
+          httpsAgent: expect.objectContaining({
+            options: expect.objectContaining({
+              proxy: {
+                port: 1234
+              }
+            })
+          })
+        })
+      );
+    });
+
+    const testAuth = (username, password) => async () => {
       const spy = jest.fn(() => Promise.resolve(testingResult));
 
       expect(
@@ -174,7 +236,7 @@ test("DataSources/ApiGouv", () => {
               tunnel: true,
               host: "proxy",
               port: 1234,
-              auth: { username: "user", password: "password" }
+              auth: { username, password }
             }
           },
           spy
@@ -195,12 +257,20 @@ test("DataSources/ApiGouv", () => {
               proxy: {
                 host: "proxy",
                 port: 1234,
-                proxyAuth: "user:password"
+                proxyAuth: `${username || ""}:${password || ""}`
               }
             })
           })
         })
       );
-    });
+    };
+
+    it("tunnel proxy with auth", testAuth("username", "password"));
+    it("tunnel proxy with auth and only user", testAuth("user"));
+    it(
+      "tunnel proxy with auth and only password",
+      testAuth(undefined, "password")
+    );
+    it("tunnel proxy with empty auth", testAuth());
   });
 });

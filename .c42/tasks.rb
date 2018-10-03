@@ -45,8 +45,11 @@ end
         desc 'npm:build', 'Lance npm run build'
         shell_task 'npm:build', "#{ctr_npm} run build"
 
-        desc 'cypress:run', 'Lance les tests de cypress'
-        shell_task 'cypress:run', "#{CYPRESS}"
+        desc 'cypress:tests', 'Lance les tests de cypress'
+        shell_task 'cypress:tests', "#{CYPRESS}"
+
+        desc 'cypress:run', 'Lance cypress en local'
+        shell_task 'cypress:run', "cd client && ./node_modules/.bin/cypress open --port 8080"
     end
 end
 

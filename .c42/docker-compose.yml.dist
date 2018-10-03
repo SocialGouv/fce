@@ -5,7 +5,7 @@ services:
     image: node_front
     network_mode: "bridge"
     ports:
-      - 3000
+      - 3000:3000
     volumes:
       - ./client/:/project
       - .npm:/.npm
@@ -16,8 +16,8 @@ services:
 
   cypress:
     build: .c42/docker/cypress
-    network_mode: "bridge"
-    links:
+    network_mode: "host"
+    depend_on:
       - front
     volumes:
       - ./client/:/project

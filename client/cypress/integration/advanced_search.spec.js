@@ -1,6 +1,5 @@
 var search = function(terms) {
-  cy
-    .get(".nav-link")
+  cy.get(".nav-link")
     .contains("Recherche avancée")
     .click();
 
@@ -23,16 +22,14 @@ var search = function(terms) {
 describe("Basic search", function() {
   it("Login to the app", function() {
     cy.visit("/");
-    cy
-      .get("#password")
+    cy.get("#password")
       .clear()
       .type("D1r€cct€");
     cy.get(".login-form").submit();
     cy.location("pathname").should("eq", "/");
   });
   it("Advanced page", function() {
-    cy
-      .get(".nav-link")
+    cy.get(".nav-link")
       .contains("Recherche avancée")
       .click();
 
@@ -50,8 +47,7 @@ describe("Basic search", function() {
     ].forEach(function(name) {
       cy.get('input[name="' + name + '"]').should("be.visible");
     });
-    cy
-      .get("button")
+    cy.get("button")
       .contains("Rechercher")
       .should("be.visible");
   });
@@ -59,16 +55,14 @@ describe("Basic search", function() {
     search({ raisonSociale: "occitech", siegeSocial: true });
     cy.location("pathname").should("eq", "/search/results");
 
-    cy
-      .get(".ReactTable")
+    cy.get(".ReactTable")
       .should("be.visible")
       .find(".rt-tbody > .rt-tr-group")
       .its("length")
       .should("be.eq", 2);
 
     search({ raisonSociale: "occitech", siegeSocial: false });
-    cy
-      .get(".ReactTable")
+    cy.get(".ReactTable")
       .should("be.visible")
       .find(".rt-tbody > .rt-tr-group")
       .its("length")

@@ -1,6 +1,5 @@
 var search = function(term) {
-  cy
-    .get(".nav-link")
+  cy.get(".nav-link")
     .contains("Recherche simple")
     .click();
 
@@ -11,8 +10,7 @@ var search = function(term) {
 describe("Basic search", function() {
   it("Login to the app", function() {
     cy.visit("/");
-    cy
-      .get("#password")
+    cy.get("#password")
       .clear()
       .type("D1r€cct€");
     cy.get(".login-form").submit();
@@ -20,8 +18,7 @@ describe("Basic search", function() {
   });
   it("have search form", function() {
     cy.get("#term").should("be.visible");
-    cy
-      .get("button")
+    cy.get("button")
       .contains("Rechercher")
       .should("be.visible");
   });
@@ -30,14 +27,12 @@ describe("Basic search", function() {
     cy.get(".search-form").submit();
 
     cy.location("pathname").should("eq", "/search/results");
-    cy
-      .get(".alert-info")
+    cy.get(".alert-info")
       .should("be.visible")
       .should("contain", "Aucun résultat");
   });
   it("return to search page when click to menu", function() {
-    cy
-      .get(".nav-link")
+    cy.get(".nav-link")
       .contains("Recherche simple")
       .click();
     cy.location("pathname").should("eq", "/search");
@@ -48,16 +43,14 @@ describe("Basic search", function() {
 
     cy.location("pathname").should("eq", "/search/results");
 
-    cy
-      .get(".ReactTable")
+    cy.get(".ReactTable")
       .should("be.visible")
       .find(".rt-tbody > .rt-tr-group")
       .its("length")
       .should("be.gte", 1);
   });
   it("click on siret open establishment", function() {
-    cy
-      .get(".ReactTable")
+    cy.get(".ReactTable")
       .find("a")
       .contains("48776861600038")
       .click();
@@ -66,8 +59,7 @@ describe("Basic search", function() {
   it("click on siren open enterprise", function() {
     search("occitech");
 
-    cy
-      .get(".ReactTable")
+    cy.get(".ReactTable")
       .find("a")
       .eq(1)
       .click();

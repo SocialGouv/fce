@@ -49,7 +49,7 @@ end
         shell_task 'cypress:tests', "#{CYPRESS}"
 
         desc 'cypress:run', 'Lance cypress en local'
-        shell_task 'cypress:run', "cd client && ./node_modules/.bin/cypress open --port 8080"
+        shell_task 'cypress:run', "cd client && ./node_modules/.bin/cypress open --port 8080 --env host=http://direccte.test"
     end
 end
 

@@ -22,7 +22,7 @@ var sections = [
 
 describe("Establishment", function() {
   it("Login to the app", function() {
-    cy.visit("/");
+    cy.visit(Cypress.env("host") + "/");
     cy.get("#password")
       .clear()
       .type("D1r€cct€");

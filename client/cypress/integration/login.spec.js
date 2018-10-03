@@ -1,6 +1,6 @@
 describe("Login to app", function() {
   it("First visite redirect to login page", function() {
-    cy.visit("/");
+    cy.visit(Cypress.env("host") + "/");
     cy.location("pathname").should("eq", "/login");
   });
   it("Login page contain valid form", function() {
@@ -28,7 +28,7 @@ describe("Login to app", function() {
 
     cy.location("pathname").should("eq", "/login");
 
-    cy.visit("/");
+    cy.visit(Cypress.env("host") + "/");
     cy.location("pathname").should("eq", "/login");
   });
 });

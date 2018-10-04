@@ -5,7 +5,7 @@ services:
     image: node_front
     network_mode: "bridge"
     ports:
-      - 3000
+      - 3000:3000
     volumes:
       - ./client/:/project
       - .npm:/.npm
@@ -13,6 +13,16 @@ services:
     environment:
       VIRTUAL_HOST: direccte.test
       VIRTUAL_PORT: 3000
+
+  cypress:
+    build: .c42/docker/cypress
+    network_mode: "host"
+    depend_on:
+      - front
+    volumes:
+      - ./client/:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
 
   server:
     build: .c42/docker/server

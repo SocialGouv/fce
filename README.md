@@ -42,3 +42,25 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo apt-get install docker-ce
 ```
+
+## Tests
+
+### Client
+
+Les tests de la partie client ont été réalisé avec [Cypress](https://www.cypress.io/)
+
+Pour les executer il vous faudra dans un premier temps l'installer :
+
+```shell
+# se placer dans le dossier client "cd client"
+./node_modules/.bin/cypress install
+```
+
+Vous pourrez ensuite lancer l'interface GUI via la commande (vous pouvez utiliser un autre port si celui-ci est déjà utilisé sur votre machine)
+
+**Pour fonctionner les containers `front`, `mongo` et `server` doivent être démarré**
+
+```shell
+# se placer dans le dossier client "cd client"
+./node_modules/.bin/cypress open --port 8080 --env host=http://direccte.test
+```

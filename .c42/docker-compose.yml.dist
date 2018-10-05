@@ -17,7 +17,7 @@ services:
   cypress:
     build: .c42/docker/cypress
     network_mode: "host"
-    depend_on:
+    depends_on:
       - front
     volumes:
       - ./client/:/project

@@ -60,7 +60,7 @@ Vous pourrez ensuite lancer l'interface GUI via la commande (vous pouvez utilise
 
 **Pour fonctionner les containers `front`, `mongo` et `server` doivent être démarré**
 
-```
+```shell
 # se placer dans le dossier client "cd client"
 ./node_modules/.bin/cypress open --port 8080 --env host=http://direccte.test
 ```

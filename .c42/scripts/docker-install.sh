@@ -1,16 +1,11 @@
 #!/bin/bash
-# ROOT/scripts/install.sh
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd $DIR/../..
 
-echo
-echo "=================================="
-echo "INSTALLATION OF DOCKER-COMPOSE.YML"
-echo "=================================="
 
-echo
-echo "Current directory: `pwd`"
+echo "Installation of docker-compose.yml"
+echo "----------------------------------"
 
 if [ -e ".c42/docker-compose.yml" ] && [ -e "docker-compose.yml" ]
 then
@@ -41,3 +36,4 @@ docker-compose build
 
 echo
 echo "Done!"
+echo

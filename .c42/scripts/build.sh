@@ -14,7 +14,6 @@ echo
 echo "==============="
 echo "BUILD A RELEASE"
 echo "==============="
-echo "Current directory: `pwd`"
 
 if [ -d "dist" ]
 then

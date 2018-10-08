@@ -23,7 +23,6 @@ else
     do
         read -p "Do you want to edit docker-compose.yml? [y/N]" answer
         answer=${answer,,}
-        echo "Answer: $answer"
     done
     if [ "$answer" = "y" ]
     then

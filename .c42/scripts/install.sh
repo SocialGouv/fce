@@ -27,14 +27,6 @@ echo
 echo "Start docker"
 echo "------------"
 docker-compose up -d
-echo
-echo "Restart front"
-echo "-------------"
-docker-compose restart front
-echo
-echo "Restart server"
-echo "--------------"
-docker-compose restart server
 
 echo
 echo "Done!"

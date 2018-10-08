@@ -1,7 +1,6 @@
 #!/bin/bash
-# ROOT/scripts/build.sh
 
-function run
+function dcRun
 {
   CMD="docker-compose run --rm"
   ARG="$1"
@@ -15,8 +14,6 @@ echo
 echo "==============="
 echo "BUILD A RELEASE"
 echo "==============="
-
-echo
 echo "Current directory: `pwd`"
 
 if [ -d "dist" ]
@@ -30,18 +27,18 @@ echo
 echo "=========================="
 echo "Installing dependencies..."
 echo "=========================="
-run "frentreprise yarn"
-run "server yarn"
-run "front yarn"
+dcRun "frentreprise yarn"
+dcRun "server yarn"
+dcRun "front yarn"
 
 echo
 echo "==========="
 echo "Building..."
 echo "==========="
-run "frentreprise yarn build"
-run "server yarn upgrade frentreprise"
-run "server yarn build"
-run "front yarn build"
+dcRun "frentreprise yarn build"
+dcRun "server yarn upgrade frentreprise"
+dcRun "server yarn build"
+dcRun "front yarn build"
 
 echo
 echo "============"
@@ -55,3 +52,4 @@ chmod 755 ./dist/install.sh
 
 echo
 echo "Done!"
+echo

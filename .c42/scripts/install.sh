@@ -2,9 +2,7 @@
 
 function dcRun
 {
-  CMD="docker-compose run --rm"
-  ARG="$1"
-  eval ${CMD} ${ARG}
+  docker-compose run --rm $@
 }
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
@@ -21,8 +19,8 @@ echo "============================"
 echo
 echo "Install yarn"
 echo "------------"
-dcRun "front yarn install"
-dcRun "server yarn install"
+dcRun front yarn install
+dcRun server yarn install
 echo
 echo "Start docker"
 echo "------------"

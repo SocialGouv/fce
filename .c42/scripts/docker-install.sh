@@ -7,7 +7,9 @@ cd $DIR/../..
 echo "Installation of docker-compose.yml"
 echo "----------------------------------"
 
-if [ -e ".c42/docker-compose.yml" ] && [ -e "docker-compose.yml" ]
+pwd
+
+if [ -e "docker-compose.yml" ]
 then
     echo
     echo "docker-compose.yml is already present"
@@ -16,10 +18,10 @@ else
     echo
     echo "copying docker-compose.yml"
     echo
-    cp .c42/docker-compose.yml.dist .c42/docker-compose.yml
+    cp .c42/docker-compose.yml{.dist,}
     ln -s .c42/docker-compose.yml docker-compose.yml
-    answer=""
-    until [ "$answer" = "y" ] || [ "$answer" = "n" ]
+    answer="nothing"
+    until [ "$answer" = "y" ] || [ "$answer" = "" ] || [ "$answer" = "n" ]
     do
         read -p "Do you want to edit docker-compose.yml? [y/N]" answer
         answer=${answer,,}

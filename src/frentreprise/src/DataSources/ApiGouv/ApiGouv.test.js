@@ -7,7 +7,7 @@ import EntreprisesAPI from "./EntreprisesAPI";
 
 import { _ as _ApiGouv, default as ApiGouv } from "./ApiGouv";
 
-test("DataSources/ApiGouv", () => {
+test("DataSources/ApiGouv/ApiGouv", () => {
   const apigouv = new ApiGouv("https://legouvernement.api");
 
   it("cannot be used for search", async () => {

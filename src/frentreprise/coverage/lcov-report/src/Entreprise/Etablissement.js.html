@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/13</span>
+        <span class='fraction'>11/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/8</span>
+        <span class='fraction'>8/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/13</span>
+        <span class='fraction'>11/11</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -74,66 +74,66 @@
 29
 30
 31
-32</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+32</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import BaseModel, { _protected } from "./BaseModel";</span>
-<span class="cstat-no" title="statement not covered" >import { cleanObject } from "../Utils";</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import BaseModel, { _protected } from "./BaseModel";
+import { cleanObject } from "../Utils";
 &nbsp;
-const _entreprise = <span class="cstat-no" title="statement not covered" >Symbol("_entreprise");</span>
+const _entreprise = Symbol("_entreprise");
 &nbsp;
 export default class Etablissement extends BaseModel {
-<span class="fstat-no" title="function not covered" >  constructor(</span>data, entreprise) {
-<span class="cstat-no" title="statement not covered" >    super();</span>
-<span class="cstat-no" title="statement not covered" >    this[_entreprise] = entreprise;</span>
-<span class="cstat-no" title="statement not covered" >    this.replaceData(data);</span>
+  constructor(data, entreprise) {
+    super();
+    this[_entreprise] = entreprise;
+    this.replaceData(data);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  [_</span>protected._importData](data) {
-<span class="cstat-no" title="statement not covered" >    if (this[_entreprise]) {</span>
-      const etData = <span class="cstat-no" title="statement not covered" >data &amp;&amp; data["_etData"];</span>
-<span class="cstat-no" title="statement not covered" >      if (etData &amp;&amp; typeof etData === "object") {</span>
-<span class="cstat-no" title="statement not covered" >        this[_entreprise].updateData(cleanObject(etData));</span>
+  [_protected._importData](data) {
+    if (this[_entreprise]) {
+      const etData = data &amp;&amp; data["_etData"];
+      if (etData &amp;&amp; typeof etData === "object") {
+        this[_entreprise].updateData(cleanObject(etData));
         // Merge datasources since we used our data source to get datas
-<span class="cstat-no" title="statement not covered" >        this[_entreprise].updateData({</span>
+        this[_entreprise].updateData({
           _dataSources: {
             ...this[_entreprise]._dataSources,
             ...data._dataSources
           }
         });
-<span class="cstat-no" title="statement not covered" >        delete data._etData;</span>
+        delete data._etData;
       }
     }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    super[_protected._importData](data);</span>
+    super[_protected._importData](data);
   }
 }
 &nbsp;</pre></td></tr>
@@ -142,7 +142,7 @@ export default class Etablissement extends BaseModel {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Oct 03 2018 14:45:44 GMT+0000 (UTC)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Oct 09 2018 17:56:29 GMT+0000 (UTC)
 </div>
 </div>
 <script src="../../prettify.js"></script>

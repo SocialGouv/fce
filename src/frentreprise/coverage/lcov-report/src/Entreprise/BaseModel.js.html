@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>12/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">87.5% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/8</span>
+        <span class='fraction'>7/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/6</span>
+        <span class='fraction'>6/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>12/12</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -83,76 +83,76 @@
 38
 39
 40
-41</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+41</td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">49x</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const _importData = <span class="cstat-no" title="statement not covered" >Symbol("_importData");</span>
-const _data = <span class="cstat-no" title="statement not covered" >Symbol("_data");</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const _importData = Symbol("_importData");
+const _data = Symbol("_data");
 &nbsp;
 export default class BaseModel {
-<span class="fstat-no" title="function not covered" >  constructor(</span>data = <span class="branch-0 cbranch-no" title="branch not covered" >{}) {</span>
-<span class="cstat-no" title="statement not covered" >    this[_importData](data, true);</span>
+  constructor(data = {}) {
+    this[_importData](data, true);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  updateData(</span>data) {
-<span class="cstat-no" title="statement not covered" >    this[_importData](data);</span>
+  updateData(data) {
+    this[_importData](data);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  replaceData(</span>data) {
-<span class="cstat-no" title="statement not covered" >    this[_importData](data, true);</span>
+  replaceData(data) {
+    this[_importData](data, true);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  [_</span>importData](data, replace = <span class="branch-0 cbranch-no" title="branch not covered" >false) {</span>
-<span class="cstat-no" title="statement not covered" >    if (typeof data === "object") {</span>
-<span class="cstat-no" title="statement not covered" >      this[_data] = {</span>
+  [_importData](data, replace = false) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (typeof data === "object") {
+      this[_data] = {
         ...(replace === true ? {} : this[_data]),
         ...data
       };
     }
 &nbsp;
     // Add missing accessors
-<span class="cstat-no" title="statement not covered" >    Object.keys(this[_data]).forEach(<span class="fstat-no" title="function not covered" >key =&gt; </span>{</span>
-<span class="cstat-no" title="statement not covered" >      if (!this.hasOwnProperty(key)) {</span>
-<span class="cstat-no" title="statement not covered" >        Object.defineProperty(this, key, {</span>
-          get: <span class="fstat-no" title="function not covered" >() =&gt; </span>{
-<span class="cstat-no" title="statement not covered" >            return this[_data][key];</span>
+    Object.keys(this[_data]).forEach(key =&gt; {
+      if (!this.hasOwnProperty(key)) {
+        Object.defineProperty(this, key, {
+          get: () =&gt; {
+            return this[_data][key];
           }
         });
       }
@@ -160,7 +160,7 @@ export default class BaseModel {
   }
 }
 &nbsp;
-export const <span class="cstat-no" title="statement not covered" >_protected = {</span>
+export const _protected = {
   _importData
 };
 &nbsp;</pre></td></tr>
@@ -169,7 +169,7 @@ export const <span class="cstat-no" title="statement not covered" >_protected = 
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Oct 03 2018 14:45:44 GMT+0000 (UTC)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Oct 09 2018 17:56:29 GMT+0000 (UTC)
 </div>
 </div>
 <script src="../../prettify.js"></script>

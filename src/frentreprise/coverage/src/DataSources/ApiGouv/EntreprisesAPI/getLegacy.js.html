@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">7.14% </span>
+        <span class="strong">92.86% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>1/14</span>
+        <span class='fraction'>13/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">85.71% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/14</span>
+        <span class='fraction'>12/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/3</span>
+        <span class='fraction'>3/3</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">7.69% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>1/13</span>
+        <span class='fraction'>13/13</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -91,15 +91,15 @@
 46
 47</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -108,22 +108,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -137,15 +137,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import utils from "../utils";
 &nbsp;
-const getLegacy = <span class="fstat-no" title="function not covered" >as</span>ync (SIREN, Axios, params) =&gt; {
-<span class="cstat-no" title="statement not covered" >  return await utils.requestAPI(</span>
+const getLegacy = async (SIREN, Axios, params) =&gt; {
+  return await utils.requestAPI(
     Axios,
     `entreprises_legacy/${SIREN}`,
     params,
-<span class="fstat-no" title="function not covered" >    (o</span>ut, data) =&gt; {
-<span class="cstat-no" title="statement not covered" >      if (data &amp;&amp; data.entreprise) {</span>
-        const legacy_ent = <span class="cstat-no" title="statement not covered" >data.entreprise;</span>
-<span class="cstat-no" title="statement not covered" >        [</span>
+    (out, data) =&gt; {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (data &amp;&amp; data.entreprise) {
+        const legacy_ent = data.entreprise;
+        [
           "siren",
           "raison_sociale",
           "nombre_etablissements_actifs",
@@ -153,23 +153,23 @@ const getLegacy = <span class="fstat-no" title="function not covered" >as</span>
           "nom",
           "prenom",
           "siret_siege_social"
-        ].forEach(<span class="fstat-no" title="function not covered" >ke</span>y =&gt; {
-<span class="cstat-no" title="statement not covered" >          if (typeof legacy_ent[key] === "boolean") <span class="cstat-no" title="statement not covered" >out[key] = legacy_ent[key];</span></span>
-          else <span class="cstat-no" title="statement not covered" >out[key] = legacy_ent[key] || undefined;</span>
+        ].forEach(key =&gt; {
+          <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof legacy_ent[key] === "boolean") <span class="cstat-no" title="statement not covered" >out[key] = legacy_ent[key];</span>
+          else out[key] = legacy_ent[key] || undefined;
         });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        out.categorie_juridique = legacy_ent.forme_juridique;</span>
-<span class="cstat-no" title="statement not covered" >        out.date_de_creation = utils.convertDate(legacy_ent.date_creation);</span>
-<span class="cstat-no" title="statement not covered" >        out.date_de_radiation = utils.convertDate(legacy_ent.date_radiation);</span>
+        out.categorie_juridique = legacy_ent.forme_juridique;
+        out.date_de_creation = utils.convertDate(legacy_ent.date_creation);
+        out.date_de_radiation = utils.convertDate(legacy_ent.date_radiation);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        if (</span>
+        if (
           !legacy_ent.etat_administratif ||
           typeof legacy_ent.etat_administratif !== "object"
         ) {
-<span class="cstat-no" title="statement not covered" >          legacy_ent.etat_administratif = {};</span>
+          legacy_ent.etat_administratif = {};
         }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        out.etat_entreprise = {</span>
+        out.etat_entreprise = {
           label: legacy_ent.etat_administratif.value || "N/A",
           date: utils.convertDate(
             legacy_ent.etat_administratif.date_mise_a_jour
@@ -187,7 +187,7 @@ export default getLegacy;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Oct 03 2018 14:45:44 GMT+0000 (UTC)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Oct 09 2018 17:56:29 GMT+0000 (UTC)
 </div>
 </div>
 <script src="../../../../prettify.js"></script>

@@ -65,6 +65,7 @@ test("Entreprise/Entreprise", () => {
     const ent = new Entreprise(data, Etablissement);
     expect(ent.hasEtablissement(validsiret)).toBe(true);
     expect(ent.hasEtablissement(invalidsiret)).toBe(false);
+
     const ent2 = new Entreprise({}, Etablissement);
     expect(ent2.hasEtablissement(validsiret)).toBe(false);
     expect(ent2.hasEtablissement(invalidsiret)).toBe(false);

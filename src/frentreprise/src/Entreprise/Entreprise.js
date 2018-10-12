@@ -15,7 +15,8 @@ export default class Entreprise extends BaseModel {
   }
 
   [_protected._importData](data, replace) {
-    const ets = data && data["_ets"];
+    const entData = { ...data };
+    const ets = entData["_ets"];
 
     if (ets) {
       if (!Array.isArray(ets)) {
@@ -32,10 +33,10 @@ export default class Entreprise extends BaseModel {
         }
       });
 
-      delete data._ets;
+      delete entData._ets;
     }
 
-    super[_protected._importData](data, replace);
+    super[_protected._importData](entData, replace);
   }
 
   /**

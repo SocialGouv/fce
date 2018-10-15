@@ -7,8 +7,6 @@ cd $DIR/../..
 echo "Installation of docker-compose.yml"
 echo "----------------------------------"
 
-pwd
-
 if [ -e "docker-compose.yml" ]
 then
     echo

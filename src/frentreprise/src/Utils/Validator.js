@@ -1,3 +1,5 @@
+/* Maths checks, no need to test a formula */
+/* istanbul ignore file */
 export function validateSIREN(SIREN, strict = false) {
   // SIREN is 9 numeric characters only
   if (!/^[0-9]{9}$/.test(SIREN)) return false;

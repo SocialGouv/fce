@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * @summary A error thrown when a given SIRET or SIREN is invalid.
  */

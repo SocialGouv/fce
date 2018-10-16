@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * @summary A error thrown when a method is defined but not implemented (yet).
  * @param {any} message An additional message for the error.

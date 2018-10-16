@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import NotImplementedError from "../Errors/NotImplementedError";
 
 export default class DataSource {

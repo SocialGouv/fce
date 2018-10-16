@@ -178,7 +178,8 @@ class frentreprise {
   }
 
   removeDataSource(dataSource) {
-    this[_.dataSources].slice(this[_.dataSources].indexOf(dataSource), 1);
+    this[_.dataSources] = this[_.dataSources].filter(ds => ds !== dataSource);
+    return;
   }
 
   [_.compareDataSource](a, b) {

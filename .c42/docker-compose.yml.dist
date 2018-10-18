@@ -20,7 +20,7 @@ services:
     depends_on:
       - front
     volumes:
-      - ./client/:/project
+      - ./src/client/:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
 

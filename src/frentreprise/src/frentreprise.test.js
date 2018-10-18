@@ -1,5 +1,6 @@
 import { nestcribe_path as test } from "../tests/utils";
 
+import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import frentreprise from "./frentreprise";
 
 test("frentreprise", () => {
@@ -22,5 +23,20 @@ test("frentreprise", () => {
     frentreprise.addDataSource(aDs);
     expect(frentreprise.getDataSources().length).toBe(dsLen);
     expect(frentreprise.getDataSource("ApiGouv")).toBe(aDs);
+  });
+
+  it("refuses invalid SIRET or SIREN", async () => {
+    const invalid = "toto123";
+    let error;
+    try {
+      await frentreprise.getEntreprise(invalid);
+    } catch (e) {
+      error = e;
+    }
+
+    expect(error).toBeInstanceOf(InvalidIdentifierError);
+    expect(error.message).toEqual(
+      expect.stringContaining("Invalid SIRET or SIREN")
+    );
   });
 });

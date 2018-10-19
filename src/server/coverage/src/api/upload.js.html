@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/api/upload.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/api</a> upload.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">31.15% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>19/61</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">21.43% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>3/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">31.15% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>19/61</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139</td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const path = require("path");
+const fs = require("fs");
+const express = require("express");
+const router = express.Router();
+const multer = require("multer");
+const PoleCIngestor = require("../dataIngestors/interactions/PoleCIngestor");
+const PoleTIngestor = require("../dataIngestors/interactions/PoleTIngestor");
+const Pole3EIngestor = require("../dataIngestors/interactions/Pole3EIngestor");
+const EtablissementsStreamIngestor = require("../dataIngestors/EtablissementsStreamIngestor");
+const NomenclaturesIngestor = require("../dataIngestors/NomenclaturesIngestor");
+const SESEParamsIngestor = require("../dataIngestors/SESEParamsIngestor");
+/*
+WikiT.xls
+EOS.xls
+SORA.xls
+*/
+&nbsp;
+const destinationFolder = path.resolve(
+  __dirname,
+  (typeof __DIST !== "undefined" &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >__DIST </span>? <span class="branch-0 cbranch-no" title="branch not covered" >"." </span>: "..") + "/uploads"
+);
+&nbsp;
+fs.existsSync(destinationFolder) || <span class="branch-1 cbranch-no" title="branch not covered" >fs.mkdirSync(destinationFolder);</span>
+&nbsp;
+const storage = multer.diskStorage({
+  destination: <span class="fstat-no" title="function not covered" >fu</span>nction(req, file, cb) {
+<span class="cstat-no" title="statement not covered" >    cb(null, destinationFolder);</span>
+  },
+  filename: <span class="fstat-no" title="function not covered" >fu</span>nction(req, file, cb) {
+    const extension = <span class="cstat-no" title="statement not covered" >path.extname(file.originalname);</span>
+    let baseName = <span class="cstat-no" title="statement not covered" >path.basename(file.originalname, extension);</span>
+<span class="cstat-no" title="statement not covered" >    baseName = baseName.toLowerCase();</span>
+    const fileName = <span class="cstat-no" title="statement not covered" >baseName + "." + new Date().toISOString() + extension;</span>
+<span class="cstat-no" title="statement not covered" >    cb(null, fileName);</span>
+  }
+});
+&nbsp;
+const removeOldFiles = <span class="fstat-no" title="function not covered" >(c</span>odeName, newFileName) =&gt; {
+<span class="cstat-no" title="statement not covered" >  fs.readdirSync(destinationFolder).forEach(<span class="fstat-no" title="function not covered" >fo</span>lderFileName =&gt; {</span>
+    let regex = <span class="cstat-no" title="statement not covered" >new RegExp(codeName, "i");</span>
+    let match = <span class="cstat-no" title="statement not covered" >folderFileName.match(regex);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (match &amp;&amp; folderFileName != newFileName) {</span>
+<span class="cstat-no" title="statement not covered" >      fs.unlinkSync(destinationFolder + "/" + folderFileName);</span>
+    }
+  });
+<span class="cstat-no" title="statement not covered" >  return;</span>
+};
+&nbsp;
+const upload = multer({ storage: storage });
+&nbsp;
+const filesOptions = {
+  sora: {
+    fileName: "sora",
+    sheetName: "v1",
+    ingestorClass: PoleCIngestor
+  },
+  wikit: {
+    fileName: "wikit",
+    sheetName: "wikit",
+    ingestorClass: PoleTIngestor
+  },
+  eos: {
+    fileName: "eos",
+    sheetName: "Sheet1",
+    ingestorClass: Pole3EIngestor
+  },
+  siene: {
+    fileName: "siene",
+    ingestorClass: EtablissementsStreamIngestor
+  },
+  nomenclature: {
+    fileName: "nomenclature",
+    ingestorClass: NomenclaturesIngestor
+  },
+  sese: {
+    fileName: "sese",
+    ingestorClass: SESEParamsIngestor
+  }
+};
+&nbsp;
+router.post("/upload", upload.any(), <span class="fstat-no" title="function not covered" >fu</span>nction(req, res) {
+  let responseData = <span class="cstat-no" title="statement not covered" >{</span>
+    files: {}
+  };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  Promise.all(</span>
+    req.files.map(<span class="fstat-no" title="function not covered" >fi</span>le =&gt; {
+      const fieldName = <span class="cstat-no" title="statement not covered" >file.fieldname;</span>
+<span class="cstat-no" title="statement not covered" >      responseData.files[fieldName] = { success: null, message: null };</span>
+&nbsp;
+      const keys = <span class="cstat-no" title="statement not covered" >Object.keys(filesOptions);</span>
+      const index = <span class="cstat-no" title="statement not covered" >keys.indexOf(fieldName);</span>
+<span class="cstat-no" title="statement not covered" >      if (index &gt; -1) {</span>
+        const fileOptions = <span class="cstat-no" title="statement not covered" >filesOptions[fieldName];</span>
+        const filePath = <span class="cstat-no" title="statement not covered" >file.path;</span>
+        const sheetName = <span class="cstat-no" title="statement not covered" >fileOptions.sheetName;</span>
+&nbsp;
+        const dbParams = <span class="cstat-no" title="statement not covered" >{</span>
+          shouldSaveEntities: true,
+          shouldResetEntities: true
+        };
+        const ingestor = <span class="cstat-no" title="statement not covered" >new fileOptions.ingestorClass(filePath, sheetName);</span>
+        const ingestorPromise = <span class="cstat-no" title="statement not covered" >ingestor</span>
+          .reset(dbParams)
+          .then(<span class="fstat-no" title="function not covered" >da</span>ta =&gt; {
+<span class="cstat-no" title="statement not covered" >            return ingestor.save(dbParams);</span>
+          })
+          .then(<span class="fstat-no" title="function not covered" >da</span>ta =&gt; {
+<span class="cstat-no" title="statement not covered" >            removeOldFiles(fieldName, file.filename);</span>
+<span class="cstat-no" title="statement not covered" >            responseData.files[fieldName].success = true;</span>
+<span class="cstat-no" title="statement not covered" >            responseData.files[fieldName].message = "Uploaded and saved ! ";</span>
+          })
+          .catch(<span class="fstat-no" title="function not covered" >er</span>ror =&gt; {
+<span class="cstat-no" title="statement not covered" >            console.error(error);</span>
+<span class="cstat-no" title="statement not covered" >            console.error(error.stack);</span>
+<span class="cstat-no" title="statement not covered" >            responseData.files[fieldName].success = false;</span>
+<span class="cstat-no" title="statement not covered" >            responseData.files[fieldName].message = "Ingestor error";</span>
+          });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (fileOptions.fileName === "siene") {</span>
+<span class="cstat-no" title="statement not covered" >          responseData.files[fieldName].success = true;</span>
+<span class="cstat-no" title="statement not covered" >          responseData.files[fieldName].message = "Processing upload...";</span>
+<span class="cstat-no" title="statement not covered" >          return Promise.resolve();</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        return ingestorPromise;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      responseData.files[fieldName].success = true;</span>
+<span class="cstat-no" title="statement not covered" >      responseData.files[fieldName].message = "Uploaded ! ";</span>
+<span class="cstat-no" title="statement not covered" >      return Promise.resolve();</span>
+    })
+  ).then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >    res.send(responseData);</span>
+  });
+});
+&nbsp;
+module.exports = router;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 19 2018 15:37:23 GMT+0000 (UTC)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

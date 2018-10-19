@@ -16,8 +16,7 @@
     "build": "NODE_ENV=production webpack --color",
     "test": "NODE_ENV=test jest",
     "test-watch": "npm run test -- --watchAll",
-    "coverage":
-      "rm -rf coverage/ && npm run test -- --coverage --coverageDirectory=coverage"
+    "coverage": "rm -rf coverage/ && npm run test -- --coverage --coverageDirectory=coverage"
   },
   "devDependencies": {
     "babel": "^6.23.0",
@@ -37,12 +36,21 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["<rootDir>/config/", "<rootDir>/lib/axios"],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/build/",
+      "<rootDir>/config/",
+      "<rootDir>/lib/axios"
+    ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
       "!<rootDir>/config/",
       "!<rootDir>/lib/axios"
     ],
-    "coverageReporters": ["text", "lcov", "html"]
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ]
   }
 }

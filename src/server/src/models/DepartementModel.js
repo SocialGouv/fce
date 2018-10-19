@@ -6,10 +6,10 @@ const departementSchema = new Schema({
   libelle_departement: String
 });
 
-const Departement = mongoose.model("Departement", departementSchema);
-
 departementSchema.statics.findOneByCode = function(code_departement, cb) {
-  return this.findOneByCode({ code_departement }, cb);
+  return this.findOne({ code_departement }, cb);
 };
+
+const Departement = mongoose.model("Departement", departementSchema);
 
 module.exports = Departement;

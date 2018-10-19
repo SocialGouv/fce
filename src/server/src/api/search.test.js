@@ -1,8 +1,7 @@
 const request = require("supertest");
-const server = require("../index.js");
 require("../mongo/db");
 const Etablissement = require("../models/EtablissementModel");
-const TIMEOUT = 15000;
+const TIMEOUT = 5000;
 
 const _done = (err, done) => {
   if (err) {
@@ -10,6 +9,18 @@ const _done = (err, done) => {
   }
   done();
 };
+
+let server;
+
+beforeEach(() => {
+  server = require("../index.js");
+}, TIMEOUT);
+
+afterEach(() => {
+  return setTimeout(function() {
+    server.close();
+  }, TIMEOUT);
+}, TIMEOUT);
 
 describe("Search", () => {
   describe("simple", () => {

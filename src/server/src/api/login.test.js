@@ -1,5 +1,5 @@
 const request = require("supertest");
-const server = require("../index.js");
+const TIMEOUT = 3000;
 
 const _done = (err, done) => {
   if (err) {
@@ -7,6 +7,18 @@ const _done = (err, done) => {
   }
   done();
 };
+
+let server;
+
+beforeEach(() => {
+  server = require("../index.js");
+}, TIMEOUT);
+
+afterEach(() => {
+  return setTimeout(function() {
+    server.close();
+  }, TIMEOUT);
+}, TIMEOUT);
 
 describe("Login", () => {
   test("user login", done => {

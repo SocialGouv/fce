@@ -1,7 +1,7 @@
 const request = require("supertest");
-const server = require("../index.js");
+let server;
 require("../mongo/db");
-const TIMEOUT = 15000;
+const TIMEOUT = 5000;
 const Nomenclature = require("../models/NomenclatureModel");
 const CodePostal = require("../models/CodePostalModel");
 const Departement = require("../models/DepartementModel");
@@ -64,6 +64,12 @@ describe("Entities", () => {
   beforeEach(() => {
     return Nomenclature.remove({})
       .then(() => {
+        return setTimeout(function() {
+          server.close();
+        }, TIMEOUT);
+      })
+      .then(() => {
+        server = require("../index.js");
         return generateNomenclature();
       })
       .then(() => {

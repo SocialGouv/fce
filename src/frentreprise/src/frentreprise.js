@@ -151,6 +151,7 @@ class frentreprise {
                 }
               });
             } else {
+              console.log("updateEnt", cleanObject(result));
               results[SIREN].updateData(cleanObject(result));
             }
           }
@@ -189,7 +190,7 @@ class frentreprise {
     return a > b ? 1 : a < b ? -1 : 0;
   }
 
-  [_.askDataSource](method, request, forEach = result => result) {
+  [_.askDataSource](method, request, forEachData) {
     return Promise.all(
       this.getDataSources().map(dataSource => {
         console.log(
@@ -199,7 +200,11 @@ class frentreprise {
         );
 
         return dataSource.source[method](request).then(data => {
-          const cleanedData = cleanObject(data);
+          const cleanedData = Array.isArray(data)
+            ? data.map(e => cleanObject(e))
+            : typeof data === "object" && data
+              ? cleanObject(data)
+              : data;
 
           console.log(
             `Got response for [${method}] from dataSource named ${
@@ -215,11 +220,8 @@ class frentreprise {
       })
     ).then(results => {
       results
-        .sort(
-          (a, b) =>
-            (a.source && b.source && this[_.compareDataSource](a, b)) || 0
-        )
-        .map(forEach);
+        .sort((a, b) => this[_.compareDataSource](a.source, b.source))
+        .map(forEachData);
     });
   }
 }

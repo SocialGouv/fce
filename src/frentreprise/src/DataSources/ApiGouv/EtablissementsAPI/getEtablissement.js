@@ -9,10 +9,6 @@ const getEtablissement = async (SIRET, Axios, params) => {
       if (data && data.etablissement) {
         const et = data.etablissement;
 
-        [].forEach(key => {
-          out[key] = et[key];
-        });
-
         out.date_creation = utils.convertDate(et.date_creation_etablissement);
 
         if (et.adresse && typeof et.adresse === "object") {
@@ -33,14 +29,16 @@ const getEtablissement = async (SIRET, Axios, params) => {
         out.activite =
           et.naf && et.libelle_naf ? `${et.naf} - ${et.libelle_naf}` : null;
 
-        out.etablissement_employeur =
-          +et.tranche_effectif_salarie_etablissement.a > 0;
+        if (et.tranche_effectif_salarie_etablissement) {
+          out.etablissement_employeur =
+            +et.tranche_effectif_salarie_etablissement.a > 0;
 
-        out.tranche_effectif_insee =
-          et.tranche_effectif_salarie_etablissement.intitule;
-        out.annee_tranche_effectif_insee =
-          +et.tranche_effectif_salarie_etablissement.date_reference ||
-          undefined;
+          out.tranche_effectif_insee =
+            et.tranche_effectif_salarie_etablissement.intitule;
+          out.annee_tranche_effectif_insee =
+            +et.tranche_effectif_salarie_etablissement.date_reference ||
+            undefined;
+        }
       }
     }
   );

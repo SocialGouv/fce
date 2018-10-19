@@ -17,7 +17,9 @@ const document_association = async (SIRET, Axios, params) => {
           { timestamp: 0 }
         );
 
-        out.document_association = lastDocument;
+        if (lastDocument && lastDocument.timestamp) {
+          out.document_association = lastDocument;
+        }
       }
     }
   );

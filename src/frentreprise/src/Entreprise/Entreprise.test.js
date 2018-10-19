@@ -50,6 +50,7 @@ test("Entreprise/Entreprise", () => {
 
   it("can update or create establishement when constructing or updating with data", () => {
     const validsiret = "48776861600038";
+    const validsiret2 = "72200393602320";
     const invalidsiret = "invalidsiret";
     const data = {
       _ets: [
@@ -72,5 +73,18 @@ test("Entreprise/Entreprise", () => {
     ent2.updateData(data);
     expect(ent2.hasEtablissement(validsiret)).toBe(true);
     expect(ent2.hasEtablissement(invalidsiret)).toBe(false);
+    expect(ent2.etablissements.length).toBe(1);
+    ent2.updateData({
+      _ets: {
+        siret: validsiret2
+      }
+    });
+    expect(ent2.etablissements.length).toBe(2);
+    ent2.updateData({
+      _ets: 5 // random data, will be ignored
+    });
+    expect(ent2.etablissements.length).toBe(2);
+    expect(ent2.hasEtablissement(validsiret2)).toBe(true);
+    ent2.updateData(777); // Will silently fail
   });
 });

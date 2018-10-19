@@ -3,72 +3,57 @@ import { nestcribe_path as test } from "../../../../tests/utils";
 import utils from "../utils";
 import getLegacy from "./getLegacy";
 
-test("DataSources/ApiGouv/EntreprisesAPI/getLegacy", () => {
+test("DataSources/ApiGouv/EtablissementsAPI/getLegacy", () => {
   describe("sucessfully parse data", async () => {
     const testCases = [
       {
         it: "filter out null values, copy required attributes",
         data: {
-          entreprise: {
-            siren: "12345610",
-            raison_sociale: false,
-            nombre_etablissements_actifs: 5,
-            nom_commercial: "abc",
-            nom: null,
-            siret_siege_social: "1235123",
-            forme_juridique: "forme A"
+          etablissement: {
+            siret: "12345610",
+            siege_social: false,
+            enseigne: "toto",
+            nom_commercial: 5,
+            prenom: null,
+            siret_siege_social: "1235123"
           }
         },
         expected: expect.objectContaining({
-          siren: "12345610",
-          raison_sociale: false,
-          nombre_etablissements_actifs: 5,
-          nom_commercial: "abc",
+          siret: "12345610",
+          siege_social: false,
+          enseigne: "toto",
+          nom_commercial: 5,
           nom: undefined,
           prenom: undefined,
-          siret_siege_social: "1235123",
-          categorie_juridique: "forme A"
+          siret_siege_social: "1235123"
         })
       },
       {
-        it: "expects dates to be parsed",
+        it: "expects etat_etablissement to be parsed",
         data: {
-          entreprise: {
-            date_creation: 1296552600,
-            date_radiation: 1296552600
+          etablissement: {
+            etat_administratif_etablissement: {
+              value: "Actif",
+              date_mise_a_jour: 1296552600
+            }
           }
         },
         expected: expect.objectContaining({
-          date_de_creation: new Date(Date.UTC(2011, 1, 1, 9, 30, 0)),
-          date_de_radiation: new Date(Date.UTC(2011, 1, 1, 9, 30, 0))
+          etat_etablissement: {
+            date: new Date(Date.UTC(2011, 1, 1, 9, 30, 0)),
+            label: "Actif"
+          }
         })
       },
       {
         it: "sets unknown data about etat_entreprise to undefined",
         data: {
-          entreprise: {}
+          etablissement: {}
         },
         expected: expect.objectContaining({
-          etat_entreprise: {
+          etat_etablissement: {
             label: "N/A",
             date: undefined
-          }
-        })
-      },
-      {
-        it: "set data about etat_entreprise",
-        data: {
-          entreprise: {
-            etat_administratif: {
-              value: "Actif",
-              date_mise_a_jour: 1262304000
-            }
-          }
-        },
-        expected: expect.objectContaining({
-          etat_entreprise: {
-            label: "Actif",
-            date: new Date(Date.UTC(2010))
           }
         })
       }
@@ -122,7 +107,7 @@ test("DataSources/ApiGouv/EntreprisesAPI/getLegacy", () => {
           get: () =>
             Promise.resolve({
               data: {
-                entreprise: null
+                etablissement: null
               }
             })
         },

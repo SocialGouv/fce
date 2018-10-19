@@ -20,6 +20,49 @@ test("DataSources/ApiGouv/EntreprisesAPI/attestation_dgfip", () => {
     expect(result).toEqual({ attestation_dgfip: apiData.url });
   });
 
+  it("handles invalid data", async () => {
+    expect(
+      await attestation_dgfip(
+        "SIREN",
+        {
+          get: () =>
+            Promise.resolve({
+              data: {}
+            })
+        },
+        {}
+      )
+    ).toEqual({});
+
+    expect(
+      await attestation_dgfip(
+        "SIREN",
+        {
+          get: () =>
+            Promise.resolve({
+              data: null
+            })
+        },
+        {}
+      )
+    ).toEqual({});
+
+    expect(
+      await attestation_dgfip(
+        "SIREN",
+        {
+          get: () =>
+            Promise.resolve({
+              data: {
+                url: new Date()
+              }
+            })
+        },
+        {}
+      )
+    ).toEqual({});
+  });
+
   it("returns an empty data when it fails", async () => {
     const Axios = {
       get: () => Promise.reject()

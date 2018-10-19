@@ -35,13 +35,11 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         it: "sets unknown data about tranche_effectif to undefined",
         data: {
           entreprise: {
-            tranche_effectif_salarie_entreprise: {
-              date_reference: 2015
-            }
+            tranche_effectif_salarie_entreprise: {}
           }
         },
         expected: {
-          annee_tranche_effectif: 2015,
+          annee_tranche_effectif: undefined,
           tranche_effectif: undefined
         }
       },
@@ -117,6 +115,36 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         expect(result).toEqual(testCase.expected);
       });
     }
+  });
+
+  it("handles invalid data", async () => {
+    expect(
+      await getEntreprise(
+        "SIREN",
+        {
+          get: () =>
+            Promise.resolve({
+              data: null
+            })
+        },
+        {}
+      )
+    ).toEqual({});
+
+    expect(
+      await getEntreprise(
+        "SIREN",
+        {
+          get: () =>
+            Promise.resolve({
+              data: {
+                entreprise: null
+              }
+            })
+        },
+        {}
+      )
+    ).toEqual({});
   });
 
   it("returns an empty data when it fails", async () => {

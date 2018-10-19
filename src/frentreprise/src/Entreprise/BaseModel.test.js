@@ -36,6 +36,8 @@ test("Entreprise/BaseModel", () => {
     // Changed
     expect(model.bar).not.toEqual(data.bar);
     expect(model.bar).toEqual("new");
+
+    model.updateData(777); // Will silently fail
   });
 
   it("can replace all data", () => {

@@ -23,10 +23,10 @@ const getLegacy = async (SIRET, Axios, params) => {
         });
 
         if (
-          !legacy_et.etat_administratif ||
-          typeof legacy_et.etat_administratif !== "object"
+          !legacy_et.etat_administratif_etablissement ||
+          typeof legacy_et.etat_administratif_etablissement !== "object"
         ) {
-          legacy_et.etat_administratif = {};
+          legacy_et.etat_administratif_etablissement = {};
         }
 
         out.etat_etablissement = {

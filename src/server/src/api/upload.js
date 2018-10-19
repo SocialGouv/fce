@@ -17,7 +17,7 @@ SORA.xls
 
 const destinationFolder = path.resolve(
   __dirname,
-  (__DIST ? "." : "..") + "/uploads"
+  (typeof __DIST !== "undefined" && __DIST ? "." : "..") + "/uploads"
 );
 
 fs.existsSync(destinationFolder) || fs.mkdirSync(destinationFolder);

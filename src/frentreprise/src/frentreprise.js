@@ -62,8 +62,8 @@ class frentreprise {
 
     // We unduplicate SIRETs using a hash map
     const etablissementsLookups = Object.keys({
-      [SIRET]: true,
-      [entreprise.siret_siege_social]: true
+      [entreprise.siret_siege_social]: true,
+      [SIRET]: true
     });
 
     // Just wait for process to finish
@@ -230,3 +230,4 @@ module.exports.Etablissement = Etablissement;
 module.exports.DataSource = DataSource;
 module.exports.isSIRET = Validator.validateSIRET;
 module.exports.isSIREN = Validator.validateSIREN;
+module.exports._ = _;

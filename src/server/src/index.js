@@ -68,7 +68,9 @@ function run() {
       console.log(`Listening on ${host || ""}:${port}`);
     }
   );
+
+  return app;
 }
 
 init();
-run();
+module.exports = run();

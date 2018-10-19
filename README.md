@@ -64,3 +64,9 @@ Vous pourrez ensuite lancer l'interface GUI via la commande (vous pouvez utilise
 # se placer dans le dossier client "cd client"
 ./node_modules/.bin/cypress open --port 8080 --env host=http://direccte.test
 ```
+
+### Server
+
+```shell
+.c42 server:npm test
+```

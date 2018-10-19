@@ -9,7 +9,8 @@
     "watch": "webpack --color --watch & nodemon",
     "nodemon": "nodemon build/server.js",
     "build": "NODE_ENV=production webpack --color",
-    "postbuild": "chown -R --reference=package.json ."
+    "postbuild": "chown -R --reference=package.json .",
+    "test": "jest"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -34,10 +35,13 @@
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
     "fs-extra": "^5.0.0",
-    "jest": "^22.4.0",
+    "jest": "^23.6.0",
+    "jest-express": "^1.8.0",
     "node-debug": "^0.1.0",
     "nodemon": "^1.17.1",
     "post-compile-webpack-plugin": "^0.1.1",
+    "supertest": "^3.3.0",
+    "tape": "^4.9.1",
     "webpack": "^4.0.0",
     "webpack-cli": "^2.0.9",
     "webpack-node-externals": "^1.6.0"

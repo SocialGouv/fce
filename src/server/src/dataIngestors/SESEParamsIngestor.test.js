@@ -23,7 +23,7 @@ describe("default ingestor", () => {
 
     expect(data[1].eos_filiere).toBeUndefined();
 
-    expect(data[3].siret).toBe("01765005200016");
+    expect(data[3].siret).toBe("08552019500034");
     expect(data[3].eos_filiere).toBe("Automobile");
   });
 });

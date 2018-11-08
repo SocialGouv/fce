@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/dataIngestors/SESEParamsIngestor.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/dataIngestors</a> SESEParamsIngestor.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">15.63% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>5/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">9.09% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">16.13% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>5/31</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const Ingestor = require("./Ingestor");
+const WorksheetHelper = require("../helpers/WorksheetHelper");
+const Etablissement = require("../models/EtablissementModel");
+&nbsp;
+class SESEParamsIngestor extends Ingestor {
+  constructor(filePath) {
+    super(filePath);
+    const sheetName = <span class="cstat-no" title="statement not covered" >this.workbook.SheetNames[0];</span>
+<span class="cstat-no" title="statement not covered" >    this.workSheet = this.workbook.Sheets[sheetName];</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tData() {
+<span class="cstat-no" title="statement not covered" >    console.log("[SESEParamsIngestor] Parsing data");</span>
+    const wsh = <span class="cstat-no" title="statement not covered" >new WorksheetHelper(this.workSheet, {</span>
+      keysToLowerCase: true
+    });
+&nbsp;
+    const rowsData = <span class="cstat-no" title="statement not covered" >wsh.getRowsData();</span>
+<span class="cstat-no" title="statement not covered" >    return rowsData;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tSESEParams() {
+<span class="cstat-no" title="statement not covered" >    return this.getData();</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  sa</span>ve() {
+    const data = <span class="cstat-no" title="statement not covered" >this.getData();</span>
+<span class="cstat-no" title="statement not covered" >    console.log("[SESEParamsIngestor] Saving data");</span>
+    const total = <span class="cstat-no" title="statement not covered" >data.length;</span>
+    let processed = <span class="cstat-no" title="statement not covered" >0;</span>
+    const promises = <span class="cstat-no" title="statement not covered" >data.map(<span class="fstat-no" title="function not covered" >SE</span>SEParam =&gt; {</span>
+      const siret = <span class="cstat-no" title="statement not covered" >SESEParam.siret;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      console.log(`[SESEParamsIngestor] Updating etablissement ${siret}`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      return Etablissement.update({ siret: siret }, { sese: SESEParam })</span>
+        .then(
+<span class="fstat-no" title="function not covered" >          ()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >            console.log(</span>
+              `[SESEParamsIngestor] Processed etablissement ${siret}`
+            );
+          },
+<span class="fstat-no" title="function not covered" >          er</span>r =&gt; <span class="cstat-no" title="statement not covered" >console.error(`[SESEParamsIngestor] ${err}`)</span>
+        )
+        .then(<span class="fstat-no" title="function not covered" >()</span> =&gt; {
+<span class="cstat-no" title="statement not covered" >          processed++;</span>
+<span class="cstat-no" title="statement not covered" >          console.log(</span>
+            `[SESEParamsIngestor] ${(processed * 100 / total).toFixed(
+              2
+            )}% - ${processed} / ${total}`
+          );
+        });
+    });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return Promise.all(promises).then(<span class="fstat-no" title="function not covered" >da</span>ta =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      console.log("[SESEParamsIngestor] Saved all data");</span>
+      const response = <span class="cstat-no" title="statement not covered" >data.filter(<span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >d != undefined)</span>;</span>
+<span class="cstat-no" title="statement not covered" >      console.log("[SESEParamsIngestor] response:", response);</span>
+<span class="cstat-no" title="statement not covered" >      return response;</span>
+    });
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>set() {
+<span class="cstat-no" title="statement not covered" >    console.log("[SESEParamsIngestor] reset");</span>
+<span class="cstat-no" title="statement not covered" >    return Etablissement.update({ $unset: { sese: "" } });</span>
+  }
+}
+&nbsp;
+module.exports = SESEParamsIngestor;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 19 2018 15:37:23 GMT+0000 (UTC)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

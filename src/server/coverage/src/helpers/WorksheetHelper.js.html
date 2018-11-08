@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/helpers/WorksheetHelper.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/helpers</a> WorksheetHelper.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>67/67</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>19/19</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>7/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>67/67</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">106x</span>
+<span class="cline-any cline-yes">106x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2755x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-yes">177200x</span>
+<span class="cline-any cline-yes">177200x</span>
+<span class="cline-any cline-yes">131128x</span>
+<span class="cline-any cline-yes">131128x</span>
+<span class="cline-any cline-yes">131128x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">177200x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1772x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">885x</span>
+<span class="cline-any cline-yes">885x</span>
+<span class="cline-any cline-yes">885x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">885x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">885x</span>
+<span class="cline-any cline-yes">13799x</span>
+<span class="cline-any cline-yes">13799x</span>
+<span class="cline-any cline-yes">13799x</span>
+<span class="cline-any cline-yes">13799x</span>
+<span class="cline-any cline-yes">11486x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13799x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">885x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">882x</span>
+<span class="cline-any cline-yes">882x</span>
+<span class="cline-any cline-yes">882x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">882x</span>
+<span class="cline-any cline-yes">13789x</span>
+<span class="cline-any cline-yes">13789x</span>
+<span class="cline-any cline-yes">13789x</span>
+<span class="cline-any cline-yes">11084x</span>
+<span class="cline-any cline-yes">11084x</span>
+<span class="cline-any cline-yes">9763x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1321x</span>
+<span class="cline-any cline-yes">64x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1257x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11020x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">882x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">882x</span>
+<span class="cline-any cline-yes">882x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">96x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">class WorksheetHelper {
+  constructor(workSheet, params) {
+    this.workSheet = workSheet;
+    this.params = params;
+  }
+&nbsp;
+  getReferences() {
+    let references = {};
+&nbsp;
+    const split = this.workSheet["!ref"].split(":");
+    const start = split[0];
+    const end = split[1];
+&nbsp;
+    const columnRegex = /^[A-Z]+/g;
+    const rowRegex = /[0-9]+$/g;
+&nbsp;
+    const startColumn = start.match(columnRegex)[0];
+    const startRow = start.match(rowRegex)[0];
+&nbsp;
+    const endColumn = end.match(columnRegex)[0];
+    const endRow = end.match(rowRegex)[0];
+&nbsp;
+    references = {
+      start: {
+        column: startColumn,
+        row: startRow
+      },
+      end: {
+        column: endColumn,
+        row: endRow
+      }
+    };
+    return references;
+  }
+&nbsp;
+  generateAlphabet(indexNumber) {
+    const alphabetLength = indexNumber || 100;
+    const alphabetBase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let alphabet = [];
+    for (let i = 0; i &lt; alphabetLength; i++) {
+      let letter = alphabetBase[i];
+      if (i &gt; 25) {
+        const q = parseInt(i / 26, 10);
+        const r = i % 26;
+        letter = alphabetBase[q - 1] + alphabetBase[r];
+      }
+      alphabet.push(letter);
+    }
+    return alphabet;
+  }
+&nbsp;
+  getAlphabeticalColumnNames() {
+    const refs = this.getReferences(this.workSheet);
+    const alphabet = this.generateAlphabet();
+&nbsp;
+    const startIndex = alphabet.indexOf(refs.start.column);
+    const endIndex = alphabet.indexOf(refs.end.column);
+&nbsp;
+    const columnNames = alphabet.slice(startIndex, endIndex + 1);
+&nbsp;
+    return columnNames;
+  }
+&nbsp;
+  getColumnKeys() {
+    const refs = this.getReferences(this.workSheet);
+    const startRow = refs.start.row;
+    const alphaColumnNames = this.getAlphabeticalColumnNames(this.workSheet);
+&nbsp;
+    let columnKeys = [];
+&nbsp;
+    for (let i = 0; i &lt; alphaColumnNames.length; i++) {
+      const columnRef = alphaColumnNames[i];
+      const cell = this.workSheet[columnRef + "" + startRow];
+      let columnKey = cell ? cell.v : null;
+      if (columnKey &amp;&amp; this.params &amp;&amp; this.params.keysToLowerCase) {
+        columnKey = columnKey.toLowerCase();
+      }
+      columnKeys.push(columnKey);
+    }
+    return columnKeys;
+  }
+&nbsp;
+  getRowData(rowNumber, columnsToKeep) {
+    const columnNames = this.getAlphabeticalColumnNames(this.workSheet);
+    const columnKeys = this.getColumnKeys(this.workSheet);
+    let item = {};
+&nbsp;
+    for (let i = 0; i &lt; columnNames.length; i++) {
+      const cellRef = columnNames[i] + "" + rowNumber;
+      const cell = this.workSheet[cellRef];
+      if (cell) {
+        let attributeKey = null;
+        if (!columnsToKeep) {
+          attributeKey = columnKeys[i];
+        } else {
+          if (!columnsToKeep[columnNames[i]]) {
+            continue;
+          }
+          attributeKey = columnsToKeep[columnNames[i]];
+        }
+        item[attributeKey] = (cell.w || cell.v).trim();
+      }
+    }
+&nbsp;
+    return item;
+  }
+&nbsp;
+  getRowsData(columnsToKeep) {
+    const refs = this.getReferences(this.workSheet);
+&nbsp;
+    let getRowsData = [];
+    const startRowNumber = parseInt(refs.start.row);
+    const endRowNumber = parseInt(refs.end.row);
+    for (
+      let rowNumber = startRowNumber + 1;
+      rowNumber &lt;= endRowNumber;
+      rowNumber++
+    ) {
+      const item = this.getRowData(rowNumber, columnsToKeep);
+      getRowsData.push(item);
+    }
+&nbsp;
+    return getRowsData;
+  }
+}
+&nbsp;
+module.exports = WorksheetHelper;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Oct 19 2018 15:37:23 GMT+0000 (UTC)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

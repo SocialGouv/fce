@@ -74,36 +74,14 @@ pipeline {
     }
     stage('Deploy') {
       parallel {
-        stage('Dev') {
+        stage('Preproduction') {
           when {
             anyOf {
               branch 'develop'
             }
           }
           steps {
-            echo "Deploying $BRANCH_NAME into on https://dev.direccte.commit42.fr/ from $JENKINS_URL ..."
-            sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
-              sh '''
-                  docker-compose run --rm \
-                      -v `pwd`:/project \
-                      -v `pwd`/.docker:/var/lib/docker \
-                      -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                      -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                      builder \
-                      bundle exec c42 deploy dev
-              '''
-            }
-          }
-        }
-        stage('Preproduction') {
-          when {
-            anyOf {
-              branch 'master'
-            }
-            expression { TO_DEPLOY }
-          }
-          steps {
-            echo "Deploying $BRANCH_NAME on https://direccte.commit42.fr/ from $JENKINS_URL ..."
+            echo "Deploying $BRANCH_NAME into on https://direccte.commit42.fr/ from $JENKINS_URL ..."
             sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
               sh '''
                   docker-compose run --rm \

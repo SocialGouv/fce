@@ -23,7 +23,7 @@ ou, si vous utilisez zsh :
 - Installez Bundler si nécessaire : `sudo gem install bundler`
 - Sinon Assurez-vous que qu'il est à jour `sudo gem update bundler`
 - Installer le bundle : `bundle` ou `bundle install` à la racine du projet
-- `c42 install`
+- `bundle exec c42 install`
 - Configurer pettier sur son IDE : https://prettier.io/docs/en/vim.html
 
 
@@ -41,4 +41,32 @@ sudo add-apt-repository \
 
 sudo apt-get update
 sudo apt-get install docker-ce
+```
+
+## Tests
+
+### Client
+
+Les tests de la partie client ont été réalisé avec [Cypress](https://www.cypress.io/)
+
+Pour les executer il vous faudra dans un premier temps l'installer :
+
+```shell
+# se placer dans le dossier client "cd client"
+./node_modules/.bin/cypress install
+```
+
+Vous pourrez ensuite lancer l'interface GUI via la commande (vous pouvez utiliser un autre port si celui-ci est déjà utilisé sur votre machine)
+
+**Pour fonctionner les containers `front`, `mongo` et `server` doivent être démarré**
+
+```shell
+# se placer dans le dossier client "cd client"
+./node_modules/.bin/cypress open --port 8080 --env host=http://direccte.test
+```
+
+### Server
+
+```shell
+.c42 server:npm test
 ```

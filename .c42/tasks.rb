@@ -4,6 +4,7 @@ SHELL = '/bin/bash'.freeze
 NPM = ENV['NPM'] || 'docker-compose run --rm %container% npm'
 YARN = ENV['YARN'] || 'docker-compose run --rm %container% yarn'
 NODE = ENV['NODE'] || 'docker-compose run --rm %container% node'
+CYPRESS = 'docker-compose run --rm cypress'
 
 desc 'docker:run', 'Lance docker-compose up'
 task 'docker:run' do
@@ -43,6 +44,15 @@ end
 
         desc 'npm:build', 'Lance npm run build'
         shell_task 'npm:build', "#{ctr_npm} run build"
+
+        desc 'cypress:tests', 'Lance les tests de cypress'
+        shell_task 'cypress:tests', "#{CYPRESS}"
+
+        desc 'cypress:install', 'Installation de cypress'
+        shell_task 'cypress:install', 'cd client && ./node_modules/.bin/cypress install'
+
+        desc 'cypress:run', 'Lance cypress en local'
+        shell_task 'cypress:run', "cd client && ./node_modules/.bin/cypress open --port 8080 --env host=http://direccte.test"
     end
 end
 
@@ -110,7 +120,7 @@ task :install do
   invoke 'docker:restart', ['server']
 end
 
-depenvs = %w[dev preprod]
+depenvs = %w[preprod]
 desc 'deploy DEPLOY_ENV', "deploy to DEPLOY_ENV (#{depenvs.join(', ')})"
 task :deploy do |dep_env = 'preprod'|
   unless depenvs.include?(dep_env)

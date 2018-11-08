@@ -1,0 +1,24 @@
+version: '3'
+services:
+  client:
+    restart: always
+    build:
+      args:
+        REACT_APP_API_ENDPOINT: 'http://localhost:5000/api'
+      context: ./src/client
+    ports:
+    - "8080:80"
+
+  server:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./src/server/Dockerfile
+    depends_on:
+      - mongo
+    ports:
+    - "5000:80"
+
+  mongo:
+    image: mongo:3.6
+    restart: always

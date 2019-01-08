@@ -1,0 +1,10 @@
+{
+  "APIGouv": {
+    "token": "Wla5Sr8oyktnldY0QK67nlsjgIHqFKul"
+  },
+  "proxy": {
+    "host": "proxyweb.intranet.social.gouv.fr",
+    "port": 8080,
+    "tunnel": true
+  }
+}

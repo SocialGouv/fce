@@ -1,0 +1,85 @@
+version: '3'
+
+services:
+  front:
+    build: .c42/docker/front
+    networks:
+      - traefik
+      - default
+    ports:
+      - 3000
+    volumes:
+      - ./src/client/:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+    labels:
+      - traefik.frontend.rule=Host:fce.test
+      - traefik.port=3000
+
+  server:
+    build: .c42/docker/server
+    networks:
+      - traefik
+      - default
+    ports:
+      - 80
+    links:
+      - db
+    volumes:
+      - ./src/server/:/project
+      - ./src/frentreprise/:/frentreprise
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+    labels:
+      - traefik.frontend.rule=Host:srv.fce.test
+    environment:
+      WATCH: 1
+
+
+  builder:
+    build: .c42/docker/builder
+    privileged: true
+    volumes:
+      - ./:/project
+      - $SSH_AUTH_SOCK:/ssh-agent
+
+  db:
+    image: postgres:9.6
+    network_mode: "bridge"
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: fce
+
+  adminer:
+    image: adminer
+    networks:
+      - traefik
+      - default
+    links:
+      - db:db
+    ports:
+      - 8080
+    labels:
+        - "traefik.port=8080"
+        - "traefik.frontend.rule=Host:adm.fce.test"
+    environment:
+      ADMINER_DESIGN: pappu687
+
+  frentreprise:
+    build: .c42/docker/server
+    image: node_server
+    networks:
+      - traefik
+      - default
+    volumes:
+      - ./src/frentreprise:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+
+networks:
+  traefik:
+    external: true
+
+volumes:
+  db-data:
+    driver: local

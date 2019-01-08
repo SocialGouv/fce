@@ -1,0 +1,25 @@
+html {
+  height: 100%;
+}
+
+body {
+  background: #fcfef3 url("/img/img_bg.jpg") no-repeat scroll top center;
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100%;
+}
+
+.app-container {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+
+  @media print {
+    padding-top: 1rem;
+  }
+
+  .bg-info a {
+    color: white;
+    text-decoration: underline;
+  }
+}

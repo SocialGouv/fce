@@ -38,7 +38,7 @@ task :preprod do
 end
 
 after 'deploy:finalize_update' do
-  run "cd #{latest_release}/dist && npm install"
+#   run "cd #{latest_release}/dist && npm install"
 end
 
 # see https://github.com/capistrano/capistrano/blob/master/lib/capistrano/ext/multistage.rb#L22

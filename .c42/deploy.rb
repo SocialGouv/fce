@@ -25,7 +25,7 @@ set :app_path, '/dist/htdocs/'
 set :user, 'commit42'
 
 task :preprod do
-  set :deploy_to, '/home/commit42/fce'
+  set :deploy_to, '/home/commit42/deployment/fce'
   set :branch, 'develop'
   set :webhost, 'https://fce.commit42.fr'
   after 'deploy' do
@@ -34,11 +34,11 @@ task :preprod do
 
   set :http_auth_users, [%w[demo direccte2019]]
   set :http_auth_path, app_path
-  after 'deploy:finalize_update', 'http_auth:protect'
+#   after 'deploy:finalize_update', 'http_auth:protect'
 end
 
 after 'deploy:finalize_update' do
-  run "cd #{latest_release}/dist && npm install"
+#   run "cd #{latest_release}/dist && npm install"
 end
 
 # see https://github.com/capistrano/capistrano/blob/master/lib/capistrano/ext/multistage.rb#L22

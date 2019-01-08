@@ -76,8 +76,8 @@ task 'build' do
 
     info("Packaging...")
     directory "dist" # copy .c42/dist/ to dist/
-    directory "../server/build", "dist" # copy .c42/../server/build to dist/
-    directory "../client/build", "dist/htdocs" # copy .c42/../client/build to dist/htdocs
+    directory "../src/server/build", "dist" # copy .c42/../server/build to dist/
+    directory "../src/client/build", "dist/htdocs" # copy .c42/../client/build to dist/htdocs
     chmod "dist/run.sh", 0755
     chmod "dist/install.sh", 0755
 

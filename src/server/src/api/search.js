@@ -180,4 +180,16 @@ const sendResultXlsx = (data, response) => {
   response.send(wbout);
 };
 
+router.get("/test-postgres", function(request, response) {
+  const db = require("../db/postgres");
+
+  db.query("SELECT * FROM test")
+    .then(res => {
+      response.send({ success: true, pg: res.rows });
+    })
+    .catch(e => {
+      response.send({ success: false });
+    });
+});
+
 module.exports = router;

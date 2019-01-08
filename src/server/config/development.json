@@ -1,3 +1,9 @@
 {
+  "postgres": {
+    "host": "db",
+    "user": "postgres",
+    "password": "root",
+    "database": "fce"
+  },
   "proxy": false
 }

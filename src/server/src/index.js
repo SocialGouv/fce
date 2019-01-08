@@ -3,9 +3,6 @@ import path from "path";
 import config from "config";
 import express from "express";
 import bodyParser from "body-parser";
-// import mongoose from "mongoose";
-
-// import Mongo from "./frentreprise/datasources/Mongo";
 
 import apiRouter from "./api";
 

@@ -20,6 +20,7 @@
     "frentreprise": "../frentreprise",
     "json2csv": "^4.0.1",
     "multer": "^1.3.0",
+    "pg": "^7.7.1",
     "promise-queue": "^2.2.5",
     "xlsx": "^0.12.1"
   },

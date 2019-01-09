@@ -32,7 +32,7 @@ pipeline {
         }
       }
       steps {
-        // notifyBuild()
+        notifyBuild()
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
           sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
@@ -53,7 +53,7 @@ pipeline {
         }
       }
       steps {
-        // notifyBuild("WAITING");
+        notifyBuild("WAITING");
         input(message: "Are you sure you want to deploy on preproduction?")
           script {
             TO_DEPLOY = true
@@ -100,10 +100,10 @@ pipeline {
       deleteDir()
     }
     success {
-    //   notifyBuild("SUCCESSFUL");
+      notifyBuild("SUCCESSFUL");
     }
     failure {
-    //   notifyBuild("FAILED");
+      notifyBuild("FAILED");
     }
   }
 }
@@ -131,7 +131,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
   def subject = "${emoji} *${buildStatus}* - ${env.JOB_NAME} [${env.BUILD_NUMBER}]"
   def summary = "${subject}\n\n${env.BUILD_URL}"
 
-  if(STARTED) {
-    slackSend (color: colorCode, message: summary, channel: "${params.SLACK_CHANNEL}")
-  }
+//   if(STARTED) {
+//     slackSend (color: colorCode, message: summary, channel: "${params.SLACK_CHANNEL}")
+//   }
 }

@@ -12,21 +12,14 @@ pipeline {
   }
   stages {
     stage('Init') {
-      when {
-        anyOf {
-          branch 'develop';
-          branch 'master'
-        }
-      }
       steps {
         script {
           TO_DEPLOY = false
         }
-        notifyBuild()
         echo "Init $BRANCH_NAME on $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
-            cp .c42/docker-compose.yml.dist docker-compose.yml
+            cp .c42/docker-compose.yml.jenkins docker-compose.yml
             docker-compose build builder
           '''
         }
@@ -40,6 +33,7 @@ pipeline {
         }
       }
       steps {
+        notifyBuild()
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
           sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''

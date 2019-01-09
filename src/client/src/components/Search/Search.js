@@ -10,7 +10,7 @@ class Search extends React.Component {
     return (
       <div className="app-search">
         <Row className="justify-content-md-center">
-          <Col xl="6" md="8">
+          <Col xl="6" md="8" className= "search-container">
             <h1 className="title">
               Rechercher un établissement ou une entreprise
             </h1>
@@ -50,7 +50,7 @@ class Search extends React.Component {
         </Row>
 
         <Row className="justify-content-md-center">
-          <Col xl="6" md="8">
+          <Col xl="6" md="8" className="advanced-search--link">
             <Link to="/search/advanced">Recherche avancée</Link>
           </Col>
         </Row>

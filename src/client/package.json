@@ -52,5 +52,11 @@
     "prettier": "^1.9.2",
     "redux-devtools": "^3.4.1",
     "redux-logger": "^3.0.6"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

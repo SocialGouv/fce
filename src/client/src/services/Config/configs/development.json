@@ -1,3 +1,3 @@
 {
-  "api_endpoint": "https://srv.fce.test/api"
+  "api_endpoint": "http://srv.fce.test/api"
 }

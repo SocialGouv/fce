@@ -19,6 +19,7 @@ echo "============================"
 echo
 echo "Install yarn"
 echo "------------"
+dcRun frentreprise yarn install
 dcRun front yarn install
 dcRun server yarn install
 echo

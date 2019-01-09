@@ -42,8 +42,8 @@ echo "============"
 echo "Packaging..."
 echo "============"
 cp -rv .c42/dist ./dist
-cp -rv server/build/. ./dist
-cp -rv client/build/. ./dist/htdocs
+cp -rv src/server/build/. ./dist
+cp -rv src/client/build/. ./dist/htdocs
 chmod 755 ./dist/*.sh
 
 echo

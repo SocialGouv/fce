@@ -20,7 +20,6 @@ pipeline {
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
             cp .c42/docker-compose.yml.jenkins docker-compose.yml
-            docker-compose build builder
           '''
         }
       }
@@ -37,14 +36,12 @@ pipeline {
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
           sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
-                docker-compose run --rm \
-                    -v `pwd`:/project \
-                    -v `pwd`/.docker:/var/lib/docker \
-                    -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                    -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                    builder \
-                    bash -c \
-                    "bundle install --clean --path=vendors/bundle"
+                docker run -t --rm \
+                -v `pwd`:/app \
+                -e BUNDLE_APP_CONFIG=/app/.bundle \
+                -w /app \
+                ruby \
+                bundle install --clean --path=vendors/bundle
             '''
           }
       }
@@ -78,13 +75,15 @@ pipeline {
             echo "Deploying $BRANCH_NAME into on https://fce.commit42.fr/ from $JENKINS_URL ..."
             sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
               sh '''
-                  docker-compose run --rm \
-                      -v `pwd`:/project \
-                      -v `pwd`/.docker:/var/lib/docker \
-                      -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                      -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                      builder \
-                      bundle exec cap preprod deploy
+                  docker run --rm \
+                	-v `pwd`:/app \
+                    -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
+                    -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
+                    -e SSH_AUTH_SOCK=/run/ssh_agent \
+                    -e BUNDLE_APP_CONFIG=/app/.bundle \
+                    -w /app \
+                    ruby bash -c \
+                    'bundle exec c42 deploy preprod'
               '''
             }
           }
@@ -110,29 +109,6 @@ pipeline {
 }
 
 @NonCPS
-def getChangeString() {
- MAX_MSG_LEN = 100
- def changeString = ""
-
- echo "Gathering SCM changes"
- def changeLogSets = currentBuild.changeSets
- for (int i = 0; i < changeLogSets.size(); i++) {
- def entries = changeLogSets[i].items
- for (int j = 0; j < entries.length; j++) {
- def entry = entries[j]
- truncated_msg = entry.msg.take(MAX_MSG_LEN)
- changeString += " - ${truncated_msg} [${entry.author}]\n"
- }
- }
-
- if (!changeString) {
- changeString = " - No new changes"
- }
- return changeString
-}
-
-
-
 def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
@@ -153,9 +129,6 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
 
   def subject = "${emoji} *${buildStatus}* - ${env.JOB_NAME} [${env.BUILD_NUMBER}]"
-  if(buildStatus == "STARTED") {
-      subject = "${subject}\n\nChangelog:\n" + getChangeString()
-  }
   def summary = "${subject}\n\n${env.BUILD_URL}"
 
   if(STARTED) {

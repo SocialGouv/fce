@@ -50,7 +50,7 @@ echo "============"
 echo "Packaging..."
 echo "============"
 cp -rv .c42/dist ./dist
-cp -rv src/frentreprise/. .
+cp -rv src/frentreprise .
 cp -rv src/server/build/. ./dist
 cp -rv src/client/build/. ./dist/htdocs
 chmod 755 ./dist/*.sh

@@ -1,59 +1,42 @@
 #!/bin/bash
 
-function dcRun
-{
-  docker-compose run --rm $@
-}
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd $DIR/../..
 
-echo
-echo "============================"
-echo "INSTALLATION OF THE PROJECT "
-echo "============================"
+SSH_HOST=commit42@$(dig +short commit42.fr)
+RELEASEN=$(date +%Y%m%d%H%M%S)
 
-#Install docker-compose.yml
-.c42/scripts/docker-install.sh
+KEEP_RELEASES=2
 
-echo
-echo "==============="
-echo "BUILD A RELEASE"
-echo "==============="
+echo "Creating folders"
 
-if [ -d "dist" ]
-then
-  echo
-  echo "Removing old build..."
-  rm -rf dist/
+ssh $SSH_HOST 'bash -s' <<'CMD'
+ mkdir -p ~/deployment/fce2/releases
+CMD
+
+echo "Creating release"
+rsync -avzP dist/. $SSH_HOST:~/deployment/fce2/releases/$RELEASEN
+
+ssh $SSH_HOST KEEP_RELEASES=$KEEP_RELEASES RELEASEN=$RELEASEN 'bash -s' <<'CMD'
+echo "Launching npm install"
+cd ~/deployment/fce2/releases/$RELEASEN && npm install
+
+echo "Linking release"
+ln -nfs ~/deployment/fce2/releases/$RELEASEN ~/deployment/fce2/current;
+
+echo "Killing old instance"
+ps -ef | grep node | grep "fce" | grep -v grep | awk "{print \$2}" | xargs kill -9
+
+echo "Cleaning old releases"
+cd ~/easymile/releases;
+
+RELEASES=$(ls -d */ | sort -r);
+COUNT=$(echo "$RELEASES" | wc -l);
+
+if [ "$COUNT" -gt "$KEEP_RELEASES" ]; then
+    echo "$RELEASES" | tail -n -$(($COUNT-2)) | xargs rm -rvf;
 fi
-
-echo
-echo "=========================="
-echo "Installing dependencies..."
-echo "=========================="
-dcRun frentreprise yarn
-dcRun server yarn
-dcRun front yarn
-
-echo
-echo "==========="
-echo "Building..."
-echo "==========="
-dcRun frentreprise yarn build
-dcRun server yarn upgrade frentreprise
-dcRun server yarn build
-dcRun front yarn build
-
-echo
-echo "============"
-echo "Packaging..."
-echo "============"
-cp -rv .c42/dist ./dist
-cp -rv src/frentreprise .
-cp -rv src/server/build/. ./dist
-cp -rv src/client/build/. ./dist/htdocs
-chmod 755 ./dist/*.sh
+CMD
 
 echo
 echo "Done!"

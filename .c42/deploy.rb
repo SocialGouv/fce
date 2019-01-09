@@ -14,7 +14,8 @@ set :deploy_via, :copy
 set :copy_cache, true
 set :copy_only, ['README.md', 'version.txt', 'dist']
 set :copy_exclude, Dir.glob('*') - copy_only
-set :build_script, 'SKIP_QUESTIONS=1 c42 docker:install && c42 build'
+# set :build_script, 'SKIP_QUESTIONS=1 c42 docker:install && c42 build'
+set :build_script, 'SKIP_QUESTIONS=1 .c42/scripts/deploy.sh'
 set :copy_compression, :bz2
 set :ssh_options, forward_agent: true
 

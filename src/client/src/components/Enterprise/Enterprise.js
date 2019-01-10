@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import withLoading from "../../services/Loading";
-import "./enterprise.css";
+import "./enterprise.scss";
 import { Row, Col, Button } from "reactstrap";
 import QuickAccess from "./QuickAccess";
 import Establishments from "./Establishments";

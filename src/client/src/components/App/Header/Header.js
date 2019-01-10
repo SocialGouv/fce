@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { logoutUser } from "../../../services/Store/actions";
 
-import "./header.css";
+import "./header.scss";
 import {
   Collapse,
   Navbar,

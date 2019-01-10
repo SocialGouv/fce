@@ -1,5 +1,5 @@
 import React from "react";
-import "./searchResults.css";
+import "./searchResults.scss";
 import { Row, Col, Button, Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faFileExcel, faPrint } from "@fortawesome/fontawesome-pro-light";

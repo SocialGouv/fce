@@ -1,5 +1,5 @@
 import React from "react";
-import "./errors.css";
+import "./errors.scss";
 import { Container, Row, Col } from "reactstrap";
 
 class Error403 extends React.Component {

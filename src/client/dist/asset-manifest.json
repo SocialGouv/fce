@@ -1,0 +1,14 @@
+{
+  "main.js": "/static/js/main.chunk.js",
+  "main.js.map": "/static/js/main.chunk.js.map",
+  "static/js/0.chunk.js": "/static/js/0.chunk.js",
+  "static/js/0.chunk.js.map": "/static/js/0.chunk.js.map",
+  "runtime~main.js": "/static/js/bundle.js",
+  "runtime~main.js.map": "/static/js/bundle.js.map",
+  "static/media/rw-widgets.eot?v=4.1.0": "/static/media/rw-widgets.bc7c4a59.eot",
+  "static/media/rw-widgets.ttf?v=4.1.0": "/static/media/rw-widgets.eceddf47.ttf",
+  "static/media/rw-widgets.woff?v=4.1.0": "/static/media/rw-widgets.12f0820c.woff",
+  "static/media/loader-big.gif": "/static/media/loader-big.a770b679.gif",
+  "static/media/rw-widgets.svg?v=4.1.0": "/static/media/rw-widgets.792dcd18.svg",
+  "index.html": "/index.html"
+}

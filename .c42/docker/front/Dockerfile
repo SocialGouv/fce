@@ -1,4 +1,4 @@
-FROM node:9.5
+FROM node:10.14
 
 RUN mkdir -p /root/.ssh
 RUN ssh-keyscan -H github.com >> /root/.ssh/known_hosts
@@ -10,7 +10,4 @@ VOLUME ["/project"]
 
 RUN yarn install
 
-COPY "run.sh" "/run.sh"
-RUN chmod a+x /run.sh
-
-CMD ["/run.sh"]
+CMD ["yarn", "start"]

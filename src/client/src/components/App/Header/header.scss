@@ -1,0 +1,11 @@
+$light-blue: #AEDFFC;
+$dark-blue: #2A37B5;
+
+.gradient-color-direccte {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#5cd2d6+0,b4df6b+100 */
+  background: $dark-blue; /* Old browsers */
+  background: $dark-blue; /* FF3.6-15 */
+  background: $dark-blue; /* Chrome10-25,Safari5.1-6 */
+  background: $dark-blue; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  //filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5cd2d6', endColorstr='#b4df6b',GradientType=1 ); /* IE6-9 */
+}

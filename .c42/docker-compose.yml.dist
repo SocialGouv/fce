@@ -3,6 +3,7 @@ version: '3'
 services:
   front:
     build: .c42/docker/front
+    image: node_front
     networks:
       - traefik
       - default
@@ -18,6 +19,7 @@ services:
 
   server:
     build: .c42/docker/server
+    image: node_server
     networks:
       - traefik
       - default

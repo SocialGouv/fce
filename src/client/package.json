@@ -30,7 +30,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "watch": "node scripts/watch.js",
     "build": "react-scripts build",
     "postbuild": "chown -R --reference=package.json .",
     "postinstall": "chown -R --reference=package.json .",

@@ -126,7 +126,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
   def summary = "${subject}\n\n${env.BUILD_URL}"
 
-//   if(STARTED) {
-//     slackSend (color: colorCode, message: summary, channel: "${params.SLACK_CHANNEL}")
-//   }
+  if(STARTED) {
+    slackSend (color: colorCode, message: summary, channel: "${params.SLACK_CHANNEL}")
+  }
 }

@@ -25,7 +25,6 @@ export default class ApiGouv extends DataSource {
   async getSIRET(SIRET) {
     return await this[_.requestAPIs](
       SIRET,
-      EtablissementsAPI.getLegacy,
       EtablissementsAPI.getEtablissement,
       EtablissementsAPI.agefiph,
       EtablissementsAPI.exercices,
@@ -40,7 +39,6 @@ export default class ApiGouv extends DataSource {
   async getSIREN(SIREN) {
     return await this[_.requestAPIs](
       SIREN,
-      EntreprisesAPI.getLegacy,
       EntreprisesAPI.getEntreprise,
       EntreprisesAPI.attestation_acoss,
       EntreprisesAPI.attestation_dgfip

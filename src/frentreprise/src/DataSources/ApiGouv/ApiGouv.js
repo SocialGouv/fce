@@ -84,9 +84,11 @@ export default class ApiGouv extends DataSource {
       axiosConfig.httpsAgent = tunnel.httpsOverHttp(agentConfig);
     }
 
-    const requests = apiCalls.filter(fn => typeof fn === "function").map(fn => {
-      return fn(identifier, this[_.axios], axiosConfig);
-    });
+    const requests = apiCalls
+      .filter(fn => typeof fn === "function")
+      .map(fn => {
+        return fn(identifier, this[_.axios], axiosConfig);
+      });
 
     await Promise.all(requests).then(results => {
       Object.assign(out, ...results);

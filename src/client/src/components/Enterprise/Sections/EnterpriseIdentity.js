@@ -15,7 +15,7 @@ class EnterpriseIdentity extends React.Component {
             <Value value={enterprise.siren} empty="-" />
           </dd>
 
-          {enterprise.categorie_juridique
+          {enterprise.raison_sociale
             ? [
                 <dt className="dt col-md-4" key="rs_label">
                   Raison Sociale

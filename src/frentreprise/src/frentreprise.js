@@ -53,7 +53,7 @@ class frentreprise {
         ...result.data,
         _dataSources: {
           ...entreprise._dataSources,
-          [result.source.name]: true // Add current data source
+          [result.source.name]: !!Object.keys(result.data).length // Add current data source (true = success)
         }
       });
     });
@@ -83,7 +83,7 @@ class frentreprise {
               ...result.data,
               _dataSources: {
                 ...ets._dataSources,
-                [result.source.name]: true // Add current data source
+                [result.source.name]: !!Object.keys(result.data).length // Add current data source (true = success)
               }
             });
           });

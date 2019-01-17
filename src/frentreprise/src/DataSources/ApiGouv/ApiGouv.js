@@ -25,7 +25,6 @@ export default class ApiGouv extends DataSource {
   async getSIRET(SIRET) {
     return await this[_.requestAPIs](
       SIRET,
-      EtablissementsAPI.getLegacy,
       EtablissementsAPI.getEtablissement,
       EtablissementsAPI.agefiph,
       EtablissementsAPI.exercices,
@@ -40,7 +39,6 @@ export default class ApiGouv extends DataSource {
   async getSIREN(SIREN) {
     return await this[_.requestAPIs](
       SIREN,
-      EntreprisesAPI.getLegacy,
       EntreprisesAPI.getEntreprise,
       EntreprisesAPI.attestation_acoss,
       EntreprisesAPI.attestation_dgfip
@@ -84,9 +82,11 @@ export default class ApiGouv extends DataSource {
       axiosConfig.httpsAgent = tunnel.httpsOverHttp(agentConfig);
     }
 
-    const requests = apiCalls.filter(fn => typeof fn === "function").map(fn => {
-      return fn(identifier, this[_.axios], axiosConfig);
-    });
+    const requests = apiCalls
+      .filter(fn => typeof fn === "function")
+      .map(fn => {
+        return fn(identifier, this[_.axios], axiosConfig);
+      });
 
     await Promise.all(requests).then(results => {
       Object.assign(out, ...results);

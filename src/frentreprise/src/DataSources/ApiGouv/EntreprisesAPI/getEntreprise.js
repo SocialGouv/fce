@@ -9,10 +9,17 @@ const getEntreprise = async (SIREN, Axios, params) => {
       if (data && data.entreprise) {
         const ent = data.entreprise;
 
-        ["categorie_entreprise"].forEach(key => {
-          if (typeof ent[key] !== "undefined") {
-            out[key] = ent[key];
-          }
+        [
+          "categorie_entreprise",
+          "siren",
+          "raison_sociale",
+          "nom_commercial",
+          "nom",
+          "prenom",
+          "siret_siege_social"
+        ].forEach(key => {
+          if (typeof ent[key] === "boolean") out[key] = ent[key];
+          else out[key] = ent[key] || undefined;
         });
 
         if (

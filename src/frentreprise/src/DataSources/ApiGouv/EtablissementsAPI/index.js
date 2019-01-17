@@ -1,4 +1,3 @@
-import getLegacy from "./getLegacy";
 import getEtablissement from "./getEtablissement";
 import exercices from "./exercices";
 import agefiph from "./agefiph";
@@ -8,7 +7,6 @@ import successeur from "./successeur";
 import document_association from "./document_association";
 
 export default {
-  getLegacy,
   getEtablissement,
   exercices,
   agefiph,

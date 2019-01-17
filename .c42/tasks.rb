@@ -56,6 +56,12 @@ end
     end
 end
 
+desc 'frentreprise:upgrade', "Upgrade frentreprise"
+task 'frentreprise:upgrade' do
+    run 'c42 frentreprise:yarn build'
+    run 'c42 server:yarn upgrade frentreprise'
+end
+
 desc 'build', "Build a release"
 task 'build' do
     if(File.directory?("dist"))

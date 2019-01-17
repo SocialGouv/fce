@@ -26,6 +26,7 @@ export default {
       const request = await Axios.get(URL, params);
 
       if (request && request.data) {
+        console.log(`Request successed for ${request.request.res.responseUrl}`);
         await Promise.resolve(callback(out, request.data));
       }
     } catch (exception) {

@@ -22,6 +22,72 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         }
       },
       {
+        it: "does copy siren",
+        data: {
+          entreprise: {
+            siren: "lasirène"
+          }
+        },
+        expected: {
+          siren: "lasirène"
+        }
+      },
+      {
+        it: "does copy raison_sociale",
+        data: {
+          entreprise: {
+            raison_sociale: "Phil Electrique"
+          }
+        },
+        expected: {
+          raison_sociale: "Phil Electrique"
+        }
+      },
+      {
+        it: "does copy nom_commercial",
+        data: {
+          entreprise: {
+            nom_commercial: "Phil Electrique"
+          }
+        },
+        expected: {
+          nom_commercial: "Phil Electrique"
+        }
+      },
+      {
+        it: "does copy nom",
+        data: {
+          entreprise: {
+            nom: "Electrique"
+          }
+        },
+        expected: {
+          nom: "Electrique"
+        }
+      },
+      {
+        it: "does copy prenom",
+        data: {
+          entreprise: {
+            prenom: "Phil"
+          }
+        },
+        expected: {
+          prenom: "Phil"
+        }
+      },
+      {
+        it: "does copy siret_siege_social",
+        data: {
+          entreprise: {
+            siret_siege_social: "siretasiation"
+          }
+        },
+        expected: {
+          siret_siege_social: "siretasiation"
+        }
+      },
+      {
         it: "expects tranche_effectif_salarie_entreprise to be an object",
         data: {
           entreprise: {

@@ -1,18 +1,17 @@
-import utils from "../utils";
+import utils from "../../../Utils/utils";
 
 const association = async (SIRET, Axios, params) => {
   return await utils.requestAPI(
     Axios,
     `associations/${SIRET}`,
-    params,
-    async (out, data) => {
+    params).then(data => {
       if (
         data.association &&
         typeof data.association === "object" &&
         data.association.etat &&
         data.association.id
       ) {
-        out.association = data.association;
+        return {association : data.association };
       }
     }
   );

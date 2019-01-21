@@ -1,11 +1,11 @@
-import utils from "../utils";
+import utils from "../../../Utils/utils";
 
 const getEntreprise = async (SIREN, Axios, params) => {
   return await utils.requestAPI(
     Axios,
     `entreprises/${SIREN}`,
-    params,
-    (out, data) => {
+    params).then(data => {
+      const out = {};
       if (data && data.entreprise) {
         const ent = data.entreprise;
 
@@ -48,6 +48,8 @@ const getEntreprise = async (SIREN, Axios, params) => {
           });
         }
       }
+
+      return out;
     }
   );
 };

@@ -1,11 +1,11 @@
-import utils from "../utils";
+import utils from "../../../Utils/utils";
 
 const getEtablissement = async (SIRET, Axios, params) => {
   return await utils.requestAPI(
     Axios,
     `etablissements/${SIRET}`,
-    params,
-    (out, data) => {
+    params).then(data => {
+      const out = {};
       if (data && data.etablissement) {
         const et = data.etablissement;
 
@@ -43,6 +43,7 @@ const getEtablissement = async (SIRET, Axios, params) => {
           +et.tranche_effectif_salarie_etablissement.date_reference ||
           undefined;
       }
+      return out;
     }
   );
 };

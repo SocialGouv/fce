@@ -1,6 +1,5 @@
 import { nestcribe_path as test } from "../../../utils";
 
-import utils from "../../../../src/DataSources/ApiGouv/utils";
 import attestation_acoss from "../../../../src/DataSources/ApiGouv/EntreprisesAPI/attestation_acoss";
 
 test("DataSources/ApiGouv/EntreprisesAPI/attestation_acoss", () => {

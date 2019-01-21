@@ -123,6 +123,29 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         }
       },
       {
+        it: "does copy naf",
+        data: {
+          entreprise: {
+            naf_entreprise: "6202A"
+          }
+        },
+        expected: {
+          naf: "6202A"
+        }
+      },
+      {
+        it: "does copy libelle_naf",
+        data: {
+          entreprise: {
+            libelle_naf_entreprise:
+              "Conseil en systèmes et logiciels informatiques"
+          }
+        },
+        expected: {
+          libelle_naf: "Conseil en systèmes et logiciels informatiques"
+        }
+      },
+      {
         it: "expects tranche_effectif_salarie_entreprise to be an object",
         data: {
           entreprise: {

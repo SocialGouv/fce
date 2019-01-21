@@ -21,8 +21,6 @@ test("DataSources/ApiGouv/ApiGouv", () => {
     const SIRET = "83106781400010";
 
     const mockedAPIs = [
-      "getLegacy",
-      "getLegacy",
       "getEtablissement",
       "agefiph",
       "exercices",
@@ -55,7 +53,6 @@ test("DataSources/ApiGouv/ApiGouv", () => {
     const SIREN = "831067814";
 
     const mockedAPIs = [
-      "getLegacy",
       "getEntreprise",
       "attestation_acoss",
       "attestation_dgfip"

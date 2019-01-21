@@ -99,6 +99,30 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         }
       },
       {
+        it: "does copy forme_juridique",
+        data: {
+          entreprise: {
+            forme_juridique:
+              "Société à responsabilité limitée (sans autre indication)"
+          }
+        },
+        expected: {
+          forme_juridique:
+            "Société à responsabilité limitée (sans autre indication)"
+        }
+      },
+      {
+        it: "does copy forme_juridique_code",
+        data: {
+          entreprise: {
+            forme_juridique_code: "5499"
+          }
+        },
+        expected: {
+          forme_juridique_code: "5499"
+        }
+      },
+      {
         it: "expects tranche_effectif_salarie_entreprise to be an object",
         data: {
           entreprise: {

@@ -17,7 +17,9 @@ const getEntreprise = async (SIREN, Axios, params) => {
           "nom",
           "prenom",
           "siret_siege_social",
-          "capital_social"
+          "capital_social",
+          "forme_juridique",
+          "forme_juridique_code"
         ].forEach(key => {
           if (typeof ent[key] === "boolean") out[key] = ent[key];
           else out[key] = ent[key] || undefined;

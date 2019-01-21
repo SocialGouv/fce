@@ -31,6 +31,7 @@ export default class DireccteEntreprise extends Entreprise {
         "siret_siege_social",
         "attestation_dgfip",
         "attestation_acoss",
+        "capital_social",
         "_dataSources"
       ],
       null

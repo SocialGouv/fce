@@ -88,6 +88,17 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         }
       },
       {
+        it: "does copy capital_social",
+        data: {
+          entreprise: {
+            capital_social: 100000
+          }
+        },
+        expected: {
+          capital_social: 100000
+        }
+      },
+      {
         it: "expects tranche_effectif_salarie_entreprise to be an object",
         data: {
           entreprise: {

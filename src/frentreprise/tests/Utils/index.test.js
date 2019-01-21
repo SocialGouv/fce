@@ -1,6 +1,6 @@
-import { nestcribe_path as test } from "../../tests/utils";
+import { nestcribe_path as test } from "../utils";
 
-import { cleanObject } from "./index";
+import { cleanObject } from "../../src/Utils/index";
 
 test("Utils", () => {
   it("cleanObject", () => {

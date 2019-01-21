@@ -1,6 +1,6 @@
-import { nestcribe_path as test } from "../../tests/utils";
+import { nestcribe_path as test } from "../utils";
 
-import BaseModel from "./BaseModel";
+import BaseModel from "../../src/Entreprise/BaseModel";
 
 test("Entreprise/BaseModel", () => {
   const data = { some_data: "foo", bar: "baz" };

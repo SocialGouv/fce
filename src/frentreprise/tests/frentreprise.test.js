@@ -1,7 +1,7 @@
-import { nestcribe_path as test } from "../tests/utils";
+import { nestcribe_path as test } from "./utils";
 
-import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
-import frentreprise, { _ as _frentreprise } from "./frentreprise";
+import InvalidIdentifierError from "../src/Errors/InvalidIdentifierError";
+import frentreprise, { _ as _frentreprise } from "../src/frentreprise";
 
 test("frentreprise", () => {
   it("have a default ApiGouv datasource", () => {
@@ -43,7 +43,7 @@ test("frentreprise", () => {
     });
 
     it(`When asked with SIRET, it gets :
-    - entreprise, 
+    - entreprise,
     - asked etablissement,
     - and siege social etablissement if it is different`, async () => {
       //  Here we cannot use jest.spyOn, because it doesn't support Symbols as

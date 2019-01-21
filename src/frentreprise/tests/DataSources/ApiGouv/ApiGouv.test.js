@@ -1,11 +1,14 @@
-import { nestcribe_path as test } from "../../../tests/utils";
+import { nestcribe_path as test } from "../../utils";
 
-jest.mock("./EtablissementsAPI");
-import EtablissementsAPI from "./EtablissementsAPI";
-jest.mock("./EntreprisesAPI");
-import EntreprisesAPI from "./EntreprisesAPI";
+jest.mock("../../../src/DataSources/ApiGouv/EtablissementsAPI");
+import EtablissementsAPI from "../../../src/DataSources/ApiGouv/EtablissementsAPI";
+jest.mock("../../../src/DataSources/ApiGouv/EntreprisesAPI");
+import EntreprisesAPI from "../../../src/DataSources/ApiGouv/EntreprisesAPI";
 
-import { _ as _ApiGouv, default as ApiGouv } from "./ApiGouv";
+import {
+  _ as _ApiGouv,
+  default as ApiGouv
+} from "../../../src/DataSources/ApiGouv/ApiGouv";
 
 test("DataSources/ApiGouv/ApiGouv", () => {
   const apigouv = new ApiGouv("https://legouvernement.api");

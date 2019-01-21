@@ -1,6 +1,6 @@
-import { nestcribe_path as test } from "../../../tests/utils";
+import { nestcribe_path as test } from "../../utils";
 
-import utils from "./utils";
+import utils from "../../../src/DataSources/ApiGouv/utils";
 
 test("DataSources/ApiGouv/utils", () => {
   describe("convertDate", () => {
@@ -135,7 +135,7 @@ test("DataSources/ApiGouv/utils", () => {
         {
           get: () => Promise.resolve({ data })
         },
-        "http://url",
+        "https://url",
         {},
         callback
       );

@@ -1,7 +1,6 @@
-import { nestcribe_path as test } from "../../../../tests/utils";
+import { nestcribe_path as test } from "../../../utils";
 
-import utils from "../utils";
-import getEntreprise from "./getEntreprise";
+import getEntreprise from "../../../../src/DataSources/ApiGouv/EntreprisesAPI/getEntreprise";
 
 test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
   describe("sucessfully parse data", async () => {

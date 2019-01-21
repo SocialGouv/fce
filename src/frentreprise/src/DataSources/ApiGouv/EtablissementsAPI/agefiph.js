@@ -1,13 +1,11 @@
-import utils from "../utils";
+import utils from "../../../Utils/utils";
 
 const agefiph = async (SIRET, Axios, params) => {
   return await utils.requestAPI(
     Axios,
     `attestations_agefiph/${SIRET}`,
-    params,
-    (out, data) => {
-      out.agefiph_derniere_annee_conformite_connue =
-        data.derniere_annee_de_conformite_connue || null;
+    params).then(data => {
+      return { derniere_annee_de_conformite_connue: data.derniere_annee_de_conformite_connue || null };
     }
   );
 };

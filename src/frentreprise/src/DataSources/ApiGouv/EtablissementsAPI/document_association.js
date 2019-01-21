@@ -1,11 +1,10 @@
-import utils from "../utils";
+import utils from "../../../Utils/utils";
 
 const document_association = async (SIRET, Axios, params) => {
   return await utils.requestAPI(
     Axios,
     `documents_associations/${SIRET}`,
-    params,
-    async (out, data) => {
+    params).then(data => {
       if (data.documents && Array.isArray(data.documents)) {
         const documents = data.documents;
         const lastDocument = documents.reduce(
@@ -17,7 +16,7 @@ const document_association = async (SIRET, Axios, params) => {
           { timestamp: 0 }
         );
 
-        out.document_association = lastDocument;
+        return { document_association: lastDocument };
       }
     }
   );

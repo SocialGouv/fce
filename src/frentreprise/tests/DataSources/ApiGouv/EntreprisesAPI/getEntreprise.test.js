@@ -146,6 +146,17 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         }
       },
       {
+        it: "does copy date_de_creation",
+        data: {
+          entreprise: {
+            date_creation: 1136156400
+          }
+        },
+        expected: {
+          date_de_creation: new Date(1136156400 * 1000)
+        }
+      },
+      {
         it: "expects tranche_effectif_salarie_entreprise to be an object",
         data: {
           entreprise: {

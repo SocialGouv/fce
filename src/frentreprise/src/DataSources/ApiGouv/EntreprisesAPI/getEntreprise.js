@@ -52,6 +52,10 @@ const getEntreprise = async (SIREN, Axios, params) => {
             });
           });
         }
+
+        if (ent.date_creation) {
+          out.date_de_creation = utils.convertDate(ent.date_creation);
+        }
       }
 
       return out;

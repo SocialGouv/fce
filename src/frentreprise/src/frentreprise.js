@@ -24,11 +24,6 @@ class frentreprise {
       priority: 80, // higher prevail
       source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/")
     });
-    // this.addDataSource({
-    //   name: "SireneAPI",
-    //   priority: 100, // higher prevail
-    //   source: new SireneAPI("https://api.insee.fr/entreprises/sirene/V3/")
-    // });
   }
 
   async getEntreprise(SiretOrSiren) {

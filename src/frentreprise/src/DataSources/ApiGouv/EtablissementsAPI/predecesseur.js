@@ -18,7 +18,6 @@ const predecesseur = async (SIRET, Axios, params) => {
           };
         }
       }
-      return {};
     });
 };
 

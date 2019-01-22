@@ -40,6 +40,6 @@ test("DataSources/ApiGouv/EtablissementsAPI/successeur", () => {
       .mockImplementationOnce(() => {});
 
     const result = await successeur("ERRORSIREN", Axios, {});
-    expect(result).toEqual({});
+    expect(result).toEqual(undefined);
   });
 });

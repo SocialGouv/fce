@@ -19,7 +19,6 @@ const successeur = async (SIRET, Axios, params) => {
           };
         }
       }
-      return {};
     });
 };
 

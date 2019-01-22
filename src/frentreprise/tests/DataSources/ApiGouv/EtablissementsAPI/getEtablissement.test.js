@@ -20,6 +20,28 @@ test("DataSources/ApiGouv/EtablissementsAPI/getEtablissement", () => {
         expected: {
           siret: "lesiret"
         }
+      },
+      {
+        it: "does copy enseigne",
+        data: {
+          etablissement: {
+            enseigne: "lalala"
+          }
+        },
+        expected: {
+          enseigne: "lalala"
+        }
+      },
+      {
+        it: "does copy date_creation",
+        data: {
+          etablissement: {
+            date_creation_etablissement: 1136156400
+          }
+        },
+        expected: {
+          date_creation: new Date(1136156400 * 1000)
+        }
       }
     ];
 

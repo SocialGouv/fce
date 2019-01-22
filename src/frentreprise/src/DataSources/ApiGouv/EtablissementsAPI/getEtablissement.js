@@ -8,10 +8,12 @@ const getEtablissement = async (SIRET, Axios, params) => {
       if (data && data.etablissement) {
         const et = data.etablissement;
 
-        ["siret", "siege_social", "enseigne"].forEach(key => {
-          if (typeof et[key] === "boolean") out[key] = et[key];
-          else out[key] = et[key] || undefined;
-        });
+        ["siret", "siege_social", "enseigne", "naf", "libelle_naf"].forEach(
+          key => {
+            if (typeof et[key] === "boolean") out[key] = et[key];
+            else out[key] = et[key] || undefined;
+          }
+        );
 
         out.date_creation = utils.convertDate(et.date_creation_etablissement);
 

@@ -42,6 +42,107 @@ test("DataSources/ApiGouv/EtablissementsAPI/getEtablissement", () => {
         expected: {
           date_creation: new Date(1136156400 * 1000)
         }
+      },
+      {
+        it: "does copy naf",
+        data: {
+          etablissement: {
+            naf: "6202A"
+          }
+        },
+        expected: {
+          naf: "6202A"
+        }
+      },
+      {
+        it: "does copy libelle_naf",
+        data: {
+          etablissement: {
+            libelle_naf: "Conseil en systèmes et logiciels informatiques"
+          }
+        },
+        expected: {
+          libelle_naf: "Conseil en systèmes et logiciels informatiques"
+        }
+      },
+      {
+        it: "does copy region",
+        data: {
+          etablissement: {
+            region_implantation: {
+              code: "76",
+              value: "Occitanie"
+            }
+          }
+        },
+        expected: {
+          region: "Occitanie",
+          code_region: 76
+        }
+      },
+      {
+        it: "does copy adresse",
+        data: {
+          etablissement: {
+            adresse: {
+              l1: "OCCITECH",
+              l2: null,
+              l3: null,
+              l4: "35 BOULEVARD DES RECOLLETS",
+              l5: null,
+              l6: "31400 TOULOUSE",
+              l7: "FRANCE",
+              numero_voie: "35",
+              type_voie: "BD",
+              nom_voie: "DES RECOLLETS",
+              complement_adresse: "B",
+              code_postal: "31400",
+              localite: "TOULOUSE",
+              code_insee_localite: "31555",
+              cedex: null
+            }
+          }
+        },
+        expected: {
+          adresse: "35 BD DES RECOLLETS\nB 31400\nTOULOUSE",
+          adresse_components: {
+            l1: "OCCITECH",
+            l2: null,
+            l3: null,
+            l4: "35 BOULEVARD DES RECOLLETS",
+            l5: null,
+            l6: "31400 TOULOUSE",
+            l7: "FRANCE",
+            numero_voie: "35",
+            type_voie: "BD",
+            nom_voie: "DES RECOLLETS",
+            complement_adresse: "B",
+            code_postal: "31400",
+            localite: "TOULOUSE",
+            code_insee_localite: "31555",
+            cedex: null
+          },
+          departement: "31"
+        }
+      },
+      {
+        it: "does copy effectif",
+        data: {
+          etablissement: {
+            tranche_effectif_salarie_etablissement: {
+              de: 6,
+              a: 9,
+              code: "03",
+              date_reference: "2016",
+              intitule: "6 à 9 salariés"
+            }
+          }
+        },
+        expected: {
+          tranche_effectif_insee: "6 à 9 salariés",
+          annee_tranche_effectif_insee: 2016,
+          etablissement_employeur: true
+        }
       }
     ];
 

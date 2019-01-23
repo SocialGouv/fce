@@ -15,15 +15,15 @@ function init() {
   frentreprise.EntrepriseModel = require("./frentreprise/models/Entreprise");
   frentreprise.EtablissementModel = require("./frentreprise/models/Etablissement");
    
-  // const apiGouv = frentreprise.getDataSource("ApiGouv").source; 
-  // apiGouv.token = config.get("APIGouv.token");
-  // apiGouv.axiosConfig = {
-  //   ...apiGouv.axiosConfig,
-  //   proxy: (config.has("proxy") && config.get("proxy")) || false
-  // };
-  // if (config.has("apiTimeout")) {
-  //   apiGouv.axiosConfig.timeout = config.get("apiTimeout");
-  // }
+  const apiGouv = frentreprise.getDataSource("ApiGouv").source; 
+  apiGouv.token = config.get("APIGouv.token");
+  apiGouv.axiosConfig = {
+    ...apiGouv.axiosConfig,
+    proxy: (config.has("proxy") && config.get("proxy")) || false
+  };
+  if (config.has("apiTimeout")) {
+    apiGouv.axiosConfig.timeout = config.get("apiTimeout");
+  }
 
   const sireneAPI = frentreprise.getDataSource("SireneAPI").source;
   sireneAPI.token = config.get("SireneAPI.token");

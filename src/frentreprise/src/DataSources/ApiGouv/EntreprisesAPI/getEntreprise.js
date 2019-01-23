@@ -56,6 +56,9 @@ const getEntreprise = async (SIREN, Axios, params) => {
         if (ent.date_creation) {
           out.date_de_creation = utils.convertDate(ent.date_creation);
         }
+        if (ent.date_radiation) {
+          out.date_de_radiation = utils.convertDate(ent.date_radiation);
+        }
       }
 
       return out;

@@ -157,6 +157,17 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         }
       },
       {
+        it: "does copy date_de_radiation",
+        data: {
+          entreprise: {
+            date_radiation: 1136156400
+          }
+        },
+        expected: {
+          date_de_radiation: new Date(1136156400 * 1000)
+        }
+      },
+      {
         it: "expects tranche_effectif_salarie_entreprise to be an object",
         data: {
           entreprise: {

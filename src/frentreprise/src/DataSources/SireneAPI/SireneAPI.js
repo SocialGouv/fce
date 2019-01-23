@@ -1,6 +1,7 @@
 import tunnel from "tunnel";
 import DataSource from "../DataSource";
 import Siren from './Siren';
+import Siret from './Siret';
 import axios from "../../../lib/axios";
 
 export const _ = {
@@ -24,13 +25,7 @@ export default class SireneAPI extends DataSource {
   async getSIRET(SIRET) {
     return await this[_.requestAPIs](
       SIRET,
-      EtablissementsAPI.getEtablissement,
-      EtablissementsAPI.agefiph,
-      EtablissementsAPI.exercices,
-      EtablissementsAPI.association,
-      EtablissementsAPI.predecesseur,
-      EtablissementsAPI.successeur,
-      EtablissementsAPI.document_association
+      Siret.getSettlement
     );
   }
 
@@ -38,7 +33,8 @@ export default class SireneAPI extends DataSource {
   async getSIREN(SIREN) {
     return await this[_.requestAPIs](
       SIREN,
-      Siren.siren
+      Siren.getEntreprise,
+      Siret.getSettlements
     );
   }
 
@@ -51,11 +47,8 @@ export default class SireneAPI extends DataSource {
 
     const axiosConfig = {
       ...this.axiosConfig,
-      params: {
-        token: this.token,
-        context: "Tiers",
-        recipient: "Direccte Occitanie",
-        object: "FCEE - Direccte Occitanie"
+      headers: {
+        "Authorization": `Bearer ${this.token}`
       }
     };
 
@@ -69,7 +62,7 @@ export default class SireneAPI extends DataSource {
       if (axiosConfig.proxy.port) {
         agentConfig.proxy.port = axiosConfig.proxy.port;
       }
-
+ 
       if (axiosConfig.proxy.auth) {
         agentConfig.proxy.proxyAuth = `${axiosConfig.proxy.auth.username ||
           ""}:${axiosConfig.proxy.auth.password || ""}`;

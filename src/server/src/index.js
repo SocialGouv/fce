@@ -7,7 +7,6 @@ import bodyParser from "body-parser";
 import apiRouter from "./api";
 
 import frentreprise from "frentreprise";
-
 const app = express();
 const port = (config.has("port") && +config.get("port")) || 80;
 const host = (config.has("port") && config.get("host")) || undefined;
@@ -15,15 +14,25 @@ const host = (config.has("port") && config.get("host")) || undefined;
 function init() {
   frentreprise.EntrepriseModel = require("./frentreprise/models/Entreprise");
   frentreprise.EtablissementModel = require("./frentreprise/models/Etablissement");
+   
+  // const apiGouv = frentreprise.getDataSource("ApiGouv").source; 
+  // apiGouv.token = config.get("APIGouv.token");
+  // apiGouv.axiosConfig = {
+  //   ...apiGouv.axiosConfig,
+  //   proxy: (config.has("proxy") && config.get("proxy")) || false
+  // };
+  // if (config.has("apiTimeout")) {
+  //   apiGouv.axiosConfig.timeout = config.get("apiTimeout");
+  // }
 
-  const apiGouv = frentreprise.getDataSource("ApiGouv").source;
-  apiGouv.token = config.get("APIGouv.token");
-  apiGouv.axiosConfig = {
-    ...apiGouv.axiosConfig,
+  const sireneAPI = frentreprise.getDataSource("SireneAPI").source;
+  sireneAPI.token = config.get("SireneAPI.token");
+  sireneAPI.axiosConfig = {
+    ...sireneAPI.axiosConfig,
     proxy: (config.has("proxy") && config.get("proxy")) || false
   };
   if (config.has("apiTimeout")) {
-    apiGouv.axiosConfig.timeout = config.get("apiTimeout");
+    sireneAPI.axiosConfig.timeout = config.get("apiTimeout");
   }
 
   app.use(function(req, res, next) {

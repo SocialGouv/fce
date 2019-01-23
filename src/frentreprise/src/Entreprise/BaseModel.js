@@ -14,6 +14,10 @@ export default class BaseModel {
     this[_importData](data, true);
   }
 
+  getData() {
+    return this[_data];
+  }
+
   [_importData](data, replace = false) {
     if (typeof data === "object") {
       this[_data] = {

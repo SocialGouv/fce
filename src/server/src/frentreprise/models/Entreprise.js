@@ -12,28 +12,31 @@ export default class DireccteEntreprise extends Entreprise {
     const data = copyKeys(
       this,
       [
-        "siren",
-        "raison_sociale",
-        "nom_commercial",
-        "nom",
-        "prenom",
-        "sigle",
+        "attestation_acoss",
+        "attestation_dgfip",
+        "annee_tranche_effectif",
+        "capital_social",
+        "categorie_entreprise",
         "categorie_juridique",
         "date_immatriculation_rcs",
         "date_de_creation",
+        "date_mise_a_jour",
         "date_de_radiation",
+        "entreprise_employeur",
         "etat_entreprise",
-        "categorie_entreprise",
-        "tranche_effectif",
-        "annee_tranche_effectif",
-        "nombre_etablissements_actifs",
-        "mandataires_sociaux",
-        "siret_siege_social",
-        "attestation_dgfip",
-        "attestation_acoss",
-        "capital_social",
         "forme_juridique",
         "forme_juridique_code",
+        "mandataires_sociaux",
+        "naf",
+        "nom_commercial",
+        "nom",
+        "nombre_etablissements_actifs",
+        "prenom",
+        "raison_sociale",
+        "sigle",
+        "siren",
+        "siret_siege_social",
+        "tranche_effectif",
         "_dataSources"
       ],
       null
@@ -43,7 +46,10 @@ export default class DireccteEntreprise extends Entreprise {
       return ets.export();
     });
 
-    return data;
+    return {
+      ...data, 
+      _raw: this.getData()
+    };
   }
 }
 

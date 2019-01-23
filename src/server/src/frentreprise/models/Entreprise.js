@@ -36,6 +36,7 @@ export default class DireccteEntreprise extends Entreprise {
         "forme_juridique_code",
         "naf",
         "libelle_naf",
+        "entreprise_employeur",
         "_dataSources"
       ],
       null

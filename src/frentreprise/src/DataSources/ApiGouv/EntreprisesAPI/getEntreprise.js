@@ -41,6 +41,10 @@ const getEntreprise = async (SIREN, Axios, params) => {
             ent.tranche_effectif_salarie_entreprise.intitule || undefined;
         }
 
+        out.entreprise_employeur = ent.tranche_effectif_salarie_entreprise
+          ? +ent.tranche_effectif_salarie_entreprise.a > 0
+          : undefined;
+
         if (Array.isArray(ent.mandataires_sociaux)) {
           out.mandataires_sociaux = [];
           ent.mandataires_sociaux.forEach(manso => {

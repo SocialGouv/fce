@@ -187,7 +187,8 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         },
         expected: {
           annee_tranche_effectif: 2015,
-          tranche_effectif: undefined
+          tranche_effectif: undefined,
+          entreprise_employeur: false
         }
       },
       {
@@ -202,7 +203,8 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         },
         expected: {
           annee_tranche_effectif: 2015,
-          tranche_effectif: "Tranche 2"
+          tranche_effectif: "Tranche 2",
+          entreprise_employeur: false
         }
       },
       {

@@ -1,6 +1,6 @@
-import { nestcribe_path as test } from "../../../tests/utils";
+import { nestcribe_path as test } from "../utils";
 
-import utils from "./utils";
+import utils from "../../src/Utils/utils";
 
 test("DataSources/ApiGouv/utils", () => {
   describe("convertDate", () => {
@@ -127,22 +127,18 @@ test("DataSources/ApiGouv/utils", () => {
 
   describe("RequestAPI", () => {
     it("calls callback when there is returned data", async () => {
-      const callback = jest.fn((out, data) => {
-        out.mydata = data.mydata;
-      });
       const data = { mydata: 123 };
-      const result = await utils.requestAPI(
-        {
-          get: () => Promise.resolve({ data })
-        },
-        "http://url",
-        {},
-        callback
-      );
 
-      expect(result).toEqual({ mydata: 123 });
-      expect(callback).toHaveBeenCalledTimes(1);
-      expect(callback).toHaveBeenCalledWith(expect.any(Object), data);
+      utils
+        .requestAPI(
+          {
+            get: () => Promise.resolve({ data })
+          },
+          "http://url"
+        )
+        .then(data => {
+          expect(result).toEqual({ mydata: 123 });
+        });
     });
 
     it("Returns empty object without calling cb when there is no returned data", async () => {

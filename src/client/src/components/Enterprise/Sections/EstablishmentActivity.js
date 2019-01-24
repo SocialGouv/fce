@@ -74,7 +74,8 @@ class EstablishmentActivity extends React.Component {
                   target="_blank"
                 >
                   les derniers statuts
-                </a>.
+                </a>
+                .
               </span>
             ) : null}
           </dd>
@@ -88,6 +89,22 @@ class EstablishmentActivity extends React.Component {
                     value={
                       establishment.association.id ||
                       establishment.association.siret
+                    }
+                    empty="-"
+                  />
+                </dd>
+              ]
+            : null}
+          {establishment.document_association
+            ? [
+                <dt className="dt col-md-4" key="rna_label">
+                  Document association
+                </dt>,
+                <dd className="dd col-md-8" key="rna_value">
+                  <Value
+                    value={
+                      establishment.document_association &&
+                      establishment.document_association.url
                     }
                     empty="-"
                   />
@@ -130,6 +147,15 @@ class EstablishmentActivity extends React.Component {
               value={establishment.source_dernier_effectif_physique}
               empty="-"
             />
+          </dd>
+          <dt className="dt col-md-4">Code NAF</dt>
+          <dd className="dd col-md-8">
+            <Value value={establishment.naf} empty="-" />
+          </dd>
+
+          <dt className="dt col-md-4">Libelle NAF</dt>
+          <dd className="dd col-md-8">
+            <Value value={establishment.libelle_naf} empty="-" />
           </dd>
         </dl>
       </section>

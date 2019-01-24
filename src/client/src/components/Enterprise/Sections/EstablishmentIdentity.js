@@ -10,6 +10,11 @@ class EstablishmentIdentity extends React.Component {
         <h1 className="title h4">Identité de l'établissement</h1>
 
         <dl className="dl row">
+          <dt className="dt col-md-4">Siège social</dt>
+          <dd className="dd col-md-8">
+            <Value value={establishment.siege_social} empty="-" />
+          </dd>
+
           <dt className="dt col-md-4">Enseigne</dt>
           <dd className="dd col-md-8">
             <Value value={establishment.enseigne} empty="-" />

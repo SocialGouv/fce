@@ -19,15 +19,17 @@ export default {
       .join("\n");
   },
 
-  requestAPI: async (Axios, URL, params, callback) => {
-    const out = {};
-
+  requestAPI: async (Axios, URL, params = {}) => {
     try {
       const request = await Axios.get(URL, params);
 
       if (request && request.data) {
-        console.log(`Request successed for ${request.request.res.responseUrl}`);
-        await Promise.resolve(callback(out, request.data));
+        const responseUrl =
+          request.request &&
+          request.request.res &&
+          request.request.res.responseUrl;
+        console.log(`Request successed for ${responseUrl}`);
+        return request.data || {};
       }
     } catch (exception) {
       if (exception && "request" in exception) {
@@ -73,6 +75,6 @@ ${bodyData}
       }
     }
 
-    return out;
+    return Promise.resolve({});
   }
 };

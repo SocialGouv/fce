@@ -1,7 +1,7 @@
-import { nestcribe_path as test } from "../../tests/utils";
+import { nestcribe_path as test } from "../utils";
 
-import Entreprise from "./Entreprise";
-import Etablissement from "./Etablissement";
+import Entreprise from "../../src/Entreprise/Entreprise";
+import Etablissement from "../../src/Entreprise/Etablissement";
 
 test("Entreprise/Entreprise", () => {
   it("constructs with data", () => {

@@ -50,14 +50,14 @@ class EnterpriseActivity extends React.Component {
             />
           </dd>
 
-          <dt className="dt col-md-4">Catégorie d'entreprise</dt>
-          <dd className="dd col-md-8">
-            <Value value={enterprise.categorie_entreprise} empty="-" />
-          </dd>
-
           <dt className="dt col-md-4">Activité Principale</dt>
           <dd className="dd col-md-8">
             <Value value={enterprise.activite} empty="-" />
+          </dd>
+
+          <dt className="dt col-md-4">Entreprise employeur</dt>
+          <dd className="dd col-md-8">
+            <Value value={enterprise.entreprise_employeur} empty="-" />
           </dd>
 
           <dt className="dt col-md-4">Tranche Effectif</dt>
@@ -71,10 +71,22 @@ class EnterpriseActivity extends React.Component {
           </dd>
 
           <dt className="dt col-md-4">
-            Nombre d'établissements actifs<br />(France entière)
+            Nombre d'établissements actifs
+            <br />
+            (France entière)
           </dt>
           <dd className="dd col-md-8">
             <Value value={enterprise.nombre_etablissements_actifs} empty="-" />
+          </dd>
+
+          <dt className="dt col-md-4">Code NAF</dt>
+          <dd className="dd col-md-8">
+            <Value value={enterprise.naf} empty="-" />
+          </dd>
+
+          <dt className="dt col-md-4">Libelle NAF</dt>
+          <dd className="dd col-md-8">
+            <Value value={enterprise.libelle_naf} empty="-" />
           </dd>
         </dl>
       </section>

@@ -1,6 +1,7 @@
 import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
+import SireneAPI from "./DataSources/SireneAPI";
 
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
@@ -20,7 +21,7 @@ class frentreprise {
     this[_.dataSources] = [];
     this.addDataSource({
       name: "ApiGouv",
-      priority: 100, // higher prevail
+      priority: 80, // higher prevail
       source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/")
     });
   }

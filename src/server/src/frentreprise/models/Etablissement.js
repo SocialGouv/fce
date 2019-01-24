@@ -51,6 +51,8 @@ class DireccteEtablissement extends Etablissement {
         "ea",
         "alternance",
         "prime_embauche_pme",
+        "naf",
+        "libelle_naf",
         "_dataSources"
       ],
       null

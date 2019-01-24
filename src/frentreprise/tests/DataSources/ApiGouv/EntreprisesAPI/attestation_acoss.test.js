@@ -1,9 +1,8 @@
-import { nestcribe_path as test } from "../../../../tests/utils";
+import { nestcribe_path as test } from "../../../utils";
 
-import utils from "../utils";
-import attestation_dgfip from "./attestation_dgfip";
+import attestation_acoss from "../../../../src/DataSources/ApiGouv/EntreprisesAPI/attestation_acoss";
 
-test("DataSources/ApiGouv/EntreprisesAPI/attestation_dgfip", () => {
+test("DataSources/ApiGouv/EntreprisesAPI/attestation_acoss", () => {
   it("gets url", async () => {
     const apiData = {
       url: "http://attestation_url"
@@ -16,8 +15,8 @@ test("DataSources/ApiGouv/EntreprisesAPI/attestation_dgfip", () => {
         })
     };
 
-    const result = await attestation_dgfip("SIREN", Axios, {});
-    expect(result).toEqual({ attestation_dgfip: apiData.url });
+    const result = await attestation_acoss("SIREN", Axios, {});
+    expect(result).toEqual({ attestation_acoss: apiData.url });
   });
 
   it("returns an empty data when it fails", async () => {
@@ -29,7 +28,7 @@ test("DataSources/ApiGouv/EntreprisesAPI/attestation_dgfip", () => {
       .spyOn(global.console, "error")
       .mockImplementationOnce(() => {});
 
-    const result = await attestation_dgfip("ERRORSIREN", Axios, {});
+    const result = await attestation_acoss("ERRORSIREN", Axios, {});
     expect(result).toEqual({});
   });
 });

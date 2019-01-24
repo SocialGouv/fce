@@ -260,8 +260,7 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
           },
           {}
         );
-
-        expect(result).toEqual(testCase.expected);
+   expect(result).toEqual(testCase.expected);
       });
     }
   });

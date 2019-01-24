@@ -18,11 +18,11 @@ const getEntreprise = async (SIREN, Axios, params) => {
         raison_sociale: uniteLegale.denominationUniteLegale,
         sigle: ent.sigleUniteLegale,
         nom: uniteLegale.nomUniteLegale,
-        prenom: [ent.prenom1UniteLegale, ent.prenom2UniteLegale, ent.prenom3UniteLegale, ent.prenom4UniteLegale].filter(a => a).join(""),
+        prenom: utils.isEmpty([ent.prenom1UniteLegale, ent.prenom2UniteLegale, ent.prenom3UniteLegale, ent.prenom4UniteLegale].filter(a => a).join(" ")) ? undefined : [ent.prenom1UniteLegale, ent.prenom2UniteLegale, ent.prenom3UniteLegale, ent.prenom4UniteLegale].filter(a => a).join(" "),
         nom_commercial: uniteLegale.nomUsageUniteLegale,
         categorie_entreprise: ent.categorieEntreprise,
-        siret_siege_social: `${ent.siren}${uniteLegale.nicSiegeUniteLegale}`,
-        forme_juridique: getLegalCode(uniteLegale.categorieJuridiqueUniteLegale),
+        siret_siege_social: utils.isEmpty(ent.siren) || utils.isEmpty(uniteLegale.nicSiegeUniteLegale) ? undefined : `${ent.siren}${uniteLegale.nicSiegeUniteLegale}`,
+        forme_juridique: utils.isEmpty(uniteLegale.categorieJuridiqueUniteLegale) ? undefined : getLegalCode(uniteLegale.categorieJuridiqueUniteLegale),
         forme_juridique_code: uniteLegale.categorieJuridiqueUniteLegale,
         naf: uniteLegale.activitePrincipaleUniteLegale,
         date_de_creation: ent.dateCreationUniteLegale,
@@ -30,13 +30,12 @@ const getEntreprise = async (SIREN, Axios, params) => {
         date_mise_a_jour: uniteLegale.etatAdministratifUniteLegale ==="C" ? uniteLegale.dateFin : ent.dateDernierTraitementUniteLegale,
         date_de_radiation: uniteLegale.dateFin,
         entreprise_employeur: uniteLegale.caractereEmployeurUniteLegale,
-        annee_tranche_effectif: ent.anneeEffectifsUniteLegale
+        annee_tranche_effectif: ent.anneeEffectifsUniteLegale,
+        // _raw: ent
       };
     }
 
-    Object.keys(out).forEach(key => out[key] = out[key] || undefined);
-
-    out.request_sirene = ent;
+    // out.request_sirene = ent;
 
     return out;
   });

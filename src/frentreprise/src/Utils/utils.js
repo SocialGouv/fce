@@ -19,6 +19,13 @@ export default {
       .join("\n");
   },
 
+  isEmpty(value) {
+    return value === undefined ||
+    value === null ||
+    (typeof value === 'object' && Object.keys(value).length === 0) ||
+    (typeof value === 'string' && value.trim().length === 0)
+  },
+
   requestAPI: async (Axios, URL, params = {}) => {
     try {
       const request = await Axios.get(URL, params);

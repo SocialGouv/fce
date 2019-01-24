@@ -1,12 +1,8 @@
-import {
-  copyKeys
-} from "../../utils";
-const {
-  Etablissement
-} = require("frentreprise");
+import { copyKeys } from "../../utils";
+const { Etablissement } = require("frentreprise");
 
 class DireccteEtablissement extends Etablissement {
-  export (keys) {
+  export(keys) {
     return {
       ...copyKeys(
         this,
@@ -63,7 +59,7 @@ class DireccteEtablissement extends Etablissement {
         null
       ),
       _raw: this.getData()
-    }
+    };
   }
 }
 

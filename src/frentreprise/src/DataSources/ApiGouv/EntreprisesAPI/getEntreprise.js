@@ -1,10 +1,9 @@
 import utils from "../../../Utils/utils";
 
 const getEntreprise = async (SIREN, Axios, params) => {
-  return await utils.requestAPI(
-    Axios,
-    `entreprises/${SIREN}`,
-    params).then(data => {
+  return await utils
+    .requestAPI(Axios, `entreprises/${SIREN}`, params)
+    .then(data => {
       const out = {};
       if (data && data.entreprise) {
         const ent = data.entreprise;
@@ -19,10 +18,16 @@ const getEntreprise = async (SIREN, Axios, params) => {
           "siret_siege_social",
           "capital_social",
           "forme_juridique",
-          "forme_juridique_code"
+          "forme_juridique_code",
+          { in: "naf_entreprise", out: "naf" },
+          { in: "libelle_naf_entreprise", out: "libelle_naf" }
         ].forEach(key => {
-          if (typeof ent[key] === "boolean") out[key] = ent[key];
-          else out[key] = ent[key] || undefined;
+          const inKey = typeof key === "object" ? key.in : key;
+          const outKey = typeof key === "object" ? key.out : key;
+          const value = ent[inKey];
+
+          if (typeof value === "boolean") out[outKey] = value;
+          else out[outKey] = value || undefined;
         });
 
         if (
@@ -36,6 +41,10 @@ const getEntreprise = async (SIREN, Axios, params) => {
             ent.tranche_effectif_salarie_entreprise.intitule || undefined;
         }
 
+        out.entreprise_employeur = ent.tranche_effectif_salarie_entreprise
+          ? +ent.tranche_effectif_salarie_entreprise.a > 0
+          : undefined;
+
         if (Array.isArray(ent.mandataires_sociaux)) {
           out.mandataires_sociaux = [];
           ent.mandataires_sociaux.forEach(manso => {
@@ -47,11 +56,17 @@ const getEntreprise = async (SIREN, Axios, params) => {
             });
           });
         }
+
+        if (ent.date_creation) {
+          out.date_de_creation = utils.convertDate(ent.date_creation);
+        }
+        if (ent.date_radiation) {
+          out.date_de_radiation = utils.convertDate(ent.date_radiation);
+        }
       }
 
       return out;
-    }
-  );
+    });
 };
 
 export default getEntreprise;

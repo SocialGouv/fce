@@ -26,6 +26,7 @@ export default class DireccteEntreprise extends Entreprise {
         "etat_entreprise",
         "forme_juridique",
         "forme_juridique_code",
+        "libelle_naf",
         "mandataires_sociaux",
         "naf",
         "nom_commercial",
@@ -47,7 +48,7 @@ export default class DireccteEntreprise extends Entreprise {
     });
 
     return {
-      ...data, 
+      ...data,
       _raw: this.getData()
     };
   }

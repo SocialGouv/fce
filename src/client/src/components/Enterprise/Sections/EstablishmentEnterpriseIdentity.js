@@ -14,16 +14,8 @@ class EstablishmentEnterpriseIdentity extends React.Component {
         <h1 className="title h4">Identité de l&apos;entreprise</h1>
 
         <dl className="dl row">
-          {enterprise.categorie_juridique
+          {enterprise.nom || enterprise.prenom
             ? [
-                <dt className="dt col-md-4" key="rs_label">
-                  Raison Sociale
-                </dt>,
-                <dd className="dd definition col-md-8" key="rs_value">
-                  <Value value={enterprise.raison_sociale} empty="-" />
-                </dd>
-              ]
-            : [
                 <dt className="dt col-md-4" key="name_label">
                   Nom
                 </dt>,
@@ -35,6 +27,14 @@ class EstablishmentEnterpriseIdentity extends React.Component {
                 </dt>,
                 <dd className="dd definition col-md-8" key="firstname_value">
                   <Value value={enterprise.prenom} empty="-" />
+                </dd>
+              ]
+            : [
+                <dt className="dt col-md-4" key="rs_label">
+                  Raison Sociale
+                </dt>,
+                <dd className="dd definition col-md-8" key="rs_value">
+                  <Value value={enterprise.raison_sociale} empty="-" />
                 </dd>
               ]}
 

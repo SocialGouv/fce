@@ -123,6 +123,51 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         }
       },
       {
+        it: "does copy naf",
+        data: {
+          entreprise: {
+            naf_entreprise: "6202A"
+          }
+        },
+        expected: {
+          naf: "6202A"
+        }
+      },
+      {
+        it: "does copy libelle_naf",
+        data: {
+          entreprise: {
+            libelle_naf_entreprise:
+              "Conseil en systèmes et logiciels informatiques"
+          }
+        },
+        expected: {
+          libelle_naf: "Conseil en systèmes et logiciels informatiques"
+        }
+      },
+      {
+        it: "does copy date_de_creation",
+        data: {
+          entreprise: {
+            date_creation: 1136156400
+          }
+        },
+        expected: {
+          date_de_creation: new Date(1136156400 * 1000)
+        }
+      },
+      {
+        it: "does copy date_de_radiation",
+        data: {
+          entreprise: {
+            date_radiation: 1136156400
+          }
+        },
+        expected: {
+          date_de_radiation: new Date(1136156400 * 1000)
+        }
+      },
+      {
         it: "expects tranche_effectif_salarie_entreprise to be an object",
         data: {
           entreprise: {
@@ -142,7 +187,8 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         },
         expected: {
           annee_tranche_effectif: 2015,
-          tranche_effectif: undefined
+          tranche_effectif: undefined,
+          entreprise_employeur: false
         }
       },
       {
@@ -157,7 +203,8 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         },
         expected: {
           annee_tranche_effectif: 2015,
-          tranche_effectif: "Tranche 2"
+          tranche_effectif: "Tranche 2",
+          entreprise_employeur: false
         }
       },
       {

@@ -183,6 +183,37 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         }
       },
       {
+        it: "does return dateFin as date_mise_a_jour when closed",
+        data: {
+          uniteLegale: {
+            periodesUniteLegale: [{
+              etatAdministratifUniteLegale: "C",
+              dateFin: "2019-01-24"
+            }]
+          }
+        },
+        expected: {
+          date_mise_a_jour: "2019-01-24",
+          date_de_radiation: "2019-01-24",
+          etat_entreprise: "C"
+        }
+      },
+      {
+        it: "does return dateDernierTraitementUniteLegale as date_mise_a_jour when open",
+        data: {
+          uniteLegale: {
+            dateDernierTraitementUniteLegale: "2019-01-24",
+            periodesUniteLegale: [{
+              etatAdministratifUniteLegale: "A",
+            }]
+          }
+        },
+        expected: {
+          date_mise_a_jour: "2019-01-24",
+          etat_entreprise: "A"
+        }
+      },
+      {
         it: "does copy entreprise_employeur",
         data: {
           uniteLegale: {
@@ -212,7 +243,7 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
       const testCase = testCases[i];
 
       it(testCase.it || `tests case n°${i + 1}`, async () => {
-        const result = await getEntreprise(
+        let result = await getEntreprise(
           testCase.identifier || null, {
             get: args =>
               Promise.resolve({
@@ -224,6 +255,7 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         );
 
         delete result._raw;
+        result = JSON.parse(JSON.stringify(result));
 
         expect(result).toEqual(testCase.expected);
       });

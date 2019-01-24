@@ -31,7 +31,7 @@ const getEntreprise = async (SIREN, Axios, params) => {
         date_de_radiation: uniteLegale.dateFin,
         entreprise_employeur: uniteLegale.caractereEmployeurUniteLegale,
         annee_tranche_effectif: ent.anneeEffectifsUniteLegale,
-        // _raw: ent
+        _raw: ent
       };
     }
 

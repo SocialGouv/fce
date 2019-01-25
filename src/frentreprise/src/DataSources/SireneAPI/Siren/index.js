@@ -1,5 +1,5 @@
-import siren from "./siren";
+import getEntreprise from "./getEntreprise";
 
 export default {
-  siren,
+  getEntreprise,
 };

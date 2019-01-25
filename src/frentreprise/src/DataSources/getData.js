@@ -6,7 +6,11 @@ export default (data, fields) => {
   fields.forEach(field => {
     const inKey = typeof field === "object" ? field.in : field;
     const outKey = typeof field === "object" ? field.out : field;
-    let value = _get(data, inKey);
+    const defaultValue =
+      typeof field === "object" && field.defaultValue
+        ? field.defaultValue
+        : undefined;
+    let value = _get(data, inKey, defaultValue);
 
     if (field.callback) {
       value = field.callback(value, data);

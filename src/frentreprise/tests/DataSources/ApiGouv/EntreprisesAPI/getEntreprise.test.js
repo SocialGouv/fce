@@ -1,13 +1,19 @@
-import { nestcribe_path as test } from "../../../utils";
+import {
+  nestcribe_path as test
+} from "../../../utils";
 
 import getEntreprise from "../../../../src/DataSources/ApiGouv/EntreprisesAPI/getEntreprise";
 
 test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
   describe("sucessfully parse data", async () => {
-    const testCases = [
-      {
+    const testCases = [{
         it: "doesn't copy useless values",
-        data: { useless: true, entreprise: { also_useless: true } },
+        data: {
+          useless: true,
+          entreprise: {
+            also_useless: true
+          }
+        },
         expected: {}
       },
       {
@@ -102,13 +108,11 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         it: "does copy forme_juridique",
         data: {
           entreprise: {
-            forme_juridique:
-              "Société à responsabilité limitée (sans autre indication)"
+            forme_juridique: "Société à responsabilité limitée (sans autre indication)"
           }
         },
         expected: {
-          forme_juridique:
-            "Société à responsabilité limitée (sans autre indication)"
+          forme_juridique: "Société à responsabilité limitée (sans autre indication)"
         }
       },
       {
@@ -137,8 +141,7 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         it: "does copy libelle_naf",
         data: {
           entreprise: {
-            libelle_naf_entreprise:
-              "Conseil en systèmes et logiciels informatiques"
+            libelle_naf_entreprise: "Conseil en systèmes et logiciels informatiques"
           }
         },
         expected: {
@@ -211,8 +214,7 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
         it: "add mandataires_sociaux data",
         data: {
           entreprise: {
-            mandataires_sociaux: [
-              {
+            mandataires_sociaux: [{
                 fonction: "Président",
                 prenom: "Michel",
                 nom: "Michot"
@@ -225,8 +227,7 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
           }
         },
         expected: {
-          mandataires_sociaux: [
-            {
+          mandataires_sociaux: [{
               nom: "Michot",
               prenom: "Michel",
               fonction: "Président",
@@ -248,19 +249,16 @@ test("DataSources/ApiGouv/EntreprisesAPI/getEntreprise", () => {
 
       it(testCase.it || `tests case n°${i + 1}`, async () => {
         const result = await getEntreprise(
-          testCase.identifier || null,
-          {
+          testCase.identifier || null, {
             get: args =>
               Promise.resolve({
-                data:
-                  typeof testCase.data === "function"
-                    ? testCase.data(...args)
-                    : testCase.data
+                data: typeof testCase.data === "function" ?
+                  testCase.data(...args) :
+                  testCase.data
               })
-          },
-          {}
+          }, {}
         );
-   expect(result).toEqual(testCase.expected);
+        expect(result).toEqual(testCase.expected);
       });
     }
   });

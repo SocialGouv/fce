@@ -1,4 +1,5 @@
 import utils from "../../../Utils/utils";
+import helpers from "../Helpers/helpers";
 
 const getSettlements = async (SIREN, Axios, params) => {
   return await utils.requestAPI(
@@ -6,12 +7,12 @@ const getSettlements = async (SIREN, Axios, params) => {
     `siret/?q=siren:${SIREN}&nombre=10000`,
     params
   ).then((data) => {
-   const etabs = data.etablissements.map(utils.formatEtab)
+    const etabs = data.etablissements.map(helpers.formatEtab)
 
-   return {
+    return {
       nombre_etablissements_actifs: etabs.filter(eta => eta.actif).length,
       _ets: etabs
-   };
+    };
   });
 };
 

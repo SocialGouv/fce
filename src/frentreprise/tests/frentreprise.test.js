@@ -25,6 +25,23 @@ test("frentreprise", () => {
     expect(frentreprise.getDataSource("ApiGouv")).toBe(aDs);
   });
 
+  it("can get datasources sorted by priority", () => {
+    const hightPriority = {
+      name: "hightPriority",
+      priority: 99999999
+    };
+    const lowPriority = {
+      name: "lowPriority",
+      priority: 1
+    };
+    frentreprise.addDataSource(hightPriority);
+    frentreprise.addDataSource(lowPriority);
+
+    const datasources = frentreprise.getDataSources();
+    expect(datasources[0]).toBe(lowPriority);
+    expect(datasources.slice(-1)[0]).toBe(hightPriority);
+  });
+
   describe("getEntreprise", () => {
     it("refuses invalid SIRET or SIREN", async () => {
       const invalid = "toto123";

@@ -19,11 +19,18 @@ export default class BaseModel {
   }
 
   [_importData](data, replace = false) {
+    const isDefinedValue = value => value || value === false;
+
     if (typeof data === "object") {
-      this[_data] = {
-        ...(replace === true ? {} : this[_data]),
-        ...data
-      };
+      if (replace || this[_data] === undefined) {
+        this[_data] = { ...{}, ...data };
+      } else {
+        for (const [key, value] of Object.entries(data)) {
+          if (!this[_data].hasOwnProperty(key) || isDefinedValue(value)) {
+            this[_data] = { ...this[_data], ...{ [key]: value } };
+          }
+        }
+      }
     }
 
     // Add missing accessors

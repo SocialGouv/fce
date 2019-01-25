@@ -38,6 +38,51 @@ test("Entreprise/BaseModel", () => {
     expect(model.bar).toEqual("new");
   });
 
+  it("can be updated with data but only if data is not undefined", () => {
+    const model = new BaseModel(data);
+
+    // We update data
+    model.updateData({
+      new_data: undefined,
+      bar: undefined
+    });
+
+    // New data
+    expect(model.new_data).toBe(undefined);
+    // Not changed
+    expect(model.bar).toBe(data.bar);
+  });
+
+  it("can be updated with data but only if data is not null", () => {
+    const model = new BaseModel(data);
+
+    // We update data
+    model.updateData({
+      new_data: null,
+      bar: null
+    });
+
+    // New data
+    expect(model.new_data).toBe(null);
+    // Not changed
+    expect(model.bar).toBe(data.bar);
+  });
+
+  it("can be updated with false data", () => {
+    const model = new BaseModel(data);
+
+    // We update data
+    model.updateData({
+      new_data: false,
+      bar: false
+    });
+
+    // New data
+    expect(model.new_data).toBe(false);
+    // changed
+    expect(model.bar).toBe(false);
+  });
+
   it("can replace all data", () => {
     const model = new BaseModel(data);
 

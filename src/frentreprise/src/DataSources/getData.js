@@ -9,7 +9,7 @@ export default (data, fields) => {
     let value = _get(data, inKey);
 
     if (field.callback) {
-      value = field.callback(value);
+      value = field.callback(value, data);
     }
 
     if (typeof value === "boolean") {

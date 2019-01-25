@@ -1,7 +1,8 @@
 export * from "./Validator";
 
 export function cleanObject(object) {
-  const data = { ...object };
+  const data = { ...object
+  };
 
   return Object.keys(data).reduce((acc, key) => {
     if (data[key] !== null && typeof data[key] !== "undefined") {

@@ -1040,8 +1040,38 @@ const formatEtab = (etab) => {
   }
 };
 
+const formatEnt = (ent) => {
+  if (!ent || typeof ent !== "object") {
+    return {}
+  }
+
+  const uniteLegale = Array.isArray(ent.periodesUniteLegale) && ent.periodesUniteLegale.length ? ent.periodesUniteLegale[0] : {};
+
+  return {
+    siren: ent.siren,
+    raison_sociale: uniteLegale.denominationUniteLegale,
+    sigle: ent.sigleUniteLegale,
+    nom: uniteLegale.nomUniteLegale,
+    prenom: utils.isEmpty([ent.prenom1UniteLegale, ent.prenom2UniteLegale, ent.prenom3UniteLegale, ent.prenom4UniteLegale].filter(a => a).join(" ")) ? undefined : [ent.prenom1UniteLegale, ent.prenom2UniteLegale, ent.prenom3UniteLegale, ent.prenom4UniteLegale].filter(a => a).join(" "),
+    nom_commercial: uniteLegale.nomUsageUniteLegale,
+    categorie_entreprise: ent.categorieEntreprise,
+    siret_siege_social: utils.isEmpty(ent.siren) || utils.isEmpty(uniteLegale.nicSiegeUniteLegale) ? undefined : `${ent.siren}${uniteLegale.nicSiegeUniteLegale}`,
+    forme_juridique: utils.isEmpty(uniteLegale.categorieJuridiqueUniteLegale) ? undefined : getLegalCode(uniteLegale.categorieJuridiqueUniteLegale),
+    forme_juridique_code: uniteLegale.categorieJuridiqueUniteLegale,
+    naf: uniteLegale.activitePrincipaleUniteLegale,
+    date_de_creation: ent.dateCreationUniteLegale,
+    etat_entreprise: uniteLegale.etatAdministratifUniteLegale,
+    date_mise_a_jour: uniteLegale.etatAdministratifUniteLegale === "C" ? uniteLegale.dateFin : ent.dateDernierTraitementUniteLegale,
+    date_de_radiation: uniteLegale.dateFin,
+    entreprise_employeur: uniteLegale.caractereEmployeurUniteLegale,
+    annee_tranche_effectif: ent.anneeEffectifsUniteLegale,
+    _raw: ent
+  };
+};
+
 export default {
   getNAF,
   getLegalCode,
-  formatEtab
+  formatEtab,
+  formatEnt
 };

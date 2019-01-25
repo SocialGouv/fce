@@ -10,6 +10,7 @@
   "dependencies": {
     "follow-redirects": "^1.3.0",
     "is-buffer": "^1.1.5",
+    "lodash.get": "^4.4.2",
     "tunnel": "^0.0.5"
   },
   "scripts": {

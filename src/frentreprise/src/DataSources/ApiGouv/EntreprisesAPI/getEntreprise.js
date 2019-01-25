@@ -64,7 +64,6 @@ const getEntreprise = async (SIREN, Axios, params) => {
           out.date_de_radiation = utils.convertDate(ent.date_radiation);
         }
       }
-
       return out;
     });
 };

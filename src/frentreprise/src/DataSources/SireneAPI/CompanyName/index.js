@@ -1,5 +1,5 @@
-import getCompanyName from "./getCompanyName";
+import getCompanyByName from "./getCompanyByName";
 
 export default {
-  getCompanyName,
+  getCompanyByName,
 };

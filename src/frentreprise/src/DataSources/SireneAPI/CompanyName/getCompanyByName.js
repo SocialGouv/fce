@@ -2,7 +2,7 @@ import utils from "../../../Utils/utils";
 import helpers from "../Helpers/helpers";
 import getSettlements from "../Siret/getSettlements";
 
-const getCompanyName = async (QUERY, Axios, params) => {
+const getCompanyByName = async (QUERY, Axios, params) => {
   const data = await utils.requestAPI(
     Axios,
     `siren/?q=periode(denominationUniteLegale:*${QUERY}*)&nombre=10000`,
@@ -21,4 +21,4 @@ const getCompanyName = async (QUERY, Axios, params) => {
   return out;
 };
 
-export default getCompanyName;
+export default getCompanyByName;

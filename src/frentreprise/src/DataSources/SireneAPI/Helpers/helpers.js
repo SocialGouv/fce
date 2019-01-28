@@ -1143,60 +1143,84 @@ const getLegalCode = code => {
 };
 
 const formatEtab = etab => {
-  if (!etab || typeof etab !== "object") {
-    return {};
-  }
-
-  const adresse_components = etab.adresseEtablissement
-    ? {
-        numero_voie: etab.adresseEtablissement.numeroVoieEtablissement,
-        indice_repetition:
-          etab.adresseEtablissement.indiceRepetitionEtablissement,
-        type_voie: etab.adresseEtablissement.typeVoieEtablissement,
-        nom_voie: etab.adresseEtablissement.libelleVoieEtablissement,
-        complement_adresse:
-          etab.adresseEtablissement.complementAdresseEtablissement,
-        code_postal: etab.adresseEtablissement.codePostalEtablissement,
-        code_insee_localite: etab.adresseEtablissement.codeCommuneEtablissement,
-        localite: etab.adresseEtablissement.libelleCommuneEtablissement
+  const getAdresseComponent = adresse => {
+    return (
+      adresse && {
+        numero_voie: adresse.numeroVoieEtablissement,
+        indice_repetition: adresse.indiceRepetitionEtablissement,
+        type_voie: adresse.typeVoieEtablissement,
+        nom_voie: adresse.libelleVoieEtablissement,
+        complement_adresse: adresse.complementAdresseEtablissement,
+        code_postal: adresse.codePostalEtablissement,
+        code_insee_localite: adresse.codeCommuneEtablissement,
+        localite: adresse.libelleCommuneEtablissement
       }
-    : {};
-
-  return {
-    siret: etab.siret,
-    actif:
-      etab.uniteLegale && etab.uniteLegale.etatAdministratifUniteLegale
-        ? etab.uniteLegale.etatAdministratifUniteLegale === "A"
-        : undefined,
-    etat_etablissement: etab.uniteLegale
-      ? etab.uniteLegale.etatAdministratifUniteLegale
-      : undefined,
-    enseigne: etab.enseigne,
-    naf: etab.uniteLegale
-      ? etab.uniteLegale.activitePrincipaleUniteLegale
-      : undefined,
-    libelle_naf:
-      !etab.uniteLegale ||
-      utils.isEmpty(etab.uniteLegale.activitePrincipaleUniteLegale)
-        ? undefined
-        : getNAF(
-            etab.uniteLegale.activitePrincipaleUniteLegale.replace(".", "")
-          ),
-    siege_social: etab.etablissementSiege,
-    date_creation: etab.dateCreationEtablissement,
-    tranche_effectif_insee: etab.trancheEffectifsEtablissement,
-    annee_tranche_effectif_insee: etab.anneeEffectifsEtablissement,
-    adresse_components: utils.isEmpty(adresse_components)
-      ? undefined
-      : adresse_components,
-    adresse: utils.isEmpty(adresse_components)
-      ? undefined
-      : utils.getCleanAddress(adresse_components),
-    etablissement_employeur: etab.periodesEtablissement
-      ? etab.periodesEtablissement[0].caractereEmployeurEtablissement
-      : undefined,
-    _raw: etab
+    );
   };
+
+  const fields = [
+    "siret",
+    {
+      in: "uniteLegale.etatAdministratifUniteLegale",
+      out: "actif",
+      callback: etat => etat && etat === "A"
+    },
+    {
+      in: "uniteLegale.etatAdministratifUniteLegale",
+      out: "etat_etablissement"
+    },
+    "enseigne",
+    {
+      in: "uniteLegale.activitePrincipaleUniteLegale",
+      out: "naf"
+    },
+    {
+      in: "uniteLegale.activitePrincipaleUniteLegale",
+      out: "libelle_naf",
+      callback: activite =>
+        utils.isEmpty(activite) ? undefined : getNAF(activite.replace(".", ""))
+    },
+    {
+      in: "etablissementSiege",
+      out: "siege_social"
+    },
+    {
+      in: "dateCreationEtablissement",
+      out: "date_creation"
+    },
+    {
+      in: "trancheEffectifsEtablissement",
+      out: "tranche_effectif_insee"
+    },
+    {
+      in: "anneeEffectifsEtablissement",
+      out: "annee_tranche_effectif_insee"
+    },
+    {
+      in: "adresseEtablissement",
+      out: "adresse_components",
+      callback: adresse => {
+        const adresseComponent = getAdresseComponent(adresse);
+        return utils.isEmpty(adresseComponent) ? undefined : adresseComponent;
+      }
+    },
+    {
+      in: "adresseEtablissement",
+      out: "adresse",
+      callback: adresse => {
+        const adresseComponent = getAdresseComponent(adresse);
+        return utils.isEmpty(adresseComponent)
+          ? undefined
+          : utils.getCleanAddress(adresseComponent);
+      }
+    },
+    {
+      in: "periodesEtablissement[0].caractereEmployeurEtablissement",
+      out: "etablissement_employeur"
+    }
+  ];
+
+  return typeof etab === "object" ? getData(etab, fields) : {};
 };
 
 const formatEnt = ent => {

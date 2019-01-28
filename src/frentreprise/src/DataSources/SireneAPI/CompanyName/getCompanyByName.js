@@ -15,7 +15,7 @@ const getCompanyByName = async (QUERY, Axios, params) => {
     out.push({
       ...entData,
       ...settlements
-    })
+    });
   }
 
   return out;

@@ -1,8 +1,10 @@
 import utils from "../../../Utils/utils";
+import getData from "../../getData";
 
-const getNAF = (code) => {
+const getNAF = code => {
   const nomenclatures = {
-    "0111Z": "Culture de céréales (à l'exception du riz), de légumineuses et de graines oléagineuses",
+    "0111Z":
+      "Culture de céréales (à l'exception du riz), de légumineuses et de graines oléagineuses",
     "0111Z": "Culture du riz",
     "0111Z": "Culture de légumes, de melons, de racines et de tubercules",
     "0111Z": "Culture de la canne à sucre",
@@ -13,10 +15,12 @@ const getNAF = (code) => {
     "0111Z": "Culture de fruits tropicaux et subtropicaux",
     "0111Z": "Culture d'agrumes",
     "0111Z": "Culture de fruits à pépins et à noyau",
-    "0111Z": "Culture d'autres fruits d'arbres ou d'arbustes et de fruits à coque",
+    "0111Z":
+      "Culture d'autres fruits d'arbres ou d'arbustes et de fruits à coque",
     "0111Z": "Culture de fruits oléagineux",
     "0111Z": "Culture de plantes à boissons",
-    "0111Z": "Culture de plantes à épices, aromatiques, médicinales et pharmaceutiques",
+    "0111Z":
+      "Culture de plantes à épices, aromatiques, médicinales et pharmaceutiques",
     "0111Z": "Autres cultures permanentes",
     "0111Z": "Reproduction de plantes",
     "0111Z": "Élevage de vaches laitières",
@@ -35,7 +39,8 @@ const getNAF = (code) => {
     "0111Z": "Chasse, piégeage et services annexes",
     "0111Z": "Sylviculture et autres activités forestières",
     "0111Z": "Exploitation forestière",
-    "0111Z": "Récolte de produits forestiers non ligneux poussant à l'état sauvage",
+    "0111Z":
+      "Récolte de produits forestiers non ligneux poussant à l'état sauvage",
     "0240Z": "Services de soutien à l'exploitation forestière",
     "0311Z": "Pêche en mer",
     "0312Z": "Pêche en eau douce",
@@ -48,8 +53,10 @@ const getNAF = (code) => {
     "0710Z": "Extraction de minerais de fer",
     "0721Z": "Extraction de minerais d'uranium et de thorium",
     "0729Z": "Extraction d'autres minerais de métaux non ferreux",
-    "0811Z": "Extraction de pierres ornementales et de construction, de calcaire industriel, de gypse, de craie et d'ardoise",
-    "0812Z": "Exploitation de gravières et sablières, extraction d'argiles et de kaolin",
+    "0811Z":
+      "Extraction de pierres ornementales et de construction, de calcaire industriel, de gypse, de craie et d'ardoise",
+    "0812Z":
+      "Exploitation de gravières et sablières, extraction d'argiles et de kaolin",
     "0891Z": "Extraction des minéraux chimiques et d'engrais minéraux",
     "0892Z": "Extraction de tourbe",
     "0893Z": "Production de sel",
@@ -60,7 +67,8 @@ const getNAF = (code) => {
     "1012Z": "Transformation et conservation de la viande de volaille",
     "1013A": "Préparation industrielle de produits à base de viande",
     "1013B": "Charcuterie",
-    "1020Z": "Transformation et conservation de poisson, de crustacés et de mollusques",
+    "1020Z":
+      "Transformation et conservation de poisson, de crustacés et de mollusques",
     "1031Z": "Transformation et conservation de pommes de terre",
     "1032Z": "Préparation de jus de fruits et légumes",
     "1039A": "Autre transformation et conservation de légumes",
@@ -80,7 +88,8 @@ const getNAF = (code) => {
     "1071B": "Cuisson de produits de boulangerie",
     "1071C": "Boulangerie et boulangerie-pâtisserie",
     "1071D": "Pâtisserie",
-    "1072Z": "Fabrication de biscuits, biscottes et pâtisseries de conservation",
+    "1072Z":
+      "Fabrication de biscuits, biscottes et pâtisseries de conservation",
     "1073Z": "Fabrication de pâtes alimentaires",
     "1081Z": "Fabrication de sucre",
     "1082Z": "Fabrication de cacao, chocolat et de produits de confiserie",
@@ -119,7 +128,8 @@ const getNAF = (code) => {
     "1420Z": "Fabrication d'articles en fourrure",
     "1431Z": "Fabrication d'articles chaussants à mailles",
     "1439Z": "Fabrication d'autres articles à mailles",
-    "1511Z": "Apprêt et tannage des cuirs ; préparation et teinture des fourrures",
+    "1511Z":
+      "Apprêt et tannage des cuirs ; préparation et teinture des fourrures",
     "1512Z": "Fabrication d'articles de voyage, de maroquinerie et de sellerie",
     "1520Z": "Fabrication de chaussures",
     "1610A": "Sciage et rabotage du bois, hors imprégnation",
@@ -128,7 +138,8 @@ const getNAF = (code) => {
     "1622Z": "Fabrication de parquets assemblés",
     "1623Z": "Fabrication de charpentes et d'autres menuiseries",
     "1624Z": "Fabrication d'emballages en bois",
-    "1629Z": "Fabrication d'objets divers en bois ; fabrication d'objets en liège, vannerie et sparterie",
+    "1629Z":
+      "Fabrication d'objets divers en bois ; fabrication d'objets en liège, vannerie et sparterie",
     "1711Z": "Fabrication de pâte à papier",
     "1712Z": "Fabrication de papier et de carton",
     "1721A": "Fabrication de carton ondulé",
@@ -148,7 +159,8 @@ const getNAF = (code) => {
     "2011Z": "Fabrication de gaz industriels",
     "2012Z": "Fabrication de colorants et de pigments",
     "2013A": "Enrichissement et retraitement de matières nucléaires",
-    "2013B": "Fabrication d'autres produits chimiques inorganiques de base n.c.a.",
+    "2013B":
+      "Fabrication d'autres produits chimiques inorganiques de base n.c.a.",
     "2014Z": "Fabrication d'autres produits chimiques organiques de base",
     "2015Z": "Fabrication de produits azotés et d'engrais",
     "2016Z": "Fabrication de matières plastiques de base",
@@ -166,20 +178,26 @@ const getNAF = (code) => {
     "2120Z": "Fabrication de préparations pharmaceutiques",
     "2211Z": "Fabrication et rechapage de pneumatiques",
     "2219Z": "Fabrication d'autres articles en caoutchouc",
-    "2221Z": "Fabrication de plaques, feuilles, tubes et profilés en matières plastiques",
+    "2221Z":
+      "Fabrication de plaques, feuilles, tubes et profilés en matières plastiques",
     "2222Z": "Fabrication d'emballages en matières plastiques",
-    "2223Z": "Fabrication d'éléments en matières plastiques pour la construction",
+    "2223Z":
+      "Fabrication d'éléments en matières plastiques pour la construction",
     "2229A": "Fabrication de pièces techniques à base de matières plastiques",
-    "2229B": "Fabrication de produits de consommation courante en matières plastiques",
+    "2229B":
+      "Fabrication de produits de consommation courante en matières plastiques",
     "2311Z": "Fabrication de verre plat",
     "2312Z": "Façonnage et transformation du verre plat",
     "2313Z": "Fabrication de verre creux",
     "2314Z": "Fabrication de fibres de verre",
-    "2319Z": "Fabrication et façonnage d'autres articles en verre, y compris verre technique",
+    "2319Z":
+      "Fabrication et façonnage d'autres articles en verre, y compris verre technique",
     "2320Z": "Fabrication de produits réfractaires",
     "2331Z": "Fabrication de carreaux en céramique",
-    "2332Z": "Fabrication de briques, tuiles et produits de construction, en terre cuite",
-    "2341Z": "Fabrication d'articles céramiques à usage domestique ou ornemental",
+    "2332Z":
+      "Fabrication de briques, tuiles et produits de construction, en terre cuite",
+    "2341Z":
+      "Fabrication d'articles céramiques à usage domestique ou ornemental",
     "2342Z": "Fabrication d'appareils sanitaires en céramique",
     "2343Z": "Fabrication d'isolateurs et pièces isolantes en céramique",
     "2344Z": "Fabrication d'autres produits céramiques à usage technique",
@@ -196,7 +214,8 @@ const getNAF = (code) => {
     "2391Z": "Fabrication de produits abrasifs",
     "2399Z": "Fabrication d'autres produits minéraux non métalliques n.c.a.",
     "2410Z": "Sidérurgie",
-    "2420Z": "Fabrication de tubes, tuyaux, profilés creux et accessoires correspondants en acier",
+    "2420Z":
+      "Fabrication de tubes, tuyaux, profilés creux et accessoires correspondants en acier",
     "2431Z": "Étirage à froid de barres",
     "2432Z": "Laminage à froid de feuillards",
     "2433Z": "Profilage à froid par formage ou pliage",
@@ -211,11 +230,15 @@ const getNAF = (code) => {
     "2452Z": "Fonderie d'acier",
     "2453Z": "Fonderie de métaux légers",
     "2454Z": "Fonderie d'autres métaux non ferreux",
-    "2511Z": "Fabrication de structures métalliques et de parties de structures",
+    "2511Z":
+      "Fabrication de structures métalliques et de parties de structures",
     "2512Z": "Fabrication de portes et fenêtres en métal",
-    "2521Z": "Fabrication de radiateurs et de chaudières pour le chauffage central",
-    "2529Z": "Fabrication d'autres réservoirs, citernes et conteneurs métalliques",
-    "2530Z": "Fabrication de générateurs de vapeur, à l'exception des chaudières pour le chauffage central",
+    "2521Z":
+      "Fabrication de radiateurs et de chaudières pour le chauffage central",
+    "2529Z":
+      "Fabrication d'autres réservoirs, citernes et conteneurs métalliques",
+    "2530Z":
+      "Fabrication de générateurs de vapeur, à l'exception des chaudières pour le chauffage central",
     "2540Z": "Fabrication d'armes et de munitions",
     "2550A": "Forge, estampage, matriçage ; métallurgie des poudres",
     "2550B": "Découpage, emboutissage",
@@ -228,7 +251,8 @@ const getNAF = (code) => {
     "2573B": "Fabrication d'autres outillages",
     "2591Z": "Fabrication de fûts et emballages métalliques similaires",
     "2592Z": "Fabrication d'emballages métalliques légers",
-    "2593Z": "Fabrication d'articles en fils métalliques, de chaînes et de ressorts",
+    "2593Z":
+      "Fabrication d'articles en fils métalliques, de chaînes et de ressorts",
     "2594Z": "Fabrication de vis et de boulons",
     "2599A": "Fabrication d'articles métalliques ménagers",
     "2599B": "Fabrication d'autres articles métalliques",
@@ -240,11 +264,14 @@ const getNAF = (code) => {
     "2651A": "Fabrication d'équipements d'aide à la navigation",
     "2651B": "Fabrication d'instrumentation scientifique et technique",
     "2652Z": "Horlogerie",
-    "2660Z": "Fabrication d'équipements d'irradiation médicale, d'équipements électromédicaux et électrothérapeutiques",
+    "2660Z":
+      "Fabrication d'équipements d'irradiation médicale, d'équipements électromédicaux et électrothérapeutiques",
     "2670Z": "Fabrication de matériels optique et photographique",
     "2680Z": "Fabrication de supports magnétiques et optiques",
-    "2711Z": "Fabrication de moteurs, génératrices et transformateurs électriques",
-    "2712Z": "Fabrication de matériel de distribution et de commande électrique",
+    "2711Z":
+      "Fabrication de moteurs, génératrices et transformateurs électriques",
+    "2712Z":
+      "Fabrication de matériel de distribution et de commande électrique",
     "2720Z": "Fabrication de piles et d'accumulateurs électriques",
     "2731Z": "Fabrication de câbles de fibres optiques",
     "2732Z": "Fabrication d'autres fils et câbles électroniques ou électriques",
@@ -253,17 +280,21 @@ const getNAF = (code) => {
     "2751Z": "Fabrication d'appareils électroménagers",
     "2752Z": "Fabrication d'appareils ménagers non électriques",
     "2790Z": "Fabrication d'autres matériels électriques",
-    "2811Z": "Fabrication de moteurs et turbines, à l'exception des moteurs d'avions et de véhicules",
+    "2811Z":
+      "Fabrication de moteurs et turbines, à l'exception des moteurs d'avions et de véhicules",
     "2812Z": "Fabrication d'équipements hydrauliques et pneumatiques",
     "2813Z": "Fabrication d'autres pompes et compresseurs",
     "2814Z": "Fabrication d'autres articles de robinetterie",
     "2815Z": "Fabrication d'engrenages et d'organes mécaniques de transmission",
     "2821Z": "Fabrication de fours et brûleurs",
     "2822Z": "Fabrication de matériel de levage et de manutention",
-    "2823Z": "Fabrication de machines et d'équipements de bureau (à l'exception des ordinateurs et équipements périphériques)",
+    "2823Z":
+      "Fabrication de machines et d'équipements de bureau (à l'exception des ordinateurs et équipements périphériques)",
     "2824Z": "Fabrication d'outillage portatif à moteur incorporé",
-    "2825Z": "Fabrication d'équipements aérauliques et frigorifiques industriels",
-    "2829A": "Fabrication d'équipements d'emballage, de conditionnement et de pesage",
+    "2825Z":
+      "Fabrication d'équipements aérauliques et frigorifiques industriels",
+    "2829A":
+      "Fabrication d'équipements d'emballage, de conditionnement et de pesage",
     "2829B": "Fabrication d'autres machines d'usage général",
     "2830Z": "Fabrication de machines agricoles et forestières",
     "2841Z": "Fabrication de machines-outils pour le travail des métaux",
@@ -272,17 +303,21 @@ const getNAF = (code) => {
     "2892Z": "Fabrication de machines pour l'extraction ou la construction",
     "2893Z": "Fabrication de machines pour l'industrie agro-alimentaire",
     "2894Z": "Fabrication de machines pour les industries textiles",
-    "2895Z": "Fabrication de machines pour les industries du papier et du carton",
-    "2896Z": "Fabrication de machines pour le travail du caoutchouc ou des plastiques",
+    "2895Z":
+      "Fabrication de machines pour les industries du papier et du carton",
+    "2896Z":
+      "Fabrication de machines pour le travail du caoutchouc ou des plastiques",
     "2899A": "Fabrication de machines d'imprimerie",
     "2899B": "Fabrication d'autres machines spécialisées",
     "2910Z": "Construction de véhicules automobiles",
     "2920Z": "Fabrication de carrosseries et remorques",
-    "2931Z": "Fabrication d'équipements électriques et électroniques automobiles",
+    "2931Z":
+      "Fabrication d'équipements électriques et électroniques automobiles",
     "2932Z": "Fabrication d'autres équipements automobiles",
     "3011Z": "Construction de navires et de structures flottantes",
     "3012Z": "Construction de bateaux de plaisance",
-    "3020Z": "Construction de locomotives et d'autre matériel ferroviaire roulant",
+    "3020Z":
+      "Construction de locomotives et d'autre matériel ferroviaire roulant",
     "3030Z": "Construction aéronautique et spatiale",
     "3040Z": "Construction de véhicules militaires de combat",
     "3091Z": "Fabrication de motocycles",
@@ -292,10 +327,12 @@ const getNAF = (code) => {
     "3102Z": "Fabrication de meubles de cuisine",
     "3103Z": "Fabrication de matelas",
     "3109A": "Fabrication de sièges d'ameublement d'intérieur",
-    "3109B": "Fabrication d'autres meubles et industries connexes de l'ameublement",
+    "3109B":
+      "Fabrication d'autres meubles et industries connexes de l'ameublement",
     "3211Z": "Frappe de monnaie",
     "3212Z": "Fabrication d'articles de joaillerie et bijouterie",
-    "3213Z": "Fabrication d'articles de bijouterie fantaisie et articles similaires",
+    "3213Z":
+      "Fabrication d'articles de bijouterie fantaisie et articles similaires",
     "3220Z": "Fabrication d'instruments de musique",
     "3230Z": "Fabrication d'articles de sport",
     "3240Z": "Fabrication de jeux et jouets",
@@ -311,10 +348,13 @@ const getNAF = (code) => {
     "3316Z": "Réparation et maintenance d'aéronefs et d'engins spatiaux",
     "3317Z": "Réparation et maintenance d'autres équipements de transport",
     "3319Z": "Réparation d'autres équipements",
-    "3320A": "Installation de structures métalliques, chaudronnées et de tuyauterie",
+    "3320A":
+      "Installation de structures métalliques, chaudronnées et de tuyauterie",
     "3320B": "Installation de machines et équipements mécaniques",
-    "3320C": "Conception d'ensemble et assemblage sur site industriel d'équipements de contrôle des processus industriels",
-    "3320D": "Installation d'équipements électriques, de matériels électroniques et optiques ou d'autres matériels",
+    "3320C":
+      "Conception d'ensemble et assemblage sur site industriel d'équipements de contrôle des processus industriels",
+    "3320D":
+      "Installation d'équipements électriques, de matériels électroniques et optiques ou d'autres matériels",
     "3511Z": "Production d'électricité",
     "3512Z": "Transport d'électricité",
     "3513Z": "Distribution d'électricité",
@@ -353,7 +393,8 @@ const getNAF = (code) => {
     "4321A": "Travaux d'installation électrique dans tous locaux",
     "4321B": "Travaux d'installation électrique sur la voie publique",
     "4322A": "Travaux d'installation d'eau et de gaz en tous locaux",
-    "4322B": "Travaux d'installation d'équipements thermiques et de climatisation",
+    "4322B":
+      "Travaux d'installation d'équipements thermiques et de climatisation",
     "4329A": "Travaux d'isolation",
     "4329B": "Autres travaux d'installation n.c.a.",
     "4331Z": "Travaux de plâtrerie",
@@ -377,64 +418,110 @@ const getNAF = (code) => {
     "4531Z": "Commerce de gros d'équipements automobiles",
     "4532Z": "Commerce de détail d'équipements automobiles",
     "4540Z": "Commerce et réparation de motocycles",
-    "4611Z": "Intermédiaires du commerce en matières premières agricoles, animaux vivants, matières premières textiles et produits semi-finis",
+    "4611Z":
+      "Intermédiaires du commerce en matières premières agricoles, animaux vivants, matières premières textiles et produits semi-finis",
     "4612A": "Centrales d'achat de carburant",
-    "4612B": "Autres intermédiaires du commerce en combustibles, métaux, minéraux et produits chimiques",
+    "4612B":
+      "Autres intermédiaires du commerce en combustibles, métaux, minéraux et produits chimiques",
     "4613Z": "Intermédiaires du commerce en bois et matériaux de construction",
-    "4614Z": "Intermédiaires du commerce en machines, équipements industriels, navires et avions",
-    "4615Z": "Intermédiaires du commerce en meubles, articles de ménage et quincaillerie",
-    "4616Z": "Intermédiaires du commerce en textiles, habillement, fourrures, chaussures et articles en cuir",
+    "4614Z":
+      "Intermédiaires du commerce en machines, équipements industriels, navires et avions",
+    "4615Z":
+      "Intermédiaires du commerce en meubles, articles de ménage et quincaillerie",
+    "4616Z":
+      "Intermédiaires du commerce en textiles, habillement, fourrures, chaussures et articles en cuir",
     "4617A": "Centrales d'achat alimentaires",
     "4617B": "Autres intermédiaires du commerce en denrées, boissons et tabac",
-    "4618Z": "Intermédiaires spécialisés dans le commerce d'autres produits spécifiques",
+    "4618Z":
+      "Intermédiaires spécialisés dans le commerce d'autres produits spécifiques",
     "4619A": "Centrales d'achat non alimentaires",
     "4619B": "Autres intermédiaires du commerce en produits divers",
-    "4621Z": "Commerce de gros (commerce interentreprises) de céréales, de tabac non manufacturé, de semences et d'aliments pour le bétail",
-    "4622Z": "Commerce de gros (commerce interentreprises) de fleurs et plantes",
+    "4621Z":
+      "Commerce de gros (commerce interentreprises) de céréales, de tabac non manufacturé, de semences et d'aliments pour le bétail",
+    "4622Z":
+      "Commerce de gros (commerce interentreprises) de fleurs et plantes",
     "4623Z": "Commerce de gros (commerce interentreprises) d'animaux vivants",
     "4624Z": "Commerce de gros (commerce interentreprises) de cuirs et peaux",
-    "4631Z": "Commerce de gros (commerce interentreprises) de fruits et légumes",
-    "4632A": "Commerce de gros (commerce interentreprises) de viandes de boucherie",
-    "4632B": "Commerce de gros (commerce interentreprises) de produits à base de viande",
-    "4632C": "Commerce de gros (commerce interentreprises) de volailles et gibier",
-    "4633Z": "Commerce de gros (commerce interentreprises) de produits laitiers, œufs, huiles et matières grasses comestibles",
+    "4631Z":
+      "Commerce de gros (commerce interentreprises) de fruits et légumes",
+    "4632A":
+      "Commerce de gros (commerce interentreprises) de viandes de boucherie",
+    "4632B":
+      "Commerce de gros (commerce interentreprises) de produits à base de viande",
+    "4632C":
+      "Commerce de gros (commerce interentreprises) de volailles et gibier",
+    "4633Z":
+      "Commerce de gros (commerce interentreprises) de produits laitiers, œufs, huiles et matières grasses comestibles",
     "4634Z": "Commerce de gros (commerce interentreprises) de boissons",
-    "4635Z": "Commerce de gros (commerce interentreprises) de produits à base de tabac",
-    "4636Z": "Commerce de gros (commerce interentreprises) de sucre, chocolat et confiserie",
-    "4637Z": "Commerce de gros (commerce interentreprises) de café, thé, cacao et épices",
-    "4638A": "Commerce de gros (commerce interentreprises) de poissons, crustacés et mollusques",
-    "4638B": "Commerce de gros (commerce interentreprises) alimentaire spécialisé divers",
-    "4639A": "Commerce de gros (commerce interentreprises) de produits surgelés",
-    "4639B": "Commerce de gros (commerce interentreprises) alimentaire non spécialisé",
+    "4635Z":
+      "Commerce de gros (commerce interentreprises) de produits à base de tabac",
+    "4636Z":
+      "Commerce de gros (commerce interentreprises) de sucre, chocolat et confiserie",
+    "4637Z":
+      "Commerce de gros (commerce interentreprises) de café, thé, cacao et épices",
+    "4638A":
+      "Commerce de gros (commerce interentreprises) de poissons, crustacés et mollusques",
+    "4638B":
+      "Commerce de gros (commerce interentreprises) alimentaire spécialisé divers",
+    "4639A":
+      "Commerce de gros (commerce interentreprises) de produits surgelés",
+    "4639B":
+      "Commerce de gros (commerce interentreprises) alimentaire non spécialisé",
     "4641Z": "Commerce de gros (commerce interentreprises) de textiles",
-    "4642Z": "Commerce de gros (commerce interentreprises) d'habillement et de chaussures",
-    "4643Z": "Commerce de gros (commerce interentreprises) d'appareils électroménagers",
-    "4644Z": "Commerce de gros (commerce interentreprises) de vaisselle, verrerie et produits d'entretien",
-    "4645Z": "Commerce de gros (commerce interentreprises) de parfumerie et de produits de beauté",
-    "4646Z": "Commerce de gros (commerce interentreprises) de produits pharmaceutiques",
-    "4647Z": "Commerce de gros (commerce interentreprises) de meubles, de tapis et d'appareils d'éclairage",
-    "4648Z": "Commerce de gros (commerce interentreprises) d'articles d'horlogerie et de bijouterie",
-    "4649Z": "Commerce de gros (commerce interentreprises) d'autres biens domestiques",
-    "4651Z": "Commerce de gros (commerce interentreprises) d'ordinateurs, d'équipements informatiques périphériques et de logiciels",
-    "4652Z": "Commerce de gros (commerce interentreprises) de composants et d'équipements électroniques et de télécommunication",
-    "4661Z": "Commerce de gros (commerce interentreprises) de matériel agricole",
+    "4642Z":
+      "Commerce de gros (commerce interentreprises) d'habillement et de chaussures",
+    "4643Z":
+      "Commerce de gros (commerce interentreprises) d'appareils électroménagers",
+    "4644Z":
+      "Commerce de gros (commerce interentreprises) de vaisselle, verrerie et produits d'entretien",
+    "4645Z":
+      "Commerce de gros (commerce interentreprises) de parfumerie et de produits de beauté",
+    "4646Z":
+      "Commerce de gros (commerce interentreprises) de produits pharmaceutiques",
+    "4647Z":
+      "Commerce de gros (commerce interentreprises) de meubles, de tapis et d'appareils d'éclairage",
+    "4648Z":
+      "Commerce de gros (commerce interentreprises) d'articles d'horlogerie et de bijouterie",
+    "4649Z":
+      "Commerce de gros (commerce interentreprises) d'autres biens domestiques",
+    "4651Z":
+      "Commerce de gros (commerce interentreprises) d'ordinateurs, d'équipements informatiques périphériques et de logiciels",
+    "4652Z":
+      "Commerce de gros (commerce interentreprises) de composants et d'équipements électroniques et de télécommunication",
+    "4661Z":
+      "Commerce de gros (commerce interentreprises) de matériel agricole",
     "4662Z": "Commerce de gros (commerce interentreprises) de machines-outils",
-    "4663Z": "Commerce de gros (commerce interentreprises) de machines pour l'extraction, la construction et le génie civil",
-    "4664Z": "Commerce de gros (commerce interentreprises) de machines pour l'industrie textile et l'habillement",
-    "4665Z": "Commerce de gros (commerce interentreprises) de mobilier de bureau",
-    "4666Z": "Commerce de gros (commerce interentreprises) d'autres machines et équipements de bureau",
-    "4669A": "Commerce de gros (commerce interentreprises) de matériel électrique",
-    "4669B": "Commerce de gros (commerce interentreprises) de fournitures et équipements industriels divers",
-    "4669C": "Commerce de gros (commerce interentreprises) de fournitures et équipements divers pour le commerce et les services",
-    "4671Z": "Commerce de gros (commerce interentreprises) de combustibles et de produits annexes",
-    "4672Z": "Commerce de gros (commerce interentreprises) de minerais et métaux",
-    "4673A": "Commerce de gros (commerce interentreprises) de bois et de matériaux de construction",
-    "4673B": "Commerce de gros (commerce interentreprises) d'appareils sanitaires et de produits de décoration",
+    "4663Z":
+      "Commerce de gros (commerce interentreprises) de machines pour l'extraction, la construction et le génie civil",
+    "4664Z":
+      "Commerce de gros (commerce interentreprises) de machines pour l'industrie textile et l'habillement",
+    "4665Z":
+      "Commerce de gros (commerce interentreprises) de mobilier de bureau",
+    "4666Z":
+      "Commerce de gros (commerce interentreprises) d'autres machines et équipements de bureau",
+    "4669A":
+      "Commerce de gros (commerce interentreprises) de matériel électrique",
+    "4669B":
+      "Commerce de gros (commerce interentreprises) de fournitures et équipements industriels divers",
+    "4669C":
+      "Commerce de gros (commerce interentreprises) de fournitures et équipements divers pour le commerce et les services",
+    "4671Z":
+      "Commerce de gros (commerce interentreprises) de combustibles et de produits annexes",
+    "4672Z":
+      "Commerce de gros (commerce interentreprises) de minerais et métaux",
+    "4673A":
+      "Commerce de gros (commerce interentreprises) de bois et de matériaux de construction",
+    "4673B":
+      "Commerce de gros (commerce interentreprises) d'appareils sanitaires et de produits de décoration",
     "4674A": "Commerce de gros (commerce interentreprises) de quincaillerie",
-    "4674B": "Commerce de gros (commerce interentreprises) de fournitures pour la plomberie et le chauffage",
-    "4675Z": "Commerce de gros (commerce interentreprises) de produits chimiques",
-    "4676Z": "Commerce de gros (commerce interentreprises) d'autres produits intermédiaires",
-    "4677Z": "Commerce de gros (commerce interentreprises) de déchets et débris",
+    "4674B":
+      "Commerce de gros (commerce interentreprises) de fournitures pour la plomberie et le chauffage",
+    "4675Z":
+      "Commerce de gros (commerce interentreprises) de produits chimiques",
+    "4676Z":
+      "Commerce de gros (commerce interentreprises) d'autres produits intermédiaires",
+    "4677Z":
+      "Commerce de gros (commerce interentreprises) de déchets et débris",
     "4690Z": "Commerce de gros (commerce interentreprises) non spécialisé",
     "4711A": "Commerce de détail de produits surgelés",
     "4711B": "Commerce d'alimentation générale",
@@ -445,47 +532,67 @@ const getNAF = (code) => {
     "4719A": "Grands magasins",
     "4719B": "Autres commerces de détail en magasin non spécialisé",
     "4721Z": "Commerce de détail de fruits et légumes en magasin spécialisé",
-    "4722Z": "Commerce de détail de viandes et de produits à base de viande en magasin spécialisé",
-    "4723Z": "Commerce de détail de poissons, crustacés et mollusques en magasin spécialisé",
-    "4724Z": "Commerce de détail de pain, pâtisserie et confiserie en magasin spécialisé",
+    "4722Z":
+      "Commerce de détail de viandes et de produits à base de viande en magasin spécialisé",
+    "4723Z":
+      "Commerce de détail de poissons, crustacés et mollusques en magasin spécialisé",
+    "4724Z":
+      "Commerce de détail de pain, pâtisserie et confiserie en magasin spécialisé",
     "4725Z": "Commerce de détail de boissons en magasin spécialisé",
-    "4726Z": "Commerce de détail de produits à base de tabac en magasin spécialisé",
+    "4726Z":
+      "Commerce de détail de produits à base de tabac en magasin spécialisé",
     "4729Z": "Autres commerces de détail alimentaires en magasin spécialisé",
     "4730Z": "Commerce de détail de carburants en magasin spécialisé",
-    "4741Z": "Commerce de détail d'ordinateurs, d'unités périphériques et de logiciels en magasin spécialisé",
-    "4742Z": "Commerce de détail de matériels de télécommunication en magasin spécialisé",
-    "4743Z": "Commerce de détail de matériels audio et vidéo en magasin spécialisé",
+    "4741Z":
+      "Commerce de détail d'ordinateurs, d'unités périphériques et de logiciels en magasin spécialisé",
+    "4742Z":
+      "Commerce de détail de matériels de télécommunication en magasin spécialisé",
+    "4743Z":
+      "Commerce de détail de matériels audio et vidéo en magasin spécialisé",
     "4751Z": "Commerce de détail de textiles en magasin spécialisé",
-    "4752A": "Commerce de détail de quincaillerie, peintures et verres en petites surfaces (moins de 400 m²)",
-    "4752B": "Commerce de détail de quincaillerie, peintures et verres en grandes surfaces (400 m² et plus)",
-    "4753Z": "Commerce de détail de tapis, moquettes et revêtements de murs et de sols en magasin spécialisé",
-    "4754Z": "Commerce de détail d'appareils électroménagers en magasin spécialisé",
+    "4752A":
+      "Commerce de détail de quincaillerie, peintures et verres en petites surfaces (moins de 400 m²)",
+    "4752B":
+      "Commerce de détail de quincaillerie, peintures et verres en grandes surfaces (400 m² et plus)",
+    "4753Z":
+      "Commerce de détail de tapis, moquettes et revêtements de murs et de sols en magasin spécialisé",
+    "4754Z":
+      "Commerce de détail d'appareils électroménagers en magasin spécialisé",
     "4759A": "Commerce de détail de meubles",
     "4759B": "Commerce de détail d'autres équipements du foyer",
     "4761Z": "Commerce de détail de livres en magasin spécialisé",
-    "4762Z": "Commerce de détail de journaux et papeterie en magasin spécialisé",
-    "4763Z": "Commerce de détail d'enregistrements musicaux et vidéo en magasin spécialisé",
+    "4762Z":
+      "Commerce de détail de journaux et papeterie en magasin spécialisé",
+    "4763Z":
+      "Commerce de détail d'enregistrements musicaux et vidéo en magasin spécialisé",
     "4764Z": "Commerce de détail d'articles de sport en magasin spécialisé",
     "4765Z": "Commerce de détail de jeux et jouets en magasin spécialisé",
     "4771Z": "Commerce de détail d'habillement en magasin spécialisé",
     "4772A": "Commerce de détail de la chaussure",
     "4772B": "Commerce de détail de maroquinerie et d'articles de voyage",
-    "4773Z": "Commerce de détail de produits pharmaceutiques en magasin spécialisé",
-    "4774Z": "Commerce de détail d'articles médicaux et orthopédiques en magasin spécialisé",
-    "4775Z": "Commerce de détail de parfumerie et de produits de beauté en magasin spécialisé",
-    "4776Z": "Commerce de détail de fleurs, plantes, graines, engrais, animaux de compagnie et aliments pour ces animaux en magasin spécialisé",
-    "4777Z": "Commerce de détail d'articles d'horlogerie et de bijouterie en magasin spécialisé",
+    "4773Z":
+      "Commerce de détail de produits pharmaceutiques en magasin spécialisé",
+    "4774Z":
+      "Commerce de détail d'articles médicaux et orthopédiques en magasin spécialisé",
+    "4775Z":
+      "Commerce de détail de parfumerie et de produits de beauté en magasin spécialisé",
+    "4776Z":
+      "Commerce de détail de fleurs, plantes, graines, engrais, animaux de compagnie et aliments pour ces animaux en magasin spécialisé",
+    "4777Z":
+      "Commerce de détail d'articles d'horlogerie et de bijouterie en magasin spécialisé",
     "4778A": "Commerces de détail d'optique",
     "4778B": "Commerces de détail de charbons et combustibles",
     "4778C": "Autres commerces de détail spécialisés divers",
     "4779Z": "Commerce de détail de biens d'occasion en magasin",
     "4781Z": "Commerce de détail alimentaire sur éventaires et marchés",
-    "4782Z": "Commerce de détail de textiles, d'habillement et de chaussures sur éventaires et marchés",
+    "4782Z":
+      "Commerce de détail de textiles, d'habillement et de chaussures sur éventaires et marchés",
     "4789Z": "Autres commerces de détail sur éventaires et marchés",
     "4791A": "Vente à distance sur catalogue général",
     "4791B": "Vente à distance sur catalogue spécialisé",
     "4799A": "Vente à domicile",
-    "4799B": "Vente par automates et autres commerces de détail hors magasin, éventaires ou marchés n.c.a.",
+    "4799B":
+      "Vente par automates et autres commerces de détail hors magasin, éventaires ou marchés n.c.a.",
     "4910Z": "Transport ferroviaire interurbain de voyageurs",
     "4920Z": "Transports ferroviaires de fret",
     "4931Z": "Transports urbains et suburbains de voyageurs",
@@ -514,11 +621,13 @@ const getNAF = (code) => {
     "5224B": "Manutention non portuaire",
     "5229A": "Messagerie, fret express",
     "5229B": "Affrètement et organisation des transports",
-    "5310Z": "Activités de poste dans le cadre d'une obligation de service universel",
+    "5310Z":
+      "Activités de poste dans le cadre d'une obligation de service universel",
     "5320Z": "Autres activités de poste et de courrier",
     "5510Z": "Hôtels et hébergement similaire",
     "5520Z": "Hébergement touristique et autre hébergement de courte durée",
-    "5530Z": "Terrains de camping et parcs pour caravanes ou véhicules de loisirs",
+    "5530Z":
+      "Terrains de camping et parcs pour caravanes ou véhicules de loisirs",
     "5590Z": "Autres hébergements",
     "5610A": "Restauration traditionnelle",
     "5610B": "Cafétérias et autres libres-services",
@@ -539,7 +648,8 @@ const getNAF = (code) => {
     "5911A": "Production de films et de programmes pour la télévision",
     "5911B": "Production de films institutionnels et publicitaires",
     "5911C": "Production de films pour le cinéma",
-    "5912Z": "Post-production de films cinématographiques, de vidéo et de programmes de télévision",
+    "5912Z":
+      "Post-production de films cinématographiques, de vidéo et de programmes de télévision",
     "5913A": "Distribution de films cinématographiques",
     "5913B": "Édition et distribution vidéo",
     "5914Z": "Projection de films cinématographiques",
@@ -566,7 +676,8 @@ const getNAF = (code) => {
     "6430Z": "Fonds de placement et entités financières similaires",
     "6491Z": "Crédit-bail",
     "6492Z": "Autre distribution de crédit",
-    "6499Z": "Autres activités des services financiers, hors assurance et caisses de retraite, n.c.a.",
+    "6499Z":
+      "Autres activités des services financiers, hors assurance et caisses de retraite, n.c.a.",
     "6511Z": "Assurance vie",
     "6512Z": "Autres assurances",
     "6520Z": "Réassurance",
@@ -574,10 +685,12 @@ const getNAF = (code) => {
     "6611Z": "Administration de marchés financiers",
     "6612Z": "Courtage de valeurs mobilières et de marchandises",
     "6619A": "Supports juridiques de gestion de patrimoine mobilier",
-    "6619B": "Autres activités auxiliaires de services financiers, hors assurance et caisses de retraite, n.c.a.",
+    "6619B":
+      "Autres activités auxiliaires de services financiers, hors assurance et caisses de retraite, n.c.a.",
     "6621Z": "Évaluation des risques et dommages",
     "6622Z": "Activités des agents et courtiers d'assurances",
-    "6629Z": "Autres activités auxiliaires d'assurance et de caisses de retraite",
+    "6629Z":
+      "Autres activités auxiliaires d'assurance et de caisses de retraite",
     "6630Z": "Gestion de fonds",
     "6810Z": "Activités des marchands de biens immobiliers",
     "6820A": "Location de logements",
@@ -596,7 +709,8 @@ const getNAF = (code) => {
     "7120A": "Contrôle technique automobile",
     "7120B": "Analyses, essais et inspections techniques",
     "7211Z": "Recherche-développement en biotechnologie",
-    "7219Z": "Recherche-développement en autres sciences physiques et naturelles",
+    "7219Z":
+      "Recherche-développement en autres sciences physiques et naturelles",
     "7220Z": "Recherche-développement en sciences humaines et sociales",
     "7311Z": "Activités des agences de publicité",
     "7312Z": "Régie publicitaire de médias",
@@ -607,19 +721,26 @@ const getNAF = (code) => {
     "7490A": "Activité des économistes de la construction",
     "7490B": "Activités spécialisées, scientifiques et techniques diverses",
     "7500Z": "Activités vétérinaires",
-    "7711A": "Location de courte durée de voitures et de véhicules automobiles légers",
-    "7711B": "Location de longue durée de voitures et de véhicules automobiles légers",
+    "7711A":
+      "Location de courte durée de voitures et de véhicules automobiles légers",
+    "7711B":
+      "Location de longue durée de voitures et de véhicules automobiles légers",
     "7712Z": "Location et location-bail de camions",
     "7721Z": "Location et location-bail d'articles de loisirs et de sport",
     "7722Z": "Location de vidéocassettes et disques vidéo",
-    "7729Z": "Location et location-bail d'autres biens personnels et domestiques",
+    "7729Z":
+      "Location et location-bail d'autres biens personnels et domestiques",
     "7731Z": "Location et location-bail de machines et équipements agricoles",
-    "7732Z": "Location et location-bail de machines et équipements pour la construction",
-    "7733Z": "Location et location-bail de machines de bureau et de matériel informatique",
+    "7732Z":
+      "Location et location-bail de machines et équipements pour la construction",
+    "7733Z":
+      "Location et location-bail de machines de bureau et de matériel informatique",
     "7734Z": "Location et location-bail de matériels de transport par eau",
     "7735Z": "Location et location-bail de matériels de transport aérien",
-    "7739Z": "Location et location-bail d'autres machines, équipements et biens matériels n.c.a.",
-    "7740Z": "Location-bail de propriété intellectuelle et de produits similaires, à l'exception des œuvres soumises à copyright",
+    "7739Z":
+      "Location et location-bail d'autres machines, équipements et biens matériels n.c.a.",
+    "7740Z":
+      "Location-bail de propriété intellectuelle et de produits similaires, à l'exception des œuvres soumises à copyright",
     "7810Z": "Activités des agences de placement de main-d'œuvre",
     "7820Z": "Activités des agences de travail temporaire",
     "7830Z": "Autre mise à disposition de ressources humaines",
@@ -631,19 +752,23 @@ const getNAF = (code) => {
     "8030Z": "Activités d'enquête",
     "8110Z": "Activités combinées de soutien lié aux bâtiments",
     "8121Z": "Nettoyage courant des bâtiments",
-    "8122Z": "Autres activités de nettoyage des bâtiments et nettoyage industriel",
+    "8122Z":
+      "Autres activités de nettoyage des bâtiments et nettoyage industriel",
     "8129A": "Désinfection, désinsectisation, dératisation",
     "8129B": "Autres activités de nettoyage n.c.a.",
     "8130Z": "Services d'aménagement paysager",
     "8211Z": "Services administratifs combinés de bureau",
-    "8219Z": "Photocopie, préparation de documents et autres activités spécialisées de soutien de bureau",
+    "8219Z":
+      "Photocopie, préparation de documents et autres activités spécialisées de soutien de bureau",
     "8220Z": "Activités de centres d'appels",
     "8230Z": "Organisation de foires, salons professionnels et congrès",
-    "8291Z": "Activités des agences de recouvrement de factures et des sociétés d'information financière sur la clientèle",
+    "8291Z":
+      "Activités des agences de recouvrement de factures et des sociétés d'information financière sur la clientèle",
     "8292Z": "Activités de conditionnement",
     "8299Z": "Autres activités de soutien aux entreprises n.c.a.",
     "8411Z": "Administration publique générale",
-    "8412Z": "Administration publique (tutelle) de la santé, de la formation, de la culture et des services sociaux, autre que sécurité sociale",
+    "8412Z":
+      "Administration publique (tutelle) de la santé, de la formation, de la culture et des services sociaux, autre que sécurité sociale",
     "8413Z": "Administration publique (tutelle) des activités économiques",
     "8421Z": "Affaires étrangères",
     "8422Z": "Défense",
@@ -675,23 +800,28 @@ const getNAF = (code) => {
     "8690B": "Laboratoires d'analyses médicales",
     "8690C": "Centres de collecte et banques d'organes",
     "8690D": "Activités des infirmiers et des sages-femmes",
-    "8690E": "Activités des professionnels de la rééducation, de l'appareillage et des pédicures-podologues",
+    "8690E":
+      "Activités des professionnels de la rééducation, de l'appareillage et des pédicures-podologues",
     "8690F": "Activités de santé humaine non classées ailleurs",
     "8710A": "Hébergement médicalisé pour personnes âgées",
     "8710B": "Hébergement médicalisé pour enfants handicapés",
-    "8710C": "Hébergement médicalisé pour adultes handicapés et autre hébergement médicalisé",
+    "8710C":
+      "Hébergement médicalisé pour adultes handicapés et autre hébergement médicalisé",
     "8720A": "Hébergement social pour handicapés mentaux et malades mentaux",
     "8720B": "Hébergement social pour toxicomanes",
     "8730A": "Hébergement social pour personnes âgées",
     "8730B": "Hébergement social pour handicapés physiques",
     "8790A": "Hébergement social pour enfants en difficultés",
-    "8790B": "Hébergement social pour adultes et familles en difficultés et autre hébergement social",
+    "8790B":
+      "Hébergement social pour adultes et familles en difficultés et autre hébergement social",
     "8810A": "Aide à domicile",
-    "8810B": "Accueil ou accompagnement sans hébergement d'adultes handicapés ou de personnes âgées",
+    "8810B":
+      "Accueil ou accompagnement sans hébergement d'adultes handicapés ou de personnes âgées",
     "8810C": "Aide par le travail",
     "8891A": "Accueil de jeunes enfants",
     "8891B": "Accueil ou accompagnement sans hébergement d'enfants handicapés",
-    "8899A": "Autre accueil ou accompagnement sans hébergement d'enfants et d'adolescents",
+    "8899A":
+      "Autre accueil ou accompagnement sans hébergement d'enfants et d'adolescents",
     "8899B": "Action sociale sans hébergement n.c.a.",
     "9001Z": "Arts du spectacle vivant",
     "9002Z": "Activités de soutien au spectacle vivant",
@@ -700,8 +830,10 @@ const getNAF = (code) => {
     "9004Z": "Gestion de salles de spectacles",
     "9101Z": "Gestion des bibliothèques et des archives",
     "9102Z": "Gestion des musées",
-    "9103Z": "Gestion des sites et monuments historiques et des attractions touristiques similaires",
-    "9104Z": "Gestion des jardins botaniques et zoologiques et des réserves naturelles",
+    "9103Z":
+      "Gestion des sites et monuments historiques et des attractions touristiques similaires",
+    "9104Z":
+      "Gestion des jardins botaniques et zoologiques et des réserves naturelles",
     "9200Z": "Organisation de jeux de hasard et d'argent",
     "9311Z": "Gestion d'installations sportives",
     "9312Z": "Activités de clubs de sports",
@@ -718,7 +850,8 @@ const getNAF = (code) => {
     "9511Z": "Réparation d'ordinateurs et d'équipements périphériques",
     "9512Z": "Réparation d'équipements de communication",
     "9521Z": "Réparation de produits électroniques grand public",
-    "9522Z": "Réparation d'appareils électroménagers et d'équipements pour la maison et le jardin",
+    "9522Z":
+      "Réparation d'appareils électroménagers et d'équipements pour la maison et le jardin",
     "9523Z": "Réparation de chaussures et d'articles en cuir",
     "9524Z": "Réparation de meubles et d'équipements du foyer",
     "9525Z": "Réparation d'articles d'horlogerie et de bijouterie",
@@ -730,16 +863,19 @@ const getNAF = (code) => {
     "9603Z": "Services funéraires",
     "9604Z": "Entretien corporel",
     "9609Z": "Autres services personnels n.c.a.",
-    "9700Z": "Activités des ménages en tant qu'employeurs de personnel domestique",
-    "9810Z": "Activités indifférenciées des ménages en tant que producteurs de biens pour usage propre",
-    "9820Z": "Activités indifférenciées des ménages en tant que producteurs de services pour usage propre",
-    "9900Z": "Activités des organisations et organismes extraterritoriaux",
-  }
+    "9700Z":
+      "Activités des ménages en tant qu'employeurs de personnel domestique",
+    "9810Z":
+      "Activités indifférenciées des ménages en tant que producteurs de biens pour usage propre",
+    "9820Z":
+      "Activités indifférenciées des ménages en tant que producteurs de services pour usage propre",
+    "9900Z": "Activités des organisations et organismes extraterritoriaux"
+  };
 
   return nomenclatures[code];
 };
 
-const getLegalCode = (code) => {
+const getLegalCode = code => {
   const nomenclature = {
     1000: "Entrepreneur individuel",
     2110: "Indivision entre personnes physiques",
@@ -1006,42 +1142,165 @@ const getLegalCode = (code) => {
   return nomenclature[code] || "N/A";
 };
 
-const formatEtab = (etab) => {
+const formatEtab = etab => {
   if (!etab || typeof etab !== "object") {
-    return {}
+    return {};
   }
 
-  const adresse_components = etab.adresseEtablissement ? {
-    numero_voie: etab.adresseEtablissement.numeroVoieEtablissement,
-    indice_repetition: etab.adresseEtablissement.indiceRepetitionEtablissement,
-    type_voie: etab.adresseEtablissement.typeVoieEtablissement,
-    nom_voie: etab.adresseEtablissement.libelleVoieEtablissement,
-    complement_adresse: etab.adresseEtablissement.complementAdresseEtablissement,
-    code_postal: etab.adresseEtablissement.codePostalEtablissement,
-    code_insee_localite: etab.adresseEtablissement.codeCommuneEtablissement,
-    localite: etab.adresseEtablissement.libelleCommuneEtablissement
-  } : {}
+  const adresse_components = etab.adresseEtablissement
+    ? {
+        numero_voie: etab.adresseEtablissement.numeroVoieEtablissement,
+        indice_repetition:
+          etab.adresseEtablissement.indiceRepetitionEtablissement,
+        type_voie: etab.adresseEtablissement.typeVoieEtablissement,
+        nom_voie: etab.adresseEtablissement.libelleVoieEtablissement,
+        complement_adresse:
+          etab.adresseEtablissement.complementAdresseEtablissement,
+        code_postal: etab.adresseEtablissement.codePostalEtablissement,
+        code_insee_localite: etab.adresseEtablissement.codeCommuneEtablissement,
+        localite: etab.adresseEtablissement.libelleCommuneEtablissement
+      }
+    : {};
 
   return {
     siret: etab.siret,
-    actif: etab.uniteLegale && etab.uniteLegale.etatAdministratifUniteLegale ? etab.uniteLegale.etatAdministratifUniteLegale === "A" : undefined,
-    etat_etablissement: etab.uniteLegale ? etab.uniteLegale.etatAdministratifUniteLegale : undefined,
+    actif:
+      etab.uniteLegale && etab.uniteLegale.etatAdministratifUniteLegale
+        ? etab.uniteLegale.etatAdministratifUniteLegale === "A"
+        : undefined,
+    etat_etablissement: etab.uniteLegale
+      ? etab.uniteLegale.etatAdministratifUniteLegale
+      : undefined,
     enseigne: etab.enseigne,
-    naf: etab.uniteLegale ? etab.uniteLegale.activitePrincipaleUniteLegale : undefined,
-    libelle_naf: !etab.uniteLegale || utils.isEmpty(etab.uniteLegale.activitePrincipaleUniteLegale) ? undefined : getNAF(etab.uniteLegale.activitePrincipaleUniteLegale.replace(".", "")),
+    naf: etab.uniteLegale
+      ? etab.uniteLegale.activitePrincipaleUniteLegale
+      : undefined,
+    libelle_naf:
+      !etab.uniteLegale ||
+      utils.isEmpty(etab.uniteLegale.activitePrincipaleUniteLegale)
+        ? undefined
+        : getNAF(
+            etab.uniteLegale.activitePrincipaleUniteLegale.replace(".", "")
+          ),
     siege_social: etab.etablissementSiege,
     date_creation: etab.dateCreationEtablissement,
     tranche_effectif_insee: etab.trancheEffectifsEtablissement,
     annee_tranche_effectif_insee: etab.anneeEffectifsEtablissement,
-    adresse_components: utils.isEmpty(adresse_components) ? undefined : adresse_components,
-    adresse: utils.isEmpty(adresse_components) ? undefined : utils.getCleanAddress(adresse_components),
-    etablissement_employeur: etab.periodesEtablissement ? etab.periodesEtablissement[0].caractereEmployeurEtablissement : undefined,
-    _raw: etab,
-  }
+    adresse_components: utils.isEmpty(adresse_components)
+      ? undefined
+      : adresse_components,
+    adresse: utils.isEmpty(adresse_components)
+      ? undefined
+      : utils.getCleanAddress(adresse_components),
+    etablissement_employeur: etab.periodesEtablissement
+      ? etab.periodesEtablissement[0].caractereEmployeurEtablissement
+      : undefined,
+    _raw: etab
+  };
+};
+
+const formatEnt = ent => {
+  const fields = [
+    "siren",
+    {
+      in: "periodesUniteLegale[0].denominationUniteLegale",
+      out: "raison_sociale"
+    },
+    { in: "sigleUniteLegale", out: "sigle" },
+    { in: "periodesUniteLegale[0]nomUniteLegale", out: "nom" },
+    {
+      in: "prenom1UniteLegale",
+      out: "prenom",
+      callback: (p1, ent) =>
+        utils.isEmpty(
+          [
+            ent.prenom1UniteLegale,
+            ent.prenom2UniteLegale,
+            ent.prenom3UniteLegale,
+            ent.prenom4UniteLegale
+          ]
+            .filter(a => a)
+            .join(" ")
+        )
+          ? undefined
+          : [
+              ent.prenom1UniteLegale,
+              ent.prenom2UniteLegale,
+              ent.prenom3UniteLegale,
+              ent.prenom4UniteLegale
+            ]
+              .filter(a => a)
+              .join(" ")
+    },
+    {
+      in: "periodesUniteLegale[0].nomUsageUniteLegale",
+      out: "nom_commercial"
+    },
+    {
+      in: "categorieEntreprise",
+      out: "categorie_entreprise"
+    },
+    {
+      in: "periodesUniteLegale[0]",
+      out: "siret_siege_social",
+      defaultValue: {},
+      callback: (uniteLegale, ent) =>
+        utils.isEmpty(ent.siren) ||
+        utils.isEmpty(uniteLegale.nicSiegeUniteLegale)
+          ? undefined
+          : `${ent.siren}${uniteLegale.nicSiegeUniteLegale}`
+    },
+    {
+      in: "periodesUniteLegale[0].categorieJuridiqueUniteLegale",
+      out: "forme_juridique",
+      callback: category =>
+        utils.isEmpty(category) ? undefined : getLegalCode(category)
+    },
+    {
+      in: "periodesUniteLegale[0].categorieJuridiqueUniteLegale",
+      out: "forme_juridique_code"
+    },
+    {
+      in: "periodesUniteLegale[0].activitePrincipaleUniteLegale",
+      out: "naf"
+    },
+    {
+      in: "dateCreationUniteLegale",
+      out: "date_de_creation"
+    },
+    {
+      in: "periodesUniteLegale[0].etatAdministratifUniteLegale",
+      out: "etat_entreprise"
+    },
+    {
+      in: "periodesUniteLegale[0]",
+      out: "date_mise_a_jour",
+      defaultValue: {},
+      callback: (uniteLegale, ent) =>
+        uniteLegale.etatAdministratifUniteLegale === "C"
+          ? uniteLegale.dateFin
+          : ent.dateDernierTraitementUniteLegale
+    },
+    {
+      in: "periodesUniteLegale[0].dateFin",
+      out: "date_de_radiation"
+    },
+    {
+      in: "periodesUniteLegale[0].caractereEmployeurUniteLegale",
+      out: "entreprise_employeur"
+    },
+    {
+      in: "anneeEffectifsUniteLegale",
+      out: "annee_tranche_effectif"
+    }
+  ];
+
+  return typeof ent === "object" ? getData(ent, fields) : {};
 };
 
 export default {
   getNAF,
   getLegalCode,
-  formatEtab
+  formatEtab,
+  formatEnt
 };

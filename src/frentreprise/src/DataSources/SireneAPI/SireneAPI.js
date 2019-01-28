@@ -2,6 +2,7 @@ import tunnel from "tunnel";
 import DataSource from "../DataSource";
 import Siren from './Siren';
 import Siret from './Siret';
+import CompanyName from './CompanyName';
 import axios from "../../../lib/axios";
 
 export const _ = {
@@ -38,13 +39,28 @@ export default class SireneAPI extends DataSource {
     );
   }
 
-  async search() {
-    return false;
+  async search(q) {
+    const res = await CompanyName.getCompanyByName(q, this[_.axios], this.getAxiosConfig());
+    console.log(res)
+    return res;
   }
 
   async [_.requestAPIs](identifier, ...apiCalls) {
     let out = {};
+    const requests = apiCalls
+      .filter(fn => typeof fn === "function")
+      .map(fn => {
+        return fn(identifier, this[_.axios], this.getAxiosConfig());
+      });
 
+    await Promise.all(requests).then(results => {
+      Object.assign(out, ...results);
+    });
+
+    return out;
+  }
+
+  getAxiosConfig() {
     const axiosConfig = {
       ...this.axiosConfig,
       headers: {
@@ -53,7 +69,9 @@ export default class SireneAPI extends DataSource {
     };
 
     if (axiosConfig.proxy && axiosConfig.proxy.tunnel === true) {
-      const agentConfig = { proxy: {} };
+      const agentConfig = {
+        proxy: {}
+      };
 
       if (axiosConfig.proxy.host) {
         agentConfig.proxy.host = axiosConfig.proxy.host;
@@ -62,7 +80,7 @@ export default class SireneAPI extends DataSource {
       if (axiosConfig.proxy.port) {
         agentConfig.proxy.port = axiosConfig.proxy.port;
       }
- 
+
       if (axiosConfig.proxy.auth) {
         agentConfig.proxy.proxyAuth = `${axiosConfig.proxy.auth.username ||
           ""}:${axiosConfig.proxy.auth.password || ""}`;
@@ -72,16 +90,6 @@ export default class SireneAPI extends DataSource {
       axiosConfig.httpsAgent = tunnel.httpsOverHttp(agentConfig);
     }
 
-    const requests = apiCalls
-      .filter(fn => typeof fn === "function")
-      .map(fn => {
-        return fn(identifier, this[_.axios], axiosConfig);
-      });
-
-    await Promise.all(requests).then(results => {
-      Object.assign(out, ...results);
-    });
-
-    return out;
+    return axiosConfig;
   }
 }

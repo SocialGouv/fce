@@ -49,10 +49,10 @@ end
         shell_task 'cypress:tests', "#{CYPRESS}"
 
         desc 'cypress:install', 'Installation de cypress'
-        shell_task 'cypress:install', 'cd client && ./node_modules/.bin/cypress install'
+        shell_task 'cypress:install', 'cd src/client && ./node_modules/.bin/cypress install'
 
         desc 'cypress:run', 'Lance cypress en local'
-        shell_task 'cypress:run', "cd client && ./node_modules/.bin/cypress open --port 8080 --env host=http://direccte.test"
+        shell_task 'cypress:run', "cd src/client && ./node_modules/.bin/cypress open --port 8080 --env host=https://fce.test"
     end
 end
 

@@ -1,7 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { withRouter } from "react-router";
+import {
+  connect
+} from "react-redux";
+import {
+  Redirect
+} from "react-router-dom";
+import {
+  withRouter
+} from "react-router";
 import {
   loadEstablishment,
   loadEntreprise
@@ -40,8 +46,7 @@ class Enterprise extends React.Component {
 
   mountComponent() {
     console.log("mountComponent");
-    this.setState(
-      {
+    this.setState({
         isEnterprise: this.props.match.params.hasOwnProperty("siren"),
         isLoaded: false
       },
@@ -109,7 +114,9 @@ class Enterprise extends React.Component {
     this.props
       .loadEstablishment(siret)
       .then(response => {
-        const { results } = response.data;
+        const {
+          results
+        } = response.data;
 
         if (results.length) {
           this.loadEstablishmentByStore(siret);
@@ -120,7 +127,7 @@ class Enterprise extends React.Component {
         }
       })
       .catch(
-        function(error) {
+        function (error) {
           this.setState({
             redirectTo: "/404"
           });
@@ -132,7 +139,9 @@ class Enterprise extends React.Component {
     this.props
       .loadEntreprise(siren)
       .then(response => {
-        const { results } = response.data;
+        const {
+          results
+        } = response.data;
 
         if (results.length) {
           this.loadEnterpriseByStore(siren);
@@ -143,7 +152,7 @@ class Enterprise extends React.Component {
         }
       })
       .catch(
-        function(error) {
+        function (error) {
           this.setState({
             redirectTo: "/404"
           });
@@ -160,9 +169,7 @@ class Enterprise extends React.Component {
         return establishment.siege_social === true;
       });
 
-    const establishments = enterprise.etablissements.filter(establishment => {
-      return establishment.code_region === Config.get("region").occitanie;
-    });
+    const establishments = enterprise.etablissements;
 
     this.setState({
       enterprise,
@@ -177,25 +184,48 @@ class Enterprise extends React.Component {
 
   render() {
     if (this.state.redirectTo) {
-      return <Redirect push to={this.state.redirectTo} />;
+      return <Redirect push to = {
+        this.state.redirectTo
+      }
+      />;
     }
 
-    return this.state.isEnterprise ? (
-      <EnterpriseView
-        enterprise={this.state.enterprise}
-        headOffice={this.state.headOffice}
-        establishments={this.state.establishments}
-        hasSearchResults={this.props.hasSearchResults}
-        isLoaded={this.state.isLoaded}
+    return this.state.isEnterprise ? ( <
+      EnterpriseView enterprise = {
+        this.state.enterprise
+      }
+      headOffice = {
+        this.state.headOffice
+      }
+      establishments = {
+        this.state.establishments
+      }
+      hasSearchResults = {
+        this.props.hasSearchResults
+      }
+      isLoaded = {
+        this.state.isLoaded
+      }
       />
-    ) : (
-      <EstablishmentView
-        enterprise={this.state.enterprise}
-        headOffice={this.state.headOffice}
-        establishment={this.state.establishment}
-        establishments={this.state.establishments}
-        hasSearchResults={this.props.hasSearchResults}
-        isLoaded={this.state.isLoaded}
+    ) : ( <
+      EstablishmentView enterprise = {
+        this.state.enterprise
+      }
+      headOffice = {
+        this.state.headOffice
+      }
+      establishment = {
+        this.state.establishment
+      }
+      establishments = {
+        this.state.establishments
+      }
+      hasSearchResults = {
+        this.props.hasSearchResults
+      }
+      isLoaded = {
+        this.state.isLoaded
+      }
       />
     );
   }

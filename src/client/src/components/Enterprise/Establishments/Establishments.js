@@ -38,7 +38,7 @@ class Establishments extends React.Component {
         <hr />
 
         <section>
-          <h1 className="h5">Établissement siège / principal</h1>
+          <h1 className="h5">Établissement siège</h1>
 
           <Establishment establishment={headOffice} />
         </section>
@@ -46,7 +46,7 @@ class Establishments extends React.Component {
         <hr />
 
         <section>
-          <h1 className="h5">Établissements en Occitanie</h1>
+          <h1 className="h5">Établissements</h1>
 
           {establishmentsItems}
         </section>

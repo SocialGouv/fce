@@ -18,6 +18,8 @@ class DireccteEtablissement extends Etablissement {
           "code_region",
           "date_creation",
           "etat_etablissement",
+          "date_fin",
+          "date_dernier_traitement_etablissement",
           "activite",
           "date_debut_activite_economique",
           "modalite_activite",

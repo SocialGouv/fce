@@ -22,6 +22,5 @@ export default (data, fields) => {
       out[outKey] = value || undefined;
     }
   });
-
   return out;
 };

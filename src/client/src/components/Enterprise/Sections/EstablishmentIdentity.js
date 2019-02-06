@@ -37,7 +37,14 @@ class EstablishmentIdentity extends React.Component {
 
           <dt className="dt col-md-4">Département</dt>
           <dd className="dd col-md-8">
-            <Value value={establishment.departement} empty="-" />
+            <Value
+              value={
+                establishment.departement
+                  ? establishment.departement
+                  : establishment.adresse_components.code_postal.slice(0, 2)
+              }
+              empty="-"
+            />
           </dd>
 
           <dt className="dt col-md-4">Région</dt>

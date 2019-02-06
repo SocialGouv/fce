@@ -1161,13 +1161,21 @@ const formatEtab = etab => {
   const fields = [
     "siret",
     {
-      in: "uniteLegale.etatAdministratifUniteLegale",
+      in: "periodesEtablissement[0].etatAdministratifEtablissement",
       out: "actif",
       callback: etat => etat && etat === "A"
     },
     {
-      in: "uniteLegale.etatAdministratifUniteLegale",
+      in: "periodesEtablissement[0].etatAdministratifEtablissement",
       out: "etat_etablissement"
+    },
+    {
+      in: "periodesEtablissement[0].dateDebut",
+      out: "date_fin"
+    },
+    {
+      in: "dateDernierTraitementEtablissement",
+      out: "date_dernier_traitement_etablissement"
     },
     "enseigne",
     {
@@ -1219,7 +1227,6 @@ const formatEtab = etab => {
       out: "etablissement_employeur"
     }
   ];
-
   return typeof etab === "object" ? getData(etab, fields) : {};
 };
 

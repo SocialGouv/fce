@@ -4,6 +4,7 @@ import Value from "../../../elements/Value";
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
+    console.log(establishment);
 
     return (
       <section id="activity" className="enterprise-section">
@@ -16,20 +17,15 @@ class EstablishmentActivity extends React.Component {
           </dd>
           <dt className="dt col-md-4">Etat de l'établissement</dt>
           <dd className="dd col-md-8">
-            <Value
-              value={
-                establishment.etat_etablissement &&
-                establishment.etat_etablissement.label
-              }
-              empty="-"
-            />
+            <Value value={establishment.etat_etablissement} empty="-" />
           </dd>
           <dt className="dt col-md-4">Date de l'état</dt>
           <dd className="dd col-md-8">
             <Value
               value={
-                establishment.etat_etablissement &&
-                establishment.etat_etablissement.date
+                establishment.etat_etablissement === "F"
+                  ? establishment.date_fin
+                  : establishment.date_dernier_traitement_etablissement
               }
               empty="-"
             />

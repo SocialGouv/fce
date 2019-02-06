@@ -1,12 +1,11 @@
-import {
-  nestcribe_path as test
-} from "../../../utils";
+import { nestcribe_path as test } from "../../../utils";
 
 import getSettlement from "../../../../src/DataSources/SireneAPI/Siret/getSettlement";
 
 test("DataSources/SireneAPI/Siret/getSettlement", () => {
   describe("successfully parse data", async () => {
-    const testCases = [{
+    const testCases = [
+      {
         it: "doesn't copy useless values",
         data: {
           useless: true,
@@ -31,9 +30,11 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         it: "expects true if settlement is open",
         data: {
           etablissement: {
-            uniteLegale: {
-              etatAdministratifUniteLegale: "A"
-            }
+            periodesEtablissement: [
+              {
+                etatAdministratifEtablissement: "A"
+              }
+            ]
           }
         },
         expected: {
@@ -45,28 +46,50 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         it: "expects false if settlement is closed",
         data: {
           etablissement: {
-            uniteLegale: {
-              etatAdministratifUniteLegale: "C"
-            }
+            periodesEtablissement: [
+              {
+                etatAdministratifEtablissement: "F"
+              }
+            ]
           }
         },
         expected: {
           actif: false,
-          etat_etablissement: "C"
+          etat_etablissement: "F"
         }
       },
       {
         it: "does copy etat_etablissement",
         data: {
           etablissement: {
-            uniteLegale: {
-              etatAdministratifUniteLegale: "A"
-            }
+            periodesEtablissement: [
+              {
+                etatAdministratifEtablissement: "A"
+              }
+            ]
           }
         },
         expected: {
           etat_etablissement: "A",
           actif: true
+        }
+      },
+      {
+        it: "does copy date_fin",
+        data: {
+          etablissement: {
+            periodesEtablissement: [
+              {
+                dateDebut: "2019-02-06",
+                etatAdministratifEtablissement: "F"
+              }
+            ]
+          }
+        },
+        expected: {
+          etat_etablissement: "F",
+          date_fin: "2019-02-06",
+          actif: false
         }
       },
       {
@@ -172,15 +195,17 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         it: "does copy etablissement_employeur",
         data: {
           etablissement: {
-            periodesEtablissement: [{
-              caractereEmployeurEtablissement: "N"
-            }]
+            periodesEtablissement: [
+              {
+                caractereEmployeurEtablissement: "N"
+              }
+            ]
           }
         },
         expected: {
           etablissement_employeur: "N"
         }
-      },
+      }
     ];
 
     for (let i = 0; i < testCases.length; i++) {
@@ -188,18 +213,21 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
 
       it(testCase.it || `tests case n°${i + 1}`, async () => {
         let result = await getSettlement(
-          testCase.identifier || null, {
+          testCase.identifier || null,
+          {
             get: args =>
               Promise.resolve({
-                data: typeof testCase.data === "function" ?
-                  testCase.data(...args) : testCase.data
+                data:
+                  typeof testCase.data === "function"
+                    ? testCase.data(...args)
+                    : testCase.data
               })
-          }, {}
+          },
+          {}
         );
 
         delete result._raw;
         result = JSON.parse(JSON.stringify(result));
-
 
         expect(result).toEqual(testCase.expected);
       });

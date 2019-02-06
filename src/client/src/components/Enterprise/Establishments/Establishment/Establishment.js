@@ -21,13 +21,19 @@ class Establishment extends React.Component {
         </li>
         <li>
           <Value
+            value={establishment.etat_etablissement === "A" ? "Actif" : "Fermé"}
+            empty=""
+          />{" "}
+          -{" "}
+          <Value
             value={
-              establishment.etat_etablissement &&
-              establishment.etat_etablissement.label
+              establishment.departement
+                ? establishment.departement
+                : establishment.adresse_components.code_postal.slice(0, 2)
             }
             empty=""
           />{" "}
-          - <Value value={establishment.departement} empty="" /> -{" "}
+          -{" "}
           <Value
             value={
               establishment.adresse_components &&

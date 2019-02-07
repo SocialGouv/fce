@@ -76,13 +76,13 @@ class Header extends React.Component {
               )}
             </Nav>
 
-            <Nav className="ml-auto" navbar>
+            {/* <Nav className="ml-auto" navbar>
               <NavItem>
                 <Form inline onSubmit={this.props.logoutUser}>
                   <Button color="danger">Se déconnecter</Button>
                 </Form>
               </NavItem>
-            </Nav>
+            </Nav> */}
           </Collapse>
         </Navbar>
       </header>

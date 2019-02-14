@@ -57,10 +57,13 @@ Cordialement`);
   render() {
     return (
       <a
-        className="btn btn-primary"
+        className="button is-primary"
         href={`mailto:${this.getTo()}?subject=${this.getSubject()}&body=${this.getBody()}`}
       >
-        <FontAwesomeIcon icon={faEnvelope} /> Demande d'informations
+        <span className="icon">
+          <FontAwesomeIcon icon={faEnvelope} />
+        </span>
+        <span>Demande d'informations</span>
       </a>
     );
   }

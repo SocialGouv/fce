@@ -1,26 +1,44 @@
 import React from "react";
 import Value from "../../../elements/Value";
+import EstablishmentTransfert from "./EstablishmentTransfert";
+import classNames from "classnames";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
 
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
     console.log(establishment);
 
+    const stateClass =
+      establishment.etat_etablissement == "A"
+        ? "icon--success"
+        : "icon--danger";
+
     return (
       <section id="activity" className="enterprise-section">
-        <h1 className="title h4">État et activité</h1>
+        <h1 className="title is-size-4">État et activité</h1>
 
-        <dl className="dl row">
-          <dt className="dt col-md-4">Date de création</dt>
-          <dd className="dd col-md-8">
+        <div className="columns">
+          <h5 className="column is-3">Date de création</h5>
+          <span className="column is-8">
             <Value value={establishment.date_creation} empty="-" />
-          </dd>
-          <dt className="dt col-md-4">Etat de l'établissement</dt>
-          <dd className="dd col-md-8">
-            <Value value={establishment.etat_etablissement} empty="-" />
-          </dd>
-          <dt className="dt col-md-4">Date de l'état</dt>
-          <dd className="dd col-md-8">
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Etat de l'établissement</h5>
+          <span className="column is-8">
+            {establishment.etat_etablissement && (
+              <FontAwesomeIcon
+                className={classNames(stateClass)}
+                icon={faCircle}
+              />
+            )}
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Date de l'état</h5>
+          <span className="column is-8">
             <Value
               value={
                 establishment.etat_etablissement === "F"
@@ -29,36 +47,26 @@ class EstablishmentActivity extends React.Component {
               }
               empty="-"
             />
-          </dd>
-          <dt className="dt col-md-4 mt-4">Activité</dt>
-          <dd className="dd col-md-8 mt-4">
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Activité</h5>
+          <span className="column is-8">
             <Value value={establishment.activite} empty="-" />
-          </dd>
-          <dt className="dt col-md-4">Activité économique depuis le</dt>
-          <dd className="dd col-md-8">
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Activité économique depuis le</h5>
+          <span className="column is-8">
             <Value
               value={establishment.date_debut_activite_economique}
               empty="-"
             />
-          </dd>
-          <dt className="dt col-md-4">Modalité d'activité</dt>
-          <dd className="dd col-md-8">
-            <Value value={establishment.modalite_activite} empty="-" />
-          </dd>
-          <dt className="dt col-md-4">Caractère Saisonner</dt>
-          <dd className="dd col-md-8">
-            <Value value={establishment.caractere_saisonnier} empty="-" />
-          </dd>
-          <dt className="dt col-md-4">Caractère auxiliaire</dt>
-          <dd className="dd col-md-8">
-            <Value value={establishment.caractere_auxiliaire} empty="-" />
-          </dd>
-          <dt className="dt col-md-4 mt-4">Marchand</dt>
-          <dd className="dd col-md-8 mt-4">
-            <Value value={establishment.marchand} empty="-" />
-          </dd>
-          <dt className="dt col-md-4">Association</dt>
-          <dd className="dd col-md-8">
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Association</h5>
+          <span className="column is-8">
             <Value value={!!establishment.association} empty="-" />
             {establishment.association &&
             establishment.document_association &&
@@ -74,13 +82,15 @@ class EstablishmentActivity extends React.Component {
                 .
               </span>
             ) : null}
-          </dd>
+          </span>
+        </div>
+        <div className="columns">
           {establishment.association
             ? [
-                <dt className="dt col-md-4" key="rna_label">
+                <h5 className="column is-3" key="rna_label">
                   Numéro RNA
-                </dt>,
-                <dd className="dd col-md-8" key="rna_value">
+                </h5>,
+                <span className="column is-8" key="rna_value">
                   <Value
                     value={
                       establishment.association.id ||
@@ -88,15 +98,17 @@ class EstablishmentActivity extends React.Component {
                     }
                     empty="-"
                   />
-                </dd>
+                </span>
               ]
             : null}
+        </div>
+        <div className="columns">
           {establishment.document_association
             ? [
-                <dt className="dt col-md-4" key="rna_label">
+                <h5 className="column is-3" key="rna_label">
                   Document association
-                </dt>,
-                <dd className="dd col-md-8" key="rna_value">
+                </h5>,
+                <span className="column is-8" key="rna_value">
                   <Value
                     value={
                       establishment.document_association &&
@@ -104,56 +116,223 @@ class EstablishmentActivity extends React.Component {
                     }
                     empty="-"
                   />
-                </dd>
+                </span>
               ]
             : null}
-          <dt className="dt col-md-4 mt-4">Etablissement employeur</dt>
-          <dd className="dd col-md-8 mt-4">
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Etablissement employeur</h5>
+          <span className="column is-8">
             <Value
               value={establishment.etablissement_employeur && "Oui"}
               no="Non"
               empty="-"
             />
-          </dd>
-          <dt className="dt col-md-4">Tranche Effectif INSEE</dt>
-          <dd className="dd col-md-8">
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Tranche Effectif INSEE</h5>
+          <span className="column is-8">
             <Value value={establishment.tranche_effectif_insee} empty="-" />
-          </dd>
-          <dt className="dt col-md-4">Année tranche Effectif INSEE</dt>
-          <dd className="dd col-md-8">
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Année tranche Effectif INSEE</h5>
+          <span className="column is-8">
             <Value
               value={establishment.annee_tranche_effectif_insee}
               empty="-"
             />
-          </dd>
-          <dt className="dt col-md-4">Dernier effectif physique</dt>
-          <dd className="dd col-md-8">
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Nombre d'intérimaires</h5>
+          <span className="column is-8">
+            <Value value={establishment.interim} empty="-" />
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Dernier effectif physique</h5>
+          <span className="column is-8">
             <Value value={establishment.dernier_effectif_physique} empty="-" />
-          </dd>
-          <dt className="dt col-md-4">Date dernier effectif physique</dt>
-          <dd className="dd col-md-8">
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Date dernier effectif physique</h5>
+          <span className="column is-8">
             <Value
               value={establishment.date_dernier_effectif_physique}
               empty="-"
             />
-          </dd>
-          <dt className="dt col-md-4">Source dernier effectif physique</dt>
-          <dd className="dd col-md-8">
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Source dernier effectif physique</h5>
+          <span className="column is-8">
             <Value
               value={establishment.source_dernier_effectif_physique}
               empty="-"
             />
-          </dd>
-          <dt className="dt col-md-4">Code NAF</dt>
-          <dd className="dd col-md-8">
-            <Value value={establishment.naf} empty="-" />
-          </dd>
-
-          <dt className="dt col-md-4">Libelle NAF</dt>
-          <dd className="dd col-md-8">
-            <Value value={establishment.libelle_naf} empty="-" />
-          </dd>
-        </dl>
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">ETI / Pépite</h5>
+          <span className="column is-8">
+            <Value value={establishment.eti_pepite} empty="-" />
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Filière stratégique</h5>
+          <span className="column is-8">
+            <Value value={establishment.filiere_strategique} empty="-" />
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">
+            Adhérent à un Pole de compétitivité (2015)
+          </h5>
+          <span className="column is-8">
+            <Value
+              value={
+                Array.isArray(establishment.pole_competitivite) &&
+                !!establishment.pole_competitivite.length
+              }
+            />
+          </span>
+        </div>
+        <div className="accordions">
+          <div className="accordion">
+            <div className="accordion-header toggle">
+              <span className="">Liste des pôles de compétitivité</span>
+              <span className="">
+                <button className="button is-light is-rounded">
+                  <span className="icon">
+                    <FontAwesomeIcon icon={faChevronDown} />
+                  </span>
+                </button>
+              </span>
+            </div>
+            <div className="accordion-body">
+              <div className="accordion-content">
+                <table className="table is-striped">
+                  <tbody>
+                    {Array.isArray(establishment.pole_competitivite) &&
+                      establishment.pole_competitivite.length &&
+                      establishment.pole_competitivite.map(pole => (
+                        <tr>
+                          <td> {pole} </td>
+                        </tr>
+                      ))}
+                    <tr>
+                      <td>Lorem ipsum</td>
+                    </tr>
+                    <tr>
+                      <td> Dolor sit amet </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        {!establishment.predecesseur && !establishment.successeur ? (
+          <div className="columns">
+            <h5 className="column is-3">
+              Etablissement Successeur / Prédecesseur
+            </h5>
+            <span className="column is-8">Pas d'informations</span>
+          </div>
+        ) : (
+          <>
+            <EstablishmentTransfert
+              predecesseur={true}
+              data={establishment.predecesseur}
+            />{" "}
+            <EstablishmentTransfert
+              successeur={true}
+              data={establishment.successeur}
+            />
+          </>
+        )}
+        <div className="columns">
+          <h5 className="column is-3">
+            Nombre d'accords déposés au cours des 24 derniers mois :
+          </h5>
+          <span className="column is-8">
+            {establishment.accords ? establishment.accords.nb_accords : 0}
+          </span>
+        </div>
+        <div className="accordions">
+          <div className="accordion">
+            <div className="accordion-header toggle">
+              <span className="">Liste des accords par thématiques</span>
+              <span className="">
+                <button className="button is-light is-rounded">
+                  <span className="icon">
+                    <FontAwesomeIcon icon={faChevronDown} />
+                  </span>
+                </button>
+              </span>
+            </div>
+            <div className="accordion-body">
+              <div className="accordion-content">
+                <table className="table is-striped">
+                  <thead>
+                    <th className="th"> Thématique</th>
+                    <th className="th"> Nombre accords concernés </th>
+                  </thead>
+                  <tbody>
+                    {establishment.accords ? (
+                      Object.keys(establishment.accords.details).map(theme => (
+                        <tr>
+                          <td> {theme} </td>
+                          <td> {establishment.accords.details[theme]} </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <>
+                        <tr>
+                          <td>Epargne salariale</td>
+                          <td>NC</td>
+                        </tr>
+                        <tr>
+                          <td>Salaires / Rémunérations</td>
+                          <td>NC</td>
+                        </tr>
+                        <tr>
+                          <td>Durée du travail / Repos</td>
+                          <td>NC</td>
+                        </tr>
+                        <tr>
+                          <td>Egalité professionnelle femmes / hommes</td>
+                          <td>NC</td>
+                        </tr>
+                        <tr>
+                          <td>Emploi / GPEC</td>
+                          <td>NC</td>
+                        </tr>
+                        <tr>
+                          <td>Conditions de travail</td>
+                          <td>NC</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            Prévoyance / protection sociale complémentaire
+                          </td>
+                          <td>NC</td>
+                        </tr>
+                        <tr>
+                          <td>Autres</td>
+                          <td>NC</td>
+                        </tr>
+                      </>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     );
   }

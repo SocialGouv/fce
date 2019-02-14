@@ -1,6 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import classNames from "classnames";
 import Value from "../../../../elements/Value";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import {
+  faCircle,
+  faCalendarExclamation
+} from "@fortawesome/fontawesome-pro-solid";
 
 class Establishment extends React.Component {
   render() {
@@ -8,6 +14,11 @@ class Establishment extends React.Component {
     const nbInteractions = Array.isArray(establishment.direccte)
       ? establishment.direccte.length
       : 0;
+
+    const stateClass =
+      establishment.etat_etablissement == "A"
+        ? "icon--success"
+        : "icon--danger";
 
     return (
       <ul className="list-unstyled">
@@ -20,11 +31,8 @@ class Establishment extends React.Component {
           </Link>
         </li>
         <li>
-          <Value
-            value={establishment.etat_etablissement === "A" ? "Actif" : "Fermé"}
-            empty=""
-          />{" "}
-          -{" "}
+          <FontAwesomeIcon className={classNames(stateClass)} icon={faCircle} />
+          <span> - </span>
           <Value
             value={
               establishment.departement
@@ -32,8 +40,8 @@ class Establishment extends React.Component {
                 : establishment.adresse_components.code_postal.slice(0, 2)
             }
             empty=""
-          />{" "}
-          -{" "}
+          />
+          <span> - </span>
           <Value
             value={
               establishment.adresse_components &&
@@ -41,10 +49,12 @@ class Establishment extends React.Component {
             }
             empty=""
           />
-          {" - "}
-          {nbInteractions > 1
-            ? `${nbInteractions} interactions`
-            : `${nbInteractions} interaction`}
+          <span> - </span>
+          <span>{nbInteractions}</span>
+          <FontAwesomeIcon
+            className="aside-interact--icon"
+            icon={faCalendarExclamation}
+          />
         </li>
       </ul>
     );

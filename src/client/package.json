@@ -11,6 +11,8 @@
     "@fortawesome/react-fontawesome": "0.0.17",
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
+    "bulma": "^0.7.4",
+    "bulma-extensions": "^4.1.0",
     "classnames": "^2.2.5",
     "json2csv": "^4.0.0",
     "moment": "^2.20.1",

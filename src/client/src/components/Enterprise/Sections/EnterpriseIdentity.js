@@ -6,8 +6,8 @@ class EnterpriseIdentity extends React.Component {
     const { enterprise } = this.props;
 
     return (
-      <section id="identity" className="enterprise-section bg-info text-white">
-        <h1 className="title h4">Identité de l'entreprise</h1>
+      <section id="identity" className="enterprise-section text-white">
+        <h1 className="title is-size-1">Identité de l'entreprise</h1>
 
         <dl className="dl row">
           <dt className="dt col-md-4">SIREN</dt>

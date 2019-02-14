@@ -1,0 +1,14 @@
+.navbar {
+  background-color: $primary;
+
+  a.navbar-item {
+    color: $light;
+
+    &:hover {
+      background-color: $primary !important;
+      color: $light;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
+}

@@ -7,11 +7,8 @@ class EstablishmentEnterpriseIdentity extends React.Component {
     const { enterprise, headOffice } = this.props;
 
     return (
-      <section
-        id="identity-en"
-        className="enterprise-section bg-info text-white"
-      >
-        <h1 className="title h4">Identité de l&apos;entreprise</h1>
+      <section id="identity-en" className="enterprise-section">
+        <h1 className="title is-size-4">Identité de l&apos;entreprise</h1>
 
         <dl className="dl row">
           {enterprise.nom || enterprise.prenom

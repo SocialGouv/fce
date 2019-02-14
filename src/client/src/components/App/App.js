@@ -26,7 +26,7 @@ class App extends React.Component {
           <BrowserRouter>
             <ScrollToTop>
               <Header />
-              <Container className="app-container" fluid={true}>
+              <div className="app-container">
                 <Switch>
                   <Route exact path="/" component={Search} />
                   <Route exact path="/search" component={Search} />
@@ -54,7 +54,7 @@ class App extends React.Component {
                   <Route exact path="/404" render={() => <Error404 />} />
                   <Redirect to="/404" />
                 </Switch>
-              </Container>
+              </div>
               <Footer />
             </ScrollToTop>
           </BrowserRouter>

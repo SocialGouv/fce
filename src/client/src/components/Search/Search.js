@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, Form, FormGroup, Input, Button, Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 
@@ -8,51 +7,55 @@ class Search extends React.Component {
   render() {
     return (
       <div className="app-search">
-        <Row className="justify-content-md-center">
-          <Col xl="6" md="8" className="search-container">
+        <div className="columns app-search--container">
+          <div className="column is-offset-3-desktop is-offset-2-tablet is-6-desktop is-8-tablet search">
             <h1 className="title">
               Rechercher un établissement ou une entreprise
             </h1>
 
             {this.props.hasError ? (
-              <Alert color="danger">
+              <div className="alert is-danger">
                 Une erreur est survenue lors de la communication avec l'API
-              </Alert>
+              </div>
             ) : (
               ""
             )}
 
-            <Form className="search-form" inline onSubmit={this.props.search}>
-              <FormGroup className="col-md-9">
-                <Input
-                  type="text"
-                  name="term"
-                  id="term"
-                  className="field"
-                  required
-                  placeholder="SIRET, SIREN, raison sociale, nom"
-                  onChange={evt => this.props.updateForm(evt)}
-                />
-              </FormGroup>
+            <form className="form search-div" onSubmit={this.props.search}>
+              <div className="field is-grouped is-grouped-centered">
+                <div className="control is-expanded">
+                  <input
+                    type="text"
+                    name="term"
+                    id="term"
+                    className="input is-large"
+                    required
+                    placeholder="SIRET, SIREN, raison sociale, nom"
+                    onChange={evt => this.props.updateForm(evt)}
+                  />
+                </div>
+                <div class="control">
+                  <button
+                    type="submit"
+                    className="action button is-primary has-text-light is-large"
+                  >
+                    {this.props.loading ? (
+                      <FontAwesomeIcon icon={faSpinner} spin />
+                    ) : (
+                      "Rechercher"
+                    )}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
 
-              <FormGroup className="col-md-3">
-                <Button className="action" color="primary">
-                  {this.props.loading ? (
-                    <FontAwesomeIcon icon={faSpinner} spin />
-                  ) : (
-                    "Rechercher"
-                  )}
-                </Button>
-              </FormGroup>
-            </Form>
-          </Col>
-        </Row>
-
-        <Row className="justify-content-md-center">
-          <Col xl="6" md="8" className="advanced-search--link">
+        <div className="columns app-search--container">
+          <div className="column is-offset-3-desktop is-offset-2-tablet is-6-desktop is-8-tablet advanced-search--link">
             <Link to="/search/advanced">Recherche avancée</Link>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     );
   }

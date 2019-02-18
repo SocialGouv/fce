@@ -65,19 +65,12 @@ class Enterprise extends React.Component {
 
     if (
       this.props.currentEnterprise &&
-      this.props.currentEnterprise.etablissements
+      this.props.currentEnterprise.etablissements &&
+      this.props.currentEnterprise._success
     ) {
-      if (!this.isValidDataSources(this.props.currentEnterprise._dataSources)) {
-        return false;
-      }
-
       establishment = this.props.currentEnterprise.etablissements.find(
         establishment => {
-          return (
-            establishment.siret === siret &&
-            establishment._dataSources &&
-            this.isValidDataSources(establishment._dataSources)
-          );
+          return establishment.siret === siret && establishment._success;
         }
       );
 
@@ -92,12 +85,9 @@ class Enterprise extends React.Component {
   loadEnterpriseByStore = siren => {
     if (
       this.props.currentEnterprise &&
-      this.props.currentEnterprise.siren === siren
+      this.props.currentEnterprise.siren === siren &&
+      this.props.currentEnterprise._success
     ) {
-      if (!this.isValidDataSources(this.props.currentEnterprise._dataSources)) {
-        return false;
-      }
-
       return this.initData(this.props.currentEnterprise, null);
     }
 
@@ -177,10 +167,6 @@ class Enterprise extends React.Component {
     });
 
     return true;
-  };
-
-  isValidDataSources = datasources => {
-    return datasources && !!Object.values(datasources).includes(true);
   };
 
   render() {

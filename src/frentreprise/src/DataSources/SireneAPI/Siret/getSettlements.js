@@ -5,9 +5,10 @@ const getSettlements = async (SIREN, Axios, params) => {
   return await utils
     .requestAPI(Axios, `siret/?q=siren:${SIREN}&nombre=10000`, params)
     .then(data => {
-      const etabs = data.etablissements
-        ? data.etablissements.map(helpers.formatEtab)
-        : [];
+      if (!data.etablissements) {
+        return {};
+      }
+      const etabs = data.etablissements.map(helpers.formatEtab);
 
       return {
         nombre_etablissements_actifs: etabs.filter(eta => eta.actif).length,

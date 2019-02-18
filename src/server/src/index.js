@@ -14,8 +14,8 @@ const host = (config.has("port") && config.get("host")) || undefined;
 function init() {
   frentreprise.EntrepriseModel = require("./frentreprise/models/Entreprise");
   frentreprise.EtablissementModel = require("./frentreprise/models/Etablissement");
-   
-  const apiGouv = frentreprise.getDataSource("ApiGouv").source; 
+
+  const apiGouv = frentreprise.getDataSource("ApiGouv").source;
   apiGouv.token = config.get("APIGouv.token");
   apiGouv.axiosConfig = {
     ...apiGouv.axiosConfig,

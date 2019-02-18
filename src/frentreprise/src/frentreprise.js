@@ -11,7 +11,8 @@ import { cleanObject } from "./Utils";
 const _ = {
   dataSources: Symbol("_dataSources"),
   compareDataSource: Symbol("_compareDataSource"),
-  askDataSource: Symbol("_askDataSource")
+  askDataSource: Symbol("_askDataSource"),
+  isValidDataSources: Symbol("_isValidDataSources")
 };
 
 class frentreprise {
@@ -98,6 +99,16 @@ class frentreprise {
         }
       })
     );
+
+    entreprise.updateData({
+      _success: this[_.isValidDataSources](entreprise._dataSources)
+    });
+
+    entreprise.etablissements.map(et => {
+      et.updateData({
+        _success: this[_.isValidDataSources](et._dataSources)
+      });
+    });
 
     return entreprise;
   }
@@ -236,6 +247,10 @@ class frentreprise {
         )
         .map(forEach);
     });
+  }
+
+  [_.isValidDataSources](datasources) {
+    return datasources && !!Object.values(datasources).includes(true);
   }
 }
 

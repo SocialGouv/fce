@@ -4,15 +4,9 @@ import ApiGouv from "./DataSources/ApiGouv";
 import SireneAPI from "./DataSources/SireneAPI";
 
 import DataSource from "./DataSources/DataSource";
-import {
-  Entreprise
-} from "./Entreprise";
-import {
-  Etablissement
-} from "./Entreprise";
-import {
-  cleanObject
-} from "./Utils";
+import { Entreprise } from "./Entreprise";
+import { Etablissement } from "./Entreprise";
+import { cleanObject } from "./Utils";
 
 const _ = {
   dataSources: Symbol("_dataSources"),
@@ -49,7 +43,8 @@ class frentreprise {
 
     const SIREN = gotSIREN ? SiretOrSiren : SiretOrSiren.substr(0, 9);
 
-    const entreprise = new this.EntrepriseModel({
+    const entreprise = new this.EntrepriseModel(
+      {
         _dataSources: {}
       },
       this.EtablissementModel
@@ -149,7 +144,8 @@ class frentreprise {
 
           if (Validator.validateSIREN(SIREN)) {
             if (!results[SIREN]) {
-              results[SIREN] = new this.EntrepriseModel({
+              results[SIREN] = new this.EntrepriseModel(
+                {
                   siren: SIREN,
                   _dataSources: {}
                 },
@@ -214,7 +210,12 @@ class frentreprise {
         );
 
         return dataSource.source[method](request).then(data => {
-          const cleanedData = typeof data === "object" ? Array.isArray(data) ? data.map(cleanObject) : cleanObject(data) : data;
+          const cleanedData =
+            typeof data === "object"
+              ? Array.isArray(data)
+                ? data.map(cleanObject)
+                : cleanObject(data)
+              : data;
           console.log(
             `Got response for [${method}] from dataSource named ${
               dataSource.name
@@ -231,7 +232,7 @@ class frentreprise {
       results
         .sort(
           (a, b) =>
-          (a.source && b.source && this[_.compareDataSource](a, b)) || 0
+            (a.source && b.source && this[_.compareDataSource](a, b)) || 0
         )
         .map(forEach);
     });

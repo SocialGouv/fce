@@ -65,12 +65,11 @@ class Enterprise extends React.Component {
 
     if (
       this.props.currentEnterprise &&
-      this.props.currentEnterprise.etablissements &&
-      this.props.currentEnterprise._success
+      this.props.currentEnterprise.etablissements
     ) {
       establishment = this.props.currentEnterprise.etablissements.find(
         establishment => {
-          return establishment.siret === siret && establishment._success;
+          return establishment.siret === siret;
         }
       );
 
@@ -85,8 +84,7 @@ class Enterprise extends React.Component {
   loadEnterpriseByStore = siren => {
     if (
       this.props.currentEnterprise &&
-      this.props.currentEnterprise.siren === siren &&
-      this.props.currentEnterprise._success
+      this.props.currentEnterprise.siren === siren
     ) {
       return this.initData(this.props.currentEnterprise, null);
     }
@@ -107,7 +105,13 @@ class Enterprise extends React.Component {
       .then(response => {
         const { query, results } = response.data;
 
-        if (query.isSIRET && results.length) {
+        const establishment =
+          results.length &&
+          results[0].etablissements.find(establishment => {
+            return establishment.siret === siret && establishment._success;
+          });
+
+        if (query.isSIRET && establishment) {
           this.loadEstablishmentByStore(siret);
         } else {
           this.setState({
@@ -130,7 +134,7 @@ class Enterprise extends React.Component {
       .then(response => {
         const { query, results } = response.data;
 
-        if (query.isSIREN && results.length) {
+        if (query.isSIREN && results.length && results[0]._success) {
           this.loadEnterpriseByStore(siren);
         } else {
           this.setState({

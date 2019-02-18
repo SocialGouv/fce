@@ -38,7 +38,8 @@ export default class DireccteEntreprise extends Entreprise {
         "siren",
         "siret_siege_social",
         "tranche_effectif",
-        "_dataSources"
+        "_dataSources",
+        "_success"
       ],
       null
     );

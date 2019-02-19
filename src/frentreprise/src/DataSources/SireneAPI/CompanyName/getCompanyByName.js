@@ -8,6 +8,11 @@ const getCompanyByName = async (QUERY, Axios, params) => {
     `siren/?q=periode(denominationUniteLegale:"${QUERY}")&nombre=10000`,
     params
   );
+
+  if (!data.unitesLegales) {
+    return [];
+  }
+
   const out = [];
   for (let i = 0; i < data.unitesLegales.length; i++) {
     const entData = helpers.formatEnt(data.unitesLegales[i]);

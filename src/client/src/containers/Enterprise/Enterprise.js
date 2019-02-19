@@ -1,13 +1,7 @@
 import React from "react";
-import {
-  connect
-} from "react-redux";
-import {
-  Redirect
-} from "react-router-dom";
-import {
-  withRouter
-} from "react-router";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router";
 import {
   loadEstablishment,
   loadEntreprise
@@ -46,7 +40,8 @@ class Enterprise extends React.Component {
 
   mountComponent() {
     console.log("mountComponent");
-    this.setState({
+    this.setState(
+      {
         isEnterprise: this.props.match.params.hasOwnProperty("siren"),
         isLoaded: false
       },
@@ -70,22 +65,17 @@ class Enterprise extends React.Component {
 
     if (
       this.props.currentEnterprise &&
-      this.props.currentEnterprise.etablissements &&
-      this.props.currentEnterprise._dataSources.ApiGouv
+      this.props.currentEnterprise.etablissements
     ) {
       establishment = this.props.currentEnterprise.etablissements.find(
         establishment => {
-          return (
-            establishment.siret === siret &&
-            establishment._dataSources &&
-            establishment._dataSources.ApiGouv
-          );
+          return establishment.siret === siret;
         }
       );
-    }
 
-    if (establishment) {
-      return this.initData(this.props.currentEnterprise, establishment);
+      if (establishment) {
+        return this.initData(this.props.currentEnterprise, establishment);
+      }
     }
 
     return false;
@@ -94,8 +84,7 @@ class Enterprise extends React.Component {
   loadEnterpriseByStore = siren => {
     if (
       this.props.currentEnterprise &&
-      this.props.currentEnterprise.siren === siren &&
-      this.props.currentEnterprise._dataSources.ApiGouv
+      this.props.currentEnterprise.siren === siren
     ) {
       return this.initData(this.props.currentEnterprise, null);
     }
@@ -114,11 +103,15 @@ class Enterprise extends React.Component {
     this.props
       .loadEstablishment(siret)
       .then(response => {
-        const {
-          results
-        } = response.data;
+        const { query, results } = response.data;
 
-        if (results.length) {
+        const establishment =
+          results.length &&
+          results[0].etablissements.find(establishment => {
+            return establishment.siret === siret && establishment._success;
+          });
+
+        if (query.isSIRET && establishment) {
           this.loadEstablishmentByStore(siret);
         } else {
           this.setState({
@@ -127,7 +120,7 @@ class Enterprise extends React.Component {
         }
       })
       .catch(
-        function (error) {
+        function(error) {
           this.setState({
             redirectTo: "/404"
           });
@@ -139,11 +132,9 @@ class Enterprise extends React.Component {
     this.props
       .loadEntreprise(siren)
       .then(response => {
-        const {
-          results
-        } = response.data;
+        const { query, results } = response.data;
 
-        if (results.length) {
+        if (query.isSIREN && results.length && results[0]._success) {
           this.loadEnterpriseByStore(siren);
         } else {
           this.setState({
@@ -152,7 +143,7 @@ class Enterprise extends React.Component {
         }
       })
       .catch(
-        function (error) {
+        function(error) {
           this.setState({
             redirectTo: "/404"
           });
@@ -184,48 +175,25 @@ class Enterprise extends React.Component {
 
   render() {
     if (this.state.redirectTo) {
-      return <Redirect push to = {
-        this.state.redirectTo
-      }
-      />;
+      return <Redirect push to={this.state.redirectTo} />;
     }
 
-    return this.state.isEnterprise ? ( <
-      EnterpriseView enterprise = {
-        this.state.enterprise
-      }
-      headOffice = {
-        this.state.headOffice
-      }
-      establishments = {
-        this.state.establishments
-      }
-      hasSearchResults = {
-        this.props.hasSearchResults
-      }
-      isLoaded = {
-        this.state.isLoaded
-      }
+    return this.state.isEnterprise ? (
+      <EnterpriseView
+        enterprise={this.state.enterprise}
+        headOffice={this.state.headOffice}
+        establishments={this.state.establishments}
+        hasSearchResults={this.props.hasSearchResults}
+        isLoaded={this.state.isLoaded}
       />
-    ) : ( <
-      EstablishmentView enterprise = {
-        this.state.enterprise
-      }
-      headOffice = {
-        this.state.headOffice
-      }
-      establishment = {
-        this.state.establishment
-      }
-      establishments = {
-        this.state.establishments
-      }
-      hasSearchResults = {
-        this.props.hasSearchResults
-      }
-      isLoaded = {
-        this.state.isLoaded
-      }
+    ) : (
+      <EstablishmentView
+        enterprise={this.state.enterprise}
+        headOffice={this.state.headOffice}
+        establishment={this.state.establishment}
+        establishments={this.state.establishments}
+        hasSearchResults={this.props.hasSearchResults}
+        isLoaded={this.state.isLoaded}
       />
     );
   }
@@ -250,5 +218,8 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Enterprise)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Enterprise)
 );

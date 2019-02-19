@@ -1,88 +1,172 @@
 import React from "react";
 import Value from "../../../elements/Value";
+import Finances from "./Finances";
+import classNames from "classnames";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
 
 class EnterpriseActivity extends React.Component {
   render() {
-    const { enterprise } = this.props;
+    const { enterprise, headOffice } = this.props;
     console.log(enterprise);
+
+    enterprise.observation_rcs = "Non disponible actuellement";
+
+    const stateClass =
+      enterprise.etat_entreprise == "A" ? "icon--success" : "icon--danger";
 
     return (
       <section id="activity" className="enterprise-section">
-        <h1 className="title h4">État et activité</h1>
+        <h2 className="title is-size-4">État et activité</h2>
 
-        <dl className="dl row">
-          <dt className="dt col-md-4">Date immatriculation RCS</dt>
-          <dd className="dd col-md-8">
+        <div className="columns">
+          <h5 className="column is-3">Date immatriculation RCS</h5>
+          <span className="column is-8">
             <Value value={enterprise.date_immatriculation_rcs} empty="-" />
-          </dd>
+          </span>
+        </div>
 
-          <dt className="dt col-md-4">Date de création</dt>
-          <dd className="dd col-md-8">
+        {enterprise.observation_rcs && (
+          <div className="columns">
+            <h5 className="column is-3">Observation RCS</h5>
+            <span className="column is-8">
+              <Value value={enterprise.observation_rcs} empty="-" />
+            </span>
+          </div>
+        )}
+
+        <div className="columns">
+          <h5 className="column is-3">Date de création</h5>
+          <span className="column is-8">
             <Value value={enterprise.date_de_creation} empty="-" />
-          </dd>
+          </span>
           {enterprise.date_de_radiation
             ? [
-                <dt className="dt col-md-4" key="date_rad_label">
+                <h5 className="column is-3" key="date_rad_label">
                   Date de radiation
-                </dt>,
-                <dd className="dd col-md-8" key="date_rad_value">
+                </h5>,
+                <span className="column is-8" key="date_rad_value">
                   <Value value={enterprise.date_de_radiation} empty="-" />
-                </dd>
+                </span>
               ]
             : ""}
+        </div>
 
-          <dt className="dt col-md-4">Etat de l'entreprise</dt>
-          <dd className="dd col-md-8">
-            <Value value={enterprise.etat_entreprise} empty="-" />
-          </dd>
+        <div className="columns">
+          <h5 className="column is-3">Etat de l'entreprise</h5>
+          <span className="column is-8">
+            {enterprise.etat_entreprise && (
+              <FontAwesomeIcon
+                className={classNames(stateClass)}
+                icon={faCircle}
+              />
+            )}
+          </span>
+        </div>
 
-          <dt className="dt col-md-4">Date de l'état</dt>
-          <dd className="dd col-md-8">
+        <div className="columns">
+          <h5 className="column is-3">Date de l'état</h5>
+          <span className="column is-8">
             <Value
               value={enterprise.etat_entreprise && enterprise.date_mise_a_jour}
               empty="-"
             />
-          </dd>
+          </span>
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Catégorie</h5>
+          <span className="column is-8">
+            <Value value={enterprise.categorie_entreprise} empty="-" />
+          </span>
+        </div>
 
-          <dt className="dt col-md-4">Activité Principale</dt>
-          <dd className="dd col-md-8">
-            <Value value={enterprise.activite} empty="-" />
-          </dd>
+        <div className="columns">
+          <h5 className="column is-3">Activité Principale</h5>
+          <span className="column is-8">
+            <Value value={enterprise.naf} empty="-" />
+            <span> - </span>
+            <Value value={enterprise.libelle_naf} empty="-" />
+          </span>
+        </div>
 
-          <dt className="dt col-md-4">Entreprise employeur</dt>
-          <dd className="dd col-md-8">
-            <Value value={enterprise.entreprise_employeur} empty="-" />
-          </dd>
-
-          <dt className="dt col-md-4">Tranche Effectif</dt>
-          <dd className="dd col-md-8">
+        <div className="columns">
+          <h5 className="column is-3">Tranche Effectif</h5>
+          <span className="column is-8">
             <Value value={enterprise.tranche_effectif} empty="-" />
-          </dd>
+          </span>
+        </div>
 
-          <dt className="dt col-md-4">Année tranche Effectif</dt>
-          <dd className="dd col-md-8">
+        <div className="columns">
+          <h5 className="column is-3">Année tranche Effectif</h5>
+          <span className="column is-8">
             <Value value={enterprise.annee_tranche_effectif} empty="-" />
-          </dd>
+          </span>
+        </div>
 
-          <dt className="dt col-md-4">
+        <div className="columns">
+          <h5 className="column is-3">
             Nombre d'établissements actifs
             <br />
             (France entière)
-          </dt>
-          <dd className="dd col-md-8">
+          </h5>
+          <span className="column is-8">
             <Value value={enterprise.nombre_etablissements_actifs} empty="-" />
-          </dd>
+          </span>
+        </div>
 
-          <dt className="dt col-md-4">Code NAF</dt>
-          <dd className="dd col-md-8">
-            <Value value={enterprise.naf} empty="-" />
-          </dd>
-
-          <dt className="dt col-md-4">Libelle NAF</dt>
-          <dd className="dd col-md-8">
-            <Value value={enterprise.libelle_naf} empty="-" />
-          </dd>
-        </dl>
+        <div className="columns">
+          <h5 className="column is-3">Attestation fiscale DGFIP</h5>
+          <span className="column is-8">
+            <Value
+              value={!!enterprise.attestation_dgfip}
+              empty="Non Disponible"
+              no="Non Disponible"
+            />
+          </span>
+          {enterprise.attestation_dgfip ? (
+            <span className="span col-md-5">
+              <a href={enterprise.attestation_dgfip} target="_blank">
+                télécharger le document
+              </a>
+            </span>
+          ) : null}
+        </div>
+        <div className="columns">
+          <h5 className="column is-3">Attestation sociale ACOSS</h5>
+          <span className="column is-8">
+            <Value
+              value={!!enterprise.attestation_acoss}
+              empty="Non Disponible"
+              no="Non Disponible"
+            />
+          </span>
+          {enterprise.attestation_acoss ? (
+            <span className="span col-md-5">
+              <a href={enterprise.attestation_acoss} target="_blank">
+                télécharger le document
+              </a>
+            </span>
+          ) : null}
+        </div>
+        <div className="accordions">
+          <div className="accordion">
+            <div className="accordion-header toggle">
+              <span className="">Données économiques et financières</span>
+              <span className="">
+                <button className="button is-light is-rounded">
+                  <span className="icon">
+                    <FontAwesomeIcon icon={faChevronDown} />
+                  </span>
+                </button>
+              </span>
+            </div>
+            <div className="accordion-body">
+              <div className="accordion-content">
+                <Finances establishment={headOffice} />
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     );
   }

@@ -14,20 +14,20 @@ class Establishments extends React.Component {
     ));
 
     return (
-      <aside className="aside-contain establishments-aside column is-3 is-12-tablet">
+      <aside className="aside-contain establishments-aside column is-3-desktop is-12-tablet">
         <section>
           <h3 className="title is-size-5">
             Entreprise <Value value={enterprise.raison_sociale} empty="-" />
           </h3>
 
           <dl className="columns">
-            <dt className="column is-4">Raison Sociale</dt>
+            <dt className="column is-3">Raison Sociale</dt>
             <dd className="definition column is-8">
               <Value value={enterprise.raison_sociale} empty="-" />
             </dd>
           </dl>
           <dl className="columns">
-            <dt className="column is-4">SIREN</dt>
+            <dt className="column is-3">SIREN</dt>
             <dd className="definition column is-8">
               <Link to={`/enterprise/${enterprise.siren}`}>
                 <Value value={enterprise.siren} empty="-" />

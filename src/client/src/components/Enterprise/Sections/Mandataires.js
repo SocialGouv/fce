@@ -12,12 +12,12 @@ class Mandataires extends React.Component {
 
     return (
       <section id="mandataire" className="enterprise-section">
-        <h1 className="title h4">Mandataires sociaux</h1>
+        <h2 className="title is-size-4">Mandataires sociaux</h2>
 
         {items.length ? (
           items
         ) : (
-          <p className="text-center">Aucun mandataire n'a été trouvé</p>
+          <p className="has-text-center">Aucun mandataire n'a été trouvé</p>
         )}
       </section>
     );

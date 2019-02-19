@@ -74,11 +74,10 @@ class AdvancedSearch extends React.Component {
     this.setState({ hasError: false, searchLoading: true, errorMessage: null });
 
     const nbTermsCompleted = () =>
-      Object.keys(this.state.terms).filter(
-        term =>
-          Array.isArray(this.state.terms[term])
-            ? this.state.terms[term].length
-            : this.state.terms[term]
+      Object.keys(this.state.terms).filter(term =>
+        Array.isArray(this.state.terms[term])
+          ? this.state.terms[term].length
+          : this.state.terms[term]
       ).length;
 
     const isValidSearch = () => {
@@ -181,4 +180,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdvancedSearch);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdvancedSearch);

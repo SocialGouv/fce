@@ -37,11 +37,9 @@ class Finances extends React.Component {
     }
 
     return (
-      <section id="finances" className="enterprise-section">
-        <h1 className="title h4">Données économiques et financières</h1>
-
+      <>
         {establishment.donnees_ecofi ? (
-          <table className="table table-striped">
+          <table className="table is-striped">
             <thead>
               <tr>
                 <th>Date fin exercice</th>
@@ -66,7 +64,7 @@ class Finances extends React.Component {
         ) : (
           <p className="text-center">Non disponible</p>
         )}
-      </section>
+      </>
     );
   }
 }

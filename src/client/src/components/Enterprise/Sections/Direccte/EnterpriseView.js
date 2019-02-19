@@ -1,6 +1,8 @@
 import React from "react";
 import Value from "../../../../elements/Value";
 import { Link } from "react-router-dom";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
 
 class EstablishmentView extends React.Component {
   constructor(props) {
@@ -21,7 +23,7 @@ class EstablishmentView extends React.Component {
       enterprise.etablissements.reduce((data, etab) => {
         (etab.direccte || []).forEach(dirvis => {
           const { siret } = etab;
-          const etat = etab.etat_etablissement && etab.etat_etablissement.label;
+          const etat = etab.etat_etablissement;
           const dep =
             etab.adresse_components &&
             etab.adresse_components.code_postal &&
@@ -41,39 +43,98 @@ class EstablishmentView extends React.Component {
 
     return (
       <section id="direccte" className="enterprise-section">
-        <h1 className="title h4">Interactions avec la DIRECCTE</h1>
-        <dl className="dl row">
-          <dt className="dt col-md-9">
-            Nombre total d'interactions avec l'entreprise
-          </dt>
-          <dd className="dd col-md-3">
-            <Value value={total} empty="-" />
-          </dd>
-        </dl>
-        <table className="table table-striped direccte-interactions">
-          <thead>
-            <tr>
-              <th>SIRET</th>
-              <th>Etat</th>
-              <th>Département</th>
-              <th>Commune</th>
-              <th>Nombre d'interactions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {direccte.map(etab => (
-              <tr key={etab.siret}>
-                <td>
-                  <Link to={`/establishment/${etab.siret}`}>{etab.siret}</Link>
-                </td>
-                <td>{etab.etat}</td>
-                <td>{etab.dep}</td>
-                <td>{etab.commune}</td>
-                <td>{etab.count}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <h2 className="title is-size-4">Interactions avec la DIRECCTE</h2>
+        <div className="direccte-excerpt">
+          <div className="direccte-excerpt--pole">
+            <span className="direccte-excerpt--pole-value">{total}</span>
+            <span className="direccte-excerpt--pole-key">
+              interactions sur{" "}
+            </span>
+            <span className="direccte-excerpt--pole-value">
+              {enterprise.etablissements.length}
+            </span>
+            <span className="direccte-excerpt--pole-key">établissements</span>
+          </div>
+        </div>
+        <div className="accordions">
+          <div className="accordion">
+            <div className="accordion-header toggle">
+              <span className="">Détails des intéractions</span>
+              <span className="">
+                <button className="button is-light is-rounded">
+                  <span className="icon">
+                    <FontAwesomeIcon icon={faChevronDown} />
+                  </span>
+                </button>
+              </span>
+            </div>
+            <div className="accordion-body">
+              <div className="accordion-content">
+                <table className="table is-striped direccte-interactions">
+                  <thead>
+                    <tr>
+                      <th>SIRET</th>
+                      <th>Etat</th>
+                      <th>Département</th>
+                      <th>Commune</th>
+                      <th>Nombre d'interactions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {direccte.map(etab => (
+                      <tr key={etab.siret}>
+                        <td>
+                          <Link to={`/establishment/${etab.siret}`}>
+                            {etab.siret}
+                          </Link>
+                        </td>
+                        <td>
+                          {etab.etat && (
+                            <FontAwesomeIcon
+                              className={
+                                etab.etat == "A"
+                                  ? "icon--success"
+                                  : "icon--danger"
+                              }
+                              icon={faCircle}
+                            />
+                          )}
+                        </td>
+                        <td>{etab.dep}</td>
+                        <td>{etab.commune}</td>
+                        <td>{etab.count}</td>
+                      </tr>
+                    ))}
+                    <tr>
+                      <td>83106781400010</td>
+                      <td>
+                        <FontAwesomeIcon
+                          className="icon--success"
+                          icon={faCircle}
+                        />
+                      </td>
+                      <td>31</td>
+                      <td>Toulouse</td>
+                      <td>0</td>
+                    </tr>
+                    <tr>
+                      <td>83106781400010</td>
+                      <td>
+                        <FontAwesomeIcon
+                          className="icon--success"
+                          icon={faCircle}
+                        />
+                      </td>
+                      <td>31</td>
+                      <td>Toulouse</td>
+                      <td>0</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     );
   }

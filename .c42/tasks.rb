@@ -5,6 +5,7 @@ NPM = ENV['NPM'] || 'docker-compose run --rm %container% npm'
 YARN = ENV['YARN'] || 'docker-compose run --rm %container% yarn'
 NODE = ENV['NODE'] || 'docker-compose run --rm %container% node'
 CYPRESS = 'docker-compose run --rm cypress'
+DB_NAME = 'fce'
 
 desc 'docker:run', 'Lance docker-compose up'
 task 'docker:run' do
@@ -17,6 +18,12 @@ task 'docker:restart' do
   check_ssh_agent
   `docker-compose restart`
 end
+
+desc 'pg:console', 'Lance la console postgres'
+shell_task 'pg:console', "docker exec -i $(docker-compose ps -q db | sed -n 1p) /bin/bash -c 'psql -d #{DB_NAME} -U postgres'"
+
+desc 'pg:dump', 'Lance la console pg_dump pour créer un dump de la bdd'
+shell_task 'pg:dump', "docker exec -i $(docker-compose ps -q db | sed -n 1p) /bin/bash -c 'pg_dump -U postgres #{DB_NAME}'"
 
 # Front
 %w(front server frentreprise).each do |ctr|
@@ -113,12 +120,23 @@ desc 'install', 'Installe le projet'
 task :install do
   invoke 'docker:install', []
 
+  sql_cat_cmd = 'cat .c42/tmp/fce-base.sql' if File.exists?('.c42/tmp/fce-base.sql')
+  sql_cat_cmd = 'cat .c42/tmp/dump.sql' if File.exists?('.c42/tmp/dump.sql')
+  sql_cat_cmd = 'zcat .c42/tmp/dump.sql.gz' if File.exists?('.c42/tmp/dump.sql.gz')
+  fatal('Could not find .c42/tmp/[dump|fce-base].sql[.gz]') unless defined?(sql_cat_cmd) && !sql_cat_cmd.nil?
+
   info('Yarn install')
   invoke 'front:yarn', ['install']
   invoke 'server:yarn', ['install']
 
   info('Starting docker')
   invoke 'docker:run', []
+
+  info('Waiting for full loading of the db container')
+  sleep 12
+
+  info('Piping sql dump into pg:console')
+  run("#{sql_cat_cmd} | c42 pg:console")
 
   info('Restart front')
   invoke 'docker:restart', ['front']

@@ -13,6 +13,6 @@ export default async (SIRET, interactionsPole3E) => {
       };
     });
 
-    return { direccte: interactions };
+    return { interactions_3E: interactions };
   });
 };

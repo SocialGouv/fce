@@ -30,7 +30,7 @@ describe("frentreprise/datasources/PG/Etablissements/getInteractionsPole3E", () 
     };
 
     const expected = {
-      direccte: [
+      interactions_3E: [
         {
           id: 11,
           siret: "01565003900041",

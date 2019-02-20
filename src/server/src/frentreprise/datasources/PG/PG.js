@@ -1,6 +1,7 @@
 import { DataSource } from "frentreprise";
 import Etablissements from "./Etablissements";
 import InteractionsPole3E from "../../../models/InteractionsPole3E";
+import InteractionsPole3T from "../../../models/InteractionsPole3T";
 
 export const _ = {
   requestDB: Symbol("_requestDB")
@@ -9,10 +10,11 @@ export const _ = {
 export default class PG extends DataSource {
   // Etablissements
   async getSIRET(SIRET) {
-    return await this[_.requestDB](SIRET, [
-      Etablissements.getInteractionsPole3E,
-      new InteractionsPole3E()
-    ]);
+    return await this[_.requestDB](
+      SIRET,
+      [Etablissements.getInteractionsPole3E, new InteractionsPole3E()],
+      [Etablissements.getInteractionsPole3T, new InteractionsPole3T()]
+    );
   }
 
   async getSIREN(SIREN) {

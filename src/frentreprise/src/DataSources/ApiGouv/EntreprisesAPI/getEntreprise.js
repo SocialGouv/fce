@@ -14,8 +14,8 @@ const getEntreprise = async (SIREN, Axios, params) => {
         "prenom",
         "siret_siege_social",
         "capital_social",
-        "forme_juridique",
-        "forme_juridique_code",
+        { in: "forme_juridique", out: "categorie_juridique" },
+        { in: "forme_juridique_code", out: "categorie_juridique_code" },
         { in: "naf_entreprise", out: "naf" },
         { in: "libelle_naf_entreprise", out: "libelle_naf" },
         {

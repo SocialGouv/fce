@@ -1283,13 +1283,13 @@ const formatEnt = ent => {
     },
     {
       in: "periodesUniteLegale[0].categorieJuridiqueUniteLegale",
-      out: "forme_juridique",
+      out: "categorie_juridique",
       callback: category =>
         utils.isEmpty(category) ? undefined : getLegalCode(category)
     },
     {
       in: "periodesUniteLegale[0].categorieJuridiqueUniteLegale",
-      out: "forme_juridique_code"
+      out: "categorie_juridique_code"
     },
     {
       in: "periodesUniteLegale[0].activitePrincipaleUniteLegale",

@@ -1193,6 +1193,12 @@ const formatEtab = etab => {
       out: "siege_social"
     },
     {
+      in: "etablissementSiege",
+      out: "categorie_etablissement",
+      callback: siege_social =>
+        siege_social ? "Siège social" : "Établissement secondaire"
+    },
+    {
       in: "dateCreationEtablissement",
       out: "date_creation"
     },

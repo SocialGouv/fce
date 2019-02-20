@@ -69,6 +69,21 @@ services:
     environment:
       ADMINER_DESIGN: pappu687
 
+  pgadmin:
+    image: dpage/pgadmin4
+    networks:
+      - traefik
+      - default
+    links:
+      - db
+    ports:
+      - 80
+    labels:
+      - "traefik.frontend.rule=Host:pga.fce.test"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: contact@commit42.fr
+      PGADMIN_DEFAULT_PASSWORD: root
+
   frentreprise:
     build: .c42/docker/server
     image: node_server

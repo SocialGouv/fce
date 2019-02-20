@@ -1,7 +1,4 @@
-import InteractionsPole3E from "../../../../models/InteractionsPole3E";
-
-export default async SIRET => {
-  const interactionsPole3E = new InteractionsPole3E();
+export default async (SIRET, interactionsPole3E) => {
   return interactionsPole3E.findAllBySIRET(SIRET).then(rows => {
     if (!rows || !rows.length) {
       return {};

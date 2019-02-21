@@ -19,7 +19,6 @@ export default class DireccteEntreprise extends Entreprise {
         "categorie_entreprise",
         "categorie_juridique",
         "categorie_juridique_code",
-        "date_immatriculation_rcs",
         "date_de_creation",
         "date_mise_a_jour",
         "date_de_radiation",
@@ -37,6 +36,9 @@ export default class DireccteEntreprise extends Entreprise {
         "siren",
         "siret_siege_social",
         "tranche_effectif",
+        "rcs_date_immatriculation",
+        "rcs_information_libelle",
+        "rcs_information_date",
         "_dataSources",
         "_success"
       ],

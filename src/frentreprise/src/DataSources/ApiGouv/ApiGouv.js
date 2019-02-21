@@ -41,7 +41,8 @@ export default class ApiGouv extends DataSource {
       SIREN,
       EntreprisesAPI.getEntreprise,
       EntreprisesAPI.attestation_acoss,
-      EntreprisesAPI.attestation_dgfip
+      EntreprisesAPI.attestation_dgfip,
+      EntreprisesAPI.infogreffe_rcs
     );
   }
 

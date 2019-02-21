@@ -32,14 +32,6 @@ const getEtablissement = async (SIRET, Axios, params) => {
           out: "region"
         },
         {
-          in: "naf",
-          out: "activite",
-          callback: (naf, etablissement) =>
-            naf && etablissement.libelle_naf
-              ? `${naf} - ${etablissement.libelle_naf}`
-              : undefined
-        },
-        {
           in: "tranche_effectif_salarie_etablissement",
           out: "etablissement_employeur",
           callback: trancheEffectif => trancheEffectif && +trancheEffectif.a > 0

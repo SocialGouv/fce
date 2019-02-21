@@ -20,7 +20,6 @@ class DireccteEtablissement extends Etablissement {
           "etat_etablissement",
           "date_fin",
           "date_dernier_traitement_etablissement",
-          "activite",
           "date_debut_activite_economique",
           "modalite_activite",
           "marchand",

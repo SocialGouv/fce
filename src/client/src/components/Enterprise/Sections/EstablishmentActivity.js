@@ -52,7 +52,9 @@ class EstablishmentActivity extends React.Component {
         <div className="columns">
           <h5 className="column is-3">Activité</h5>
           <span className="column is-8">
-            <Value value={establishment.activite} empty="-" />
+            <Value value={establishment.naf} empty="-" />
+            <span> - </span>
+            <Value value={establishment.libelle_naf} empty="-" />
           </span>
         </div>
         <div className="columns">

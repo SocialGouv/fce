@@ -1,5 +1,6 @@
 import utils from "../../../Utils/utils";
 import getData from "../../getData";
+import axios from "../../../../lib/axios";
 
 const getNAF = code => {
   const nomenclatures = {
@@ -1244,7 +1245,7 @@ const formatEtab = etab => {
   return typeof etab === "object" ? getData(etab, fields) : {};
 };
 
-const formatEnt = ent => {
+const formatEnt = async (ent, params) => {
   const fields = [
     "siren",
     {
@@ -1310,6 +1311,11 @@ const formatEnt = ent => {
       out: "naf"
     },
     {
+      in: "periodesUniteLegale[0].activitePrincipaleUniteLegale",
+      out: "libelle_naf",
+      callback: async naf => await getLibelleNaf(naf, params)
+    },
+    {
       in: "dateCreationUniteLegale",
       out: "date_de_creation"
     },
@@ -1344,7 +1350,20 @@ const formatEnt = ent => {
     }
   ];
 
-  return typeof ent === "object" ? getData(ent, fields) : {};
+  return typeof ent === "object" ? await getData(ent, fields) : {};
+};
+
+const getLibelleNaf = async (codeNaf, params) => {
+  const Axios = axios.create({
+    baseURL:
+      "https://api.insee.fr/metadonnees/nomenclatures/v1/codes/nafr2/sousClasse/",
+    timeout: 5000
+  });
+  params.timeout = 5000;
+
+  return await utils
+    .requestAPI(Axios, `${codeNaf}`, params)
+    .then(data => (utils.isEmpty(data.intitule) ? undefined : data.intitule));
 };
 
 export default {

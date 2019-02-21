@@ -1,8 +1,8 @@
 import tunnel from "tunnel";
 import DataSource from "../DataSource";
-import Siren from './Siren';
-import Siret from './Siret';
-import CompanyName from './CompanyName';
+import Siren from "./Siren";
+import Siret from "./Siret";
+import CompanyName from "./CompanyName";
 import axios from "../../../lib/axios";
 
 export const _ = {
@@ -24,10 +24,7 @@ export default class SireneAPI extends DataSource {
 
   // Etablissements
   async getSIRET(SIRET) {
-    return await this[_.requestAPIs](
-      SIRET,
-      Siret.getSettlement
-    );
+    return await this[_.requestAPIs](SIRET, Siret.getSettlement);
   }
 
   // Entreprises
@@ -40,8 +37,12 @@ export default class SireneAPI extends DataSource {
   }
 
   async search(q) {
-    const res = await CompanyName.getCompanyByName(q, this[_.axios], this.getAxiosConfig());
-    console.log(res)
+    const res = await CompanyName.getCompanyByName(
+      q,
+      this[_.axios],
+      this.getAxiosConfig()
+    );
+    console.log(res);
     return res;
   }
 
@@ -64,7 +65,7 @@ export default class SireneAPI extends DataSource {
     const axiosConfig = {
       ...this.axiosConfig,
       headers: {
-        "Authorization": `Bearer ${this.token}`
+        Authorization: `Bearer ${this.token}`
       }
     };
 

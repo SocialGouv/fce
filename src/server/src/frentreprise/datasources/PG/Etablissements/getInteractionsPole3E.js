@@ -7,12 +7,16 @@ export default async (SIRET, interactionsPole3E) => {
     const interactions = rows.map(interaction => {
       const [day, month, year] = interaction.date_visite.split("/");
       return {
-        ...interaction,
-        date_visite: `${year}-${month}-${day}`,
-        pole: "3E"
+        date: `${year}-${month}-${day}`,
+        pole: "3E",
+        unite: `Service Entreprise ${interaction.region.trim()}`,
+        type: interaction.type_suivi.trim(),
+        agent: interaction.inspecteurs.trim(),
+        filiere: interaction.filieres.trim(),
+        eti_pepite: interaction.suivi_eti.trim()
       };
     });
 
-    return { direccte: interactions };
+    return { interactions_3E: interactions };
   });
 };

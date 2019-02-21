@@ -30,27 +30,23 @@ describe("frentreprise/datasources/PG/Etablissements/getInteractionsPole3E", () 
     };
 
     const expected = {
-      direccte: [
+      interactions_3E: [
         {
-          id: 11,
-          siret: "01565003900041",
-          date_visite: "2017-01-04",
-          region: "Bourgogne-Franche-Comté",
-          inspecteurs: "Yann Akepourlui",
-          filieres: "Alimentaire",
-          type_suivi: "EPV",
-          suivi_eti: "Suivi par un référent au titre dune pépite",
+          date: "2017-01-04",
+          unite: `Service Entreprise Bourgogne-Franche-Comté`,
+          agent: "Yann Akepourlui",
+          filiere: "Alimentaire",
+          type: "EPV",
+          eti_pepite: "Suivi par un référent au titre dune pépite",
           pole: "3E"
         },
         {
-          id: 12,
-          siret: "01565003900041",
-          date_visite: "2017-02-04",
-          region: "Bourgogne-Franche-Comté",
-          inspecteurs: "Zinedine Pacesoir",
-          filieres: "Alimentaire",
-          type_suivi: "EPV",
-          suivi_eti: "Suivi par un référent au titre dune pépite",
+          date: "2017-02-04",
+          unite: `Service Entreprise Bourgogne-Franche-Comté`,
+          agent: "Zinedine Pacesoir",
+          filiere: "Alimentaire",
+          type: "EPV",
+          eti_pepite: "Suivi par un référent au titre dune pépite",
           pole: "3E"
         }
       ]

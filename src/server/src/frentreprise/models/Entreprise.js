@@ -38,6 +38,9 @@ export default class DireccteEntreprise extends Entreprise {
         "siren",
         "siret_siege_social",
         "tranche_effectif",
+        "rcs_date_immatriculation",
+        "rcs_information_libelle",
+        "rcs_information_date",
         "_dataSources",
         "_success"
       ],

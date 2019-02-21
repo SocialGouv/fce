@@ -4,13 +4,11 @@ import Finances from "./Finances";
 import classNames from "classnames";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import { toI18nDate } from "../../../helpers/Date";
 
 class EnterpriseActivity extends React.Component {
   render() {
     const { enterprise, headOffice } = this.props;
-    console.log(enterprise);
-
-    enterprise.observation_rcs = "Non disponible actuellement";
 
     const stateClass =
       enterprise.etat_entreprise == "A" ? "icon--success" : "icon--danger";
@@ -22,15 +20,20 @@ class EnterpriseActivity extends React.Component {
         <div className="columns">
           <h5 className="column is-3">Date immatriculation RCS</h5>
           <span className="column is-8">
-            <Value value={enterprise.date_immatriculation_rcs} empty="-" />
+            <Value value={enterprise.rcs_date_immatriculation} empty="-" />
           </span>
         </div>
 
-        {enterprise.observation_rcs && (
+        {enterprise.rcs_information_libelle && (
           <div className="columns">
             <h5 className="column is-3">Observation RCS</h5>
             <span className="column is-8">
-              <Value value={enterprise.observation_rcs} empty="-" />
+              <Value
+                value={`${toI18nDate(enterprise.rcs_information_date, "L")} - ${
+                  enterprise.rcs_information_libelle
+                }`}
+                empty="-"
+              />
             </span>
           </div>
         )}

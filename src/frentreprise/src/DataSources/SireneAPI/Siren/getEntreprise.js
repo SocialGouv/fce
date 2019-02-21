@@ -4,7 +4,7 @@ import helpers from "../Helpers/helpers";
 const getEntreprise = async (SIREN, Axios, params) => {
   return await utils.requestAPI(Axios, `siren/${SIREN}`, params).then(data => {
     if (!data.uniteLegale) {
-      return false;
+      return {};
     }
 
     return helpers.formatEnt(data.uniteLegale);

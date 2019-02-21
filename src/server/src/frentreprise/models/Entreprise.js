@@ -18,14 +18,12 @@ export default class DireccteEntreprise extends Entreprise {
         "capital_social",
         "categorie_entreprise",
         "categorie_juridique",
-        "date_immatriculation_rcs",
+        "categorie_juridique_code",
         "date_de_creation",
         "date_mise_a_jour",
         "date_de_radiation",
         "entreprise_employeur",
         "etat_entreprise",
-        "forme_juridique",
-        "forme_juridique_code",
         "libelle_naf",
         "mandataires_sociaux",
         "naf",
@@ -38,7 +36,11 @@ export default class DireccteEntreprise extends Entreprise {
         "siren",
         "siret_siege_social",
         "tranche_effectif",
-        "_dataSources"
+        "rcs_date_immatriculation",
+        "rcs_information_libelle",
+        "rcs_information_date",
+        "_dataSources",
+        "_success"
       ],
       null
     );

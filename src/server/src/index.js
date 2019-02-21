@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import apiRouter from "./api";
 
 import frentreprise from "frentreprise";
+import PG from "./frentreprise/datasources/PG/PG";
 const app = express();
 const port = (config.has("port") && +config.get("port")) || 80;
 const host = (config.has("port") && config.get("host")) || undefined;
@@ -14,8 +15,8 @@ const host = (config.has("port") && config.get("host")) || undefined;
 function init() {
   frentreprise.EntrepriseModel = require("./frentreprise/models/Entreprise");
   frentreprise.EtablissementModel = require("./frentreprise/models/Etablissement");
-   
-  const apiGouv = frentreprise.getDataSource("ApiGouv").source; 
+
+  const apiGouv = frentreprise.getDataSource("ApiGouv").source;
   apiGouv.token = config.get("APIGouv.token");
   apiGouv.axiosConfig = {
     ...apiGouv.axiosConfig,
@@ -33,6 +34,14 @@ function init() {
   };
   if (config.has("apiTimeout")) {
     sireneAPI.axiosConfig.timeout = config.get("apiTimeout");
+  }
+
+  if (config.has("postgres")) {
+    frentreprise.addDataSource({
+      name: "Postgres",
+      priority: 50,
+      source: new PG()
+    });
   }
 
   app.use(function(req, res, next) {

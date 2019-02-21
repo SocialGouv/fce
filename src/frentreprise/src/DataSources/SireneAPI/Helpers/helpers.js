@@ -1189,8 +1189,22 @@ const formatEtab = etab => {
         utils.isEmpty(activite) ? undefined : getNAF(activite.replace(".", ""))
     },
     {
+      in: "uniteLegale.activitePrincipaleUniteLegale",
+      out: "activite",
+      callback: (naf, etablissement) =>
+        utils.isEmpty(naf)
+          ? undefined
+          : `${naf} - ${getNAF(naf.replace(".", ""))}`
+    },
+    {
       in: "etablissementSiege",
       out: "siege_social"
+    },
+    {
+      in: "etablissementSiege",
+      out: "categorie_etablissement",
+      callback: siege_social =>
+        siege_social ? "Siège social" : "Établissement secondaire"
     },
     {
       in: "dateCreationEtablissement",
@@ -1283,13 +1297,13 @@ const formatEnt = ent => {
     },
     {
       in: "periodesUniteLegale[0].categorieJuridiqueUniteLegale",
-      out: "forme_juridique",
+      out: "categorie_juridique",
       callback: category =>
         utils.isEmpty(category) ? undefined : getLegalCode(category)
     },
     {
       in: "periodesUniteLegale[0].categorieJuridiqueUniteLegale",
-      out: "forme_juridique_code"
+      out: "categorie_juridique_code"
     },
     {
       in: "periodesUniteLegale[0].activitePrincipaleUniteLegale",
@@ -1323,6 +1337,10 @@ const formatEnt = ent => {
     {
       in: "anneeEffectifsUniteLegale",
       out: "annee_tranche_effectif"
+    },
+    {
+      in: "trancheEffectifsUniteLegale",
+      out: "tranche_effectif"
     }
   ];
 

@@ -18,7 +18,6 @@ export default class DireccteEntreprise extends Entreprise {
         "capital_social",
         "categorie_entreprise",
         "categorie_juridique",
-        "date_immatriculation_rcs",
         "date_de_creation",
         "date_mise_a_jour",
         "date_de_radiation",

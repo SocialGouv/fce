@@ -212,6 +212,9 @@ const formatEnt = async (ent, params) => {
 };
 
 const getLibelleNaf = async (codeNaf, params) => {
+  if (!params) {
+    return undefined;
+  }
   const Axios = axios.create({
     baseURL:
       "https://api.insee.fr/metadonnees/nomenclatures/v1/codes/nafr2/sousClasse/",
@@ -225,6 +228,9 @@ const getLibelleNaf = async (codeNaf, params) => {
 };
 
 const getLegalCode = async (category, params) => {
+  if (!params) {
+    return undefined;
+  }
   const Axios = axios.create({
     baseURL: "https://api.insee.fr/metadonnees/nomenclatures/v1/codes/cj/n3/",
     timeout: 5000

@@ -45,7 +45,8 @@ const formatEtab = async (etab, params) => {
     {
       in: "uniteLegale.activitePrincipaleUniteLegale",
       out: "libelle_naf",
-      callback: async naf => await getLibelleNaf(naf, params)
+      callback: async naf =>
+        utils.isEmpty(naf) ? undefined : await getLibelleNaf(naf, params)
     },
     {
       in: "etablissementSiege",
@@ -55,7 +56,11 @@ const formatEtab = async (etab, params) => {
       in: "etablissementSiege",
       out: "categorie_etablissement",
       callback: siege_social =>
-        siege_social ? "Siège social" : "Établissement secondaire"
+        utils.isEmpty(siege_social)
+          ? undefined
+          : siege_social
+          ? "Siège social"
+          : "Établissement secondaire"
     },
     {
       in: "dateCreationEtablissement",
@@ -149,7 +154,10 @@ const formatEnt = async (ent, params) => {
     {
       in: "periodesUniteLegale[0].categorieJuridiqueUniteLegale",
       out: "categorie_juridique",
-      callback: async category => await getLegalCode(category, params)
+      callback: async category =>
+        utils.isEmpty(category)
+          ? undefined
+          : await getLegalCode(category, params)
     },
     {
       in: "periodesUniteLegale[0].categorieJuridiqueUniteLegale",
@@ -162,7 +170,8 @@ const formatEnt = async (ent, params) => {
     {
       in: "periodesUniteLegale[0].activitePrincipaleUniteLegale",
       out: "libelle_naf",
-      callback: async naf => await getLibelleNaf(naf, params)
+      callback: async naf =>
+        utils.isEmpty(naf) ? undefined : await getLibelleNaf(naf, params)
     },
     {
       in: "dateCreationUniteLegale",

@@ -104,20 +104,6 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         }
       },
       {
-        it: "does copy naf and update libelle",
-        data: {
-          etablissement: {
-            uniteLegale: {
-              activitePrincipaleUniteLegale: "62.01Z"
-            }
-          }
-        },
-        expected: {
-          naf: "62.01Z",
-          libelle_naf: "Programmation informatique"
-        }
-      },
-      {
         it: "does copy siege_social",
         data: {
           etablissement: {
@@ -125,7 +111,8 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
           }
         },
         expected: {
-          siege_social: true
+          siege_social: true,
+          categorie_etablissement: "Siège social"
         }
       },
       {

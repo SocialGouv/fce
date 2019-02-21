@@ -12,7 +12,11 @@ const getEtablissement = async (SIRET, Axios, params) => {
           in: "siege_social",
           out: "categorie_etablissement",
           callback: siege_social =>
-            siege_social ? "Siège social" : "Établissement secondaire"
+            utils.isEmpty(siege_social)
+              ? undefined
+              : siege_social
+              ? "Siège social"
+              : "Établissement secondaire"
         },
         "enseigne",
         "naf",

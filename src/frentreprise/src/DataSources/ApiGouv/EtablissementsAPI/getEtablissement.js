@@ -8,6 +8,12 @@ const getEtablissement = async (SIRET, Axios, params) => {
       const fields = [
         "siret",
         "siege_social",
+        {
+          in: "siege_social",
+          out: "categorie_etablissement",
+          callback: siege_social =>
+            siege_social ? "Siège social" : "Établissement secondaire"
+        },
         "enseigne",
         "naf",
         "libelle_naf",

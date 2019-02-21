@@ -15,7 +15,7 @@ const getCompanyByName = async (QUERY, Axios, params) => {
 
   const out = [];
   for (let i = 0; i < data.unitesLegales.length; i++) {
-    const entData = helpers.formatEnt(data.unitesLegales[i]);
+    const entData = await helpers.formatEnt(data.unitesLegales[i], params);
     const settlements = await getSettlements(entData.siren, Axios, params);
     out.push({
       ...entData,

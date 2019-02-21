@@ -42,7 +42,6 @@ export default class SireneAPI extends DataSource {
       this[_.axios],
       this.getAxiosConfig()
     );
-    console.log(res);
     return res;
   }
 

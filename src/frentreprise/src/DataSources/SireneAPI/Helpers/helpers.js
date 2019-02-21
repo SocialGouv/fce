@@ -1189,6 +1189,14 @@ const formatEtab = etab => {
         utils.isEmpty(activite) ? undefined : getNAF(activite.replace(".", ""))
     },
     {
+      in: "uniteLegale.activitePrincipaleUniteLegale",
+      out: "activite",
+      callback: (naf, etablissement) =>
+        utils.isEmpty(naf)
+          ? undefined
+          : `${naf} - ${getNAF(naf.replace(".", ""))}`
+    },
+    {
       in: "etablissementSiege",
       out: "siege_social"
     },
@@ -1329,6 +1337,10 @@ const formatEnt = ent => {
     {
       in: "anneeEffectifsUniteLegale",
       out: "annee_tranche_effectif"
+    },
+    {
+      in: "trancheEffectifsUniteLegale",
+      out: "tranche_effectif"
     }
   ];
 

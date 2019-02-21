@@ -1,4 +1,4 @@
-@media print{
+@media print {
   @page {
     size: landscape;
   }
@@ -9,32 +9,37 @@
     zoom: 40%;
   }
 
-  .title {
+  .title,
+  .subtitle {
     text-align: center;
     margin-bottom: 2rem;
   }
 
-  .terms-list {
-    padding: 1rem;
+  .subtitle {
+    text-transform: uppercase;
+    color: $primary;
+  }
 
-    .definition {
-      min-height: 24px;
-    }
+  .terms-list.box {
+    padding: 2rem;
+    box-shadow: none;
   }
 
   .export-buttons {
-    .btn {
-      margin-right: 5px;
-      margin-left: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .button {
+      margin: 2rem;
     }
-    margin-bottom: 20px;
   }
 
   .result-row {
     @media print {
       justify-content: left;
 
-      > div {
+      >div {
         flex: 0 0 100%;
         max-width: 100%;
       }
@@ -50,16 +55,32 @@
   }
 
   .table {
+    border-radius: 0.325rem;
+    overflow: hidden;
+
     .rt-tr {
       cursor: pointer;
+
+      &:nth-child(even) {
+        background-color: $light;
+      }
+
+      &:hover {
+        background-color: $secondary;
+        color: $light;
+      }
     }
 
-    .rt-th, .rt-td {
+    .rt-th,
+    .rt-td {
       padding: .75rem;
       border-top: 1px solid #dee2e6;
     }
+
     .rt-th {
       font-weight: bold;
+      background-color: $light;
+      color: $primary;
     }
 
     .rt-thead {

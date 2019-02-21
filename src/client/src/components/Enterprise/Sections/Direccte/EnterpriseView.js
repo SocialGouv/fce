@@ -47,7 +47,7 @@ class EstablishmentView extends React.Component {
         <div className="direccte-excerpt">
           <div className="direccte-excerpt--pole">
             <span className="direccte-excerpt--pole-value">{total}</span>
-            <span className="direccte-excerpt--pole-key">
+            <span className="direccte-ex cerpt--pole-key">
               interactions sur{" "}
             </span>
             <span className="direccte-excerpt--pole-value">

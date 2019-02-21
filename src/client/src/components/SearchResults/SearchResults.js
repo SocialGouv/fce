@@ -1,8 +1,7 @@
 import React from "react";
-import "./searchResults.scss";
 import { Row, Col, Button, Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faFileExcel, faPrint } from "@fortawesome/fontawesome-pro-light";
+import { faFileExcel, faPrint } from "@fortawesome/fontawesome-pro-solid";
 import Terms from "./Terms";
 import ReactTable from "react-table";
 import Value from "../../elements/Value";
@@ -12,40 +11,49 @@ class SearchResults extends React.Component {
   render() {
     return (
       <div className="app-searchResults">
-        <Row className="justify-content-md-center">
-          <Col md="12">
-            <h1 className="title">Résultats de recherche</h1>
-          </Col>
-        </Row>
+        <div className="columns">
+          <div className="column is-12">
+            <h1 className="title is-size-1">Résultats de recherche</h1>
+            <h2 className="subtitle is-size-2">
+              {this.props.results.length} résultat
+              {this.props.results.length > 1 ? "s" : ""}
+            </h2>
+          </div>
+        </div>
 
-        <Row className="justify-content-md-center">
-          <Col md="10">
-            <Terms
-              terms={this.props.terms}
-              nbResults={this.props.results.length}
-            />
-          </Col>
-        </Row>
+        <div className="columns">
+          <div className="column is-offset-3 is-6">
+            <Terms terms={this.props.terms} />
+          </div>
+        </div>
 
-        <Row className="justify-content-md-center d-print-none">
-          <Col md="12" className="text-center export-buttons">
-            <Button color="primary" onClick={() => window.print()}>
-              <FontAwesomeIcon icon={faPrint} /> Imprimer
-            </Button>
+        <div className="columns d-print-none">
+          <div className="column is-12 has-text-center export-buttons">
+            <button
+              className="button is-primary"
+              onClick={() => window.print()}
+            >
+              <span className="icon">
+                <FontAwesomeIcon icon={faPrint} />
+              </span>
+              <span>Imprimer</span>
+            </button>
             {this.props.terms.csvURL ? (
-              <Button
-                outline
-                color="secondary"
+              <button
+                className="button is-dark is-outlined"
                 onClick={e => window.open(this.props.terms.csvURL, "_blank")}
               >
-                <FontAwesomeIcon icon={faFileExcel} /> Export Excel
-              </Button>
+                <span className="icon">
+                  <FontAwesomeIcon icon={faFileExcel} />
+                </span>
+                <span>Export Excel</span>
+              </button>
             ) : null}
-          </Col>
-        </Row>
+          </div>
+        </div>
 
-        <Row className="justify-content-md-center result-row">
-          <Col md="12">
+        <div className="columns result-row">
+          <div className="column is-12">
             {!Array.isArray(this.props.results) ? (
               <Alert color="danger">
                 Une erreur est survenue, il est propable que la recherche est
@@ -66,7 +74,7 @@ class SearchResults extends React.Component {
                     ? 25
                     : this.props.results.length
                 }
-                className="table -striped -highlight"
+                className="table is-striped is-hoverable"
                 filterable={true}
                 showPagination={this.props.results.length > 25}
                 pageSizeOptions={[25, 50, 100]}
@@ -215,8 +223,8 @@ class SearchResults extends React.Component {
             ) : (
               ""
             )}
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     );
   }

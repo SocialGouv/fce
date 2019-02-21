@@ -6,6 +6,7 @@
 @import 'Footer/footer';
 @import '../Search/search';
 @import '../AdvancedSearch/advancedSearch';
+@import '../SearchResults/searchResults.scss';
 @import '../Enterprise/enterprise';
 
 html {
@@ -26,6 +27,7 @@ a {
 
 .app-container {
   padding: 5rem 1rem;
+  min-height: 100vh;
 
   @media print {
     padding-top: 1rem;

@@ -9,11 +9,12 @@ export default async (SIRET, interactionsPole3E) => {
       return {
         date: `${year}-${month}-${day}`,
         pole: "3E",
-        unite: `Service Entreprise ${interaction.region.trim()}`,
-        type: interaction.type_suivi.trim(),
-        agent: interaction.inspecteurs.trim(),
-        filiere: interaction.filieres.trim(),
-        eti_pepite: interaction.suivi_eti.trim()
+        unite: `Service Entreprise ${interaction.region &&
+          interaction.region.trim()}`,
+        type: interaction.type_suivi && interaction.type_suivi.trim(),
+        agent: interaction.inspecteurs && interaction.inspecteurs.trim(),
+        filiere: interaction.filieres && interaction.filieres.trim(),
+        eti_pepite: interaction.suivi_eti && interaction.suivi_eti.trim()
       };
     });
 

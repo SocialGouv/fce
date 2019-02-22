@@ -8,11 +8,12 @@ export default async (SIRET, interactionsPole3T) => {
       const [day, month, year] = interaction.date.split("/");
       return {
         pole: "3T",
-        unite: interaction.realise_pour.trim(),
-        type: interaction.type_intervention.trim(),
+        unite: interaction.realise_pour && interaction.realise_pour.trim(),
+        type:
+          interaction.type_intervention && interaction.type_intervention.trim(),
         date: `${year}-${month}-${day}`,
-        agent: interaction.intervenant.trim(),
-        note: interaction.action_sur.trim()
+        agent: interaction.intervenant && interaction.intervenant.trim(),
+        note: interaction.action_sur && interaction.action_sur.trim()
       };
     });
 

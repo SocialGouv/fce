@@ -43,7 +43,7 @@ class DireccteEtablissement extends Etablissement {
           "activite_partielle_24_derniers_mois",
           "pse_en_projet_ou_en_cours",
           "interactions_3E",
-          "interactions_3T",
+          "interactions_T",
           "interactions_C",
           "association",
           "document_association",

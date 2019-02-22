@@ -17,6 +17,6 @@ export default async (SIRET, interactionsPole3T) => {
       };
     });
 
-    return { interactions_3T: interactions };
+    return { interactions_T: interactions };
   });
 };

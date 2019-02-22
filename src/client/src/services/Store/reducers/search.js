@@ -87,29 +87,29 @@ const addCountInteractionsToEstablishment = (
   interactionsTerms
 ) => {
   let interactions = {};
-  let totalInteractions = 0;
-  let nbInteractionsCurrentPole = 0;
+  let totalInteractions = {
+    total: 0
+  };
 
   Config.get("interactions").forEach(pole => {
     try {
-      nbInteractionsCurrentPole = establishment.direccte.filter(
-        interaction => interaction.pole === pole
-      ).length;
-      interactions[pole] = nbInteractionsCurrentPole;
+      const interactionsPole = establishment[`interactions_${pole}`] || [];
+      interactions[pole] = interactionsPole;
+      totalInteractions[pole] = interactionsPole.length;
 
       if (!interactionsTerms || interactionsTerms.includes(pole)) {
-        totalInteractions += nbInteractionsCurrentPole;
+        totalInteractions.total += interactionsPole.length;
       }
     } catch (e) {
-      if (Array.isArray(interactions[pole])) {
-        console.error(e);
-      }
-      interactions[pole] = 0;
+      console.error(e);
+      interactions[pole] = [];
+      totalInteractions[pole] = 0;
     }
   });
 
   establishment.interactions = interactions;
   establishment.totalInteractions = totalInteractions;
+
   return establishment;
 };
 

@@ -30,6 +30,22 @@ const formatEtab = async (etab, params) => {
       out: "etat_etablissement"
     },
     {
+      in: "periodesEtablissement[0].etatAdministratifEtablissement",
+      out: "etat_etablissement_libelle",
+      callback: etat => {
+        switch (etat) {
+          case "A":
+            return "Actif";
+          case "F":
+            return "Fermé";
+          case "C":
+            return "Cessé";
+          default:
+            return undefined;
+        }
+      }
+    },
+    {
       in: "periodesEtablissement[0].dateDebut",
       out: "date_fin"
     },

@@ -68,7 +68,7 @@ class EnterpriseActivity extends React.Component {
         </div>
 
         <div className="columns">
-          <h5 className="column is-3">Date de l'état</h5>
+          <h5 className="column is-3">Date de la mise à jour</h5>
           <span className="column is-8">
             <Value
               value={enterprise.etat_entreprise && enterprise.date_mise_a_jour}

@@ -19,13 +19,6 @@ class Establishments extends React.Component {
           <h3 className="title is-size-5">
             Entreprise <Value value={enterprise.raison_sociale} empty="-" />
           </h3>
-
-          <dl className="columns">
-            <dt className="column is-3">Raison Sociale</dt>
-            <dd className="definition column is-8">
-              <Value value={enterprise.raison_sociale} empty="-" />
-            </dd>
-          </dl>
           <dl className="columns">
             <dt className="column is-3">SIREN</dt>
             <dd className="definition column is-8">

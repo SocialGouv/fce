@@ -16,7 +16,7 @@ class EnterpriseIdentity extends React.Component {
             <Value value={enterprise.siren} empty="-" />
           </span>
         </div>
-        <div className="columns">
+        {/* <div className="columns">
           {enterprise.nom || enterprise.prenom
             ? [
                 <h5 className="column is-3" key="name_label">
@@ -40,7 +40,7 @@ class EnterpriseIdentity extends React.Component {
                   <Value value={enterprise.raison_sociale} empty="-" />
                 </span>
               ]}
-        </div>
+        </div> */}
         <div className="columns">
           <h5 className="column is-3">Nom commercial</h5>
           <span className="column is-8">
@@ -55,7 +55,7 @@ class EnterpriseIdentity extends React.Component {
         </div>
 
         <div className="columns">
-          <h5 className="column is-3">Catégorie juridique</h5>
+          <h5 className="column is-3">Forme juridique</h5>
           <span className="column is-8">
             <Value value={enterprise.categorie_juridique} empty="-" />
           </span>

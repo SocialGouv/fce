@@ -22,7 +22,7 @@ class SearchResults extends React.Component {
         </div>
 
         <div className="columns">
-          <div className="column is-offset-3 is-6">
+          <div className="column is-offset-2 is-8">
             <Terms terms={this.props.terms} />
           </div>
         </div>

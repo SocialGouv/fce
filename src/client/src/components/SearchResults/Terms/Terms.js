@@ -6,36 +6,36 @@ class Terms extends React.Component {
       <div className="terms-list box columns">
         <div className="column is-6">
           <div className="columns">
-            <h5 className="column is-3">Raison Sociale / Nom</h5>
-            <span className="column is-8">
+            <h5 className="column is-6">Raison Sociale / Nom</h5>
+            <span className="column is-6">
               {this.props.terms.raisonSociale}
             </span>
           </div>
           <div className="columns">
-            <h5 className="column is-3">SIREN</h5>
-            <span className="column is-8">{this.props.terms.siren}</span>
+            <h5 className="column is-6">SIREN</h5>
+            <span className="column is-6">{this.props.terms.siren}</span>
           </div>
           <div className="columns">
-            <h5 className="column is-3">Code NAF</h5>
-            <span className="column is-8">{this.props.terms.naf}</span>
+            <h5 className="column is-6">Code NAF</h5>
+            <span className="column is-6">{this.props.terms.naf}</span>
           </div>
           <div className="columns">
-            <h5 className="column is-3">Commune</h5>
-            <span className="column is-8">{this.props.terms.commune}</span>
+            <h5 className="column is-6">Commune</h5>
+            <span className="column is-6">{this.props.terms.commune}</span>
           </div>
         </div>
         <div className="column is-6">
           <div className="columns">
-            <h5 className="column is-3">Code Postal</h5>
-            <span className="column is-8">{this.props.terms.codePostal}</span>
+            <h5 className="column is-7">Code Postal</h5>
+            <span className="column is-5">{this.props.terms.codePostal}</span>
           </div>
           <div className="columns">
-            <h5 className="column is-3">Département</h5>
-            <span className="column is-8">{this.props.terms.departement}</span>
+            <h5 className="column is-7">Département</h5>
+            <span className="column is-5">{this.props.terms.departement}</span>
           </div>
           <div className="columns">
-            <h5 className="column is-3">Interactions</h5>
-            <span className="column is-8">
+            <h5 className="column is-7">Interactions</h5>
+            <span className="column is-5">
               {this.props.terms.interactions &&
               this.props.terms.interactions.length
                 ? this.props.terms.interactions
@@ -45,10 +45,10 @@ class Terms extends React.Component {
             </span>
           </div>
           <div className="columns">
-            <h5 className="column is-3">
+            <h5 className="column is-7">
               Etablissements principaux uniquement ?
             </h5>
-            <span className="column is-8">
+            <span className="column is-5">
               {this.props.terms.siegeSocial ? "oui" : "non"}
             </span>
           </div>

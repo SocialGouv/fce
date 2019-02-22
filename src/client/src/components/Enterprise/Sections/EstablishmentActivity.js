@@ -13,7 +13,6 @@ const assocStyle = {
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
-    console.log(establishment);
 
     establishment.association = {
       id: "W313001376",
@@ -31,7 +30,9 @@ class EstablishmentActivity extends React.Component {
         <div className="columns">
           <h5 className="column is-3">Activité principale</h5>
           <span className="column is-8">
-            <Value value={establishment.activite} empty="-" />
+            <Value value={establishment.naf} empty="-" />
+            <span> - </span>
+            <Value value={establishment.libelle_naf} empty="-" />
           </span>
         </div>
         <div className="columns">
@@ -276,8 +277,10 @@ class EstablishmentActivity extends React.Component {
               <div className="accordion-content">
                 <table className="table is-striped">
                   <thead>
-                    <th className="th"> Thématique</th>
-                    <th className="th"> Nombre accords concernés </th>
+                    <tr>
+                      <th className="th"> Thématique</th>
+                      <th className="th"> Nombre accords concernés </th>
+                    </tr>
                   </thead>
                   <tbody>
                     {establishment.accords ? (

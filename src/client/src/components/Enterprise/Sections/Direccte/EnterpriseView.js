@@ -21,7 +21,7 @@ class EstablishmentView extends React.Component {
 
     const direccte = Object.values(
       enterprise.etablissements.reduce((data, etab) => {
-        (etab.direccte || []).forEach(dirvis => {
+        (etab.interactions || []).forEach(dirvis => {
           const { siret } = etab;
           const etat = etab.etat_etablissement;
           const dep =
@@ -105,30 +105,6 @@ class EstablishmentView extends React.Component {
                         <td>{etab.count}</td>
                       </tr>
                     ))}
-                    <tr>
-                      <td>83106781400010</td>
-                      <td>
-                        <FontAwesomeIcon
-                          className="icon--success"
-                          icon={faCircle}
-                        />
-                      </td>
-                      <td>31</td>
-                      <td>Toulouse</td>
-                      <td>0</td>
-                    </tr>
-                    <tr>
-                      <td>83106781400010</td>
-                      <td>
-                        <FontAwesomeIcon
-                          className="icon--success"
-                          icon={faCircle}
-                        />
-                      </td>
-                      <td>31</td>
-                      <td>Toulouse</td>
-                      <td>0</td>
-                    </tr>
                   </tbody>
                 </table>
               </div>

@@ -1,11 +1,16 @@
 import React from "react";
 import { Row, Col, Button, Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faFileExcel, faPrint } from "@fortawesome/fontawesome-pro-solid";
+import {
+  faFileExcel,
+  faPrint,
+  faCircle
+} from "@fortawesome/fontawesome-pro-solid";
 import Terms from "./Terms";
 import ReactTable from "react-table";
 import Value from "../../elements/Value";
 import { withRouter } from "react-router-dom";
+import classNames from "classnames";
 
 class SearchResults extends React.Component {
   render() {
@@ -145,11 +150,14 @@ class SearchResults extends React.Component {
                     id: "etat",
                     minWidth: 80,
                     accessor: e =>
-                      Value({
-                        value:
-                          e.etablissement.etat_etablissement &&
-                          e.etablissement.etat_etablissement.label,
-                        empty: "-"
+                      e.etablissement.etat_etablissement &&
+                      FontAwesomeIcon({
+                        className: classNames(
+                          e.etablissement.etat_etablissement == "A"
+                            ? "icon--success"
+                            : "icon--danger"
+                        ),
+                        icon: faCircle
                       })
                   },
                   {
@@ -185,13 +193,6 @@ class SearchResults extends React.Component {
                       })
                   },
                   {
-                    Header: "Activité",
-                    id: "activite",
-                    minWidth: 300,
-                    accessor: e =>
-                      Value({ value: e.etablissement.activite, empty: "-" })
-                  },
-                  {
                     Header: "Cat. Etablissement",
                     id: "categorie_etablissement",
                     minWidth: 200,
@@ -207,7 +208,7 @@ class SearchResults extends React.Component {
                     minWidth: 80,
                     accessor: e =>
                       Value({
-                        value: e.etablissement.totalInteractions,
+                        value: e.etablissement.totalInteractions.total,
                         empty: ""
                       })
                   }

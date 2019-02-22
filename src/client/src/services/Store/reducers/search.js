@@ -4,7 +4,7 @@ import {
   SEARCH_NOMENCLATURES,
   RESET_STORE
 } from "../constants/ActionTypes";
-import Config from "../../Config";
+import addInteractionsToEstablishment from "../utils/addInteractionsToEstablishment";
 
 const initialState = {
   results: [],
@@ -70,7 +70,7 @@ const flattenResults = (results, terms) => {
   results.forEach(enterprise => {
     if (Array.isArray(enterprise.etablissements)) {
       enterprise.etablissements.forEach(establishment => {
-        establishment = addCountInteractionsToEstablishment(
+        establishment = addInteractionsToEstablishment(
           establishment,
           interactionTerms
         );
@@ -80,37 +80,6 @@ const flattenResults = (results, terms) => {
   });
 
   return flattenResults;
-};
-
-const addCountInteractionsToEstablishment = (
-  establishment,
-  interactionsTerms
-) => {
-  let interactions = {};
-  let totalInteractions = 0;
-  let nbInteractionsCurrentPole = 0;
-
-  Config.get("interactions").forEach(pole => {
-    try {
-      nbInteractionsCurrentPole = establishment.direccte.filter(
-        interaction => interaction.pole === pole
-      ).length;
-      interactions[pole] = nbInteractionsCurrentPole;
-
-      if (!interactionsTerms || interactionsTerms.includes(pole)) {
-        totalInteractions += nbInteractionsCurrentPole;
-      }
-    } catch (e) {
-      if (Array.isArray(interactions[pole])) {
-        console.error(e);
-      }
-      interactions[pole] = 0;
-    }
-  });
-
-  establishment.interactions = interactions;
-  establishment.totalInteractions = totalInteractions;
-  return establishment;
 };
 
 export default search;

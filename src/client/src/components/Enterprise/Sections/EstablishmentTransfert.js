@@ -5,7 +5,7 @@ import Value from "../../../elements/Value";
 const EstablishmentTransfert = ({ predecesseur, successeur, data }) => {
   return data
     ? [
-        <div className="columns">
+        <div className="columns" key="transfert_label_container">
           <h5 className="column is-size-6 is-3" key="transfert_label">
             SIRET{" "}
             {predecesseur ? "prédécesseur" : successeur ? "successeur" : ""}
@@ -16,7 +16,7 @@ const EstablishmentTransfert = ({ predecesseur, successeur, data }) => {
             </Link>
           </span>
         </div>,
-        <div className="columns">
+        <div className="columns" key="transfert_date_label_container">
           <h5 className="column is-size-6 is-3" key="transfert_date_label">
             Date du transfert
           </h5>

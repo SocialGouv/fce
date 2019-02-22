@@ -39,7 +39,8 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         },
         expected: {
           actif: true,
-          etat_etablissement: "A"
+          etat_etablissement: "A",
+          etat_etablissement_libelle: "Actif"
         }
       },
       {
@@ -55,7 +56,8 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         },
         expected: {
           actif: false,
-          etat_etablissement: "F"
+          etat_etablissement: "F",
+          etat_etablissement_libelle: "Fermé"
         }
       },
       {
@@ -71,6 +73,7 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         },
         expected: {
           etat_etablissement: "A",
+          etat_etablissement_libelle: "Actif",
           actif: true
         }
       },
@@ -89,7 +92,8 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         expected: {
           etat_etablissement: "F",
           date_fin: "2019-02-06",
-          actif: false
+          actif: false,
+          etat_etablissement_libelle: "Fermé"
         }
       },
       {
@@ -104,20 +108,6 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         }
       },
       {
-        it: "does copy naf and update libelle",
-        data: {
-          etablissement: {
-            uniteLegale: {
-              activitePrincipaleUniteLegale: "62.01Z"
-            }
-          }
-        },
-        expected: {
-          naf: "62.01Z",
-          libelle_naf: "Programmation informatique"
-        }
-      },
-      {
         it: "does copy siege_social",
         data: {
           etablissement: {
@@ -125,7 +115,8 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
           }
         },
         expected: {
-          siege_social: true
+          siege_social: true,
+          categorie_etablissement: "Siège social"
         }
       },
       {

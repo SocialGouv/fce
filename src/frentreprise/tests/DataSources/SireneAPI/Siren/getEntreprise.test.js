@@ -1,6 +1,4 @@
-import {
-  nestcribe_path as test
-} from "../../../utils";
+import { nestcribe_path as test } from "../../../utils";
 
 import getEntreprise from "../../../../src/DataSources/SireneAPI/Siren/getEntreprise";
 
@@ -32,9 +30,11 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         it: "does copy raison_sociale",
         data: {
           uniteLegale: {
-            periodesUniteLegale: [{
-              denominationUniteLegale: "Phil Electrique"
-            }]
+            periodesUniteLegale: [
+              {
+                denominationUniteLegale: "Phil Electrique"
+              }
+            ]
           }
         },
         expected: {
@@ -56,9 +56,11 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         it: "does copy nom",
         data: {
           uniteLegale: {
-            periodesUniteLegale: [{
-              nomUniteLegale: "Térieur"
-            }]
+            periodesUniteLegale: [
+              {
+                nomUniteLegale: "Térieur"
+              }
+            ]
           }
         },
         expected: {
@@ -83,9 +85,11 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         it: "does copy nom_commercial",
         data: {
           uniteLegale: {
-            periodesUniteLegale: [{
-              nomUsageUniteLegale: "Térieur"
-            }]
+            periodesUniteLegale: [
+              {
+                nomUsageUniteLegale: "Térieur"
+              }
+            ]
           }
         },
         expected: {
@@ -108,9 +112,11 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         data: {
           uniteLegale: {
             siren: "841322266",
-            periodesUniteLegale: [{
-              nicSiegeUniteLegale: "00013"
-            }]
+            periodesUniteLegale: [
+              {
+                nicSiegeUniteLegale: "00013"
+              }
+            ]
           }
         },
         expected: {
@@ -119,26 +125,14 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         }
       },
       {
-        it: "does copy forme_juridique",
-        data: {
-          uniteLegale: {
-            periodesUniteLegale: [{
-              categorieJuridiqueUniteLegale: "1000"
-            }]
-          }
-        },
-        expected: {
-          forme_juridique_code: "1000",
-          forme_juridique: "Entrepreneur individuel"
-        }
-      },
-      {
         it: "does copy naf",
         data: {
           uniteLegale: {
-            periodesUniteLegale: [{
-              activitePrincipaleUniteLegale: "62.01Z"
-            }]
+            periodesUniteLegale: [
+              {
+                activitePrincipaleUniteLegale: "62.01Z"
+              }
+            ]
           }
         },
         expected: {
@@ -149,9 +143,11 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         it: "does copy etat_entreprise",
         data: {
           uniteLegale: {
-            periodesUniteLegale: [{
-              etatAdministratifUniteLegale: "A"
-            }]
+            periodesUniteLegale: [
+              {
+                etatAdministratifUniteLegale: "A"
+              }
+            ]
           }
         },
         expected: {
@@ -173,9 +169,11 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         it: "does copy date_de_radiation",
         data: {
           uniteLegale: {
-            periodesUniteLegale: [{
-              dateFin: "2019-01-24"
-            }]
+            periodesUniteLegale: [
+              {
+                dateFin: "2019-01-24"
+              }
+            ]
           }
         },
         expected: {
@@ -186,10 +184,12 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         it: "does return dateFin as date_mise_a_jour when closed",
         data: {
           uniteLegale: {
-            periodesUniteLegale: [{
-              etatAdministratifUniteLegale: "C",
-              dateFin: "2019-01-24"
-            }]
+            periodesUniteLegale: [
+              {
+                etatAdministratifUniteLegale: "C",
+                dateFin: "2019-01-24"
+              }
+            ]
           }
         },
         expected: {
@@ -199,13 +199,16 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         }
       },
       {
-        it: "does return dateDernierTraitementUniteLegale as date_mise_a_jour when open",
+        it:
+          "does return dateDernierTraitementUniteLegale as date_mise_a_jour when open",
         data: {
           uniteLegale: {
             dateDernierTraitementUniteLegale: "2019-01-24",
-            periodesUniteLegale: [{
-              etatAdministratifUniteLegale: "A",
-            }]
+            periodesUniteLegale: [
+              {
+                etatAdministratifUniteLegale: "A"
+              }
+            ]
           }
         },
         expected: {
@@ -217,9 +220,11 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         it: "does copy entreprise_employeur",
         data: {
           uniteLegale: {
-            periodesUniteLegale: [{
-              caractereEmployeurUniteLegale: "N"
-            }]
+            periodesUniteLegale: [
+              {
+                caractereEmployeurUniteLegale: "N"
+              }
+            ]
           }
         },
         expected: {
@@ -236,7 +241,7 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
         expected: {
           annee_tranche_effectif: "2019"
         }
-      },
+      }
     ];
 
     for (let i = 0; i < testCases.length; i++) {
@@ -244,14 +249,17 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
 
       it(testCase.it || `tests case n°${i + 1}`, async () => {
         let result = await getEntreprise(
-          testCase.identifier || null, {
+          testCase.identifier || null,
+          {
             get: args =>
               Promise.resolve({
-                data: typeof testCase.data === "function" ?
-                  testCase.data(...args) :
-                  testCase.data
+                data:
+                  typeof testCase.data === "function"
+                    ? testCase.data(...args)
+                    : testCase.data
               })
-          }, {}
+          },
+          {}
         );
 
         delete result._raw;
@@ -263,15 +271,15 @@ test("DataSources/SireneAPI/Siren/getEntreprise", () => {
   });
 
   it("returns an empty data when it fails", async () => {
-  const Axios = {
-    get: () => Promise.reject()
-  };
+    const Axios = {
+      get: () => Promise.reject()
+    };
 
-  const consoleSpy = jest
-    .spyOn(global.console, "error")
-    .mockImplementationOnce(() => {});
+    const consoleSpy = jest
+      .spyOn(global.console, "error")
+      .mockImplementationOnce(() => {});
 
-  const result = await getEntreprise("ERRORSIREN", Axios, {});
-  expect(result).toEqual({});
+    const result = await getEntreprise("ERRORSIREN", Axios, {});
+    expect(result).toEqual({});
   });
 });

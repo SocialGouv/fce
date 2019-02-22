@@ -1,14 +1,18 @@
 import utils from "../../../Utils/utils";
 import helpers from "../Helpers/helpers";
 
-const getSettlements = async (SIREN, Axios, params) => {
+const getSettlements = async (SIREN, Axios, params, isSearch = false) => {
   return await utils
     .requestAPI(Axios, `siret/?q=siren:${SIREN}&nombre=10000`, params)
-    .then(data => {
+    .then(async data => {
       if (!data.etablissements) {
         return {};
       }
-      const etabs = data.etablissements.map(helpers.formatEtab);
+      const etabs = await Promise.all(
+        data.etablissements.map(
+          async etab => await helpers.formatEtab(etab, isSearch ? null : params)
+        )
+      );
 
       return {
         nombre_etablissements_actifs: etabs.filter(eta => eta.actif).length,

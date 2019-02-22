@@ -12,7 +12,11 @@ const getEtablissement = async (SIRET, Axios, params) => {
           in: "siege_social",
           out: "categorie_etablissement",
           callback: siege_social =>
-            siege_social ? "Siège social" : "Établissement secondaire"
+            utils.isEmpty(siege_social)
+              ? undefined
+              : siege_social
+              ? "Siège social"
+              : "Établissement secondaire"
         },
         "enseigne",
         "naf",
@@ -30,14 +34,6 @@ const getEtablissement = async (SIRET, Axios, params) => {
         {
           in: "region_implantation.value",
           out: "region"
-        },
-        {
-          in: "naf",
-          out: "activite",
-          callback: (naf, etablissement) =>
-            naf && etablissement.libelle_naf
-              ? `${naf} - ${etablissement.libelle_naf}`
-              : undefined
         },
         {
           in: "tranche_effectif_salarie_etablissement",

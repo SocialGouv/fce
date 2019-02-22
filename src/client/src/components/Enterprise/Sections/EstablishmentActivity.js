@@ -1,69 +1,39 @@
 import React from "react";
 import Value from "../../../elements/Value";
 import EstablishmentTransfert from "./EstablishmentTransfert";
-import classNames from "classnames";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+
+const assocStyle = {
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center"
+};
 
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
     console.log(establishment);
 
-    const stateClass =
-      establishment.etat_etablissement == "A"
-        ? "icon--success"
-        : "icon--danger";
+    establishment.association = {
+      id: "W313001376",
+      siret: "83136781400010"
+    };
+
+    establishment.document_association = {
+      url: "https://document_association.pdf"
+    };
 
     return (
       <section id="activity" className="enterprise-section">
-        <h1 className="title is-size-4">État et activité</h1>
+        <h2 className="title is-size-4">Activité</h2>
 
         <div className="columns">
-          <h5 className="column is-3">Date de création</h5>
-          <span className="column is-8">
-            <Value value={establishment.date_creation} empty="-" />
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Etat de l'établissement</h5>
-          <span className="column is-8">
-            {establishment.etat_etablissement && (
-              <FontAwesomeIcon
-                className={classNames(stateClass)}
-                icon={faCircle}
-              />
-            )}
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Date de l'état</h5>
-          <span className="column is-8">
-            <Value
-              value={
-                establishment.etat_etablissement === "F"
-                  ? establishment.date_fin
-                  : establishment.date_dernier_traitement_etablissement
-              }
-              empty="-"
-            />
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Activité</h5>
+          <h5 className="column is-3">Activité principale</h5>
           <span className="column is-8">
             <Value value={establishment.naf} empty="-" />
             <span> - </span>
             <Value value={establishment.libelle_naf} empty="-" />
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Activité économique depuis le</h5>
-          <span className="column is-8">
-            <Value
-              value={establishment.date_debut_activite_economique}
-              empty="-"
-            />
           </span>
         </div>
         <div className="columns">
@@ -74,14 +44,13 @@ class EstablishmentActivity extends React.Component {
             establishment.document_association &&
             establishment.document_association.url ? (
               <span>
-                &nbsp;Télécharger&nbsp;
+                <span>&nbsp;- télécharger&nbsp;</span>
                 <a
                   href={establishment.document_association.url}
                   target="_blank"
                 >
                   les derniers statuts
                 </a>
-                .
               </span>
             ) : null}
           </span>
@@ -104,24 +73,25 @@ class EstablishmentActivity extends React.Component {
               ]
             : null}
         </div>
-        <div className="columns">
+        {/* <div className="columns">
           {establishment.document_association
             ? [
                 <h5 className="column is-3" key="rna_label">
                   Document association
                 </h5>,
                 <span className="column is-8" key="rna_value">
-                  <Value
-                    value={
+                  <a
+                    href={
                       establishment.document_association &&
                       establishment.document_association.url
                     }
-                    empty="-"
-                  />
+                  >
+                    Télécharger les documents
+                  </a>
                 </span>
               ]
             : null}
-        </div>
+        </div> */}
         <div className="columns">
           <h5 className="column is-3">Etablissement employeur</h5>
           <span className="column is-8">
@@ -132,50 +102,78 @@ class EstablishmentActivity extends React.Component {
             />
           </span>
         </div>
-        <div className="columns">
-          <h5 className="column is-3">Tranche Effectif INSEE</h5>
-          <span className="column is-8">
-            <Value value={establishment.tranche_effectif_insee} empty="-" />
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Année tranche Effectif INSEE</h5>
-          <span className="column is-8">
-            <Value
-              value={establishment.annee_tranche_effectif_insee}
-              empty="-"
-            />
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Nombre d'intérimaires</h5>
-          <span className="column is-8">
-            <Value value={establishment.interim} empty="-" />
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Dernier effectif physique</h5>
-          <span className="column is-8">
-            <Value value={establishment.dernier_effectif_physique} empty="-" />
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Date dernier effectif physique</h5>
-          <span className="column is-8">
-            <Value
-              value={establishment.date_dernier_effectif_physique}
-              empty="-"
-            />
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Source dernier effectif physique</h5>
-          <span className="column is-8">
-            <Value
-              value={establishment.source_dernier_effectif_physique}
-              empty="-"
-            />
-          </span>
+        <div className="accordions">
+          <div className="accordion">
+            <div className="accordion-header toggle">
+              <span className="">Effectifs</span>
+              <span className="">
+                <button className="button is-light is-rounded">
+                  <span className="icon">
+                    <FontAwesomeIcon icon={faChevronDown} />
+                  </span>
+                </button>
+              </span>
+            </div>
+            <div className="accordion-body">
+              <div className="accordion-content no-table">
+                <div className="columns">
+                  <h5 className="column is-3">Tranche Effectif INSEE</h5>
+                  <span className="column is-8">
+                    <Value
+                      value={establishment.tranche_effectif_insee}
+                      empty="-"
+                    />
+                  </span>
+                </div>
+                <div className="columns">
+                  <h5 className="column is-3">Année tranche Effectif INSEE</h5>
+                  <span className="column is-8">
+                    <Value
+                      value={establishment.annee_tranche_effectif_insee}
+                      empty="-"
+                    />
+                  </span>
+                </div>
+                <div className="columns">
+                  <h5 className="column is-3">Nombre d'intérimaires</h5>
+                  <span className="column is-8">
+                    <Value value={establishment.interim} empty="-" />
+                  </span>
+                </div>
+                <div className="columns">
+                  <h5 className="column is-3">Dernier effectif physique</h5>
+                  <span className="column is-8">
+                    <Value
+                      value={establishment.dernier_effectif_physique}
+                      empty="-"
+                    />
+                  </span>
+                </div>
+                <div className="columns">
+                  <h5 className="column is-3">
+                    Date dernier effectif physique
+                  </h5>
+                  <span className="column is-8">
+                    <Value
+                      value={establishment.date_dernier_effectif_physique}
+                      empty="-"
+                    />
+                  </span>
+                </div>
+                <div className="columns">
+                  <h5 className="column is-3">
+                    Source dernier effectif physique
+                  </h5>
+                  <span className="column is-8">
+                    <Value
+                      value={establishment.source_dernier_effectif_physique}
+                      empty="-"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="columns">
           <h5 className="column is-3">ETI / Pépite</h5>

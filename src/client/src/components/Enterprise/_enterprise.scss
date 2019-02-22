@@ -10,7 +10,7 @@
     >.aside-contain {
       overflow: auto;
       height: 75%;
-      background-color: $light;
+      background-color: $white;
       border-radius: 0.325rem;
       z-index: 10;
       padding-top: 1.5rem;
@@ -61,7 +61,7 @@
     .establishment-keys {
       display: flex;
       justify-content: flex-start;
-      align-items: flex-end;
+      align-items: center;
 
       #identity-et {
         width: 60%;
@@ -69,10 +69,10 @@
     }
 
     .enterprise-section {
-      padding: 1rem;
+      padding: 2rem;
       margin: 4rem 0 0;
       padding-top: 2rem;
-      background-color: $light;
+      background-color: $white;
       // box-shadow: 1px 1px 1px $dark;
       border-radius: 0.325rem;
       position: relative;
@@ -80,8 +80,8 @@
       >.title {
         margin-bottom: 1rem;
         font-size: 1.4rem;
-        background-color: $light;
-        padding: 1rem;
+        background-color: $white;
+        padding: 1rem 2rem;
         position: absolute;
         top: -2rem;
         left: 0;
@@ -89,6 +89,17 @@
         text-transform: uppercase;
         font-weight: normal;
         color: $primary;
+      }
+
+      .subtitle {
+        text-align: left;
+        color: $primary;
+        font-weight: bold;
+        margin-top: 0;
+
+        &:not(:first-of-type) {
+          margin-top: 1rem;
+        }
       }
 
       >.dl {
@@ -113,11 +124,10 @@
       margin-left: 1%;
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
+      justify-content: flex-start;
       align-items: center;
       position: relative;
       overflow: hidden;
-      margin-top: 2rem;
       padding: 1rem 0.5rem 0;
 
       &-mask {
@@ -139,10 +149,7 @@
         border-radius: 0.325rem;
         height: 100%;
         color: $light;
-
-        &:not(:last-child) {
-          margin-bottom: .75rem;
-        }
+        margin-bottom: 0.5rem;
 
         .title {
           text-transform: uppercase;
@@ -163,6 +170,10 @@
 
       &-icon {
         font-size: 2.25rem;
+      }
+
+      .icon--danger {
+        font-size: 1.75rem;
       }
 
       &-state,
@@ -274,7 +285,7 @@
   }
 
   .accordion-body {
-    background-color: $white !important;
+    background-color: $light !important;
   }
 
   .accordion-content {
@@ -299,6 +310,7 @@
   }
 
   &--danger {
+    font-size: .75rem;
     color: #888;
   }
 }

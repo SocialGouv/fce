@@ -14,8 +14,13 @@ import SearchResults from "../../containers/SearchResults";
 import AdvancedSearch from "../../containers/AdvancedSearch";
 import Enterprise from "../../containers/Enterprise";
 import { Error403, Error404 } from "../../components/Errors";
+import PaperBG from "../../assets/img/paper.png";
 
 let { store, persistor } = configureStore();
+
+const appStyle = {
+  background: `url(${PaperBG})`
+};
 
 class App extends React.Component {
   render() {
@@ -26,7 +31,7 @@ class App extends React.Component {
           <BrowserRouter>
             <ScrollToTop>
               <Header />
-              <div className="app-container">
+              <div className="app-container" style={appStyle}>
                 <Switch>
                   <Route exact path="/" component={Search} />
                   <Route exact path="/search" component={Search} />

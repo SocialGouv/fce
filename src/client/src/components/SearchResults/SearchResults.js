@@ -208,7 +208,7 @@ class SearchResults extends React.Component {
                     minWidth: 80,
                     accessor: e =>
                       Value({
-                        value: e.etablissement.totalInteractions,
+                        value: e.etablissement.totalInteractions.total,
                         empty: ""
                       })
                   }

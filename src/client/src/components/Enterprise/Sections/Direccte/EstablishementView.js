@@ -21,7 +21,6 @@ class EstablishmentView extends React.Component {
 
   render() {
     const { establishment } = this.props;
-    console.log(establishment);
 
     return (
       <section id="direccte" className="enterprise-section">

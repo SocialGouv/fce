@@ -1,7 +1,7 @@
 import Config from "../../Config";
 
 export default (establishment, interactionsTerms = null) => {
-  let interactions = {};
+  let interactions = [];
   let totalInteractions = {
     total: 0
   };
@@ -9,7 +9,7 @@ export default (establishment, interactionsTerms = null) => {
   Config.get("interactions").forEach(pole => {
     try {
       const interactionsPole = establishment[`interactions_${pole}`] || [];
-      interactions[pole] = interactionsPole;
+      interactions = [...interactions, ...interactionsPole];
       totalInteractions[pole] = interactionsPole.length;
 
       if (!interactionsTerms || interactionsTerms.includes(pole)) {

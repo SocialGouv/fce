@@ -21,6 +21,8 @@ class EstablishmentView extends React.Component {
 
   render() {
     const { establishment } = this.props;
+    console.log(establishment);
+
     return (
       <section id="direccte" className="enterprise-section">
         <h2 className="title is-size-4">Visites / Contrôles</h2>
@@ -36,52 +38,33 @@ class EstablishmentView extends React.Component {
             <Value value={establishment.unite_controle_competente} empty="-" />
           </span>
         </div>
-        {establishment.direccte && establishment.direccte.length ? (
-          <div>
-            <div className="direccte-excerpt">
-              {establishment.direccte
-                .reduce(
-                  (ints, dirvis) => {
-                    ints.counts[dirvis.pole]++;
-                    ints.table = Object.keys(ints.counts).map(key => ({
-                      key,
-                      value: ints.counts[key]
-                    }));
-                    return ints;
-                  },
-                  {
-                    counts: { T: 0, C: 0, "3E": 0 },
-                    table: []
-                  }
-                )
-                .table.map((pole, index) => (
-                  <div key={index} className="notification is-primary">
-                    <span>Pôle {pole.key}</span>
-                    <span>{pole.value}</span>
-                    <FontAwesomeIcon icon={faCalendarExclamation} />
-                  </div>
-                ))}
-            </div>
+
+        <div className="direccte-excerpt">
+          <div className="direccte-excerpt--pole">
+            <span className="direccte-excerpt--pole-key">Pôle T</span>
+            <span className="direccte-excerpt--pole-value">
+              {establishment.totalInteractions &&
+                establishment.totalInteractions["T"]}
+            </span>
+            <FontAwesomeIcon icon={faCalendarExclamation} />
           </div>
-        ) : (
-          <div className="direccte-excerpt">
-            <div className="direccte-excerpt--pole">
-              <span className="direccte-excerpt--pole-key">Pôle T</span>
-              <span className="direccte-excerpt--pole-value">1</span>
-              <FontAwesomeIcon icon={faCalendarExclamation} />
-            </div>
-            <div className="direccte-excerpt--pole">
-              <span className="direccte-excerpt--pole-key">Pôle C</span>
-              <span className="direccte-excerpt--pole-value">0</span>
-              <FontAwesomeIcon icon={faCalendarExclamation} />
-            </div>
-            <div className="direccte-excerpt--pole">
-              <span className="direccte-excerpt--pole-key">Pôle 3E</span>
-              <span className="direccte-excerpt--pole-value">1</span>
-              <FontAwesomeIcon icon={faCalendarExclamation} />
-            </div>
+          <div className="direccte-excerpt--pole">
+            <span className="direccte-excerpt--pole-key">Pôle C</span>
+            <span className="direccte-excerpt--pole-value">
+              {establishment.totalInteractions &&
+                establishment.totalInteractions["C"]}
+            </span>
+            <FontAwesomeIcon icon={faCalendarExclamation} />
           </div>
-        )}
+          <div className="direccte-excerpt--pole">
+            <span className="direccte-excerpt--pole-key">Pôle 3E</span>
+            <span className="direccte-excerpt--pole-value">
+              {establishment.totalInteractions &&
+                establishment.totalInteractions["3E"]}
+            </span>
+            <FontAwesomeIcon icon={faCalendarExclamation} />
+          </div>
+        </div>
 
         <div className="accordions">
           <div className="accordion">
@@ -97,7 +80,8 @@ class EstablishmentView extends React.Component {
             </div>
             <div className="accordion-body">
               <div className="accordion-content">
-                {establishment.direccte && establishment.direccte.length ? (
+                {establishment.interactions &&
+                establishment.interactions.length ? (
                   <table className="table is-striped direccte-interactions">
                     <thead>
                       <tr>
@@ -107,7 +91,7 @@ class EstablishmentView extends React.Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {establishment.direccte.map((dirvis, index) => {
+                      {establishment.interactions.map((dirvis, index) => {
                         return (
                           <tr key={index}>
                             <td>
@@ -120,18 +104,14 @@ class EstablishmentView extends React.Component {
                             <td>
                               <Value value={dirvis.unite} empty="-" />
                             </td>
-                            <td> ND </td>
                             <td>
-                              <Value
-                                value={dirvis.type_intervention}
-                                empty="-"
-                              />
+                              <Value value={dirvis.agent} empty="-" />{" "}
                             </td>
                             <td>
-                              <Value
-                                value={dirvis.cible_intervention}
-                                empty="-"
-                              />
+                              <Value value={dirvis.type} empty="-" />
+                            </td>
+                            <td>
+                              <Value value={dirvis.note} empty="-" />
                             </td>
                             <td> ND </td>
                           </tr>

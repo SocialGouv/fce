@@ -48,7 +48,6 @@ class Establishment extends React.Component {
 
   render() {
     const { establishment, enterprise } = this.props;
-    console.log(establishment);
 
     return (
       <section className="app-enterprise">
@@ -138,19 +137,19 @@ class Establishment extends React.Component {
               enterprise={this.props.enterprise}
             /> */}
           </div>
-          <div id="establishments" class="quickview responsive-item">
-            <div class="quickview-body">
-              <header class="quickview-header">
-                <p class="title">Liste des établissements</p>
-                <span class="delete" data-dismiss="quickview" />
+          <div id="establishments" className="quickview responsive-item">
+            <div className="quickview-body">
+              <header className="quickview-header">
+                <p className="title">Liste des établissements</p>
+                <span className="delete" data-dismiss="quickview" />
               </header>
-              <div class="quickview-block">
+              <div className="quickview-block">
                 <Establishments
                   enterprise={this.props.enterprise}
                   headOffice={this.props.headOffice}
                   establishments={this.props.establishments}
                 />
-                <footer class="quickview-footer" />
+                <footer className="quickview-footer" />
               </div>
             </div>
           </div>

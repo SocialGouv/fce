@@ -15,7 +15,6 @@ import {
 class Dashboard extends React.Component {
   render() {
     const { establishment } = this.props;
-    console.log(establishment);
 
     const stateClass =
       establishment.etat_etablissement == "A"

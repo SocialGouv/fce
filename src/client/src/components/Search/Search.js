@@ -34,7 +34,7 @@ class Search extends React.Component {
                     onChange={evt => this.props.updateForm(evt)}
                   />
                 </div>
-                <div class="control">
+                <div className="control">
                   <button
                     type="submit"
                     className="action button is-primary has-text-light is-large"

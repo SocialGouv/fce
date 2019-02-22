@@ -39,7 +39,8 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         },
         expected: {
           actif: true,
-          etat_etablissement: "A"
+          etat_etablissement: "A",
+          etat_etablissement_libelle: "Actif"
         }
       },
       {
@@ -55,7 +56,8 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         },
         expected: {
           actif: false,
-          etat_etablissement: "F"
+          etat_etablissement: "F",
+          etat_etablissement_libelle: "Fermé"
         }
       },
       {
@@ -71,6 +73,7 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         },
         expected: {
           etat_etablissement: "A",
+          etat_etablissement_libelle: "Actif",
           actif: true
         }
       },
@@ -89,7 +92,8 @@ test("DataSources/SireneAPI/Siret/getSettlement", () => {
         expected: {
           etat_etablissement: "F",
           date_fin: "2019-02-06",
-          actif: false
+          actif: false,
+          etat_etablissement_libelle: "Fermé"
         }
       },
       {

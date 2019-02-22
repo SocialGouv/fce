@@ -19,7 +19,7 @@ class Mandataire extends React.Component {
               </div>
             ]
           : [
-              <div className="columns">
+              <div className="columns" key="name_container">
                 <h5 className="column is-3" key="name_label">
                   Nom
                 </h5>
@@ -27,7 +27,7 @@ class Mandataire extends React.Component {
                   <Value value={mandataire.nom} empty="-" />
                 </span>
               </div>,
-              <div className="columns">
+              <div className="columns" key="firstname_container">
                 <h5 className="column is-3" key="firstname_label">
                   Prenom
                 </h5>

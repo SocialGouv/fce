@@ -3,7 +3,7 @@ const hosts2config = require("./configs/hosts2configs.json");
 let config = null;
 const log = console.warning || console.error || console.log;
 const globalConfig = {
-  interactions: ["C", "3E", "3T"],
+  interactions: ["C", "3E", "T"],
   region: {
     occitanie: 76
   },

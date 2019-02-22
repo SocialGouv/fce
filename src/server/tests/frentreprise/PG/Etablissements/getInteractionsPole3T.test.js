@@ -28,14 +28,14 @@ describe("frentreprise/datasources/PG/Etablissements/getInteractionsPole3E", () 
     };
 
     const expected = {
-      interactions_3T: [
+      interactions_T: [
         {
           date: "2017-01-04",
           unite: "Unité de contrôle n°1 de l'Hérault",
           agent: "Yann Akepourlui",
           note: "Etablissement",
           type: "Enquête",
-          pole: "3T"
+          pole: "T"
         },
         {
           date: "2017-02-04",
@@ -43,7 +43,7 @@ describe("frentreprise/datasources/PG/Etablissements/getInteractionsPole3E", () 
           agent: "Yann Akepourlui",
           note: "Etablissement",
           type: "Enquête",
-          pole: "3T"
+          pole: "T"
         }
       ]
     };

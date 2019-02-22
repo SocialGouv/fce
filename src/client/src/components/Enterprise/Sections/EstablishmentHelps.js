@@ -214,7 +214,7 @@ class EstablishmentHelps extends React.Component {
               </div>
               <div className="accordion-body">
                 <div className="accordion-content">
-                  <table class="table table-striped">
+                  <table className="table table-striped">
                     <tbody>
                       <tr>
                         <th>Nombre d'embauches en contrat d'apprentissage</th>

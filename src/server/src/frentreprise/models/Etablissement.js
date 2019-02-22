@@ -44,6 +44,7 @@ class DireccteEtablissement extends Etablissement {
           "pse_en_projet_ou_en_cours",
           "interactions_3E",
           "interactions_3T",
+          "interactions_C",
           "association",
           "document_association",
           "predecesseur",

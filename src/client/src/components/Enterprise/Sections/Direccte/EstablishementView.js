@@ -65,22 +65,21 @@ class EstablishmentView extends React.Component {
           </div>
         </div>
 
-        <div className="accordions">
-          <div className="accordion">
-            <div className="accordion-header toggle">
-              <span className=""> Détail des visites et contrôles </span>
-              <span className="">
-                <button className="button is-light is-rounded">
-                  <span className="icon">
-                    <FontAwesomeIcon icon={faChevronDown} />
-                  </span>
-                </button>
-              </span>
-            </div>
-            <div className="accordion-body">
-              <div className="accordion-content">
-                {establishment.interactions &&
-                establishment.interactions.length ? (
+        {establishment.interactions && establishment.interactions.length ? (
+          <div className="accordions">
+            <div className="accordion">
+              <div className="accordion-header toggle">
+                <span className=""> Détail des visites et contrôles </span>
+                <span className="">
+                  <button className="button is-light is-rounded">
+                    <span className="icon">
+                      <FontAwesomeIcon icon={faChevronDown} />
+                    </span>
+                  </button>
+                </span>
+              </div>
+              <div className="accordion-body">
+                <div className="accordion-content">
                   <table className="table is-striped direccte-interactions">
                     <thead>
                       <tr>
@@ -123,34 +122,11 @@ class EstablishmentView extends React.Component {
                       })}
                     </tbody>
                   </table>
-                ) : (
-                  <table className="table is-striped direccte-interactions">
-                    <thead>
-                      <tr>
-                        <th> Date </th> <th> Pôle </th> <th> Objet </th>
-                        <th> Unité </th> <th> Agent </th> <th> Type </th>
-                        <th> Notes </th> <th> Suite </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td> 27 / 06 / 2018 </td> <td> 3 E </td> <td> ND </td>
-                        <td> Unité transport </td> <td> ND </td>
-                        <td> Visite </td> <td> - </td> <td> ND </td>
-                      </tr>
-                      <tr>
-                        <td> 01 / 02 / 2018 </td> <td> T </td> <td> ND </td>
-                        <td> Unité de contrôle n° 1 de Haute Garonne </td>
-                        <td> ND </td> <td> Contrôle </td> <td> - </td>
-                        <td> ND </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : null}
       </section>
     );
   }

@@ -84,9 +84,14 @@ class EstablishmentView extends React.Component {
                   <table className="table is-striped direccte-interactions">
                     <thead>
                       <tr>
-                        <th> Date </th> <th> Pôle </th> <th> Objet </th>
-                        <th> Unité </th> <th> Agent </th> <th> Type </th>
-                        <th> Notes </th> <th> Suite </th>
+                        <th>Date</th>
+                        <th>Pôle</th>
+                        <th>Objet</th>
+                        <th>Unité</th>
+                        <th>Agent</th>
+                        <th>Type</th>
+                        <th>Notes</th>
+                        <th>Suite</th>
                       </tr>
                     </thead>
                     <tbody>

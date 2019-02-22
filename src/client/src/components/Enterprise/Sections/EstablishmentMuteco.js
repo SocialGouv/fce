@@ -69,7 +69,7 @@ class EstablishmentMuteco extends React.Component {
                         {Object.keys(
                           establishment.activite_partielle_24_derniers_mois
                         ).map(year => (
-                          <th>
+                          <th key={year}>
                             {
                               establishment.activite_partielle_24_derniers_mois[
                                 year
@@ -85,7 +85,7 @@ class EstablishmentMuteco extends React.Component {
                         {Object.keys(
                           establishment.activite_partielle_24_derniers_mois
                         ).map(year => (
-                          <td>
+                          <td key={year}>
                             <Value
                               value={
                                 establishment
@@ -102,7 +102,7 @@ class EstablishmentMuteco extends React.Component {
                         {Object.keys(
                           establishment.activite_partielle_24_derniers_mois
                         ).map(year => (
-                          <td>
+                          <td key={year}>
                             <Value
                               value={
                                 establishment
@@ -150,7 +150,7 @@ class EstablishmentMuteco extends React.Component {
                 <div className="accordion-content no-table">
                   {Object.keys(establishment.pse_en_projet_ou_en_cours).map(
                     year => [
-                      <>
+                      <React.Fragment key={year}>
                         <div className="columns">
                           <h5 className="column is-3">
                             Année d'ouverture du PSE
@@ -193,7 +193,7 @@ class EstablishmentMuteco extends React.Component {
                             />
                           </span>
                         </div>
-                      </>
+                      </React.Fragment>
                     ]
                   )}
                 </div>

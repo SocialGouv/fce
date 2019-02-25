@@ -14,15 +14,6 @@ class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
 
-    establishment.association = {
-      id: "W313001376",
-      siret: "83136781400010"
-    };
-
-    establishment.document_association = {
-      url: "https://document_association.pdf"
-    };
-
     return (
       <section id="activity" className="enterprise-section">
         <h2 className="title is-size-4">Activité</h2>

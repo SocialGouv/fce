@@ -5,7 +5,7 @@
   "SireneAPI": {
     "token": "d0cb2d62-68e5-3729-853a-af7633d34acd",
     "pagination": {
-      "itemsByPage": 2
+      "itemsByPage": 20
     }
   },
   "postgres": {

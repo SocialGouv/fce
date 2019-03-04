@@ -119,9 +119,11 @@ class frentreprise {
   async search(query, page = 1) {
     const results = {};
     let hasError = false;
+    let pagination = null;
 
     await this[_.askDataSource]("search", query, page, searchResult => {
-      const source_results = searchResult.data;
+      const { data: source_results } = searchResult;
+      pagination = searchResult.pagination;
 
       if (source_results === false) {
         console.log(
@@ -185,7 +187,9 @@ class frentreprise {
 
     let resultsValues = Object.values(results);
 
-    return !resultsValues.length && hasError ? false : resultsValues;
+    return !resultsValues.length && hasError
+      ? false
+      : { items: resultsValues, pagination };
   }
 
   getDataSources() {
@@ -231,7 +235,16 @@ class frentreprise {
               }
             : null;
 
-        return dataSource.source[method](request, pagination).then(data => {
+        return dataSource.source[method](request, pagination).then(response => {
+          const data =
+            typeof response === "object" && response.items
+              ? response.items
+              : response;
+          const paginationResponse =
+            pagination && typeof response === "object" && response.pagination
+              ? response.pagination
+              : null;
+
           const cleanedData =
             typeof data === "object"
               ? Array.isArray(data)
@@ -246,7 +259,8 @@ class frentreprise {
 
           return Promise.resolve({
             source: dataSource,
-            data: cleanedData
+            data: cleanedData,
+            pagination: paginationResponse
           });
         });
       })

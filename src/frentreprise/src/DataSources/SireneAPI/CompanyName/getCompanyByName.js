@@ -13,10 +13,16 @@ const getCompanyByName = async (QUERY, pagination, Axios, params) => {
   const startIndex = itemsByPage * (page - 1);
   const endIndex = itemsByPage * page - 1;
 
-  console.log("////", startIndex, endIndex);
-
   if (!data.unitesLegales || !data.unitesLegales[startIndex]) {
-    return [];
+    return {
+      items: [],
+      pagination: {
+        page,
+        itemsByPage,
+        pages: 0,
+        items: 0
+      }
+    };
   }
 
   const out = [];
@@ -37,7 +43,15 @@ const getCompanyByName = async (QUERY, pagination, Axios, params) => {
     });
   }
 
-  return out;
+  return {
+    items: out,
+    pagination: {
+      page,
+      itemsByPage,
+      pages: Math.ceil(data.unitesLegales.length / itemsByPage),
+      items: data.unitesLegales.length
+    }
+  };
 };
 
 export default getCompanyByName;

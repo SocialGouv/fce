@@ -34,7 +34,8 @@ router.get("/search(.:format)?", function(req, res) {
     }, logError.bind(this, data));
   } else {
     freCall = frentreprise.search(data.query.q, page).then(results => {
-      data.results = results.map(ent => ent.export());
+      data.results = results.items.map(ent => ent.export());
+      data.pagination = results.pagination;
     }, logError.bind(this, data));
   }
 

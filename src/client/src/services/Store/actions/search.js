@@ -2,7 +2,7 @@ import * as types from "../constants/ActionTypes";
 import Http from "../../Http";
 import Config from "../../Config";
 
-export const search = term => (dispatch, getState) => {
+export const search = (term, page = 1) => (dispatch, getState) => {
   dispatch(
     _setTerms({
       raisonSociale: term,
@@ -14,11 +14,14 @@ export const search = term => (dispatch, getState) => {
 
   return Http.get("/search", {
     params: {
-      q: term
+      q: term,
+      page
     }
   })
     .then(function(response) {
-      dispatch(_setSearchResponses(response.data.results));
+      dispatch(
+        _setSearchResponses(response.data.results, response.data.pagination)
+      );
 
       let terms = {};
 
@@ -66,7 +69,9 @@ export const advancedSearch = terms => (dispatch, getState) => {
     }
   })
     .then(function(response) {
-      dispatch(_setSearchResponses(response.data.results));
+      dispatch(
+        _setSearchResponses(response.data.results, response.data.pagination)
+      );
       return Promise.resolve(response);
     })
     .catch(function(error) {
@@ -97,9 +102,10 @@ export const getNomenclatures = terms => (dispatch, getState) => {
     });
 };
 
-const _setSearchResponses = results => ({
+const _setSearchResponses = (results, pagination) => ({
   type: types.SEARCH_RESULTS,
-  results
+  results,
+  pagination
 });
 
 const _setNomenclatures = nomenclatures => ({

@@ -8,6 +8,7 @@ import addInteractionsToEstablishment from "../utils/addInteractionsToEstablishm
 
 const initialState = {
   results: [],
+  pagination: {},
   terms: {
     siret: null,
     siren: null,
@@ -33,7 +34,8 @@ const search = (state = initialState, action) => {
     case SEARCH_RESULTS:
       return {
         ...state,
-        results: flattenResults(action.results, state.terms)
+        results: flattenResults(action.results, state.terms),
+        pagination: action.pagination
       };
     case SEARCH_TERMS:
       return {
@@ -62,7 +64,7 @@ const flattenResults = (results, terms) => {
     return false;
   }
 
-  let flattenResults = [];
+  const flattenResults = [];
   const interactionTerms = Array.isArray(terms.interactions)
     ? terms.interactions.map(interaction => interaction.value)
     : null;

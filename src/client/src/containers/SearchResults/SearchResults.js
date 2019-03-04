@@ -7,13 +7,19 @@ class SearchResults extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false
+      loading: false,
+      initialize: true
     };
   }
 
   fetchData = (state, instance) => {
     const { page: pageIndex } = state;
     const page = pageIndex + 1;
+
+    if (this.state.initialize) {
+      this.setState({ initialize: false });
+      return;
+    }
 
     this.setState({ loading: true });
 

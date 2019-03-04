@@ -3,7 +3,10 @@
     "token": "Wla5Sr8oyktnldY0QK67nlsjgIHqFKul"
   },
   "SireneAPI": {
-    "token": "ad857561-23e7-3c93-a13d-f8683efdb3fc"
+    "token": "ad857561-23e7-3c93-a13d-f8683efdb3fc",
+    "pagination": {
+      "itemsByPage": 2
+    }
   },
   "postgres": {
     "host": "postgresql-commit42.occitech.eu",

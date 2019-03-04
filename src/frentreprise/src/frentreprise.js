@@ -4,15 +4,9 @@ import ApiGouv from "./DataSources/ApiGouv";
 import SireneAPI from "./DataSources/SireneAPI";
 
 import DataSource from "./DataSources/DataSource";
-import {
-  Entreprise
-} from "./Entreprise";
-import {
-  Etablissement
-} from "./Entreprise";
-import {
-  cleanObject
-} from "./Utils";
+import { Entreprise } from "./Entreprise";
+import { Etablissement } from "./Entreprise";
+import { cleanObject } from "./Utils";
 
 const _ = {
   dataSources: Symbol("_dataSources"),
@@ -34,7 +28,10 @@ class frentreprise {
     this.addDataSource({
       name: "SireneAPI",
       priority: 100, // higher prevail
-      source: new SireneAPI("https://api.insee.fr/entreprises/sirene/V3/")
+      source: new SireneAPI("https://api.insee.fr/entreprises/sirene/V3/"),
+      pagination: {
+        itemsByPage: 25
+      }
     });
   }
 
@@ -50,13 +47,14 @@ class frentreprise {
 
     const SIREN = gotSIREN ? SiretOrSiren : SiretOrSiren.substr(0, 9);
 
-    const entreprise = new this.EntrepriseModel({
+    const entreprise = new this.EntrepriseModel(
+      {
         _dataSources: {}
       },
       this.EtablissementModel
     );
 
-    await this[_.askDataSource]("getSIREN", SIREN, result => {
+    await this[_.askDataSource]("getSIREN", SIREN, null, result => {
       console.log(
         `Using response from dataSource named ${
           result.source.name
@@ -84,7 +82,7 @@ class frentreprise {
     await Promise.all(
       etablissementsLookups.map(lookSIRET => {
         if (Validator.validateSIRET(lookSIRET)) {
-          return this[_.askDataSource]("getSIRET", lookSIRET, result => {
+          return this[_.askDataSource]("getSIRET", lookSIRET, null, result => {
             console.log(
               `Using response from dataSource named ${
                 result.source.name
@@ -118,11 +116,11 @@ class frentreprise {
     return entreprise;
   }
 
-  async search(query) {
+  async search(query, page = 1) {
     const results = {};
     let hasError = false;
 
-    await this[_.askDataSource]("search", query, searchResult => {
+    await this[_.askDataSource]("search", query, page, searchResult => {
       const source_results = searchResult.data;
 
       if (source_results === false) {
@@ -160,7 +158,8 @@ class frentreprise {
 
           if (Validator.validateSIREN(SIREN)) {
             if (!results[SIREN]) {
-              results[SIREN] = new this.EntrepriseModel({
+              results[SIREN] = new this.EntrepriseModel(
+                {
                   siren: SIREN,
                   _dataSources: {}
                 },
@@ -215,7 +214,7 @@ class frentreprise {
     return a > b ? 1 : a < b ? -1 : 0;
   }
 
-  [_.askDataSource](method, request, forEach = result => result) {
+  [_.askDataSource](method, request, page, forEach = result => result) {
     return Promise.all(
       this.getDataSources().map(dataSource => {
         console.log(
@@ -224,8 +223,21 @@ class frentreprise {
           } with request : ${JSON.stringify(request)}`
         );
 
-        return dataSource.source[method](request).then(data => {
-          const cleanedData = typeof data === "object" ? Array.isArray(data) ? data.map(cleanObject) : cleanObject(data) : data;
+        const pagination =
+          page && dataSource.pagination
+            ? {
+                ...dataSource.pagination,
+                page
+              }
+            : null;
+
+        return dataSource.source[method](request, pagination).then(data => {
+          const cleanedData =
+            typeof data === "object"
+              ? Array.isArray(data)
+                ? data.map(cleanObject)
+                : cleanObject(data)
+              : data;
           console.log(
             `Got response for [${method}] from dataSource named ${
               dataSource.name
@@ -242,7 +254,7 @@ class frentreprise {
       results
         .sort(
           (a, b) =>
-          (a.source && b.source && this[_.compareDataSource](a, b)) || 0
+            (a.source && b.source && this[_.compareDataSource](a, b)) || 0
         )
         .map(forEach);
     });

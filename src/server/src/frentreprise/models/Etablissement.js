@@ -59,6 +59,8 @@ class DireccteEtablissement extends Etablissement {
           "naf",
           "libelle_naf",
           "nom_commercial",
+          "nom",
+          "prenom",
           "_dataSources",
           "_success"
         ],

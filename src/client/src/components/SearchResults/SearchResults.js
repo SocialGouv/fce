@@ -138,7 +138,12 @@ class SearchResults extends React.Component {
                     id: "nom",
                     minWidth: 350,
                     accessor: e =>
-                      Value({ value: e.raison_sociale || e.nom, empty: "-" })
+                      Value({
+                        value:
+                          e.etablissement.nom_commercial ||
+                          `${e.etablissement.prenom} ${e.etablissement.nom}`,
+                        empty: "-"
+                      })
                   },
                   {
                     Header: "État",

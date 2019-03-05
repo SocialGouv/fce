@@ -5,7 +5,7 @@ import getSettlements from "../Siret/getSettlements";
 const getCompanyByName = async (QUERY, pagination, Axios, params) => {
   const data = await utils.requestAPI(
     Axios,
-    `siren/?q=periode(denominationUniteLegale:"${QUERY}")&nombre=10000`,
+    `siret/?q=raisonSociale:"${QUERY}"&nombre=10000`,
     params
   );
 
@@ -13,7 +13,7 @@ const getCompanyByName = async (QUERY, pagination, Axios, params) => {
   const startIndex = itemsByPage * (page - 1);
   const endIndex = itemsByPage * page - 1;
 
-  if (!data.unitesLegales || !data.unitesLegales[startIndex]) {
+  if (!data.etablissements || !data.etablissements[startIndex]) {
     return {
       items: [],
       pagination: {
@@ -27,20 +27,11 @@ const getCompanyByName = async (QUERY, pagination, Axios, params) => {
 
   const out = [];
   for (let i = startIndex; i <= endIndex; i++) {
-    if (!data.unitesLegales[i]) {
+    if (!data.etablissements[i]) {
       continue;
     }
-    const entData = await helpers.formatEnt(data.unitesLegales[i]);
-    const settlements = await getSettlements(
-      entData.siren,
-      Axios,
-      params,
-      true
-    );
-    out.push({
-      ...entData,
-      ...settlements
-    });
+    const etabData = await helpers.formatEtab(data.etablissements[i]);
+    out.push(etabData);
   }
 
   return {
@@ -48,8 +39,9 @@ const getCompanyByName = async (QUERY, pagination, Axios, params) => {
     pagination: {
       page,
       itemsByPage,
-      pages: Math.ceil(data.unitesLegales.length / itemsByPage),
-      items: data.unitesLegales.length
+      pages: Math.ceil(data.etablissements.length / itemsByPage),
+      items: data.etablissements.length,
+      currentItems: out.length
     }
   };
 };

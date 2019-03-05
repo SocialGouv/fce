@@ -111,6 +111,10 @@ const formatEtab = async (etab, params) => {
     {
       in: "periodesEtablissement[0].caractereEmployeurEtablissement",
       out: "etablissement_employeur"
+    },
+    {
+      in: "uniteLegale.denominationUniteLegale",
+      out: "nom_commercial"
     }
   ];
   return typeof etab === "object" ? await getData(etab, fields) : {};

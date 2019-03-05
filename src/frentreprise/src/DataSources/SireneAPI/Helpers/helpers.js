@@ -115,6 +115,14 @@ const formatEtab = async (etab, params) => {
     {
       in: "uniteLegale.denominationUniteLegale",
       out: "nom_commercial"
+    },
+    {
+      in: "uniteLegale.nomUniteLegale",
+      out: "nom"
+    },
+    {
+      in: "uniteLegale.prenom1UniteLegale",
+      out: "prenom"
     }
   ];
   return typeof etab === "object" ? await getData(etab, fields) : {};

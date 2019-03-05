@@ -5,7 +5,7 @@ import getSettlements from "../Siret/getSettlements";
 const getCompanyByName = async (QUERY, pagination, Axios, params) => {
   const data = await utils.requestAPI(
     Axios,
-    `siret/?q=raisonSociale:"${QUERY}"&nombre=10000`,
+    `siret/?q=raisonSociale:"${QUERY}" OR nomUniteLegale:"${QUERY}"&nombre=10000`,
     params
   );
 

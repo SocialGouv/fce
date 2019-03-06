@@ -35,6 +35,10 @@ class frentreprise {
     });
   }
 
+  setDb(db) {
+    this.db = db;
+  }
+
   async getEntreprise(SiretOrSiren) {
     SiretOrSiren = SiretOrSiren + "";
 
@@ -234,6 +238,10 @@ class frentreprise {
                 page
               }
             : null;
+
+        if (this.db) {
+          dataSource.source.setDb(this.db);
+        }
 
         return dataSource.source[method](request, pagination).then(response => {
           const data =

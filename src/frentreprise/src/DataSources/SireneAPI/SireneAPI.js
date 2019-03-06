@@ -41,7 +41,8 @@ export default class SireneAPI extends DataSource {
       q,
       page,
       this[_.axios],
-      this.getAxiosConfig()
+      this.getAxiosConfig(),
+      this.db
     );
     return res;
   }
@@ -51,7 +52,7 @@ export default class SireneAPI extends DataSource {
     const requests = apiCalls
       .filter(fn => typeof fn === "function")
       .map(fn => {
-        return fn(identifier, this[_.axios], this.getAxiosConfig());
+        return fn(identifier, this[_.axios], this.getAxiosConfig(), this.db);
       });
 
     await Promise.all(requests).then(results => {

@@ -1,14 +1,14 @@
 import utils from "../../../Utils/utils";
 import helpers from "../Helpers/helpers";
 
-const getSettlement = async (SIRET, Axios, params) => {
+const getSettlement = async (SIRET, Axios, params, db) => {
   return await utils
     .requestAPI(Axios, `siret/${SIRET}`, params)
     .then(async data => {
       if (!data.etablissement) {
         return {};
       }
-      return await helpers.formatEtab(data.etablissement, params);
+      return await helpers.formatEtab(data.etablissement, params, db);
     });
 };
 

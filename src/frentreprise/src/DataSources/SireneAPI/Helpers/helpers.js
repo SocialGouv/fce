@@ -1,8 +1,9 @@
 import utils from "../../../Utils/utils";
 import getData from "../../getData";
 import axios from "../../../../lib/axios";
+import NafModel from "../../../Models/Naf";
 
-const formatEtab = async (etab, params) => {
+const formatEtab = async (etab, params, db) => {
   const getAdresseComponent = adresse => {
     return (
       adresse && {
@@ -62,7 +63,7 @@ const formatEtab = async (etab, params) => {
       in: "uniteLegale.activitePrincipaleUniteLegale",
       out: "libelle_naf",
       callback: async naf =>
-        utils.isEmpty(naf) ? undefined : await getLibelleNaf(naf, params)
+        utils.isEmpty(naf) ? undefined : await getLibelleNaf(naf, db)
     },
     {
       in: "etablissementSiege",
@@ -128,7 +129,7 @@ const formatEtab = async (etab, params) => {
   return typeof etab === "object" ? await getData(etab, fields) : {};
 };
 
-const formatEnt = async (ent, params) => {
+const formatEnt = async (ent, params, db) => {
   const fields = [
     "siren",
     {
@@ -199,7 +200,7 @@ const formatEnt = async (ent, params) => {
       in: "periodesUniteLegale[0].activitePrincipaleUniteLegale",
       out: "libelle_naf",
       callback: async naf =>
-        utils.isEmpty(naf) ? undefined : await getLibelleNaf(naf, params)
+        utils.isEmpty(naf) ? undefined : await getLibelleNaf(naf, db)
     },
     {
       in: "dateCreationUniteLegale",
@@ -239,20 +240,13 @@ const formatEnt = async (ent, params) => {
   return typeof ent === "object" ? await getData(ent, fields) : {};
 };
 
-const getLibelleNaf = async (codeNaf, params) => {
-  if (!params) {
+const getLibelleNaf = async (codeNaf, db) => {
+  if (!db) {
     return undefined;
   }
-  const Axios = axios.create({
-    baseURL:
-      "https://api.insee.fr/metadonnees/nomenclatures/v1/codes/nafr2/sousClasse/",
-    timeout: 5000
-  });
-  params.timeout = 5000;
-
-  return await utils
-    .requestAPI(Axios, `${codeNaf}`, params)
-    .then(data => (utils.isEmpty(data.intitule) ? undefined : data.intitule));
+  const nafModel = new NafModel(db);
+  const naf = nafModel.getByCode(codeNaf);
+  return naf ? naf.libelle : null;
 };
 
 const getLegalCode = async (category, params) => {

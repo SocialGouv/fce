@@ -75,7 +75,7 @@ test("frentreprise", () => {
         const testSIREN = "487768616";
 
         // mock askDataSource responses
-        const adsSpy = jest.fn((action, id, dataCallback) => {
+        const adsSpy = jest.fn((action, id, page, dataCallback) => {
           if (action === "getSIREN" && id === testSIREN) {
             dataCallback({
               source: { name: "jest", priority: 1 },
@@ -96,6 +96,7 @@ test("frentreprise", () => {
           1,
           "getSIREN",
           testSIREN,
+          null,
           expect.any(Function)
         );
 
@@ -103,6 +104,7 @@ test("frentreprise", () => {
           2,
           "getSIRET",
           testSIRET,
+          null,
           expect.any(Function)
         );
 
@@ -116,6 +118,7 @@ test("frentreprise", () => {
           1,
           "getSIREN",
           testSIREN,
+          null,
           expect.any(Function)
         );
 
@@ -123,6 +126,7 @@ test("frentreprise", () => {
           2,
           "getSIRET",
           testSIRET,
+          null,
           expect.any(Function)
         );
 
@@ -130,6 +134,7 @@ test("frentreprise", () => {
           3,
           "getSIRET",
           testSIRET2,
+          null,
           expect.any(Function)
         );
       } finally {
@@ -150,7 +155,7 @@ test("frentreprise", () => {
         const invalidSIRET = "pouet";
 
         // mock askDataSource responses
-        const adsSpy = jest.fn((action, id, dataCallback) => {
+        const adsSpy = jest.fn((action, id, page, dataCallback) => {
           if (action === "getSIREN" && id === testSIREN) {
             dataCallback({
               source: { name: "jest", priority: 1 },
@@ -171,6 +176,7 @@ test("frentreprise", () => {
           1,
           "getSIREN",
           testSIREN,
+          null,
           expect.any(Function)
         );
 
@@ -178,6 +184,7 @@ test("frentreprise", () => {
           2,
           "getSIRET",
           testSIRET,
+          null,
           expect.any(Function)
         );
       } finally {
@@ -203,7 +210,7 @@ test("frentreprise", () => {
         const testEtData = { name: "hello etab", siret: testSIRET };
 
         // mock askDataSource responses
-        const adsSpy = jest.fn((action, id, dataCallback) => {
+        const adsSpy = jest.fn((action, id, page, dataCallback) => {
           if (action === "getSIREN" && id === testSIREN) {
             dataCallback({
               source: { name: "jest", priority: 1 },
@@ -254,7 +261,7 @@ test("frentreprise", () => {
       const originalAskDataSource = frentreprise[_frentreprise.askDataSource];
       try {
         // mock askDataSource responses
-        const adsSpy = jest.fn((action, id, dataCallback) => {
+        const adsSpy = jest.fn((action, id, page, dataCallback) => {
           if (action === "search") {
             dataCallback({
               source: { name: "jest" },
@@ -288,6 +295,7 @@ test("frentreprise", () => {
           1,
           "search",
           "testSIRET",
+          1,
           expect.any(Function)
         );
       } finally {
@@ -304,7 +312,7 @@ test("frentreprise", () => {
       const originalAskDataSource = frentreprise[_frentreprise.askDataSource];
       try {
         // mock askDataSource responses
-        const adsSpy = jest.fn((action, id, dataCallback) => {
+        const adsSpy = jest.fn((action, id, page, dataCallback) => {
           if (action === "search") {
             dataCallback({
               source: { name: "jest" },
@@ -321,7 +329,7 @@ test("frentreprise", () => {
 
         const result = await frentreprise.search("testSIRET");
 
-        expect(result).toEqual([]);
+        expect(result).toEqual({ items: [], pagination: undefined });
 
         expect(consoleSpy).toHaveBeenCalledTimes(1);
         expect(consoleSpy).toHaveBeenNthCalledWith(
@@ -335,6 +343,7 @@ test("frentreprise", () => {
           1,
           "search",
           "testSIRET",
+          1,
           expect.any(Function)
         );
       } finally {

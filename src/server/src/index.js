@@ -28,6 +28,12 @@ function init() {
 
   const sireneAPI = frentreprise.getDataSource("SireneAPI").source;
   sireneAPI.token = config.get("SireneAPI.token");
+
+  if (config.has("SireneAPI.pagination")) {
+    frentreprise.getDataSource("SireneAPI").pagination = config.get(
+      "SireneAPI.pagination"
+    );
+  }
   sireneAPI.axiosConfig = {
     ...sireneAPI.axiosConfig,
     proxy: (config.has("proxy") && config.get("proxy")) || false

@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Button, Alert } from "reactstrap";
+import { Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import {
   faFileExcel,
@@ -60,11 +60,7 @@ class SearchResults extends React.Component {
         <div className="columns result-row">
           <div className="column is-12">
             {!Array.isArray(this.props.results) ? (
-              <Alert color="danger">
-                Une erreur est survenue, il est propable que la recherche est
-                échouée car celle-ci n'est pas assez précise et retourne une
-                trop grande quantité de résultat.
-              </Alert>
+              <Alert color="danger">Une erreur est survenue.</Alert>
             ) : !this.props.results.length ? (
               <Alert color="info">Aucun résultat</Alert>
             ) : (
@@ -74,15 +70,14 @@ class SearchResults extends React.Component {
             {Array.isArray(this.props.results) && this.props.results.length ? (
               <ReactTable
                 data={this.props.results}
-                defaultPageSize={
-                  this.props.results.length >= 25
-                    ? 25
-                    : this.props.results.length
-                }
                 className="table is-striped is-hoverable"
-                filterable={true}
-                showPagination={this.props.results.length > 25}
-                pageSizeOptions={[25, 50, 100]}
+                defaultPageSize={this.props.results.length}
+                showPagination={this.props.pagination.pages > 1}
+                showPageSizeOptions={false}
+                manual // Forces table not to paginate or sort automatically, so we can handle it server-side
+                pages={this.props.pagination.pages}
+                onFetchData={this.props.fetchData}
+                loading={this.props.loading}
                 getTrProps={(state, rowInfo) => {
                   return {
                     onClick: e => {
@@ -143,7 +138,12 @@ class SearchResults extends React.Component {
                     id: "nom",
                     minWidth: 350,
                     accessor: e =>
-                      Value({ value: e.raison_sociale || e.nom, empty: "-" })
+                      Value({
+                        value:
+                          e.etablissement.nom_commercial ||
+                          `${e.etablissement.prenom} ${e.etablissement.nom}`,
+                        empty: "-"
+                      })
                   },
                   {
                     Header: "État",

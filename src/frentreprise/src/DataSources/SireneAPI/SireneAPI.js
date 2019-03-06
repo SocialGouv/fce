@@ -36,9 +36,10 @@ export default class SireneAPI extends DataSource {
     );
   }
 
-  async search(q) {
+  async search(q, page) {
     const res = await CompanyName.getCompanyByName(
       q,
+      page,
       this[_.axios],
       this.getAxiosConfig()
     );

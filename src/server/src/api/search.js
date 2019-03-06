@@ -14,6 +14,8 @@ const logError = (data, err) => {
 
 router.get("/search(.:format)?", function(req, res) {
   const query = (req.query["q"] || "").trim();
+  const page = +req.query["page"] || 1;
+
   const data = {
     query: {
       search: "simple",
@@ -31,8 +33,9 @@ router.get("/search(.:format)?", function(req, res) {
       data.results = [entreprise.export()];
     }, logError.bind(this, data));
   } else {
-    freCall = frentreprise.search(data.query.q).then(results => {
-      data.results = results.map(ent => ent.export());
+    freCall = frentreprise.search(data.query.q, page).then(results => {
+      data.results = results.items.map(ent => ent.export());
+      data.pagination = results.pagination;
     }, logError.bind(this, data));
   }
 

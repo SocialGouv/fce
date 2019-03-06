@@ -103,7 +103,8 @@ test("DataSources/ApiGouv/ApiGouv", () => {
             context: "Tiers",
             object: expect.stringMatching("Direccte")
           })
-        })
+        }),
+        undefined
       );
     });
 
@@ -123,7 +124,8 @@ test("DataSources/ApiGouv/ApiGouv", () => {
             object: expect.stringMatching("Direccte")
           }),
           proxy
-        })
+        }),
+        undefined
       );
     });
 
@@ -160,7 +162,8 @@ test("DataSources/ApiGouv/ApiGouv", () => {
               }
             })
           })
-        })
+        }),
+        undefined
       );
     });
 
@@ -191,7 +194,8 @@ test("DataSources/ApiGouv/ApiGouv", () => {
               }
             })
           })
-        })
+        }),
+        undefined
       );
     });
 
@@ -222,7 +226,8 @@ test("DataSources/ApiGouv/ApiGouv", () => {
               }
             })
           })
-        })
+        }),
+        undefined
       );
     });
 
@@ -261,7 +266,8 @@ test("DataSources/ApiGouv/ApiGouv", () => {
               }
             })
           })
-        })
+        }),
+        undefined
       );
     };
 

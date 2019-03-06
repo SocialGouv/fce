@@ -1,8 +1,7 @@
 import utils from "../../../Utils/utils";
 import helpers from "../Helpers/helpers";
-import getSettlements from "../Siret/getSettlements";
 
-const getCompanyByName = async (QUERY, pagination, Axios, params) => {
+const getCompanyByName = async (QUERY, pagination, Axios, params, db) => {
   const data = await utils.requestAPI(
     Axios,
     `siret/?q=raisonSociale:"${QUERY}" OR nomUniteLegale:"${QUERY}"&nombre=10000`,
@@ -30,7 +29,7 @@ const getCompanyByName = async (QUERY, pagination, Axios, params) => {
     if (!data.etablissements[i]) {
       continue;
     }
-    const etabData = await helpers.formatEtab(data.etablissements[i]);
+    const etabData = await helpers.formatEtab(data.etablissements[i], null, db);
     out.push(etabData);
   }
 

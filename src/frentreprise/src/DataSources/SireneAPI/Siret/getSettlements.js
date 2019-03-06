@@ -1,7 +1,7 @@
 import utils from "../../../Utils/utils";
 import helpers from "../Helpers/helpers";
 
-const getSettlements = async (SIREN, Axios, params, isSearch = false) => {
+const getSettlements = async (SIREN, Axios, params, db) => {
   return await utils
     .requestAPI(Axios, `siret/?q=siren:${SIREN}&nombre=10000`, params)
     .then(async data => {
@@ -10,7 +10,7 @@ const getSettlements = async (SIREN, Axios, params, isSearch = false) => {
       }
       const etabs = await Promise.all(
         data.etablissements.map(
-          async etab => await helpers.formatEtab(etab, isSearch ? null : params)
+          async etab => await helpers.formatEtab(etab, params, db)
         )
       );
 

@@ -21,9 +21,12 @@ router.get("/search(.:format)?", function(req, res) {
 
   const data = {
     query: {
-      search: "simple",
       format: req.params["format"] || "json",
-      q: query,
+      terms: {
+        q: query,
+        commune: (req.query["commune"] || "").trim(),
+        codePostal: (req.query["codePostal"] || "").trim()
+      },
       isSIRET: frentreprise.isSIRET(query),
       isSIREN: frentreprise.isSIREN(query)
     }
@@ -36,7 +39,7 @@ router.get("/search(.:format)?", function(req, res) {
       data.results = [entreprise.export()];
     }, logError.bind(this, data));
   } else {
-    freCall = frentreprise.search(data.query.q, page).then(results => {
+    freCall = frentreprise.search(data.query.terms, page).then(results => {
       data.results = results.items.map(ent => ent.export());
       data.pagination = results.pagination;
     }, logError.bind(this, data));

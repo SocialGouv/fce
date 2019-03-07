@@ -120,12 +120,12 @@ class frentreprise {
     return entreprise;
   }
 
-  async search(query, page = 1) {
+  async search(terms, page = 1) {
     const results = {};
     let hasError = false;
     let pagination = null;
 
-    await this[_.askDataSource]("search", query, page, searchResult => {
+    await this[_.askDataSource]("search", terms, page, searchResult => {
       const { data: source_results } = searchResult;
       pagination = searchResult.pagination;
 

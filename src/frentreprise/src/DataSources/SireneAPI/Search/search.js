@@ -4,7 +4,7 @@ import helpers from "../Helpers/helpers";
 export default async (terms, pagination, Axios, params, db) => {
   const data = await utils.requestAPI(
     Axios,
-    `siret/?q=${await buildQuery(terms, db)}`,
+    `siret/?q=${await buildQuery(terms)}`,
     params
   );
 
@@ -45,7 +45,7 @@ export default async (terms, pagination, Axios, params, db) => {
   };
 };
 
-const buildQuery = async (terms, db) => {
+const buildQuery = async terms => {
   const query = [`(raisonSociale:"${terms.q}" OR nomUniteLegale:"${terms.q}")`];
 
   if (terms.commune) {
@@ -58,6 +58,10 @@ const buildQuery = async (terms, db) => {
 
   if (terms.departement) {
     query.push(`codePostalEtablissement:${terms.departement}*`);
+  }
+
+  if (terms.naf) {
+    query.push(`periode(activitePrincipaleEtablissement:${terms.naf})`);
   }
 
   return query.join(" AND ");

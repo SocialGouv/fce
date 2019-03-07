@@ -1,5 +1,6 @@
 import Communes from "../models/Communes";
 import Naf from "../models/Naf";
+import Departements from "../models/Departements";
 
 const express = require("express");
 const XLSX = require("xlsx");
@@ -170,6 +171,17 @@ router.get("/naf", function(req, res) {
   naf.search(query).then(nafs => {
     const success = Array.isArray(nafs);
     return res.send({ success, results: nafs });
+  });
+});
+
+router.get("/departements", function(req, res) {
+  const query = (req.query["q"] || "").trim();
+
+  const departements = new Departements();
+
+  departements.search(query).then(departements => {
+    const success = Array.isArray(departements);
+    return res.send({ success, results: departements });
   });
 });
 

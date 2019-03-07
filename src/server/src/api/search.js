@@ -1,3 +1,6 @@
+import Communes from "../models/Communes";
+import Naf from "../models/Naf";
+
 const express = require("express");
 const XLSX = require("xlsx");
 const router = express.Router();
@@ -183,16 +186,34 @@ const sendResultXlsx = (data, response) => {
   response.send(wbout);
 };
 
-router.get("/test-postgres", function(request, response) {
-  const db = require("../db/postgres");
+router.get("/communes", function(req, res) {
+  const query = (req.query["q"] || "").trim();
 
-  db.query("SELECT * FROM test")
-    .then(res => {
-      response.send({ success: true, pg: res.rows });
-    })
-    .catch(e => {
-      response.send({ success: false });
-    });
+  if (query.length <= 3) {
+    return res.send({ success: false, message: "query too short" });
+  }
+
+  const communes = new Communes();
+
+  communes.search(query).then(communes => {
+    const success = Array.isArray(communes);
+    return res.send({ success, results: communes });
+  });
+});
+
+router.get("/naf", function(req, res) {
+  const query = (req.query["q"] || "").trim();
+
+  if (query.length <= 3) {
+    return res.send({ success: false, message: "query too short" });
+  }
+
+  const naf = new Naf();
+
+  naf.search(query).then(nafs => {
+    const success = Array.isArray(nafs);
+    return res.send({ success, results: nafs });
+  });
 });
 
 module.exports = router;

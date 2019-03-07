@@ -2,9 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import AdvancedSearchView from "../../components/AdvancedSearch";
-import { advancedSearch, getNomenclatures } from "../../services/Store/actions";
-
-const NOMENCLATURE_TIMEOUT = 5 * 60 * 1000; // 5 minutes
+import { advancedSearch } from "../../services/Store/actions";
 
 class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -23,41 +21,8 @@ class AdvancedSearch extends React.Component {
       hasError: false,
       errorMessage: null,
       searchLoading: false,
-      isLoadedNomenclatures: false,
       redirectTo: false
     };
-  }
-
-  componentDidMount() {
-    this.loadNomenclatures();
-  }
-
-  loadNomenclatures() {
-    const { autocompleteData: nomenclatures } = this.props;
-    if (
-      nomenclatures &&
-      nomenclatures.nafCodes &&
-      nomenclatures.nafCodes.length &&
-      (nomenclatures.updated_at || 0) + NOMENCLATURE_TIMEOUT > +new Date()
-    ) {
-      this.setState({ isLoadedNomenclatures: true, hasError: false });
-    } else {
-      this.props
-        .getNomenclatures()
-        .then(response => {
-          this.setState({
-            isLoadedNomenclatures: true,
-            hasError: false
-          });
-        })
-        .catch(error => {
-          this.setState({
-            isLoadedNomenclatures: true,
-            hasError: true,
-            errorMessage: "Impossible de charger les nomenclatures"
-          });
-        });
-    }
   }
 
   updateForm = (name, value) => {
@@ -153,10 +118,8 @@ class AdvancedSearch extends React.Component {
         search={this.search}
         updateForm={this.updateForm}
         searchLoading={this.state.searchLoading}
-        isLoaded={this.state.isLoadedNomenclatures}
         hasError={this.state.hasError}
         errorMessage={this.state.errorMessage}
-        autocompleteData={this.props.autocompleteData}
         terms={this.state.terms}
       />
     );
@@ -164,18 +127,13 @@ class AdvancedSearch extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    autocompleteData: state.search.nomenclatures
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     advancedSearch: terms => {
       return dispatch(advancedSearch(terms));
-    },
-    getNomenclatures: () => {
-      return dispatch(getNomenclatures());
     }
   };
 };

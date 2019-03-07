@@ -3,15 +3,9 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 import { faTimes } from "@fortawesome/fontawesome-pro-light";
 import { DropdownList } from "react-widgets/lib";
-import withLoading from "../../services/Loading";
 
 class AdvancedSearch extends React.Component {
   render() {
-    const interactionsOptions = [
-      { value: true, label: "N'importe quel pôle" },
-      ...this.props.autocompleteData.polesInteractions
-    ];
-
     return (
       <div className="app-advancedSearch">
         <div className="columns app-search--container">
@@ -29,9 +23,9 @@ class AdvancedSearch extends React.Component {
                 ""
               )}
               <div className="field is-horizontal">
-                <div className="field-label is-normal" for="siren">
+                <label className="field-label is-normal" htmlFor="siren">
                   SIREN
-                </div>
+                </label>
                 <div className="field-body">
                   <div className="field">
                     <p className="control is-expanded">
@@ -50,9 +44,12 @@ class AdvancedSearch extends React.Component {
                 </div>
               </div>
               <div className="field is-horizontal">
-                <div className="field-label is-normal" for="raisonSociale">
+                <label
+                  className="field-label is-normal"
+                  htmlFor="raisonSociale"
+                >
                   Raison Sociale
-                </div>
+                </label>
                 <div className="field-body">
                   <div className="field">
                     <p className="control is-expanded">
@@ -74,14 +71,14 @@ class AdvancedSearch extends React.Component {
                 </div>
               </div>
               <div className="field is-horizontal">
-                <div className="field-label is-normal" for="naf">
-                  Code NAF
-                </div>
+                <label className="field-label is-normal" htmlFor="naf">
+                  Activité
+                </label>
                 <div className="field-body">
                   <div className="field">
                     <p className="control is-expanded">
                       <DropdownList
-                        data={this.props.autocompleteData.nafCodes}
+                        data={[]}
                         value={this.props.terms.naf}
                         valueField="code"
                         textField={nafCode =>
@@ -97,7 +94,7 @@ class AdvancedSearch extends React.Component {
                       />
                     </p>
                   </div>
-                  {/* <div className="field dropdown-close">
+                  <div className="field dropdown-close">
                     {this.props.terms.naf ? (
                       <button
                         className="button is-primary"
@@ -110,19 +107,19 @@ class AdvancedSearch extends React.Component {
                     ) : (
                       ""
                     )}
-                  </div> */}
+                  </div>
                 </div>
               </div>
 
               <div className="field is-horizontal">
-                <div className="field-label is-normal" for="commune">
+                <label className="field-label is-normal" htmlFor="commune">
                   Commune
-                </div>
+                </label>
                 <div className="field-body">
                   <div className="field">
                     <p className="control is-expanded">
                       <DropdownList
-                        data={this.props.autocompleteData.communes}
+                        data={[]}
                         value={this.props.terms.commune}
                         valueField="libelle_commune"
                         textField="libelle_commune"
@@ -139,7 +136,7 @@ class AdvancedSearch extends React.Component {
                       />
                     </p>
                   </div>
-                  {/* <div className="field dropdown-close">
+                  <div className="field dropdown-close">
                     {this.props.terms.commune ? (
                       <button
                         className="button is-primary"
@@ -152,142 +149,12 @@ class AdvancedSearch extends React.Component {
                     ) : (
                       ""
                     )}
-                  </div> */}
-                </div>
-              </div>
-
-              <div className="field is-horizontal">
-                <div className="field-label is-normal" for="codePostal">
-                  Code postal
-                </div>
-                <div className="field-body">
-                  <div className="field">
-                    <p className="control is-expanded">
-                      <DropdownList
-                        data={this.props.autocompleteData.postalCodes}
-                        value={this.props.terms.codePostal}
-                        valueField="code_postal"
-                        textField="code_postal"
-                        filter
-                        id="codePostal"
-                        name="codePostal"
-                        placeholder="Code postal"
-                        onChange={value =>
-                          this.props.updateForm("codePostal", value.code_postal)
-                        }
-                      />
-                    </p>
                   </div>
-                  {/* <div className="field dropdown-close">
-                    {this.props.terms.codePostal ? (
-                      <button
-                        className="button is-primary"
-                        color="link"
-                        title="Supprimer la valeur"
-                        onClick={e => this.props.updateForm("codePostal", null)}
-                      >
-                        <FontAwesomeIcon icon={faTimes} />
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div> */}
-                </div>
-              </div>
-
-              <div className="field is-horizontal">
-                <div className="field-label is-normal" for="departement">
-                  Département
-                </div>
-                <div className="field-body">
-                  <div className="field">
-                    <p className="control is-expanded">
-                      <DropdownList
-                        data={this.props.autocompleteData.departements}
-                        value={this.props.terms.departement}
-                        valueField="code_departement"
-                        textField="code_departement"
-                        filter
-                        id="departement"
-                        name="departement"
-                        placeholder="Département"
-                        onChange={value =>
-                          this.props.updateForm(
-                            "departement",
-                            value.code_departement
-                          )
-                        }
-                      />
-                    </p>
-                  </div>
-                  {/* <div className="field dropdown-close">
-                    {this.props.terms.departement ? (
-                      <button
-                        className="button is-primary"
-                        color="link"
-                        title="Supprimer la valeur"
-                        onClick={e => this.props.updateForm("departement", null)}
-                      >
-                        <FontAwesomeIcon icon={faTimes} />
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div> */}
-                </div>
-              </div>
-
-              <div className="field is-horizontal">
-                <div className="field-label is-normal" for="interactions">
-                  Interactions Direccte
-                </div>
-                <div className="field-body">
-                  <div className="field">
-                    <p className="control is-expanded">
-                      <DropdownList
-                        data={interactionsOptions}
-                        value={
-                          this.props.terms.interactions &&
-                          this.props.terms.interactions.length ===
-                            this.props.autocompleteData.polesInteractions.length
-                            ? interactionsOptions[0]
-                            : this.props.terms.interactions[0]
-                        }
-                        valueField="value"
-                        textField="label"
-                        filter
-                        id="interactions"
-                        name="interactions"
-                        placeholder="Interactions avec la Direccte"
-                        onChange={option => {
-                          const value =
-                            option.value === true
-                              ? this.props.autocompleteData.polesInteractions
-                              : [option];
-                          return this.props.updateForm("interactions", value);
-                        }}
-                      />
-                    </p>
-                  </div>
-                  {/* <div className="field dropdown-close">
-                    {this.props.terms.interactions.length ? (
-                      <button
-                        className="button is-primary"
-                        color="link"
-                        title="Supprimer la valeur"
-                        onClick={e => this.props.updateForm("interactions", null)}
-                      >
-                        <FontAwesomeIcon icon={faTimes} />
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div> */}
                 </div>
               </div>
 
               <div className="field">
-                <label class="checkbox">
+                <label className="checkbox">
                   <input
                     type="checkbox"
                     name="siegeSocial"
@@ -321,4 +188,4 @@ class AdvancedSearch extends React.Component {
   }
 }
 
-export default withLoading(AdvancedSearch);
+export default AdvancedSearch;

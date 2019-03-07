@@ -1,7 +1,6 @@
 import {
   SEARCH_RESULTS,
   SEARCH_TERMS,
-  SEARCH_NOMENCLATURES,
   RESET_STORE
 } from "../constants/ActionTypes";
 import addInteractionsToEstablishment from "../utils/addInteractionsToEstablishment";
@@ -19,13 +18,6 @@ const initialState = {
     departement: null,
     interactions: null,
     siegeSocial: null
-  },
-  nomenclatures: {
-    polesInteractions: [],
-    nafCodes: [],
-    communes: [],
-    postalCodes: [],
-    departements: []
   }
 };
 
@@ -41,15 +33,6 @@ const search = (state = initialState, action) => {
       return {
         ...state,
         terms: { ...initialState.terms, ...action.terms }
-      };
-    case SEARCH_NOMENCLATURES:
-      return {
-        ...state,
-        nomenclatures: {
-          ...initialState.nomenclatures,
-          ...action.nomenclatures,
-          updated_at: +new Date()
-        }
       };
     case RESET_STORE:
       return {};

@@ -79,38 +79,10 @@ export const advancedSearch = terms => (dispatch, getState) => {
     });
 };
 
-export const getNomenclatures = terms => (dispatch, getState) => {
-  dispatch(_setTerms(terms));
-
-  return Http.get("/entities")
-    .then(function(response) {
-      if (typeof response.data.results === "object") {
-        response.data.results.polesInteractions = Config.get(
-          "interactions"
-        ).map(interaction => {
-          return {
-            value: interaction,
-            label: `Pôle ${interaction}`
-          };
-        });
-      }
-      dispatch(_setNomenclatures(response.data.results));
-      return Promise.resolve(response);
-    })
-    .catch(function(error) {
-      return Promise.reject(error);
-    });
-};
-
 const _setSearchResponses = (results, pagination) => ({
   type: types.SEARCH_RESULTS,
   results,
   pagination
-});
-
-const _setNomenclatures = nomenclatures => ({
-  type: types.SEARCH_NOMENCLATURES,
-  nomenclatures
 });
 
 const _setTerms = terms => ({

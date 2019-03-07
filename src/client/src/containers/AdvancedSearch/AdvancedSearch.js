@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import AdvancedSearchView from "../../components/AdvancedSearch";
 import { advancedSearch } from "../../services/Store/actions";
+import Http from "../../services/Http";
+import Config from "../../services/Config";
+
+const WAIT_DROPDOWN_SEARCH_INTERVAL = 1000;
 
 class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -21,7 +25,12 @@ class AdvancedSearch extends React.Component {
       hasError: false,
       errorMessage: null,
       searchLoading: false,
-      redirectTo: false
+      redirectTo: false,
+      nafDropdown: {
+        busy: false,
+        data: [],
+        term: ""
+      }
     };
   }
 
@@ -108,6 +117,57 @@ class AdvancedSearch extends React.Component {
       });
   };
 
+  searchNaf = term => {
+    clearTimeout(this.searchNafTimer);
+
+    if (term.length < Config.get("advancedSearch").minTerms) {
+      // return;
+    }
+
+    this.setState({ nafDropdown: { ...this.state.nafDropdown, term } });
+
+    this.searchNafTimer = setTimeout(() => {
+      this.setState({
+        nafDropdown: { ...this.state.nafDropdown, busy: true },
+        hasError: false
+      });
+
+      Http.get("/naf", {
+        params: {
+          q: this.state.nafDropdown.term
+        }
+      })
+        .then(response => {
+          const { data } = response;
+
+          if (!data.success) {
+            throw data.message ||
+              "Une erreur est survenue lors de la recherche d'un code NAF";
+          }
+
+          this.setState({
+            nafDropdown: {
+              ...this.state.nafDropdown,
+              busy: false,
+              data: data.results
+            }
+          });
+        })
+        .catch(error => {
+          this.setState({
+            nafDropdown: {
+              ...this.state.nafDropdown,
+              busy: false,
+              data: []
+            },
+            hasError: true,
+            errorMessage: "La recherche de codes NAF a échouée"
+          });
+          console.error(error);
+        });
+    }, WAIT_DROPDOWN_SEARCH_INTERVAL);
+  };
+
   render() {
     if (this.state.redirectTo) {
       return <Redirect push to={this.state.redirectTo} />;
@@ -121,6 +181,8 @@ class AdvancedSearch extends React.Component {
         hasError={this.state.hasError}
         errorMessage={this.state.errorMessage}
         terms={this.state.terms}
+        nafDropdown={this.state.nafDropdown}
+        searchNaf={this.searchNaf}
       />
     );
   }

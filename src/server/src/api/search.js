@@ -28,7 +28,11 @@ router.get("/search(.:format)?", function(req, res) {
         commune: (req.query["commune"] || "").trim(),
         codePostal: (req.query["codePostal"] || "").trim(),
         departement: (req.query["departement"] || "").trim(),
-        naf: (req.query["naf"] || "").trim()
+        naf: (req.query["naf"] || "").trim(),
+        siegeSocial:
+          req.query["siegeSocial"] === "1" ||
+          req.query["siegeSocial"] === "true" ||
+          req.query["siegeSocial"] === true
       },
       isSIRET: frentreprise.isSIRET(query),
       isSIREN: frentreprise.isSIREN(query)

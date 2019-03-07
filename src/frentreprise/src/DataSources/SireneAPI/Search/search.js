@@ -64,5 +64,9 @@ const buildQuery = async terms => {
     query.push(`periode(activitePrincipaleEtablissement:${terms.naf})`);
   }
 
+  if (terms.siegeSocial) {
+    query.push(`etablissementSiege:true`);
+  }
+
   return query.join(" AND ");
 };

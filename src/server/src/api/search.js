@@ -212,7 +212,14 @@ router.get("/naf", function(req, res) {
 
   naf.search(query).then(nafs => {
     const success = Array.isArray(nafs);
-    return res.send({ success, results: nafs });
+    if (success) {
+      return res.send({ success, results: nafs });
+    }
+    return res.send({
+      success,
+      results: [],
+      message: "Une erreur est survenue lors de la recherche d'un code NAF"
+    });
   });
 });
 

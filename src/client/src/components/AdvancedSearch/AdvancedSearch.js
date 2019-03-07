@@ -78,12 +78,16 @@ class AdvancedSearch extends React.Component {
                   <div className="field">
                     <p className="control is-expanded">
                       <DropdownList
-                        data={[]}
+                        busy={this.props.nafDropdown.busy}
+                        data={this.props.nafDropdown.data}
                         value={this.props.terms.naf}
                         valueField="code"
-                        textField={nafCode =>
-                          `${nafCode.code} - ${nafCode.libelle}`
-                        }
+                        textField={naf => {
+                          console.log(naf);
+
+                          return `${naf.code} - ${naf.libelle}`;
+                        }}
+                        searchTerm={this.props.nafDropdown.term}
                         filter
                         id="naf"
                         name="naf"
@@ -91,6 +95,7 @@ class AdvancedSearch extends React.Component {
                         onChange={value =>
                           this.props.updateForm("naf", value.code)
                         }
+                        onSearch={this.props.searchNaf}
                       />
                     </p>
                   </div>

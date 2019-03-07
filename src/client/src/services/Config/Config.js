@@ -10,6 +10,9 @@ const globalConfig = {
   emailInformation: {
     to: "oc.documentation@direccte.gouv.fr",
     subject: "FCE - demande d’informations complémentaires"
+  },
+  advancedSearch: {
+    minTerms: 4
   }
 };
 

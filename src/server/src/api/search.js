@@ -25,7 +25,8 @@ router.get("/search(.:format)?", function(req, res) {
       terms: {
         q: query,
         commune: (req.query["commune"] || "").trim(),
-        codePostal: (req.query["codePostal"] || "").trim()
+        codePostal: (req.query["codePostal"] || "").trim(),
+        departement: (req.query["departement"] || "").trim()
       },
       isSIRET: frentreprise.isSIRET(query),
       isSIREN: frentreprise.isSIREN(query)

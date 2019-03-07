@@ -56,5 +56,9 @@ const buildQuery = async (terms, db) => {
     query.push(`codePostalEtablissement:${terms.codePostal}`);
   }
 
+  if (terms.departement) {
+    query.push(`codePostalEtablissement:${terms.departement}*`);
+  }
+
   return query.join(" AND ");
 };

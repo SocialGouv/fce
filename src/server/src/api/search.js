@@ -53,51 +53,6 @@ router.get("/search(.:format)?", function(req, res) {
   });
 });
 
-router.get("/advancedSearch(.:format)?", function(req, res) {
-  const code_activite = (req.query["naf"] || "").trim();
-  const libelle_commune = (req.query["commune"] || "").trim();
-  const code_postal = (req.query["codePostal"] || "").trim();
-  const code_departement = (req.query["departement"] || "").trim();
-  const raison_sociale = (req.query["raisonSociale"] || "").trim();
-  const siren = (req.query["siren"] || "").trim();
-  const siege_social = (req.query["siegeSocial"] || "").trim();
-  const interactions = (req.query["interactions"] || []).map(interaction => {
-    try {
-      return JSON.parse(interaction).value;
-    } catch (e) {
-      console.error(e);
-    }
-  });
-
-  let data = {
-    query: {
-      search: "advanced",
-      format: req.params["format"] || "json",
-      params: {
-        code_activite,
-        libelle_commune,
-        code_postal,
-        code_departement,
-        raison_sociale,
-        siren,
-        siege_social,
-        interactions
-      }
-    }
-  };
-
-  frentreprise.search(data.query.params).then(results => {
-    try {
-      results = results.map(ent => ent.export());
-    } catch (e) {
-      results = false;
-    }
-    data.results = results;
-    data.size = data.results && data.results.length;
-    sendResult(data, res);
-  }, logError.bind(this, data));
-});
-
 const sendResult = (data, response) => {
   if (data.query.format === "xlsx") {
     sendResultXlsx(data, response);
@@ -131,9 +86,6 @@ const sendResultXlsx = (data, response) => {
   } else {
     // Search
     filename = "recherche";
-    if (data.query.search === "advanced") {
-      filename += "_avancee";
-    }
 
     dataToExport = flattenResults.map(entreprise => {
       const etablissement = entreprise.etablissement;

@@ -2,7 +2,7 @@ import tunnel from "tunnel";
 import DataSource from "../DataSource";
 import Siren from "./Siren";
 import Siret from "./Siret";
-import CompanyName from "./CompanyName";
+import search from "./Search";
 import axios from "../../../lib/axios";
 
 export const _ = {
@@ -36,9 +36,9 @@ export default class SireneAPI extends DataSource {
     );
   }
 
-  async search(q, page) {
-    const res = await CompanyName.getCompanyByName(
-      q,
+  async search(terms, page) {
+    const res = await search(
+      terms,
       page,
       this[_.axios],
       this.getAxiosConfig(),

@@ -1,10 +1,10 @@
 import utils from "../../../Utils/utils";
 import helpers from "../Helpers/helpers";
 
-const getCompanyByName = async (QUERY, pagination, Axios, params, db) => {
+export default async (terms, pagination, Axios, params, db) => {
   const data = await utils.requestAPI(
     Axios,
-    `siret/?q=raisonSociale:"${QUERY}" OR nomUniteLegale:"${QUERY}"&nombre=10000`,
+    `siret/?q=${await buildQuery(terms)}`,
     params
   );
 
@@ -45,4 +45,28 @@ const getCompanyByName = async (QUERY, pagination, Axios, params, db) => {
   };
 };
 
-export default getCompanyByName;
+const buildQuery = async terms => {
+  const query = [`(raisonSociale:"${terms.q}" OR nomUniteLegale:"${terms.q}")`];
+
+  if (terms.commune) {
+    query.push(`codeCommuneEtablissement:${terms.commune}`);
+  }
+
+  if (terms.codePostal) {
+    query.push(`codePostalEtablissement:${terms.codePostal}`);
+  }
+
+  if (terms.departement) {
+    query.push(`codePostalEtablissement:${terms.departement}*`);
+  }
+
+  if (terms.naf) {
+    query.push(`periode(activitePrincipaleEtablissement:${terms.naf})`);
+  }
+
+  if (terms.siegeSocial) {
+    query.push(`etablissementSiege:true`);
+  }
+
+  return query.join(" AND ");
+};

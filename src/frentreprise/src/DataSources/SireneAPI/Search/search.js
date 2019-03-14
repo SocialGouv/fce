@@ -61,6 +61,9 @@ const buildQuery = async terms => {
   }
 
   if (terms.naf) {
+    if (terms.naf.indexOf(".") !== 2) {
+      terms.naf = [terms.naf.slice(0, 2), ".", terms.naf.slice(2)].join("");
+    }
     query.push(`periode(activitePrincipaleEtablissement:${terms.naf})`);
   }
 

@@ -42,7 +42,7 @@ router.get("/search(.:format)?", function(req, res) {
   let freCall;
 
   if (data.query.isSIREN || data.query.isSIRET) {
-    freCall = frentreprise.getEntreprise(data.query.q).then(entreprise => {
+    freCall = frentreprise.getEntreprise(data.query.terms.q).then(entreprise => {
       data.results = [entreprise.export()];
     }, logError.bind(this, data));
   } else {

@@ -39,10 +39,10 @@ class Search extends Component {
         let redirectTo = "/search/results";
 
         if (query.isSIRET && results) {
-          redirectTo = `/establishment/${query.q}`;
+          redirectTo = `/establishment/${query.terms.q}`;
           this.props.setCurrentEnterprise(results[0]);
         } else if (query.isSIREN && results) {
-          redirectTo = `/enterprise/${query.q}`;
+          redirectTo = `/enterprise/${query.terms.q}`;
           this.props.setCurrentEnterprise(results[0]);
         } else if (results && results.length === 1) {
           redirectTo = `/establishment/${results[0].etablissements[0].siret}`;

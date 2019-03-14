@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import SearchView from "../../components/Search";
 import { search, setCurrentEnterprise } from "../../services/Store/actions";
+import Http from "../../services/Http";
+import Config from "../../services/Config";
 
 class Search extends Component {
   constructor(props) {
@@ -10,7 +12,8 @@ class Search extends Component {
     this.state = {
       terms: {
         q: "",
-        siegeSocial: false
+        siegeSocial: false,
+        naf: null
       },
       hasError: false,
       loading: false,
@@ -26,6 +29,46 @@ class Search extends Component {
     this.setState({
       terms: terms
     });
+  };
+
+  updateFormSelect = (name, element) => {
+    let terms = { ...this.state.terms };
+    terms[name] = element.value;
+
+    this.setState({
+      terms: terms
+    });
+  };
+
+  loadNaf = term => {
+    if (term.length < Config.get("advancedSearch").minTerms) {
+      return new Promise(resolve => {
+        resolve([]);
+      });
+    }
+
+    return Http.get("/naf", {
+      params: {
+        q: term
+      }
+    })
+      .then(response => {
+        if (response.data && response.data.results) {
+          return Promise.resolve(
+            response.data.results.map(naf => {
+              return {
+                label: naf.libelle,
+                value: naf.code
+              };
+            })
+          );
+        }
+        return Promise.reject([]);
+      })
+      .catch(function(error) {
+        console.error(error);
+        return Promise.reject([]);
+      });
   };
 
   search = evt => {
@@ -74,8 +117,10 @@ class Search extends Component {
         terms={this.state.terms}
         search={this.search}
         updateForm={this.updateForm}
+        updateFormSelect={this.updateFormSelect}
         loading={this.state.loading}
         hasError={this.state.hasError}
+        loadNaf={this.loadNaf}
       />
     );
   }

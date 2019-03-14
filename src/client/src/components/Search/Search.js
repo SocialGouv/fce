@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
+import AsyncSelect from "react-select/lib/Async";
+import Config from "../../services/Config";
 
 class Search extends React.Component {
   render() {
@@ -59,7 +60,31 @@ class Search extends React.Component {
                     Siège social
                   </label>
                 </div>
-                <div className="column is-one-quarter" />
+                <div className="column is-one-quarter">
+                  <div className="field">
+                    <label className="label" htmlFor="naf">
+                      Activité
+                    </label>
+                    <div className="control">
+                      <AsyncSelect
+                        id="naf"
+                        name="naf"
+                        defaultOptions={[]}
+                        loadOptions={this.props.loadNaf}
+                        onChange={value =>
+                          this.props.updateFormSelect("naf", value)
+                        }
+                        loadingMessage={() => "Chargement..."}
+                        noOptionsMessage={term =>
+                          term.length >= Config.get("advancedSearch").minTerms
+                            ? "Aucun résultat"
+                            : "Veuillez saisir au moins 3 caractères"
+                        }
+                        placeholder="Code NAF ou libellé"
+                      />
+                    </div>
+                  </div>
+                </div>
                 <div className="column is-one-quarter" />
               </div>
             </form>

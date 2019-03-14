@@ -78,14 +78,38 @@ class Search extends React.Component {
                         noOptionsMessage={term =>
                           term.length >= Config.get("advancedSearch").minTerms
                             ? "Aucun résultat"
-                            : "Veuillez saisir au moins 3 caractères"
+                            : "Veuillez saisir au moins 4 caractères"
                         }
                         placeholder="Code NAF ou libellé"
                       />
                     </div>
                   </div>
                 </div>
-                <div className="column is-one-quarter" />
+                <div className="column is-one-quarter">
+                  <div className="field">
+                    <label className="label" htmlFor="commune">
+                      Commune
+                    </label>
+                    <div className="control">
+                      <AsyncSelect
+                        id="commune"
+                        name="commune"
+                        defaultOptions={[]}
+                        loadOptions={this.props.loadCommunes}
+                        onChange={value =>
+                          this.props.updateFormSelect("commune", value)
+                        }
+                        loadingMessage={() => "Chargement..."}
+                        noOptionsMessage={term =>
+                          term.length >= Config.get("advancedSearch").minTerms
+                            ? "Aucun résultat"
+                            : "Veuillez saisir au moins 4 caractères"
+                        }
+                        placeholder="Nom de commune ou code postal"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </form>
           </div>

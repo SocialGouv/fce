@@ -13,7 +13,8 @@ class Search extends Component {
       terms: {
         q: "",
         siegeSocial: false,
-        naf: null
+        naf: null,
+        commune: null
       },
       hasError: false,
       loading: false,
@@ -59,6 +60,37 @@ class Search extends Component {
               return {
                 label: naf.libelle,
                 value: naf.code
+              };
+            })
+          );
+        }
+        return Promise.reject([]);
+      })
+      .catch(function(error) {
+        console.error(error);
+        return Promise.reject([]);
+      });
+  };
+
+  loadCommunes = term => {
+    if (term.length < Config.get("advancedSearch").minTerms) {
+      return new Promise(resolve => {
+        resolve([]);
+      });
+    }
+
+    return Http.get("/communes", {
+      params: {
+        q: term
+      }
+    })
+      .then(response => {
+        if (response.data && response.data.results) {
+          return Promise.resolve(
+            response.data.results.map(commune => {
+              return {
+                label: `${commune.nom} (${commune.code_postal})`,
+                value: commune.code_insee
               };
             })
           );
@@ -121,6 +153,7 @@ class Search extends Component {
         loading={this.state.loading}
         hasError={this.state.hasError}
         loadNaf={this.loadNaf}
+        loadCommunes={this.loadCommunes}
       />
     );
   }

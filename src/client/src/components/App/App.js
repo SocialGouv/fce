@@ -36,11 +36,6 @@ class App extends React.Component {
                   <Route exact path="/search" component={Search} />
                   <Route
                     exact
-                    path="/search/results"
-                    component={SearchResults}
-                  />
-                  <Route
-                    exact
                     path="/enterprise/:siren"
                     component={Enterprise}
                   />

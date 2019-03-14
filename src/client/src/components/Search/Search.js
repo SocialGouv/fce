@@ -81,6 +81,7 @@ class Search extends React.Component {
                             : "Veuillez saisir au moins 4 caractères"
                         }
                         placeholder="Code NAF ou libellé"
+                        isClearable
                       />
                     </div>
                   </div>
@@ -106,6 +107,7 @@ class Search extends React.Component {
                             : "Veuillez saisir au moins 4 caractères"
                         }
                         placeholder="Nom de commune ou code postal"
+                        isClearable
                       />
                     </div>
                   </div>

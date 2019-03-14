@@ -5,6 +5,7 @@ import SearchView from "../../components/Search";
 import { search, setCurrentEnterprise } from "../../services/Store/actions";
 import Http from "../../services/Http";
 import Config from "../../services/Config";
+import SearchResults from "../../containers/SearchResults";
 
 class Search extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class Search extends Component {
       },
       hasError: false,
       loading: false,
-      redirectTo: false
+      redirectTo: false,
+      showResults: false
     };
   }
 
@@ -34,7 +36,7 @@ class Search extends Component {
 
   updateFormSelect = (name, element) => {
     let terms = { ...this.state.terms };
-    terms[name] = element.value;
+    terms[name] = element && element.value;
 
     this.setState({
       terms: terms
@@ -111,7 +113,8 @@ class Search extends Component {
       .search(this.state.terms)
       .then(response => {
         const { query, results } = response.data;
-        let redirectTo = "/search/results";
+        let redirectTo = false;
+        let showResults = false;
 
         if (query.isSIRET && results) {
           redirectTo = `/establishment/${query.terms.q}`;
@@ -121,12 +124,15 @@ class Search extends Component {
           this.props.setCurrentEnterprise(results[0]);
         } else if (results && results.length === 1) {
           redirectTo = `/establishment/${results[0].etablissements[0].siret}`;
+        } else {
+          showResults = true;
         }
 
         this.setState({
           hasError: false,
           loading: false,
-          redirectTo
+          redirectTo,
+          showResults
         });
       })
       .catch(
@@ -145,16 +151,19 @@ class Search extends Component {
     }
 
     return (
-      <SearchView
-        terms={this.state.terms}
-        search={this.search}
-        updateForm={this.updateForm}
-        updateFormSelect={this.updateFormSelect}
-        loading={this.state.loading}
-        hasError={this.state.hasError}
-        loadNaf={this.loadNaf}
-        loadCommunes={this.loadCommunes}
-      />
+      <>
+        <SearchView
+          terms={this.state.terms}
+          search={this.search}
+          updateForm={this.updateForm}
+          updateFormSelect={this.updateFormSelect}
+          loading={this.state.loading}
+          hasError={this.state.hasError}
+          loadNaf={this.loadNaf}
+          loadCommunes={this.loadCommunes}
+        />
+        {this.state.showResults ? <SearchResults /> : null}
+      </>
     );
   }
 }

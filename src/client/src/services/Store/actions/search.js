@@ -2,19 +2,22 @@ import * as types from "../constants/ActionTypes";
 import Http from "../../Http";
 import Config from "../../Config";
 
-export const search = (term, page = 1) => (dispatch, getState) => {
+export const search = (terms, page = 1) => (dispatch, getState) => {
+  // Just in case, to prevent infinite recursion
+  if (terms.csvURL) {
+    delete terms.csvURL;
+  }
+
   dispatch(
     _setTerms({
-      raisonSociale: term,
-      csvURL: Http.buildURL(`${Http.defaults.baseURL}/search.xlsx`, {
-        q: term
-      })
+      ...terms,
+      csvURL: Http.buildURL(`${Http.defaults.baseURL}/search.xlsx`, terms)
     })
   );
 
   return Http.get("/search", {
     params: {
-      q: term,
+      ...terms,
       page
     }
   })
@@ -32,10 +35,7 @@ export const search = (term, page = 1) => (dispatch, getState) => {
         dispatch(
           _setTerms({
             ...terms,
-            csvURL: Http.buildURL(
-              `${Http.defaults.baseURL}/advancedSearch.xlsx`,
-              terms
-            )
+            csvURL: Http.buildURL(`${Http.defaults.baseURL}/search.xlsx`, terms)
           })
         );
       }

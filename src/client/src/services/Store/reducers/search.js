@@ -11,7 +11,7 @@ const initialState = {
   terms: {
     siret: null,
     siren: null,
-    raisonSociale: null,
+    q: null,
     naf: null,
     commune: null,
     codePostal: null,

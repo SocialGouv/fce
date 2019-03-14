@@ -8,7 +8,7 @@ class Search extends React.Component {
     return (
       <div className="app-search">
         <div className="columns app-search--container">
-          <div className="column is-offset-3-desktop is-offset-2-tablet is-6-desktop is-8-tablet search">
+          <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
             <h1 className="title">
               Rechercher un établissement ou une entreprise
             </h1>
@@ -26,7 +26,7 @@ class Search extends React.Component {
                 <div className="control is-expanded">
                   <input
                     type="text"
-                    name="term"
+                    name="q"
                     id="term"
                     className="input is-large"
                     required
@@ -47,13 +47,22 @@ class Search extends React.Component {
                   </button>
                 </div>
               </div>
-            </form>
-          </div>
-        </div>
 
-        <div className="columns app-search--container">
-          <div className="column is-offset-3-desktop is-offset-2-tablet is-6-desktop is-8-tablet advanced-search--link">
-            <Link to="/search/advanced">Recherche avancée</Link>
+              <div className="columns">
+                <div className="column is-one-quarter">
+                  <label className="checkbox">
+                    <input
+                      type="checkbox"
+                      name="siegeSocial"
+                      onChange={evt => this.props.updateForm(evt)}
+                    />
+                    Siège social
+                  </label>
+                </div>
+                <div className="column is-one-quarter" />
+                <div className="column is-one-quarter" />
+              </div>
+            </form>
           </div>
         </div>
       </div>

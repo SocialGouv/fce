@@ -8,7 +8,10 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      term: "",
+      terms: {
+        q: "",
+        siegeSocial: false
+      },
       hasError: false,
       loading: false,
       redirectTo: false
@@ -16,10 +19,12 @@ class Search extends Component {
   }
 
   updateForm = evt => {
-    const target = evt.target;
+    const { name, value, type, checked } = evt.target;
+    let terms = { ...this.state.terms };
+    terms[name] = type === "checkbox" ? checked : value;
 
     this.setState({
-      [target.name]: target.value
+      terms: terms
     });
   };
 
@@ -28,7 +33,7 @@ class Search extends Component {
     this.setState({ hasError: false, loading: true });
 
     this.props
-      .search(this.state.term)
+      .search(this.state.terms)
       .then(response => {
         const { query, results } = response.data;
         let redirectTo = "/search/results";
@@ -66,6 +71,7 @@ class Search extends Component {
 
     return (
       <SearchView
+        terms={this.state.terms}
         search={this.search}
         updateForm={this.updateForm}
         loading={this.state.loading}
@@ -90,4 +96,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Search);

@@ -48,22 +48,8 @@ class Header extends React.Component {
                 className="navbar-item"
                 title="Rechercher un établissement ou une entreprise"
               >
-                Recherche simple
+                Recherche
               </Link>
-              <Link
-                to="/search/advanced"
-                className="navbar-item"
-                title="Rechercher une liste d'établissements"
-              >
-                Recherche avancée
-              </Link>
-              {this.props.user && this.props.user.isAdmin ? (
-                <Link to="/admin" className="navbar-item">
-                  Admin
-                </Link>
-              ) : (
-                ""
-              )}
             </div>
           </div>
         </nav>

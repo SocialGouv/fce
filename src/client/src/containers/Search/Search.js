@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import SearchView from "../../components/Search";
 import { search, setCurrentEnterprise } from "../../services/Store/actions";
+import Http from "../../services/Http";
+import Config from "../../services/Config";
+import SearchResults from "../../containers/SearchResults";
 
 class Search extends Component {
   constructor(props) {
@@ -10,11 +13,14 @@ class Search extends Component {
     this.state = {
       terms: {
         q: "",
-        siegeSocial: false
+        siegeSocial: false,
+        naf: null,
+        commune: null
       },
       hasError: false,
       loading: false,
-      redirectTo: false
+      redirectTo: false,
+      showResults: false
     };
   }
 
@@ -28,6 +34,77 @@ class Search extends Component {
     });
   };
 
+  updateFormSelect = (name, element) => {
+    let terms = { ...this.state.terms };
+    terms[name] = element && element.value;
+
+    this.setState({
+      terms: terms
+    });
+  };
+
+  loadNaf = term => {
+    if (term.length < Config.get("advancedSearch").minTerms) {
+      return new Promise(resolve => {
+        resolve([]);
+      });
+    }
+
+    return Http.get("/naf", {
+      params: {
+        q: term
+      }
+    })
+      .then(response => {
+        if (response.data && response.data.results) {
+          return Promise.resolve(
+            response.data.results.map(naf => {
+              return {
+                label: naf.libelle,
+                value: naf.code
+              };
+            })
+          );
+        }
+        return Promise.reject([]);
+      })
+      .catch(function(error) {
+        console.error(error);
+        return Promise.reject([]);
+      });
+  };
+
+  loadCommunes = term => {
+    if (term.length < Config.get("advancedSearch").minTerms) {
+      return new Promise(resolve => {
+        resolve([]);
+      });
+    }
+
+    return Http.get("/communes", {
+      params: {
+        q: term
+      }
+    })
+      .then(response => {
+        if (response.data && response.data.results) {
+          return Promise.resolve(
+            response.data.results.map(commune => {
+              return {
+                label: `${commune.nom} (${commune.code_postal})`,
+                value: commune.code_insee
+              };
+            })
+          );
+        }
+        return Promise.reject([]);
+      })
+      .catch(function(error) {
+        console.error(error);
+        return Promise.reject([]);
+      });
+  };
+
   search = evt => {
     evt && evt.preventDefault();
     this.setState({ hasError: false, loading: true });
@@ -36,7 +113,8 @@ class Search extends Component {
       .search(this.state.terms)
       .then(response => {
         const { query, results } = response.data;
-        let redirectTo = "/search/results";
+        let redirectTo = false;
+        let showResults = false;
 
         if (query.isSIRET && results) {
           redirectTo = `/establishment/${query.terms.q}`;
@@ -46,12 +124,15 @@ class Search extends Component {
           this.props.setCurrentEnterprise(results[0]);
         } else if (results && results.length === 1) {
           redirectTo = `/establishment/${results[0].etablissements[0].siret}`;
+        } else {
+          showResults = true;
         }
 
         this.setState({
           hasError: false,
           loading: false,
-          redirectTo
+          redirectTo,
+          showResults
         });
       })
       .catch(
@@ -70,13 +151,19 @@ class Search extends Component {
     }
 
     return (
-      <SearchView
-        terms={this.state.terms}
-        search={this.search}
-        updateForm={this.updateForm}
-        loading={this.state.loading}
-        hasError={this.state.hasError}
-      />
+      <>
+        <SearchView
+          terms={this.state.terms}
+          search={this.search}
+          updateForm={this.updateForm}
+          updateFormSelect={this.updateFormSelect}
+          loading={this.state.loading}
+          hasError={this.state.hasError}
+          loadNaf={this.loadNaf}
+          loadCommunes={this.loadCommunes}
+        />
+        {this.state.showResults ? <SearchResults /> : null}
+      </>
     );
   }
 }

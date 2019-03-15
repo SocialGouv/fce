@@ -11,7 +11,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Search from "../../containers/Search";
 import SearchResults from "../../containers/SearchResults";
-import AdvancedSearch from "../../containers/AdvancedSearch";
 import Enterprise from "../../containers/Enterprise";
 import { Error403, Error404 } from "../../components/Errors";
 import PaperBG from "../../assets/img/paper.png";
@@ -35,16 +34,6 @@ class App extends React.Component {
                 <Switch>
                   <Route exact path="/" component={Search} />
                   <Route exact path="/search" component={Search} />
-                  <Route
-                    exact
-                    path="/search/advanced"
-                    component={AdvancedSearch}
-                  />
-                  <Route
-                    exact
-                    path="/search/results"
-                    component={SearchResults}
-                  />
                   <Route
                     exact
                     path="/enterprise/:siren"

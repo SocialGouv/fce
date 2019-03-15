@@ -16,47 +16,6 @@ class SearchResults extends React.Component {
   render() {
     return (
       <div className="app-searchResults">
-        <div className="columns">
-          <div className="column is-12">
-            <h1 className="title is-size-1">Résultats de recherche</h1>
-            <h2 className="subtitle is-size-2">
-              {this.props.results.length} résultat
-              {this.props.results.length > 1 ? "s" : ""}
-            </h2>
-          </div>
-        </div>
-
-        <div className="columns">
-          <div className="column is-offset-2 is-8">
-            <Terms terms={this.props.terms} />
-          </div>
-        </div>
-
-        <div className="columns d-print-none">
-          <div className="column is-12 has-text-center export-buttons">
-            <button
-              className="button is-primary"
-              onClick={() => window.print()}
-            >
-              <span className="icon">
-                <FontAwesomeIcon icon={faPrint} />
-              </span>
-              <span>Imprimer</span>
-            </button>
-            {this.props.terms.csvURL ? (
-              <button
-                className="button is-dark is-outlined"
-                onClick={e => window.open(this.props.terms.csvURL, "_blank")}
-              >
-                <span className="icon">
-                  <FontAwesomeIcon icon={faFileExcel} />
-                </span>
-                <span>Export Excel</span>
-              </button>
-            ) : null}
-          </div>
-        </div>
-
         <div className="columns result-row">
           <div className="column is-12">
             {!Array.isArray(this.props.results) ? (

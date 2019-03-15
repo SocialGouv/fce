@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
+import AsyncSelect from "react-select/lib/Async";
+import Config from "../../services/Config";
 
 class Search extends React.Component {
   render() {
@@ -59,8 +60,58 @@ class Search extends React.Component {
                     Siège social
                   </label>
                 </div>
-                <div className="column is-one-quarter" />
-                <div className="column is-one-quarter" />
+                <div className="column is-one-quarter">
+                  <div className="field">
+                    <label className="label" htmlFor="naf">
+                      Activité
+                    </label>
+                    <div className="control">
+                      <AsyncSelect
+                        id="naf"
+                        name="naf"
+                        defaultOptions={[]}
+                        loadOptions={this.props.loadNaf}
+                        onChange={value =>
+                          this.props.updateFormSelect("naf", value)
+                        }
+                        loadingMessage={() => "Chargement..."}
+                        noOptionsMessage={term =>
+                          term.length >= Config.get("advancedSearch").minTerms
+                            ? "Aucun résultat"
+                            : "Veuillez saisir au moins 4 caractères"
+                        }
+                        placeholder="Code NAF ou libellé"
+                        isClearable
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="column is-one-quarter">
+                  <div className="field">
+                    <label className="label" htmlFor="commune">
+                      Commune
+                    </label>
+                    <div className="control">
+                      <AsyncSelect
+                        id="commune"
+                        name="commune"
+                        defaultOptions={[]}
+                        loadOptions={this.props.loadCommunes}
+                        onChange={value =>
+                          this.props.updateFormSelect("commune", value)
+                        }
+                        loadingMessage={() => "Chargement..."}
+                        noOptionsMessage={term =>
+                          term.length >= Config.get("advancedSearch").minTerms
+                            ? "Aucun résultat"
+                            : "Veuillez saisir au moins 4 caractères"
+                        }
+                        placeholder="Nom de commune ou code postal"
+                        isClearable
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </form>
           </div>

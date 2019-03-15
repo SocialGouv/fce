@@ -17,7 +17,7 @@ class SearchResults extends React.Component {
 
     this.setState({ loading: true });
 
-    this.props.search(this.props.terms.raisonSociale, page).then(response => {
+    this.props.search(this.props.terms, page).then(response => {
       this.setState({ loading: false });
     });
   };

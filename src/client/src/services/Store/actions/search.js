@@ -47,38 +47,6 @@ export const search = (terms, page = 1) => (dispatch, getState) => {
     });
 };
 
-export const advancedSearch = terms => (dispatch, getState) => {
-  // Just in case, to prevent infinite recursion
-  if (terms.csvURL) {
-    delete terms.csvURL;
-  }
-
-  dispatch(
-    _setTerms({
-      ...terms,
-      csvURL: Http.buildURL(
-        `${Http.defaults.baseURL}/advancedSearch.xlsx`,
-        terms
-      )
-    })
-  );
-
-  return Http.get("/advancedSearch", {
-    params: {
-      ...terms
-    }
-  })
-    .then(function(response) {
-      dispatch(
-        _setSearchResponses(response.data.results, response.data.pagination)
-      );
-      return Promise.resolve(response);
-    })
-    .catch(function(error) {
-      return Promise.reject(error);
-    });
-};
-
 const _setSearchResponses = (results, pagination) => ({
   type: types.SEARCH_RESULTS,
   results,

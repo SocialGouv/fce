@@ -22,14 +22,14 @@ class Search extends React.Component {
               ""
             )}
 
-            <form className="form search-div" onSubmit={this.props.search}>
+            <form className="form search-form" onSubmit={this.props.search}>
               <div className="field is-grouped is-grouped-centered">
                 <div className="control is-expanded">
                   <input
                     type="text"
                     name="q"
                     id="term"
-                    className="input is-large"
+                    className="input"
                     required
                     placeholder="SIRET, SIREN, raison sociale, nom"
                     onChange={evt => this.props.updateForm(evt)}
@@ -38,7 +38,7 @@ class Search extends React.Component {
                 <div className="control">
                   <button
                     type="submit"
-                    className="action button is-primary has-text-light is-large"
+                    className="action button is-primary has-text-light"
                   >
                     {this.props.loading ? (
                       <FontAwesomeIcon icon={faSpinner} spin />
@@ -50,17 +50,21 @@ class Search extends React.Component {
               </div>
 
               <div className="columns">
-                <div className="column is-one-quarter">
-                  <label className="checkbox">
+                <div className="column is-one-fifth">
+                  <div className="field">
                     <input
+                      class="is-checkradio"
                       type="checkbox"
                       name="siegeSocial"
+                      id="siegeSocial"
                       onChange={evt => this.props.updateForm(evt)}
                     />
-                    Siège social
-                  </label>
+                    <label htmlFor="siegeSocial" className="check-radio-label">
+                      Siège social
+                    </label>
+                  </div>
                 </div>
-                <div className="column is-one-quarter">
+                <div className="column is-one-third">
                   <div className="field">
                     <label className="label" htmlFor="naf">
                       Activité
@@ -86,10 +90,10 @@ class Search extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="column is-one-quarter">
+                <div className="column is-one-third">
                   <div className="field">
                     <label className="label" htmlFor="commune">
-                      Commune
+                      Localité
                     </label>
                     <div className="control">
                       <AsyncSelect

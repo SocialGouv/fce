@@ -2,10 +2,11 @@
 @import '~bulma/bulma';
 @import '~bulma-extensions/bulma-accordion/dist/css/bulma-accordion';
 @import '~bulma-extensions/bulma-quickview/dist/css/bulma-quickview';
+@import '~bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio';
 @import 'Header/header';
 @import 'Footer/footer';
 @import '../Search/search';
-@import '../AdvancedSearch/advancedSearch';
+// @import '../AdvancedSearch/advancedSearch';
 @import '../SearchResults/searchResults.scss';
 @import '../Enterprise/enterprise';
 

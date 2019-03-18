@@ -10,20 +10,23 @@
     .field {
       width: 100%;
     }
+
     .action {
       width: 100%;
+    }
+
+    .columns {
+      align-items: center;
     }
   }
 
   .search-container {
     background-color: #fff;
     border-radius: .325rem;
-    padding: 2rem 2rem 1rem; 
+    padding: 2rem 2rem 1rem;
   }
 
-  .advanced-search--link {
-    background-color: #fff;
-    padding-bottom: 1rem;
-    padding-left: 3rem;
+  .check-radio-label {
+    font-weight: bold;
   }
 }

@@ -4,16 +4,19 @@ import Siren from "./Siren";
 import Siret from "./Siret";
 import search from "./Search";
 import axios from "../../../lib/axios";
+import qs from "qs";
 
 export const _ = {
   axios: Symbol("_axios"),
-  requestAPIs: Symbol("_requestAPIs")
+  requestAPIs: Symbol("_requestAPIs"),
+  getToken: Symbol("_getToken")
 };
 
 export default class SireneAPI extends DataSource {
   constructor(baseURL, axiosConfig = {}) {
     super();
     this.token = null;
+    this.basicAuth = null;
 
     this[_.axios] = axios.create({
       baseURL: baseURL,
@@ -41,7 +44,7 @@ export default class SireneAPI extends DataSource {
       terms,
       page,
       this[_.axios],
-      this.getAxiosConfig(),
+      await this.getAxiosConfig(),
       this.db
     );
     return res;
@@ -51,8 +54,13 @@ export default class SireneAPI extends DataSource {
     let out = {};
     const requests = apiCalls
       .filter(fn => typeof fn === "function")
-      .map(fn => {
-        return fn(identifier, this[_.axios], this.getAxiosConfig(), this.db);
+      .map(async fn => {
+        return fn(
+          identifier,
+          this[_.axios],
+          await this.getAxiosConfig(),
+          this.db
+        );
       });
 
     await Promise.all(requests).then(results => {
@@ -62,11 +70,11 @@ export default class SireneAPI extends DataSource {
     return out;
   }
 
-  getAxiosConfig() {
+  async getAxiosConfig() {
     const axiosConfig = {
       ...this.axiosConfig,
       headers: {
-        Authorization: `Bearer ${this.token}`
+        Authorization: `Bearer ${await this[_.getToken](this.basicAuth)}`
       }
     };
 
@@ -93,5 +101,28 @@ export default class SireneAPI extends DataSource {
     }
 
     return axiosConfig;
+  }
+
+  async [_.getToken](basicAuth) {
+    const axiosConfig = {
+      ...this.axiosConfig,
+      headers: {
+        Authorization: `Basic ${basicAuth}`,
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    };
+
+    try {
+      const request = await this[_.axios].post(
+        "https://api.insee.fr/token",
+        qs.stringify({ grant_type: "client_credentials" }),
+        axiosConfig
+      );
+
+      return request.data.access_token;
+    } catch (e) {
+      console.error("Request token failed", e);
+      return null;
+    }
   }
 }

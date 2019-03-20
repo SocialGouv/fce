@@ -17,11 +17,16 @@ class Search extends Component {
         naf: null,
         commune: null
       },
+      nafList: [],
       hasError: false,
       loading: false,
       redirectTo: false,
       showResults: false
     };
+  }
+
+  componentDidMount() {
+    this.loadNaf();
   }
 
   updateForm = evt => {
@@ -43,34 +48,23 @@ class Search extends Component {
     });
   };
 
-  loadNaf = term => {
-    if (term.length < Config.get("advancedSearch").minTerms) {
-      return new Promise(resolve => {
-        resolve([]);
-      });
-    }
-
-    return Http.get("/naf", {
-      params: {
-        q: term
-      }
-    })
+  loadNaf = () => {
+    return Http.get("/naf")
       .then(response => {
         if (response.data && response.data.results) {
-          return Promise.resolve(
-            response.data.results.map(naf => {
-              return {
-                label: `${naf.code} - ${naf.libelle}`,
-                value: naf.code
-              };
-            })
-          );
+          const nafList = response.data.results.map(naf => {
+            return {
+              label: `${naf.code} - ${naf.libelle}`,
+              value: naf.code
+            };
+          });
+          this.setState({
+            nafList
+          });
         }
-        return Promise.reject([]);
       })
       .catch(function(error) {
         console.error(error);
-        return Promise.reject([]);
       });
   };
 
@@ -159,7 +153,7 @@ class Search extends Component {
           updateFormSelect={this.updateFormSelect}
           loading={this.state.loading}
           hasError={this.state.hasError}
-          loadNaf={this.loadNaf}
+          nafList={this.state.nafList}
           loadCommunes={this.loadCommunes}
         />
         {this.state.showResults ? <SearchResults /> : null}

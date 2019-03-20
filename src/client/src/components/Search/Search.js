@@ -2,6 +2,7 @@ import React from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 import AsyncSelect from "react-select/lib/Async";
+import Select from "react-select";
 import Config from "../../services/Config";
 
 class Search extends React.Component {
@@ -53,7 +54,7 @@ class Search extends React.Component {
                 <div className="column is-one-fifth">
                   <div className="field">
                     <input
-                      class="is-checkradio"
+                      className="is-checkradio"
                       type="checkbox"
                       name="siegeSocial"
                       id="siegeSocial"
@@ -70,23 +71,14 @@ class Search extends React.Component {
                       Activité
                     </label>
                     <div className="control">
-                      <AsyncSelect
+                      <Select
                         id="naf"
                         name="naf"
-                        defaultOptions={[]}
-                        loadOptions={this.props.loadNaf}
+                        options={this.props.nafList}
                         onChange={value =>
                           this.props.updateFormSelect("naf", value)
                         }
-                        loadingMessage={() => "Chargement..."}
-                        noOptionsMessage={term =>
-                          term.inputValue.length >=
-                          Config.get("advancedSearch").minTerms
-                            ? "Aucun résultat"
-                            : `Veuillez saisir au moins ${
-                                Config.get("advancedSearch").minTerms
-                              } caractères`
-                        }
+                        noOptionsMessage={term => "Aucun résultat"}
                         placeholder="Code NAF ou libellé"
                         isClearable
                       />

@@ -9,7 +9,8 @@ export default ({
   yes = "Oui",
   dateFormat = "L",
   breakLines = false,
-  link = false
+  link = false,
+  nonEmptyValues = []
 }) => {
   if (value && typeof value === "object") {
     return "error";
@@ -33,7 +34,7 @@ export default ({
     value = toI18nDate(value, dateFormat);
   }
 
-  if (!value && empty) {
+  if (!value && empty && !nonEmptyValues.includes(value)) {
     return empty;
   }
 
@@ -49,5 +50,5 @@ export default ({
     );
   }
 
-  return value || null;
+  return value;
 };

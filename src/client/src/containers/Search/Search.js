@@ -60,7 +60,7 @@ class Search extends Component {
           return Promise.resolve(
             response.data.results.map(naf => {
               return {
-                label: naf.libelle,
+                label: `${naf.code} - ${naf.libelle}`,
                 value: naf.code
               };
             })

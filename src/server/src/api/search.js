@@ -153,7 +153,7 @@ const sendResultXlsx = (data, response) => {
 router.get("/communes", function(req, res) {
   const query = (req.query["q"] || "").trim();
 
-  if (query.length <= 3) {
+  if (query.length < 2) {
     return res.send({ success: false, message: "query too short" });
   }
 
@@ -168,7 +168,7 @@ router.get("/communes", function(req, res) {
 router.get("/naf", function(req, res) {
   const query = (req.query["q"] || "").trim();
 
-  if (query.length <= 3) {
+  if (query.length < 2) {
     return res.send({ success: false, message: "query too short" });
   }
 

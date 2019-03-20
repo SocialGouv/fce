@@ -31,10 +31,10 @@ class SearchResults extends React.Component {
                 data={this.props.results}
                 className="table is-striped is-hoverable"
                 defaultPageSize={this.props.results.length}
-                showPagination={this.props.pagination.pages > 1}
+                showPagination={this.props.pagination && this.props.pagination.pages > 1}
                 showPageSizeOptions={false}
                 manual // Forces table not to paginate or sort automatically, so we can handle it server-side
-                pages={this.props.pagination.pages}
+                pages={this.props.pagination && this.props.pagination.pages}
                 onFetchData={this.props.fetchData}
                 loading={this.props.loading}
                 getTrProps={(state, rowInfo) => {

@@ -28,7 +28,7 @@ function init() {
   }
 
   const sireneAPI = frentreprise.getDataSource("SireneAPI").source;
-  sireneAPI.token = config.get("SireneAPI.token");
+  sireneAPI.basicAuth = config.get("SireneAPI.basicAuth");
 
   if (config.has("SireneAPI.pagination")) {
     frentreprise.getDataSource("SireneAPI").pagination = config.get(

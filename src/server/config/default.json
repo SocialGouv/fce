@@ -3,7 +3,7 @@
     "token": "Wla5Sr8oyktnldY0QK67nlsjgIHqFKul"
   },
   "SireneAPI": {
-    "token": "00f0cf86-539f-3857-9845-74790299eefa",
+    "basicAuth": "QVRmZGY0UGpvdG9PWnVwOGJxUHpfV0dvZ0NvYTp1NGVvb0VTZjJVRmNKb0ZBaldCc0VUNkhaUkVh",
     "pagination": {
       "itemsByPage": 15
     }

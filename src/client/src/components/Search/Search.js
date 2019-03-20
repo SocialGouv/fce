@@ -80,9 +80,12 @@ class Search extends React.Component {
                         }
                         loadingMessage={() => "Chargement..."}
                         noOptionsMessage={term =>
-                          term.length >= Config.get("advancedSearch").minTerms
+                          term.inputValue.length >=
+                          Config.get("advancedSearch").minTerms
                             ? "Aucun résultat"
-                            : "Veuillez saisir au moins 4 caractères"
+                            : `Veuillez saisir au moins ${
+                                Config.get("advancedSearch").minTerms
+                              } caractères`
                         }
                         placeholder="Code NAF ou libellé"
                         isClearable
@@ -106,9 +109,12 @@ class Search extends React.Component {
                         }
                         loadingMessage={() => "Chargement..."}
                         noOptionsMessage={term =>
-                          term.length >= Config.get("advancedSearch").minTerms
+                          term.inputValue.length >=
+                          Config.get("advancedSearch").minTerms
                             ? "Aucun résultat"
-                            : "Veuillez saisir au moins 4 caractères"
+                            : `Veuillez saisir au moins ${
+                                Config.get("advancedSearch").minTerms
+                              } caractères`
                         }
                         placeholder="Nom de commune ou code postal"
                         isClearable

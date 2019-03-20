@@ -63,25 +63,6 @@ class EstablishmentActivity extends React.Component {
               ]
             : null}
         </div>
-        {/* <div className="columns">
-          {establishment.document_association
-            ? [
-                <h5 className="column is-3" key="rna_label">
-                  Document association
-                </h5>,
-                <span className="column is-8" key="rna_value">
-                  <a
-                    href={
-                      establishment.document_association &&
-                      establishment.document_association.url
-                    }
-                  >
-                    Télécharger les documents
-                  </a>
-                </span>
-              ]
-            : null}
-        </div> */}
         <div className="columns">
           <h5 className="column is-3">Etablissement employeur</h5>
           <span className="column is-8">
@@ -136,6 +117,7 @@ class EstablishmentActivity extends React.Component {
                     <Value
                       value={establishment.dernier_effectif_physique}
                       empty="-"
+                      nonEmptyValues={[0, "0"]}
                     />
                   </span>
                 </div>

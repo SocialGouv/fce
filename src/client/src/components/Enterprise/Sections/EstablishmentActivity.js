@@ -26,6 +26,14 @@ class EstablishmentActivity extends React.Component {
             <Value value={establishment.libelle_naf} empty="-" />
           </span>
         </div>
+
+        <div className="columns">
+          <h5 className="column is-3">IDCC</h5>
+          <span className="column is-8">
+            {establishment.code_idcc || establishment.libelle_idcc ? <Value value={`${establishment.code_idcc} - ${establishment.libelle_idcc}`} empty="-" /> : <span>-</span>}
+          </span>
+        </div>
+
         <div className="columns">
           <h5 className="column is-3">Association</h5>
           <span className="column is-8">

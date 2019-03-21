@@ -90,8 +90,10 @@ class Search extends Component {
           return Promise.resolve(
             response.data.results.map(commune => {
               return {
-                label: `${commune.nom} (${commune.code_postal})`,
-                value: commune.code_insee
+                label: `${commune.nom} (${commune.code_postal
+                  .trim()
+                  .padStart(5, "0")})`,
+                value: commune.code_insee.trim().padStart(5, "0")
               };
             })
           );

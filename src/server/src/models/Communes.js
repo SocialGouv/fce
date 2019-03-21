@@ -5,7 +5,7 @@ export default class Communes extends Model {
     return this.db
       .query("SELECT * FROM communes WHERE nom ILIKE $1 OR code_postal = $2", [
         `%${q}%`,
-        q
+        +q
       ])
       .then(res => {
         return res.rows;

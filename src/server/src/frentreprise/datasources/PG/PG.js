@@ -2,6 +2,8 @@ import { DataSource } from "frentreprise";
 import Etablissements from "./Etablissements";
 import InteractionsPole3E from "../../../models/InteractionsPole3E";
 import InteractionsPole3T from "../../../models/InteractionsPole3T";
+import UcEff from "../../../models/UcEff";
+import Idcc from "../../../models/Idcc";
 
 export const _ = {
   requestDB: Symbol("_requestDB")
@@ -13,7 +15,9 @@ export default class PG extends DataSource {
     return await this[_.requestDB](
       SIRET,
       [Etablissements.getInteractionsPole3E, new InteractionsPole3E()],
-      [Etablissements.getInteractionsPole3T, new InteractionsPole3T()]
+      [Etablissements.getInteractionsPole3T, new InteractionsPole3T()],
+      [Etablissements.getUcEff, new UcEff()],
+      [Etablissements.getIdcc, new Idcc()]
     );
   }
 

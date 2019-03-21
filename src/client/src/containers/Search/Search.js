@@ -74,36 +74,42 @@ class Search extends Component {
   };
 
   loadCommunes = term => {
+    clearTimeout(this.loadCommunesTimer);
+
     if (term.length < Config.get("advancedSearch").minTerms) {
       return new Promise(resolve => {
         resolve([]);
       });
     }
 
-    return Http.get("/communes", {
-      params: {
-        q: term
-      }
-    })
-      .then(response => {
-        if (response.data && response.data.results) {
-          return Promise.resolve(
-            response.data.results.map(commune => {
-              return {
-                label: `${commune.nom} (${commune.code_postal
-                  .trim()
-                  .padStart(5, "0")})`,
-                value: commune.code_insee.trim().padStart(5, "0")
-              };
-            })
-          );
-        }
-        return Promise.reject([]);
-      })
-      .catch(function(error) {
-        console.error(error);
-        return Promise.reject([]);
-      });
+    return new Promise((resolve, reject) => {
+      return (this.loadCommunesTimer = setTimeout(() => {
+        return Http.get("/communes", {
+          params: {
+            q: term
+          }
+        })
+          .then(response => {
+            if (response.data && response.data.results) {
+              return resolve(
+                response.data.results.map(commune => {
+                  return {
+                    label: `${
+                      commune.nom
+                    } (${commune.code_postal.trim().padStart(5, "0")})`,
+                    value: commune.code_insee.trim().padStart(5, "0")
+                  };
+                })
+              );
+            }
+            return reject([]);
+          })
+          .catch(function(error) {
+            console.error(error);
+            return reject([]);
+          });
+      }, Config.get("advancedSearch").debounce));
+    });
   };
 
   search = evt => {

@@ -12,7 +12,8 @@ const globalConfig = {
     subject: "FCE - demande d’informations complémentaires"
   },
   advancedSearch: {
-    minTerms: 2
+    minTerms: 2,
+    debounce: 500
   }
 };
 

@@ -41,7 +41,12 @@ class Search extends Component {
 
   updateFormSelect = (name, element) => {
     let terms = { ...this.state.terms };
-    terms[name] = element && element.value;
+
+    if (Array.isArray(element)) {
+      terms[name] = element.map(el => el.value);
+    } else {
+      terms[name] = element && element.value;
+    }
 
     this.setState({
       terms: terms

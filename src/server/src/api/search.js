@@ -28,7 +28,7 @@ router.get("/search(.:format)?", function(req, res) {
         commune: (req.query["commune"] || "").trim(),
         codePostal: (req.query["codePostal"] || "").trim(),
         departement: (req.query["departement"] || "").trim(),
-        naf: (req.query["naf"] || "").trim(),
+        naf: Array.isArray(req.query["naf"]) ? req.query["naf"] : [],
         siegeSocial:
           req.query["siegeSocial"] === "1" ||
           req.query["siegeSocial"] === "true" ||

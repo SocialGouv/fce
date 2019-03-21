@@ -60,11 +60,13 @@ const buildQuery = async terms => {
     query.push(`codePostalEtablissement:${terms.departement}*`);
   }
 
-  if (terms.naf) {
-    if (terms.naf.indexOf(".") !== 2) {
-      terms.naf = [terms.naf.slice(0, 2), ".", terms.naf.slice(2)].join("");
-    }
-    query.push(`periode(activitePrincipaleEtablissement:${terms.naf})`);
+  if (Array.isArray(terms.naf) && terms.naf.length) {
+    const nafConditions = terms.naf.map(codeNaf => {
+      codeNaf = [codeNaf.slice(0, 2), ".", codeNaf.slice(2)].join("");
+      return `activitePrincipaleEtablissement:${codeNaf}`;
+    });
+
+    query.push(`periode(${nafConditions.join(" OR ")})`);
   }
 
   if (terms.siegeSocial) {

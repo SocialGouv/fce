@@ -81,6 +81,7 @@ class Search extends React.Component {
                         noOptionsMessage={term => "Aucun résultat"}
                         placeholder="Code NAF ou libellé"
                         isClearable
+                        isMulti
                       />
                     </div>
                   </div>

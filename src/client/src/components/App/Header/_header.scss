@@ -1,8 +1,19 @@
 .navbar {
-  background-color: $primary;
+  background-color: $light;
+
+  &-brand {
+    align-items: center;
+    color: $dark;
+
+    &>img {
+      width: 80px;
+      height: 47px;
+      margin-right: 1rem;
+    }
+  }
 
   a.navbar-item {
-    color: $light;
+    color: $dark;
 
     &:hover {
       background-color: $primary !important;

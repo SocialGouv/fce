@@ -17,6 +17,7 @@
     "json2csv": "^4.0.0",
     "moment": "^2.20.1",
     "node-sass": "^4.11.0",
+    "piwik-react-router": "^0.12.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",

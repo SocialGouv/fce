@@ -16,7 +16,7 @@ class Establishment extends React.Component {
       : 0;
 
     const stateClass =
-      establishment.etat_etablissement == "A"
+      establishment.etat_etablissement === "A"
         ? "icon--success"
         : "icon--danger";
 

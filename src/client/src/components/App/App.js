@@ -1,21 +1,27 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
+import PiwikReactRouter from "piwik-react-router";
 import configureStore from "../../services/Store";
 
 import "./app.scss";
-import { Container } from "reactstrap";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
 import Footer from "./Footer";
 import Search from "../../containers/Search";
-import SearchResults from "../../containers/SearchResults";
 import Enterprise from "../../containers/Enterprise";
 import { Error403, Error404 } from "../../components/Errors";
 import PaperBG from "../../assets/img/paper.png";
 
 let { store, persistor } = configureStore();
+let history = createBrowserHistory();
+
+const piwik = PiwikReactRouter({
+  url: "",
+  siteId: 1
+});
 
 const appStyle = {
   background: `url(${PaperBG})`
@@ -27,7 +33,7 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter>
+          <BrowserRouter history={piwik.connectToHistory(history)}>
             <ScrollToTop>
               <Header />
               <div className="app-container" style={appStyle}>

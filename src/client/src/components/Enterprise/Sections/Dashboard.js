@@ -1,10 +1,7 @@
 import React from "react";
-import Value from "../../../elements/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import {
-  faTimes,
-  faCheckCircle,
   faCircle,
   faUser,
   faCalendarExclamation,
@@ -17,7 +14,7 @@ class Dashboard extends React.Component {
     const { establishment } = this.props;
 
     const stateClass =
-      establishment.etat_etablissement == "A"
+      establishment.etat_etablissement === "A"
         ? "icon--success"
         : "icon--danger";
 
@@ -33,7 +30,9 @@ class Dashboard extends React.Component {
             />
             <span>
               {" "}
-              {establishment.etat_etablissement == "A" ? "Actif" : "Fermé"}{" "}
+              {establishment.etat_etablissement === "A"
+                ? "Actif"
+                : "Fermé"}{" "}
             </span>
           </div>
         </div>

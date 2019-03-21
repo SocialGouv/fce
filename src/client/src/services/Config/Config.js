@@ -13,7 +13,30 @@ const globalConfig = {
   },
   advancedSearch: {
     minTerms: 4
-  }
+  },
+  accords: [
+    { key: "epargne", value: "Epargne salariale" },
+    { key: "remuneration", value: "Salaires / Rémunérations" },
+    { key: "temps_travail", value: "Durée du travail / Repos" },
+    { key: "egalite_pro", value: "Egalité professionnelle femmes / hommes" },
+    { key: "emploi", value: "Emploi / GPEC" },
+    { key: "conditions_travail", value: "Conditions de travail" },
+    {
+      key: "protection_sociale",
+      value: "Prévoyance / protection sociale complémentaire"
+    },
+    {
+      key: "nouvelles_technologies",
+      value: "Nouvelles technologies numériques"
+    },
+    { key: "classifications", value: "Classifications" },
+    {
+      key: "droit_syndical",
+      value: "Droit syndical, représentation du personnel"
+    },
+    { key: "formation", value: "Formation professionnelle" },
+    { key: "autres", value: "Autres" }
+  ]
 };
 
 function initConfig() {

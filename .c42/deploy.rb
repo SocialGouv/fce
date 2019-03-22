@@ -77,7 +77,4 @@ task 'restart' do
   run %(ps -ef | grep node | grep "#{application}" | grep -v grep | awk "{print \\$2}" | xargs kill -9)
 end
 after 'deploy', 'restart'
-
-set :app_shared_files, ["/src/server/.env"]
-
 after 'restart', 'deploy:cleanup'

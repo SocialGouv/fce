@@ -28,7 +28,7 @@ router.get("/search(.:format)?", function(req, res) {
         commune: (req.query["commune"] || "").trim(),
         codePostal: (req.query["codePostal"] || "").trim(),
         departement: (req.query["departement"] || "").trim(),
-        naf: (req.query["naf"] || "").trim(),
+        naf: Array.isArray(req.query["naf"]) ? req.query["naf"] : [],
         siegeSocial:
           req.query["siegeSocial"] === "1" ||
           req.query["siegeSocial"] === "true" ||
@@ -153,7 +153,7 @@ const sendResultXlsx = (data, response) => {
 router.get("/communes", function(req, res) {
   const query = (req.query["q"] || "").trim();
 
-  if (query.length <= 3) {
+  if (query.length < 2) {
     return res.send({ success: false, message: "query too short" });
   }
 
@@ -166,15 +166,9 @@ router.get("/communes", function(req, res) {
 });
 
 router.get("/naf", function(req, res) {
-  const query = (req.query["q"] || "").trim();
-
-  if (query.length <= 3) {
-    return res.send({ success: false, message: "query too short" });
-  }
-
   const naf = new Naf();
 
-  naf.search(query).then(nafs => {
+  naf.findAll().then(nafs => {
     const success = Array.isArray(nafs);
     if (success) {
       return res.send({ success, results: nafs });

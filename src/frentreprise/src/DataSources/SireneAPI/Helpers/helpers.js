@@ -245,7 +245,8 @@ const getLibelleNaf = async (codeNaf, db) => {
     return undefined;
   }
   const nafModel = new NafModel(db);
-  const naf = nafModel.getByCode(codeNaf);
+  const naf = await nafModel.getByCode(codeNaf);
+
   return naf ? naf.libelle : null;
 };
 

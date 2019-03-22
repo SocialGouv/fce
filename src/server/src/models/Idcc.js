@@ -10,7 +10,7 @@ export default class Idcc extends Model {
         LEFT JOIN idcc i ON ei.idcc = i.code
         WHERE siret = $1
         `,
-        [+siret]
+        [siret]
       )
       .then(res => {
         return res.rows && res.rows.length ? res.rows[0] : null;

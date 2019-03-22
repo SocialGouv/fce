@@ -1,10 +1,5 @@
 {
   "fce.test": "development",
   "fce.commit42.fr": "staging",
-  "preprod.direccte.com": "preproduction",
-  "fce.gouv.fr": "production",
-  "fce.direccte.gouv.fr": "production",
-  "localhost": "production-local",
-  "0.0.0.0": "production",
-  "10.31.24.127": "production"
+  "fce.num.social.gouv.fr": "production"
 }

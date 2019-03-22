@@ -125,7 +125,10 @@ task :install do
   sql_cat_cmd = 'zcat .c42/tmp/dump.sql.gz' if File.exists?('.c42/tmp/dump.sql.gz')
   fatal('Could not find .c42/tmp/[dump|fce-base].sql[.gz]') unless defined?(sql_cat_cmd) && !sql_cat_cmd.nil?
 
+  copy_file('../src/server/.env.dist', './src/server/.env')
+
   info('Yarn install')
+  invoke 'frentreprise:yarn', ['install']
   invoke 'front:yarn', ['install']
   invoke 'server:yarn', ['install']
 

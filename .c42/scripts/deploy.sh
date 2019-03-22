@@ -18,6 +18,9 @@ echo "Creating release"
 rsync -avzP dist/. $SSH_HOST:~/deployment/fce/releases/$RELEASEN
 
 ssh $SSH_HOST KEEP_RELEASES=$KEEP_RELEASES RELEASEN=$RELEASEN 'bash -s' <<'CMD'
+echo "Link server .env"
+ln -nfs ~/deployment/fce/shared/.env ~/deployment/fce/releases/$RELEASEN/.env
+
 echo "Launching npm install"
 cd ~/deployment/fce/releases/$RELEASEN && npm install
 

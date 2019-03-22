@@ -1,13 +1,12 @@
 import path from "path";
-
-import config from "config";
 import express from "express";
 import bodyParser from "body-parser";
-
 import apiRouter from "./api";
-
 import frentreprise from "frentreprise";
 import PG from "./frentreprise/datasources/PG/PG";
+
+require("dotenv").config();
+const config = require("config");
 const app = express();
 const port = (config.has("port") && +config.get("port")) || 80;
 const host = (config.has("port") && config.get("host")) || undefined;

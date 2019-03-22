@@ -4,6 +4,7 @@ import InteractionsPole3E from "../../../models/InteractionsPole3E";
 import InteractionsPole3T from "../../../models/InteractionsPole3T";
 import UcEff from "../../../models/UcEff";
 import Idcc from "../../../models/Idcc";
+import Accords from "../../../models/Accords";
 
 export const _ = {
   requestDB: Symbol("_requestDB")
@@ -17,7 +18,8 @@ export default class PG extends DataSource {
       [Etablissements.getInteractionsPole3E, new InteractionsPole3E()],
       [Etablissements.getInteractionsPole3T, new InteractionsPole3T()],
       [Etablissements.getUcEff, new UcEff()],
-      [Etablissements.getIdcc, new Idcc()]
+      [Etablissements.getIdcc, new Idcc()],
+      [Etablissements.getAccords, new Accords()]
     );
   }
 

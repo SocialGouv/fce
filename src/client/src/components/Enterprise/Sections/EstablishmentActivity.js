@@ -3,6 +3,7 @@ import Value from "../../../elements/Value";
 import EstablishmentTransfert from "./EstablishmentTransfert";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import Config from "../../../services/Config";
 
 const assocStyle = {
   display: "flex",
@@ -30,7 +31,16 @@ class EstablishmentActivity extends React.Component {
         <div className="columns">
           <h5 className="column is-3">IDCC</h5>
           <span className="column is-8">
-            {establishment.code_idcc || establishment.libelle_idcc ? <Value value={`${establishment.code_idcc} - ${establishment.libelle_idcc}`} empty="-" /> : <span>-</span>}
+            {establishment.code_idcc || establishment.libelle_idcc ? (
+              <Value
+                value={`${establishment.code_idcc} - ${
+                  establishment.libelle_idcc
+                }`}
+                empty="-"
+              />
+            ) : (
+              <span>-</span>
+            )}
           </span>
         </div>
 
@@ -264,51 +274,21 @@ class EstablishmentActivity extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {establishment.accords ? (
-                      Object.keys(establishment.accords.details).map(theme => (
-                        <tr>
-                          <td> {theme} </td>
-                          <td> {establishment.accords.details[theme]} </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <>
-                        <tr>
-                          <td>Epargne salariale</td>
-                          <td>NC</td>
-                        </tr>
-                        <tr>
-                          <td>Salaires / Rémunérations</td>
-                          <td>NC</td>
-                        </tr>
-                        <tr>
-                          <td>Durée du travail / Repos</td>
-                          <td>NC</td>
-                        </tr>
-                        <tr>
-                          <td>Egalité professionnelle femmes / hommes</td>
-                          <td>NC</td>
-                        </tr>
-                        <tr>
-                          <td>Emploi / GPEC</td>
-                          <td>NC</td>
-                        </tr>
-                        <tr>
-                          <td>Conditions de travail</td>
-                          <td>NC</td>
-                        </tr>
-                        <tr>
-                          <td>
-                            Prévoyance / protection sociale complémentaire
-                          </td>
-                          <td>NC</td>
-                        </tr>
-                        <tr>
-                          <td>Autres</td>
-                          <td>NC</td>
-                        </tr>
-                      </>
-                    )}
+                    {Config.get("accords").map(typeAccord => (
+                      <tr key={`accord-${typeAccord.key}`}>
+                        <td>{typeAccord.value}</td>
+                        <td>
+                          <Value
+                            value={
+                              establishment.accords &&
+                              establishment.accords[typeAccord.key]
+                            }
+                            empty="-"
+                            nonEmptyValues={[0, "0"]}
+                          />
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>

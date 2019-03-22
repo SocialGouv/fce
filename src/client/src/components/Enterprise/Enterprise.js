@@ -67,15 +67,15 @@ class Enterprise extends React.Component {
 
             <div className="task-bar d-print-none">
               {this.props.hasSearchResults ? (
-                <Link
+                <button
                   className="button back-button is-dark"
-                  to={`/search/results`}
+                  onClick={() => this.props.history.goBack()}
                 >
                   <span className="icon">
                     <FontAwesomeIcon icon={faArrowAltLeft} />
                   </span>
                   <span>Retour aux résultats</span>
-                </Link>
+                </button>
               ) : (
                 ""
               )}

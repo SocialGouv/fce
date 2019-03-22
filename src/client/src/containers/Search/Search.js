@@ -10,6 +10,7 @@ import SearchResults from "../../containers/SearchResults";
 class Search extends Component {
   constructor(props) {
     super(props);
+    console.log(props.prevTerms);
     this.state = {
       terms: {
         q: "",
@@ -23,6 +24,24 @@ class Search extends Component {
       showResults: false
     };
   }
+
+  componentDidMount() {
+    const { q, siegeSocial, naf, commune } = this.props.prevTerms;
+    if (!this.checkPreviousTerms(this.props.prevTerms)) {
+      this.setState({
+        terms: { q, siegeSocial, naf, commune }
+      });
+    }
+  }
+
+  checkPreviousTerms = terms => {
+    let empty = false;
+    Object.values(terms).map(t => {
+      empty = t === null ? true : false;
+    });
+
+    return empty;
+  };
 
   updateForm = evt => {
     const { name, value, type, checked } = evt.target;
@@ -169,7 +188,9 @@ class Search extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    prevTerms: state.search.terms
+  };
 };
 
 const mapDispatchToProps = dispatch => {

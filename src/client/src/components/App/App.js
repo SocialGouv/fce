@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
@@ -33,7 +33,7 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter history={piwik.connectToHistory(history)}>
+          <Router history={piwik.connectToHistory(history)}>
             <ScrollToTop>
               <Header />
               <div className="app-container" style={appStyle}>
@@ -57,7 +57,7 @@ class App extends React.Component {
               </div>
               <Footer />
             </ScrollToTop>
-          </BrowserRouter>
+          </Router>
         </PersistGate>
       </Provider>
     );

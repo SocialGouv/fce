@@ -14,24 +14,30 @@ import classNames from "classnames";
 
 class SearchResults extends React.Component {
   render() {
+    const { results, pagination } = this.props;
     return (
-      <div className="app-searchResults">
+      <div className="app-searchResults" style={{ marginTop: "3rem" }}>
+        {results && results.length >= 1 && (
+          <h2 className="title">{pagination.items} établissements trouvés</h2>
+        )}
         <div className="columns result-row">
           <div className="column is-12">
-            {!Array.isArray(this.props.results) ? (
+            {!Array.isArray(results) ? (
               <Alert color="danger">Une erreur est survenue.</Alert>
-            ) : !this.props.results.length ? (
+            ) : !results.length ? (
               <Alert color="info">Aucun résultat</Alert>
             ) : (
               ""
             )}
 
-            {Array.isArray(this.props.results) && this.props.results.length ? (
+            {Array.isArray(results) && results.length ? (
               <ReactTable
-                data={this.props.results}
+                data={results}
                 className="table is-striped is-hoverable"
-                defaultPageSize={this.props.results.length}
-                showPagination={this.props.pagination && this.props.pagination.pages > 1}
+                defaultPageSize={results.length}
+                showPagination={
+                  this.props.pagination && this.props.pagination.pages > 1
+                }
                 showPageSizeOptions={false}
                 manual // Forces table not to paginate or sort automatically, so we can handle it server-side
                 pages={this.props.pagination && this.props.pagination.pages}
@@ -82,17 +88,6 @@ class SearchResults extends React.Component {
                       })
                   },
                   {
-                    Header: "SIREN",
-                    id: "siren",
-                    minWidth: 120,
-                    accessor: e =>
-                      Value({
-                        value: e.siren,
-                        empty: "-",
-                        link: `/enterprise/${e.siren}`
-                      })
-                  },
-                  {
                     Header: "Raison Sociale / Nom",
                     id: "nom",
                     minWidth: 350,
@@ -118,6 +113,21 @@ class SearchResults extends React.Component {
                         ),
                         icon: faCircle
                       })
+                  },
+                  {
+                    Header: "Activité",
+                    id: "activite",
+                    minWidth: 200,
+                    accessor: e => {
+                      return (
+                        e.etablissement.naf &&
+                        Value({
+                          value: `${e.etablissement.naf} - ${
+                            e.etablissement.libelle_naf
+                          }`
+                        })
+                      );
+                    }
                   },
                   {
                     Header: "Code postal",
@@ -160,17 +170,17 @@ class SearchResults extends React.Component {
                         value: e.etablissement.categorie_etablissement,
                         empty: "-"
                       })
-                  },
-                  {
-                    Header: "Interactions",
-                    id: "total-interactions",
-                    minWidth: 80,
-                    accessor: e =>
-                      Value({
-                        value: e.etablissement.totalInteractions.total,
-                        empty: ""
-                      })
                   }
+                  // {
+                  //   Header: "Interactions",
+                  //   id: "total-interactions",
+                  //   minWidth: 80,
+                  //   accessor: e =>
+                  //     Value({
+                  //       value: e.etablissement.totalInteractions.total,
+                  //       empty: ""
+                  //     })
+                  // }
                 ]}
                 previousText="Précédent"
                 nextText="Suivant"

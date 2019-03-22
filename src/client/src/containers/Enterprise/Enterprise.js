@@ -16,6 +16,7 @@ class Enterprise extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      history: null,
       isEnterprise: null,
       enterprise: null,
       headOffice: null,
@@ -185,6 +186,7 @@ class Enterprise extends React.Component {
         establishments={this.state.establishments}
         hasSearchResults={this.props.hasSearchResults}
         isLoaded={this.state.isLoaded}
+        history={this.props.history}
       />
     ) : (
       <EstablishmentView
@@ -194,6 +196,7 @@ class Enterprise extends React.Component {
         establishments={this.state.establishments}
         hasSearchResults={this.props.hasSearchResults}
         isLoaded={this.state.isLoaded}
+        history={this.props.history}
       />
     );
   }

@@ -11,7 +11,7 @@ class EnterpriseActivity extends React.Component {
     const { enterprise, headOffice } = this.props;
 
     const stateClass =
-      enterprise.etat_entreprise == "A" ? "icon--success" : "icon--danger";
+      enterprise.etat_entreprise === "A" ? "icon--success" : "icon--danger";
 
     return (
       <section id="activity" className="enterprise-section">
@@ -128,7 +128,11 @@ class EnterpriseActivity extends React.Component {
           </span>
           {enterprise.attestation_dgfip ? (
             <span className="span col-md-5">
-              <a href={enterprise.attestation_dgfip} target="_blank">
+              <a
+                href={enterprise.attestation_dgfip}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 télécharger le document
               </a>
             </span>
@@ -145,7 +149,11 @@ class EnterpriseActivity extends React.Component {
           </span>
           {enterprise.attestation_acoss ? (
             <span className="span col-md-5">
-              <a href={enterprise.attestation_acoss} target="_blank">
+              <a
+                href={enterprise.attestation_acoss}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 télécharger le document
               </a>
             </span>

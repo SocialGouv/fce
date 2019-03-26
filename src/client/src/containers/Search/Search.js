@@ -26,8 +26,22 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    this.loadNaf();
+    const { q, siegeSocial, naf, commune } = this.props.prevTerms;
+    if (this.hasPreviousTerms(this.props.prevTerms)) {
+      this.setState(
+        {
+          terms: { q, siegeSocial, naf, commune }
+        },
+        () => {
+          this.search();
+        }
+      );
+    }
   }
+
+  hasPreviousTerms = terms => {
+    return Object.values(terms).find(t => t !== null) !== undefined;
+  };
 
   updateForm = evt => {
     const { name, value, type, checked } = evt.target;
@@ -53,23 +67,34 @@ class Search extends Component {
     });
   };
 
-  loadNaf = () => {
-    return Http.get("/naf")
+  loadNaf = term => {
+    if (term.length < Config.get("advancedSearch").minTerms) {
+      return new Promise(resolve => {
+        resolve([]);
+      });
+    }
+
+    return Http.get("/naf", {
+      params: {
+        q: term
+      }
+    })
       .then(response => {
         if (response.data && response.data.results) {
-          const nafList = response.data.results.map(naf => {
-            return {
-              label: `${naf.code} - ${naf.libelle}`,
-              value: naf.code
-            };
-          });
-          this.setState({
-            nafList
-          });
+          return Promise.resolve(
+            response.data.results.map(naf => {
+              return {
+                label: `${naf.code} - ${naf.libelle}`,
+                value: naf.code
+              };
+            })
+          );
         }
+        return Promise.reject([]);
       })
       .catch(function(error) {
         console.error(error);
+        return Promise.reject([]);
       });
   };
 
@@ -129,8 +154,6 @@ class Search extends Component {
         } else if (query.isSIREN && results) {
           redirectTo = `/enterprise/${query.terms.q}`;
           this.props.setCurrentEnterprise(results[0]);
-        } else if (results && results.length === 1) {
-          redirectTo = `/establishment/${results[0].etablissements[0].siret}`;
         } else {
           showResults = true;
         }
@@ -166,7 +189,7 @@ class Search extends Component {
           updateFormSelect={this.updateFormSelect}
           loading={this.state.loading}
           hasError={this.state.hasError}
-          nafList={this.state.nafList}
+          loadNaf={this.loadNaf}
           loadCommunes={this.loadCommunes}
         />
         {this.state.showResults ? <SearchResults /> : null}
@@ -176,7 +199,9 @@ class Search extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    prevTerms: state.search.terms
+  };
 };
 
 const mapDispatchToProps = dispatch => {

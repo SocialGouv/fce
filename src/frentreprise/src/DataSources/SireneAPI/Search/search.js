@@ -4,7 +4,7 @@ import helpers from "../Helpers/helpers";
 export default async (terms, pagination, Axios, params, db) => {
   const data = await utils.requestAPI(
     Axios,
-    `siret/?q=${await buildQuery(terms)}`,
+    `siret/?q=${await buildQuery(terms)}&nombre=10000`,
     params
   );
 

@@ -9,11 +9,23 @@ class Search extends React.Component {
   render() {
     return (
       <div className="app-search">
+        <div className="app-search--header">
+          <h1 className="title has-text-primary">
+            Trouver l'entreprise qu'il vous faut parmi 465798431 fiches !
+          </h1>
+          <p className="lead">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque
+            est facilis mollitia. Consequuntur magni cumque quaerat impedit
+            sapiente rerum error consequatur commodi porro! Cupiditate dolores
+            debitis eveniet ullam porro, eos consequuntur fuga ex perferendis
+            nostrum officia molestiae!
+          </p>
+        </div>
         <div className="columns app-search--container">
           <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
-            <h1 className="title">
+            <h2 className="title">
               Rechercher un établissement ou une entreprise
-            </h1>
+            </h2>
 
             {this.props.hasError ? (
               <div className="alert is-danger">
@@ -30,7 +42,7 @@ class Search extends React.Component {
                     type="text"
                     name="q"
                     id="term"
-                    className="input"
+                    className="input is-medium"
                     required
                     placeholder="SIRET, SIREN, raison sociale, nom"
                     onChange={evt => this.props.updateForm(evt)}
@@ -39,10 +51,12 @@ class Search extends React.Component {
                 <div className="control">
                   <button
                     type="submit"
-                    className="action button is-primary has-text-light"
+                    className="action button is-outlined is-light is-medium"
                   >
                     {this.props.loading ? (
-                      <FontAwesomeIcon icon={faSpinner} spin />
+                      <span className="icon">
+                        <FontAwesomeIcon icon={faSpinner} spin />
+                      </span>
                     ) : (
                       "Rechercher"
                     )}
@@ -54,7 +68,7 @@ class Search extends React.Component {
                 <div className="column is-one-fifth">
                   <div className="field">
                     <input
-                      className="is-checkradio"
+                      className="is-checkradio is-light"
                       type="checkbox"
                       name="siegeSocial"
                       id="siegeSocial"
@@ -67,30 +81,32 @@ class Search extends React.Component {
                 </div>
                 <div className="column is-one-third">
                   <div className="field">
-                    <label className="label" htmlFor="naf">
-                      Activité
-                    </label>
                     <div className="control">
-                      <Select
+                      <AsyncSelect
                         id="naf"
                         name="naf"
-                        options={this.props.nafList}
+                        defaultOptions={[]}
+                        loadOptions={this.props.loadNaf}
                         onChange={value =>
                           this.props.updateFormSelect("naf", value)
                         }
-                        noOptionsMessage={term => "Aucun résultat"}
+                        loadingMessage={() => "Chargement..."}
+                        noOptionsMessage={term =>
+                          term.inputValue.length >=
+                          Config.get("advancedSearch").minTerms
+                            ? "Aucun résultat"
+                            : `Veuillez saisir au moins ${
+                                Config.get("advancedSearch").minTerms
+                              } caractères`
+                        }
                         placeholder="Code NAF ou libellé"
                         isClearable
-                        isMulti
                       />
                     </div>
                   </div>
                 </div>
                 <div className="column is-one-third">
                   <div className="field">
-                    <label className="label" htmlFor="commune">
-                      Localité
-                    </label>
                     <div className="control">
                       <AsyncSelect
                         id="commune"
@@ -109,7 +125,7 @@ class Search extends React.Component {
                                 Config.get("advancedSearch").minTerms
                               } caractères`
                         }
-                        placeholder="Nom de commune ou code postal"
+                        placeholder="Commune ou code postal"
                         isClearable
                       />
                     </div>

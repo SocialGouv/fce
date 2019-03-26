@@ -46,9 +46,6 @@ class Enterprise extends React.Component {
     return (
       <section className="app-enterprise">
         <div className="columns">
-          {/* <Col className="aside-box d-print-none" md="2">
-            <QuickAccess sections={this.getSections()} />
-          </Col> */}
           <div className="column main is-9-desktop is-12-tablet">
             <h2 className="subtitle">Fiche Entreprise</h2>
 
@@ -67,15 +64,15 @@ class Enterprise extends React.Component {
 
             <div className="task-bar d-print-none">
               {this.props.hasSearchResults ? (
-                <Link
+                <button
                   className="button back-button is-dark"
-                  to={`/search/results`}
+                  onClick={() => this.props.history.goBack()}
                 >
                   <span className="icon">
                     <FontAwesomeIcon icon={faArrowAltLeft} />
                   </span>
                   <span>Retour aux résultats</span>
-                </Link>
+                </button>
               ) : (
                 ""
               )}

@@ -52,9 +52,6 @@ class Establishment extends React.Component {
     return (
       <section className="app-enterprise">
         <div className="columns">
-          {/* <div className="column is-2 aside-box d-print-none">
-            <QuickAccess sections={this.getSections()} />
-          </div> */}
           <div className="main establishment column is-9-desktop is-12-tablet">
             <h2 className="subtitle">Fiche Établissement</h2>
 
@@ -67,15 +64,15 @@ class Establishment extends React.Component {
 
             <div className="task-bar d-print-none">
               {this.props.hasSearchResults ? (
-                <Link
+                <button
                   className="button back-button is-dark"
-                  to={`/search/results`}
+                  onClick={() => this.props.history.goBack()}
                 >
                   <span className="icon">
                     <FontAwesomeIcon icon={faArrowAltLeft} />
                   </span>
                   <span>Retour aux résultats</span>
-                </Link>
+                </button>
               ) : (
                 ""
               )}
@@ -105,10 +102,6 @@ class Establishment extends React.Component {
               </a>
             </div>
 
-            {/* <EstablishmentEnterpriseIdentity
-              enterprise={this.props.enterprise}
-              headOffice={this.props.headOffice}
-            /> */}
             <div className="establishment-keys">
               <EstablishmentIdentity
                 establishment={this.props.establishment}
@@ -131,11 +124,6 @@ class Establishment extends React.Component {
             />
             <EstablishmentMuteco establishment={this.props.establishment} />
             <EstablishmentHelps establishment={this.props.establishment} />
-            {/* <Relation establishment={this.props.establishment} />
-            <Interventions
-              establishment={this.props.establishment}
-              enterprise={this.props.enterprise}
-            /> */}
           </div>
           <div id="establishments" className="quickview responsive-item">
             <div className="quickview-body">

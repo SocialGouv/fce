@@ -85,17 +85,25 @@ class Search extends React.Component {
                       Activité
                     </label> */}
                     <div className="control">
-                      <Select
+                      <AsyncSelect
                         id="naf"
                         name="naf"
-                        options={this.props.nafList}
+                        defaultOptions={[]}
+                        loadOptions={this.props.loadNaf}
                         onChange={value =>
                           this.props.updateFormSelect("naf", value)
                         }
-                        noOptionsMessage={term => "Aucun résultat"}
+                        loadingMessage={() => "Chargement..."}
+                        noOptionsMessage={term =>
+                          term.inputValue.length >=
+                          Config.get("advancedSearch").minTerms
+                            ? "Aucun résultat"
+                            : `Veuillez saisir au moins ${
+                                Config.get("advancedSearch").minTerms
+                              } caractères`
+                        }
                         placeholder="Code NAF ou libellé"
                         isClearable
-                        isMulti
                       />
                     </div>
                   </div>
@@ -123,7 +131,7 @@ class Search extends React.Component {
                                 Config.get("advancedSearch").minTerms
                               } caractères`
                         }
-                        placeholder="Nom de commune ou code postal"
+                        placeholder="Commune ou code postal"
                         isClearable
                       />
                     </div>

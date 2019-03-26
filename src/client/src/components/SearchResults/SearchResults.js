@@ -18,7 +18,10 @@ class SearchResults extends React.Component {
     return (
       <div className="app-searchResults" style={{ marginTop: "3rem" }}>
         {results && results.length >= 1 && (
-          <h2 className="title">{pagination.items} établissements trouvés</h2>
+          <h2 className="title">
+            {pagination.items} établissement{pagination.items > 1 && "s"} trouvé{" "}
+            {pagination.items > 1 && "s"}
+          </h2>
         )}
         <div className="columns result-row">
           <div className="column is-12">

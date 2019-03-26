@@ -10,7 +10,6 @@ import SearchResults from "../../containers/SearchResults";
 class Search extends Component {
   constructor(props) {
     super(props);
-    console.log(props.prevTerms);
     this.state = {
       terms: {
         q: "",
@@ -29,12 +28,17 @@ class Search extends Component {
   componentDidMount() {
     const { q, siegeSocial, naf, commune } = this.props.prevTerms;
     if (!this.checkPreviousTerms(this.props.prevTerms)) {
-      this.setState({
-        terms: { q, siegeSocial, naf, commune }
-      });
+      this.setState(
+        {
+          terms: { q, siegeSocial, naf, commune }
+        },
+        () => {
+          console.log(this.state.terms);
+          this.search();
+        }
+      );
     }
-
-    this.loadNaf();
+    // this.loadNaf();
   }
 
   checkPreviousTerms = terms => {
@@ -70,23 +74,34 @@ class Search extends Component {
     });
   };
 
-  loadNaf = () => {
-    return Http.get("/naf")
+  loadNaf = term => {
+    if (term.length < Config.get("advancedSearch").minTerms) {
+      return new Promise(resolve => {
+        resolve([]);
+      });
+    }
+
+    return Http.get("/naf", {
+      params: {
+        q: term
+      }
+    })
       .then(response => {
         if (response.data && response.data.results) {
-          const nafList = response.data.results.map(naf => {
-            return {
-              label: `${naf.code} - ${naf.libelle}`,
-              value: naf.code
-            };
-          });
-          this.setState({
-            nafList
-          });
+          return Promise.resolve(
+            response.data.results.map(naf => {
+              return {
+                label: `${naf.code} - ${naf.libelle}`,
+                value: naf.code
+              };
+            })
+          );
         }
+        return Promise.reject([]);
       })
       .catch(function(error) {
         console.error(error);
+        return Promise.reject([]);
       });
   };
 
@@ -146,8 +161,8 @@ class Search extends Component {
         } else if (query.isSIREN && results) {
           redirectTo = `/enterprise/${query.terms.q}`;
           this.props.setCurrentEnterprise(results[0]);
-        } else if (results && results.length === 1) {
-          redirectTo = `/establishment/${results[0].etablissements[0].siret}`;
+          // } else if (results && results.length === 1) {
+          //   redirectTo = `/establishment/${results[0].etablissements[0].siret}`;
         } else {
           showResults = true;
         }
@@ -183,7 +198,7 @@ class Search extends Component {
           updateFormSelect={this.updateFormSelect}
           loading={this.state.loading}
           hasError={this.state.hasError}
-          nafList={this.state.nafList}
+          loadNaf={this.loadNaf}
           loadCommunes={this.loadCommunes}
         />
         {this.state.showResults ? <SearchResults /> : null}

@@ -81,9 +81,6 @@ class Search extends React.Component {
                 </div>
                 <div className="column is-one-third">
                   <div className="field">
-                    {/* <label className="label" htmlFor="naf">
-                      Activité
-                    </label> */}
                     <div className="control">
                       <AsyncSelect
                         id="naf"
@@ -110,9 +107,6 @@ class Search extends React.Component {
                 </div>
                 <div className="column is-one-third">
                   <div className="field">
-                    {/* <label className="label" htmlFor="commune">
-                      Localité
-                    </label> */}
                     <div className="control">
                       <AsyncSelect
                         id="commune"

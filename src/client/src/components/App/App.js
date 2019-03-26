@@ -7,6 +7,7 @@ import PiwikReactRouter from "piwik-react-router";
 import configureStore from "../../services/Store";
 
 import "./app.scss";
+import Config from "../../services/Config";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -18,10 +19,7 @@ import PaperBG from "../../assets/img/paper.png";
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
 
-const piwik = PiwikReactRouter({
-  url: "",
-  siteId: 1
-});
+const piwik = PiwikReactRouter(Config.get("piwik"));
 
 const appStyle = {
   background: `url(${PaperBG})`

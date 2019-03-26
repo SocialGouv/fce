@@ -27,27 +27,20 @@ class Search extends Component {
 
   componentDidMount() {
     const { q, siegeSocial, naf, commune } = this.props.prevTerms;
-    if (!this.checkPreviousTerms(this.props.prevTerms)) {
+    if (this.hasPreviousTerms(this.props.prevTerms)) {
       this.setState(
         {
           terms: { q, siegeSocial, naf, commune }
         },
         () => {
-          console.log(this.state.terms);
           this.search();
         }
       );
     }
-    // this.loadNaf();
   }
 
-  checkPreviousTerms = terms => {
-    let empty = false;
-    Object.values(terms).map(t => {
-      empty = t === null ? true : false;
-    });
-
-    return empty;
+  hasPreviousTerms = terms => {
+    return Object.values(terms).find(t => t !== null) !== undefined;
   };
 
   updateForm = evt => {
@@ -161,8 +154,6 @@ class Search extends Component {
         } else if (query.isSIREN && results) {
           redirectTo = `/enterprise/${query.terms.q}`;
           this.props.setCurrentEnterprise(results[0]);
-          // } else if (results && results.length === 1) {
-          //   redirectTo = `/establishment/${results[0].etablissements[0].siret}`;
         } else {
           showResults = true;
         }

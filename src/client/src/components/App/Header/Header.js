@@ -40,18 +40,6 @@ class Header extends React.Component {
             <span aria-hidden="true" />
             <span aria-hidden="true" />
           </a>
-
-          {/* <div className="navbar-menu" id="navbarMenu">
-            <div className="navbar-start">
-              <Link
-                to="/search"
-                className="navbar-item"
-                title="Rechercher un établissement ou une entreprise"
-              >
-                Recherche
-              </Link>
-            </div>
-          </div> */}
         </nav>
       </header>
     );

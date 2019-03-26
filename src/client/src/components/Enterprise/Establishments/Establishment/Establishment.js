@@ -10,7 +10,6 @@ import {
 
 class Establishment extends React.Component {
   render() {
-    console.log(this.props);
     const { establishment } = this.props;
     const nbInteractions = Array.isArray(establishment.direccte)
       ? establishment.direccte.length

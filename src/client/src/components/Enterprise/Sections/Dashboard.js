@@ -22,7 +22,6 @@ class Dashboard extends React.Component {
       <section id="dashboard" className="enterprise-section dashboard">
         <div className="dashboard-mask" />
         <div className="dashboard-item dashboard-state">
-          {/* <h3 class="title is-size-5">Etat</h3> */}
           <div className="dashboard-item--value">
             <FontAwesomeIcon
               className={classNames("dashboard-icon", stateClass)}
@@ -37,7 +36,6 @@ class Dashboard extends React.Component {
           </div>
         </div>
         <div className="dashboard-item dashboard-people">
-          {/* <h3 class="title is-size-5">Effectif</h3> */}
           <div className="dashboard-item--value">
             <FontAwesomeIcon className="dashboard-icon" icon={faUser} />
             <span>x 15</span>

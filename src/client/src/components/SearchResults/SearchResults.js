@@ -174,16 +174,6 @@ class SearchResults extends React.Component {
                         empty: "-"
                       })
                   }
-                  // {
-                  //   Header: "Interactions",
-                  //   id: "total-interactions",
-                  //   minWidth: 80,
-                  //   accessor: e =>
-                  //     Value({
-                  //       value: e.etablissement.totalInteractions.total,
-                  //       empty: ""
-                  //     })
-                  // }
                 ]}
                 previousText="Précédent"
                 nextText="Suivant"

@@ -7,6 +7,13 @@ import Config from "../../services/Config";
 
 class Search extends React.Component {
   render() {
+    const selectCustomStyles = {
+      option: (provided, state) => ({
+        ...provided,
+        color: "#353535"
+      })
+    };
+
     return (
       <div className="app-search">
         <div className="app-search--header">
@@ -101,6 +108,7 @@ class Search extends React.Component {
                         }
                         placeholder="Code NAF ou libellé"
                         isClearable
+                        styles={selectCustomStyles}
                       />
                     </div>
                   </div>
@@ -127,6 +135,7 @@ class Search extends React.Component {
                         }
                         placeholder="Commune ou code postal"
                         isClearable
+                        styles={selectCustomStyles}
                       />
                     </div>
                   </div>

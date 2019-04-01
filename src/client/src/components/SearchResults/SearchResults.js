@@ -19,7 +19,7 @@ class SearchResults extends React.Component {
       <div className="app-searchResults" style={{ marginTop: "3rem" }}>
         {results && results.length >= 1 && (
           <h2 className="title">
-            {pagination.items} établissement{pagination.items > 1 && "s"} trouvé{" "}
+            {pagination.items} établissement{pagination.items > 1 && "s"} trouvé
             {pagination.items > 1 && "s"}
           </h2>
         )}

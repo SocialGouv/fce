@@ -2,7 +2,7 @@ FROM docker:stable-dind
 
 RUN apk add --no-cache --update alpine-sdk curl git openssh zip tar ruby ruby-dev zlib python python-dev py-pip bash docker
 
-RUN pip install docker-compose
+RUN pip install docker-compose==1.23.2
 
 RUN echo "gem: --no-rdoc --no-ri" >> /etc/gemrc
 RUN gem update --system > /dev/null

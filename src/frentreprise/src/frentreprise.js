@@ -251,7 +251,7 @@ class frentreprise {
           const paginationResponse =
             pagination && typeof response === "object" && response.pagination
               ? response.pagination
-              : null;
+              : {};
 
           const cleanedData =
             typeof data === "object"

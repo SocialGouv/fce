@@ -26,6 +26,7 @@
     "react-scripts": "2.0.3",
     "react-select": "^2.4.1",
     "react-table": "^6.8.0",
+    "react-tooltip": "^3.10.0",
     "react-widgets": "^4.2.0",
     "reactstrap": "^5.0.0-beta",
     "redux": "^3.7.2",

@@ -41,7 +41,10 @@ class Search extends Component {
   }
 
   hasPreviousTerms = terms => {
-    return Object.values(terms).find(t => t !== null) !== undefined;
+    return (
+      Object.keys(this.state.terms).find(key => terms[key] !== null) !==
+      undefined
+    );
   };
 
   updateForm = evt => {

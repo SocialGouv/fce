@@ -1,15 +1,12 @@
 import React from "react";
 import { Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import {
-  faFileExcel,
-  faPrint,
-  faCircle
-} from "@fortawesome/fontawesome-pro-solid";
+import { faSquare, faCircle } from "@fortawesome/fontawesome-pro-solid";
 import Terms from "./Terms";
 import ReactTable from "react-table";
 import Value from "../../elements/Value";
 import { withRouter } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
 import classNames from "classnames";
 
 class SearchResults extends React.Component {
@@ -19,7 +16,7 @@ class SearchResults extends React.Component {
       <div className="app-searchResults" style={{ marginTop: "3rem" }}>
         {results && results.length >= 1 && (
           <h2 className="title">
-            {pagination.items} établissement{pagination.items > 1 && "s"} trouvé{" "}
+            {pagination.items} établissement{pagination.items > 1 && "s"} trouvé
             {pagination.items > 1 && "s"}
           </h2>
         )}
@@ -91,6 +88,43 @@ class SearchResults extends React.Component {
                       })
                   },
                   {
+                    Header: "État",
+                    id: "etat",
+                    minWidth: 80,
+                    accessor: e => (
+                      <>
+                        {e.etablissement.etat_etablissement &&
+                        e.etablissement.etat_etablissement == "A" ? (
+                          <div style={{ textAlign: "center" }}>
+                            <FontAwesomeIcon
+                              data-tip
+                              data-for="active"
+                              className="icon--success"
+                              icon={faCircle}
+                              id="active"
+                            />
+                            <ReactTooltip id="active" effect="solid">
+                              <span>Actif</span>
+                            </ReactTooltip>
+                          </div>
+                        ) : (
+                          <div style={{ textAlign: "center" }}>
+                            <FontAwesomeIcon
+                              data-tip
+                              data-for="closed"
+                              className="icon--danger"
+                              icon={faSquare}
+                              id="closed"
+                            />
+                            <ReactTooltip id="closed" effect="solid">
+                              <span>Fermé</span>
+                            </ReactTooltip>
+                          </div>
+                        )}
+                      </>
+                    )
+                  },
+                  {
                     Header: "Raison Sociale / Nom",
                     id: "nom",
                     minWidth: 350,
@@ -103,34 +137,29 @@ class SearchResults extends React.Component {
                       })
                   },
                   {
-                    Header: "État",
-                    id: "etat",
-                    minWidth: 80,
+                    Header: "Cat. Etablissement",
+                    id: "categorie_etablissement",
+                    minWidth: 200,
                     accessor: e =>
-                      e.etablissement.etat_etablissement &&
-                      FontAwesomeIcon({
-                        className: classNames(
-                          e.etablissement.etat_etablissement == "A"
-                            ? "icon--success"
-                            : "icon--danger"
-                        ),
-                        icon: faCircle
+                      Value({
+                        value: e.etablissement.categorie_etablissement,
+                        empty: "-"
                       })
                   },
                   {
-                    Header: "Activité",
-                    id: "activite",
-                    minWidth: 200,
-                    accessor: e => {
-                      return (
-                        e.etablissement.naf &&
-                        Value({
-                          value: `${e.etablissement.naf} - ${
-                            e.etablissement.libelle_naf
-                          }`
-                        })
-                      );
-                    }
+                    Header: "Département",
+                    id: "departement",
+                    accessor: e =>
+                      Value({
+                        value:
+                          e.etablissement.adresse_components &&
+                          e.etablissement.adresse_components.code_postal &&
+                          e.etablissement.adresse_components.code_postal.substr(
+                            0,
+                            2
+                          ),
+                        empty: "-"
+                      })
                   },
                   {
                     Header: "Code postal",
@@ -150,29 +179,19 @@ class SearchResults extends React.Component {
                       })})`
                   },
                   {
-                    Header: "Département",
-                    id: "departement",
-                    accessor: e =>
-                      Value({
-                        value:
-                          e.etablissement.adresse_components &&
-                          e.etablissement.adresse_components.code_postal &&
-                          e.etablissement.adresse_components.code_postal.substr(
-                            0,
-                            2
-                          ),
-                        empty: "-"
-                      })
-                  },
-                  {
-                    Header: "Cat. Etablissement",
-                    id: "categorie_etablissement",
+                    Header: "Activité",
+                    id: "activite",
                     minWidth: 200,
-                    accessor: e =>
-                      Value({
-                        value: e.etablissement.categorie_etablissement,
-                        empty: "-"
-                      })
+                    accessor: e => {
+                      return (
+                        e.etablissement.naf &&
+                        Value({
+                          value: `${e.etablissement.naf} - ${
+                            e.etablissement.libelle_naf
+                          }`
+                        })
+                      );
+                    }
                   }
                 ]}
                 previousText="Précédent"

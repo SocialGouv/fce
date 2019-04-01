@@ -43,6 +43,18 @@ a {
   margin: 0 0 1rem;
 }
 
+.icon {
+  font-size: 1rem;
+
+  &--success {
+    color: $success;
+  }
+
+  &--danger {
+    color: $danger;
+  }
+}
+
 @media print {
   .d-print-none {
     display: none;

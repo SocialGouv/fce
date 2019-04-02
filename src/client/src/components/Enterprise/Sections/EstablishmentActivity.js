@@ -249,7 +249,17 @@ class EstablishmentActivity extends React.Component {
             Nombre d'accords déposés au cours des 24 derniers mois :
           </h5>
           <span className="column is-8">
-            {establishment.accords ? establishment.accords.nb_accords : 0}
+            {establishment.accords
+              ? Config.get("accords").reduce((total, typeAccord) => {
+                  if (
+                    establishment.accords &&
+                    establishment.accords[typeAccord.key]
+                  ) {
+                    total += +establishment.accords[typeAccord.key];
+                  }
+                  return total;
+                }, 0)
+              : "-"}
           </span>
         </div>
         <div className="accordions">

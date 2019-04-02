@@ -13,7 +13,8 @@ const globalConfig = {
   },
   advancedSearch: {
     minTerms: 2,
-    debounce: 500
+    debounce: 500,
+    terms: ["q", "naf", "commune", "siegeSocial"]
   },
   accords: [
     { key: "epargne", value: "Epargne salariale" },

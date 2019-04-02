@@ -46,6 +46,7 @@ router.get("/search(.:format)?", function(req, res) {
       .getEntreprise(data.query.terms.q)
       .then(entreprise => {
         data.results = [entreprise.export()];
+        data.pagination = {};
       }, logError.bind(this, data));
   } else {
     freCall = frentreprise.search(data.query.terms, page).then(results => {

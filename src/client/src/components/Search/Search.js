@@ -14,6 +14,8 @@ class Search extends React.Component {
       })
     };
 
+    const { terms } = this.props;
+
     return (
       <div className="app-search">
         <div className="app-search--header">
@@ -53,6 +55,7 @@ class Search extends React.Component {
                     required
                     placeholder="SIRET, SIREN, raison sociale, nom"
                     onChange={evt => this.props.updateForm(evt)}
+                    value={terms.q || ""}
                   />
                 </div>
                 <div className="control">
@@ -80,6 +83,7 @@ class Search extends React.Component {
                       name="siegeSocial"
                       id="siegeSocial"
                       onChange={evt => this.props.updateForm(evt)}
+                      checked={!!terms.siegeSocial}
                     />
                     <label htmlFor="siegeSocial" className="check-radio-label">
                       Siège social
@@ -89,25 +93,18 @@ class Search extends React.Component {
                 <div className="column is-one-third">
                   <div className="field">
                     <div className="control">
-                      <AsyncSelect
+                      <Select
                         id="naf"
                         name="naf"
-                        defaultOptions={[]}
-                        loadOptions={this.props.loadNaf}
+                        options={this.props.nafList}
                         onChange={value =>
                           this.props.updateFormSelect("naf", value)
                         }
-                        loadingMessage={() => "Chargement..."}
-                        noOptionsMessage={term =>
-                          term.inputValue.length >=
-                          Config.get("advancedSearch").minTerms
-                            ? "Aucun résultat"
-                            : `Veuillez saisir au moins ${
-                                Config.get("advancedSearch").minTerms
-                              } caractères`
-                        }
+                        noOptionsMessage={term => "Aucun résultat"}
                         placeholder="Code NAF ou libellé"
                         isClearable
+                        isMulti
+                        value={terms._nafSelect}
                         styles={selectCustomStyles}
                       />
                     </div>
@@ -135,6 +132,7 @@ class Search extends React.Component {
                         }
                         placeholder="Commune ou code postal"
                         isClearable
+                        value={terms._communeSelect}
                         styles={selectCustomStyles}
                       />
                     </div>

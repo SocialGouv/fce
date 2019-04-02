@@ -1,6 +1,7 @@
 import React from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
+import Value from "../../../elements/Value";
 import {
   faCircle,
   faUser,
@@ -38,7 +39,13 @@ class Dashboard extends React.Component {
         <div className="dashboard-item dashboard-people">
           <div className="dashboard-item--value">
             <FontAwesomeIcon className="dashboard-icon" icon={faUser} />
-            <span>x 15</span>
+            <span>
+              <Value
+                value={establishment.dernier_effectif_physique}
+                empty="-"
+                nonEmptyValues={[0, "0"]}
+              />
+            </span>
           </div>
         </div>
         <div className="dashboard-item dashboard-interactions">

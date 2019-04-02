@@ -20,10 +20,10 @@ export default class Communes extends Model {
     }
 
     return this.db
-      .query("SELECT * FROM communes WHERE nom ~* ($1) OR code_postal = $2", [
-        terms.join("|"),
-        +q
-      ])
+      .query(
+        "SELECT * FROM communes WHERE nom ~* ($1) OR LPAD(code_postal, 5, '0') ILIKE $2",
+        [terms.join("|"), `${q}%`]
+      )
       .then(res => {
         return res.rows;
       })

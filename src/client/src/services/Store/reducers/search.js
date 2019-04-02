@@ -1,7 +1,8 @@
 import {
   SEARCH_RESULTS,
   SEARCH_TERMS,
-  RESET_STORE
+  RESET_STORE,
+  SEARCH_RESET
 } from "../constants/ActionTypes";
 import addInteractionsToEstablishment from "../utils/addInteractionsToEstablishment";
 
@@ -36,6 +37,8 @@ const search = (state = initialState, action) => {
       };
     case RESET_STORE:
       return {};
+    case SEARCH_RESET:
+      return { ...initialState };
 
     default:
       return state;

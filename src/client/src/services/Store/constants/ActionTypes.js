@@ -3,6 +3,7 @@ export const LOGOUT_USER = "LOGOUT_USER";
 
 export const SEARCH_RESULTS = "SEARCH_RESULTS";
 export const SEARCH_TERMS = "SEARCH_TERMS";
+export const SEARCH_RESET = "SEARCH_RESET";
 
 export const SET_CURRENT_ENTERPRISE = "SET_CURRENT_ENTERPRISE";
 

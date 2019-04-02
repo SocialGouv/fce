@@ -47,6 +47,12 @@ export const search = (terms, page = 1) => (dispatch, getState) => {
     });
 };
 
+export const resetSearch = () => (dispatch, getState) => {
+  dispatch({
+    type: types.SEARCH_RESET
+  });
+};
+
 const _setSearchResponses = (results, pagination) => ({
   type: types.SEARCH_RESULTS,
   results,

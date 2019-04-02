@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import SearchView from "../../components/Search";
-import { search, setCurrentEnterprise } from "../../services/Store/actions";
+import {
+  search,
+  setTerm,
+  setCurrentEnterprise
+} from "../../services/Store/actions";
 import Http from "../../services/Http";
 import Config from "../../services/Config";
 import SearchResults from "../../containers/SearchResults";
@@ -11,12 +15,6 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      terms: {
-        q: "",
-        siegeSocial: false,
-        naf: null,
-        commune: null
-      },
       nafList: [],
       hasError: false,
       loading: false,
@@ -26,52 +24,36 @@ class Search extends Component {
   }
 
   componentDidMount() {
-    const { q, siegeSocial, naf, commune } = this.props.prevTerms;
-    if (this.hasPreviousTerms(this.props.prevTerms)) {
-      this.setState(
-        {
-          terms: { q, siegeSocial, naf, commune }
-        },
-        () => {
-          this.search();
-        }
-      );
+    if (this.hasPreviousTerms(this.props.terms)) {
+      this.setState({
+        showResults: true
+      });
     }
     this.loadNaf();
   }
 
   hasPreviousTerms = terms => {
     return (
-      Object.keys(this.state.terms).find(key => terms[key] !== null) !==
+      Config.get("advancedSearch").terms.find(key => terms[key] !== null) !==
       undefined
     );
   };
 
   updateForm = evt => {
     const { name, value, type, checked } = evt.target;
-    let terms = { ...this.state.terms };
-    terms[name] = type === "checkbox" ? checked : value;
-
-    this.setState({
-      terms: terms
-    });
+    this.props.setTerm(name, type === "checkbox" ? checked : value);
   };
 
   updateFormSelect = (name, element) => {
-    let terms = { ...this.state.terms };
+    const value = Array.isArray(element)
+      ? element.map(el => el.value)
+      : element && element.value;
 
-    if (Array.isArray(element)) {
-      terms[name] = element.map(el => el.value);
-    } else {
-      terms[name] = element && element.value;
-    }
-
-    this.setState({
-      terms: terms
-    });
+    this.props.setTerm(`_${name}Select`, element);
+    this.props.setTerm(name, value);
   };
 
-  loadNaf = term => {
+  loadNaf = () => {
     return Http.get("/naf")
       .then(response => {
         if (response.data && response.data.results) {
@@ -81,6 +63,7 @@ class Search extends Component {
               value: naf.code
             };
           });
+
           this.setState({
             nafList
           });
@@ -135,7 +118,7 @@ class Search extends Component {
     this.setState({ hasError: false, loading: true });
 
     this.props
-      .search(this.state.terms)
+      .search(this.props.terms)
       .then(response => {
         const { query, results } = response.data;
         let redirectTo = false;
@@ -176,7 +159,7 @@ class Search extends Component {
     return (
       <>
         <SearchView
-          terms={this.state.terms}
+          terms={this.props.terms}
           search={this.search}
           updateForm={this.updateForm}
           updateFormSelect={this.updateFormSelect}
@@ -193,7 +176,7 @@ class Search extends Component {
 
 const mapStateToProps = state => {
   return {
-    prevTerms: state.search.terms
+    terms: state.search.terms
   };
 };
 
@@ -202,6 +185,11 @@ const mapDispatchToProps = dispatch => {
     search: term => {
       return dispatch(search(term));
     },
+
+    setTerm: (termKey, termValue) => {
+      return dispatch(setTerm(termKey, termValue));
+    },
+
     setCurrentEnterprise: enterprise => {
       return dispatch(setCurrentEnterprise(enterprise));
     }

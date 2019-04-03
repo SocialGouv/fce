@@ -1,21 +1,20 @@
 import React, { Component } from "react";
+import PaperBG from "../../../assets/img/paper.png";
 
-import "./Footer.css";
+const footerStyle = {
+  background: `url(${PaperBG})`
+};
 
 class Footer extends Component {
   render() {
     return (
-      <footer className="app-footer">
+      <footer className="app-footer" style={footerStyle}>
         <img
           src="/img/la_direccte.png"
           alt="La DIRECCTE Occitanie"
-          className="float-left img-direccte"
+          className="img-direccte"
         />
-        <img
-          src="/img/labo.png"
-          alt="Le labO"
-          className="float-right img-labo"
-        />
+        <img src="/img/labo.png" alt="Le labO" className="img-labo" />
       </footer>
     );
   }

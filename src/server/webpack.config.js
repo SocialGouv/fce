@@ -41,7 +41,7 @@ module.exports = {
       __DIST: JSON.stringify(PRODUCTION)
     }),
     new PostCompile(() => {
-      ["config", "lib"].forEach(dir => {
+      ["config"].forEach(dir => {
         fs.copySync(
           path.resolve(__dirname, `./${dir}`),
           path.resolve(buildDir, `./${dir}`)

@@ -3,7 +3,9 @@
 .vscode/
 
 # dist
-/dist/
+dist/
 
 # docker
 docker-compose.yml
+
+vendor/

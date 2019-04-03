@@ -1,3 +1,4 @@
+import Dashboard from "./Dashboard";
 import EnterpriseIdentity from "./EnterpriseIdentity";
 import EnterpriseActivity from "./EnterpriseActivity";
 import EnterpriseHeadOffice from "./EnterpriseHeadOffice";
@@ -5,6 +6,8 @@ import EstablishmentActivity from "./EstablishmentActivity";
 import EstablishmentIdentity from "./EstablishmentIdentity";
 import EstablishmentEnterpriseIdentity from "./EstablishmentEnterpriseIdentity";
 import EstablishmentPredesSucce from "./EstablishmentPredesSucce";
+import EstablishmentMuteco from "./EstablishmentMuteco";
+import EstablishmentHelps from "./EstablishmentHelps";
 import Finances from "./Finances";
 import Attestations from "./Attestations";
 import Interventions from "./Interventions";
@@ -13,6 +16,7 @@ import Mandataires from "./Mandataires";
 import Relation from "./Relation";
 
 export {
+  Dashboard,
   EnterpriseIdentity,
   EnterpriseActivity,
   EnterpriseHeadOffice,
@@ -20,6 +24,8 @@ export {
   EstablishmentIdentity,
   EstablishmentEnterpriseIdentity,
   EstablishmentPredesSucce,
+  EstablishmentMuteco,
+  EstablishmentHelps,
   Finances,
   Attestations,
   Interventions,

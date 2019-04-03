@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  front:
+    build: .c42/docker/front
+    image: node_front
+    volumes:
+      - ./src/client/:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+
+  server:
+    build: .c42/docker/server
+    image: node_server
+    links:
+      - db
+    volumes:
+      - ./src/server/:/project
+      - ./src/frentreprise/:/frentreprise
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+
+  builder:
+    build: .c42/docker/builder
+    privileged: true
+    volumes:
+      - ./:/project
+      - $SSH_AUTH_SOCK:/ssh-agent
+
+  db:
+    image: postgres:9.6
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: fce
+
+  frentreprise:
+    build: .c42/docker/server
+    image: node_server
+    volumes:
+      - ./src/frentreprise:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+
+volumes:
+  db-data:
+    driver: local

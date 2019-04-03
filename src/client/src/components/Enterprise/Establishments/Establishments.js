@@ -14,20 +14,14 @@ class Establishments extends React.Component {
     ));
 
     return (
-      <aside className="aside-contain establishments-aside col-md-3">
+      <aside className="aside-contain establishments-aside column is-3-desktop is-12-tablet">
         <section>
-          <h1 className="h5">
+          <h3 className="title is-size-5">
             Entreprise <Value value={enterprise.raison_sociale} empty="-" />
-          </h1>
-
-          <dl className="row">
-            <dt className="col-md-4">Raison Sociale</dt>
-            <dd className="definition col-md-8">
-              <Value value={enterprise.raison_sociale} empty="-" />
-            </dd>
-
-            <dt className="col-md-4">SIREN</dt>
-            <dd className="definition col-md-8">
+          </h3>
+          <dl className="columns">
+            <dt className="column is-3">SIREN</dt>
+            <dd className="definition column is-8">
               <Link to={`/enterprise/${enterprise.siren}`}>
                 <Value value={enterprise.siren} empty="-" />
               </Link>
@@ -38,7 +32,7 @@ class Establishments extends React.Component {
         <hr />
 
         <section>
-          <h1 className="h5">Établissement siège / principal</h1>
+          <h3 className="title is-size-5">Siège social</h3>
 
           <Establishment establishment={headOffice} />
         </section>
@@ -46,7 +40,7 @@ class Establishments extends React.Component {
         <hr />
 
         <section>
-          <h1 className="h5">Établissements en Occitanie</h1>
+          <h3 className="title is-size-5">Établissements</h3>
 
           {establishmentsItems}
         </section>

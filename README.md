@@ -70,3 +70,13 @@ Vous pourrez ensuite lancer l'interface GUI via la commande (vous pouvez utilise
 ```shell
 .c42 server:npm test
 ```
+
+## Import csv dans postgres
+
+```shell
+psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_uc_eff(siret, cod_section, nme_ddtefp3, nme_region, dereffphy, date_effphy_et, source_effphy_et) FROM '/tmp/import/etablissements_uc_eff.csv' with (format csv, header true, delimiter ',');"
+```
+
+```shell
+psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_idcc(siret, idcc) FROM '/tmp/import/etablissements_idcc.csv' with (format csv, header true, delimiter ',');"
+```

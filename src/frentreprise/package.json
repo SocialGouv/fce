@@ -10,14 +10,15 @@
   "dependencies": {
     "follow-redirects": "^1.3.0",
     "is-buffer": "^1.1.5",
+    "lodash.get": "^4.4.2",
     "tunnel": "^0.0.5"
   },
   "scripts": {
+    "start": "NODE_ENV=development webpack --color --watch",
     "build": "NODE_ENV=production webpack --color",
     "test": "NODE_ENV=test jest",
     "test-watch": "npm run test -- --watchAll",
-    "coverage":
-      "rm -rf coverage/ && npm run test -- --coverage --coverageDirectory=coverage"
+    "coverage": "rm -rf coverage/ && npm run test -- --coverage --coverageDirectory=coverage"
   },
   "devDependencies": {
     "babel": "^6.23.0",
@@ -32,17 +33,24 @@
     "jest-babel": "^1.0.1",
     "jest-html-reporter": "^2.4.2",
     "webpack": "^4.0.0",
-    "webpack-cli": "^2.0.9",
+    "webpack-cli": "^3.2.1",
     "webpack-node-externals": "^1.6.0"
   },
   "jest": {
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["<rootDir>/config/", "<rootDir>/lib/axios"],
+    "testPathIgnorePatterns": [
+      "<rootDir>/config/",
+      "<rootDir>/lib/axios"
+    ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
       "!<rootDir>/config/",
       "!<rootDir>/lib/axios"
     ],
-    "coverageReporters": ["text", "lcov", "html"]
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ]
   }
 }

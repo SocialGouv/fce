@@ -1,11 +1,11 @@
-import getLegacy from "./getLegacy";
 import getEntreprise from "./getEntreprise";
 import attestation_dgfip from "./attestation_dgfip";
 import attestation_acoss from "./attestation_acoss";
+import infogreffe_rcs from "./infogreffe_rcs";
 
 export default {
-  getLegacy,
   getEntreprise,
   attestation_dgfip,
-  attestation_acoss
+  attestation_acoss,
+  infogreffe_rcs
 };

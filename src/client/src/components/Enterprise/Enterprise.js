@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import bulmaAccordion from "bulma-extensions/bulma-accordion/dist/js/bulma-accordion";
+import bulmaQuickView from "bulma-extensions/bulma-quickview/dist/js/bulma-quickview";
 import withLoading from "../../services/Loading";
-import "./enterprise.css";
 import { Row, Col, Button } from "reactstrap";
 import QuickAccess from "./QuickAccess";
 import Establishments from "./Establishments";
@@ -12,13 +13,14 @@ import {
   EnterpriseIdentity,
   EnterpriseActivity,
   EnterpriseHeadOffice,
-  Mandataires,
-  Finances,
-  Attestations
+  Mandataires
 } from "./Sections";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/fontawesome-pro-light";
-import { faArrowAltLeft } from "@fortawesome/fontawesome-pro-light/index";
+import {
+  faPrint,
+  faMapPin,
+  faArrowAltLeft
+} from "@fortawesome/fontawesome-pro-solid";
 
 class Enterprise extends React.Component {
   getSections = () => {
@@ -33,19 +35,21 @@ class Enterprise extends React.Component {
     ];
   };
 
+  componentDidMount() {
+    const accordions = bulmaAccordion.attach();
+    const quickviews = bulmaQuickView.attach();
+  }
+
   render() {
     const { enterprise, headOffice } = this.props;
 
     return (
       <section className="app-enterprise">
-        <Row>
-          <Col className="aside-box d-print-none" md="2">
-            <QuickAccess sections={this.getSections()} />
-          </Col>
-          <Col className="main" md="7">
+        <div className="columns">
+          <div className="column main is-9-desktop is-12-tablet">
             <h2 className="subtitle">Fiche Entreprise</h2>
 
-            <h1 className="title">
+            <h1 className="title is-size-1">
               <Value
                 value={
                   enterprise.raison_sociale ||
@@ -60,34 +64,72 @@ class Enterprise extends React.Component {
 
             <div className="task-bar d-print-none">
               {this.props.hasSearchResults ? (
-                <Link className="btn btn-secondary" to={`/search/results`}>
-                  <FontAwesomeIcon icon={faArrowAltLeft} /> Retour aux résultats
-                </Link>
+                <button
+                  className="button back-button is-dark"
+                  onClick={() => this.props.history.goBack()}
+                >
+                  <span className="icon">
+                    <FontAwesomeIcon icon={faArrowAltLeft} />
+                  </span>
+                  <span>Retour aux résultats</span>
+                </button>
               ) : (
                 ""
               )}
-              <Button color="primary" onClick={() => window.print()}>
-                <FontAwesomeIcon icon={faPrint} /> Imprimer
-              </Button>
+              <a
+                className="button is-primary has-text-light"
+                onClick={() => window.print()}
+              >
+                <span className="icon">
+                  <FontAwesomeIcon icon={faPrint} />
+                </span>
+                <span>Imprimer</span>
+              </a>
               <MailTo type="enterprise" enterprise={enterprise} />
+              <a
+                className="button is-primary has-text-light responsive-item"
+                data-show="quickview"
+                data-target="establishments"
+              >
+                <span className="icon">
+                  <FontAwesomeIcon icon={faMapPin} />
+                </span>
+                <span>Voir les établissements</span>
+              </a>
             </div>
 
             <EnterpriseIdentity enterprise={enterprise} />
-            <EnterpriseActivity enterprise={enterprise} />
-            <EnterpriseHeadOffice headOffice={headOffice} />
-            <Finances establishment={headOffice} />
-            <Attestations enterprise={enterprise} />
+            <EnterpriseActivity
+              enterprise={enterprise}
+              headOffice={headOffice}
+            />
             <Direccte enterprise={enterprise} />
             <Mandataires enterprise={enterprise} />
-          </Col>
-          <Col className="aside-box" md="3">
+          </div>
+          <div id="establishments" className="quickview responsive-item">
+            <div className="quickview-body">
+              <header className="quickview-header">
+                <p className="title">Liste des établissements</p>
+                <span className="delete" data-dismiss="quickview" />
+              </header>
+              <div className="quickview-block">
+                <Establishments
+                  enterprise={this.props.enterprise}
+                  headOffice={this.props.headOffice}
+                  establishments={this.props.establishments}
+                />
+                <footer className="quickview-footer" />
+              </div>
+            </div>
+          </div>
+          <div className="column is-3 aside-box">
             <Establishments
               enterprise={this.props.enterprise}
               headOffice={this.props.headOffice}
               establishments={this.props.establishments}
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
       </section>
     );
   }

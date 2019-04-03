@@ -2,19 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { logoutUser } from "../../../services/Store/actions";
+import { logoutUser, resetSearch } from "../../../services/Store/actions";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/fontawesome-pro-solid";
 
-import "./header.css";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  Form,
-  Button
-} from "reactstrap";
+import logo from "../../../assets/img/logo_gouv.png";
 
 class Header extends React.Component {
   constructor(props) {
@@ -32,59 +24,32 @@ class Header extends React.Component {
     });
   }
 
+  newSearch = event => {
+    this.props.resetSearch();
+  };
+
   render() {
     return (
       <header className="app-header">
-        <Navbar
-          className="gradient-color-direccte"
-          dark
-          fixed="top"
-          expand="md"
-        >
-          <NavbarBrand href="/">FCE | Direccte</NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="mr-auto" navbar>
-              <NavItem>
-                <Link
-                  to="/search"
-                  className="nav-link"
-                  title="Rechercher un établissement ou une entreprise"
-                >
-                  Recherche simple
-                </Link>
-              </NavItem>
-
-              <NavItem>
-                <Link
-                  to="/search/advanced"
-                  className="nav-link"
-                  title="Rechercher une liste d'établissements"
-                >
-                  Recherche avancée
-                </Link>
-              </NavItem>
-
-              {this.props.user && this.props.user.isAdmin ? (
-                <NavItem>
-                  <Link to="/admin" className="nav-link">
-                    Admin
-                  </Link>
-                </NavItem>
-              ) : (
-                ""
-              )}
-            </Nav>
-
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <Form inline onSubmit={this.props.logoutUser}>
-                  <Button color="danger">Se déconnecter</Button>
-                </Form>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
+        <nav className="navbar">
+          <Link to="/" onClick={this.newSearch} className="navbar-brand">
+            <img src={logo} alt="Logo Marianne" /> Fiche Commune Entreprise
+          </Link>
+          <Link to="/" onClick={this.newSearch} className="navbar-brand">
+            <FontAwesomeIcon icon={faSearch} /> Nouvelle recherche
+          </Link>
+          <a
+            role="button"
+            className="navbar-burger burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarMenu"
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </a>
+        </nav>
       </header>
     );
   }
@@ -100,6 +65,9 @@ const mapDispatchToProps = dispatch => {
   return {
     logoutUser: () => {
       dispatch(logoutUser());
+    },
+    resetSearch: () => {
+      dispatch(resetSearch());
     }
   };
 };

@@ -11,16 +11,22 @@
     "@fortawesome/react-fontawesome": "0.0.17",
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
+    "bulma": "^0.7.4",
+    "bulma-extensions": "^4.1.0",
     "classnames": "^2.2.5",
     "json2csv": "^4.0.0",
     "moment": "^2.20.1",
+    "node-sass": "^4.11.0",
+    "piwik-react-router": "^0.12.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.17",
+    "react-scripts": "2.0.3",
+    "react-select": "^2.4.1",
     "react-table": "^6.8.0",
+    "react-tooltip": "^3.10.0",
     "react-widgets": "^4.2.0",
     "reactstrap": "^5.0.0-beta",
     "redux": "^3.7.2",
@@ -30,8 +36,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "gulp": "gulp",
-    "prebuild": "gulp sass",
     "build": "react-scripts build",
     "postbuild": "chown -R --reference=package.json .",
     "postinstall": "chown -R --reference=package.json .",
@@ -41,16 +45,16 @@
   },
   "devDependencies": {
     "cypress": "^3.1.0",
-    "eslint": "^4.14.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.4.0",
-    "gulp": "^3.9.1",
-    "gulp-filelog": "^0.4.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.1.0",
-    "gulp-sourcemaps": "^2.6.3",
     "prettier": "^1.9.2",
     "redux-devtools": "^3.4.1",
     "redux-logger": "^3.0.6"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

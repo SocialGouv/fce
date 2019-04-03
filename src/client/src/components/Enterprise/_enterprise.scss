@@ -1,0 +1,372 @@
+.app-enterprise {
+  .aside-box {
+    padding: 0 1rem 0 0;
+
+    @media print {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    > .aside-contain {
+      overflow: auto;
+      height: 75%;
+      background-color: $white;
+      border-radius: 0.325rem;
+      z-index: 10;
+      padding-top: 1.5rem;
+      position: fixed;
+
+      @media print {
+        position: static;
+        max-width: 100%;
+        overflow: visible;
+        height: auto !important;
+      }
+    }
+  }
+
+  .main {
+    @media print {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    > .title,
+    .subtitle {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    h5 {
+      font-weight: bold;
+    }
+
+    > .task-bar {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 60%;
+      margin: 0 auto;
+
+      a.button:hover {
+        text-decoration: none;
+        background-color: lighten($primary, 20%);
+
+        &.back-button {
+          background-color: lighten($dark, 10%);
+        }
+      }
+    }
+
+    .establishment-keys {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      #identity-et {
+        width: 60%;
+      }
+    }
+
+    .enterprise-section {
+      padding: 2rem;
+      margin: 4rem 0 0;
+      padding-top: 2rem;
+      background-color: $white;
+      // box-shadow: 1px 1px 1px $dark;
+      border-radius: 0.325rem;
+      position: relative;
+
+      > .title {
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+        background-color: $white;
+        padding: 1rem 2rem;
+        position: absolute;
+        top: -2rem;
+        left: 0;
+        border-radius: 0.325rem 0.325rem 0 0;
+        text-transform: uppercase;
+        font-weight: normal;
+        color: $primary;
+      }
+
+      .subtitle {
+        text-align: left;
+        color: $primary;
+        font-weight: bold;
+        margin-top: 0;
+
+        &:not(:first-of-type) {
+          margin-top: 1rem;
+        }
+      }
+
+      > .dl {
+        margin-bottom: 0;
+      }
+
+      > .dd,
+      > .dt {
+        padding: 1rem 0;
+        word-wrap: break-word;
+      }
+
+      .toggle-element {
+        padding: 1rem;
+        background-color: #e9ecef;
+      }
+    }
+
+    .dashboard {
+      background-color: transparent;
+      width: 39%;
+      margin-left: 1%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 1rem 0.5rem 0;
+
+      &-mask {
+        background-color: $dark;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+
+      &-item {
+        z-index: 30;
+        padding: 1rem;
+        text-align: center;
+        width: 60%;
+        background-color: $secondary;
+        border-radius: 0.325rem;
+        height: 100%;
+        color: $light;
+        margin-bottom: 0.5rem;
+
+        .title {
+          text-transform: uppercase;
+          font-weight: normal;
+        }
+
+        &--value {
+          font-weight: normal;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          > span {
+            font-weight: bold;
+          }
+        }
+      }
+
+      &-icon {
+        font-size: 2.25rem;
+      }
+
+      .icon--danger {
+        font-size: 1.75rem;
+      }
+
+      &-state,
+      &-people,
+      &-interactions {
+        span {
+          margin-left: 0.5rem;
+          font-size: 1.6rem;
+        }
+      }
+
+      &-alerts {
+        .dashboard-icon {
+          color: $warning;
+        }
+      }
+
+      &-people,
+      &-interactions,
+      &-help {
+        .dashboard-icon {
+          color: $light;
+        }
+      }
+
+      &-people,
+      &-interactions {
+        .dashboard-icon {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+
+  small {
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .direccte-excerpt {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 1rem 0;
+
+    &--pole {
+      padding: 0.75rem 1.25rem;
+      background-color: $primary;
+      color: $light;
+      margin-right: 1rem;
+      border-radius: 0.325rem;
+
+      &-key {
+        margin-right: 1rem;
+      }
+
+      &-value {
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .quick-access-aside {
+    .title {
+      text-align: center;
+    }
+
+    .menu-list {
+      li {
+        width: 100%;
+        padding: 1rem 0;
+
+        &:not(:last-child) {
+          border-bottom: solid 1px #e9ecef;
+        }
+
+        &:hover {
+          background-color: #e9ecef;
+        }
+
+        > .link {
+          background-color: transparent;
+
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+.columns {
+  align-items: flex-start;
+}
+
+.accordions .accordion {
+  margin-bottom: 1.5rem;
+
+  .accordion-header {
+    background-color: $secondary;
+
+    .button {
+      background-color: transparent;
+      color: $light;
+    }
+  }
+
+  .accordion-body {
+    background-color: $light !important;
+  }
+
+  .accordion-content {
+    padding: 0 !important;
+
+    table {
+      margin: 0;
+    }
+
+    &.no-table {
+      padding: 1rem !important;
+    }
+  }
+}
+
+.aside-interact--icon {
+  color: $primary;
+  margin-left: 0.5rem;
+}
+
+.responsive-item {
+  display: none;
+}
+
+@keyframes blip {
+  0% {
+    transform: scale(0.5);
+  }
+
+  50% {
+    transform: scale(0.75);
+  }
+
+  100% {
+    transform: scale(0.5);
+  }
+}
+
+@include touch {
+  .app-enterprise {
+    .establishment-keys {
+      flex-direction: column !important;
+    }
+
+    .task-bar {
+      width: 100% !important;
+    }
+
+    #identity-et,
+    .dashboard {
+      width: 100% !important;
+      flex-direction: row !important;
+      align-items: center !important;
+
+      &-item {
+        width: 18% !important;
+
+        &:not(:last-child) {
+          margin-bottom: 0 !important;
+          margin-top: 0 !important;
+        }
+      }
+
+      &-icon {
+        font-size: 1.6rem !important;
+      }
+
+      &-state,
+      &-people,
+      &-interactions {
+        span {
+          font-size: 1.2rem !important;
+        }
+      }
+    }
+
+    .app-entreprise .aside-box {
+      display: none;
+    }
+
+    .responsive-item {
+      display: flex;
+    }
+  }
+}

@@ -1,3 +1,7 @@
+import Communes from "../models/Communes";
+import Naf from "../models/Naf";
+import Departements from "../models/Departements";
+
 const express = require("express");
 const XLSX = require("xlsx");
 const router = express.Router();
@@ -14,11 +18,22 @@ const logError = (data, err) => {
 
 router.get("/search(.:format)?", function(req, res) {
   const query = (req.query["q"] || "").trim();
+  const page = +req.query["page"] || 1;
+
   const data = {
     query: {
-      search: "simple",
       format: req.params["format"] || "json",
-      q: query,
+      terms: {
+        q: query,
+        commune: (req.query["commune"] || "").trim(),
+        codePostal: (req.query["codePostal"] || "").trim(),
+        departement: (req.query["departement"] || "").trim(),
+        naf: Array.isArray(req.query["naf"]) ? req.query["naf"] : [],
+        siegeSocial:
+          req.query["siegeSocial"] === "1" ||
+          req.query["siegeSocial"] === "true" ||
+          req.query["siegeSocial"] === true
+      },
       isSIRET: frentreprise.isSIRET(query),
       isSIREN: frentreprise.isSIREN(query)
     }
@@ -27,12 +42,16 @@ router.get("/search(.:format)?", function(req, res) {
   let freCall;
 
   if (data.query.isSIREN || data.query.isSIRET) {
-    freCall = frentreprise.getEntreprise(data.query.q).then(entreprise => {
-      data.results = [entreprise.export()];
-    }, logError.bind(this, data));
+    freCall = frentreprise
+      .getEntreprise(data.query.terms.q)
+      .then(entreprise => {
+        data.results = [entreprise.export()];
+        data.pagination = {};
+      }, logError.bind(this, data));
   } else {
-    freCall = frentreprise.search(data.query.q).then(results => {
-      data.results = results.map(ent => ent.export());
+    freCall = frentreprise.search(data.query.terms, page).then(results => {
+      data.results = results.items.map(ent => ent.export());
+      data.pagination = results.pagination;
     }, logError.bind(this, data));
   }
 
@@ -40,51 +59,6 @@ router.get("/search(.:format)?", function(req, res) {
     data.size = (data.results && data.results.length) || 0;
     sendResult(data, res);
   });
-});
-
-router.get("/advancedSearch(.:format)?", function(req, res) {
-  const code_activite = (req.query["naf"] || "").trim();
-  const libelle_commune = (req.query["commune"] || "").trim();
-  const code_postal = (req.query["codePostal"] || "").trim();
-  const code_departement = (req.query["departement"] || "").trim();
-  const raison_sociale = (req.query["raisonSociale"] || "").trim();
-  const siren = (req.query["siren"] || "").trim();
-  const siege_social = (req.query["siegeSocial"] || "").trim();
-  const interactions = (req.query["interactions"] || []).map(interaction => {
-    try {
-      return JSON.parse(interaction).value;
-    } catch (e) {
-      console.error(e);
-    }
-  });
-
-  let data = {
-    query: {
-      search: "advanced",
-      format: req.params["format"] || "json",
-      params: {
-        code_activite,
-        libelle_commune,
-        code_postal,
-        code_departement,
-        raison_sociale,
-        siren,
-        siege_social,
-        interactions
-      }
-    }
-  };
-
-  frentreprise.search(data.query.params).then(results => {
-    try {
-      results = results.map(ent => ent.export());
-    } catch (e) {
-      results = false;
-    }
-    data.results = results;
-    data.size = data.results && data.results.length;
-    sendResult(data, res);
-  }, logError.bind(this, data));
 });
 
 const sendResult = (data, response) => {
@@ -120,9 +94,6 @@ const sendResultXlsx = (data, response) => {
   } else {
     // Search
     filename = "recherche";
-    if (data.query.search === "advanced") {
-      filename += "_avancee";
-    }
 
     dataToExport = flattenResults.map(entreprise => {
       const etablissement = entreprise.etablissement;
@@ -180,16 +151,46 @@ const sendResultXlsx = (data, response) => {
   response.send(wbout);
 };
 
-router.get("/test-postgres", function(request, response) {
-  const db = require("../db/postgres");
+router.get("/communes", function(req, res) {
+  const query = (req.query["q"] || "").trim();
 
-  db.query("SELECT * FROM test")
-    .then(res => {
-      response.send({ success: true, pg: res.rows });
-    })
-    .catch(e => {
-      response.send({ success: false });
+  if (query.length < 2) {
+    return res.send({ success: false, message: "query too short" });
+  }
+
+  const communes = new Communes();
+
+  communes.search(query).then(communes => {
+    const success = Array.isArray(communes);
+    return res.send({ success, results: communes });
+  });
+});
+
+router.get("/naf", function(req, res) {
+  const naf = new Naf();
+
+  naf.findAll().then(nafs => {
+    const success = Array.isArray(nafs);
+    if (success) {
+      return res.send({ success, results: nafs });
+    }
+    return res.send({
+      success,
+      results: [],
+      message: "Une erreur est survenue lors de la recherche d'un code NAF"
     });
+  });
+});
+
+router.get("/departements", function(req, res) {
+  const query = (req.query["q"] || "").trim();
+
+  const departements = new Departements();
+
+  departements.search(query).then(departements => {
+    const success = Array.isArray(departements);
+    return res.send({ success, results: departements });
+  });
 });
 
 module.exports = router;

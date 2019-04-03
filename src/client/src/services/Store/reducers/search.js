@@ -1,30 +1,24 @@
 import {
   SEARCH_RESULTS,
   SEARCH_TERMS,
-  SEARCH_NOMENCLATURES,
-  RESET_STORE
+  RESET_STORE,
+  SEARCH_RESET,
+  SEARCH_SET_TERM
 } from "../constants/ActionTypes";
-import Config from "../../Config";
+import addInteractionsToEstablishment from "../utils/addInteractionsToEstablishment";
 
 const initialState = {
   results: [],
+  pagination: {},
   terms: {
     siret: null,
     siren: null,
-    raisonSociale: null,
+    q: null,
     naf: null,
+    _nafSelect: null,
     commune: null,
-    codePostal: null,
-    departement: null,
-    interactions: null,
+    _communeSelect: null,
     siegeSocial: null
-  },
-  nomenclatures: {
-    polesInteractions: [],
-    nafCodes: [],
-    communes: [],
-    postalCodes: [],
-    departements: []
   }
 };
 
@@ -33,24 +27,27 @@ const search = (state = initialState, action) => {
     case SEARCH_RESULTS:
       return {
         ...state,
-        results: flattenResults(action.results, state.terms)
+        results: flattenResults(action.results, state.terms),
+        pagination: action.pagination
       };
+
     case SEARCH_TERMS:
       return {
         ...state,
         terms: { ...initialState.terms, ...action.terms }
       };
-    case SEARCH_NOMENCLATURES:
-      return {
-        ...state,
-        nomenclatures: {
-          ...initialState.nomenclatures,
-          ...action.nomenclatures,
-          updated_at: +new Date()
-        }
-      };
+
     case RESET_STORE:
       return {};
+
+    case SEARCH_RESET:
+      return { ...initialState };
+
+    case SEARCH_SET_TERM:
+      return {
+        ...state,
+        terms: { ...state.terms, ...{ [action.termKey]: action.termValue } }
+      };
 
     default:
       return state;
@@ -62,7 +59,7 @@ const flattenResults = (results, terms) => {
     return false;
   }
 
-  let flattenResults = [];
+  const flattenResults = [];
   const interactionTerms = Array.isArray(terms.interactions)
     ? terms.interactions.map(interaction => interaction.value)
     : null;
@@ -70,7 +67,7 @@ const flattenResults = (results, terms) => {
   results.forEach(enterprise => {
     if (Array.isArray(enterprise.etablissements)) {
       enterprise.etablissements.forEach(establishment => {
-        establishment = addCountInteractionsToEstablishment(
+        establishment = addInteractionsToEstablishment(
           establishment,
           interactionTerms
         );
@@ -80,37 +77,6 @@ const flattenResults = (results, terms) => {
   });
 
   return flattenResults;
-};
-
-const addCountInteractionsToEstablishment = (
-  establishment,
-  interactionsTerms
-) => {
-  let interactions = {};
-  let totalInteractions = 0;
-  let nbInteractionsCurrentPole = 0;
-
-  Config.get("interactions").forEach(pole => {
-    try {
-      nbInteractionsCurrentPole = establishment.direccte.filter(
-        interaction => interaction.pole === pole
-      ).length;
-      interactions[pole] = nbInteractionsCurrentPole;
-
-      if (!interactionsTerms || interactionsTerms.includes(pole)) {
-        totalInteractions += nbInteractionsCurrentPole;
-      }
-    } catch (e) {
-      if (Array.isArray(interactions[pole])) {
-        console.error(e);
-      }
-      interactions[pole] = 0;
-    }
-  });
-
-  establishment.interactions = interactions;
-  establishment.totalInteractions = totalInteractions;
-  return establishment;
 };
 
 export default search;

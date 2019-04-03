@@ -6,38 +6,43 @@ class Mandataire extends React.Component {
     const { mandataire } = this.props;
 
     return (
-      <div>
-        <dl className="dl row">
-          {mandataire.raison_sociale
-            ? [
-                <dt className="dt col-md-4" key="rs_label">
+      <>
+        {mandataire.raison_sociale
+          ? [
+              <div className="columns">
+                <h5 className="column is-3" key="rs_label">
                   Raison Sociale
-                </dt>,
-                <dd className="dd col-md-8" key="rs_value">
+                </h5>
+                <span className="column is-8" key="rs_value">
                   <Value value={mandataire.raison_sociale} empty="-" />
-                </dd>
-              ]
-            : [
-                <dt className="dt col-md-4" key="name_label">
+                </span>
+              </div>
+            ]
+          : [
+              <div className="columns" key="name_container">
+                <h5 className="column is-3" key="name_label">
                   Nom
-                </dt>,
-                <dd className="dd col-md-8" key="name_value">
+                </h5>
+                <span className="column is-8" key="name_value">
                   <Value value={mandataire.nom} empty="-" />
-                </dd>,
-                <dt className="dt col-md-4" key="firstname_label">
+                </span>
+              </div>,
+              <div className="columns" key="firstname_container">
+                <h5 className="column is-3" key="firstname_label">
                   Prenom
-                </dt>,
-                <dd className="dd col-md-8" key="firstname_value">
+                </h5>
+                <span className="column is-8" key="firstname_value">
                   <Value value={mandataire.prenom} empty="-" />
-                </dd>
-              ]}
-
-          <dt className="dt col-md-4">Fonction</dt>
-          <dd className="dd col-md-8">
+                </span>
+              </div>
+            ]}
+        <div className="columns">
+          <h5 className="column is-3">Fonction</h5>
+          <span className="column is-8">
             <Value value={mandataire.fonction} empty="-" />
-          </dd>
-        </dl>
-      </div>
+          </span>
+        </div>
+      </>
     );
   }
 }

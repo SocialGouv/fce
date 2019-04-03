@@ -5,6 +5,7 @@ NPM = ENV['NPM'] || 'docker-compose run --rm %container% npm'
 YARN = ENV['YARN'] || 'docker-compose run --rm %container% yarn'
 NODE = ENV['NODE'] || 'docker-compose run --rm %container% node'
 CYPRESS = 'docker-compose run --rm cypress'
+DB_NAME = 'fce'
 
 desc 'docker:run', 'Lance docker-compose up'
 task 'docker:run' do
@@ -17,6 +18,12 @@ task 'docker:restart' do
   check_ssh_agent
   `docker-compose restart`
 end
+
+desc 'pg:console', 'Lance la console postgres'
+shell_task 'pg:console', "docker exec -i $(docker-compose ps -q db | sed -n 1p) /bin/bash -c 'psql -d #{DB_NAME} -U postgres'"
+
+desc 'pg:dump', 'Lance la console pg_dump pour créer un dump de la bdd'
+shell_task 'pg:dump', "docker exec -i $(docker-compose ps -q db | sed -n 1p) /bin/bash -c 'pg_dump -U postgres #{DB_NAME}'"
 
 # Front
 %w(front server frentreprise).each do |ctr|
@@ -49,11 +56,17 @@ end
         shell_task 'cypress:tests', "#{CYPRESS}"
 
         desc 'cypress:install', 'Installation de cypress'
-        shell_task 'cypress:install', 'cd client && ./node_modules/.bin/cypress install'
+        shell_task 'cypress:install', 'cd src/client && ./node_modules/.bin/cypress install'
 
         desc 'cypress:run', 'Lance cypress en local'
-        shell_task 'cypress:run', "cd client && ./node_modules/.bin/cypress open --port 8080 --env host=http://direccte.test"
+        shell_task 'cypress:run', "cd src/client && ./node_modules/.bin/cypress open --port 8080 --env host=https://fce.test"
     end
+end
+
+desc 'frentreprise:upgrade', "Upgrade frentreprise"
+task 'frentreprise:upgrade' do
+    run 'c42 frentreprise:yarn build'
+    run 'c42 server:yarn upgrade frentreprise'
 end
 
 desc 'build', "Build a release"
@@ -76,8 +89,9 @@ task 'build' do
 
     info("Packaging...")
     directory "dist" # copy .c42/dist/ to dist/
-    directory "../server/build", "dist" # copy .c42/../server/build to dist/
-    directory "../client/build", "dist/htdocs" # copy .c42/../client/build to dist/htdocs
+    directory "../src/server/build", "dist" # copy .c42/../server/build to dist/
+    directory "../src/client/build", "dist/htdocs" # copy .c42/../client/build to dist/htdocs
+    directory "../src/frentreprise", "frentreprise"
     chmod "dist/run.sh", 0755
     chmod "dist/install.sh", 0755
 
@@ -106,12 +120,26 @@ desc 'install', 'Installe le projet'
 task :install do
   invoke 'docker:install', []
 
+  sql_cat_cmd = 'cat .c42/tmp/fce-base.sql' if File.exists?('.c42/tmp/fce-base.sql')
+  sql_cat_cmd = 'cat .c42/tmp/dump.sql' if File.exists?('.c42/tmp/dump.sql')
+  sql_cat_cmd = 'zcat .c42/tmp/dump.sql.gz' if File.exists?('.c42/tmp/dump.sql.gz')
+  fatal('Could not find .c42/tmp/[dump|fce-base].sql[.gz]') unless defined?(sql_cat_cmd) && !sql_cat_cmd.nil?
+
+  copy_file('../src/server/.env.dist', './src/server/.env')
+
   info('Yarn install')
+  invoke 'frentreprise:yarn', ['install']
   invoke 'front:yarn', ['install']
   invoke 'server:yarn', ['install']
 
   info('Starting docker')
   invoke 'docker:run', []
+
+  info('Waiting for full loading of the db container')
+  sleep 12
+
+  info('Piping sql dump into pg:console')
+  run("#{sql_cat_cmd} | c42 pg:console")
 
   info('Restart front')
   invoke 'docker:restart', ['front']

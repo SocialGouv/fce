@@ -1,0 +1,62 @@
+@import 'variables';
+@import '~bulma/bulma';
+@import '~bulma-extensions/bulma-accordion/dist/css/bulma-accordion';
+@import '~bulma-extensions/bulma-quickview/dist/css/bulma-quickview';
+@import '~bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio';
+@import 'Header/header';
+@import 'Footer/footer';
+@import '../Search/search';
+@import '../SearchResults/searchResults.scss';
+@import '../Enterprise/enterprise';
+
+html {
+  height: 100vh;
+}
+
+body {
+  background: $white;
+  position: relative;
+  margin: 0;
+  padding-bottom: 6rem;
+  min-height: 100vh;
+}
+
+a {
+  color: $primary;
+}
+
+.app-container {
+  padding: 5rem 1rem;
+  min-height: 100vh;
+
+  @media print {
+    padding-top: 1rem;
+  }
+
+  .bg-info a {
+    color: white;
+    text-decoration: underline;
+  }
+}
+
+.title {
+  margin: 0 0 1rem;
+}
+
+.icon {
+  font-size: 1rem;
+
+  &--success {
+    color: $success;
+  }
+
+  &--danger {
+    color: $danger;
+  }
+}
+
+@media print {
+  .d-print-none {
+    display: none;
+  }
+}

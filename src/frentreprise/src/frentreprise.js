@@ -1,6 +1,7 @@
 import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
+import SireneAPI from "./DataSources/SireneAPI";
 
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
@@ -10,7 +11,8 @@ import { cleanObject } from "./Utils";
 const _ = {
   dataSources: Symbol("_dataSources"),
   compareDataSource: Symbol("_compareDataSource"),
-  askDataSource: Symbol("_askDataSource")
+  askDataSource: Symbol("_askDataSource"),
+  isValidDataSources: Symbol("_isValidDataSources")
 };
 
 class frentreprise {
@@ -20,9 +22,21 @@ class frentreprise {
     this[_.dataSources] = [];
     this.addDataSource({
       name: "ApiGouv",
-      priority: 100, // higher prevail
+      priority: 80, // higher prevail
       source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/")
     });
+    this.addDataSource({
+      name: "SireneAPI",
+      priority: 100, // higher prevail
+      source: new SireneAPI("https://api.insee.fr/entreprises/sirene/V3/"),
+      pagination: {
+        itemsByPage: 25
+      }
+    });
+  }
+
+  setDb(db) {
+    this.db = db;
   }
 
   async getEntreprise(SiretOrSiren) {
@@ -38,11 +52,13 @@ class frentreprise {
     const SIREN = gotSIREN ? SiretOrSiren : SiretOrSiren.substr(0, 9);
 
     const entreprise = new this.EntrepriseModel(
-      { _dataSources: {} },
+      {
+        _dataSources: {}
+      },
       this.EtablissementModel
     );
 
-    await this[_.askDataSource]("getSIREN", SIREN, result => {
+    await this[_.askDataSource]("getSIREN", SIREN, null, result => {
       console.log(
         `Using response from dataSource named ${
           result.source.name
@@ -53,7 +69,7 @@ class frentreprise {
         ...result.data,
         _dataSources: {
           ...entreprise._dataSources,
-          [result.source.name]: true // Add current data source
+          [result.source.name]: !!Object.keys(result.data).length // Add current data source (true = success)
         }
       });
     });
@@ -70,7 +86,7 @@ class frentreprise {
     await Promise.all(
       etablissementsLookups.map(lookSIRET => {
         if (Validator.validateSIRET(lookSIRET)) {
-          return this[_.askDataSource]("getSIRET", lookSIRET, result => {
+          return this[_.askDataSource]("getSIRET", lookSIRET, null, result => {
             console.log(
               `Using response from dataSource named ${
                 result.source.name
@@ -83,7 +99,7 @@ class frentreprise {
               ...result.data,
               _dataSources: {
                 ...ets._dataSources,
-                [result.source.name]: true // Add current data source
+                [result.source.name]: !!Object.keys(result.data).length // Add current data source (true = success)
               }
             });
           });
@@ -91,15 +107,27 @@ class frentreprise {
       })
     );
 
+    entreprise.updateData({
+      _success: this[_.isValidDataSources](entreprise._dataSources)
+    });
+
+    entreprise.etablissements.map(et => {
+      et.updateData({
+        _success: this[_.isValidDataSources](et._dataSources)
+      });
+    });
+
     return entreprise;
   }
 
-  async search(query) {
+  async search(terms, page = 1) {
     const results = {};
     let hasError = false;
+    let pagination = null;
 
-    await this[_.askDataSource]("search", query, searchResult => {
-      const source_results = searchResult.data;
+    await this[_.askDataSource]("search", terms, page, searchResult => {
+      const { data: source_results } = searchResult;
+      pagination = searchResult.pagination;
 
       if (source_results === false) {
         console.log(
@@ -137,7 +165,10 @@ class frentreprise {
           if (Validator.validateSIREN(SIREN)) {
             if (!results[SIREN]) {
               results[SIREN] = new this.EntrepriseModel(
-                { siren: SIREN, _dataSources: {} },
+                {
+                  siren: SIREN,
+                  _dataSources: {}
+                },
                 this.EtablissementModel
               );
             }
@@ -160,7 +191,9 @@ class frentreprise {
 
     let resultsValues = Object.values(results);
 
-    return !resultsValues.length && hasError ? false : resultsValues;
+    return !resultsValues.length && hasError
+      ? false
+      : { items: resultsValues, pagination };
   }
 
   getDataSources() {
@@ -189,7 +222,7 @@ class frentreprise {
     return a > b ? 1 : a < b ? -1 : 0;
   }
 
-  [_.askDataSource](method, request, forEach = result => result) {
+  [_.askDataSource](method, request, page, forEach = result => result) {
     return Promise.all(
       this.getDataSources().map(dataSource => {
         console.log(
@@ -198,9 +231,34 @@ class frentreprise {
           } with request : ${JSON.stringify(request)}`
         );
 
-        return dataSource.source[method](request).then(data => {
-          const cleanedData = cleanObject(data);
+        const pagination =
+          page && dataSource.pagination
+            ? {
+                ...dataSource.pagination,
+                page
+              }
+            : null;
 
+        if (this.db) {
+          dataSource.source.setDb(this.db);
+        }
+
+        return dataSource.source[method](request, pagination).then(response => {
+          const data =
+            typeof response === "object" && response.items
+              ? response.items
+              : response;
+          const paginationResponse =
+            pagination && typeof response === "object" && response.pagination
+              ? response.pagination
+              : {};
+
+          const cleanedData =
+            typeof data === "object"
+              ? Array.isArray(data)
+                ? data.map(cleanObject)
+                : cleanObject(data)
+              : data;
           console.log(
             `Got response for [${method}] from dataSource named ${
               dataSource.name
@@ -209,7 +267,8 @@ class frentreprise {
 
           return Promise.resolve({
             source: dataSource,
-            data: cleanedData
+            data: cleanedData,
+            pagination: paginationResponse
           });
         });
       })
@@ -221,6 +280,10 @@ class frentreprise {
         )
         .map(forEach);
     });
+  }
+
+  [_.isValidDataSources](datasources) {
+    return datasources && !!Object.values(datasources).includes(true);
   }
 }
 

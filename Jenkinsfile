@@ -3,7 +3,7 @@ def STARTED = false
 pipeline {
   agent any
   options {
-    buildDiscarder(logRotator(numToKeepStr: '20'))
+      buildDiscarder(logRotator(numToKeepStr: '20'))
   }
   parameters {
     string(name: 'SLACK_CHANNEL',
@@ -19,16 +19,12 @@ pipeline {
         }
       }
       steps {
-        script {
-          TO_DEPLOY = false
-        }
         notifyBuild()
         echo "Init $BRANCH_NAME on $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
-          sh '''
-            cp .c42/docker-compose.yml.dist docker-compose.yml
-            docker-compose build builder
-          '''
+            sh '''
+                .c42/scripts/install.sh
+            '''
         }
       }
     }
@@ -41,18 +37,26 @@ pipeline {
       }
       steps {
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
-          sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
+        sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
-                docker-compose run --rm \
-                    -v `pwd`:/project \
-                    -v `pwd`/.docker:/var/lib/docker \
-                    -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                    -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                    builder \
-                    bash -c \
-                    "bundle install --clean --path=vendors/bundle"
+                .c42/scripts/build.sh
             '''
-          }
+        }
+      }
+    }
+    stage('Deploy staging') {
+      when {
+        anyOf {
+          branch 'develop'
+        }
+      }
+      steps {
+        echo "Deploying $BRANCH_NAME from $JENKINS_URL ..."
+        sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
+          sh '''
+            .c42/scripts/deploy.sh
+          '''
+        }
       }
     }
     stage('Confirm') {
@@ -63,55 +67,46 @@ pipeline {
       }
       steps {
         notifyBuild("WAITING");
-        input(message: "Are you sure you want to deploy on preproduction?")
+        input(message: "Are you sure you want to deploy on production?")
           script {
             TO_DEPLOY = true
           }
         sh '''
           echo "Deployment confirmed"
-          '''
+        '''
       }
     }
-    stage('Deploy') {
-      parallel {
-        stage('Preproduction') {
-          when {
-            anyOf {
-              branch 'develop'
-            }
-          }
-          steps {
-            echo "Deploying $BRANCH_NAME into on https://fce.commit42.fr/ from $JENKINS_URL ..."
-            sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
-              sh '''
-                  docker-compose run --rm \
-                      -v `pwd`:/project \
-                      -v `pwd`/.docker:/var/lib/docker \
-                      -v "${SSH_AUTH_SOCK}:/run/ssh_agent" \
-                      -v "${JENKINS_HOME}/.ssh/known_hosts:/root/.ssh/known_hosts:ro" \
-                      builder \
-                      bundle exec c42 deploy preprod
-              '''
-            }
-          }
+    stage('Deploy production') {
+      when {
+        anyOf {
+          branch 'master'
+        }
+        expression { TO_DEPLOY }
+      }
+      steps {
+        echo "Deploying $BRANCH_NAME from $JENKINS_URL ..."
+        sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
+          sh '''
+            .c42/scripts/deploy.sh
+          '''
         }
       }
     }
   }
   post {
-    always {
-      sh '''
-        [ -f docker-compose.yml ] && docker-compose down
-        sudo chown -R $(id -u):$(id -g) ./
-      '''
-      deleteDir()
-    }
-    success {
-      notifyBuild("SUCCESSFUL");
-    }
-    failure {
-      notifyBuild("FAILED");
-    }
+      always {
+          sh '''
+            docker-compose down
+            sudo chown -R $(id -u):$(id -g) ./
+            '''
+          deleteDir()
+      }
+      success {
+          notifyBuild("SUCCESSFUL");
+      }
+      failure {
+          notifyBuild("FAILED");
+      }
   }
 }
 
@@ -136,8 +131,6 @@ def getChangeString() {
  }
  return changeString
 }
-
-
 
 def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful

@@ -1,24 +1,30 @@
 import * as types from "../constants/ActionTypes";
 import Http from "../../Http";
-import Config from "../../Config";
 
-export const search = term => (dispatch, getState) => {
-  dispatch(
-    _setTerms({
-      raisonSociale: term,
-      csvURL: Http.buildURL(`${Http.defaults.baseURL}/search.xlsx`, {
-        q: term
-      })
-    })
-  );
+export const setTerm = (termKey, termValue) => (dispatch, getState) => {
+  dispatch({
+    type: types.SEARCH_SET_TERM,
+    termKey,
+    termValue
+  });
+};
+
+export const search = (terms, page = 1) => (dispatch, getState) => {
+  // Just in case, to prevent infinite recursion
+  if (terms.csvURL) {
+    delete terms.csvURL;
+  }
 
   return Http.get("/search", {
     params: {
-      q: term
+      ...terms,
+      page
     }
   })
     .then(function(response) {
-      dispatch(_setSearchResponses(response.data.results));
+      dispatch(
+        _setSearchResponses(response.data.results, response.data.pagination)
+      );
 
       let terms = {};
 
@@ -28,11 +34,7 @@ export const search = term => (dispatch, getState) => {
         };
         dispatch(
           _setTerms({
-            ...terms,
-            csvURL: Http.buildURL(
-              `${Http.defaults.baseURL}/advancedSearch.xlsx`,
-              terms
-            )
+            ...terms
           })
         );
       }
@@ -44,67 +46,16 @@ export const search = term => (dispatch, getState) => {
     });
 };
 
-export const advancedSearch = terms => (dispatch, getState) => {
-  // Just in case, to prevent infinite recursion
-  if (terms.csvURL) {
-    delete terms.csvURL;
-  }
-
-  dispatch(
-    _setTerms({
-      ...terms,
-      csvURL: Http.buildURL(
-        `${Http.defaults.baseURL}/advancedSearch.xlsx`,
-        terms
-      )
-    })
-  );
-
-  return Http.get("/advancedSearch", {
-    params: {
-      ...terms
-    }
-  })
-    .then(function(response) {
-      dispatch(_setSearchResponses(response.data.results));
-      return Promise.resolve(response);
-    })
-    .catch(function(error) {
-      return Promise.reject(error);
-    });
+export const resetSearch = () => (dispatch, getState) => {
+  dispatch({
+    type: types.SEARCH_RESET
+  });
 };
 
-export const getNomenclatures = terms => (dispatch, getState) => {
-  dispatch(_setTerms(terms));
-
-  return Http.get("/entities")
-    .then(function(response) {
-      if (typeof response.data.results === "object") {
-        response.data.results.polesInteractions = Config.get(
-          "interactions"
-        ).map(interaction => {
-          return {
-            value: interaction,
-            label: `Pôle ${interaction}`
-          };
-        });
-      }
-      dispatch(_setNomenclatures(response.data.results));
-      return Promise.resolve(response);
-    })
-    .catch(function(error) {
-      return Promise.reject(error);
-    });
-};
-
-const _setSearchResponses = results => ({
+const _setSearchResponses = (results, pagination) => ({
   type: types.SEARCH_RESULTS,
-  results
-});
-
-const _setNomenclatures = nomenclatures => ({
-  type: types.SEARCH_NOMENCLATURES,
-  nomenclatures
+  results,
+  pagination
 });
 
 const _setTerms = terms => ({

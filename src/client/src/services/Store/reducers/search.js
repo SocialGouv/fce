@@ -5,7 +5,7 @@ import {
   SEARCH_RESET,
   SEARCH_SET_TERM
 } from "../constants/ActionTypes";
-import addInteractionsToEstablishment from "../utils/addInteractionsToEstablishment";
+import addInteractions from "../utils/addInteractions";
 
 const initialState = {
   results: [],
@@ -67,10 +67,7 @@ const flattenResults = (results, terms) => {
   results.forEach(enterprise => {
     if (Array.isArray(enterprise.etablissements)) {
       enterprise.etablissements.forEach(establishment => {
-        establishment = addInteractionsToEstablishment(
-          establishment,
-          interactionTerms
-        );
+        establishment = addInteractions(establishment, interactionTerms);
         flattenResults.push({ ...enterprise, etablissement: establishment });
       });
     }

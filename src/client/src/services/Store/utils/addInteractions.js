@@ -1,6 +1,6 @@
 import Config from "../../Config";
 
-export default (establishment, interactionsTerms = null) => {
+export default (entity, interactionsTerms = null) => {
   let interactions = [];
   let totalInteractions = {
     total: 0
@@ -8,7 +8,7 @@ export default (establishment, interactionsTerms = null) => {
 
   Config.get("interactions").forEach(pole => {
     try {
-      const interactionsPole = establishment[`interactions_${pole}`] || [];
+      const interactionsPole = entity[`interactions_${pole}`] || [];
       interactions = [...interactions, ...interactionsPole];
       totalInteractions[pole] = interactionsPole.length;
 
@@ -22,8 +22,8 @@ export default (establishment, interactionsTerms = null) => {
     }
   });
 
-  establishment.interactions = interactions;
-  establishment.totalInteractions = totalInteractions;
+  entity.interactions = interactions;
+  entity.totalInteractions = totalInteractions;
 
-  return establishment;
+  return entity;
 };

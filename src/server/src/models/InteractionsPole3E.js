@@ -12,4 +12,18 @@ export default class InteractionsPole3E extends Model {
         return [];
       });
   }
+
+  findAllBySIREN(siren) {
+    return this.db
+      .query("SELECT * FROM interactions_pole_3e WHERE siret ILIKE $1", [
+        `${siren}%`
+      ])
+      .then(res => {
+        return res.rows;
+      })
+      .catch(e => {
+        console.error("InteractionsPole3E::findAllBySIREN", e);
+        return [];
+      });
+  }
 }

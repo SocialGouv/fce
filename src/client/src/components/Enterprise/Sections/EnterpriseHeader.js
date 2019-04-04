@@ -10,7 +10,9 @@ import {
 class EnterpriseHeader extends React.Component {
   render() {
     const { enterprise } = this.props;
-    const rs = enterprise.raison_sociale.toLowerCase().replace(" ", "-");
+    const slugSocieteCom = enterprise.raison_sociale
+      .toLowerCase()
+      .replace(" ", "-");
 
     return (
       <section id="header" className="enterprise-header">
@@ -64,7 +66,7 @@ class EnterpriseHeader extends React.Component {
               Voir sur{" "}
               <a
                 className="is-link"
-                href={`https://www.societe.com/societe/${rs}-${
+                href={`https://www.societe.com/societe/${slugSocieteCom}-${
                   enterprise.siren
                 }.html`}
               >

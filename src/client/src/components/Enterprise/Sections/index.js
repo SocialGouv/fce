@@ -1,5 +1,5 @@
 import Dashboard from "./Dashboard";
-import EnterpriseIdentity from "./EnterpriseIdentity";
+import EnterpriseHeader from "./EnterpriseHeader";
 import EnterpriseActivity from "./EnterpriseActivity";
 import EnterpriseHeadOffice from "./EnterpriseHeadOffice";
 import EstablishmentActivity from "./EstablishmentActivity";
@@ -17,7 +17,7 @@ import Relation from "./Relation";
 
 export {
   Dashboard,
-  EnterpriseIdentity,
+  EnterpriseHeader,
   EnterpriseActivity,
   EnterpriseHeadOffice,
   EstablishmentActivity,

@@ -15,7 +15,7 @@ class EnterpriseActivity extends React.Component {
 
     return (
       <section id="activity" className="enterprise-section">
-        <h2 className="title is-size-4">État et activité</h2>
+        <h2 className="title is-size-4">Informations sur l’entreprise</h2>
 
         <div className="columns">
           <h5 className="column is-3">Date immatriculation RCS</h5>

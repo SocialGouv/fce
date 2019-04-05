@@ -1,4 +1,15 @@
 .app-enterprise {
+
+  .enterprise-overlay {
+    min-height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to bottom, #69C5D3 0%, #fafafa 40%);
+    opacity: 0.75;
+  }
+
   .aside-box {
     padding: 0 1rem 0 0;
 
@@ -7,7 +18,7 @@
       max-width: 100%;
     }
 
-    > .aside-contain {
+    >.aside-contain {
       overflow: auto;
       height: 75%;
       background-color: $white;
@@ -31,7 +42,7 @@
       max-width: 100%;
     }
 
-    > .title,
+    >.title,
     .subtitle {
       text-align: center;
       margin-bottom: 1.5rem;
@@ -41,7 +52,7 @@
       font-weight: bold;
     }
 
-    > .task-bar {
+    >.task-bar {
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -77,7 +88,7 @@
       border-radius: 0.325rem;
       position: relative;
 
-      > .title {
+      >.title {
         margin-bottom: 1rem;
         font-size: 1.4rem;
         background-color: $white;
@@ -102,12 +113,12 @@
         }
       }
 
-      > .dl {
+      >.dl {
         margin-bottom: 0;
       }
 
-      > .dd,
-      > .dt {
+      >.dd,
+      >.dt {
         padding: 1rem 0;
         word-wrap: break-word;
       }
@@ -115,6 +126,17 @@
       .toggle-element {
         padding: 1rem;
         background-color: #e9ecef;
+      }
+    }
+
+    .enterprise-header {
+      padding: 0 2rem;
+      position: relative;
+
+      .top-header {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
       }
     }
 
@@ -162,7 +184,7 @@
           justify-content: center;
           align-items: center;
 
-          > span {
+          >span {
             font-weight: bold;
           }
         }
@@ -255,7 +277,7 @@
           background-color: #e9ecef;
         }
 
-        > .link {
+        >.link {
           background-color: transparent;
 
           &:hover {

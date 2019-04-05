@@ -130,7 +130,7 @@ class EnterpriseActivity extends React.Component {
           </span>
         </div>
 
-        {!enterprise.attestation_dgfip ? null : (
+        {enterprise.attestation_dgfip && (
           <div className="columns">
             <h5 className="column is-3">Attestation fiscale DGFIP</h5>
             <span className="column is-8">
@@ -140,7 +140,7 @@ class EnterpriseActivity extends React.Component {
                 no="Non Disponible"
               />
             </span>
-            {enterprise.attestation_dgfip ? (
+            {enterprise.attestation_dgfip && (
               <span className="span col-md-5">
                 <a
                   href={enterprise.attestation_dgfip}
@@ -150,11 +150,11 @@ class EnterpriseActivity extends React.Component {
                   télécharger le document
                 </a>
               </span>
-            ) : null}
+            )}
           </div>
         )}
 
-        {!enterprise.attestation_acoss ? null : (
+        {enterprise.attestation_acoss && (
           <div className="columns">
             <h5 className="column is-3">Attestation sociale ACOSS</h5>
             <span className="column is-8">
@@ -164,7 +164,7 @@ class EnterpriseActivity extends React.Component {
                 no="Non Disponible"
               />
             </span>
-            {enterprise.attestation_acoss ? (
+            {enterprise.attestation_acoss && (
               <span className="span col-md-5">
                 <a
                   href={enterprise.attestation_acoss}
@@ -174,7 +174,7 @@ class EnterpriseActivity extends React.Component {
                   télécharger le document
                 </a>
               </span>
-            ) : null}
+            )}
           </div>
         )}
       </section>

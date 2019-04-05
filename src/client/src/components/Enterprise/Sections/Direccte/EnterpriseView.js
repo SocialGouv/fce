@@ -43,7 +43,7 @@ class EstablishmentView extends React.Component {
 
     return (
       <section id="direccte" className="enterprise-section">
-        <h2 className="title is-size-4">Interactions avec la DIRECCTE</h2>
+        <h2 className="title is-size-4">VISITES ET CONTROLES</h2>
         <div className="direccte-excerpt">
           <div className="direccte-excerpt--pole">
             <span className="direccte-excerpt--pole-value">{total}</span>

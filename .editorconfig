@@ -18,5 +18,8 @@ indent_size = 2
 [*.rb]
 indent_size = 2
 
+[Jenkinsfile]
+indent_size = 2
+
 [Makefile]
 indent_style = tab

@@ -19,34 +19,47 @@ class EstablishmentView extends React.Component {
   render() {
     const { enterprise } = this.props;
 
-    const direccte = Object.values(
-      enterprise.etablissements.reduce((data, etab) => {
-        (etab.interactions || []).forEach(dirvis => {
-          const { siret } = etab;
-          const etat = etab.etat_etablissement;
-          const dep =
-            etab.adresse_components &&
-            etab.adresse_components.code_postal &&
-            etab.adresse_components.code_postal.substr(0, 2);
-          const commune =
-            etab.adresse_components && etab.adresse_components.localite;
-          if (!data[siret])
-            data[siret] = { siret, etat, dep, commune, count: 0 };
+    const etablishmentsWithInteractons = Object.values(
+      enterprise.interactions
+    ).reduce((acc, interaction) => {
+      if (!acc.hasOwnProperty(interaction.siret)) {
+        acc[interaction.siret] = 0;
+      }
+      acc[interaction.siret]++;
+      return acc;
+    }, {});
 
-          data[siret].count++;
-        });
-        return data;
-      }, {})
+    const interactions = Object.entries(etablishmentsWithInteractons).map(
+      ([siret, nbInteractions]) => {
+        const etablishment = enterprise.etablissements.find(
+          etab => etab.siret === siret
+        );
+        return {
+          siret,
+          etat: etablishment && etablishment.etat_etablissement,
+          dep:
+            etablishment &&
+            etablishment.adresse_components &&
+            etablishment.adresse_components.code_postal &&
+            etablishment.adresse_components.code_postal.substr(0, 2),
+          commune:
+            etablishment &&
+            etablishment.adresse_components &&
+            etablishment.adresse_components.localite,
+          count: nbInteractions
+        };
+      }
     );
-
-    const total = direccte.reduce((acc, etab) => (acc += etab.count), 0);
 
     return (
       <section id="direccte" className="enterprise-section">
         <h2 className="title is-size-4">VISITES ET CONTROLES</h2>
         <div className="direccte-excerpt">
           <div className="direccte-excerpt--pole">
-            <span className="direccte-excerpt--pole-value">{total}</span>
+            <span className="direccte-excerpt--pole-value">
+              {enterprise.totalInteractions &&
+                enterprise.totalInteractions.total}
+            </span>
             <span className="direccte-ex cerpt--pole-key">
               interactions sur{" "}
             </span>
@@ -81,7 +94,7 @@ class EstablishmentView extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {direccte.map(etab => (
+                    {interactions.map(etab => (
                       <tr key={etab.siret}>
                         <td>
                           <Link to={`/establishment/${etab.siret}`}>

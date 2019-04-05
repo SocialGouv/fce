@@ -14,7 +14,8 @@ pipeline {
     stage('Init') {
       when {
         anyOf {
-          branch 'develop'
+          branch 'develop';
+          branch 'master'
         }
       }
       steps {
@@ -30,7 +31,8 @@ pipeline {
     stage('Build') {
       when {
         anyOf {
-          branch 'develop'
+          branch 'develop';
+          branch 'master'
         }
       }
       steps {
@@ -42,22 +44,51 @@ pipeline {
         }
       }
     }
-    stage('Deploy') {
-      parallel {
-        stage('Staging') {
-          when {
-            anyOf {
-              branch 'develop'
-            }
+    stage('Deploy staging') {
+      when {
+        anyOf {
+          branch 'develop'
+        }
+      }
+      steps {
+        echo "Deploying $BRANCH_NAME from $JENKINS_URL ..."
+        sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
+          sh '''
+            .c42/scripts/deploy.sh
+          '''
+        }
+      }
+    }
+    stage('Confirm') {
+      when {
+        anyOf {
+          branch 'master'
+        }
+      }
+      steps {
+        notifyBuild("WAITING");
+        input(message: "Are you sure you want to deploy on production?")
+          script {
+            TO_DEPLOY = true
           }
-          steps {
-            echo "Deploying $BRANCH_NAME from $JENKINS_URL ..."
-            sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
-              sh '''
-                .c42/scripts/deploy.sh
-              '''
-            }
-          }
+        sh '''
+          echo "Deployment confirmed"
+        '''
+      }
+    }
+    stage('Deploy production') {
+      when {
+        anyOf {
+          branch 'master'
+        }
+        expression { TO_DEPLOY }
+      }
+      steps {
+        echo "Deploying $BRANCH_NAME from $JENKINS_URL ..."
+        sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
+          sh '''
+            .c42/scripts/deploy.sh
+          '''
         }
       }
     }

@@ -1,9 +1,11 @@
 import {
   SEARCH_RESULTS,
   SEARCH_TERMS,
-  RESET_STORE
+  RESET_STORE,
+  SEARCH_RESET,
+  SEARCH_SET_TERM
 } from "../constants/ActionTypes";
-import addInteractionsToEstablishment from "../utils/addInteractionsToEstablishment";
+import addInteractions from "../utils/addInteractions";
 
 const initialState = {
   results: [],
@@ -13,10 +15,9 @@ const initialState = {
     siren: null,
     q: null,
     naf: null,
+    _nafSelect: null,
     commune: null,
-    codePostal: null,
-    departement: null,
-    interactions: null,
+    _communeSelect: null,
     siegeSocial: null
   }
 };
@@ -29,13 +30,24 @@ const search = (state = initialState, action) => {
         results: flattenResults(action.results, state.terms),
         pagination: action.pagination
       };
+
     case SEARCH_TERMS:
       return {
         ...state,
         terms: { ...initialState.terms, ...action.terms }
       };
+
     case RESET_STORE:
       return {};
+
+    case SEARCH_RESET:
+      return { ...initialState };
+
+    case SEARCH_SET_TERM:
+      return {
+        ...state,
+        terms: { ...state.terms, ...{ [action.termKey]: action.termValue } }
+      };
 
     default:
       return state;
@@ -55,10 +67,7 @@ const flattenResults = (results, terms) => {
   results.forEach(enterprise => {
     if (Array.isArray(enterprise.etablissements)) {
       enterprise.etablissements.forEach(establishment => {
-        establishment = addInteractionsToEstablishment(
-          establishment,
-          interactionTerms
-        );
+        establishment = addInteractions(establishment, interactionTerms);
         flattenResults.push({ ...enterprise, etablissement: establishment });
       });
     }

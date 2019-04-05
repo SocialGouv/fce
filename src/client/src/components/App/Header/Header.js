@@ -2,7 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { logoutUser } from "../../../services/Store/actions";
+import { logoutUser, resetSearch } from "../../../services/Store/actions";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/fontawesome-pro-solid";
 
 import logo from "../../../assets/img/logo_gouv.png";
 
@@ -22,12 +24,19 @@ class Header extends React.Component {
     });
   }
 
+  newSearch = event => {
+    this.props.resetSearch();
+  };
+
   render() {
     return (
       <header className="app-header">
         <nav className="navbar">
-          <Link to="/" className="navbar-brand">
+          <Link to="/" onClick={this.newSearch} className="navbar-brand">
             <img src={logo} alt="Logo Marianne" /> Fiche Commune Entreprise
+          </Link>
+          <Link to="/" onClick={this.newSearch} className="navbar-brand">
+            <FontAwesomeIcon icon={faSearch} /> Nouvelle recherche
           </Link>
           <a
             role="button"
@@ -56,6 +65,9 @@ const mapDispatchToProps = dispatch => {
   return {
     logoutUser: () => {
       dispatch(logoutUser());
+    },
+    resetSearch: () => {
+      dispatch(resetSearch());
     }
   };
 };

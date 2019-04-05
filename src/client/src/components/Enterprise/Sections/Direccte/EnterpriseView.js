@@ -15,7 +15,7 @@ class EstablishmentView extends React.Component {
     });
   };
 
-  getEtablishmentsWithInteractons = enterprise => {
+  getEstablishmentsWithInteractions = enterprise => {
     try {
       return Object.values(enterprise.interactions).reduce(
         (acc, interaction) => {
@@ -35,11 +35,11 @@ class EstablishmentView extends React.Component {
 
   render() {
     const { enterprise } = this.props;
-    const etablishmentsWithInteractons = this.getEtablishmentsWithInteractons(
+    const establishmentsWithInteractions = this.getEstablishmentsWithInteractions(
       enterprise
     );
 
-    const interactions = Object.entries(etablishmentsWithInteractons).map(
+    const interactions = Object.entries(establishmentsWithInteractions).map(
       ([siret, nbInteractions]) => {
         const etablishment = enterprise.etablissements.find(
           etab => etab.siret === siret

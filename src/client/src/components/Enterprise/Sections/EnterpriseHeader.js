@@ -1,5 +1,6 @@
 import React from "react";
 import Value from "../../../elements/Value";
+import moment from "moment";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import {
   faArrowAltRight,
@@ -13,6 +14,7 @@ class EnterpriseHeader extends React.Component {
     const slugSocieteCom = enterprise.raison_sociale
       .toLowerCase()
       .replace(" ", "-");
+    const updateReformat = moment(enterprise.date_mise_a_jour).format('DD/MM/YYYY');
 
     return (
       <section id="header" className="enterprise-header">
@@ -29,16 +31,19 @@ class EnterpriseHeader extends React.Component {
               empty=" "
             />
           </h1>
-          <button
-            className="button is-primary has-text-light"
-            onClick={() => window.print()}
-          >
-            <br />
-            <span className="icon">
-              <FontAwesomeIcon icon={faPrint} />
-            </span>
-            <span>Imprimer</span>
-          </button>
+          <div>
+            <span className="row has-text-grey-dark has-text-weight-semibold">Fiche mise à jour le {updateReformat}</span>
+            <button
+              className="row button is-primary has-text-light is-pulled-right"
+              onClick={() => window.print()}
+            >
+              <br />
+              <span className="icon">
+                <FontAwesomeIcon icon={faPrint} />
+              </span>
+              <span>Imprimer</span>
+            </button>
+          </div>
         </div>
         <div className="row">
           <div className="columns is-vcentered w-100">

@@ -54,7 +54,16 @@ class Dashboard extends React.Component {
               className="dashboard-icon"
               icon={faCalendarExclamation}
             />
-            <span>x 20</span>
+            <span>
+              <Value
+                value={
+                  establishment.totalInteractions &&
+                  establishment.totalInteractions.total
+                }
+                empty="-"
+                nonEmptyValues={[0, "0"]}
+              />
+            </span>
           </div>
         </div>
         <div className="dashboard-item dashboard-alerts">

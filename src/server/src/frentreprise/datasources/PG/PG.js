@@ -1,5 +1,6 @@
 import { DataSource } from "frentreprise";
 import Etablissements from "./Etablissements";
+import Entreprises from "./Entreprises";
 import InteractionsPole3E from "../../../models/InteractionsPole3E";
 import InteractionsPole3T from "../../../models/InteractionsPole3T";
 import UcEff from "../../../models/UcEff";
@@ -24,7 +25,11 @@ export default class PG extends DataSource {
   }
 
   async getSIREN(SIREN) {
-    return false;
+    return await this[_.requestDB](
+      SIREN,
+      [Entreprises.getInteractionsPole3E, new InteractionsPole3E()],
+      [Entreprises.getInteractionsPole3T, new InteractionsPole3T()]
+    );
   }
 
   async search() {

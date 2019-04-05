@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  server:
+    build: ./docker/node
+    restart: always
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+
+  db:
+    image: postgres:9.6
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: w5@5lclO2F&4O8YQX#dI
+      POSTGRES_DB: fce
+
+volumes:
+  pgdata:

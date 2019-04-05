@@ -5,12 +5,6 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
 import Config from "../../../services/Config";
 
-const assocStyle = {
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center"
-};
-
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
@@ -56,6 +50,7 @@ class EstablishmentActivity extends React.Component {
                 <a
                   href={establishment.document_association.url}
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   les derniers statuts
                 </a>

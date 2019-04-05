@@ -1,5 +1,4 @@
 import React from "react";
-import Value from "../../../../elements/Value";
 import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
@@ -16,18 +15,29 @@ class EstablishmentView extends React.Component {
     });
   };
 
+  getEtablishmentsWithInteractons = enterprise => {
+    try {
+      return Object.values(enterprise.interactions).reduce(
+        (acc, interaction) => {
+          if (!acc.hasOwnProperty(interaction.siret)) {
+            acc[interaction.siret] = 0;
+          }
+          acc[interaction.siret]++;
+          return acc;
+        },
+        {}
+      );
+    } catch (error) {
+      console.error(error);
+      return {};
+    }
+  };
+
   render() {
     const { enterprise } = this.props;
-
-    const etablishmentsWithInteractons = Object.values(
-      enterprise.interactions
-    ).reduce((acc, interaction) => {
-      if (!acc.hasOwnProperty(interaction.siret)) {
-        acc[interaction.siret] = 0;
-      }
-      acc[interaction.siret]++;
-      return acc;
-    }, {});
+    const etablishmentsWithInteractons = this.getEtablishmentsWithInteractons(
+      enterprise
+    );
 
     const interactions = Object.entries(etablishmentsWithInteractons).map(
       ([siret, nbInteractions]) => {
@@ -105,7 +115,7 @@ class EstablishmentView extends React.Component {
                           {etab.etat && (
                             <FontAwesomeIcon
                               className={
-                                etab.etat == "A"
+                                etab.etat === "A"
                                   ? "icon--success"
                                   : "icon--danger"
                               }

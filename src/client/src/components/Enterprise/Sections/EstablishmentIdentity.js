@@ -2,14 +2,14 @@ import React from "react";
 import Value from "../../../elements/Value";
 import classNames from "classnames";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import { faCircle } from "@fortawesome/fontawesome-pro-solid";
 
 class EstablishmentIdentity extends React.Component {
   render() {
     const { establishment } = this.props;
 
     const stateClass =
-      establishment.etat_etablissement == "A"
+      establishment.etat_etablissement === "A"
         ? "icon--success"
         : "icon--danger";
 

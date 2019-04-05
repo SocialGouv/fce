@@ -6,7 +6,6 @@ import {
   loadEstablishment,
   loadEntreprise
 } from "../../services/Store/actions";
-import Config from "../../services/Config";
 import {
   Establishment as EstablishmentView,
   Enterprise as EnterpriseView

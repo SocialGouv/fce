@@ -29,7 +29,7 @@ class EnterpriseHeader extends React.Component {
               empty=" "
             />
           </h1>
-          <a
+          <button
             className="button is-primary has-text-light"
             onClick={() => window.print()}
           >
@@ -38,7 +38,7 @@ class EnterpriseHeader extends React.Component {
               <FontAwesomeIcon icon={faPrint} />
             </span>
             <span>Imprimer</span>
-          </a>
+          </button>
         </div>
         <div className="row">
           <div className="columns is-vcentered w-100">
@@ -51,12 +51,12 @@ class EnterpriseHeader extends React.Component {
               </span>
             </div>
             <div className="column is-9">
-              <a className="button is-primary has-text-light">
+              <button className="button is-primary has-text-light">
                 <span className="icon">
                   <FontAwesomeIcon icon={faArrowAltRight} />
                 </span>
                 <span>Siège social</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -74,17 +74,17 @@ class EnterpriseHeader extends React.Component {
               </a>
             </span>
             <div className="column is-9">
-              <a className="button is-primary has-text-light">
+              <button className="button is-primary has-text-light">
                 <span className="icon">
                   <FontAwesomeIcon icon={faArrowAltRight} />
                 </span>
                 <span>Autres établissements</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
         <div className="row is-pulled-right">
-          <a
+          <button
             className="button is-primary has-text-light responsive-item"
             data-show="quickview"
             data-target="establishments"
@@ -93,7 +93,7 @@ class EnterpriseHeader extends React.Component {
               <FontAwesomeIcon icon={faMapPin} />
             </span>
             <span>Voir les établissements</span>
-          </a>
+          </button>
         </div>
       </section>
     );

@@ -1,5 +1,4 @@
 import React from "react";
-import classNames from "classnames";
 import Value from "../../../../elements/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import {
@@ -69,8 +68,8 @@ class EstablishmentView extends React.Component {
           <div className="accordions">
             <div className="accordion">
               <div className="accordion-header toggle">
-                <span className=""> Détail des visites et contrôles </span>
-                <span className="">
+                <span> Détail des visites et contrôles </span>
+                <span>
                   <button className="button is-light is-rounded">
                     <span className="icon">
                       <FontAwesomeIcon icon={faChevronDown} />

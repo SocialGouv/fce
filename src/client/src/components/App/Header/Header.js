@@ -38,7 +38,7 @@ class Header extends React.Component {
           <Link to="/" onClick={this.newSearch} className="navbar-brand">
             <FontAwesomeIcon icon={faSearch} /> Nouvelle recherche
           </Link>
-          <a
+          <div
             role="button"
             className="navbar-burger burger"
             aria-label="menu"
@@ -48,7 +48,7 @@ class Header extends React.Component {
             <span aria-hidden="true" />
             <span aria-hidden="true" />
             <span aria-hidden="true" />
-          </a>
+          </div>
         </nav>
       </header>
     );

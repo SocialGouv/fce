@@ -12,21 +12,10 @@ import {
 } from "./Sections";
 
 class Enterprise extends React.Component {
-  getSections = () => {
-    return [
-      { name: "Identité", id: "identity" },
-      { name: "État et activité", id: "activity" },
-      { name: "Siège social", id: "headoffice" },
-      { name: "Eco & Fina.", id: "finances" },
-      { name: "Attestations", id: "attestations" },
-      { name: "Mandataires", id: "mandataire" },
-      { name: "DIRECCTE", id: "direccte" }
-    ];
-  };
 
   componentDidMount() {
-    const accordions = bulmaAccordion.attach();
-    const quickviews = bulmaQuickView.attach();
+    bulmaAccordion.attach();
+    bulmaQuickView.attach();
   }
 
   render() {

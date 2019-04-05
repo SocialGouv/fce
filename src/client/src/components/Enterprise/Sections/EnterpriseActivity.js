@@ -1,15 +1,13 @@
 import React from "react";
 import Value from "../../../elements/Value";
-import Finances from "./Finances";
 import classNames from "classnames";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import { faCircle } from "@fortawesome/fontawesome-pro-solid";
 import { toI18nDate } from "../../../helpers/Date";
 
 class EnterpriseActivity extends React.Component {
   render() {
-    const { enterprise, headOffice } = this.props;
-    console.log({ enterprise });
+    const { enterprise } = this.props;
 
     const stateClass =
       enterprise.etat_entreprise === "A" ? "icon--success" : "icon--danger";
@@ -179,26 +177,6 @@ class EnterpriseActivity extends React.Component {
             ) : null}
           </div>
         )}
-
-        <div className="accordions">
-          <div className="accordion">
-            <div className="accordion-header toggle">
-              <span className="">Données économiques et financières</span>
-              <span className="">
-                <button className="button is-light is-rounded">
-                  <span className="icon">
-                    <FontAwesomeIcon icon={faChevronDown} />
-                  </span>
-                </button>
-              </span>
-            </div>
-            <div className="accordion-body">
-              <div className="accordion-content">
-                <Finances establishment={headOffice} />
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
     );
   }

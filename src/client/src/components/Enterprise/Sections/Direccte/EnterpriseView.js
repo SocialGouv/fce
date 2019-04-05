@@ -57,7 +57,7 @@ class EstablishmentView extends React.Component {
           </div>
         </div>
         <div className="accordions">
-          <div className="accordion">
+          <div className="accordion is-active">
             <div className="accordion-header toggle">
               <span className="">Détails des intéractions</span>
               <span className="">

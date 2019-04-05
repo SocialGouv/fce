@@ -7,6 +7,7 @@ import {
   Direccte,
   EnterpriseHeader,
   EnterpriseActivity,
+  Finances,
   Mandataires
 } from "./Sections";
 
@@ -41,6 +42,7 @@ class Enterprise extends React.Component {
               enterprise={enterprise}
               headOffice={headOffice}
             />
+            <Finances establishment={headOffice} />
             <Direccte enterprise={enterprise} />
             <Mandataires enterprise={enterprise} />
           </div>

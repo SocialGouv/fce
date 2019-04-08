@@ -1,12 +1,7 @@
 import React from "react";
 import Value from "../../../elements/Value";
-import moment from "moment";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import {
-  faArrowAltRight,
-  faPrint,
-  faMapPin
-} from "@fortawesome/fontawesome-pro-solid";
+import { faArrowAltRight, faPrint } from "@fortawesome/fontawesome-pro-solid";
 
 class EnterpriseHeader extends React.Component {
   render() {
@@ -17,6 +12,18 @@ class EnterpriseHeader extends React.Component {
 
     return (
       <section id="header" className="enterprise-header">
+        <div className="has-text-link show-all-establishments">
+          <div
+            className="responsive-item"
+            data-show="quickview"
+            data-target="establishments"
+          >
+            <span>Voir les établissements</span>
+            <span className="icon">
+              <FontAwesomeIcon icon={faArrowAltRight} />
+            </span>
+          </div>
+        </div>
         <div className="row top-header">
           <h1 className="title is-size-2">
             <Value
@@ -33,7 +40,11 @@ class EnterpriseHeader extends React.Component {
           <div>
             <div className="row">
               <span className="has-text-grey-dark">Fiche mise à jour le </span>
-              <Value className="has-text-grey-dark has-text-weight-semibold" value={enterprise.date_mise_a_jour} empty=" " />
+              <Value
+                className="has-text-grey-dark has-text-weight-semibold"
+                value={enterprise.date_mise_a_jour}
+                empty=" "
+              />
             </div>
             <button
               className="row button is-primary has-text-light is-pulled-right"
@@ -89,18 +100,6 @@ class EnterpriseHeader extends React.Component {
               </button>
             </div>
           </div>
-        </div>
-        <div className="row is-pulled-right">
-          <button
-            className="button is-primary has-text-light responsive-item"
-            data-show="quickview"
-            data-target="establishments"
-          >
-            <span className="icon">
-              <FontAwesomeIcon icon={faMapPin} />
-            </span>
-            <span>Voir les établissements</span>
-          </button>
         </div>
       </section>
     );

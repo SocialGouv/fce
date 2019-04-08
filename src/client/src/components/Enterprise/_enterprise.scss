@@ -10,6 +10,12 @@
     opacity: 0.75;
   }
 
+  .show-all-establishments {
+    position: absolute;
+    top: -4rem;
+    right: 0;
+  }
+
   .aside-box {
     padding: 0 1rem 0 0;
 
@@ -18,20 +24,44 @@
       max-width: 100%;
     }
 
+    h3 {
+      margin-bottom: .25rem;
+    }
+
+    h5 {
+      margin-bottom: 1rem;
+    }
+
     >.aside-contain {
       overflow: auto;
-      height: 75%;
-      background-color: $white;
+      height: calc(100% - 20rem);
       border-radius: 0.325rem;
       z-index: 10;
-      padding-top: 1.5rem;
-      position: fixed;
+      padding: 1.5rem 3rem;
+      position: absolute;
 
       @media print {
         position: static;
         max-width: 100%;
         overflow: visible;
         height: auto !important;
+      }
+
+      .aside-contain--header {
+        padding-bottom: 3rem;
+      }
+    }
+
+    .establishment {
+      background-color: $white;
+    }
+
+    .enterprise {
+      background: none;
+      overflow: auto;
+
+      hr {
+        background-color: rgb(39, 39, 39);
       }
     }
   }

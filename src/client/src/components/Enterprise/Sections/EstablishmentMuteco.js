@@ -1,8 +1,7 @@
 import React from "react";
 import Value from "../../../elements/Value";
-import classNames from "classnames";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
 
 class EstablishmentMuteco extends React.Component {
   render() {

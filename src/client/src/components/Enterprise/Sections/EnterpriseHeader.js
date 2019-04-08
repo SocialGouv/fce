@@ -1,5 +1,6 @@
 import React from "react";
 import Value from "../../../elements/Value";
+import moment from "moment";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import {
   faArrowAltRight,
@@ -29,16 +30,22 @@ class EnterpriseHeader extends React.Component {
               empty=" "
             />
           </h1>
-          <a
-            className="button is-primary has-text-light"
-            onClick={() => window.print()}
-          >
-            <br />
-            <span className="icon">
-              <FontAwesomeIcon icon={faPrint} />
-            </span>
-            <span>Imprimer</span>
-          </a>
+          <div>
+            <div className="row">
+              <span className="has-text-grey-dark">Fiche mise à jour le </span>
+              <Value className="has-text-grey-dark has-text-weight-semibold" value={enterprise.date_mise_a_jour} empty=" " />
+            </div>
+            <button
+              className="row button is-primary has-text-light is-pulled-right"
+              onClick={() => window.print()}
+            >
+              <br />
+              <span className="icon">
+                <FontAwesomeIcon icon={faPrint} />
+              </span>
+              <span>Imprimer</span>
+            </button>
+          </div>
         </div>
         <div className="row">
           <div className="columns is-vcentered w-100">
@@ -51,12 +58,12 @@ class EnterpriseHeader extends React.Component {
               </span>
             </div>
             <div className="column is-9">
-              <a className="button is-primary has-text-light">
+              <button className="button is-primary has-text-light">
                 <span className="icon">
                   <FontAwesomeIcon icon={faArrowAltRight} />
                 </span>
                 <span>Siège social</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -74,17 +81,17 @@ class EnterpriseHeader extends React.Component {
               </a>
             </span>
             <div className="column is-9">
-              <a className="button is-primary has-text-light">
+              <button className="button is-primary has-text-light">
                 <span className="icon">
                   <FontAwesomeIcon icon={faArrowAltRight} />
                 </span>
                 <span>Autres établissements</span>
-              </a>
+              </button>
             </div>
           </div>
         </div>
         <div className="row is-pulled-right">
-          <a
+          <button
             className="button is-primary has-text-light responsive-item"
             data-show="quickview"
             data-target="establishments"
@@ -93,7 +100,7 @@ class EnterpriseHeader extends React.Component {
               <FontAwesomeIcon icon={faMapPin} />
             </span>
             <span>Voir les établissements</span>
-          </a>
+          </button>
         </div>
       </section>
     );

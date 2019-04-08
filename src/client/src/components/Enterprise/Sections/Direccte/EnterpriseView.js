@@ -1,5 +1,4 @@
 import React from "react";
-import Value from "../../../../elements/Value";
 import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
@@ -16,20 +15,31 @@ class EstablishmentView extends React.Component {
     });
   };
 
+  getEstablishmentsWithInteractions = enterprise => {
+    try {
+      return Object.values(enterprise.interactions).reduce(
+        (acc, interaction) => {
+          if (!acc.hasOwnProperty(interaction.siret)) {
+            acc[interaction.siret] = 0;
+          }
+          acc[interaction.siret]++;
+          return acc;
+        },
+        {}
+      );
+    } catch (error) {
+      console.error(error);
+      return {};
+    }
+  };
+
   render() {
     const { enterprise } = this.props;
+    const establishmentsWithInteractions = this.getEstablishmentsWithInteractions(
+      enterprise
+    );
 
-    const etablishmentsWithInteractons = Object.values(
-      enterprise.interactions
-    ).reduce((acc, interaction) => {
-      if (!acc.hasOwnProperty(interaction.siret)) {
-        acc[interaction.siret] = 0;
-      }
-      acc[interaction.siret]++;
-      return acc;
-    }, {});
-
-    const interactions = Object.entries(etablishmentsWithInteractons).map(
+    const interactions = Object.entries(establishmentsWithInteractions).map(
       ([siret, nbInteractions]) => {
         const etablishment = enterprise.etablissements.find(
           etab => etab.siret === siret
@@ -53,7 +63,7 @@ class EstablishmentView extends React.Component {
 
     return (
       <section id="direccte" className="enterprise-section">
-        <h2 className="title is-size-4">Interactions avec la DIRECCTE</h2>
+        <h2 className="title is-size-4">visites et controles</h2>
         <div className="direccte-excerpt">
           <div className="direccte-excerpt--pole">
             <span className="direccte-excerpt--pole-value">
@@ -70,7 +80,7 @@ class EstablishmentView extends React.Component {
           </div>
         </div>
         <div className="accordions">
-          <div className="accordion">
+          <div className="accordion is-active">
             <div className="accordion-header toggle">
               <span className="">Détails des intéractions</span>
               <span className="">
@@ -105,7 +115,7 @@ class EstablishmentView extends React.Component {
                           {etab.etat && (
                             <FontAwesomeIcon
                               className={
-                                etab.etat == "A"
+                                etab.etat === "A"
                                   ? "icon--success"
                                   : "icon--danger"
                               }

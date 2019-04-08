@@ -322,6 +322,22 @@
   }
 }
 
+.mandataire {
+  padding: 1rem 0;
+
+  .columns {
+    margin-bottom: 0;
+  }
+
+  h5 {
+    padding-bottom: 0;
+  }
+
+  span {
+    padding-top: 0;
+  }
+}
+
 .aside-interact--icon {
   color: $primary;
   margin-left: 0.5rem;

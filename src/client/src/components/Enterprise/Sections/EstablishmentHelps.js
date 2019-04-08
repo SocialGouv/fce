@@ -1,8 +1,7 @@
 import React from "react";
 import Value from "../../../elements/Value";
-import classNames from "classnames";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
 
 class EstablishmentHelps extends React.Component {
   render() {
@@ -83,8 +82,8 @@ class EstablishmentHelps extends React.Component {
           <div className="accordions">
             <div className="accordion">
               <div className="accordion-header toggle">
-                <span className="">Détail des aides</span>
-                <span className="">
+                <span>Détail des aides</span>
+                <span>
                   <button className="button is-light is-rounded">
                     <span className="icon">
                       <FontAwesomeIcon icon={faChevronDown} />
@@ -134,8 +133,8 @@ class EstablishmentHelps extends React.Component {
         <div className="accordions">
           <div className="accordion">
             <div className="accordion-header toggle">
-              <span className="">Détail de la structure</span>
-              <span className="">
+              <span>Détail de la structure</span>
+              <span>
                 <button className="button is-light is-rounded">
                   <span className="icon">
                     <FontAwesomeIcon icon={faChevronDown} />
@@ -158,8 +157,8 @@ class EstablishmentHelps extends React.Component {
           <div className="accordions">
             <div className="accordion">
               <div className="accordion-header toggle">
-                <span className="">Prime embauche PME</span>
-                <span className="">
+                <span>Prime embauche PME</span>
+                <span>
                   <button className="button is-light is-rounded">
                     <span className="icon">
                       <FontAwesomeIcon icon={faChevronDown} />
@@ -203,8 +202,8 @@ class EstablishmentHelps extends React.Component {
           <div className="accordions">
             <div className="accordion">
               <div className="accordion-header toggle">
-                <span className="">Détail de l'alternance</span>
-                <span className="">
+                <span>Détail de l'alternance</span>
+                <span>
                   <button className="button is-light is-rounded">
                     <span className="icon">
                       <FontAwesomeIcon icon={faChevronDown} />
@@ -237,8 +236,8 @@ class EstablishmentHelps extends React.Component {
           <div className="accordions">
             <div className="accordion">
               <div className="accordion-header toggle">
-                <span className="">Contrats aidés</span>
-                <span className="">
+                <span>Contrats aidés</span>
+                <span>
                   <button className="button is-light is-rounded">
                     <span className="icon">
                       <FontAwesomeIcon icon={faChevronDown} />

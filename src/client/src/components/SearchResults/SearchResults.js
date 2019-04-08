@@ -41,12 +41,12 @@ class SearchResults extends React.Component {
                 pages={this.props.pagination && this.props.pagination.pages}
                 onFetchData={this.props.fetchData}
                 loading={this.props.loading}
-                getTrProps={rowInfo => {
+                getTrProps={(state, rowInfo) => {
                   return {
                     onClick: e => {
                       e && e.preventDefault();
                       this.props.history.push(
-                        "/establishment/" + rowInfo.original.etablissement.siret
+                        rowInfo.row.siret.props.to
                       );
                     }
                   };

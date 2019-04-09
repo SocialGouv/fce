@@ -14,11 +14,16 @@ class EstablishmentActivity extends React.Component {
         <h2 className="title is-size-4">Activité</h2>
 
         <div className="columns">
-          <h5 className="column is-3">Activité principale</h5>
+          <h5 className="column is-3">SIRET prédecesseur</h5>
           <span className="column is-8">
-            <Value value={establishment.naf} empty="-" />
-            <span> - </span>
-            <Value value={establishment.libelle_naf} empty="-" />
+            <Value value={establishment.predecesseur} empty="-" />
+          </span>
+        </div>
+
+        <div className="columns">
+          <h5 className="column is-3">Date transfert</h5>
+          <span className="column is-8">
+            <Value value="" empty="-" />
           </span>
         </div>
 
@@ -87,7 +92,7 @@ class EstablishmentActivity extends React.Component {
           </span>
         </div>
         <div className="accordions">
-          <div className="accordion">
+          <div className="accordion is-active">
             <div className="accordion-header toggle">
               <span className="">Effectifs</span>
               <span className="">
@@ -119,12 +124,6 @@ class EstablishmentActivity extends React.Component {
                   </span>
                 </div>
                 <div className="columns">
-                  <h5 className="column is-3">Nombre d'intérimaires</h5>
-                  <span className="column is-8">
-                    <Value value={establishment.interim} empty="-" />
-                  </span>
-                </div>
-                <div className="columns">
                   <h5 className="column is-3">Dernier effectif physique</h5>
                   <span className="column is-8">
                     <Value
@@ -146,14 +145,9 @@ class EstablishmentActivity extends React.Component {
                   </span>
                 </div>
                 <div className="columns">
-                  <h5 className="column is-3">
-                    Source dernier effectif physique
-                  </h5>
+                  <h5 className="column is-3">Nombre d'intérimaires</h5>
                   <span className="column is-8">
-                    <Value
-                      value={establishment.source_dernier_effectif_physique}
-                      empty="-"
-                    />
+                    <Value value={establishment.interim} empty="-" />
                   </span>
                 </div>
               </div>
@@ -186,7 +180,7 @@ class EstablishmentActivity extends React.Component {
           </span>
         </div>
         <div className="accordions">
-          <div className="accordion">
+          <div className="accordion is-active">
             <div className="accordion-header toggle">
               <span className="">Liste des pôles de compétitivité</span>
               <span className="">
@@ -258,7 +252,7 @@ class EstablishmentActivity extends React.Component {
           </span>
         </div>
         <div className="accordions">
-          <div className="accordion">
+          <div className="accordion is-active">
             <div className="accordion-header toggle">
               <span className="">Liste des accords par thématiques</span>
               <span className="">

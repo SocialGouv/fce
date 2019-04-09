@@ -9,6 +9,7 @@ class EnterpriseHeader extends React.Component {
     const slugSocieteCom = enterprise.raison_sociale
       .toLowerCase()
       .replace(" ", "-");
+    const isActif = enterprise.etat_entreprise === "A";
 
     return (
       <section id="header" className="enterprise-header">
@@ -60,12 +61,26 @@ class EnterpriseHeader extends React.Component {
         </div>
         <div className="row">
           <div className="columns is-vcentered w-100">
-            <div className="column is-2">
+            <div className="column is-3">
               <span className="is-size-5 has-text-grey-dark">Entreprise</span>
               <br />
               <span className="is-size-5 has-text-grey-dark">SIREN : </span>
               <span className="is-size-5 has-text-weight-semibold has-text-grey-dark">
                 {enterprise.siren}
+              </span>
+              <br />
+              <span className="is-size-5 has-text-grey-dark">
+                {isActif ? "Ouverte depuis le " : "Fermée depuis le "}
+              </span>
+              <span className="is-size-5 has-text-weight-semibold has-text-grey-dark">
+                <Value
+                  value={
+                    isActif
+                      ? enterprise.date_de_creation
+                      : enterprise.date_mise_a_jour
+                  }
+                  empty="-"
+                />
               </span>
             </div>
             <div className="column is-9">
@@ -78,9 +93,9 @@ class EnterpriseHeader extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row pt-3">
           <div className="columns is-vcentered w-100">
-            <span className="column is-2 is-size-5">
+            <span className="column is-3 is-size-5">
               Voir sur{" "}
               <a
                 className="is-link"

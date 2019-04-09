@@ -1,11 +1,25 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import Establishment from "./Establishment";
 import Value from "../../../elements/Value";
 
 class Establishments extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isRedirected: false
+    };
+  }
+
   render() {
-    const { establishments, enterprise, headOffice } = this.props;
+    const {
+      establishments,
+      enterprise,
+      headOffice,
+      isEstablishmentDisplayed
+    } = this.props;
+    const { isRedirected } = this.state;
+    console.log({ establishments });
 
     let establishmentsItems = establishments.map((establishment, index) => (
       <article key={index}>
@@ -14,37 +28,49 @@ class Establishments extends React.Component {
     ));
 
     return (
-      <aside className="aside-contain establishments-aside column is-3-desktop is-12-tablet">
-        <section>
-          <h3 className="title is-size-5">
-            Entreprise <Value value={enterprise.raison_sociale} empty="-" />
-          </h3>
-          <dl className="columns">
-            <dt className="column is-3">SIREN</dt>
-            <dd className="definition column is-8">
-              <Link to={`/enterprise/${enterprise.siren}`}>
-                <Value value={enterprise.siren} empty="-" />
-              </Link>
-            </dd>
-          </dl>
-        </section>
+      <>
+        {isRedirected && <Redirect to={`/enterprise/${enterprise.siren}`} />}
+        <aside
+          className={`${
+            isEstablishmentDisplayed ? "establishment" : "enterprise"
+          } aside-contain establishments-aside column is-3-desktop is-12-tablet`}
+        >
+          <section className="pb-6">
+            <h3 className="title is-size-5">
+              Entreprise <Value value={enterprise.raison_sociale} empty="-" />
+            </h3>
+            <h5 className="has-text-grey has-text-weight-semibold">
+              {enterprise.libelle_naf}
+            </h5>
+            {isEstablishmentDisplayed && (
+              <button
+                className="button is-primary has-text-light"
+                onClick={() => {
+                  this.setState({ isRedirected: true });
+                }}
+              >
+                Voir la fiche entreprise
+              </button>
+            )}
+          </section>
 
-        <hr />
+          <section>
+            <h3 className="title is-size-5">Siège social</h3>
 
-        <section>
-          <h3 className="title is-size-5">Siège social</h3>
+            <Establishment establishment={headOffice} />
+          </section>
 
-          <Establishment establishment={headOffice} />
-        </section>
+          <hr />
 
-        <hr />
+          <section>
+            <h3 className="title is-size-5">
+              {establishments.length} Établissements
+            </h3>
 
-        <section>
-          <h3 className="title is-size-5">Établissements</h3>
-
-          {establishmentsItems}
-        </section>
-      </aside>
+            {establishmentsItems}
+          </section>
+        </aside>
+      </>
     );
   }
 }

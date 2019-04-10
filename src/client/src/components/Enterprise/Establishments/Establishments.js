@@ -47,7 +47,7 @@ class Establishments extends React.Component {
               <button
                 className="button is-primary has-text-light"
                 onClick={() => {
-                  this.setState({ isRedirected: true });
+                  this.setState({ isRedirectedToEnterprise: true });
                 }}
               >
                 Voir la fiche entreprise

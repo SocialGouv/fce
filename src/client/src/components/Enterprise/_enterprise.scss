@@ -194,6 +194,10 @@
         margin: 0 1rem;
         text-align: center;
         width: 30%;
+        height: 9rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         background-color: $secondary;
         border-radius: 0.325rem;
         color: $light;
@@ -203,15 +207,19 @@
           font-weight: normal;
         }
 
-        &--value {
-          font-weight: normal;
+        &--content {
+          font-weight: bold;
           display: flex;
-          justify-content: center;
-          align-items: center;
+          flex-direction: column;
+        }
 
-          >span {
-            font-weight: bold;
-          }
+        .dashboard-item--value {
+          font-size: 2rem;
+          font-weight: bold;
+        }
+
+        .dashboard-item--desc {
+          font-size: 1.15rem;
         }
       }
 

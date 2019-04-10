@@ -30,24 +30,15 @@ class EstablishmentHeader extends React.Component {
           <h1 className="title is-size-2">
             <Value
               value={
-                enterprise.raison_sociale ||
-                enterprise.sigle ||
-                enterprise.nom_commercial ||
-                `${enterprise.nom || ""} ${enterprise.prenom || ""}`.trim() ||
+                establishment.nom_commercial ||
+                `${establishment.nom || ""} ${establishment.prenom ||
+                  ""}`.trim() ||
                 null
               }
               empty=" "
             />
           </h1>
           <div>
-            <div className="row">
-              <span className="has-text-grey-dark">Fiche mise à jour le </span>
-              <Value
-                className="has-text-grey-dark has-text-weight-semibold"
-                value={enterprise.date_mise_a_jour}
-                empty=" "
-              />
-            </div>
             <button
               className="row button is-primary has-text-light is-pulled-right"
               onClick={() => window.print()}
@@ -78,8 +69,8 @@ class EstablishmentHeader extends React.Component {
                 <Value
                   value={
                     isActif
-                      ? enterprise.date_de_creation
-                      : enterprise.date_mise_a_jour
+                      ? establishment.date_creation
+                      : establishment.date_dernier_traitement_etablissement
                   }
                   empty="-"
                 />

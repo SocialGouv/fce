@@ -7,7 +7,7 @@ class Establishments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isRedirected: false
+      isRedirectedToEnterprise: false
     };
   }
 
@@ -18,8 +18,7 @@ class Establishments extends React.Component {
       headOffice,
       isEstablishmentDisplayed
     } = this.props;
-    const { isRedirected } = this.state;
-    console.log({ establishments });
+    const { isRedirectedToEnterprise } = this.state;
 
     let establishmentsItems = establishments.map((establishment, index) => (
       <article key={index}>
@@ -29,7 +28,9 @@ class Establishments extends React.Component {
 
     return (
       <>
-        {isRedirected && <Redirect to={`/enterprise/${enterprise.siren}`} />}
+        {isRedirectedToEnterprise && (
+          <Redirect to={`/enterprise/${enterprise.siren}`} />
+        )}
         <aside
           className={`${
             isEstablishmentDisplayed ? "establishment" : "enterprise"

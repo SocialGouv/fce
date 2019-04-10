@@ -51,7 +51,6 @@ class EnterpriseHeader extends React.Component {
               className="row button is-primary has-text-light is-pulled-right"
               onClick={() => window.print()}
             >
-              <br />
               <span className="icon">
                 <FontAwesomeIcon icon={faPrint} />
               </span>

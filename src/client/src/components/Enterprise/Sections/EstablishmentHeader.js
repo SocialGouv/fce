@@ -12,8 +12,6 @@ class EstablishmentHeader extends React.Component {
       .replace(" ", "-");
     const isActif = enterprise.etat_entreprise === "A";
 
-    console.log({ establishment });
-
     return (
       <section id="header" className="establishment-header w-100">
         <div className="has-text-link show-all-enterprise">
@@ -54,7 +52,6 @@ class EstablishmentHeader extends React.Component {
               className="row button is-primary has-text-light is-pulled-right"
               onClick={() => window.print()}
             >
-              <br />
               <span className="icon">
                 <FontAwesomeIcon icon={faPrint} />
               </span>
@@ -69,9 +66,9 @@ class EstablishmentHeader extends React.Component {
                 {establishment.categorie_etablissement}
               </span>
               <br />
-              <span className="is-size-5 has-text-grey-dark">SIREN : </span>
+              <span className="is-size-5 has-text-grey-dark">SIRET : </span>
               <span className="is-size-5 has-text-weight-semibold has-text-grey-dark">
-                {enterprise.siren}
+                {establishment.siret}
               </span>
               <br />
               <span className="is-size-5 has-text-grey-dark">

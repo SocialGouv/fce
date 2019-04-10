@@ -12,7 +12,6 @@ import {
 } from "./Sections";
 
 class Enterprise extends React.Component {
-
   componentDidMount() {
     bulmaAccordion.attach();
     bulmaQuickView.attach();
@@ -25,16 +24,6 @@ class Enterprise extends React.Component {
       <section className="app-enterprise">
         <div className="enterprise-overlay" />
         <div className="columns">
-          <div className="column main is-9-desktop is-12-tablet">
-            <EnterpriseHeader enterprise={enterprise} />
-            <EnterpriseActivity
-              enterprise={enterprise}
-              headOffice={headOffice}
-            />
-            <Finances establishment={headOffice} />
-            <Direccte enterprise={enterprise} />
-            <Mandataires enterprise={enterprise} />
-          </div>
           <div id="establishments" className="quickview responsive-item">
             <div className="quickview-body">
               <header className="quickview-header">
@@ -46,17 +35,28 @@ class Enterprise extends React.Component {
                   enterprise={this.props.enterprise}
                   headOffice={this.props.headOffice}
                   establishments={this.props.establishments}
+                  isEstablishmentDisplayed={false}
                 />
                 <footer className="quickview-footer" />
               </div>
             </div>
           </div>
-          <div className="column is-3 aside-box">
+          <div className="column is-3 aside-box is-hidden-touch">
             <Establishments
               enterprise={this.props.enterprise}
               headOffice={this.props.headOffice}
               establishments={this.props.establishments}
             />
+          </div>
+          <div className="column main is-9-desktop is-12-tablet">
+            <EnterpriseHeader enterprise={enterprise} />
+            <EnterpriseActivity
+              enterprise={enterprise}
+              headOffice={headOffice}
+            />
+            <Finances establishment={headOffice} />
+            <Direccte enterprise={enterprise} />
+            <Mandataires enterprise={enterprise} />
           </div>
         </div>
       </section>

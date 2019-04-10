@@ -3,25 +3,17 @@ import bulmaAccordion from "bulma-extensions/bulma-accordion/dist/js/bulma-accor
 import bulmaQuickView from "bulma-extensions/bulma-quickview/dist/js/bulma-quickview";
 import withLoading from "../../services/Loading";
 import Establishments from "./Establishments";
-import MailTo from "./MailTo";
-import Value from "../../elements/Value";
 import {
   Dashboard,
+  EstablishmentHeader,
   EstablishmentActivity,
   EstablishmentIdentity,
   EstablishmentMuteco,
   EstablishmentHelps,
   Direccte
 } from "./Sections";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import {
-  faPrint,
-  faArrowAltLeft,
-  faMapPin
-} from "@fortawesome/fontawesome-pro-light";
 
 class Establishment extends React.Component {
-
   componentDidMount() {
     bulmaAccordion.attach();
     bulmaQuickView.attach();
@@ -33,63 +25,22 @@ class Establishment extends React.Component {
     return (
       <section className="app-enterprise">
         <div className="columns">
+          <div className="column is-3 aside-box is-hidden-touch">
+            <Establishments
+              enterprise={this.props.enterprise}
+              headOffice={this.props.headOffice}
+              establishments={this.props.establishments}
+              isEstablishmentDisplayed={true}
+            />
+          </div>
           <div className="main establishment column is-9-desktop is-12-tablet">
-            <h2 className="subtitle">Fiche Établissement</h2>
-
-            <h1 className="title is-size-1">
-              <Value
-                value={establishment.enseigne}
-                empty={enterprise.raison_sociale}
-              />
-            </h1>
-
-            <div className="task-bar d-print-none">
-              {this.props.hasSearchResults ? (
-                <button
-                  className="button back-button is-dark"
-                  onClick={() => this.props.history.goBack()}
-                >
-                  <span className="icon">
-                    <FontAwesomeIcon icon={faArrowAltLeft} />
-                  </span>
-                  <span>Retour aux résultats</span>
-                </button>
-              ) : (
-                ""
-              )}
-              <button
-                className="button is-primary has-text-light"
-                onClick={() => window.print()}
-              >
-                <span className="icon">
-                  <FontAwesomeIcon icon={faPrint} />
-                </span>
-                <span>Imprimer</span>
-              </button>
-              <MailTo
-                type="establishment"
-                enterprise={enterprise}
+            <div className="row w-100">
+              <EstablishmentHeader
                 establishment={establishment}
+                enterprise={enterprise}
               />
-              <button
-                className="button is-primary has-text-light responsive-item"
-                data-show="quickview"
-                data-target="establishments"
-              >
-                <span className="icon">
-                  <FontAwesomeIcon icon={faMapPin} />
-                </span>
-                <span>Voir les établissements</span>
-              </button>
             </div>
-
-            <div className="establishment-keys">
-              <EstablishmentIdentity
-                establishment={this.props.establishment}
-                enterprise={this.props.enterprise}
-                headOffice={this.props.headOffice}
-                className=""
-              />
+            <div className="establishment-keys row w-100">
               <Dashboard
                 className=""
                 establishment={this.props.establishment}
@@ -121,13 +72,6 @@ class Establishment extends React.Component {
                 <footer className="quickview-footer" />
               </div>
             </div>
-          </div>
-          <div className="column is-3 aside-box">
-            <Establishments
-              enterprise={this.props.enterprise}
-              headOffice={this.props.headOffice}
-              establishments={this.props.establishments}
-            />
           </div>
         </div>
       </section>

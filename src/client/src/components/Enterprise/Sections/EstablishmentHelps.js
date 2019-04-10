@@ -75,12 +75,12 @@ class EstablishmentHelps extends React.Component {
         <div className="columns">
           <h5 className="column is-3">Aide financière</h5>
           <span className="column is-8">
-            {establishment.signataire_convention_FNE ? "Oui" : "Non disponible"}
+            {establishment.signataire_convention_FNE ? "Oui" : ""}
           </span>
         </div>
         {establishment.activite_partielle_24_derniers_mois.length ? (
           <div className="accordions">
-            <div className="accordion">
+            <div className="accordion is-active">
               <div className="accordion-header toggle">
                 <span>Détail des aides</span>
                 <span>
@@ -103,11 +103,15 @@ class EstablishmentHelps extends React.Component {
                     <tbody>
                       <tr>
                         <td>Fond Social Européen</td>
-                        <td>Non disponible</td>
+                        <td>
+                          <Value value="Non disponible" empty="-" />
+                        </td>
                       </tr>
                       <tr>
                         <td>Fond National de l'Emploi</td>
-                        <td>Non disponible</td>
+                        <td>
+                          <Value value="Non disponible" empty="-" />
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -131,7 +135,7 @@ class EstablishmentHelps extends React.Component {
           </span>
         </div>
         <div className="accordions">
-          <div className="accordion">
+          <div className="accordion is-active">
             <div className="accordion-header toggle">
               <span>Détail de la structure</span>
               <span>
@@ -155,7 +159,7 @@ class EstablishmentHelps extends React.Component {
         </div>
         {establishment.prime_embauche_pme ? (
           <div className="accordions">
-            <div className="accordion">
+            <div className="accordion is-active">
               <div className="accordion-header toggle">
                 <span>Prime embauche PME</span>
                 <span>
@@ -200,7 +204,7 @@ class EstablishmentHelps extends React.Component {
         </div>
         {establishment.alternance ? (
           <div className="accordions">
-            <div className="accordion">
+            <div className="accordion is-active">
               <div className="accordion-header toggle">
                 <span>Détail de l'alternance</span>
                 <span>
@@ -234,7 +238,7 @@ class EstablishmentHelps extends React.Component {
         ) : null}
         {establishment.contrats_aides ? (
           <div className="accordions">
-            <div className="accordion">
+            <div className="accordion is-active">
               <div className="accordion-header toggle">
                 <span>Contrats aidés</span>
                 <span>

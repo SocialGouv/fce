@@ -10,6 +10,12 @@
     opacity: 0.75;
   }
 
+  .show-all-establishments {
+    position: absolute;
+    top: -4rem;
+    right: 0;
+  }
+
   .aside-box {
     padding: 0 1rem 0 0;
 
@@ -18,20 +24,40 @@
       max-width: 100%;
     }
 
+    h3 {
+      margin-bottom: .25rem;
+    }
+
+    h5 {
+      margin-bottom: 1rem;
+    }
+
     >.aside-contain {
       overflow: auto;
-      height: 75%;
-      background-color: $white;
+      height: calc(100% - 20rem);
       border-radius: 0.325rem;
       z-index: 10;
-      padding-top: 1.5rem;
-      position: fixed;
+      padding: 1.5rem 3rem;
+      position: absolute;
 
       @media print {
         position: static;
         max-width: 100%;
         overflow: visible;
         height: auto !important;
+      }
+    }
+
+    .establishment {
+      background-color: $white;
+    }
+
+    .enterprise {
+      background: none;
+      overflow: auto;
+
+      hr {
+        background-color: rgb(39, 39, 39);
       }
     }
   }
@@ -129,7 +155,8 @@
       }
     }
 
-    .enterprise-header {
+    .enterprise-header,
+    .establishment-header {
       padding: 0 2rem;
       position: relative;
 
@@ -142,15 +169,14 @@
 
     .dashboard {
       background-color: transparent;
-      width: 39%;
-      margin-left: 1%;
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+      flex-direction: row;
+      justify-content: center;
       align-items: center;
       position: relative;
       overflow: hidden;
-      padding: 1rem 0.5rem 0;
+      padding: 1rem 4rem;
 
       &-mask {
         background-color: $dark;
@@ -165,13 +191,12 @@
       &-item {
         z-index: 30;
         padding: 1rem;
+        margin: 0 1rem;
         text-align: center;
-        width: 60%;
+        width: 30%;
         background-color: $secondary;
         border-radius: 0.325rem;
-        height: 100%;
         color: $light;
-        margin-bottom: 0.5rem;
 
         .title {
           text-transform: uppercase;

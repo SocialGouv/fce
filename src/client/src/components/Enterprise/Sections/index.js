@@ -2,6 +2,7 @@ import Dashboard from "./Dashboard";
 import EnterpriseHeader from "./EnterpriseHeader";
 import EnterpriseActivity from "./EnterpriseActivity";
 import EnterpriseHeadOffice from "./EnterpriseHeadOffice";
+import EstablishmentHeader from "./EstablishmentHeader";
 import EstablishmentActivity from "./EstablishmentActivity";
 import EstablishmentIdentity from "./EstablishmentIdentity";
 import EstablishmentEnterpriseIdentity from "./EstablishmentEnterpriseIdentity";
@@ -20,6 +21,7 @@ export {
   EnterpriseHeader,
   EnterpriseActivity,
   EnterpriseHeadOffice,
+  EstablishmentHeader,
   EstablishmentActivity,
   EstablishmentIdentity,
   EstablishmentEnterpriseIdentity,

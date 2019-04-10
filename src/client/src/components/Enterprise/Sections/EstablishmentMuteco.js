@@ -48,7 +48,7 @@ class EstablishmentMuteco extends React.Component {
 
         {establishment.activite_partielle_24_derniers_mois.length ? (
           <div className="accordions">
-            <div className="accordion">
+            <div className="accordion is-active">
               <div className="accordion-header toggle">
                 <span className="">Détail de l'activité partielle</span>
                 <span className="">
@@ -134,7 +134,7 @@ class EstablishmentMuteco extends React.Component {
 
         {establishment.pse_en_projet_ou_en_cours.length ? (
           <div className="accordions">
-            <div className="accordion">
+            <div className="accordion is-active">
               <div className="accordion-header toggle">
                 <span className="">Détail des PSE</span>
                 <span className="">

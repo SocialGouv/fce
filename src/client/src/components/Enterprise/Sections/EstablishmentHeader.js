@@ -3,21 +3,22 @@ import Value from "../../../elements/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faArrowAltRight, faPrint } from "@fortawesome/fontawesome-pro-solid";
 
-class EnterpriseHeader extends React.Component {
+class EstablishmentHeader extends React.Component {
   render() {
-    const { enterprise } = this.props;
+    const { enterprise, establishment } = this.props;
+    const adrComponents = establishment.adresse_components;
     const slugSocieteCom = enterprise.raison_sociale
       .toLowerCase()
       .replace(" ", "-");
     const isActif = enterprise.etat_entreprise === "A";
 
     return (
-      <section id="header" className="enterprise-header">
-        <div className="has-text-link show-all-establishments">
+      <section id="header" className="establishment-header w-100">
+        <div className="has-text-link show-all-enterprise">
           <div
             className="responsive-item"
             data-show="quickview"
-            data-target="establishments"
+            data-target="enterprise"
           >
             <span>Voir les établissements</span>
             <span className="icon">
@@ -60,16 +61,18 @@ class EnterpriseHeader extends React.Component {
         </div>
         <div className="row">
           <div className="columns is-vcentered w-100">
-            <div className="column is-3">
-              <span className="is-size-5 has-text-grey-dark">Entreprise</span>
+            <div className="column is-4">
+              <span className="is-size-5 has-text-grey-dark">
+                {establishment.categorie_etablissement}
+              </span>
               <br />
-              <span className="is-size-5 has-text-grey-dark">SIREN : </span>
+              <span className="is-size-5 has-text-grey-dark">SIRET : </span>
               <span className="is-size-5 has-text-weight-semibold has-text-grey-dark">
-                {enterprise.siren}
+                {establishment.siret}
               </span>
               <br />
               <span className="is-size-5 has-text-grey-dark">
-                {isActif ? "Ouverte depuis le " : "Fermée depuis le "}
+                {isActif ? "Ouvert depuis le " : "Fermé depuis le "}
               </span>
               <span className="is-size-5 has-text-weight-semibold has-text-grey-dark">
                 <Value
@@ -82,19 +85,26 @@ class EnterpriseHeader extends React.Component {
                 />
               </span>
             </div>
-            <div className="column is-9">
-              <button className="button is-primary has-text-light">
-                <span className="icon">
-                  <FontAwesomeIcon icon={faArrowAltRight} />
-                </span>
-                <span>Siège social</span>
-              </button>
+            <div className="column is-8">
+              <span className="is-size-4 has-text-grey-darker">{`${
+                adrComponents.numero_voie
+              }${adrComponents.indice_repetition} ${adrComponents.type_voie} ${
+                adrComponents.nom_voie
+              }`}</span>
+              <br />
+              <span className="is-size-4 has-text-grey-darker">{`${
+                adrComponents.code_postal
+              } ${adrComponents.localite}`}</span>
+              <br />
+              <span className="is-size-4 has-text-weight-semibold has-text-grey-darker">{`${
+                establishment.naf
+              } ${establishment.libelle_naf}`}</span>
             </div>
           </div>
         </div>
-        <div className="row pt-3">
+        <div className="row">
           <div className="columns is-vcentered w-100">
-            <span className="column is-3 is-size-5">
+            <span className="column is-4 is-size-5">
               Voir sur{" "}
               <a
                 className="is-link"
@@ -105,14 +115,6 @@ class EnterpriseHeader extends React.Component {
                 Societe.com
               </a>
             </span>
-            <div className="column is-9">
-              <button className="button is-primary has-text-light">
-                <span className="icon">
-                  <FontAwesomeIcon icon={faArrowAltRight} />
-                </span>
-                <span>Autres établissements</span>
-              </button>
-            </div>
           </div>
         </div>
       </section>
@@ -120,4 +122,4 @@ class EnterpriseHeader extends React.Component {
   }
 }
 
-export default EnterpriseHeader;
+export default EstablishmentHeader;

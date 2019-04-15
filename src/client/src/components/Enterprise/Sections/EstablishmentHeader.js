@@ -54,12 +54,12 @@ class EstablishmentHeader extends React.Component {
           <div className="columns is-vcentered w-100">
             <div className="column is-4">
               <span className="is-size-5 has-text-grey-dark">
-                {establishment.categorie_etablissement}
+                <Value value={establishment.categorie_etablissement} empty="" />
               </span>
               <br />
               <span className="is-size-5 has-text-grey-dark">SIRET : </span>
               <span className="is-size-5 has-text-weight-semibold has-text-grey-dark">
-                {establishment.siret}
+                <Value value={establishment.siret} empty="" />
               </span>
               <br />
               <span className="is-size-5 has-text-grey-dark">
@@ -77,19 +77,22 @@ class EstablishmentHeader extends React.Component {
               </span>
             </div>
             <div className="column is-8">
-              <span className="is-size-4 has-text-grey-darker">{`${
-                adrComponents.numero_voie
-              }${adrComponents.indice_repetition} ${adrComponents.type_voie} ${
-                adrComponents.nom_voie
-              }`}</span>
+              <span className="is-size-4 has-text-grey-darker">
+                <Value value={adrComponents.numero_voie} empty="" />
+                <Value value={adrComponents.indice_repetition} empty="" />{" "}
+                <Value value={adrComponents.type_voie} empty="-" />{" "}
+                <Value value={adrComponents.nom_voie} empty="-" />
+              </span>
               <br />
-              <span className="is-size-4 has-text-grey-darker">{`${
-                adrComponents.code_postal
-              } ${adrComponents.localite}`}</span>
+              <span className="is-size-4 has-text-grey-darker">
+                <Value value={adrComponents.code_postal} empty="-" />{" "}
+                <Value value={adrComponents.localite} empty="-" />
+              </span>
               <br />
-              <span className="is-size-4 has-text-weight-semibold has-text-grey-darker">{`${
-                establishment.naf
-              } ${establishment.libelle_naf}`}</span>
+              <span className="is-size-4 has-text-weight-semibold has-text-grey-darker">
+                <Value value={establishment.naf} empty="-" />{" "}
+                <Value value={establishment.libelle_naf} empty="-" />
+              </span>
             </div>
           </div>
         </div>

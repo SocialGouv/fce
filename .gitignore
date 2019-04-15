@@ -9,3 +9,4 @@ dist/
 docker-compose.yml
 
 vendor/
+node_modules/

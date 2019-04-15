@@ -26,7 +26,9 @@ ou, si vous utilisez zsh :
 - `bundle exec c42 install`
 - Configurer pettier sur son IDE : https://prettier.io/docs/en/vim.html
 
-## Gitflow
+## Contribution
+
+### Gitflow
 
 La numérotation des version de fait sur la base de : vAA.MM.I.P
 - AA = année (ex : 19)
@@ -37,6 +39,30 @@ La numérotation des version de fait sur la base de : vAA.MM.I.P
 A la fin d'une itération on ouvre une branche release qu'on ne mergera que quand l'ensemble des tickets sera validés. En cas de retours, on crée une branche issue de cette release (et non develop) qu'on enverra en PR par rapport à la branche release. Une fois validé on pourra mettre à jour develop par rapport à release.
 
 Cela nous permettra de pouvoir commencer une itération suivante sans mettre à mal le déploiement de la précédente release.
+
+### Nommage des commits
+
+Les messages de commit doivent respecter la convention suivante : grafikart.fr/tutoriels/nommage-commit-1009
+
+La librairie Commitizen permet de saisir facilement des messages de commit en respectant cette convention
+
+Installation
+
+```bash
+yarn install
+```
+
+Effectuer un commit
+
+```bash
+yarn commit
+```
+
+Quelques rêgles propre au projet
+
+- concernant le scope, il peut être découpé en 2 en fonction de la portée, l'idéal par exemple pour un commit sur le composant entreprise du client est de saisir `client:entreprise` dans le pire des cas mettre seulement la 1er partie ex : `server`
+
+- quand on vous demande si il y a une issue associée, mettre l'url de la carte Trello. (ex : https://trello.com/c/lhyJhStb/78-changer-les-logos-dans-le-footer)
 
 
 ## Déploiement

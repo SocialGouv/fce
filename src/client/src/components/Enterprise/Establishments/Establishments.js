@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import Establishment from "./Establishment";
 import Value from "../../../elements/Value";
-import { faBuilding } from "@fortawesome/fontawesome-pro-solid";
+import { faBuilding, faFileAlt } from "@fortawesome/fontawesome-pro-solid";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 
 class Establishments extends React.Component {
@@ -56,7 +56,10 @@ class Establishments extends React.Component {
                   this.setState({ isRedirectedToEnterprise: true });
                 }}
               >
-                Voir la fiche entreprise
+                <span className="icon">
+                  <FontAwesomeIcon icon={faFileAlt} />
+                </span>
+                <span>Voir la fiche entreprise</span>
               </button>
             )}
           </section>

@@ -26,6 +26,18 @@ ou, si vous utilisez zsh :
 - `bundle exec c42 install`
 - Configurer pettier sur son IDE : https://prettier.io/docs/en/vim.html
 
+## Gitflow
+
+La numérotation des version de fait sur la base de : vAA.MM.I.P
+- AA = année (ex : 19)
+- MM = mois (ex : 04)
+- I = numéro d'itération du mois (donc 1 ou 2)
+- P = patch (par defaut 0) à incrémenter pour chaque hotfix
+
+A la fin d'une itération on ouvre une branche release qu'on ne mergera que quand l'ensemble des tickets sera validés. En cas de retours, on crée une branche issue de cette release (et non develop) qu'on enverra en PR par rapport à la branche release. Une fois validé on pourra mettre à jour develop par rapport à release.
+
+Cela nous permettra de pouvoir commencer une itération suivante sans mettre à mal le déploiement de la précédente release.
+
 
 ## Déploiement
 

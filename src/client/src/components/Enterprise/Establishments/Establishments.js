@@ -2,12 +2,15 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import Establishment from "./Establishment";
 import Value from "../../../elements/Value";
+import { faBuilding } from "@fortawesome/fontawesome-pro-solid";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 
 class Establishments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isRedirectedToEnterprise: false
+      isRedirectedToEnterprise: false,
+      isRedirectedToResearch: false
     };
   }
 
@@ -18,7 +21,7 @@ class Establishments extends React.Component {
       headOffice,
       isEstablishmentDisplayed
     } = this.props;
-    const { isRedirectedToEnterprise } = this.state;
+    const { isRedirectedToEnterprise, isRedirectedToResearch } = this.state;
 
     let establishmentsItems = establishments
       .slice(0, 20)
@@ -33,6 +36,7 @@ class Establishments extends React.Component {
         {isRedirectedToEnterprise && (
           <Redirect to={`/enterprise/${enterprise.siren}`} />
         )}
+        {isRedirectedToResearch && <Redirect to="/" />}
         <aside
           className={`${
             isEstablishmentDisplayed ? "establishment" : "enterprise"
@@ -71,6 +75,18 @@ class Establishments extends React.Component {
             </h3>
 
             {establishmentsItems}
+
+            <button
+              className="row button is-primary has-text-light h-center mt-4"
+              onClick={() => {
+                this.setState({ isRedirectedToResearch: true });
+              }}
+            >
+              <span className="icon">
+                <FontAwesomeIcon icon={faBuilding} />
+              </span>
+              <span>Voir tous les établissements</span>
+            </button>
           </section>
         </aside>
       </>

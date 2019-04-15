@@ -20,11 +20,13 @@ class Establishments extends React.Component {
     } = this.props;
     const { isRedirectedToEnterprise } = this.state;
 
-    let establishmentsItems = establishments.map((establishment, index) => (
-      <article key={index}>
-        <Establishment establishment={establishment} effectif={false} />
-      </article>
-    ));
+    let establishmentsItems = establishments
+      .slice(0, 20)
+      .map((establishment, index) => (
+        <article key={index}>
+          <Establishment establishment={establishment} effectif={false} />
+        </article>
+      ));
 
     return (
       <>

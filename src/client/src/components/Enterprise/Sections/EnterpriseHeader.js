@@ -7,8 +7,8 @@ class EnterpriseHeader extends React.Component {
   render() {
     const { enterprise } = this.props;
     const slugSocieteCom = enterprise.raison_sociale
-      .toLowerCase()
-      .replace(" ", "-");
+      ? enterprise.raison_sociale.toLowerCase().replace(" ", "-")
+      : "#";
     const isActif = enterprise.etat_entreprise === "A";
 
     return (

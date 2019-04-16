@@ -7,7 +7,6 @@ import {
   Dashboard,
   EstablishmentHeader,
   EstablishmentActivity,
-  EstablishmentIdentity,
   EstablishmentMuteco,
   EstablishmentHelps,
   Direccte

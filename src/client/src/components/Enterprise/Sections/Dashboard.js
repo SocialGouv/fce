@@ -1,9 +1,7 @@
 import React from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import classNames from "classnames";
 import Value from "../../../elements/Value";
 import {
-  faCircle,
   faExclamationTriangle,
   faLifeRing
 } from "@fortawesome/fontawesome-pro-solid";
@@ -12,27 +10,9 @@ class Dashboard extends React.Component {
   render() {
     const { establishment } = this.props;
 
-    const stateClass =
-      establishment.etat_etablissement === "A"
-        ? "icon--success"
-        : "icon--danger";
-
     return (
       <section id="dashboard" className="enterprise-section dashboard">
         <div className="dashboard-mask" />
-        <div className="dashboard-item dashboard-state">
-          <div className="dashboard-item--content">
-            <span className="dashboard-item--value">
-              <FontAwesomeIcon
-                className={classNames("dashboard-icon", stateClass)}
-                icon={faCircle}
-              />
-            </span>
-            <span className="dashboard-item--desc">
-              {establishment.etat_etablissement === "A" ? "Actif" : "Fermé"}
-            </span>
-          </div>
-        </div>
         <div className="dashboard-item dashboard-people">
           <div className="dashboard-item--content">
             <span className="dashboard-item--value">

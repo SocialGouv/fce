@@ -1,7 +1,12 @@
 import React from "react";
 import Value from "../../../elements/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faArrowAltRight, faPrint } from "@fortawesome/fontawesome-pro-solid";
+import {
+  faArrowAltRight,
+  faPrint,
+  faSquare,
+  faCircle
+} from "@fortawesome/fontawesome-pro-solid";
 
 class EstablishmentHeader extends React.Component {
   render() {
@@ -10,7 +15,7 @@ class EstablishmentHeader extends React.Component {
     const slugSocieteCom = enterprise.raison_sociale
       ? enterprise.raison_sociale.toLowerCase().replace(" ", "-")
       : "#";
-    const isActif = enterprise.etat_entreprise === "A";
+    const isActive = establishment.etat_entreprise === "A";
 
     return (
       <section id="header" className="establishment-header w-100">
@@ -62,15 +67,23 @@ class EstablishmentHeader extends React.Component {
                 <Value value={establishment.siret} empty="" />
               </span>
               <br />
+              <span className="active-item-value">
+                <FontAwesomeIcon
+                  icon={isActive ? faCircle : faSquare}
+                  className="mr-2"
+                  color={isActive ? "green" : "red"}
+                />
+              </span>
               <span className="is-size-5 has-text-grey-dark">
-                {isActif ? "Ouvert depuis le " : "Fermé depuis le "}
+                {isActive ? "Ouvert depuis le " : "Fermé depuis le "}
               </span>
               <span className="is-size-5 has-text-weight-semibold has-text-grey-dark">
                 <Value
                   value={
-                    isActif
+                    isActive
                       ? establishment.date_creation
-                      : establishment.date_dernier_traitement_etablissement
+                      : establishment.date_dernier_traitement_etablissement ||
+                        establishment.date_fin
                   }
                   empty="-"
                 />

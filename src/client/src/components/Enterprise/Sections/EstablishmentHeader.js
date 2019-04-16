@@ -15,7 +15,7 @@ class EstablishmentHeader extends React.Component {
     const slugSocieteCom = enterprise.raison_sociale
       ? enterprise.raison_sociale.toLowerCase().replace(" ", "-")
       : "#";
-    const isActive = establishment.etat_entreprise === "A";
+    const isActive = establishment.etat_etablissement === "A";
 
     return (
       <section id="header" className="establishment-header w-100">

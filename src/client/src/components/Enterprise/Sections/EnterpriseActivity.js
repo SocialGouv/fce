@@ -1,16 +1,10 @@
 import React from "react";
 import Value from "../../../elements/Value";
-import classNames from "classnames";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/fontawesome-pro-solid";
 import { toI18nDate } from "../../../helpers/Date";
 
 class EnterpriseActivity extends React.Component {
   render() {
     const { enterprise } = this.props;
-
-    const stateClass =
-      enterprise.etat_entreprise === "A" ? "icon--success" : "icon--danger";
 
     return (
       <section id="activity" className="enterprise-section">
@@ -103,28 +97,6 @@ class EnterpriseActivity extends React.Component {
           <span className="column is-8">
             <Value
               value={`${enterprise.nombre_etablissements_actifs} actif(s)`}
-              empty="-"
-            />
-          </span>
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">Etat de l'entreprise</h5>
-          <span className="column is-8">
-            {enterprise.etat_entreprise && (
-              <FontAwesomeIcon
-                className={classNames(stateClass)}
-                icon={faCircle}
-              />
-            )}
-          </span>
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">Date de la mise à jour</h5>
-          <span className="column is-8">
-            <Value
-              value={enterprise.etat_entreprise && enterprise.date_mise_a_jour}
               empty="-"
             />
           </span>

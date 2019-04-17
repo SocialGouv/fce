@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { logoutUser, resetSearch } from "../../../services/Store/actions";
+import { resetSearch } from "../../../services/Store/actions";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/fontawesome-pro-solid";
 
@@ -56,16 +56,11 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    user: state.auth.user
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    logoutUser: () => {
-      dispatch(logoutUser());
-    },
     resetSearch: () => {
       dispatch(resetSearch());
     }

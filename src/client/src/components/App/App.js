@@ -8,11 +8,13 @@ import configureStore from "../../services/Store";
 
 import "./app.scss";
 import Config from "../../services/Config";
+import PrivateRoute from "../../services/PrivateRoute";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
 import Footer from "./Footer";
 import Search from "../../containers/Search";
 import Enterprise from "../../containers/Enterprise";
+import Login from "../../containers/Login";
 import { Error403, Error404 } from "../../components/Errors";
 import PaperBG from "../../assets/img/paper.png";
 
@@ -36,18 +38,19 @@ class App extends React.Component {
               <Header />
               <div className="app-container" style={appStyle}>
                 <Switch>
-                  <Route exact path="/" component={Search} />
-                  <Route exact path="/search" component={Search} />
-                  <Route
+                  <PrivateRoute exact path="/" component={Search} />
+                  <PrivateRoute exact path="/search" component={Search} />
+                  <PrivateRoute
                     exact
                     path="/enterprise/:siren"
                     component={Enterprise}
                   />
-                  <Route
+                  <PrivateRoute
                     exact
                     path="/establishment/:siret"
                     component={Enterprise}
                   />
+                  <Route exact path="/login" render={() => <Login />} />
                   <Route exact path="/403" render={() => <Error403 />} />
                   <Route exact path="/404" render={() => <Error404 />} />
                   <Redirect to="/404" />

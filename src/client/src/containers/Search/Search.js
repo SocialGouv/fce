@@ -33,6 +33,9 @@ class Search extends Component {
   }
 
   hasPreviousTerms = terms => {
+    if (!terms) {
+      return false;
+    }
     return (
       Config.get("advancedSearch").terms.find(key => terms[key] !== null) !==
       undefined
@@ -159,7 +162,7 @@ class Search extends Component {
     return (
       <>
         <SearchView
-          terms={this.props.terms}
+          terms={this.props.terms || {}}
           search={this.search}
           updateForm={this.updateForm}
           updateFormSelect={this.updateFormSelect}

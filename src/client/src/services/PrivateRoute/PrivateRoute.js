@@ -1,22 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
+import Auth from "../Auth";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  console.debug("rendering private route");
-
-  const checkAuthorization = (auth, isAdminRoute) => {
-    if (!auth || !auth.isAuthenticated) {
+  const checkAuthorization = () => {
+    if (!Auth.isLogged()) {
       return {
         auth: false,
         redirect: "/login"
-      };
-    }
-
-    if (isAdminRoute && !auth.user.isAdmin) {
-      return {
-        auth: false,
-        redirect: "/403"
       };
     }
 
@@ -29,7 +20,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        const authorization = checkAuthorization(rest.auth, rest.isAdmin);
+        const authorization = checkAuthorization();
         return authorization.auth ? (
           <Component {...props} />
         ) : (
@@ -45,10 +36,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    auth: state.auth
-  };
-};
-
-export default connect(mapStateToProps)(PrivateRoute);
+export default PrivateRoute;

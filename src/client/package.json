@@ -9,6 +9,7 @@
     "@fortawesome/fontawesome-pro-regular": "^5.0.6",
     "@fortawesome/fontawesome-pro-solid": "^5.0.6",
     "@fortawesome/react-fontawesome": "0.0.17",
+    "OhMyCache": "^1.1.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
     "bulma": "^0.7.4",

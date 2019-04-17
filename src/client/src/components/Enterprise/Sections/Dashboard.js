@@ -16,8 +16,11 @@ class Dashboard extends React.Component {
 
     const activity = {
       partialActivity:
+        establishment.activite_partielle_24_derniers_mois &&
         establishment.activite_partielle_24_derniers_mois.length > 0,
-      pseActivity: establishment.pse_en_projet_ou_en_cours.length > 0
+      pseActivity:
+        establishment.pse_en_projet_ou_en_cours &&
+        establishment.pse_en_projet_ou_en_cours.length > 0
     };
 
     return (

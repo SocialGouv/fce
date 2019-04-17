@@ -25,6 +25,7 @@ ou, si vous utilisez zsh :
 - Installer le bundle : `bundle` ou `bundle install` à la racine du projet
 - `bundle exec c42 install`
 - Configurer pettier sur son IDE : https://prettier.io/docs/en/vim.html
+- Configurer les tokens des APIs dans le fichier server/.env (LastPass: FCE tokens APIs)
 
 ## Contribution
 

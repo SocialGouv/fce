@@ -10,7 +10,7 @@ class Dashboard extends React.Component {
   render() {
     const { establishment } = this.props;
 
-    const isInteractions =
+    const hasInteractions =
       establishment.totalInteractions &&
       establishment.totalInteractions.total > 0;
 
@@ -19,8 +19,6 @@ class Dashboard extends React.Component {
         establishment.activite_partielle_24_derniers_mois.length > 0,
       pseActivity: establishment.pse_en_projet_ou_en_cours.length > 0
     };
-
-    console.log(establishment);
 
     return (
       <section id="dashboard" className="enterprise-section dashboard">
@@ -40,10 +38,10 @@ class Dashboard extends React.Component {
         <div className="dashboard-item dashboard-interactions">
           <div className="dashboard-item--content">
             <span className="dashboard-item--desc">
-              {isInteractions ? "Visite et contrôle" : "Pas de visite connue"}
+              {hasInteractions ? "Visite et contrôle" : "Pas de visite connue"}
             </span>
             <span className="dashboard-item--value">
-              {isInteractions && (
+              {hasInteractions && (
                 <Value
                   value={
                     establishment.totalInteractions &&

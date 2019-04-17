@@ -41,7 +41,7 @@ class Login extends Component {
     this.setState({
       hasError: false,
       loading: false,
-      redirectTo: user.isAdmin ? "/admin" : from
+      redirectTo: from
     });
   };
 
@@ -91,4 +91,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

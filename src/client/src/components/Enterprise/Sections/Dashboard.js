@@ -1,5 +1,6 @@
 import React from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import moment from "moment";
 import Value from "../../../elements/Value";
 import {
   faExclamationTriangle,
@@ -23,6 +24,11 @@ class Dashboard extends React.Component {
         establishment.pse_en_projet_ou_en_cours.length > 0
     };
 
+    const moments =
+      establishment.interactions &&
+      establishment.interactions.map(interaction => moment(interaction.date));
+    const lastControl = moment.max(moments).format("DD/MM/YYYY");
+
     return (
       <section id="dashboard" className="enterprise-section dashboard">
         <div className="dashboard-mask" />
@@ -41,19 +47,10 @@ class Dashboard extends React.Component {
         <div className="dashboard-item dashboard-interactions">
           <div className="dashboard-item--content">
             <span className="dashboard-item--desc">
-              {hasInteractions ? "Visite et contrôle" : "Pas de visite connue"}
+              {hasInteractions ? "Dernier contrôle : " : "Pas de visite connue"}
             </span>
             <span className="dashboard-item--value">
-              {hasInteractions && (
-                <Value
-                  value={
-                    establishment.totalInteractions &&
-                    establishment.totalInteractions.total
-                  }
-                  empty=" "
-                  nonEmptyValues={[0, "0"]}
-                />
-              )}
+              {hasInteractions && <Value value={lastControl} empty="-" />}
             </span>
           </div>
         </div>

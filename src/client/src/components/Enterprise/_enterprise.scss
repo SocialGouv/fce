@@ -191,9 +191,9 @@
       &-item {
         z-index: 30;
         padding: 1rem;
-        margin: 0 1rem;
+        margin: 0 1.5rem;
         text-align: center;
-        width: 30%;
+        width: 20%;
         height: 9rem;
         display: flex;
         justify-content: center;
@@ -223,6 +223,20 @@
         }
       }
 
+      &-indicator {
+        z-index: 30;
+        padding: 1rem;
+        margin: 0 .5rem;
+        text-align: center;
+        width: 20%;
+        height: 9rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $black;
+        background-color: none;
+      }
+
       &-icon {
         font-size: 2.25rem;
       }
@@ -231,7 +245,6 @@
         font-size: 1.75rem;
       }
 
-      &-state,
       &-people,
       &-interactions {
         span {
@@ -243,14 +256,6 @@
       &-alerts {
         .dashboard-icon {
           color: $warning;
-        }
-      }
-
-      &-people,
-      &-interactions,
-      &-help {
-        .dashboard-icon {
-          color: $light;
         }
       }
 
@@ -423,7 +428,6 @@
         font-size: 1.6rem !important;
       }
 
-      &-state,
       &-people,
       &-interactions {
         span {

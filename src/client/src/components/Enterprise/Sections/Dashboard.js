@@ -6,6 +6,7 @@ import {
   faExclamationTriangle,
   faLifeRing
 } from "@fortawesome/fontawesome-pro-solid";
+import Config from "../../../services/Config";
 
 class Dashboard extends React.Component {
   render() {
@@ -24,30 +25,16 @@ class Dashboard extends React.Component {
         establishment.pse_en_projet_ou_en_cours.length > 0
     };
 
-    const sizeRanges = {
-      NN: "Unités non employeuses",
-      "0 salarié": "0 salarié",
-      "01": "1 ou 2 salariés",
-      "02": "3 à 5 salariés",
-      "03": "6 à 9 salariés",
-      "11": "10 à 19 salariés",
-      "12": "20 à 49 salariés",
-      "21": "50 à 99 salariés",
-      "22": "100 à 199 salariés",
-      "31": "200 à 249 salariés",
-      "32": "250 à 499 salariés",
-      "41": "500 à 999 salariés",
-      "42": "1 000 à 1 999 salariés",
-      "51": "2 000 à 4 999 salariés",
-      "52": "5 000 à 9 999 salariés",
-      "53": "10 000 salariés et plus"
-    };
-
     const moments =
       establishment.interactions &&
       establishment.interactions.map(interaction => moment(interaction.date));
 
     const lastControl = moment.max(moments).format("DD/MM/YYYY");
+
+    const dashboardSizeRanges = {
+      ...Config.get("inseeSizeRanges"),
+      "0 salarié": "0 salarié"
+    };
 
     return (
       <section id="dashboard" className="enterprise-section dashboard">
@@ -57,7 +44,9 @@ class Dashboard extends React.Component {
             <span className="dashboard-item--desc">Effectif</span>
             <span className="dashboard-item--value">
               <Value
-                value={sizeRanges[establishment.tranche_effectif_insee]}
+                value={
+                  dashboardSizeRanges[establishment.tranche_effectif_insee]
+                }
                 empty="-"
               />
             </span>

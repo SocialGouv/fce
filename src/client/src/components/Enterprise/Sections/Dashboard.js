@@ -25,7 +25,7 @@ class Dashboard extends React.Component {
 
     const sizeRanges = {
       NN: "Unités non employeuses",
-      "0 salarié": "0 salarié (pas d'effectif au 31/12 )",
+      "0 salarié": "0 salarié",
       "01": "1 ou 2 salariés",
       "02": "3 à 5 salariés",
       "03": "6 à 9 salariés",
@@ -52,7 +52,6 @@ class Dashboard extends React.Component {
               <Value
                 value={sizeRanges[establishment.tranche_effectif_insee]}
                 empty="-"
-                nonEmptyValues={[0, "0"]}
               />
             </span>
           </div>

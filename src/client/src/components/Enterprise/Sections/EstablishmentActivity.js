@@ -160,13 +160,27 @@ class EstablishmentActivity extends React.Component {
         <div className="columns">
           <h5 className="column is-3">ETI / Pépite</h5>
           <span className="column is-8">
-            <Value value={establishment.eti_pepite} empty="-" />
+            <Value
+              value={
+                Array.isArray(establishment.interactions_3E) &&
+                establishment.interactions_3E.length &&
+                establishment.interactions_3E[0].eti_pepite
+              }
+              empty="-"
+            />
           </span>
         </div>
         <div className="columns">
           <h5 className="column is-3">Filière stratégique</h5>
           <span className="column is-8">
-            <Value value={establishment.filiere_strategique} empty="-" />
+            <Value
+              value={
+                Array.isArray(establishment.interactions_3E) &&
+                establishment.interactions_3E.length &&
+                establishment.interactions_3E[0].filiere
+              }
+              empty="-"
+            />
           </span>
         </div>
         <div className="columns">

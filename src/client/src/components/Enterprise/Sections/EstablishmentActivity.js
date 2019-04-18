@@ -4,7 +4,6 @@ import EstablishmentTransfert from "./EstablishmentTransfert";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
 import Config from "../../../services/Config";
-
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
@@ -109,7 +108,11 @@ class EstablishmentActivity extends React.Component {
                   <h5 className="column is-3">Tranche Effectif INSEE</h5>
                   <span className="column is-8">
                     <Value
-                      value={establishment.tranche_effectif_insee}
+                      value={
+                        Config.get("inseeSizeRanges")[
+                          establishment.tranche_effectif_insee
+                        ]
+                      }
                       empty="-"
                     />
                   </span>

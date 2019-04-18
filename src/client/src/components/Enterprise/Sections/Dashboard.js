@@ -6,6 +6,7 @@ import {
   faExclamationTriangle,
   faLifeRing
 } from "@fortawesome/fontawesome-pro-solid";
+import Config from "../../../services/Config";
 
 class Dashboard extends React.Component {
   render() {
@@ -27,7 +28,13 @@ class Dashboard extends React.Component {
     const moments =
       establishment.interactions &&
       establishment.interactions.map(interaction => moment(interaction.date));
+
     const lastControl = moment.max(moments).format("DD/MM/YYYY");
+
+    const dashboardSizeRanges = {
+      ...Config.get("inseeSizeRanges"),
+      "0 salarié": "0 salarié"
+    };
 
     return (
       <section id="dashboard" className="enterprise-section dashboard">
@@ -37,9 +44,10 @@ class Dashboard extends React.Component {
             <span className="dashboard-item--desc">Effectif</span>
             <span className="dashboard-item--value">
               <Value
-                value={establishment.dernier_effectif_physique}
-                empty="0"
-                nonEmptyValues={[0, "0"]}
+                value={
+                  dashboardSizeRanges[establishment.tranche_effectif_insee]
+                }
+                empty="-"
               />
             </span>
           </div>

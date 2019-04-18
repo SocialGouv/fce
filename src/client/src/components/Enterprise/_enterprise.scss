@@ -214,8 +214,8 @@
         }
 
         .dashboard-item--value {
-          font-size: 2rem;
-          font-weight: bold;
+          font-size: 1.3rem;
+          font-weight: normal;
         }
 
         .dashboard-item--desc {
@@ -416,7 +416,7 @@
       align-items: center !important;
 
       &-item {
-        width: 18% !important;
+        width: 30% !important;
 
         &:not(:last-child) {
           margin-bottom: 0 !important;
@@ -426,13 +426,6 @@
 
       &-icon {
         font-size: 1.6rem !important;
-      }
-
-      &-people,
-      &-interactions {
-        span {
-          font-size: 1.2rem !important;
-        }
       }
     }
 

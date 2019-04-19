@@ -196,41 +196,37 @@ class EstablishmentActivity extends React.Component {
             />
           </span>
         </div>
-        <div className="accordions">
-          <div className="accordion is-active">
-            <div className="accordion-header toggle">
-              <span className="">Liste des pôles de compétitivité</span>
-              <span className="">
-                <button className="button is-light is-rounded">
-                  <span className="icon">
-                    <FontAwesomeIcon icon={faChevronDown} />
+        {Array.isArray(establishment.pole_competitivite) &&
+          establishment.pole_competitivite.length && (
+            <div className="accordions">
+              <div className="accordion is-active">
+                <div className="accordion-header toggle">
+                  <span className="">Liste des pôles de compétitivité</span>
+                  <span className="">
+                    <button className="button is-light is-rounded">
+                      <span className="icon">
+                        <FontAwesomeIcon icon={faChevronDown} />
+                      </span>
+                    </button>
                   </span>
-                </button>
-              </span>
-            </div>
-            <div className="accordion-body">
-              <div className="accordion-content">
-                <table className="table is-striped">
-                  <tbody>
-                    {Array.isArray(establishment.pole_competitivite) &&
-                      establishment.pole_competitivite.length &&
-                      establishment.pole_competitivite.map(pole => (
-                        <tr>
-                          <td> {pole} </td>
-                        </tr>
-                      ))}
-                    <tr>
-                      <td>Lorem ipsum</td>
-                    </tr>
-                    <tr>
-                      <td> Dolor sit amet </td>
-                    </tr>
-                  </tbody>
-                </table>
+                </div>
+
+                <div className="accordion-body">
+                  <div className="accordion-content">
+                    <table className="table is-striped">
+                      <tbody>
+                        {establishment.pole_competitivite.map((pole, index) => (
+                          <tr key={`pole_competitivite_${index}`}>
+                            <td>{pole}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          )}
         {!establishment.predecesseur && !establishment.successeur ? (
           <div className="columns">
             <h5 className="column is-3">

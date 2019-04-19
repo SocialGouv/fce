@@ -1,3 +1,5 @@
+import _get from "lodash.get";
+
 const hosts2config = require("./configs/hosts2configs.json");
 
 let config = null;
@@ -6,6 +8,7 @@ const globalConfig = {
   auth: {
     expire: 86400 // 1j
   },
+  sidebardEstablishmentsLimit: 20,
   interactions: ["C", "3E", "T"],
   region: {
     occitanie: 76
@@ -81,6 +84,6 @@ function initConfig() {
 initConfig();
 
 export default {
-  get: key => (config && config[key]) || null,
+  get: key => config && _get(config, key),
   reset: initConfig
 };

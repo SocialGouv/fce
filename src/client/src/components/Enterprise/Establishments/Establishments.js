@@ -24,8 +24,10 @@ class Establishments extends React.Component {
     } = this.props;
     const { isRedirectedToEnterprise, isRedirectedToResearch } = this.state;
 
+    const sliceLimit = Config.get("sidebardEstablishmentsLimit");
+
     const establishmentsList = this.state.limit
-      ? establishments.slice(0, Config.get("sidebardEstablishmentsLimit"))
+      ? establishments.slice(0, sliceLimit)
       : establishments;
 
     const establishmentsItems = establishmentsList.map(
@@ -84,7 +86,7 @@ class Establishments extends React.Component {
 
             {establishmentsItems}
 
-            {establishments.length > 20 && (
+            {establishments.length > sliceLimit && (
               <button
                 className="row button is-primary has-text-light h-center mt-4"
                 onClick={() => {

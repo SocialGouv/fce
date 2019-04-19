@@ -1,12 +1,11 @@
 .app-enterprise {
-
   .enterprise-overlay {
     min-height: 100%;
     width: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    background: linear-gradient(to bottom, #69C5D3 0%, #fafafa 40%);
+    background: linear-gradient(to bottom, #69c5d3 0%, #fafafa 40%);
     opacity: 0.75;
   }
 
@@ -25,14 +24,14 @@
     }
 
     h3 {
-      margin-bottom: .25rem;
+      margin-bottom: 0.25rem;
     }
 
     h5 {
       margin-bottom: 1rem;
     }
 
-    >.aside-contain {
+    > .aside-contain {
       overflow: auto;
       height: auto;
       border-radius: 0.325rem;
@@ -68,7 +67,7 @@
       max-width: 100%;
     }
 
-    >.title,
+    > .title,
     .subtitle {
       text-align: center;
       margin-bottom: 1.5rem;
@@ -78,7 +77,7 @@
       font-weight: bold;
     }
 
-    >.task-bar {
+    > .task-bar {
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -114,7 +113,7 @@
       border-radius: 0.325rem;
       position: relative;
 
-      >.title {
+      > .title {
         margin-bottom: 1rem;
         font-size: 1.4rem;
         background-color: $white;
@@ -139,12 +138,12 @@
         }
       }
 
-      >.dl {
+      > .dl {
         margin-bottom: 0;
       }
 
-      >.dd,
-      >.dt {
+      > .dd,
+      > .dt {
         padding: 1rem 0;
         word-wrap: break-word;
       }
@@ -226,7 +225,7 @@
       &-indicator {
         z-index: 30;
         padding: 1rem;
-        margin: 0 .5rem;
+        margin: 0 0.5rem;
         text-align: center;
         width: 20%;
         height: 9rem;
@@ -315,7 +314,7 @@
           background-color: #e9ecef;
         }
 
-        >.link {
+        > .link {
           background-color: transparent;
 
           &:hover {

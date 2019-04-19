@@ -1,14 +1,14 @@
-@import 'variables';
-@import 'globals';
-@import '~bulma/bulma';
-@import '~bulma-extensions/bulma-accordion/dist/css/bulma-accordion';
-@import '~bulma-extensions/bulma-quickview/dist/css/bulma-quickview';
-@import '~bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio';
-@import 'Header/header';
-@import 'Footer/footer';
-@import '../Search/search';
-@import '../SearchResults/searchResults.scss';
-@import '../Enterprise/enterprise';
+@import "variables";
+@import "globals";
+@import "~bulma/bulma";
+@import "~bulma-extensions/bulma-accordion/dist/css/bulma-accordion";
+@import "~bulma-extensions/bulma-quickview/dist/css/bulma-quickview";
+@import "~bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio";
+@import "Header/header";
+@import "Footer/footer";
+@import "../Search/search";
+@import "../SearchResults/searchResults.scss";
+@import "../Enterprise/enterprise";
 
 html {
   height: 100vh;

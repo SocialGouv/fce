@@ -1,3 +1,5 @@
+import _get from "lodash.get";
+
 const hosts2config = require("./configs/hosts2configs.json");
 
 let config = null;
@@ -63,6 +65,6 @@ function initConfig() {
 initConfig();
 
 export default {
-  get: key => (config && config[key]) || null,
+  get: key => config && _get(config, key),
   reset: initConfig
 };

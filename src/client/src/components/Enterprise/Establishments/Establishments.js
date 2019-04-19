@@ -4,13 +4,14 @@ import Establishment from "./Establishment";
 import Value from "../../../elements/Value";
 import { faBuilding, faFileAlt } from "@fortawesome/fontawesome-pro-solid";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-
+import Config from "../../../services/Config";
 class Establishments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isRedirectedToEnterprise: false,
-      isRedirectedToResearch: false
+      isRedirectedToResearch: false,
+      limit: true
     };
   }
 
@@ -23,13 +24,17 @@ class Establishments extends React.Component {
     } = this.props;
     const { isRedirectedToEnterprise, isRedirectedToResearch } = this.state;
 
-    let establishmentsItems = establishments
-      .slice(0, 20)
-      .map((establishment, index) => (
+    const establishmentsList = this.state.limit
+      ? establishments.slice(0, Config.get("sidebardEstablishmentsLimit"))
+      : establishments;
+
+    const establishmentsItems = establishmentsList.map(
+      (establishment, index) => (
         <article key={index}>
           <Establishment establishment={establishment} effectif={false} />
         </article>
-      ));
+      )
+    );
 
     return (
       <>
@@ -79,17 +84,23 @@ class Establishments extends React.Component {
 
             {establishmentsItems}
 
-            <button
-              className="row button is-primary has-text-light h-center mt-4"
-              onClick={() => {
-                this.setState({ isRedirectedToResearch: true });
-              }}
-            >
-              <span className="icon">
-                <FontAwesomeIcon icon={faBuilding} />
-              </span>
-              <span>Voir tous les établissements</span>
-            </button>
+            {establishments.length > 20 && (
+              <button
+                className="row button is-primary has-text-light h-center mt-4"
+                onClick={() => {
+                  this.setState(prevState => ({ limit: !prevState.limit }));
+                }}
+              >
+                <span className="icon">
+                  <FontAwesomeIcon icon={faBuilding} />
+                </span>
+                <span>
+                  {this.state.limit
+                    ? "Voir tous les établissements"
+                    : "Réduire la liste des établissements"}
+                </span>
+              </button>
+            )}
           </section>
         </aside>
       </>

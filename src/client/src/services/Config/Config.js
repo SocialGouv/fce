@@ -8,6 +8,7 @@ const globalConfig = {
   auth: {
     expire: 86400 // 1j
   },
+  sidebardEstablishmentsLimit: 20,
   interactions: ["C", "3E", "T"],
   region: {
     occitanie: 76

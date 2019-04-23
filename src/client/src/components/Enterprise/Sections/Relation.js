@@ -47,7 +47,8 @@ class Relation extends React.Component {
             Instances représentatives du personnel :
           </dt>
           <dd className="dd col-md-10 offset-md-2">
-            Section(s) syndicale(s) : Non disponible<br />
+            Section(s) syndicale(s) : Non disponible
+            <br />
             Comité social économique : Non disponible
           </dd>
           <dt className="dt col-md-8 mt-4">

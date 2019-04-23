@@ -69,7 +69,7 @@ class Enterprise extends React.Component {
     ) {
       establishment = this.props.currentEnterprise.etablissements.find(
         establishment => {
-          return establishment.siret === siret;
+          return establishment.siret.trim() === siret.trim();
         }
       );
 
@@ -108,7 +108,10 @@ class Enterprise extends React.Component {
         const establishment =
           results.length &&
           results[0].etablissements.find(establishment => {
-            return establishment.siret === siret && establishment._success;
+            return (
+              establishment.siret.trim() === siret.trim() &&
+              establishment._success
+            );
           });
 
         if (query.isSIRET && establishment) {

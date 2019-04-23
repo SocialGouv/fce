@@ -45,9 +45,7 @@ class SearchResults extends React.Component {
                   return {
                     onClick: e => {
                       e && e.preventDefault();
-                      this.props.history.push(
-                        rowInfo.row.siret.props.to
-                      );
+                      this.props.history.push(rowInfo.row.siret.props.to);
                     }
                   };
                 }}

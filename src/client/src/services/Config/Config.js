@@ -1,3 +1,5 @@
+import _get from "lodash.get";
+
 const hosts2config = require("./configs/hosts2configs.json");
 
 let config = null;
@@ -6,6 +8,7 @@ const globalConfig = {
   auth: {
     expire: 86400 // 1j
   },
+  sidebardEstablishmentsLimit: 20,
   interactions: ["C", "3E", "T"],
   region: {
     occitanie: 76
@@ -59,6 +62,12 @@ const globalConfig = {
     "51": "2 000 à 4 999 salariés",
     "52": "5 000 à 9 999 salariés",
     "53": "10 000 salariés et plus"
+  },
+  agrementsIae: {
+    ei: "Entreprise d'insertion",
+    ai: "Association intermédiaire",
+    aci: "Atelier et chantier d'insertion",
+    etti: "Entreprise de travail temporaire d'insertion"
   }
 };
 
@@ -81,6 +90,6 @@ function initConfig() {
 initConfig();
 
 export default {
-  get: key => (config && config[key]) || null,
+  get: key => config && _get(config, key),
   reset: initConfig
 };

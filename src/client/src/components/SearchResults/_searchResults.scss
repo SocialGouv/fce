@@ -39,7 +39,7 @@
     @media print {
       justify-content: left;
 
-      >div {
+      > div {
         flex: 0 0 100%;
         max-width: 100%;
       }
@@ -73,7 +73,7 @@
 
     .rt-th,
     .rt-td {
-      padding: .75rem;
+      padding: 0.75rem;
       border-top: 1px solid #dee2e6;
     }
 

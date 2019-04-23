@@ -6,6 +6,8 @@ import InteractionsPole3T from "../../../models/InteractionsPole3T";
 import UcEff from "../../../models/UcEff";
 import Idcc from "../../../models/Idcc";
 import Accords from "../../../models/Accords";
+import PolesCompetitivite from "../../../models/PolesCompetitivite";
+import Iae from "../../../models/Iae";
 
 export const _ = {
   requestDB: Symbol("_requestDB")
@@ -20,7 +22,9 @@ export default class PG extends DataSource {
       [Etablissements.getInteractionsPole3T, new InteractionsPole3T()],
       [Etablissements.getUcEff, new UcEff()],
       [Etablissements.getIdcc, new Idcc()],
-      [Etablissements.getAccords, new Accords()]
+      [Etablissements.getAccords, new Accords()],
+      [Etablissements.getPolesCompetitivite, new PolesCompetitivite()],
+      [Etablissements.getIae, new Iae()]
     );
   }
 

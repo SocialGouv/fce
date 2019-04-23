@@ -1,42 +1,33 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import Establishment from "./Establishment";
+import EstablishmentsItems from "./EstablishmentsItems";
 import Value from "../../../elements/Value";
 import { faBuilding, faFileAlt } from "@fortawesome/fontawesome-pro-solid";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Config from "../../../services/Config";
+
 class Establishments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isRedirectedToEnterprise: false,
       isRedirectedToResearch: false,
-      limit: true
+      isLimited: true
     };
   }
 
   render() {
+    const limitItems = Config.get("sidebarEstablishmentsLimit");
+
     const {
       establishments,
       enterprise,
       headOffice,
       isEstablishmentDisplayed
     } = this.props;
+
     const { isRedirectedToEnterprise, isRedirectedToResearch } = this.state;
-
-    const sliceLimit = Config.get("sidebardEstablishmentsLimit");
-
-    const establishmentsList = this.state.limit
-      ? establishments.slice(0, sliceLimit)
-      : establishments;
-
-    const establishmentsItems = establishmentsList.map(
-      (establishment, index) => (
-        <article key={index}>
-          <Establishment establishment={establishment} effectif={false} />
-        </article>
-      )
-    );
 
     return (
       <>
@@ -47,7 +38,7 @@ class Establishments extends React.Component {
         <aside
           className={`${
             isEstablishmentDisplayed ? "establishment" : "enterprise"
-          } aside-contain establishments-aside column is-3-desktop is-12-tablet`}
+          } aside-contain establishments-aside column is-12-tablet`}
         >
           <section className="pb-6">
             <h3 className="title is-size-5">
@@ -79,28 +70,25 @@ class Establishments extends React.Component {
 
           <hr />
 
-          <section>
-            <h3 className="title is-size-5">
-              {establishments.length} Établissements
-            </h3>
-
-            {establishmentsItems}
-
-            {establishments.length > sliceLimit && (
+          <p className="title is-size-5">
+            {establishments.length} Établissements
+          </p>
+          <section className="establishments">
+            <EstablishmentsItems
+              establishments={establishments}
+              limit={this.state.isLimited && limitItems}
+            />
+            {establishments.length > limitItems && this.state.isLimited && (
               <button
-                className="row button is-primary has-text-light h-center mt-4"
+                className="button is-primary has-text-light toggle-all-establishments"
                 onClick={() => {
-                  this.setState(prevState => ({ limit: !prevState.limit }));
+                  this.setState({ isLimited: false });
                 }}
               >
                 <span className="icon">
                   <FontAwesomeIcon icon={faBuilding} />
                 </span>
-                <span>
-                  {this.state.limit
-                    ? "Voir tous les établissements"
-                    : "Réduire la liste des établissements"}
-                </span>
+                <span>Voir tous les établissements</span>
               </button>
             )}
           </section>

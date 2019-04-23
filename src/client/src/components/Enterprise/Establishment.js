@@ -11,6 +11,7 @@ import {
   EstablishmentHelps,
   Direccte
 } from "./Sections";
+import EstablishmentRelationship from "./Sections/EstablishmentRelationship";
 
 class Establishment extends React.Component {
   componentDidMount() {
@@ -19,16 +20,21 @@ class Establishment extends React.Component {
   }
 
   render() {
-    const { establishment, enterprise } = this.props;
+    const {
+      establishment,
+      establishments,
+      enterprise,
+      headOffice
+    } = this.props;
 
     return (
       <section className="app-enterprise">
         <div className="columns">
           <div className="column is-3 aside-box is-hidden-touch">
             <Establishments
-              enterprise={this.props.enterprise}
-              headOffice={this.props.headOffice}
-              establishments={this.props.establishments}
+              enterprise={enterprise}
+              headOffice={headOffice}
+              establishments={establishments}
               isEstablishmentDisplayed={true}
             />
           </div>
@@ -40,21 +46,16 @@ class Establishment extends React.Component {
               />
             </div>
             <div className="establishment-keys row w-100">
-              <Dashboard
-                className=""
-                establishment={this.props.establishment}
-              />
+              <Dashboard className="" establishment={establishment} />
             </div>
             <EstablishmentActivity
-              establishment={this.props.establishment}
-              enterprise={this.props.enterprise}
+              establishment={establishment}
+              enterprise={enterprise}
             />
-            <Direccte
-              establishment={this.props.establishment}
-              enterprise={this.props.enterprise}
-            />
-            <EstablishmentMuteco establishment={this.props.establishment} />
-            <EstablishmentHelps establishment={this.props.establishment} />
+            <Direccte establishment={establishment} enterprise={enterprise} />
+            <EstablishmentRelationship establishment={establishment} />
+            <EstablishmentMuteco establishment={establishment} />
+            <EstablishmentHelps establishment={establishment} />
           </div>
           <div id="establishments" className="quickview responsive-item">
             <div className="quickview-body">
@@ -64,9 +65,9 @@ class Establishment extends React.Component {
               </header>
               <div className="quickview-block">
                 <Establishments
-                  enterprise={this.props.enterprise}
-                  headOffice={this.props.headOffice}
-                  establishments={this.props.establishments}
+                  enterprise={enterprise}
+                  headOffice={headOffice}
+                  establishments={establishments}
                 />
                 <footer className="quickview-footer" />
               </div>

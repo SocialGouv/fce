@@ -74,6 +74,14 @@
       margin-bottom: 1.5rem;
     }
 
+    .subcategory {
+      margin-top: 2rem;
+
+      &-title {
+        border-bottom: solid 1px #eee;
+      }
+    }
+
     h5 {
       font-weight: bold;
     }

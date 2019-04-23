@@ -4,6 +4,7 @@ import getUcEff from "./getUcEff";
 import getIdcc from "./getIdcc";
 import getAccords from "./getAccords";
 import getPolesCompetitivite from "./getPolesCompetitivite";
+import getIae from "./getIae";
 
 export default {
   getInteractionsPole3E,
@@ -11,5 +12,6 @@ export default {
   getUcEff,
   getIdcc,
   getAccords,
-  getPolesCompetitivite
+  getPolesCompetitivite,
+  getIae
 };

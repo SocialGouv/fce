@@ -62,6 +62,12 @@ const globalConfig = {
     "51": "2 000 à 4 999 salariés",
     "52": "5 000 à 9 999 salariés",
     "53": "10 000 salariés et plus"
+  },
+  agrementsIae: {
+    ei: "Entreprise d'insertion",
+    ai: "Association intermédiaire",
+    aci: "Atelier et chantier d'insertion",
+    etti: "Entreprise de travail temporaire d'insertion"
   }
 };
 

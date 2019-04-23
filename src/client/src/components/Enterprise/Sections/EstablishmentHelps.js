@@ -2,6 +2,7 @@ import React from "react";
 import Value from "../../../elements/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import Config from "../../../services/Config";
 
 class EstablishmentHelps extends React.Component {
   render() {
@@ -69,9 +70,64 @@ class EstablishmentHelps extends React.Component {
 
     establishment.contrats_aides = 8;
 
+    const hasAgrements = !!(
+      establishment.agrements_iae &&
+      Object.values(establishment.agrements_iae)
+        .map(agrementData => agrementData.agrement)
+        .includes(true)
+    );
+
     return (
       <section id="muteco" className="enterprise-section">
-        <h2 className="title is-size-4"> Aides</h2>
+        <h2 className="title is-size-4">Aides</h2>
+
+        <dl className="dl columns">
+          <dt className="dt column is-3">
+            Agrément(s) Insertion par l’activité économique (IAE)
+          </dt>
+          <dd className="dd column is-8">
+            <Value value={hasAgrements} empty="-" />
+          </dd>
+        </dl>
+
+        {hasAgrements && (
+          <table className="table is-striped">
+            <thead>
+              <tr>
+                <th />
+                <th>Agrément(s) en 2018</th>
+                <th>Nombre de salariés en insertion présents en N-1</th>
+                <th>Nombre d’ETP en année N-1</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {Object.entries(Config.get("agrementsIae")).map(
+                ([key, label]) => (
+                  <tr key={key}>
+                    <th>{label}</th>
+                    <td>
+                      <Value
+                        value={establishment.agrements_iae[key].agrement}
+                      />
+                    </td>
+                    <td>
+                      <Value
+                        value={
+                          establishment.agrements_iae[key].salariesInsertion
+                        }
+                      />
+                    </td>
+                    <td>
+                      <Value value={establishment.agrements_iae[key].etp} />
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        )}
+
         <div className="columns">
           <h5 className="column is-3">Aide financière</h5>
           <span className="column is-8">

@@ -18,7 +18,7 @@ class Enterprise extends React.Component {
   }
 
   render() {
-    const { enterprise, headOffice } = this.props;
+    const { enterprise, headOffice, establishments } = this.props;
 
     return (
       <section className="app-enterprise">
@@ -32,9 +32,9 @@ class Enterprise extends React.Component {
               </header>
               <div className="quickview-block">
                 <Establishments
-                  enterprise={this.props.enterprise}
-                  headOffice={this.props.headOffice}
-                  establishments={this.props.establishments}
+                  enterprise={enterprise}
+                  headOffice={headOffice}
+                  establishments={establishments}
                   isEstablishmentDisplayed={false}
                 />
                 <footer className="quickview-footer" />
@@ -43,9 +43,9 @@ class Enterprise extends React.Component {
           </div>
           <div className="column is-3 aside-box is-hidden-touch">
             <Establishments
-              enterprise={this.props.enterprise}
-              headOffice={this.props.headOffice}
-              establishments={this.props.establishments}
+              enterprise={enterprise}
+              headOffice={headOffice}
+              establishments={establishments}
             />
           </div>
           <div className="column main is-9-desktop is-12-tablet">

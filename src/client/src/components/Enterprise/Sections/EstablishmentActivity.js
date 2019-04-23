@@ -4,7 +4,6 @@ import EstablishmentTransfert from "./EstablishmentTransfert";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
 import Config from "../../../services/Config";
-
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
@@ -109,7 +108,11 @@ class EstablishmentActivity extends React.Component {
                   <h5 className="column is-3">Tranche Effectif INSEE</h5>
                   <span className="column is-8">
                     <Value
-                      value={establishment.tranche_effectif_insee}
+                      value={
+                        Config.get("inseeSizeRanges")[
+                          establishment.tranche_effectif_insee
+                        ]
+                      }
                       empty="-"
                     />
                   </span>
@@ -157,13 +160,27 @@ class EstablishmentActivity extends React.Component {
         <div className="columns">
           <h5 className="column is-3">ETI / Pépite</h5>
           <span className="column is-8">
-            <Value value={establishment.eti_pepite} empty="-" />
+            <Value
+              value={
+                Array.isArray(establishment.interactions_3E) &&
+                establishment.interactions_3E.length &&
+                establishment.interactions_3E[0].eti_pepite
+              }
+              empty="-"
+            />
           </span>
         </div>
         <div className="columns">
           <h5 className="column is-3">Filière stratégique</h5>
           <span className="column is-8">
-            <Value value={establishment.filiere_strategique} empty="-" />
+            <Value
+              value={
+                Array.isArray(establishment.interactions_3E) &&
+                establishment.interactions_3E.length &&
+                establishment.interactions_3E[0].filiere
+              }
+              empty="-"
+            />
           </span>
         </div>
         <div className="columns">
@@ -179,41 +196,37 @@ class EstablishmentActivity extends React.Component {
             />
           </span>
         </div>
-        <div className="accordions">
-          <div className="accordion is-active">
-            <div className="accordion-header toggle">
-              <span className="">Liste des pôles de compétitivité</span>
-              <span className="">
-                <button className="button is-light is-rounded">
-                  <span className="icon">
-                    <FontAwesomeIcon icon={faChevronDown} />
+        {Array.isArray(establishment.pole_competitivite) &&
+          establishment.pole_competitivite.length && (
+            <div className="accordions">
+              <div className="accordion is-active">
+                <div className="accordion-header toggle">
+                  <span className="">Liste des pôles de compétitivité</span>
+                  <span className="">
+                    <button className="button is-light is-rounded">
+                      <span className="icon">
+                        <FontAwesomeIcon icon={faChevronDown} />
+                      </span>
+                    </button>
                   </span>
-                </button>
-              </span>
-            </div>
-            <div className="accordion-body">
-              <div className="accordion-content">
-                <table className="table is-striped">
-                  <tbody>
-                    {Array.isArray(establishment.pole_competitivite) &&
-                      establishment.pole_competitivite.length &&
-                      establishment.pole_competitivite.map(pole => (
-                        <tr>
-                          <td> {pole} </td>
-                        </tr>
-                      ))}
-                    <tr>
-                      <td>Lorem ipsum</td>
-                    </tr>
-                    <tr>
-                      <td> Dolor sit amet </td>
-                    </tr>
-                  </tbody>
-                </table>
+                </div>
+
+                <div className="accordion-body">
+                  <div className="accordion-content">
+                    <table className="table is-striped">
+                      <tbody>
+                        {establishment.pole_competitivite.map((pole, index) => (
+                          <tr key={`pole_competitivite_${index}`}>
+                            <td>{pole}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          )}
         {!establishment.predecesseur && !establishment.successeur ? (
           <div className="columns">
             <h5 className="column is-3">

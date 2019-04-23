@@ -119,3 +119,11 @@ psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_uc_eff(siret, cod
 ```shell
 psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_idcc(siret, idcc) FROM '/tmp/import/etablissements_idcc.csv' with (format csv, header true, delimiter ',');"
 ```
+
+```shell
+psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3e(siret, date_visite, region, inspecteurs, filieres, type_suivi, suivi_eti) FROM '/tmp/interactions_pole_3e_20190418.csv' with (format csv, header true, delimiter ',');"
+```
+
+```shell
+psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3t(siret, date, realise_pour) FROM '/tmp/interactions_pole_t_20190417.csv' with (format csv, header true, delimiter ',');"
+```

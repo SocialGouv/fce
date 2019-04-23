@@ -60,6 +60,7 @@ class DireccteEtablissement extends Etablissement {
           "nom_commercial",
           "nom",
           "prenom",
+          "agrements_iae",
           "_dataSources",
           "_success"
         ],

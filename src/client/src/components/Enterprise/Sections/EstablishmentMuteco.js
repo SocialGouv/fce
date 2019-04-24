@@ -6,30 +6,6 @@ import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
 class EstablishmentMuteco extends React.Component {
   render() {
     const { establishment } = this.props;
-    establishment.pse_en_projet_ou_en_cours = [
-      {
-        year: 2016,
-        etat: "in bonis",
-        poste: 34
-      },
-      {
-        year: 2017,
-        etat: "in bonis",
-        poste: 45
-      }
-    ];
-    establishment.activite_partielle_24_derniers_mois = [
-      {
-        year: 2016,
-        heures_demandees: 50000,
-        heures_consommees: 34530
-      },
-      {
-        year: 2017,
-        heures_demandees: 30000,
-        heures_consommees: 16548
-      }
-    ];
 
     return (
       <section id="muteco" className="enterprise-section">
@@ -46,7 +22,8 @@ class EstablishmentMuteco extends React.Component {
           </span>
         </div>
 
-        {establishment.activite_partielle_24_derniers_mois.length ? (
+        {Array.isArray(establishment.activite_partielle_24_derniers_mois) &&
+        establishment.activite_partielle_24_derniers_mois.length ? (
           <div className="accordions">
             <div className="accordion is-active">
               <div className="accordion-header toggle">
@@ -126,13 +103,15 @@ class EstablishmentMuteco extends React.Component {
             Plan de sauvegarde de l'emploi ou projet en cours
           </h5>
           <span className="column is-8">
-            {establishment.pse_en_projet_ou_en_cours.length
+            {Array.isArray(establishment.pse_en_projet_ou_en_cours) &&
+            establishment.pse_en_projet_ou_en_cours.length
               ? "Oui"
               : "Pas d'informations"}
           </span>
         </div>
 
-        {establishment.pse_en_projet_ou_en_cours.length ? (
+        {Array.isArray(establishment.pse_en_projet_ou_en_cours) &&
+        establishment.pse_en_projet_ou_en_cours.length ? (
           <div className="accordions">
             <div className="accordion is-active">
               <div className="accordion-header toggle">

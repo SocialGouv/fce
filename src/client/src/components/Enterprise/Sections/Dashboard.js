@@ -36,8 +36,6 @@ class Dashboard extends React.Component {
       "0 salarié": "0 salarié"
     };
 
-    console.log(establishment);
-
     return (
       <section id="dashboard" className="enterprise-section dashboard">
         <div className="dashboard-mask" />

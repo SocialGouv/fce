@@ -1,244 +1,104 @@
 import React from "react";
+import Prototype from "prop-types";
 import Value from "../../../elements/Value";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import Subcategory from "./SharedComponents/Subcategory";
+import Data from "./SharedComponents/Data";
 import Config from "../../../services/Config";
+import { getCustomPastYear } from "../../../helpers/Date/Date";
 
-class EstablishmentHelps extends React.Component {
-  render() {
-    const { establishment } = this.props;
+const EstablishmentHelps = ({ establishment }) => {
+  const hasAgrements = !!(
+    establishment.agrements_iae &&
+    Object.values(establishment.agrements_iae)
+      .map(agrementData => agrementData.agrement)
+      .includes(true)
+  );
 
-    const hasAgrements = !!(
-      establishment.agrements_iae &&
-      Object.values(establishment.agrements_iae)
-        .map(agrementData => agrementData.agrement)
-        .includes(true)
-    );
+  return (
+    <section id="muteco" className="enterprise-section">
+      <h2 className="title is-size-4">Aides et agréments</h2>
 
-    return (
-      <section id="muteco" className="enterprise-section">
-        <h2 className="title is-size-4">Aides</h2>
+      <Subcategory
+        subtitle="Agréments"
+        datas={[
+          {
+            name: "Agrément Entreprise adaptée",
+            value: establishment.ea,
+            emptyValue: "Non",
+            nonEmptyValue: ""
+          },
+          {
+            name: "Agrément(s) Insertion par l’activité économique (IAE)",
+            value: hasAgrements,
+            nonEmptyValue: ""
+          }
+        ]}
+      />
 
-        <dl className="dl columns">
-          <dt className="dt column is-3">
-            Agrément(s) Insertion par l’activité économique (IAE)
-          </dt>
-          <dd className="dd column is-8">
-            <Value value={hasAgrements} empty="-" />
-          </dd>
-        </dl>
+      {hasAgrements && (
+        <table className="table is-hoverable">
+          <thead>
+            <tr>
+              <th />
+              <th>Agrément(s) en 2018</th>
+              <th>Nombre de salariés en insertion présents en N-1</th>
+              <th>Nombre d’ETP en année N-1</th>
+            </tr>
+          </thead>
 
-        {hasAgrements && (
-          <table className="table is-striped">
-            <thead>
-              <tr>
-                <th />
-                <th>Agrément(s) en 2018</th>
-                <th>Nombre de salariés en insertion présents en N-1</th>
-                <th>Nombre d’ETP en année N-1</th>
+          <tbody>
+            {Object.entries(Config.get("agrementsIae")).map(([key, label]) => (
+              <tr key={key}>
+                <th>{label}</th>
+                <td>
+                  <Value value={establishment.agrements_iae[key].agrement} />
+                </td>
+                <td>
+                  <Value
+                    value={establishment.agrements_iae[key].salariesInsertion}
+                  />
+                </td>
+                <td>
+                  <Value value={establishment.agrements_iae[key].etp} />
+                </td>
               </tr>
-            </thead>
+            ))}
+          </tbody>
+        </table>
+      )}
 
-            <tbody>
-              {Object.entries(Config.get("agrementsIae")).map(
-                ([key, label]) => (
-                  <tr key={key}>
-                    <th>{label}</th>
-                    <td>
-                      <Value
-                        value={establishment.agrements_iae[key].agrement}
-                      />
-                    </td>
-                    <td>
-                      <Value
-                        value={
-                          establishment.agrements_iae[key].salariesInsertion
-                        }
-                      />
-                    </td>
-                    <td>
-                      <Value value={establishment.agrements_iae[key].etp} />
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
-        )}
+      <Subcategory
+        subtitle="Contrats aidés et alternance"
+        datas={[
+          {
+            name:
+              "Parcours emploi – compétences (PEC) ou Emploi d’avenir en " +
+              getCustomPastYear(1),
+            value: "pas encore disponible"
+          }
+        ]}
+      />
+      <Data
+        name={`Nombre de salariés présents au 31/12/${getCustomPastYear(1)}`}
+        value={establishment.dernier_effectif_physique}
+      />
+      <Data
+        name={`Nombre de salariés embauchés en année ${getCustomPastYear(1)}`}
+        value="pas encore disponible"
+      />
 
-        <div className="columns">
-          <h5 className="column is-3">Aide financière</h5>
-          <span className="column is-8">
-            {establishment.signataire_convention_FNE ? "Oui" : ""}
-          </span>
-        </div>
-        {Array.isArray(establishment.activite_partielle_24_derniers_mois) &&
-        establishment.activite_partielle_24_derniers_mois.length ? (
-          <div className="accordions">
-            <div className="accordion is-active">
-              <div className="accordion-header toggle">
-                <span>Détail des aides</span>
-                <span>
-                  <button className="button is-light is-rounded">
-                    <span className="icon">
-                      <FontAwesomeIcon icon={faChevronDown} />
-                    </span>
-                  </button>
-                </span>
-              </div>
-              <div className="accordion-body">
-                <div className="accordion-content">
-                  <table className="table is-striped">
-                    <thead>
-                      <tr>
-                        <th>Aide</th>
-                        <th>Montant</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Fond Social Européen</td>
-                        <td>
-                          <Value value="Non disponible" empty="-" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Fond National de l'Emploi</td>
-                        <td>
-                          <Value value="Non disponible" empty="-" />
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : null}
-        <div className="columns">
-          <h5 className="column is-3">Entreprise adaptée </h5>
-          <span className="column is-8">
-            <Value value={!!establishment.ea} empty="-" />
-          </span>
-        </div>
+      <Data
+        name={`Embauche en contrat en alternance en année ${getCustomPastYear(
+          1
+        )} ou ${getCustomPastYear(2)}`}
+        value="pas encore disponible"
+      />
+    </section>
+  );
+};
 
-        {establishment.prime_embauche_pme ? (
-          <div className="accordions">
-            <div className="accordion is-active">
-              <div className="accordion-header toggle">
-                <span>Prime embauche PME</span>
-                <span>
-                  <button className="button is-light is-rounded">
-                    <span className="icon">
-                      <FontAwesomeIcon icon={faChevronDown} />
-                    </span>
-                  </button>
-                </span>
-              </div>
-              <div className="accordion-body">
-                <div className="accordion-content no-table">
-                  <div className="columns">
-                    <h5 className="column is-3">
-                      Nombre d'embauches effectuées dans le cadre du dispositif
-                    </h5>
-                    <span className="column is-8">
-                      <Value
-                        value={establishment.prime_embauche_pme}
-                        empty="Non disponible"
-                        no="Non disponible"
-                      />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="columns">
-            <h5 className="column is-3">Prime embauche PME</h5>
-            <span className="column is-8">Non disponible</span>
-          </div>
-        )}
-        <div className="columns">
-          <h5 className="column is-3">
-            Recours à l'alternance au cours des 24 derniers mois
-          </h5>
-          <span className="column is-8">
-            {establishment.alternance ? "Oui" : "Non disponible"}
-          </span>
-        </div>
-        {establishment.alternance ? (
-          <div className="accordions">
-            <div className="accordion is-active">
-              <div className="accordion-header toggle">
-                <span>Détail de l'alternance</span>
-                <span>
-                  <button className="button is-light is-rounded">
-                    <span className="icon">
-                      <FontAwesomeIcon icon={faChevronDown} />
-                    </span>
-                  </button>
-                </span>
-              </div>
-              <div className="accordion-body">
-                <div className="accordion-content">
-                  <table className="table table-striped">
-                    <tbody>
-                      <tr>
-                        <th>Nombre d'embauches en contrat d'apprentissage</th>
-                        <td>{establishment.alternance.apprentisage}</td>
-                      </tr>
-                      <tr>
-                        <th>
-                          Nombre d'embauches en contrat de professionnalisation
-                        </th>
-                        <td>{establishment.alternance.professionnalisation}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : null}
-        {establishment.contrats_aides ? (
-          <div className="accordions">
-            <div className="accordion is-active">
-              <div className="accordion-header toggle">
-                <span>Contrats aidés</span>
-                <span>
-                  <button className="button is-light is-rounded">
-                    <span className="icon">
-                      <FontAwesomeIcon icon={faChevronDown} />
-                    </span>
-                  </button>
-                </span>
-              </div>
-              <div className="accordion-body">
-                <div className="accordion-content no-table">
-                  <div className="columns">
-                    <h5 className="column is-3"> Nombre de contrats aidés</h5>
-                    <span className="column is-8">
-                      <Value
-                        value={establishment.contrats_aides}
-                        empty="Non disponible"
-                        no="Non disponible"
-                      />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="columns">
-            <h5 className="column is-3">Recours aux contrats aidés</h5>
-            <span className="column is-8">Non disponible</span>
-          </div>
-        )}
-      </section>
-    );
-  }
-}
+EstablishmentHelps.Prototype = {
+  establishment: Prototype.object.isRequired
+};
 
 export default EstablishmentHelps;

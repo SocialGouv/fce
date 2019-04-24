@@ -6,3 +6,9 @@ export const toI18nDate = (date, format = "L") => {
   }
   return Moment(date).format(format || "L");
 };
+
+export const getCustomPastYear = N => {
+  return Moment()
+    .subtract(N, "year")
+    .format("YYYY");
+};

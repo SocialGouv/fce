@@ -9,6 +9,14 @@
         opacity: 0.75;
     }
 
+    .subcategory {
+        margin-top: 2rem;
+
+        &-title {
+            border-bottom: solid 1px #eee;
+        }
+    }
+
     .show-all-establishments {
         position: absolute;
         top: -4rem;
@@ -21,7 +29,7 @@
             max-width: 100%;
         }
 
-        > .title,
+        >.title,
         .subtitle {
             text-align: center;
             margin-bottom: 1.5rem;
@@ -31,7 +39,7 @@
             font-weight: bold;
         }
 
-        > .task-bar {
+        >.task-bar {
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -67,7 +75,7 @@
             border-radius: 0.325rem;
             position: relative;
 
-            > .title {
+            >.title {
                 margin-bottom: 1rem;
                 font-size: 1.4rem;
                 background-color: $white;
@@ -92,12 +100,12 @@
                 }
             }
 
-            > .dl {
+            >.dl {
                 margin-bottom: 0;
             }
 
-            > .dd,
-            > .dt {
+            >.dd,
+            >.dt {
                 padding: 1rem 0;
                 word-wrap: break-word;
             }
@@ -268,7 +276,7 @@
                     background-color: #e9ecef;
                 }
 
-                > .link {
+                >.link {
                     background-color: transparent;
 
                     &:hover {

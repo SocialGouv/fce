@@ -45,6 +45,7 @@ class Dashboard extends React.Component {
             <span className="dashboard-item--value">
               <Value
                 value={
+                  establishment.dernier_effectif_physique ||
                   dashboardSizeRanges[establishment.tranche_effectif_insee]
                 }
                 empty="-"

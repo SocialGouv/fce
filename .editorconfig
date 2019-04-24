@@ -8,8 +8,11 @@ end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{js,css,scss,sass,json}]
+[*.{js,json}]
 indent_size = 2
+
+[*.{css,scss,sass}]
+indent_size = 4
 
 [*.{yml,yml.dist}]
 indent_style = space

@@ -82,14 +82,6 @@ class EnterpriseHeader extends React.Component {
                 />
               </span>
             </div>
-            <div className="column is-9">
-              <button className="button is-primary has-text-light">
-                <span className="icon">
-                  <FontAwesomeIcon icon={faArrowAltRight} />
-                </span>
-                <span>Siège social</span>
-              </button>
-            </div>
           </div>
         </div>
         <div className="row pt-3">
@@ -105,14 +97,6 @@ class EnterpriseHeader extends React.Component {
                 Societe.com
               </a>
             </span>
-            <div className="column is-9">
-              <button className="button is-primary has-text-light">
-                <span className="icon">
-                  <FontAwesomeIcon icon={faArrowAltRight} />
-                </span>
-                <span>Autres établissements</span>
-              </button>
-            </div>
           </div>
         </div>
       </section>

@@ -36,6 +36,8 @@ class Dashboard extends React.Component {
       "0 salarié": "0 salarié"
     };
 
+    console.log(establishment);
+
     return (
       <section id="dashboard" className="enterprise-section dashboard">
         <div className="dashboard-mask" />
@@ -45,6 +47,7 @@ class Dashboard extends React.Component {
             <span className="dashboard-item--value">
               <Value
                 value={
+                  establishment.dernier_effectif_physique ||
                   dashboardSizeRanges[establishment.tranche_effectif_insee]
                 }
                 empty="-"

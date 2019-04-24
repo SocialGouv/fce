@@ -8,6 +8,7 @@ import Idcc from "../../../models/Idcc";
 import Accords from "../../../models/Accords";
 import PolesCompetitivite from "../../../models/PolesCompetitivite";
 import Iae from "../../../models/Iae";
+import ContratsAides from "../../../models/ContratsAides";
 
 export const _ = {
   requestDB: Symbol("_requestDB")
@@ -24,7 +25,8 @@ export default class PG extends DataSource {
       [Etablissements.getIdcc, new Idcc()],
       [Etablissements.getAccords, new Accords()],
       [Etablissements.getPolesCompetitivite, new PolesCompetitivite()],
-      [Etablissements.getIae, new Iae()]
+      [Etablissements.getIae, new Iae()],
+      [Etablissements.getContratsAides, new ContratsAides()]
     );
   }
 

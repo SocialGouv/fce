@@ -29,7 +29,7 @@ class Dashboard extends React.Component {
       establishment.interactions &&
       establishment.interactions.map(interaction => moment(interaction.date));
 
-    const lastControl = moment.max(moments).format("DD/MM/YYYY");
+    const lastControl = moments && moment.max(moments).format("DD/MM/YYYY");
 
     const dashboardSizeRanges = {
       ...Config.get("inseeSizeRanges"),

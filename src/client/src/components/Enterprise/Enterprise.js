@@ -1,6 +1,4 @@
 import React from "react";
-import bulmaAccordion from "bulma-extensions/bulma-accordion/dist/js/bulma-accordion";
-import bulmaQuickView from "bulma-extensions/bulma-quickview/dist/js/bulma-quickview";
 import withLoading from "../../services/Loading";
 import Establishments from "./Establishments";
 import {
@@ -12,11 +10,6 @@ import {
 } from "./Sections";
 
 class Enterprise extends React.Component {
-  componentDidMount() {
-    bulmaAccordion.attach();
-    bulmaQuickView.attach();
-  }
-
   render() {
     const { enterprise, headOffice, establishments } = this.props;
 

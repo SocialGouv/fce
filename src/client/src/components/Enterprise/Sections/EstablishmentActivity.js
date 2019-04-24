@@ -1,18 +1,16 @@
 import React from "react";
 import Data from "./SharedComponents/Data";
 import Config from "../../../services/Config";
+import { getSuccession } from "../../../helpers/Establishment";
 
 import Subcategory from "./SharedComponents/Subcategory";
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
-    const { successeur, predecesseur } = establishment;
-    const succession =
-      successeur !== null
-        ? successeur
-        : predecesseur !== null
-        ? predecesseur
-        : null;
+    const succession = getSuccession(
+      establishment.successeur,
+      establishment.predecesseur
+    );
 
     return (
       <section id="activity" className="enterprise-section">

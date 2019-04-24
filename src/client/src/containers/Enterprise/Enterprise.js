@@ -69,7 +69,10 @@ class Enterprise extends React.Component {
     ) {
       establishment = this.props.currentEnterprise.etablissements.find(
         establishment => {
-          return establishment.siret.trim() === siret.trim();
+          return (
+            establishment.siret.trim() === siret.trim() &&
+            establishment._dataSources !== null
+          );
         }
       );
 

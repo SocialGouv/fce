@@ -14,29 +14,23 @@ class Search extends React.Component {
       })
     };
 
-    const { terms } = this.props;
+    const { terms, hasError, search, nafList } = this.props;
 
     return (
       <div className="app-search">
-        <div className="app-search--header">
-          <h1 className="title has-text-primary">
-            Trouver l'entreprise qu'il vous faut parmi 465798431 fiches !
-          </h1>
-          <p className="lead">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque
-            est facilis mollitia. Consequuntur magni cumque quaerat impedit
-            sapiente rerum error consequatur commodi porro! Cupiditate dolores
-            debitis eveniet ullam porro, eos consequuntur fuga ex perferendis
-            nostrum officia molestiae!
-          </p>
-        </div>
         <div className="columns app-search--container">
           <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
-            <h2 className="title">
-              Rechercher un établissement ou une entreprise
+            <h2 className="title pb-2">
+              Retrouvez les informations légales et administratives des
+              entreprises
             </h2>
 
-            {this.props.hasError ? (
+            <p className="lead pb-4">
+              l'état civil, l'activité et les données de l'adminitration dans
+              une seule fiche entreprise accessible pour les agents publics
+            </p>
+
+            {hasError ? (
               <div className="alert is-danger">
                 Une erreur est survenue lors de la communication avec l'API
               </div>
@@ -44,7 +38,7 @@ class Search extends React.Component {
               ""
             )}
 
-            <form className="form search-form" onSubmit={this.props.search}>
+            <form className="form search-form" onSubmit={search}>
               <div className="field is-grouped is-grouped-centered">
                 <div className="control is-expanded">
                   <input
@@ -96,7 +90,7 @@ class Search extends React.Component {
                       <Select
                         id="naf"
                         name="naf"
-                        options={this.props.nafList}
+                        options={nafList}
                         onChange={value =>
                           this.props.updateFormSelect("naf", value)
                         }

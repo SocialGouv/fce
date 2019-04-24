@@ -61,6 +61,9 @@ class DireccteEtablissement extends Etablissement {
           "nom",
           "prenom",
           "agrements_iae",
+          "contrat_aide",
+          "contrat_aide_salaries_n1",
+          "contrat_aide_embauches_n1",
           "_dataSources",
           "_success"
         ],

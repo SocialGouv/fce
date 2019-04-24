@@ -4,7 +4,6 @@ import EnterpriseActivity from "./EnterpriseActivity";
 import EnterpriseHeadOffice from "./EnterpriseHeadOffice";
 import EstablishmentHeader from "./EstablishmentHeader";
 import EstablishmentActivity from "./EstablishmentActivity";
-import EstablishmentIdentity from "./EstablishmentIdentity";
 import EstablishmentEnterpriseIdentity from "./EstablishmentEnterpriseIdentity";
 import EstablishmentMuteco from "./EstablishmentMuteco";
 import EstablishmentHelps from "./EstablishmentHelps";
@@ -22,7 +21,6 @@ export {
   EnterpriseHeadOffice,
   EstablishmentHeader,
   EstablishmentActivity,
-  EstablishmentIdentity,
   EstablishmentEnterpriseIdentity,
   EstablishmentMuteco,
   EstablishmentHelps,

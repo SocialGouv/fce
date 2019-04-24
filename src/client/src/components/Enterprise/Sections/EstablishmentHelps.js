@@ -22,16 +22,15 @@ const EstablishmentHelps = ({ establishment }) => {
         subtitle="Agréments"
         datas={[
           {
-            dataName: "Agrément Entreprise adaptée",
-            dataValue: establishment.ea,
-            dataEmptyValue: "Non",
-            dataNonEmptyValue: ""
+            name: "Agrément Entreprise adaptée",
+            value: establishment.ea,
+            emptyValue: "Non",
+            nonEmptyValue: ""
           },
           {
-            dataName: "Agrément(s) Insertion par l’activité économique (IAE)",
-            dataValue: hasAgrements,
-            dataEmptyValue: "-",
-            dataNonEmptyValue: ""
+            name: "Agrément(s) Insertion par l’activité économique (IAE)",
+            value: hasAgrements,
+            nonEmptyValue: ""
           }
         ]}
       />
@@ -72,31 +71,27 @@ const EstablishmentHelps = ({ establishment }) => {
         subtitle="Contrats aidés et alternance"
         datas={[
           {
-            dataName:
+            name:
               "Parcours emploi – compétences (PEC) ou Emploi d’avenir en " +
               getCustomPastYear(1),
-            dataValue: "pas encore disponible"
+            value: "pas encore disponible"
           }
         ]}
       />
       <Data
-        dataName={`Nombre de salariés présents au 31/12/${getCustomPastYear(
-          1
-        )}`}
-        dataValue={establishment.dernier_effectif_physique}
+        name={`Nombre de salariés présents au 31/12/${getCustomPastYear(1)}`}
+        value={establishment.dernier_effectif_physique}
       />
       <Data
-        dataName={`Nombre de salariés embauchés en année ${getCustomPastYear(
-          1
-        )}`}
-        dataValue="pas encore disponible"
+        name={`Nombre de salariés embauchés en année ${getCustomPastYear(1)}`}
+        value="pas encore disponible"
       />
 
       <Data
-        dataName={`Embauche en contrat en alternance en année ${getCustomPastYear(
+        name={`Embauche en contrat en alternance en année ${getCustomPastYear(
           1
         )} ou ${getCustomPastYear(2)}`}
-        dataValue="pas encore disponible"
+        value="pas encore disponible"
       />
     </section>
   );

@@ -9,8 +9,8 @@ const EstablishmentMuteco = ({ establishment }) => {
       <h2 className="title is-size-4"> Mutations Economiques</h2>
 
       <Data
-        dataName="Activité partielle"
-        dataValue={
+        name="Activité partielle"
+        value={
           establishment.activite_partielle_24_derniers_mois
             ? "Oui"
             : "Information bientôt disponible"
@@ -72,8 +72,8 @@ const EstablishmentMuteco = ({ establishment }) => {
         )}
 
       <Data
-        dataName="PSE"
-        dataValue={
+        name="PSE"
+        value={
           establishment.pse_en_projet_ou_en_cours
             ? "Oui"
             : "Information bientôt disponible"

@@ -2,16 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import Value from "../../../../elements/Value";
 
-const Data = ({ dataName, dataValue, dataEmptyValue, dataNonEmptyValue }) => {
+const Data = ({ name, value, emptyValue, nonEmptyValue }) => {
   return (
     <>
       <dl className="dl columns">
-        <dt className="dt column is-3">{dataName}</dt>
+        <dt className="dt column is-3">{name}</dt>
         <dd className="dd column is-8">
           <Value
-            value={dataValue}
-            empty={dataEmptyValue}
-            nonEmptyValues={dataNonEmptyValue}
+            value={value}
+            empty={emptyValue}
+            nonEmptyValues={nonEmptyValue}
           />
         </dd>
       </dl>
@@ -20,18 +20,18 @@ const Data = ({ dataName, dataValue, dataEmptyValue, dataNonEmptyValue }) => {
 };
 
 Data.defaultProps = {
-  dataEmptyValue: "-"
+  emptyValue: "-"
 };
 
 Data.propTypes = {
-  dataName: PropTypes.string.isRequired,
-  dataValue: PropTypes.oneOfType([
+  name: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
     PropTypes.boolean
   ]),
-  dataEmptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  dataNonEmptyValue: PropTypes.oneOfType([
+  emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  nonEmptyValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
     PropTypes.object,

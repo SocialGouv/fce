@@ -19,15 +19,15 @@ const EstablishmentRelationship = ({ establishment }) => {
     <section id="activity" className="enterprise-section">
       <h2 className="title is-size-4">Relation travail</h2>
       <Data
-        dataName="Convention collective (IDCC)"
-        dataValue={`${code_idcc ? code_idcc : ""} - ${
+        name="Convention collective (IDCC)"
+        value={`${code_idcc ? code_idcc : ""} - ${
           libelle_idcc ? libelle_idcc : ""
         }`}
       />
       <Data
-        dataName="Nombre d'accords d'entreprise déposés en année N-1 et N-2"
-        dataValue={nbAccords}
-        dataEmptyValue="aucun accords connus"
+        name="Nombre d'accords d'entreprise déposés en année N-1 et N-2"
+        value={nbAccords}
+        emptyValue="aucun accords connus"
       />
       {nbAccords > 0 && (
         <table className="table is-hoverable">

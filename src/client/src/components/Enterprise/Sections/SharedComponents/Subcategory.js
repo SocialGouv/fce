@@ -9,20 +9,16 @@ const Subcategory = ({ subtitle, datas }) => {
       {datas.map(data => {
         return (
           <Data
-            key={data.dataName}
-            dataName={data.dataName}
-            dataValue={data.dataValue}
-            dataEmptyValue={data.dataEmptyValue}
-            dataNonEmptyValue={data.dataNonEmptyValue}
+            key={data.name}
+            name={data.name}
+            value={data.value}
+            emptyValue={data.emptyValue || "-"}
+            nonEmptyValue={data.nonEmptyValue}
           />
         );
       })}
     </div>
   );
-};
-
-Subcategory.defaultProps = {
-  dataEmptyValue: "-"
 };
 
 Subcategory.propTypes = {

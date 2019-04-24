@@ -16,21 +16,13 @@ class EstablishmentActivity extends React.Component {
       <section id="activity" className="enterprise-section">
         <h2 className="title is-size-4">Activité</h2>
         <Data
-          dataName="Activté principale"
-          dataValue={`${establishment.naf ? establishment.naf : "-"} ${
+          name="Activté principale"
+          value={`${establishment.naf ? establishment.naf : "-"} ${
             establishment.libelle_naf ? establishment.libelle_naf : "-"
           }`}
         />
-        <Data
-          dataName="Date de création"
-          dataValue={establishment.date_creation}
-          dataEmptyValue="-"
-        />
-        <Data
-          dataName="Association"
-          dataValue={!!establishment.association}
-          dataEmptyValue="-"
-        />
+        <Data name="Date de création" value={establishment.date_creation} />
+        <Data name="Association" value={!!establishment.association} />
         {establishment.association &&
         establishment.document_association &&
         establishment.document_association.url ? (
@@ -49,16 +41,16 @@ class EstablishmentActivity extends React.Component {
           subtitle="Lien de succession"
           datas={[
             {
-              dataName: "SIRET prédecesseur/successeur",
-              dataValue: succession && succession.siret,
-              dataEmptyValue: "pas de prédecesseur ou de successeur",
-              dataNonEmptyValue: ""
+              name: "SIRET prédecesseur/successeur",
+              value: succession && succession.siret,
+              emptyValue: "pas de prédecesseur ou de successeur",
+              nonEmptyValue: ""
             },
             {
-              dataName: "Date du transfert",
-              dataValue: succession && succession.date_transfert,
-              dataEmptyValue: "-",
-              dataNonEmptyValue: ""
+              name: "Date du transfert",
+              value: succession && succession.date_transfert,
+              emptyValue: "-",
+              nonEmptyValue: ""
             }
           ]}
         />
@@ -66,30 +58,26 @@ class EstablishmentActivity extends React.Component {
           subtitle="Effectifs"
           datas={[
             {
-              dataName: "Tranche Effectif INSEE",
-              dataValue: Config.get("inseeSizeRanges")[
+              name: "Tranche Effectif INSEE",
+              value: Config.get("inseeSizeRanges")[
                 establishment.tranche_effectif_insee
               ],
-              dataEmptyValue: "-",
-              dataNonEmptyValue: ""
+              nonEmptyValue: ""
             },
             {
-              dataName: "Année tranche effectif INSEE",
-              dataValue: establishment.annee_tranche_effectif_insee,
-              dataEmptyValue: "-",
-              dataNonEmptyValue: ""
+              name: "Année tranche effectif INSEE",
+              value: establishment.annee_tranche_effectif_insee,
+              nonEmptyValue: ""
             },
             {
-              dataName: "Dernier effectif connu",
-              dataValue: establishment.dernier_effectif_physique,
-              dataEmptyValue: "-",
-              dataNonEmptyValue: ""
+              name: "Dernier effectif connu",
+              value: establishment.dernier_effectif_physique,
+              nonEmptyValue: ""
             },
             {
-              dataName: "Date dernier effectif connu",
-              dataValue: establishment.date_dernier_effectif_physique,
-              dataEmptyValue: "-",
-              dataNonEmptyValue: ""
+              name: "Date dernier effectif connu",
+              value: establishment.date_dernier_effectif_physique,
+              nonEmptyValue: ""
             }
           ]}
         />
@@ -97,30 +85,27 @@ class EstablishmentActivity extends React.Component {
           subtitle="Développement économiques"
           datas={[
             {
-              dataName: "Filière stratégique",
-              dataValue:
+              name: "Filière stratégique",
+              value:
                 Array.isArray(establishment.interactions_3E) &&
                 establishment.interactions_3E.length &&
                 establishment.interactions_3E[0].filiere,
-              dataEmptyValue: "-",
-              dataNonEmptyValue: ""
+              nonEmptyValue: ""
             },
             {
-              dataName: "ETI / PEPITE",
-              dataValue:
+              name: "ETI / PEPITE",
+              value:
                 Array.isArray(establishment.interactions_3E) &&
                 establishment.interactions_3E.length &&
                 establishment.interactions_3E[0].eti_pepite,
-              dataEmptyValue: "-",
-              dataNonEmptyValue: ""
+              nonEmptyValue: ""
             },
             {
-              dataName: "Adhérent à un pole de compétitivité",
-              dataValue:
+              name: "Adhérent à un pole de compétitivité",
+              value:
                 Array.isArray(establishment.pole_competitivite) &&
                 !!establishment.pole_competitivite.length,
-              dataEmptyValue: "-",
-              dataNonEmptyValue: ""
+              nonEmptyValue: ""
             }
           ]}
         />

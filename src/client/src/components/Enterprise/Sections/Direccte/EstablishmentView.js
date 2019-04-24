@@ -22,13 +22,13 @@ class EstablishmentView extends React.Component {
         <h2 className="title is-size-4">Visites et Contrôles de la Direccte</h2>
 
         <Data
-          dataName="Unité de contrôle compétente (inspection du travail)"
-          dataValue={establishment.unite_controle_competente}
+          name="Unité de contrôle compétente (inspection du travail)"
+          value={establishment.unite_controle_competente}
         />
 
         <Data
-          dataName="Dernier contrôle  / dernière visite au cours des 24 derniers mois"
-          dataValue={
+          name="Dernier contrôle  / dernière visite au cours des 24 derniers mois"
+          value={
             establishment.totalInteractions &&
             establishment.totalInteractions.total === 0
               ? "pas de contrôle connu"

@@ -74,17 +74,19 @@ const EstablishmentHelps = ({ establishment }) => {
             name:
               "Parcours emploi – compétences (PEC) ou Emploi d’avenir en " +
               getCustomPastYear(1),
-            value: "pas encore disponible"
+            value: establishment.contrat_aide
           }
         ]}
       />
       <Data
         name={`Nombre de salariés présents au 31/12/${getCustomPastYear(1)}`}
-        value={establishment.dernier_effectif_physique}
+        value={establishment.contrat_aide_salaries_n1}
+        nonEmptyValue={[0]}
       />
       <Data
         name={`Nombre de salariés embauchés en année ${getCustomPastYear(1)}`}
-        value="pas encore disponible"
+        value={establishment.contrat_aide_embauches_n1}
+        nonEmptyValue={[0]}
       />
 
       <Data

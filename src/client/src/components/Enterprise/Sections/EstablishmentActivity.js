@@ -8,9 +8,9 @@ class EstablishmentActivity extends React.Component {
     const { establishment } = this.props;
     const { successeur, predecesseur } = establishment;
     const succession =
-      successeur && successeur !== null
+      successeur !== null
         ? successeur
-        : predecesseur && predecesseur !== null
+        : predecesseur !== null
         ? predecesseur
         : null;
 
@@ -53,7 +53,7 @@ class EstablishmentActivity extends React.Component {
             {
               dataName: "SIRET prédecesseur/successeur",
               dataValue: succession && succession.siret,
-              dataEmptyValue: "-",
+              dataEmptyValue: "pas de prédecesseur ou de successeur",
               dataNonEmptyValue: ""
             },
             {

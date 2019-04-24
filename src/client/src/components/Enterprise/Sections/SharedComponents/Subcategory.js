@@ -21,6 +21,10 @@ const Subcategory = ({ subtitle, datas }) => {
   );
 };
 
+Subcategory.defaultProps = {
+  dataEmptyValue: "-"
+};
+
 Subcategory.propTypes = {
   subtitle: PropTypes.string.isRequired,
   datas: PropTypes.arrayOf(PropTypes.object).isRequired

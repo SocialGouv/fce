@@ -4,31 +4,6 @@ import Prototype from "prop-types";
 import Data from "./SharedComponents/Data";
 
 const EstablishmentMuteco = ({ establishment }) => {
-  establishment.pse_en_projet_ou_en_cours = [
-    {
-      year: 2016,
-      etat: "in bonis",
-      poste: 34
-    },
-    {
-      year: 2017,
-      etat: "in bonis",
-      poste: 45
-    }
-  ];
-  establishment.activite_partielle_24_derniers_mois = [
-    {
-      year: 2016,
-      heures_demandees: 50000,
-      heures_consommees: 34530
-    },
-    {
-      year: 2017,
-      heures_demandees: 30000,
-      heures_consommees: 16548
-    }
-  ];
-
   return (
     <section id="muteco" className="enterprise-section">
       <h2 className="title is-size-4"> Mutations Economiques</h2>
@@ -38,10 +13,10 @@ const EstablishmentMuteco = ({ establishment }) => {
         dataValue={
           establishment.activite_partielle_24_derniers_mois
             ? "Oui"
-            : "Pas d'informations"
+            : "Information bientôt disponible"
         }
       />
-      {establishment.activite_partielle_24_derniers_mois &&
+      {Array.isArray(establishment.activite_partielle_24_derniers_mois) &&
         establishment.activite_partielle_24_derniers_mois.length > 0 && (
           <table className="table is-hoverable is-bordered mt-2">
             <thead>
@@ -99,10 +74,12 @@ const EstablishmentMuteco = ({ establishment }) => {
       <Data
         dataName="PSE"
         dataValue={
-          establishment.pse_en_projet_ou_en_cours ? "Oui" : "Pas d'informations"
+          establishment.pse_en_projet_ou_en_cours
+            ? "Oui"
+            : "Information bientôt disponible"
         }
       />
-      {establishment.pse_en_projet_ou_en_cours &&
+      {Array.isArray(establishment.pse_en_projet_ou_en_cours) &&
         establishment.pse_en_projet_ou_en_cours.length > 0 && (
           <table className="table is-hoverable is-bordered mt-2">
             <thead>

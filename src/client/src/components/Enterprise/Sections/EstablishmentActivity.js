@@ -45,7 +45,7 @@ class EstablishmentActivity extends React.Component {
               value: succession.datas && succession.datas.siret,
               emptyValue: "pas de prédecesseur ou de successeur",
               nonEmptyValue: "",
-              link: !!succession.datas
+              link: succession.datas
                 ? "/establishment/" + succession.datas.siret
                 : null
             },
@@ -114,16 +114,13 @@ class EstablishmentActivity extends React.Component {
         />
         {Array.isArray(establishment.pole_competitivite) &&
           !!establishment.pole_competitivite.length && (
-            <div>
+            <ul>
               {establishment.pole_competitivite.map(pole => (
-                <>
-                  <span className="is-size-6 has-text-grey-dark" key={pole}>
-                    - {pole}
-                  </span>
-                  <br />
-                </>
+                <li className="is-size-6 has-text-grey-dark" key={pole}>
+                  - {pole}
+                </li>
               ))}
-            </div>
+            </ul>
           )}
       </section>
     );

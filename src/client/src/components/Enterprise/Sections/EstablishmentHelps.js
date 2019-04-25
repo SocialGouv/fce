@@ -81,7 +81,7 @@ const EstablishmentHelps = ({ establishment }) => {
           }
         ]}
       />
-      {!!establishment.contrat_aide && (
+      {establishment.contrat_aide && (
         <>
           <table className="table is-bordered mt-3">
             <thead>

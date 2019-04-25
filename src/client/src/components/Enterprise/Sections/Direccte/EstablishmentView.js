@@ -27,12 +27,12 @@ class EstablishmentView extends React.Component {
         />
 
         <Data
-          name="Dernier contrôle  / dernière visite au cours des 24 derniers mois"
+          name="Dernier contrôle / dernière visite au cours des 24 derniers mois (Pôle T, Pôle C et Pôle E - SEER)"
           value={
             establishment.totalInteractions &&
             establishment.totalInteractions.total === 0
               ? "pas de contrôle connu"
-              : establishment.totalInteractions.total
+              : ""
           }
         />
 

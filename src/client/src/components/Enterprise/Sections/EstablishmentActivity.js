@@ -41,14 +41,15 @@ class EstablishmentActivity extends React.Component {
           subtitle="Lien de succession"
           datas={[
             {
-              name: "SIRET prédecesseur/successeur",
-              value: succession && succession.siret,
+              name: succession && succession.label,
+              value: succession && succession.datas.siret,
               emptyValue: "pas de prédecesseur ou de successeur",
-              nonEmptyValue: ""
+              nonEmptyValue: "",
+              link: "/establishment/" + succession.datas.siret
             },
             {
               name: "Date du transfert",
-              value: succession && succession.date_transfert,
+              value: succession && succession.datas.date_transfert,
               emptyValue: "-",
               nonEmptyValue: ""
             }

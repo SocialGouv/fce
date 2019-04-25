@@ -1,6 +1,6 @@
 export const getSuccession = (successeur, predecesseur) => {
   if (successeur !== null) {
-    return successeur;
+    return { label: "SIRET successeur", datas: successeur };
   }
-  return predecesseur || null;
+  return { label: "SIRET prédecesseur", datas: predecesseur } || null;
 };

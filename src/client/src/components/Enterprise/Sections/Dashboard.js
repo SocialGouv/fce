@@ -56,7 +56,9 @@ class Dashboard extends React.Component {
         <div className="dashboard-item dashboard-interactions">
           <div className="dashboard-item--content">
             <span className="dashboard-item--desc">
-              {hasInteractions ? "Dernier contrôle : " : "Pas de visite connue"}
+              {hasInteractions
+                ? "Dernière intervention : "
+                : "Pas d'intervention connue"}
             </span>
             <span className="dashboard-item--value">
               {hasInteractions && <Value value={lastControl} empty="-" />}

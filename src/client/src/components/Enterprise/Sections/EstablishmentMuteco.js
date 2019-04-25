@@ -76,7 +76,7 @@ const EstablishmentMuteco = ({ establishment }) => {
         value={
           establishment.pse_en_projet_ou_en_cours
             ? "Oui"
-            : "Information bientôt disponible"
+            : "Information en cours de négociation"
         }
       />
       {Array.isArray(establishment.pse_en_projet_ou_en_cours) &&

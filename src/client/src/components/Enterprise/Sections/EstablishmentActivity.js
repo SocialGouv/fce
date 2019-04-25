@@ -41,14 +41,17 @@ class EstablishmentActivity extends React.Component {
           subtitle="Lien de succession"
           datas={[
             {
-              name: "SIRET prédecesseur/successeur",
-              value: succession && succession.siret,
+              name: succession && succession.label,
+              value: succession.datas && succession.datas.siret,
               emptyValue: "pas de prédecesseur ou de successeur",
-              nonEmptyValue: ""
+              nonEmptyValue: "",
+              link: succession.datas
+                ? "/establishment/" + succession.datas.siret
+                : null
             },
             {
               name: "Date du transfert",
-              value: succession && succession.date_transfert,
+              value: succession.datas && succession.datas.date_transfert,
               emptyValue: "-",
               nonEmptyValue: ""
             }
@@ -109,6 +112,19 @@ class EstablishmentActivity extends React.Component {
             }
           ]}
         />
+        {Array.isArray(establishment.pole_competitivite) &&
+          !!establishment.pole_competitivite.length && (
+            <ul>
+              {establishment.pole_competitivite.map(pole => (
+                <>
+                  <li className="is-size-6 has-text-grey-dark" key={pole}>
+                    - {pole}
+                  </li>
+                  <br />
+                </>
+              ))}
+            </ul>
+          )}
       </section>
     );
   }

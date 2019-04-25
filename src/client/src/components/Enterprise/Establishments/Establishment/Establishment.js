@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 import classNames from "classnames";
 import Value from "../../../../elements/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import {
-  faCircle,
-  faCalendarExclamation
-} from "@fortawesome/fontawesome-pro-solid";
+import { faCircle } from "@fortawesome/fontawesome-pro-solid";
 
 class Establishment extends React.Component {
   render() {
@@ -49,12 +46,6 @@ class Establishment extends React.Component {
               establishment.adresse_components.localite
             }
             empty=""
-          />
-          <span> - </span>
-          <span>{nbInteractions}</span>
-          <FontAwesomeIcon
-            className="aside-interact--icon"
-            icon={faCalendarExclamation}
           />
         </li>
       </ul>

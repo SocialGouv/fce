@@ -3,6 +3,7 @@ import Prototype from "prop-types";
 import Value from "../../../elements/Value";
 import Data from "./SharedComponents/Data";
 import Config from "../../../services/Config";
+import { getCustomPastYear } from "../../../helpers/Date/Date";
 
 const EstablishmentRelationship = ({ establishment }) => {
   const { code_idcc, libelle_idcc, accords } = establishment;
@@ -25,9 +26,11 @@ const EstablishmentRelationship = ({ establishment }) => {
         }`}
       />
       <Data
-        name="Nombre d'accords d'entreprise déposés en année N-1 et N-2"
+        name={`Nombre d'accords d'entreprise déposés en année ${getCustomPastYear(
+          1
+        )} ${getCustomPastYear(2)}`}
         value={nbAccords}
-        emptyValue="aucun accords connus"
+        emptyValue="aucun accord connu"
       />
       {nbAccords > 0 && (
         <table className="table is-hoverable">

@@ -14,6 +14,7 @@ const Subcategory = ({ subtitle, datas }) => {
             value={data.value}
             emptyValue={data.emptyValue || "-"}
             nonEmptyValue={data.nonEmptyValue}
+            link={data.link}
           />
         );
       })}

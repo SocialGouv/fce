@@ -3,16 +3,14 @@ import { Link } from "react-router-dom";
 import classNames from "classnames";
 import Value from "../../../../elements/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/fontawesome-pro-solid";
+import { faCircle, faSquare } from "@fortawesome/fontawesome-pro-solid";
+import { isActiveEstablishment } from "../../../../helpers/Establishment";
 
 class Establishment extends React.Component {
   render() {
     const { establishment } = this.props;
-
-    const stateClass =
-      establishment.etat_etablissement === "A"
-        ? "icon--success"
-        : "icon--danger";
+    const isActive = isActiveEstablishment(establishment);
+    const stateClass = isActive ? "icon--success" : "icon--danger";
 
     return (
       <ul className="list-unstyled">
@@ -25,7 +23,10 @@ class Establishment extends React.Component {
           </Link>
         </li>
         <li>
-          <FontAwesomeIcon className={classNames(stateClass)} icon={faCircle} />
+          <FontAwesomeIcon
+            className={classNames(stateClass)}
+            icon={isActive ? faCircle : faSquare}
+          />
           <span> - </span>
           <Value
             value={

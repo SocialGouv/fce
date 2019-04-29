@@ -11,7 +11,6 @@ import Config from "../../services/Config";
 import PrivateRoute from "../../services/PrivateRoute";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
-import Footer from "./Footer";
 import Search from "../../containers/Search";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
@@ -36,6 +35,10 @@ class App extends React.Component {
           <Router history={piwik.connectToHistory(history)}>
             <ScrollToTop>
               <Header />
+              <div className="beta-message">
+                Ce site est un travail en cours, actuellement en beta. Vous
+                pouvez le consulter librement.
+              </div>
               <div className="app-container" style={appStyle}>
                 <Switch>
                   <PrivateRoute exact path="/" component={Search} />
@@ -56,7 +59,6 @@ class App extends React.Component {
                   <Redirect to="/404" />
                 </Switch>
               </div>
-              <Footer />
             </ScrollToTop>
           </Router>
         </PersistGate>

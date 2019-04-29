@@ -9,12 +9,17 @@
     .title {
         text-align: center;
         color: $light;
-        font-size: 1.75rem;
-        font-weight: 500;
+        font-size: 2.35rem;
+        font-weight: 700;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .lead {
         text-align: center;
+        font-size: 1.25rem;
+        font-weight: 500;
     }
 
     .search-form {

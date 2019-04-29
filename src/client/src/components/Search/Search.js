@@ -21,13 +21,14 @@ class Search extends React.Component {
         <div className="columns app-search--container">
           <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
             <h2 className="title pb-2">
-              Retrouvez les informations légales et administratives des
-              entreprises
+              Retrouvez les informations publiques concernant les entreprises et
+              associations de France
             </h2>
 
             <p className="lead pb-4">
-              l'état civil, l'activité et les données de l'administration dans
-              une seule fiche entreprise accessible pour les agents publics
+              Les bases de données sur l'état civil des entreprises et
+              associations françaises sont maintenant accessibles à tous, sans
+              frais
             </p>
 
             {hasError ? (

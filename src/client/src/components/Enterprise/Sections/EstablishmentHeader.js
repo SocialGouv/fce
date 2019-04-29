@@ -7,6 +7,7 @@ import {
   faSquare,
   faCircle
 } from "@fortawesome/fontawesome-pro-solid";
+import { getEstablishmentIsActive } from "../../../helpers/Establishment";
 
 class EstablishmentHeader extends React.Component {
   render() {
@@ -15,7 +16,8 @@ class EstablishmentHeader extends React.Component {
     const slugSocieteCom = enterprise.raison_sociale
       ? enterprise.raison_sociale.toLowerCase().replace(" ", "-")
       : "#";
-    const isActive = establishment.etat_etablissement === "A";
+    const isActive = getEstablishmentIsActive(establishment);
+    const stateClass = isActive ? "icon--success" : "icon--danger";
 
     return (
       <section id="header" className="establishment-header w-100">
@@ -70,8 +72,7 @@ class EstablishmentHeader extends React.Component {
               <span className="active-item-value">
                 <FontAwesomeIcon
                   icon={isActive ? faCircle : faSquare}
-                  className="mr-2"
-                  color={isActive ? "green" : "red"}
+                  className={`mr-2 ${stateClass}`}
                 />
               </span>
               <span className="is-size-5 has-text-grey-dark">

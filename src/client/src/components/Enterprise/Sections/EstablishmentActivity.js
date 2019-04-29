@@ -116,12 +116,9 @@ class EstablishmentActivity extends React.Component {
           !!establishment.pole_competitivite.length && (
             <ul>
               {establishment.pole_competitivite.map(pole => (
-                <>
-                  <li className="is-size-6 has-text-grey-dark" key={pole}>
-                    - {pole}
-                  </li>
-                  <br />
-                </>
+                <li className="is-size-6 has-text-grey-dark" key={pole}>
+                  - {pole}
+                </li>
               ))}
             </ul>
           )}

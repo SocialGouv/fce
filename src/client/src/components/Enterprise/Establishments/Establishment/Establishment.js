@@ -8,9 +8,6 @@ import { faCircle } from "@fortawesome/fontawesome-pro-solid";
 class Establishment extends React.Component {
   render() {
     const { establishment } = this.props;
-    const nbInteractions = Array.isArray(establishment.direccte)
-      ? establishment.direccte.length
-      : 0;
 
     const stateClass =
       establishment.etat_etablissement === "A"
@@ -32,14 +29,13 @@ class Establishment extends React.Component {
           <span> - </span>
           <Value
             value={
-              (establishment.departement &&
+              `${establishment.departement &&
                 establishment.adresse_components &&
-                establishment.adresse_components.code_postal.slice(0, 2)) ||
+                establishment.adresse_components.code_postal.slice(0, 2)} - ` ||
               null
             }
             empty=""
           />
-          <span> - </span>
           <Value
             value={
               establishment.adresse_components &&

@@ -26,7 +26,7 @@ class Search extends React.Component {
             </h2>
 
             <p className="lead pb-4">
-              l'état civil, l'activité et les données de l'adminitration dans
+              l'état civil, l'activité et les données de l'administration dans
               une seule fiche entreprise accessible pour les agents publics
             </p>
 

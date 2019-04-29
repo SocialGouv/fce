@@ -36,8 +36,7 @@ class App extends React.Component {
             <ScrollToTop>
               <Header />
               <div className="beta-message">
-                Ce site est un travail en cours, actuellement en beta. Vous
-                pouvez le consulter librement.
+                Ce site est un travail en cours, actuellement en beta.
               </div>
               <div className="app-container" style={appStyle}>
                 <Switch>

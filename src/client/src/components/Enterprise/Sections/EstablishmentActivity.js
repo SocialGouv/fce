@@ -16,7 +16,7 @@ class EstablishmentActivity extends React.Component {
       <section id="activity" className="enterprise-section">
         <h2 className="title is-size-4">Activité</h2>
         <Data
-          name="Activté principale"
+          name="Activité principale"
           value={`${establishment.naf ? establishment.naf : "-"} ${
             establishment.libelle_naf ? establishment.libelle_naf : "-"
           }`}

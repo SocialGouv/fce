@@ -46,7 +46,7 @@ const globalConfig = {
     { key: "autres", value: "Autres" }
   ],
   inseeSizeRanges: {
-    NN: "Unités non employeuses",
+    NN: "Unité non employeuse",
     "0 salarié": "0 salarié (pas d'effectif au 31/12 )",
     "01": "1 ou 2 salariés",
     "02": "3 à 5 salariés",

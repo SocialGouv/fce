@@ -42,10 +42,9 @@ class EstablishmentView extends React.Component {
 
     const interactions = Object.entries(establishmentsWithInteractions).map(
       ([siret, nbInteractions]) => {
-        const establishment = enterprise.etablissements.find(etab => {
-          console.log({ etab, nbInteractions });
-          return etab.siret.trim() === siret.trim();
-        });
+        const establishment = enterprise.etablissements.find(
+          etab => etab.siret.trim() === siret.trim()
+        );
 
         return {
           siret,
@@ -59,10 +58,7 @@ class EstablishmentView extends React.Component {
             establishment &&
             establishment.adresse_components &&
             establishment.adresse_components.localite,
-          lastControlDate: getLastDateInteraction(
-            Array.isArray(establishment.interactions) &&
-              establishment.interactions
-          )
+          lastControlDate: getLastDateInteraction(establishment.interactions)
         };
       }
     );

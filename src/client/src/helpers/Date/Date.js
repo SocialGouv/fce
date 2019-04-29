@@ -15,7 +15,9 @@ export const getCustomPastYear = N => {
 
 export const getLastDateInteraction = interactions => {
   const moments =
-    interactions && interactions.map(interaction => Moment(interaction.date));
+    Array.isArray(interactions) &&
+    interactions &&
+    interactions.map(interaction => Moment(interaction.date));
 
   return (moments && Moment.max(moments).format("DD/MM/YYYY")) || "";
 };

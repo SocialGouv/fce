@@ -64,6 +64,9 @@ a {
     text-align: center;
     background-color: #a5e1fa;
     padding: .75rem 0;
+    opacity: 0.85;
+    z-index: 1;
+    position: relative;
 }
 
 @media print {

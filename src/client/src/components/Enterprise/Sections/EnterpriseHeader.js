@@ -39,14 +39,6 @@ class EnterpriseHeader extends React.Component {
             />
           </h1>
           <div>
-            <div className="row">
-              <span className="has-text-grey-dark">Fiche mise à jour le </span>
-              <Value
-                className="has-text-grey-dark has-text-weight-semibold"
-                value={enterprise.date_mise_a_jour}
-                empty=" "
-              />
-            </div>
             <button
               className="row button is-primary has-text-light is-pulled-right"
               onClick={() => window.print()}

@@ -1,12 +1,12 @@
 import React from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import moment from "moment";
 import Value from "../../../elements/Value";
 import {
   faExclamationTriangle,
   faLifeRing
 } from "@fortawesome/fontawesome-pro-solid";
 import Config from "../../../services/Config";
+import { getLastDateInteraction } from "../../../helpers/Date";
 
 class Dashboard extends React.Component {
   render() {
@@ -25,11 +25,9 @@ class Dashboard extends React.Component {
         establishment.pse_en_projet_ou_en_cours.length > 0
     };
 
-    const moments =
-      establishment.interactions &&
-      establishment.interactions.map(interaction => moment(interaction.date));
-
-    const lastControl = moments && moment.max(moments).format("DD/MM/YYYY");
+    const lastControl = hasInteractions
+      ? getLastDateInteraction(establishment.interactions)
+      : "";
 
     const dashboardSizeRanges = {
       ...Config.get("inseeSizeRanges"),

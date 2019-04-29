@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faCircle, faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import { faCircle } from "@fortawesome/fontawesome-pro-solid";
+import { getLastDateInteraction } from "../../../../helpers/Date";
 
 class EstablishmentView extends React.Component {
   constructor(props) {
@@ -41,22 +42,27 @@ class EstablishmentView extends React.Component {
 
     const interactions = Object.entries(establishmentsWithInteractions).map(
       ([siret, nbInteractions]) => {
-        const etablishment = enterprise.etablissements.find(
-          etab => etab.siret === siret
-        );
+        const establishment = enterprise.etablissements.find(etab => {
+          console.log({ etab, nbInteractions });
+          return etab.siret.trim() === siret.trim();
+        });
+
         return {
           siret,
-          etat: etablishment && etablishment.etat_etablissement,
+          etat: establishment && establishment.etat_etablissement,
           dep:
-            etablishment &&
-            etablishment.adresse_components &&
-            etablishment.adresse_components.code_postal &&
-            etablishment.adresse_components.code_postal.substr(0, 2),
+            establishment &&
+            establishment.adresse_components &&
+            establishment.adresse_components.code_postal &&
+            establishment.adresse_components.code_postal.substr(0, 2),
           commune:
-            etablishment &&
-            etablishment.adresse_components &&
-            etablishment.adresse_components.localite,
-          count: nbInteractions
+            establishment &&
+            establishment.adresse_components &&
+            establishment.adresse_components.localite,
+          lastControlDate: getLastDateInteraction(
+            Array.isArray(establishment.interactions) &&
+              establishment.interactions
+          )
         };
       }
     );
@@ -71,69 +77,43 @@ class EstablishmentView extends React.Component {
                 enterprise.totalInteractions.total}
             </span>
             <span className="direccte-ex cerpt--pole-key">
-              interactions sur{" "}
+              établissements avec une intervention
             </span>
-            <span className="direccte-excerpt--pole-value">
-              {enterprise.etablissements.length}
-            </span>
-            <span className="direccte-excerpt--pole-key">établissements</span>
           </div>
         </div>
-        <div className="accordions">
-          <div className="accordion is-active">
-            <div className="accordion-header toggle">
-              <span className="">Détails des intéractions</span>
-              <span className="">
-                <button className="button is-light is-rounded">
-                  <span className="icon">
-                    <FontAwesomeIcon icon={faChevronDown} />
-                  </span>
-                </button>
-              </span>
-            </div>
-            <div className="accordion-body">
-              <div className="accordion-content">
-                <table className="table is-striped direccte-interactions">
-                  <thead>
-                    <tr>
-                      <th>SIRET</th>
-                      <th>Etat</th>
-                      <th>Département</th>
-                      <th>Commune</th>
-                      <th>Nombre d'interactions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {interactions.map(etab => (
-                      <tr key={etab.siret}>
-                        <td>
-                          <Link to={`/establishment/${etab.siret}`}>
-                            {etab.siret}
-                          </Link>
-                        </td>
-                        <td>
-                          {etab.etat && (
-                            <FontAwesomeIcon
-                              className={
-                                etab.etat === "A"
-                                  ? "icon--success"
-                                  : "icon--danger"
-                              }
-                              icon={faCircle}
-                            />
-                          )}
-                        </td>
-                        <td>{etab.dep}</td>
-                        <td>{etab.commune}</td>
-                        <td>{etab.count}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+        <table className="table is-striped direccte-interactions">
+          <thead>
+            <tr>
+              <th>SIRET</th>
+              <th>Etat</th>
+              <th>Département</th>
+              <th>Commune</th>
+              <th>Dernière intervention</th>
+            </tr>
+          </thead>
+          <tbody>
+            {interactions.map(etab => (
+              <tr key={etab.siret}>
+                <td>
+                  <Link to={`/establishment/${etab.siret}`}>{etab.siret}</Link>
+                </td>
+                <td>
+                  {etab.etat && (
+                    <FontAwesomeIcon
+                      className={
+                        etab.etat === "A" ? "icon--success" : "icon--danger"
+                      }
+                      icon={faCircle}
+                    />
+                  )}
+                </td>
+                <td>{etab.dep}</td>
+                <td>{etab.commune}</td>
+                <td>{etab.count}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
     );
   }

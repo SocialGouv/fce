@@ -1,156 +1,106 @@
 import React from "react";
 import Value from "../../../elements/Value";
 import { toI18nDate } from "../../../helpers/Date";
+import Config from "../../../services/Config";
+import Data from "./SharedComponents/Data";
 
-class EnterpriseActivity extends React.Component {
-  render() {
-    const { enterprise } = this.props;
+const EnterpriseActivity = ({ enterprise }) => {
+  const dashboardSizeRanges = {
+    ...Config.get("inseeSizeRanges"),
+    "0 salarié": "0 salarié"
+  };
 
-    return (
-      <section id="activity" className="enterprise-section">
-        <h2 className="title is-size-4">Informations sur l’entreprise</h2>
+  return (
+    <section id="activity" className="enterprise-section">
+      <h2 className="title is-size-4">Informations légales sur l’entreprise</h2>
 
+      <Data name="Forme juridique" value={enterprise.categorie_juridique} />
+      <Data
+        name="Activité principale"
+        value={`${enterprise.naf ? enterprise.naf : "-"} ${
+          enterprise.libelle_naf ? enterprise.libelle_naf : ""
+        }`}
+      />
+      <Data name="Date de création" value={enterprise.date_de_creation} />
+      <Data
+        name="Date immatriculation RCS"
+        value={enterprise.rcs_date_immatriculation}
+      />
+      {enterprise.rcs_information_libelle && (
+        <Data
+          name="Observation RCS"
+          value={`${toI18nDate(enterprise.rcs_information_date, "L")} - ${
+            enterprise.rcs_information_libelle
+          }`}
+        />
+      )}
+      <Data name="Catégorie" value={enterprise.categorie_entreprise} />
+      <Data
+        name="Tranche d'effectif"
+        value={dashboardSizeRanges[enterprise.tranche_effectif]}
+      />
+      <Data
+        name="Année tranche d'effectif"
+        value={enterprise.annee_tranche_effectif}
+      />
+      <Data name="Siège social (SIRET)" value={enterprise.siret_siege_social} />
+      <Data
+        name="Etablissements"
+        value={`${
+          enterprise.nombre_etablissements_actifs
+        } actif(s) et ${enterprise.etablissements.length -
+          enterprise.nombre_etablissements_actifs} fermé(s)`}
+      />
+
+      {enterprise.attestation_dgfip && (
         <div className="columns">
-          <h5 className="column is-3">Forme juridique</h5>
-          <span className="column is-8">
-            <Value value={enterprise.categorie_juridique} empty="-" />
-          </span>
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">Activité Principale</h5>
-          <span className="column is-8">
-            <Value value={enterprise.naf} empty="-" />{" "}
-            <Value value={enterprise.libelle_naf} empty="-" />
-          </span>
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">Date de création</h5>
-          <span className="column is-8">
-            <Value value={enterprise.date_de_creation} empty="-" />
-          </span>
-          {enterprise.date_de_radiation
-            ? [
-                <h5 className="column is-3" key="date_rad_label">
-                  Date de radiation
-                </h5>,
-                <span className="column is-8" key="date_rad_value">
-                  <Value value={enterprise.date_de_radiation} empty="-" />
-                </span>
-              ]
-            : ""}
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">Date immatriculation RCS</h5>
-          <span className="column is-8">
-            <Value value={enterprise.rcs_date_immatriculation} empty="-" />
-          </span>
-        </div>
-
-        {enterprise.rcs_information_libelle && (
-          <div className="columns">
-            <h5 className="column is-3">Observation RCS</h5>
-            <span className="column is-8">
-              <Value
-                value={`${toI18nDate(enterprise.rcs_information_date, "L")} - ${
-                  enterprise.rcs_information_libelle
-                }`}
-                empty="-"
-              />
-            </span>
-          </div>
-        )}
-
-        <div className="columns">
-          <h5 className="column is-3">Catégorie</h5>
-          <span className="column is-8">
-            <Value value={enterprise.categorie_entreprise} empty="-" />
-          </span>
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">Tranche Effectif</h5>
-          <span className="column is-8">
-            <Value value={enterprise.tranche_effectif} empty="-" />
-          </span>
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">Année tranche Effectif</h5>
-          <span className="column is-8">
-            <Value value={enterprise.annee_tranche_effectif} empty="-" />
-          </span>
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">Siège social (SIRET)</h5>
-          <span className="column is-8">
-            <Value value={enterprise.siret_siege_social} empty="-" />
-          </span>
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">Etablissements</h5>
+          <h5 className="column is-3">Attestation fiscale DGFIP</h5>
           <span className="column is-8">
             <Value
-              value={`${enterprise.nombre_etablissements_actifs} actif(s)`}
-              empty="-"
+              value={!!enterprise.attestation_dgfip}
+              empty="Non Disponible"
+              no="Non Disponible"
             />
           </span>
+          {enterprise.attestation_dgfip && (
+            <span className="span col-md-5">
+              <a
+                href={enterprise.attestation_dgfip}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                télécharger le document
+              </a>
+            </span>
+          )}
         </div>
+      )}
 
-        {enterprise.attestation_dgfip && (
-          <div className="columns">
-            <h5 className="column is-3">Attestation fiscale DGFIP</h5>
-            <span className="column is-8">
-              <Value
-                value={!!enterprise.attestation_dgfip}
-                empty="Non Disponible"
-                no="Non Disponible"
-              />
+      {enterprise.attestation_acoss && (
+        <div className="columns">
+          <h5 className="column is-3">Attestation sociale ACOSS</h5>
+          <span className="column is-8">
+            <Value
+              value={!!enterprise.attestation_acoss}
+              empty="Non Disponible"
+              no="Non Disponible"
+            />
+          </span>
+          {enterprise.attestation_acoss && (
+            <span className="span col-md-5">
+              <a
+                href={enterprise.attestation_acoss}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                télécharger le document
+              </a>
             </span>
-            {enterprise.attestation_dgfip && (
-              <span className="span col-md-5">
-                <a
-                  href={enterprise.attestation_dgfip}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  télécharger le document
-                </a>
-              </span>
-            )}
-          </div>
-        )}
-
-        {enterprise.attestation_acoss && (
-          <div className="columns">
-            <h5 className="column is-3">Attestation sociale ACOSS</h5>
-            <span className="column is-8">
-              <Value
-                value={!!enterprise.attestation_acoss}
-                empty="Non Disponible"
-                no="Non Disponible"
-              />
-            </span>
-            {enterprise.attestation_acoss && (
-              <span className="span col-md-5">
-                <a
-                  href={enterprise.attestation_acoss}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  télécharger le document
-                </a>
-              </span>
-            )}
-          </div>
-        )}
-      </section>
-    );
-  }
-}
+          )}
+        </div>
+      )}
+    </section>
+  );
+};
 
 export default EnterpriseActivity;

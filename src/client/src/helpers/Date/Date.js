@@ -12,3 +12,10 @@ export const getCustomPastYear = N => {
     .subtract(N, "year")
     .format("YYYY");
 };
+
+export const getLastDateInteraction = interactions => {
+  const moments =
+    interactions && interactions.map(interaction => Moment(interaction.date));
+
+  return (moments && Moment.max(moments).format("DD/MM/YYYY")) || "";
+};

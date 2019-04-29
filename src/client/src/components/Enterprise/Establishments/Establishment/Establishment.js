@@ -4,12 +4,12 @@ import classNames from "classnames";
 import Value from "../../../../elements/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faCircle, faSquare } from "@fortawesome/fontawesome-pro-solid";
-import { getEstablishmentIsActive } from "../../../../helpers/Establishment";
+import { isActiveEstablishment } from "../../../../helpers/Establishment";
 
 class Establishment extends React.Component {
   render() {
     const { establishment } = this.props;
-    const isActive = getEstablishmentIsActive(establishment);
+    const isActive = isActiveEstablishment(establishment);
     const stateClass = isActive ? "icon--success" : "icon--danger";
 
     return (

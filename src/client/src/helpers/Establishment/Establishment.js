@@ -5,6 +5,6 @@ export const getSuccession = (successeur, predecesseur) => {
   return { label: "SIRET prédecesseur", datas: predecesseur } || null;
 };
 
-export const getEstablishmentIsActive = establishment => {
+export const isActiveEstablishment = establishment => {
   return establishment.etat_etablissement === "A";
 };

@@ -29,10 +29,10 @@ class Establishment extends React.Component {
           <span> - </span>
           <Value
             value={
-              `${establishment.departement &&
+              (establishment.departement &&
                 establishment.adresse_components &&
-                establishment.adresse_components.code_postal.slice(0, 2)} - ` ||
-              null
+                establishment.adresse_components.code_postal.slice(0, 2)) ||
+              ""
             }
             empty=""
           />

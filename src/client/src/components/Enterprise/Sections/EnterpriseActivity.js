@@ -20,8 +20,7 @@ class EnterpriseActivity extends React.Component {
         <div className="columns">
           <h5 className="column is-3">Activité Principale</h5>
           <span className="column is-8">
-            <Value value={enterprise.naf} empty="-" />
-            <span> - </span>
+            <Value value={enterprise.naf} empty="-" />{" "}
             <Value value={enterprise.libelle_naf} empty="-" />
           </span>
         </div>

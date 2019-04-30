@@ -27,7 +27,11 @@ class Establishments extends React.Component {
       isEstablishmentDisplayed
     } = this.props;
 
-    const { isRedirectedToEnterprise, isRedirectedToResearch } = this.state;
+    const {
+      isRedirectedToEnterprise,
+      isRedirectedToResearch,
+      isLimited
+    } = this.state;
 
     return (
       <>
@@ -73,12 +77,12 @@ class Establishments extends React.Component {
           <p className="title is-size-5">
             {establishments.length} Établissements
           </p>
-          <section className="establishments">
+          <section className={`establishments ${!isLimited && "with-lift"}`}>
             <EstablishmentsItems
               establishments={establishments}
-              limit={this.state.isLimited && limitItems}
+              limit={isLimited && limitItems}
             />
-            {establishments.length > limitItems && this.state.isLimited && (
+            {establishments.length > limitItems && isLimited && (
               <button
                 className="button is-primary has-text-light toggle-all-establishments"
                 onClick={() => {

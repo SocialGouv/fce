@@ -83,8 +83,8 @@ class EstablishmentHeader extends React.Component {
                   value={
                     isActive
                       ? establishment.date_creation
-                      : establishment.date_dernier_traitement_etablissement ||
-                        establishment.date_fin
+                      : establishment.date_fin ||
+                        establishment.date_dernier_traitement_etablissement
                   }
                   empty="-"
                 />

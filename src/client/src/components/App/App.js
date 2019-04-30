@@ -15,7 +15,6 @@ import Search from "../../containers/Search";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import { Error403, Error404 } from "../../components/Errors";
-import PaperBG from "../../assets/img/paper.png";
 
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
@@ -23,7 +22,7 @@ let history = createBrowserHistory();
 const piwik = PiwikReactRouter(Config.get("piwik"));
 
 const appStyle = {
-  background: `url(${PaperBG})`
+  backgroundColor: `#ededed`
 };
 
 class App extends React.Component {

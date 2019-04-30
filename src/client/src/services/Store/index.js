@@ -1,6 +1,6 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storageSession from "redux-persist/lib/storage/session";
 import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 import reducer from "./reducers";
@@ -12,13 +12,18 @@ if (process.env.NODE_ENV !== "production") {
 
 const persistConfig = {
   key: "direccte",
-  storage: storage
+  storage: storageSession
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 export default () => {
-  let store = createStore(persistedReducer, applyMiddleware(...middleware));
+  const composeEnhancers =
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const store = createStore(
+    persistedReducer,
+    composeEnhancers(applyMiddleware(...middleware))
+  );
   let persistor = persistStore(store);
   return { store, persistor };
 };

@@ -2,9 +2,9 @@
   "tabWidth": 2,
   "overrides": [
     {
-      "files": "*.css",
+      "files": "*.{css,scss}",
       "options": {
-        "tabWidth": 2
+        "tabWidth": 4
       }
     }
   ]

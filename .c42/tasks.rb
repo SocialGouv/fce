@@ -6,6 +6,8 @@ YARN = ENV['YARN'] || 'docker-compose run --rm %container% yarn'
 NODE = ENV['NODE'] || 'docker-compose run --rm %container% node'
 CYPRESS = 'docker-compose run --rm cypress'
 DB_NAME = 'fce'
+REMOTE_HOST = 'commit42@commit42.fr'.freeze
+REMOTE_DUMP = 'commit42_fce.sql.gz'.freeze
 
 desc 'docker:run', 'Lance docker-compose up'
 task 'docker:run' do
@@ -22,8 +24,13 @@ end
 desc 'pg:console', 'Lance la console postgres'
 shell_task 'pg:console', "docker exec -i $(docker-compose ps -q db | sed -n 1p) /bin/bash -c 'psql -d #{DB_NAME} -U postgres'"
 
-desc 'pg:dump', 'Lance la console pg_dump pour créer un dump de la bdd'
+desc 'pg:dump', 'Lance la console pg_dump pour créer un dump de la bdd locale'
 shell_task 'pg:dump', "docker exec -i $(docker-compose ps -q db | sed -n 1p) /bin/bash -c 'pg_dump -U postgres #{DB_NAME}'"
+
+desc 'dump:get DATE', 'Recupère le dump de la bdd en fonction de la date'
+task 'dump:get' do |date|
+  run("rsync -avz #{REMOTE_HOST}:admin/backup/#{date}/postgresql/#{REMOTE_DUMP} .c42/tmp/dump.sql.gz")
+end
 
 # Front
 %w(front server frentreprise).each do |ctr|
@@ -119,6 +126,9 @@ end
 desc 'install', 'Installe le projet'
 task :install do
   invoke 'docker:install', []
+
+  info('Downloading db dump depending on the date ')
+  invoke 'dump:get', [Time.now.strftime('%Y-%m-%d')]
 
   sql_cat_cmd = 'cat .c42/tmp/fce-base.sql' if File.exists?('.c42/tmp/fce-base.sql')
   sql_cat_cmd = 'cat .c42/tmp/dump.sql' if File.exists?('.c42/tmp/dump.sql')

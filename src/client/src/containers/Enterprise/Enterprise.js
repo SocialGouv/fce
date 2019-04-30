@@ -6,7 +6,6 @@ import {
   loadEstablishment,
   loadEntreprise
 } from "../../services/Store/actions";
-import Config from "../../services/Config";
 import {
   Establishment as EstablishmentView,
   Enterprise as EnterpriseView
@@ -70,7 +69,10 @@ class Enterprise extends React.Component {
     ) {
       establishment = this.props.currentEnterprise.etablissements.find(
         establishment => {
-          return establishment.siret === siret;
+          return (
+            establishment.siret.trim() === siret.trim() &&
+            establishment._dataSources !== null
+          );
         }
       );
 
@@ -109,7 +111,10 @@ class Enterprise extends React.Component {
         const establishment =
           results.length &&
           results[0].etablissements.find(establishment => {
-            return establishment.siret === siret && establishment._success;
+            return (
+              establishment.siret.trim() === siret.trim() &&
+              establishment._success
+            );
           });
 
         if (query.isSIRET && establishment) {

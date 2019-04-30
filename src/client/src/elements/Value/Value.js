@@ -38,6 +38,10 @@ export default ({
     return empty;
   }
 
+  if (value === "Non disponible") {
+    return empty;
+  }
+
   if (typeof value === "string" && breakLines) {
     return value.split("\n").map((l, i) => <div key={`line_${i}`}>{l}</div>);
   }

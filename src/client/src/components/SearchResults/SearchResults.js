@@ -2,12 +2,10 @@ import React from "react";
 import { Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSquare, faCircle } from "@fortawesome/fontawesome-pro-solid";
-import Terms from "./Terms";
 import ReactTable from "react-table";
 import Value from "../../elements/Value";
 import { withRouter } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
-import classNames from "classnames";
 
 class SearchResults extends React.Component {
   render() {
@@ -47,9 +45,7 @@ class SearchResults extends React.Component {
                   return {
                     onClick: e => {
                       e && e.preventDefault();
-                      this.props.history.push(
-                        "/establishment/" + rowInfo.original.etablissement.siret
-                      );
+                      this.props.history.push(rowInfo.row.siret.props.to);
                     }
                   };
                 }}
@@ -94,7 +90,7 @@ class SearchResults extends React.Component {
                     accessor: e => (
                       <>
                         {e.etablissement.etat_etablissement &&
-                        e.etablissement.etat_etablissement == "A" ? (
+                        e.etablissement.etat_etablissement === "A" ? (
                           <div style={{ textAlign: "center" }}>
                             <FontAwesomeIcon
                               data-tip

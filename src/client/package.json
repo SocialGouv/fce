@@ -9,17 +9,22 @@
     "@fortawesome/fontawesome-pro-regular": "^5.0.6",
     "@fortawesome/fontawesome-pro-solid": "^5.0.6",
     "@fortawesome/react-fontawesome": "0.0.17",
+    "OhMyCache": "^1.1.1",
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
     "bulma": "^0.7.4",
     "bulma-extensions": "^4.1.0",
     "classnames": "^2.2.5",
+    "core-js": "^3.0.1",
     "json2csv": "^4.0.0",
+    "lodash.get": "^4.4.2",
     "moment": "^2.20.1",
     "node-sass": "^4.11.0",
     "piwik-react-router": "^0.12.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "prop-types": "^15.7.2",
+    "react": "16.8.6",
+    "react-app-polyfill": "^0.2.2",
+    "react-dom": "16.8.6",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -41,10 +46,9 @@
     "postinstall": "chown -R --reference=package.json .",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "prettier": "prettier --write 'src/**/*.js'"
+    "prettier": "prettier --write 'src/**/*.{js,scss}'"
   },
   "devDependencies": {
-    "cypress": "^3.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.4.0",
     "prettier": "^1.9.2",
@@ -54,7 +58,7 @@
   "browserslist": [
     ">0.2%",
     "not dead",
-    "not ie <= 11",
+    "not ie < 11",
     "not op_mini all"
   ]
 }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { loginUser } from "../../services/Store/actions";
+import Auth from "../../services/Auth";
 import LoginView from "../../components/Login";
 
 class Login extends Component {
@@ -17,8 +16,7 @@ class Login extends Component {
     evt && evt.preventDefault();
     this.setState({ hasError: false, loading: true });
 
-    this.props
-      .loginUser(this.state.password)
+    Auth.login(this.state.password)
       .then(response => {
         if (response.data.user) {
           this._loginSuccess(response.data.user);
@@ -26,11 +24,9 @@ class Login extends Component {
           this._loginFail();
         }
       })
-      .catch(
-        function(error) {
-          this._loginFail();
-        }.bind(this)
-      );
+      .catch(error => {
+        this._loginFail();
+      });
   };
 
   _loginSuccess = user => {
@@ -41,7 +37,7 @@ class Login extends Component {
     this.setState({
       hasError: false,
       loading: false,
-      redirectTo: user.isAdmin ? "/admin" : from
+      redirectTo: from
     });
   };
 
@@ -79,16 +75,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {};
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    loginUser: user => {
-      return dispatch(loginUser(user));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

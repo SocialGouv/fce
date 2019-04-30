@@ -1,310 +1,127 @@
 import React from "react";
-import Value from "../../../elements/Value";
-import EstablishmentTransfert from "./EstablishmentTransfert";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/fontawesome-pro-solid";
+import Data from "./SharedComponents/Data";
 import Config from "../../../services/Config";
+import { getSuccession } from "../../../helpers/Establishment";
 
-const assocStyle = {
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center"
-};
-
+import Subcategory from "./SharedComponents/Subcategory";
 class EstablishmentActivity extends React.Component {
   render() {
     const { establishment } = this.props;
+    const succession = getSuccession(
+      establishment.successeur,
+      establishment.predecesseur
+    );
 
     return (
       <section id="activity" className="enterprise-section">
         <h2 className="title is-size-4">Activité</h2>
-
-        <div className="columns">
-          <h5 className="column is-3">Activité principale</h5>
-          <span className="column is-8">
-            <Value value={establishment.naf} empty="-" />
-            <span> - </span>
-            <Value value={establishment.libelle_naf} empty="-" />
+        <Data
+          name="Activité principale"
+          value={`${establishment.naf ? establishment.naf : "-"} ${
+            establishment.libelle_naf ? establishment.libelle_naf : "-"
+          }`}
+        />
+        <Data name="Date de création" value={establishment.date_creation} />
+        <Data name="Association" value={!!establishment.association} />
+        {establishment.association &&
+        establishment.document_association &&
+        establishment.document_association.url ? (
+          <span>
+            <span>télécharger le document de l'association</span>
+            <a
+              href={establishment.document_association.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              les derniers statuts
+            </a>
           </span>
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">IDCC</h5>
-          <span className="column is-8">
-            {establishment.code_idcc || establishment.libelle_idcc ? (
-              <Value
-                value={`${establishment.code_idcc} - ${
-                  establishment.libelle_idcc
-                }`}
-                empty="-"
-              />
-            ) : (
-              <span>-</span>
-            )}
-          </span>
-        </div>
-
-        <div className="columns">
-          <h5 className="column is-3">Association</h5>
-          <span className="column is-8">
-            <Value value={!!establishment.association} empty="-" />
-            {establishment.association &&
-            establishment.document_association &&
-            establishment.document_association.url ? (
-              <span>
-                <span>&nbsp;- télécharger&nbsp;</span>
-                <a
-                  href={establishment.document_association.url}
-                  target="_blank"
-                >
-                  les derniers statuts
-                </a>
-              </span>
-            ) : null}
-          </span>
-        </div>
-        <div className="columns">
-          {establishment.association
-            ? [
-                <h5 className="column is-3" key="rna_label">
-                  Numéro RNA
-                </h5>,
-                <span className="column is-8" key="rna_value">
-                  <Value
-                    value={
-                      establishment.association.id ||
-                      establishment.association.siret
-                    }
-                    empty="-"
-                  />
-                </span>
-              ]
-            : null}
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Etablissement employeur</h5>
-          <span className="column is-8">
-            <Value
-              value={establishment.etablissement_employeur && "Oui"}
-              no="Non"
-              empty="-"
-            />
-          </span>
-        </div>
-        <div className="accordions">
-          <div className="accordion">
-            <div className="accordion-header toggle">
-              <span className="">Effectifs</span>
-              <span className="">
-                <button className="button is-light is-rounded">
-                  <span className="icon">
-                    <FontAwesomeIcon icon={faChevronDown} />
-                  </span>
-                </button>
-              </span>
-            </div>
-            <div className="accordion-body">
-              <div className="accordion-content no-table">
-                <div className="columns">
-                  <h5 className="column is-3">Tranche Effectif INSEE</h5>
-                  <span className="column is-8">
-                    <Value
-                      value={establishment.tranche_effectif_insee}
-                      empty="-"
-                    />
-                  </span>
-                </div>
-                <div className="columns">
-                  <h5 className="column is-3">Année tranche Effectif INSEE</h5>
-                  <span className="column is-8">
-                    <Value
-                      value={establishment.annee_tranche_effectif_insee}
-                      empty="-"
-                    />
-                  </span>
-                </div>
-                <div className="columns">
-                  <h5 className="column is-3">Nombre d'intérimaires</h5>
-                  <span className="column is-8">
-                    <Value value={establishment.interim} empty="-" />
-                  </span>
-                </div>
-                <div className="columns">
-                  <h5 className="column is-3">Dernier effectif physique</h5>
-                  <span className="column is-8">
-                    <Value
-                      value={establishment.dernier_effectif_physique}
-                      empty="-"
-                      nonEmptyValues={[0, "0"]}
-                    />
-                  </span>
-                </div>
-                <div className="columns">
-                  <h5 className="column is-3">
-                    Date dernier effectif physique
-                  </h5>
-                  <span className="column is-8">
-                    <Value
-                      value={establishment.date_dernier_effectif_physique}
-                      empty="-"
-                    />
-                  </span>
-                </div>
-                <div className="columns">
-                  <h5 className="column is-3">
-                    Source dernier effectif physique
-                  </h5>
-                  <span className="column is-8">
-                    <Value
-                      value={establishment.source_dernier_effectif_physique}
-                      empty="-"
-                    />
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">ETI / Pépite</h5>
-          <span className="column is-8">
-            <Value value={establishment.eti_pepite} empty="-" />
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">Filière stratégique</h5>
-          <span className="column is-8">
-            <Value value={establishment.filiere_strategique} empty="-" />
-          </span>
-        </div>
-        <div className="columns">
-          <h5 className="column is-3">
-            Adhérent à un Pole de compétitivité (2015)
-          </h5>
-          <span className="column is-8">
-            <Value
-              value={
+        ) : null}
+        <Subcategory
+          subtitle="Lien de succession"
+          datas={[
+            {
+              name: succession && succession.label,
+              value: succession.datas && succession.datas.siret,
+              emptyValue: "pas de prédecesseur ou de successeur",
+              nonEmptyValue: "",
+              link: succession.datas
+                ? "/establishment/" + succession.datas.siret
+                : null
+            },
+            {
+              name: "Date du transfert",
+              value: succession.datas && succession.datas.date_transfert,
+              emptyValue: "-",
+              nonEmptyValue: ""
+            }
+          ]}
+        />
+        <Subcategory
+          subtitle="Effectifs"
+          datas={[
+            {
+              name: "Tranche Effectif INSEE",
+              value: Config.get("inseeSizeRanges")[
+                establishment.tranche_effectif_insee
+              ],
+              nonEmptyValue: ""
+            },
+            {
+              name: "Année tranche effectif INSEE",
+              value: establishment.annee_tranche_effectif_insee,
+              nonEmptyValue: ""
+            },
+            {
+              name: "Dernier effectif connu",
+              value: establishment.dernier_effectif_physique,
+              nonEmptyValue: ""
+            },
+            {
+              name: "Date dernier effectif connu",
+              value: establishment.date_dernier_effectif_physique,
+              nonEmptyValue: ""
+            }
+          ]}
+        />
+        <Subcategory
+          subtitle="Développement économiques"
+          datas={[
+            {
+              name: "Filière stratégique",
+              value:
+                Array.isArray(establishment.interactions_3E) &&
+                establishment.interactions_3E.length &&
+                establishment.interactions_3E[0].filiere,
+              nonEmptyValue: ""
+            },
+            {
+              name: "ETI / PEPITE",
+              value:
+                Array.isArray(establishment.interactions_3E) &&
+                establishment.interactions_3E.length &&
+                establishment.interactions_3E[0].eti_pepite,
+              nonEmptyValue: ""
+            },
+            {
+              name: "Adhérent à un pole de compétitivité",
+              value:
                 Array.isArray(establishment.pole_competitivite) &&
-                !!establishment.pole_competitivite.length
-              }
-            />
-          </span>
-        </div>
-        <div className="accordions">
-          <div className="accordion">
-            <div className="accordion-header toggle">
-              <span className="">Liste des pôles de compétitivité</span>
-              <span className="">
-                <button className="button is-light is-rounded">
-                  <span className="icon">
-                    <FontAwesomeIcon icon={faChevronDown} />
-                  </span>
-                </button>
-              </span>
-            </div>
-            <div className="accordion-body">
-              <div className="accordion-content">
-                <table className="table is-striped">
-                  <tbody>
-                    {Array.isArray(establishment.pole_competitivite) &&
-                      establishment.pole_competitivite.length &&
-                      establishment.pole_competitivite.map(pole => (
-                        <tr>
-                          <td> {pole} </td>
-                        </tr>
-                      ))}
-                    <tr>
-                      <td>Lorem ipsum</td>
-                    </tr>
-                    <tr>
-                      <td> Dolor sit amet </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        {!establishment.predecesseur && !establishment.successeur ? (
-          <div className="columns">
-            <h5 className="column is-3">
-              Etablissement Successeur / Prédecesseur
-            </h5>
-            <span className="column is-8">Pas d'informations</span>
-          </div>
-        ) : (
-          <>
-            <EstablishmentTransfert
-              predecesseur={true}
-              data={establishment.predecesseur}
-            />{" "}
-            <EstablishmentTransfert
-              successeur={true}
-              data={establishment.successeur}
-            />
-          </>
-        )}
-        <div className="columns">
-          <h5 className="column is-3">
-            Nombre d'accords déposés au cours des 24 derniers mois :
-          </h5>
-          <span className="column is-8">
-            {establishment.accords
-              ? Config.get("accords").reduce((total, typeAccord) => {
-                  if (
-                    establishment.accords &&
-                    establishment.accords[typeAccord.key]
-                  ) {
-                    total += +establishment.accords[typeAccord.key];
-                  }
-                  return total;
-                }, 0)
-              : "-"}
-          </span>
-        </div>
-        <div className="accordions">
-          <div className="accordion">
-            <div className="accordion-header toggle">
-              <span className="">Liste des accords par thématiques</span>
-              <span className="">
-                <button className="button is-light is-rounded">
-                  <span className="icon">
-                    <FontAwesomeIcon icon={faChevronDown} />
-                  </span>
-                </button>
-              </span>
-            </div>
-            <div className="accordion-body">
-              <div className="accordion-content">
-                <table className="table is-striped">
-                  <thead>
-                    <tr>
-                      <th className="th"> Thématique</th>
-                      <th className="th"> Nombre accords concernés </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Config.get("accords").map(typeAccord => (
-                      <tr key={`accord-${typeAccord.key}`}>
-                        <td>{typeAccord.value}</td>
-                        <td>
-                          <Value
-                            value={
-                              establishment.accords &&
-                              establishment.accords[typeAccord.key]
-                            }
-                            empty="-"
-                            nonEmptyValues={[0, "0"]}
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+                !!establishment.pole_competitivite.length,
+              nonEmptyValue: ""
+            }
+          ]}
+        />
+        {Array.isArray(establishment.pole_competitivite) &&
+          !!establishment.pole_competitivite.length && (
+            <ul>
+              {establishment.pole_competitivite.map(pole => (
+                <li className="is-size-6 has-text-grey-dark" key={pole}>
+                  - {pole}
+                </li>
+              ))}
+            </ul>
+          )}
       </section>
     );
   }

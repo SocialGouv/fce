@@ -6,43 +6,32 @@ class Mandataire extends React.Component {
     const { mandataire } = this.props;
 
     return (
-      <>
-        {mandataire.raison_sociale
-          ? [
-              <div className="columns">
-                <h5 className="column is-3" key="rs_label">
-                  Raison Sociale
-                </h5>
-                <span className="column is-8" key="rs_value">
-                  <Value value={mandataire.raison_sociale} empty="-" />
-                </span>
-              </div>
-            ]
-          : [
-              <div className="columns" key="name_container">
-                <h5 className="column is-3" key="name_label">
-                  Nom
-                </h5>
-                <span className="column is-8" key="name_value">
-                  <Value value={mandataire.nom} empty="-" />
-                </span>
-              </div>,
-              <div className="columns" key="firstname_container">
-                <h5 className="column is-3" key="firstname_label">
-                  Prenom
-                </h5>
-                <span className="column is-8" key="firstname_value">
-                  <Value value={mandataire.prenom} empty="-" />
-                </span>
-              </div>
-            ]}
+      <div className="mandataire">
         <div className="columns">
           <h5 className="column is-3">Fonction</h5>
           <span className="column is-8">
             <Value value={mandataire.fonction} empty="-" />
           </span>
         </div>
-      </>
+        {mandataire.raison_sociale ? (
+          <div className="columns">
+            <h5 className="column is-3">Raison Sociale</h5>
+            <span className="column is-8">
+              <Value value={mandataire.raison_sociale} empty="-" />
+            </span>
+          </div>
+        ) : (
+          <div className="columns">
+            <h5 className="column is-3">Nom et Prénom</h5>
+            <span className="column is-8">
+              <Value
+                value={`${mandataire.nom} ${mandataire.prenom}`}
+                empty="-"
+              />
+            </span>
+          </div>
+        )}
+      </div>
     );
   }
 }

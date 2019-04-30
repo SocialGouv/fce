@@ -216,11 +216,11 @@ const formatEnt = async (ent, params, db) => {
       defaultValue: {},
       callback: (uniteLegale, ent) =>
         uniteLegale.etatAdministratifUniteLegale === "C"
-          ? uniteLegale.dateFin
+          ? uniteLegale.dateDebut
           : ent.dateDernierTraitementUniteLegale
     },
     {
-      in: "periodesUniteLegale[0].dateFin",
+      in: "periodesUniteLegale[0].dateDebut",
       out: "date_de_radiation"
     },
     {

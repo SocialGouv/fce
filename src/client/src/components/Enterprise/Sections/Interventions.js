@@ -244,7 +244,9 @@ class Interventions extends React.Component {
                     <th />
                     {Object.keys(
                       establishment.activite_partielle_24_derniers_mois
-                    ).map(year => <th>{year}</th>)}
+                    ).map(year => (
+                      <th>{year}</th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>

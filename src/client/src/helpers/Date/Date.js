@@ -6,3 +6,18 @@ export const toI18nDate = (date, format = "L") => {
   }
   return Moment(date).format(format || "L");
 };
+
+export const getCustomPastYear = N => {
+  return Moment()
+    .subtract(N, "year")
+    .format("YYYY");
+};
+
+export const getLastDateInteraction = interactions => {
+  const moments =
+    Array.isArray(interactions) &&
+    interactions &&
+    interactions.map(interaction => Moment(interaction.date));
+
+  return (moments && Moment.max(moments).format("DD/MM/YYYY")) || "";
+};

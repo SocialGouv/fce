@@ -11,3 +11,4 @@ src/*/dist/
 /.c42/docker-compose.yml
 
 vendor/
+node_modules/

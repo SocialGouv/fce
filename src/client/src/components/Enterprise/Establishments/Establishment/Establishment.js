@@ -3,22 +3,14 @@ import { Link } from "react-router-dom";
 import classNames from "classnames";
 import Value from "../../../../elements/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import {
-  faCircle,
-  faCalendarExclamation
-} from "@fortawesome/fontawesome-pro-solid";
+import { faCircle, faSquare } from "@fortawesome/fontawesome-pro-solid";
+import { isActiveEstablishment } from "../../../../helpers/Establishment";
 
 class Establishment extends React.Component {
   render() {
     const { establishment } = this.props;
-    const nbInteractions = Array.isArray(establishment.direccte)
-      ? establishment.direccte.length
-      : 0;
-
-    const stateClass =
-      establishment.etat_etablissement === "A"
-        ? "icon--success"
-        : "icon--danger";
+    const isActive = isActiveEstablishment(establishment);
+    const stateClass = isActive ? "icon--success" : "icon--danger";
 
     return (
       <ul className="list-unstyled">
@@ -31,31 +23,26 @@ class Establishment extends React.Component {
           </Link>
         </li>
         <li>
-          <FontAwesomeIcon className={classNames(stateClass)} icon={faCircle} />
+          <FontAwesomeIcon
+            className={classNames(stateClass)}
+            icon={isActive ? faCircle : faSquare}
+          />
           <span> - </span>
           <Value
             value={
-              establishment.departement
-                ? establishment.departement
-                : establishment.adresse_components
-                ? establishment.adresse_components.code_postal.slice(0, 2)
-                : null
+              (establishment.departement &&
+                establishment.adresse_components &&
+                establishment.adresse_components.code_postal.slice(0, 2)) ||
+              ""
             }
             empty=""
           />
-          <span> - </span>
           <Value
             value={
               establishment.adresse_components &&
               establishment.adresse_components.localite
             }
             empty=""
-          />
-          <span> - </span>
-          <span>{nbInteractions}</span>
-          <FontAwesomeIcon
-            className="aside-interact--icon"
-            icon={faCalendarExclamation}
           />
         </li>
       </ul>

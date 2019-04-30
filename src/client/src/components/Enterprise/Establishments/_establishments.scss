@@ -14,7 +14,7 @@
         margin-bottom: 1rem;
     }
 
-    > .aside-contain {
+    >.aside-contain {
         position: relative;
         display: block;
         overflow: auto;
@@ -22,13 +22,12 @@
         z-index: 10;
         padding: 1rem 0 1rem 1rem;
 
-        > section:not(.establishments) {
+        >section:not(.establishments) {
             padding-right: 1rem;
         }
 
         .establishments {
-            overflow-y: auto;
-            max-height: 30rem;
+            overflow-y: hidden;
 
             .toggle-all-establishments {
                 display: block;
@@ -39,6 +38,11 @@
                 border: none;
                 color: #fff;
             }
+        }
+
+        .with-lift {
+            overflow-y: auto;
+            max-height: 70rem;
         }
 
         @media print {

@@ -69,8 +69,7 @@ class EstablishmentView extends React.Component {
         <div className="direccte-excerpt">
           <div className="direccte-excerpt--pole">
             <span className="direccte-excerpt--pole-value">
-              {enterprise.totalInteractions &&
-                enterprise.totalInteractions.total}
+              {interactions.length}
             </span>
             <span className="direccte-ex cerpt--pole-key">
               établissements avec une intervention
@@ -105,7 +104,7 @@ class EstablishmentView extends React.Component {
                 </td>
                 <td>{etab.dep}</td>
                 <td>{etab.commune}</td>
-                <td>{etab.count}</td>
+                <td>{etab.lastControlDate}</td>
               </tr>
             ))}
           </tbody>

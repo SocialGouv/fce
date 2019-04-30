@@ -3,10 +3,12 @@
 .vscode/
 
 # dist
-dist/
+src/*/dist/
+/dist/
 
 # docker
-docker-compose.yml
+/docker-compose.yml
+/.c42/docker-compose.yml
 
 vendor/
 node_modules/

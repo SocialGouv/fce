@@ -87,7 +87,7 @@ pipeline {
         echo "Deploying $BRANCH_NAME from $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
-            .c42/scripts/deploy.sh
+            .c42/scripts/deploy-prod.sh
           '''
         }
       }

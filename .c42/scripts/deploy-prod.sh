@@ -3,7 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd $DIR/../..
 
-SSH_HOST=fce@$(dig +short 164.131.131.239)
+SSH_HOST=fce@164.131.131.239
 RELEASEN=$(date +%Y%m%d%H%M%S)
 
 KEEP_RELEASES=3

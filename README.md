@@ -68,6 +68,8 @@ Quelques rêgles propre au projet
 
 ## Déploiement
 
+### Requirements
+
 ```bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
@@ -81,6 +83,32 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo apt-get install docker-ce
 ```
+
+### Procédure
+
+( A automatiser via Jenkins )
+
+#### Local
+
+- cloner le repo sur sa machine en récupérant la branche master
+
+- `.c42/scripts/install.sh`
+
+- `.c42/scripts/build.sh`
+
+- Dans le répertoire dist executer `yarn`
+
+- `rsync -avz dist/ fce:production/releases/AAAAMMDDHHMM`
+
+#### Serveur
+
+- `cp production/shared/.env production/releases/AAAAMMDDHHMM/.env`
+
+- `rm -rf production/current`
+
+- `cp -R production/releases/AAAAMMDDHHMM production/current`
+
+- dans `production/current` executer `docker-compose restart`
 
 ## Tests
 

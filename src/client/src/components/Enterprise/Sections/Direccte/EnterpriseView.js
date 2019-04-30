@@ -54,7 +54,7 @@ class EstablishmentView extends React.Component {
 
         return {
           siret,
-          etat: _get(establishment, "adresse_components.localite"),
+          etat: _get(establishment, "etat_etablissement"),
           dep: codePostal && codePostal.substr(0, 2),
           commune: _get(establishment, "etat_etablissement"),
           lastControlDate: getLastDateInteraction(

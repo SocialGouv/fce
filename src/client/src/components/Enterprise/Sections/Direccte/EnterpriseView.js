@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/fontawesome-pro-solid";
 import { getLastDateInteraction } from "../../../../helpers/Date";
+import _get from "lodash.get";
 
 class EstablishmentView extends React.Component {
   constructor(props) {
@@ -46,19 +47,19 @@ class EstablishmentView extends React.Component {
           etab => etab.siret.trim() === siret.trim()
         );
 
+        const codePostal = _get(
+          establishment,
+          "adresse_components.code_postal"
+        );
+
         return {
           siret,
-          etat: establishment && establishment.etat_etablissement,
-          dep:
-            establishment &&
-            establishment.adresse_components &&
-            establishment.adresse_components.code_postal &&
-            establishment.adresse_components.code_postal.substr(0, 2),
-          commune:
-            establishment &&
-            establishment.adresse_components &&
-            establishment.adresse_components.localite,
-          lastControlDate: getLastDateInteraction(establishment.interactions)
+          etat: _get(establishment, "adresse_components.localite"),
+          dep: codePostal && codePostal.substr(0, 2),
+          commune: _get(establishment, "etat_etablissement"),
+          lastControlDate: getLastDateInteraction(
+            _get(establishment, "interactions")
+          )
         };
       }
     );
@@ -69,8 +70,7 @@ class EstablishmentView extends React.Component {
         <div className="direccte-excerpt">
           <div className="direccte-excerpt--pole">
             <span className="direccte-excerpt--pole-value">
-              {enterprise.totalInteractions &&
-                enterprise.totalInteractions.total}
+              {interactions.length}
             </span>
             <span className="direccte-ex cerpt--pole-key">
               établissements avec une intervention
@@ -105,7 +105,7 @@ class EstablishmentView extends React.Component {
                 </td>
                 <td>{etab.dep}</td>
                 <td>{etab.commune}</td>
-                <td>{etab.count}</td>
+                <td>{etab.lastControlDate}</td>
               </tr>
             ))}
           </tbody>

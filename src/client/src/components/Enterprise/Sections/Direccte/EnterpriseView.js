@@ -53,7 +53,7 @@ class EstablishmentView extends React.Component {
         );
 
         const etablissementInterractions = enterprise.interactions.filter(
-          interaction => interaction.siret.trim() === siret
+          interaction => interaction.siret.trim() === siret.trim()
         );
 
         return {

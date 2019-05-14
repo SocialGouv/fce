@@ -1,25 +1,23 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
 import Auth from "../../services/Auth";
 import LoginView from "../../components/Login";
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      password: "",
-      redirectTo: false
-    };
-  }
+  state = {
+    email: "",
+    hasError: false,
+    hasSuccess: false,
+    loading: false
+  };
 
   login = evt => {
     evt && evt.preventDefault();
-    this.setState({ hasError: false, loading: true });
+    this.setState({ hasError: false, hasSuccess: true, loading: true });
 
-    Auth.login(this.state.password)
+    Auth.sendMagicLink(this.state.email)
       .then(response => {
-        if (response.data.user) {
-          this._loginSuccess(response.data.user);
+        if (response.data && response.data.success) {
+          this._loginSuccess();
         } else {
           this._loginFail();
         }
@@ -29,23 +27,19 @@ class Login extends Component {
       });
   };
 
-  _loginSuccess = user => {
-    const { from } = (this.props.location && this.props.location.state) || {
-      from: { pathname: "/" }
-    };
-
+  _loginSuccess = () => {
     this.setState({
       hasError: false,
-      loading: false,
-      redirectTo: from
+      hasSuccess: true,
+      loading: false
     });
   };
 
   _loginFail = () => {
     this.setState({
       hasError: true,
-      loading: false,
-      redirectTo: false
+      hasSuccess: false,
+      loading: false
     });
   };
 
@@ -58,11 +52,7 @@ class Login extends Component {
   };
 
   render() {
-    const { redirectTo, hasError, loading } = this.state;
-
-    if (redirectTo) {
-      return <Redirect to={redirectTo} />;
-    }
+    const { hasSuccess, hasError, loading } = this.state;
 
     return (
       <LoginView
@@ -70,6 +60,7 @@ class Login extends Component {
         updateForm={this.updateLogin}
         loading={loading}
         hasError={hasError}
+        hasSuccess={hasSuccess}
       />
     );
   }

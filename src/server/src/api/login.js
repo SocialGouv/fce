@@ -1,20 +1,29 @@
-var express = require("express");
-var router = express.Router();
+// import MagicLink from "../lib/MagicLink";
+import express from "express";
+import config from "config";
+import MagicKey from "magic-key";
 
-router.post("/login", function(req, res) {
-  let user = null;
+const router = express.Router();
+const magicKey = new MagicKey(config.get("magicKey"));
 
-  if (req.body && req.body.password) {
-    switch (req.body.password) {
-      case "D1r€cct€":
-        user = {
-          username: "user"
-        };
-        break;
-    }
-  }
+router.post("/sendMagicLink", function(req, res) {
+  const { email, clientVerificationKey } = req.body;
+  const key = magicKey.generateKey(email, clientVerificationKey);
+
+  // todo: send email
+
   res.send({
-    user
+    success: !!key
+  });
+});
+
+router.post("/checkMagicLink", function(req, res) {
+  const { key, clientVerificationKey } = req.body;
+  const isValidKey = magicKey.validateKey(key, clientVerificationKey);
+  const decryptedKey = magicKey.decryptKey(key, clientVerificationKey);
+  // todo : generate jwt token
+  res.send({
+    success: !!isValidKey
   });
 });
 

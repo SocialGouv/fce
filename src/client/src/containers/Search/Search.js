@@ -25,9 +25,7 @@ class Search extends Component {
 
   componentDidMount() {
     if (this.hasPreviousTerms(this.props.terms)) {
-      this.setState({
-        showResults: true
-      });
+      this.search();
     }
     this.loadNaf();
   }
@@ -129,9 +127,6 @@ class Search extends Component {
 
         if (query.isSIRET && results) {
           redirectTo = `/establishment/${query.terms.q}`;
-          this.props.setCurrentEnterprise(results[0]);
-        } else if (query.isSIREN && results) {
-          redirectTo = `/enterprise/${query.terms.q}`;
           this.props.setCurrentEnterprise(results[0]);
         } else {
           showResults = true;

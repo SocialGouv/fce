@@ -3,6 +3,7 @@ import config from "config";
 import MagicKey from "magic-key";
 import Mail from "../utils/mail";
 import sendMagicLinkTpl from "../templates/email/sendMagicLink";
+import Auth from "../utils/auth";
 
 const router = express.Router();
 const magicKey = new MagicKey(config.get("magicKey"));
@@ -62,8 +63,14 @@ router.post("/login", function(req, res) {
       throw new Error("Le lien de connexion a expiré ou est invalide");
     }
 
+    const user = { email: decryptedKey.email };
+    const token = Auth.generateToken(user);
+
+    console.log(`${user.email} logged with MagicLink`);
+
     return res.send({
-      success: true
+      success: true,
+      token
     });
   } catch (e) {
     console.error(`Magic link is invalid`, e, e.message);

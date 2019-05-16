@@ -1,22 +1,26 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import Auth from "../../services/Auth";
-import LoginView from "../../components/Login";
+import MagicLinkView from "../../components/MagicLink";
 import _get from "lodash.get";
 
-class Login extends Component {
+class MagicLink extends Component {
   state = {
-    email: "",
     hasError: false,
     errorMessage: null,
     hasSuccess: false,
     loading: false
   };
 
-  login = evt => {
-    evt && evt.preventDefault();
+  componentDidMount() {
+    const key = _get(this.props, "match.params.key");
+    this.login(key);
+  }
+
+  login = key => {
     this.setState({ hasError: false, hasSuccess: false, loading: true });
 
-    Auth.sendMagicLink(this.state.email)
+    Auth.loginWithMagicLink(key)
       .then(response => {
         if (response.data && response.data.success) {
           this._loginSuccess();
@@ -52,21 +56,11 @@ class Login extends Component {
     });
   };
 
-  updateLogin = evt => {
-    const target = evt.target;
-
-    this.setState({
-      [target.name]: target.value
-    });
-  };
-
   render() {
     const { hasSuccess, hasError, loading, errorMessage } = this.state;
 
     return (
-      <LoginView
-        login={this.login}
-        updateForm={this.updateLogin}
+      <MagicLinkView
         loading={loading}
         hasError={hasError}
         hasSuccess={hasSuccess}
@@ -76,4 +70,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(MagicLink);

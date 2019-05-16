@@ -11,6 +11,12 @@ export default class Auth {
     });
   }
 
+  static loginWithMagicLink(key) {
+    return Http.post("/login", {
+      key
+    });
+  }
+
   static isLogged() {
     return !!Local.get(AUTH_KEY);
   }

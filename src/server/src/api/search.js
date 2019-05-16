@@ -41,7 +41,7 @@ router.get("/search(.:format)?", function(req, res) {
 
   let freCall;
 
-  if (data.query.isSIREN || data.query.isSIRET) {
+  if (data.query.isSIRET) {
     freCall = frentreprise
       .getEntreprise(data.query.terms.q)
       .then(entreprise => {

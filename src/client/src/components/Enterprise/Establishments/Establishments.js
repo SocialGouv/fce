@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Establishment from "./Establishment";
 import EstablishmentsItems from "./EstablishmentsItems";
@@ -6,6 +7,7 @@ import Value from "../../../elements/Value";
 import { faBuilding, faFileAlt } from "@fortawesome/fontawesome-pro-solid";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Config from "../../../services/Config";
+import { setTerm, resetSearch } from "../../../services/Store/actions";
 
 class Establishments extends React.Component {
   constructor(props) {
@@ -15,6 +17,15 @@ class Establishments extends React.Component {
       isRedirectedToResearch: false,
       isLimited: true
     };
+  }
+
+  redirectToResearch(siren) {
+    Promise.all([
+      this.props.resetSearch(),
+      this.props.setTerm("q", siren)
+    ]).then(() => {
+      this.setState({ isRedirectedToResearch: true });
+    });
   }
 
   render() {
@@ -85,9 +96,7 @@ class Establishments extends React.Component {
             {establishments.length > limitItems && isLimited && (
               <button
                 className="button is-primary has-text-light toggle-all-establishments"
-                onClick={() => {
-                  this.setState({ isLimited: false });
-                }}
+                onClick={this.redirectToResearch.bind(this, enterprise.siren)}
               >
                 <span className="icon">
                   <FontAwesomeIcon icon={faBuilding} />
@@ -102,4 +111,18 @@ class Establishments extends React.Component {
   }
 }
 
-export default Establishments;
+const mapDispatchToProps = dispatch => {
+  return {
+    setTerm: (termKey, termValue) => {
+      return dispatch(setTerm(termKey, termValue));
+    },
+    resetSearch: () => {
+      dispatch(resetSearch());
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Establishments);

@@ -1,6 +1,7 @@
 import Communes from "../models/Communes";
 import Naf from "../models/Naf";
 import Departements from "../models/Departements";
+import withAuth from "../middlewares/auth";
 
 const express = require("express");
 const XLSX = require("xlsx");
@@ -16,7 +17,7 @@ const logError = (data, err) => {
   } catch (Exception) {}
 };
 
-router.get("/search(.:format)?", function(req, res) {
+router.get("/search(.:format)?", withAuth, function(req, res) {
   const query = (req.query["q"] || "").trim();
   const page = +req.query["page"] || 1;
 
@@ -151,7 +152,7 @@ const sendResultXlsx = (data, response) => {
   response.send(wbout);
 };
 
-router.get("/communes", function(req, res) {
+router.get("/communes", withAuth, function(req, res) {
   const query = (req.query["q"] || "").trim();
 
   if (query.length < 2) {
@@ -166,7 +167,7 @@ router.get("/communes", function(req, res) {
   });
 });
 
-router.get("/naf", function(req, res) {
+router.get("/naf", withAuth, function(req, res) {
   const naf = new Naf();
 
   naf.findAll().then(nafs => {
@@ -182,7 +183,7 @@ router.get("/naf", function(req, res) {
   });
 });
 
-router.get("/departements", function(req, res) {
+router.get("/departements", withAuth, function(req, res) {
   const query = (req.query["q"] || "").trim();
 
   const departements = new Departements();

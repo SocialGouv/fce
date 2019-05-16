@@ -183,8 +183,8 @@ class SearchResults extends React.Component {
                       return (
                         naf &&
                         Value({
-                          value: `${naf === null ? "" : naf} - ${
-                            libelle_naf === null ? "" : libelle_naf
+                          value: `${naf === null ? "" : naf} ${
+                            libelle_naf === null ? "" : " - " + libelle_naf
                           }`
                         })
                       );

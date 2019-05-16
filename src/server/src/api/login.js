@@ -49,14 +49,29 @@ router.post("/sendMagicLink", async (req, res) => {
   }
 });
 
-router.post("/checkMagicLink", function(req, res) {
+router.post("/login", function(req, res) {
   const { key, clientVerificationKey } = req.body;
-  const isValidKey = magicKey.validateKey(key, clientVerificationKey);
-  const decryptedKey = magicKey.decryptKey(key, clientVerificationKey);
-  // todo : generate jwt token
-  res.send({
-    success: !!isValidKey
-  });
+
+  try {
+    const decryptedKey = magicKey.decryptKey(key, clientVerificationKey);
+    const isValidKey = magicKey.validateKey(key, clientVerificationKey);
+
+    if (!isValidKey) {
+      console.error("MagicKey Error", magicKey.getLastValidationErrorMessage());
+
+      throw new Error("Le lien de connexion a expiré ou est invalide");
+    }
+
+    return res.send({
+      success: true
+    });
+  } catch (e) {
+    console.error(`Magic link is invalid`, e, e.message);
+    return res.send({
+      success: false,
+      message: e.message
+    });
+  }
 });
 
 module.exports = router;

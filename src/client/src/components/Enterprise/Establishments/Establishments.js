@@ -19,14 +19,14 @@ class Establishments extends React.Component {
     };
   }
 
-  redirectToResearch(siren) {
+  redirectToResearch = siren => {
     Promise.all([
       this.props.resetSearch(),
       this.props.setTerm("q", siren)
     ]).then(() => {
       this.setState({ isRedirectedToResearch: true });
     });
-  }
+  };
 
   render() {
     const limitItems = Config.get("sidebarEstablishmentsLimit");
@@ -96,7 +96,7 @@ class Establishments extends React.Component {
             {establishments.length > limitItems && isLimited && (
               <button
                 className="button is-primary has-text-light toggle-all-establishments"
-                onClick={this.redirectToResearch.bind(this, enterprise.siren)}
+                onClick={() => this.redirectToResearch(enterprise.siren)}
               >
                 <span className="icon">
                   <FontAwesomeIcon icon={faBuilding} />
@@ -116,9 +116,7 @@ const mapDispatchToProps = dispatch => {
     setTerm: (termKey, termValue) => {
       return dispatch(setTerm(termKey, termValue));
     },
-    resetSearch: () => {
-      dispatch(resetSearch());
-    }
+    resetSearch: () => dispatch(resetSearch())
   };
 };
 

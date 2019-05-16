@@ -19,7 +19,7 @@ class Login extends React.Component {
     return (
       <Container className="app-login">
         <Row className="justify-content-md-center">
-          <Col xl="3" md="4">
+          <Col xl="6" md="6">
             <Form className="login-form bg-light" onSubmit={this.props.login}>
               {this.props.hasSuccess && (
                 <Alert color="success">
@@ -28,7 +28,7 @@ class Login extends React.Component {
                 </Alert>
               )}
               {this.props.hasError && (
-                <Alert color="danger">Connexion refusée</Alert>
+                <Alert color="danger">{this.props.errorMessage}</Alert>
               )}
 
               <FormGroup>

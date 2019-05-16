@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import Auth from "../../services/Auth";
 import LoginView from "../../components/Login";
+import _get from "lodash.get";
 
 class Login extends Component {
   state = {
     email: "",
     hasError: false,
+    errorMessage: null,
     hasSuccess: false,
     loading: false
   };
@@ -19,7 +21,13 @@ class Login extends Component {
         if (response.data && response.data.success) {
           this._loginSuccess();
         } else {
-          this._loginFail();
+          this._loginFail(
+            _get(
+              response,
+              "data.message",
+              "La tentative de connexion a échouée"
+            )
+          );
         }
       })
       .catch(error => {
@@ -35,9 +43,10 @@ class Login extends Component {
     });
   };
 
-  _loginFail = () => {
+  _loginFail = message => {
     this.setState({
       hasError: true,
+      errorMessage: message,
       hasSuccess: false,
       loading: false
     });
@@ -52,7 +61,7 @@ class Login extends Component {
   };
 
   render() {
-    const { hasSuccess, hasError, loading } = this.state;
+    const { hasSuccess, hasError, loading, errorMessage } = this.state;
 
     return (
       <LoginView
@@ -61,6 +70,7 @@ class Login extends Component {
         loading={loading}
         hasError={hasError}
         hasSuccess={hasSuccess}
+        errorMessage={errorMessage}
       />
     );
   }

@@ -179,11 +179,12 @@ class SearchResults extends React.Component {
                     id: "activite",
                     minWidth: 200,
                     accessor: e => {
+                      const { naf, libelle_naf } = e.etablissement;
                       return (
-                        e.etablissement.naf &&
+                        naf &&
                         Value({
-                          value: `${e.etablissement.naf} - ${
-                            e.etablissement.libelle_naf
+                          value: `${naf === null ? "" : naf} ${
+                            libelle_naf === null ? "" : " - " + libelle_naf
                           }`
                         })
                       );

@@ -144,14 +144,13 @@ class Search extends Component {
           showResults
         });
       })
-      .catch(
-        function(error) {
-          this.setState({
-            hasError: true,
-            loading: false
-          });
-        }.bind(this)
-      );
+      .catch(error => {
+        this.setState({
+          hasError: true,
+          loading: false,
+          showResults: false
+        });
+      });
   };
 
   render() {

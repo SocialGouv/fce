@@ -16,6 +16,7 @@ export default class Auth {
   }
 
   static loginWithMagicLink(key) {
+    this.logout();
     const clientVerificationKey = Local.get(AUTH_CLIENT_VERIFICATION_KEY);
     return Http.post("/login", {
       key,

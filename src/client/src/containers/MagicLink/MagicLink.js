@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
+import { Redirect } from "react-router-dom";
 import Auth from "../../services/Auth";
 import MagicLinkView from "../../components/MagicLink";
 import _get from "lodash.get";
@@ -35,7 +36,7 @@ class MagicLink extends Component {
         }
       })
       .catch(error => {
-        this._loginFail();
+        this._loginFail("La tentative de connexion a échouée");
       });
   };
 
@@ -59,11 +60,14 @@ class MagicLink extends Component {
   render() {
     const { hasSuccess, hasError, loading, errorMessage } = this.state;
 
+    if (hasSuccess) {
+      return <Redirect push to={"/"} />;
+    }
+
     return (
       <MagicLinkView
         loading={loading}
         hasError={hasError}
-        hasSuccess={hasSuccess}
         errorMessage={errorMessage}
       />
     );

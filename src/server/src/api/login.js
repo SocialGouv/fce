@@ -59,7 +59,6 @@ router.post("/login", function(req, res) {
 
     if (!isValidKey) {
       console.error("MagicKey Error", magicKey.getLastValidationErrorMessage());
-
       throw new Error("Le lien de connexion a expiré ou est invalide");
     }
 

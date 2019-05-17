@@ -4,6 +4,7 @@ import MagicKey from "magic-key";
 import Mail from "../utils/mail";
 import sendMagicLinkTpl from "../templates/email/sendMagicLink";
 import Auth from "../utils/auth";
+import MagicLinkModel from "../models/MagicLinks";
 
 const router = express.Router();
 const magicKey = new MagicKey(config.get("magicKey"));
@@ -36,6 +37,9 @@ router.post("/sendMagicLink", async (req, res) => {
       throw new Error("L'envoi de l'email a échoué");
     }
 
+    const magicLink = new MagicLinkModel();
+    magicLink.create({ email, key });
+
     console.log(`Send magic link to ${email}`);
 
     return res.send({
@@ -64,6 +68,9 @@ router.post("/login", function(req, res) {
 
     const user = { email: decryptedKey.email };
     const token = Auth.generateToken(user);
+
+    const magicLink = new MagicLinkModel();
+    magicLink.validate(key);
 
     console.log(`${user.email} logged with MagicLink`);
 

@@ -29,6 +29,10 @@ export default class Auth {
     });
   }
 
+  static logout() {
+    Local.remove(AUTH_KEY);
+  }
+
   static isLogged() {
     return !!Local.get(AUTH_KEY);
   }

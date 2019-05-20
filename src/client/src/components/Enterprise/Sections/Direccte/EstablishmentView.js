@@ -25,9 +25,6 @@ class EstablishmentView extends React.Component {
 
     const { pole_T, pole_C, pole_3E_SEER, pole_3E_SRC } = lastInteractions;
 
-    console.log("last interaction", lastInteractions);
-    console.log(establishment);
-
     return (
       <section id="direccte" className="enterprise-section">
         <h2 className="title is-size-4">Visites et Contrôles de la Direccte</h2>

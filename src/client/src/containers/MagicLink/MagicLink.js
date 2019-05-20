@@ -27,16 +27,12 @@ class MagicLink extends Component {
           this._loginSuccess();
         } else {
           this._loginFail(
-            _get(
-              response,
-              "data.message",
-              "La tentative de connexion a échouée"
-            )
+            _get(response, "data.message", "La tentative de connexion a échoué")
           );
         }
       })
       .catch(error => {
-        this._loginFail("La tentative de connexion a échouée");
+        this._loginFail("La tentative de connexion a échoué");
       });
   };
 

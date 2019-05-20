@@ -31,7 +31,7 @@ class Search extends React.Component {
             </p>
 
             {hasError ? (
-              <div className="alert is-danger">
+              <div className="notification is-danger">
                 Une erreur est survenue lors de la communication avec l'API
               </div>
             ) : (

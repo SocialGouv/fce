@@ -19,20 +19,24 @@ class Login extends React.Component {
     return (
       <Container className="app-login">
         <Row className="justify-content-md-center">
-          <Col xl="3" md="4">
+          <Col xl="6" md="6">
             <Form className="login-form bg-light" onSubmit={this.props.login}>
-              {this.props.hasError ? (
-                <Alert color="danger">Connexion refusée</Alert>
-              ) : (
-                ""
+              {this.props.hasSuccess && (
+                <Alert color="success">
+                  Un lien magique vous a été envoyé par email afin de pouvoir
+                  vous connecter
+                </Alert>
               )}
+              {this.props.hasError && (
+                <Alert color="danger">{this.props.errorMessage}</Alert>
+              )}
+
               <FormGroup>
-                <Label for="password">Code d'accès</Label>
+                <Label for="email">Adresse Email</Label>
                 <Input
-                  type="password"
-                  name="password"
-                  id="password"
-                  autoComplete="current-password"
+                  type="email"
+                  name="email"
+                  id="email"
                   required
                   invalid={this.props.hasError}
                   onChange={evt => this.props.updateForm(evt)}

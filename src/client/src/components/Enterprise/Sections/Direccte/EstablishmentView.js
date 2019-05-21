@@ -59,137 +59,42 @@ class EstablishmentView extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {pole_T === undefined ? (
-                <tr>
-                  <td>T</td>
-                  <td>Pas de date connue</td>
-                </tr>
-              ) : (
-                <tr>
-                  <td>
-                    <Value value={pole_T.pole} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_T.date} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_T.objet} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_T.unite} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_T.agent} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_T.type} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_T.note} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_T.suite} empty="ND" />
-                  </td>
-                </tr>
-              )}
-              {pole_C === undefined ? (
-                <tr>
-                  <td>C</td>
-                  <td>Données bientôt disponible</td>
-                </tr>
-              ) : (
-                <tr>
-                  <td>
-                    <Value value={pole_C.pole} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_C.date} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_C.objet} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_C.unite} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_C.agent} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_C.type} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_C.note} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_C.suite} empty="ND" />
-                  </td>
-                </tr>
-              )}
-              {pole_3E_SEER === undefined ? (
-                <tr>
-                  <td>3E - SEER</td>
-                  <td>Pas de date connue</td>
-                </tr>
-              ) : (
-                <tr>
-                  <td>
-                    <Value value={pole_3E_SEER.pole} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SEER.date} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SEER.objet} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SEER.unite} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SEER.agent} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SEER.type} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SEER.note} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SEER.suite} empty="ND" />
-                  </td>
-                </tr>
-              )}
-              {pole_3E_SRC === undefined ? (
-                <tr>
-                  <td>3E - SRC</td>
-                  <td>Données non disponible</td>
-                </tr>
-              ) : (
-                <tr>
-                  <td>
-                    <Value value={pole_3E_SRC.pole} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SRC.date} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SRC.objet} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SRC.unite} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SRC.agent} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SRC.type} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SRC.note} empty="ND" />
-                  </td>
-                  <td>
-                    <Value value={pole_3E_SRC.suite} empty="ND" />
-                  </td>
-                </tr>
+              {Object.entries(lastInteractions).map(
+                ([pole, lastInteraction]) => {
+                  return lastInteraction ? (
+                    <tr>
+                      <td>
+                        <Value value={lastInteraction.pole} empty="ND" />
+                      </td>
+                      <td>
+                        <Value value={lastInteraction.date} empty="ND" />
+                      </td>
+                      <td>
+                        <Value value={lastInteraction.objet} empty="ND" />
+                      </td>
+                      <td>
+                        <Value value={lastInteraction.unite} empty="ND" />
+                      </td>
+                      <td>
+                        <Value value={lastInteraction.agent} empty="ND" />
+                      </td>
+                      <td>
+                        <Value value={lastInteraction.type} empty="ND" />
+                      </td>
+                      <td>
+                        <Value value={lastInteraction.note} empty="ND" />
+                      </td>
+                      <td>
+                        <Value value={lastInteraction.suite} empty="ND" />
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr>
+                      <td>{pole}</td>
+                      <td colspan="7">Pas de date connue</td>
+                    </tr>
+                  );
+                }
               )}
             </tbody>
           </table>

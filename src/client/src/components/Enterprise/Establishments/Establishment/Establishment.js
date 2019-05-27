@@ -26,8 +26,7 @@ class Establishment extends React.Component {
           <FontAwesomeIcon
             className={classNames(stateClass)}
             icon={isActive ? faCircle : faSquare}
-          />
-          <span> - </span>
+          />{" "}
           <Value
             value={
               (establishment.departement &&
@@ -36,7 +35,7 @@ class Establishment extends React.Component {
               ""
             }
             empty=""
-          />
+          />{" "}
           <Value
             value={
               establishment.adresse_components &&

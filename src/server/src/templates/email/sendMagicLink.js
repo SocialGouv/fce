@@ -8,7 +8,7 @@ Vous avez fait une demande de connexion à l'application FCE, pour vous connecte
 
 <a href="${link}">${link}</a><br/><br/>
 
-<strong>Attention, ce lien n'est valable qu'avec le même navigateur internet avec lequel vous avez fait la demande. Si votre navigateur par défaut est différent veuillez copier coller le lien dans celui-ci.</strong><br/><br/>
+<strong>Attention, ce lien n'est valable que pour le navigateur avec lequel vous avez fait la demande. Si votre navigateur par défaut est différent veuillez copier coller le lien dans celui-ci.</strong><br/><br/>
 
 Cordialement,<br/><br/>
 

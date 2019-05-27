@@ -46,7 +46,6 @@ class Search extends React.Component {
                     name="q"
                     id="term"
                     className="input is-medium"
-                    required
                     placeholder="SIRET, SIREN, raison sociale, nom"
                     onChange={evt => this.props.updateForm(evt)}
                     value={terms.q || ""}

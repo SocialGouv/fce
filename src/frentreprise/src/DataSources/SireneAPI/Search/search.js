@@ -45,11 +45,15 @@ export default async (terms, pagination, Axios, params, db) => {
 };
 
 const buildQuery = async terms => {
-  const query = [
-    `(raisonSociale:"${terms.q}" OR nomUniteLegale:"${terms.q}" OR siren:"${
-      terms.q
-    }")`
-  ];
+  const query = [];
+
+  if (terms.q) {
+    query.push(
+      `(raisonSociale:"${terms.q}" OR nomUniteLegale:"${terms.q}" OR siren:"${
+        terms.q
+      }")`
+    );
+  }
 
   if (terms.commune) {
     query.push(`codeCommuneEtablissement:${terms.commune}`);

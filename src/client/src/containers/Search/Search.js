@@ -121,22 +121,11 @@ class Search extends Component {
     this.props
       .search(this.props.terms)
       .then(response => {
-        const { query, results } = response.data;
-        let redirectTo = false;
-        let showResults = false;
-
-        if (query.isSIRET && results) {
-          redirectTo = `/establishment/${query.terms.q}`;
-          this.props.setCurrentEnterprise(results[0]);
-        } else {
-          showResults = true;
-        }
-
         this.setState({
           hasError: false,
           loading: false,
-          redirectTo,
-          showResults
+          redirectTo: false,
+          showResults: true
         });
       })
       .catch(error => {

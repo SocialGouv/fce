@@ -2,17 +2,19 @@ import utils from "../../../Utils/utils";
 import helpers from "../Helpers/helpers";
 
 export default async (terms, pagination, Axios, params, db) => {
+  const { itemsByPage, page } = pagination;
+  const startIndex = itemsByPage * (page - 1);
+
   const data = await utils.requestAPI(
     Axios,
-    `siret/?q=${await buildQuery(terms)}&nombre=10000`,
+    `siret/?q=${await buildQuery(terms)}&${buildPagination(
+      startIndex,
+      itemsByPage
+    )}`,
     params
   );
 
-  const { itemsByPage, page } = pagination;
-  const startIndex = itemsByPage * (page - 1);
-  const endIndex = itemsByPage * page - 1;
-
-  if (!data.etablissements || !data.etablissements[startIndex]) {
+  if (!data.etablissements) {
     return {
       items: [],
       pagination: {
@@ -24,23 +26,20 @@ export default async (terms, pagination, Axios, params, db) => {
     };
   }
 
-  const out = [];
-  for (let i = startIndex; i <= endIndex; i++) {
-    if (!data.etablissements[i]) {
-      continue;
-    }
-    const etabData = await helpers.formatEtab(data.etablissements[i], null, db);
-    out.push(etabData);
-  }
+  const itemsPromises = data.etablissements.map(
+    async etab => await helpers.formatEtab(etab, null, db)
+  );
+
+  const items = await Promise.all(itemsPromises);
 
   return {
-    items: out,
+    items,
     pagination: {
       page,
       itemsByPage,
-      pages: Math.ceil(data.etablissements.length / itemsByPage),
-      items: data.etablissements.length,
-      currentItems: out.length
+      pages: Math.ceil(data.header.total / itemsByPage),
+      items: data.header.total,
+      currentItems: items.length
     }
   };
 };
@@ -78,4 +77,12 @@ const buildQuery = async terms => {
   }
 
   return query.join(" AND ");
+};
+
+const buildPagination = (startIndex, itemsByPage) => {
+  const params = { tri: true, nombre: itemsByPage, debut: startIndex };
+
+  return Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
 };

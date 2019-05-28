@@ -13,7 +13,7 @@ class EstablishmentActivity extends React.Component {
     );
 
     return (
-      <section id="activity" className="enterprise-section">
+      <section className="enterprise-section">
         <h2 className="title is-size-4">Activité</h2>
         <Data
           name="Activité principale"

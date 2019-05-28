@@ -1,4 +1,5 @@
 import Dashboard from "./Dashboard";
+import QuickAccess from "./QuickAccess";
 import EnterpriseHeader from "./EnterpriseHeader";
 import EnterpriseActivity from "./EnterpriseActivity";
 import EnterpriseHeadOffice from "./EnterpriseHeadOffice";
@@ -16,6 +17,7 @@ import Relation from "./Relation";
 
 export {
   Dashboard,
+  QuickAccess,
   EnterpriseHeader,
   EnterpriseActivity,
   EnterpriseHeadOffice,

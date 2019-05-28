@@ -11,7 +11,7 @@ const EnterpriseActivity = ({ enterprise }) => {
   };
 
   return (
-    <section id="activity" className="enterprise-section">
+    <section className="enterprise-section">
       <h2 className="title is-size-4">Informations légales sur l’entreprise</h2>
 
       <Data name="Forme juridique" value={enterprise.categorie_juridique} />

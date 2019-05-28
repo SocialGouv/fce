@@ -17,7 +17,7 @@ const EstablishmentRelationship = ({ establishment }) => {
     : 0;
 
   return (
-    <section id="activity" className="enterprise-section">
+    <section className="enterprise-section">
       <h2 className="title is-size-4">Relation travail</h2>
       <Data
         name="Convention collective (IDCC)"

@@ -7,7 +7,8 @@ import {
   EstablishmentActivity,
   EstablishmentMuteco,
   EstablishmentHelps,
-  Direccte
+  Direccte,
+  QuickAccess
 } from "./Sections";
 import EstablishmentRelationship from "./Sections/EstablishmentRelationship";
 
@@ -39,15 +40,23 @@ class Establishment extends React.Component {
               />
             </div>
             <div className="establishment-keys row w-100">
-              <Dashboard className="" establishment={establishment} />
+              <Dashboard establishment={establishment} />
             </div>
+            <div className="w-100">
+              <QuickAccess />
+            </div>
+            <div id="activity" />
             <EstablishmentActivity
               establishment={establishment}
               enterprise={enterprise}
             />
+            <div id="direccte" />
             <Direccte establishment={establishment} enterprise={enterprise} />
+            <div id="relation" />
             <EstablishmentRelationship establishment={establishment} />
+            <div id="muteco" />
             <EstablishmentMuteco establishment={establishment} />
+            <div id="helps" />
             <EstablishmentHelps establishment={establishment} />
           </div>
           <div id="establishments" className="quickview responsive-item">

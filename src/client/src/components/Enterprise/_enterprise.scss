@@ -229,6 +229,14 @@
                 }
             }
         }
+
+        .quick-access {
+            padding: 1.5rem;
+            margin: 1rem 0 0 0;
+            background-color: white;
+            border-radius: 0.325rem;
+            position: relative;
+        }
     }
 
     small {
@@ -292,35 +300,6 @@
 
 .columns {
     align-items: flex-start;
-}
-
-.accordions .accordion {
-    margin-bottom: 1.5rem;
-
-    .accordion-header {
-        background-color: $secondary;
-
-        .button {
-            background-color: transparent;
-            color: $light;
-        }
-    }
-
-    .accordion-body {
-        background-color: $light !important;
-    }
-
-    .accordion-content {
-        padding: 0 !important;
-
-        table {
-            margin: 0;
-        }
-
-        &.no-table {
-            padding: 1rem !important;
-        }
-    }
 }
 
 .mandataire {

@@ -15,7 +15,7 @@ const EstablishmentHelps = ({ establishment }) => {
   );
 
   return (
-    <section id="muteco" className="enterprise-section">
+    <section className="enterprise-section">
       <h2 className="title is-size-4">Aides et agréments</h2>
 
       <Subcategory

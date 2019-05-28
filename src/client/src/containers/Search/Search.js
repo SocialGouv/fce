@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import SearchView from "../../components/Search";
 import {
   search,
@@ -18,7 +17,6 @@ class Search extends Component {
       nafList: [],
       hasError: false,
       loading: false,
-      redirectTo: false,
       showResults: false
     };
   }
@@ -124,7 +122,6 @@ class Search extends Component {
         this.setState({
           hasError: false,
           loading: false,
-          redirectTo: false,
           showResults: true
         });
       })
@@ -138,10 +135,6 @@ class Search extends Component {
   };
 
   render() {
-    if (this.state.redirectTo) {
-      return <Redirect push to={this.state.redirectTo} />;
-    }
-
     return (
       <>
         <SearchView

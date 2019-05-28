@@ -2,10 +2,10 @@ import React from "react";
 
 const QuickAccess = () => {
   const anchors = [
-    { label: "activité | ", link: "activity" },
-    { label: "visites et contrôles | ", link: "direccte" },
-    { label: "relation travail | ", link: "relation" },
-    { label: "mutations économiques | ", link: "muteco" },
+    { label: "activité", link: "activity" },
+    { label: "visites et contrôles", link: "direccte" },
+    { label: "relation travail", link: "relation" },
+    { label: "mutations économiques", link: "muteco" },
     { label: "aides et agréments", link: "helps" }
   ];
 

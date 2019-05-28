@@ -236,6 +236,18 @@
             background-color: white;
             border-radius: 0.325rem;
             position: relative;
+
+            &--item {
+                &:after {
+                    content: " | ";
+                }
+            }
+
+            &--item:last-child {
+                &:after {
+                    content: "";
+                }
+            }
         }
     }
 

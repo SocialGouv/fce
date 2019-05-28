@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import SearchView from "../../components/Search";
 import {
   search,
@@ -18,7 +17,6 @@ class Search extends Component {
       nafList: [],
       hasError: false,
       loading: false,
-      redirectTo: false,
       showResults: false
     };
   }
@@ -121,22 +119,10 @@ class Search extends Component {
     this.props
       .search(this.props.terms)
       .then(response => {
-        const { query, results } = response.data;
-        let redirectTo = false;
-        let showResults = false;
-
-        if (query.isSIRET && results) {
-          redirectTo = `/establishment/${query.terms.q}`;
-          this.props.setCurrentEnterprise(results[0]);
-        } else {
-          showResults = true;
-        }
-
         this.setState({
           hasError: false,
           loading: false,
-          redirectTo,
-          showResults
+          showResults: true
         });
       })
       .catch(error => {
@@ -149,10 +135,6 @@ class Search extends Component {
   };
 
   render() {
-    if (this.state.redirectTo) {
-      return <Redirect push to={this.state.redirectTo} />;
-    }
-
     return (
       <>
         <SearchView

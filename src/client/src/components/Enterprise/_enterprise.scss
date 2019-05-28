@@ -236,10 +236,19 @@
             background-color: white;
             border-radius: 0.325rem;
             position: relative;
+            display: flex;
+            flex-direction: row;
+
+            &-list {
+                display: flex;
+                flex-direction: row;
+                padding: 0 1rem;
+            }
 
             &--item {
                 &:after {
-                    content: " | ";
+                    padding: 0 1rem;
+                    content: "|";
                 }
             }
 

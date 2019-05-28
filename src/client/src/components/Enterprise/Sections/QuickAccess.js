@@ -14,15 +14,15 @@ const QuickAccess = () => {
       <span className="has-text-grey-darker has-text-weight-medium">
         Accès rapide :{" "}
       </span>
-      {anchors.map(anchor => (
-        <a
-          key={anchor.label}
-          href={`#${anchor.link}`}
-          className="quick-access--item has-text-link is-uppercase"
-        >
-          {anchor.label}
-        </a>
-      ))}
+      <ul className="quick-access-list">
+        {anchors.map(anchor => (
+          <li className="quick-access--item has-text-link is-uppercase">
+            <a key={anchor.label} href={`#${anchor.link}`}>
+              {anchor.label}
+            </a>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 };

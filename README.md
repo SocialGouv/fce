@@ -110,6 +110,14 @@ sudo apt-get install docker-ce
 
 - dans `production/current` executer `docker-compose restart`
 
+## Troubleshooting
+
+- **Mes modifications dans frentreprise ne sont pas prise en compte**
+
+Au changement de branche le lien entre `frentreprise` et le `server` peuvent se casser, redémarrer le container `frentreprise` devrait régler le problème.
+
+Une manière de voir facilement si le lien est bon est d'écouter le container `server` et de faire une modification sur `frentreprise`, s'il redémarre c'est que tout fonctionne.
+
 ## Tests
 
 ### Client

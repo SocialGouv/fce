@@ -45,18 +45,13 @@ class Establishment extends React.Component {
             <div className="w-100">
               <QuickAccess />
             </div>
-            <div id="activity" />
             <EstablishmentActivity
               establishment={establishment}
               enterprise={enterprise}
             />
-            <div id="direccte" />
             <Direccte establishment={establishment} enterprise={enterprise} />
-            <div id="relation" />
             <EstablishmentRelationship establishment={establishment} />
-            <div id="muteco" />
             <EstablishmentMuteco establishment={establishment} />
-            <div id="helps" />
             <EstablishmentHelps establishment={establishment} />
           </div>
           <div id="establishments" className="quickview responsive-item">

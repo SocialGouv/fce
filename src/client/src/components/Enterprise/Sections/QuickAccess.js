@@ -16,10 +16,11 @@ const QuickAccess = () => {
       </span>
       <ul className="quick-access-list">
         {anchors.map(anchor => (
-          <li className="quick-access--item has-text-link is-uppercase">
-            <a key={anchor.label} href={`#${anchor.link}`}>
-              {anchor.label}
-            </a>
+          <li
+            key={anchor.label}
+            className="quick-access--item has-text-link is-uppercase"
+          >
+            <a href={`#${anchor.link}`}>{anchor.label}</a>
           </li>
         ))}
       </ul>

@@ -5,7 +5,7 @@ import Data from "./SharedComponents/Data";
 
 const EstablishmentMuteco = ({ establishment }) => {
   return (
-    <section className="enterprise-section">
+    <section id="muteco" className="enterprise-section">
       <h2 className="title is-size-4"> Mutations Economiques</h2>
 
       <Data

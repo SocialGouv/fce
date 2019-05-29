@@ -11,7 +11,7 @@ const QuickAccess = () => {
 
   return (
     <section id="quick-access" className="enterprise-section quick-access">
-      <span className="has-text-grey-darker has-text-weight-medium">
+      <span className="quick-access--text has-text-grey-darker has-text-weight-medium">
         Accès rapide :{" "}
       </span>
       <ul className="quick-access-list">

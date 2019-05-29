@@ -176,9 +176,9 @@ class Search extends Component {
           nafList={this.state.nafList}
           loadCommunes={this.loadCommunes}
         />
-        {this.state.showResults ? (
+        {this.state.showResults && (
           <SearchResults downloadXlsxExport={this.downloadXlsxExport} />
-        ) : null}
+        )}
       </>
     );
   }

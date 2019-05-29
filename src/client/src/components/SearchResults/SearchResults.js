@@ -1,7 +1,11 @@
 import React from "react";
 import { Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faSquare, faCircle } from "@fortawesome/fontawesome-pro-solid";
+import {
+  faSquare,
+  faCircle,
+  faFileExcel
+} from "@fortawesome/fontawesome-pro-solid";
 import ReactTable from "react-table";
 import Value from "../../elements/Value";
 import { withRouter } from "react-router-dom";
@@ -9,7 +13,7 @@ import ReactTooltip from "react-tooltip";
 
 class SearchResults extends React.Component {
   render() {
-    const { results, pagination } = this.props;
+    const { results, pagination, downloadXlsxExport } = this.props;
     return (
       <div className="app-searchResults" style={{ marginTop: "3rem" }}>
         {results && results.length >= 1 && (
@@ -18,6 +22,21 @@ class SearchResults extends React.Component {
             {pagination.items > 1 && "s"}
           </h2>
         )}
+
+        <div className="columns">
+          <div className="column is-12">
+            <button
+              className="button is-dark is-outlined is-pulled-right"
+              onClick={e => downloadXlsxExport(pagination.page)}
+            >
+              <span className="icon">
+                <FontAwesomeIcon icon={faFileExcel} />
+              </span>
+              <span>Export Excel</span>
+            </button>
+          </div>
+        </div>
+
         <div className="columns result-row">
           <div className="column is-12">
             {!Array.isArray(results) ? (

@@ -16,6 +16,7 @@
     "bulma-extensions": "^6.2.7",
     "classnames": "^2.2.5",
     "core-js": "^3.0.1",
+    "downloadjs": "^1.4.7",
     "json2csv": "^4.5.1",
     "lodash.find": "^4.6.0",
     "lodash.get": "^4.4.2",

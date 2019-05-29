@@ -1,4 +1,5 @@
 import React from "react";
+import Sticky from "react-sticky-el";
 
 const QuickAccess = () => {
   const anchors = [
@@ -10,21 +11,23 @@ const QuickAccess = () => {
   ];
 
   return (
-    <section id="quick-access" className="enterprise-section quick-access">
-      <span className="quick-access--text has-text-grey-darker has-text-weight-medium">
-        Accès rapide :{" "}
-      </span>
-      <ul className="quick-access-list">
-        {anchors.map(anchor => (
-          <li
-            key={anchor.label}
-            className="quick-access--item has-text-link is-uppercase"
-          >
-            <a href={`#${anchor.link}`}>{anchor.label}</a>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <Sticky>
+      <section id="quick-access" className="enterprise-section quick-access">
+        <span className="quick-access--text has-text-grey-darker has-text-weight-medium">
+          Accès rapide :{" "}
+        </span>
+        <ul className="quick-access-list">
+          {anchors.map(anchor => (
+            <li
+              key={anchor.label}
+              className="quick-access--item has-text-link is-uppercase"
+            >
+              <a href={`#${anchor.link}`}>{anchor.label}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </Sticky>
   );
 };
 

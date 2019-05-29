@@ -141,8 +141,6 @@ class Search extends Component {
       responseType: "blob"
     })
       .then(response => {
-        console.log(response);
-
         if (response.data && response.data) {
           downloadjs(
             new Blob([response.data], {

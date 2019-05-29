@@ -17,6 +17,33 @@ const logError = (data, err) => {
   } catch (Exception) {}
 };
 
+router.get("/entity", withAuth, function(req, res) {
+  const query = (req.query["q"] || "").trim();
+
+  const data = {
+    query: {
+      format: "json",
+      terms: {
+        q: query
+      },
+      isSIRET: frentreprise.isSIRET(query),
+      isSIREN: frentreprise.isSIREN(query)
+    }
+  };
+
+  const freCall = frentreprise
+    .getEntreprise(data.query.terms.q)
+    .then(entreprise => {
+      data.results = [entreprise.export()];
+      data.pagination = {};
+    }, logError.bind(this, data));
+
+  freCall.then(() => {
+    data.size = (data.results && data.results.length) || 0;
+    sendResult(data, res);
+  });
+});
+
 router.get("/search(.:format)?", withAuth, function(req, res) {
   const query = (req.query["q"] || "").trim();
   const page = +req.query["page"] || 1;
@@ -40,21 +67,10 @@ router.get("/search(.:format)?", withAuth, function(req, res) {
     }
   };
 
-  let freCall;
-
-  if (data.query.isSIRET) {
-    freCall = frentreprise
-      .getEntreprise(data.query.terms.q)
-      .then(entreprise => {
-        data.results = [entreprise.export()];
-        data.pagination = {};
-      }, logError.bind(this, data));
-  } else {
-    freCall = frentreprise.search(data.query.terms, page).then(results => {
-      data.results = results.items.map(ent => ent.export());
-      data.pagination = results.pagination;
-    }, logError.bind(this, data));
-  }
+  const freCall = frentreprise.search(data.query.terms, page).then(results => {
+    data.results = results.items.map(ent => ent.export());
+    data.pagination = results.pagination;
+  }, logError.bind(this, data));
 
   freCall.then(() => {
     data.size = (data.results && data.results.length) || 0;

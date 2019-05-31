@@ -19,7 +19,7 @@ class Login extends React.Component {
     return (
       <Container className="app-login">
         <Row className="justify-content-md-center">
-          <Col xl="6" md="6">
+          <Col xl="12" md="12">
             <Form className="login-form bg-light" onSubmit={this.props.login}>
               {this.props.hasSuccess && (
                 <Alert color="success">

@@ -97,30 +97,29 @@ const sendResultXlsx = (data, response) => {
     filename = "recherche";
 
     dataToExport = flattenResults.map(entreprise => {
-      const etablissement = entreprise.etablissement;
+      const {
+        siret,
+        etat_etablissement,
+        nom_commercial,
+        prenom,
+        nom,
+        categorie_etablissement,
+        naf,
+        libelle_naf,
+        adresse_components
+      } = entreprise.etablissement;
 
+      const codePostal = adresse_components && adresse_components.code_postal;
+      const localite = adresse_components && adresse_components.localite;
       return {
-        SIRET: etablissement.siret,
-        SIREN: entreprise.siren,
-        "Raison Sociale": entreprise.raison_sociale,
-        Etat:
-          etablissement.etat_etablissement &&
-          etablissement.etat_etablissement.label,
-        Commune:
-          etablissement.adresse_components &&
-          etablissement.adresse_components.localite,
-        "Code Postal":
-          etablissement.adresse_components &&
-          etablissement.adresse_components.code_postal,
-        Département:
-          etablissement.adresse_components &&
-          etablissement.adresse_components.code_postal &&
-          etablissement.adresse_components.code_postal.substr(0, 2),
-        Activité: etablissement.activite,
-        "Catégorie Etablissement": etablissement.categorie_etablissement,
-        Intéractions: Array.isArray(etablissement.direccte)
-          ? etablissement.direccte.length
-          : ""
+        SIRET: siret,
+        État: etat_etablissement === "A" ? "Actif" : "Fermé",
+        "Raison Sociale / Nom": nom_commercial || `${prenom} ${nom}`,
+        "Cat. Etablissement": categorie_etablissement,
+        "Code Postal": codePostal + (localite ? ` (${localite})` : ""),
+        Activité: `${naf === null ? "" : naf} ${
+          libelle_naf === null ? "" : " - " + libelle_naf
+        }`
       };
     });
   }

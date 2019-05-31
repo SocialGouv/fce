@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import SearchView from "../../components/Search";
 import {
   search,
@@ -10,6 +9,7 @@ import {
 import Http from "../../services/Http";
 import Config from "../../services/Config";
 import SearchResults from "../../containers/SearchResults";
+import downloadjs from "downloadjs";
 
 class Search extends Component {
   constructor(props) {
@@ -18,7 +18,6 @@ class Search extends Component {
       nafList: [],
       hasError: false,
       loading: false,
-      redirectTo: false,
       showResults: false
     };
   }
@@ -124,7 +123,6 @@ class Search extends Component {
         this.setState({
           hasError: false,
           loading: false,
-          redirectTo: false,
           showResults: true
         });
       })
@@ -137,11 +135,35 @@ class Search extends Component {
       });
   };
 
-  render() {
-    if (this.state.redirectTo) {
-      return <Redirect push to={this.state.redirectTo} />;
-    }
+  downloadXlsxExport = page => {
+    return Http.get("/search.xlsx", {
+      params: { ...this.props.terms, page },
+      responseType: "blob"
+    })
+      .then(response => {
+        if (response.data && response.data) {
+          downloadjs(
+            new Blob([response.data], {
+              type: response.headers["content-type"]
+            }),
+            "recherche.xlsx",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          );
+        } else {
+          this.setState({
+            hasError: true
+          });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        this.setState({
+          hasError: true
+        });
+      });
+  };
 
+  render() {
     return (
       <>
         <SearchView
@@ -154,7 +176,9 @@ class Search extends Component {
           nafList={this.state.nafList}
           loadCommunes={this.loadCommunes}
         />
-        {this.state.showResults ? <SearchResults /> : null}
+        {this.state.showResults && (
+          <SearchResults downloadXlsxExport={this.downloadXlsxExport} />
+        )}
       </>
     );
   }

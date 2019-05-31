@@ -30,6 +30,7 @@ class SearchResults extends React.Component {
         pagination={this.props.pagination}
         fetchData={this.fetchData}
         loading={this.state.loading}
+        downloadXlsxExport={this.props.downloadXlsxExport}
       />
     );
   }

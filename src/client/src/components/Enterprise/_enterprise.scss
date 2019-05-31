@@ -69,11 +69,11 @@
         }
 
         .enterprise-section {
+            scroll-margin: 7rem;
             padding: 2rem;
             margin: 4rem 0 0;
             padding-top: 2rem;
             background-color: $white;
-            // box-shadow: 1px 1px 1px $dark;
             border-radius: 0.325rem;
             position: relative;
 
@@ -229,6 +229,45 @@
                 }
             }
         }
+
+        .sticky {
+            box-shadow: 0 10px 6px -6px #777;
+            z-index: 1;
+            transition: opacity .2s;
+            opacity: 0.9;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        .quick-access {
+            padding: 1.5rem;
+            margin: 0;
+            border-radius: 0.325rem;
+            position: relative;
+            display: flex;
+            flex-direction: row;
+
+            &-list {
+                display: flex;
+                flex-direction: row;
+                padding: 0 1rem;
+            }
+
+            &--item {
+                &:after {
+                    padding: 0 1rem;
+                    content: "|";
+                }
+            }
+
+            &--item:last-child {
+                &:after {
+                    content: "";
+                }
+            }
+        }
     }
 
     small {
@@ -294,35 +333,6 @@
     align-items: flex-start;
 }
 
-.accordions .accordion {
-    margin-bottom: 1.5rem;
-
-    .accordion-header {
-        background-color: $secondary;
-
-        .button {
-            background-color: transparent;
-            color: $light;
-        }
-    }
-
-    .accordion-body {
-        background-color: $light !important;
-    }
-
-    .accordion-content {
-        padding: 0 !important;
-
-        table {
-            margin: 0;
-        }
-
-        &.no-table {
-            padding: 1rem !important;
-        }
-    }
-}
-
 .mandataire {
     padding: 1rem 0;
 
@@ -364,47 +374,64 @@
 
 @include touch {
     .app-enterprise {
-        .establishment-keys {
-            flex-direction: column !important;
-        }
+        .main {
+            .establishment-keys {
+                flex-direction: column;
+            }
 
-        .task-bar {
-            width: 100% !important;
-        }
+            .task-bar {
+                width: 100%;
+            }
 
-        #identity-et,
-        .dashboard {
-            width: 100% !important;
-            flex-direction: row !important;
-            align-items: center !important;
+            #identity-et,
+            .dashboard {
+                width: 100%;
+                flex-direction: row;
+                align-items: center;
 
-            &-item {
-                width: 30% !important;
+                &-item {
+                    width: 30%;
 
-                &:not(:last-child) {
-                    margin-bottom: 0 !important;
-                    margin-top: 0 !important;
+                    &:not(:last-child) {
+                        margin-bottom: 0;
+                        margin-top: 0;
+                    }
+                }
+
+                &-icon {
+                    font-size: 1.6rem;
+                }
+
+                &-people,
+                &-interactions {
+                    span {
+                        font-size: 1.2rem;
+                    }
                 }
             }
 
-            &-icon {
-                font-size: 1.6rem !important;
+            .app-entreprise .aside-box {
+                display: none;
             }
 
-            &-people,
-            &-interactions {
-                span {
-                    font-size: 1.2rem !important;
+            .responsive-item {
+                display: flex;
+            }
+
+            .quick-access {
+                padding: 2rem 1rem;
+                margin: 0;
+
+                &--text {
+                    display: none;
+                }
+
+                &-list {
+                    justify-content: center;
+                    align-items: center;
+                    padding: 0 .25rem;
                 }
             }
-        }
-
-        .app-entreprise .aside-box {
-            display: none;
-        }
-
-        .responsive-item {
-            display: flex;
         }
     }
 }

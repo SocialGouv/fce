@@ -51,7 +51,7 @@ const buildQuery = async terms => {
     query.push(
       `(raisonSociale:"${terms.q}" OR nomUniteLegale:"${terms.q}" OR siren:"${
         terms.q
-      }")`
+      }" OR siret:"${terms.q}")`
     );
   }
 

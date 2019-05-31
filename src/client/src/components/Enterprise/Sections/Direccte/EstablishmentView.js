@@ -62,7 +62,7 @@ class EstablishmentView extends React.Component {
               {Object.entries(lastInteractions).map(
                 ([pole, lastInteraction]) => {
                   return lastInteraction ? (
-                    <tr>
+                    <tr key={lastInteraction}>
                       <td>
                         <Value value={lastInteraction.pole} empty="ND" />
                       </td>
@@ -89,9 +89,9 @@ class EstablishmentView extends React.Component {
                       </td>
                     </tr>
                   ) : (
-                    <tr>
+                    <tr key={pole}>
                       <td>{pole}</td>
-                      <td colspan="7">Pas de date connue</td>
+                      <td colSpan="7">Pas de date connue</td>
                     </tr>
                   );
                 }

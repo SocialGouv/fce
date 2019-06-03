@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/fontawesome-pro-solid";
 import Config from "../../../services/Config";
 import { getLastDateInteraction } from "../../../helpers/Date";
+import { isActiveEstablishment } from "../../../helpers/Establishment";
 
 class Dashboard extends React.Component {
   render() {
@@ -43,8 +44,10 @@ class Dashboard extends React.Component {
             <span className="dashboard-item--value">
               <Value
                 value={
-                  establishment.dernier_effectif_physique ||
-                  dashboardSizeRanges[establishment.tranche_effectif_insee]
+                  isActiveEstablishment(establishment)
+                    ? establishment.dernier_effectif_physique ||
+                      dashboardSizeRanges[establishment.tranche_effectif_insee]
+                    : "0 salarié"
                 }
                 empty="-"
               />

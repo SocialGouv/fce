@@ -49,6 +49,7 @@ class SearchResults extends React.Component {
                 pages={this.props.pagination && this.props.pagination.pages}
                 onFetchData={this.props.fetchData}
                 loading={this.props.loading}
+                sortable={false}
                 getTrProps={(state, rowInfo) => {
                   return {
                     onClick: e => {
@@ -83,7 +84,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "SIRET",
                     id: "siret",
-                    minWidth: 150,
+                    minWidth: 120,
                     accessor: e =>
                       Value({
                         value: e.etablissement.siret,

@@ -56,11 +56,11 @@ const formatEtab = async (etab, params, db) => {
     },
     "enseigne",
     {
-      in: "periodesEtablissement[0].activitePrincipaleUniteLegale",
+      in: "periodesEtablissement[0].activitePrincipaleEtablissement",
       out: "naf"
     },
     {
-      in: "periodesEtablissement[0].activitePrincipaleUniteLegale",
+      in: "periodesEtablissement[0].activitePrincipaleEtablissement",
       out: "libelle_naf",
       callback: async naf =>
         utils.isEmpty(naf) ? undefined : await getLibelleNaf(naf, db)

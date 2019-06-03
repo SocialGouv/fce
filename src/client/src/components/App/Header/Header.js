@@ -39,11 +39,10 @@ class Header extends React.Component {
             <Link
               to="/"
               onClick={this.newSearch}
-              className="navbar-brand has-text-link"
+              className="navbar-brand has-text-link home-link"
             >
               Accueil
             </Link>
-            <span className="navbar-brand">|</span>
             <Link to="/" className="navbar-brand has-text-link">
               Résultats
             </Link>

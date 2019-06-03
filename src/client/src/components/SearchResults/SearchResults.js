@@ -6,10 +6,18 @@ import ReactTable from "react-table";
 import Value from "../../elements/Value";
 import { withRouter } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
+import Config from "./../../services/Config";
+import { isActiveEstablishment } from "../../helpers/Establishment";
 
 class SearchResults extends React.Component {
   render() {
     const { results, pagination } = this.props;
+
+    const staffSizeRanges = {
+      ...Config.get("inseeSizeRanges"),
+      "0 salarié": "0 salarié"
+    };
+
     return (
       <div className="app-searchResults" style={{ marginTop: "3rem" }}>
         {results && results.length >= 1 && (
@@ -123,7 +131,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "Raison Sociale / Nom",
                     id: "nom",
-                    minWidth: 350,
+                    minWidth: 300,
                     accessor: e =>
                       Value({
                         value:
@@ -143,17 +151,17 @@ class SearchResults extends React.Component {
                       })
                   },
                   {
-                    Header: "Département",
-                    id: "departement",
+                    Header: "Effectif",
+                    id: "effectif",
+                    minWidth: 150,
                     accessor: e =>
                       Value({
-                        value:
-                          e.etablissement.adresse_components &&
-                          e.etablissement.adresse_components.code_postal &&
-                          e.etablissement.adresse_components.code_postal.substr(
-                            0,
-                            2
-                          ),
+                        value: isActiveEstablishment(e.etablissement)
+                          ? e.etablissement.dernier_effectif_physique ||
+                            staffSizeRanges[
+                              e.etablissement.tranche_effectif_insee
+                            ]
+                          : "0 salarié",
                         empty: "-"
                       })
                   },

@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { resetSearch } from "../../../services/Store/actions";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/fontawesome-pro-solid";
 
 import logo from "../../../assets/img/logo_gouv.png";
 
@@ -32,22 +30,22 @@ class Header extends React.Component {
     return (
       <header className="app-header">
         <nav className="navbar">
-          <Link to="/" onClick={this.newSearch} className="navbar-brand">
-            <img src={logo} alt="Logo Marianne" /> Fiche Commune Entreprise
-          </Link>
-          <Link to="/" onClick={this.newSearch} className="navbar-brand">
-            <FontAwesomeIcon icon={faSearch} /> Nouvelle recherche
-          </Link>
-          <div
-            role="button"
-            className="navbar-burger burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarMenu"
-          >
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
+          <div className="navbar-start">
+            <Link to="/" onClick={this.newSearch} className="navbar-brand">
+              <img src={logo} alt="Logo Marianne" /> Fiche Commune Entreprise
+            </Link>
+          </div>
+          <div className="navbar-end is-flex">
+            <Link
+              to="/"
+              onClick={this.newSearch}
+              className="navbar-brand has-text-link home-link"
+            >
+              Accueil
+            </Link>
+            <Link to="/" className="navbar-brand has-text-link">
+              Résultats
+            </Link>
           </div>
         </nav>
       </header>

@@ -14,16 +14,11 @@ class EstablishmentView extends React.Component {
     const { establishment } = this.props;
 
     const lastInteractions = {
-      pole_T: getLastInteraction(establishment.interactions_T, "T"),
-      pole_C: getLastInteraction(establishment.interactions_C, "C"),
-      pole_3E_SEER: getLastInteraction(
-        establishment.interactions_3E,
-        "3E-SEER"
-      ),
-      pole_3E_SRC: getLastInteraction(establishment.interactions_3E, "3E-SRC")
+      T: getLastInteraction(establishment.interactions_T, "T"),
+      C: getLastInteraction(establishment.interactions_C, "C"),
+      "3E_SEER": getLastInteraction(establishment.interactions_3E, "3E-SEER"),
+      "3E_SRC": getLastInteraction(establishment.interactions_3E, "3E-SRC")
     };
-
-    const { pole_T, pole_C, pole_3E_SEER, pole_3E_SRC } = lastInteractions;
 
     return (
       <section id="direccte" className="enterprise-section">
@@ -61,39 +56,52 @@ class EstablishmentView extends React.Component {
             <tbody>
               {Object.entries(lastInteractions).map(
                 ([pole, lastInteraction]) => {
-                  return lastInteraction ? (
-                    <tr key={lastInteraction}>
-                      <td>
-                        <Value value={lastInteraction.pole} empty="ND" />
-                      </td>
-                      <td>
-                        <Value value={lastInteraction.date} empty="ND" />
-                      </td>
-                      <td>
-                        <Value value={lastInteraction.objet} empty="ND" />
-                      </td>
-                      <td>
-                        <Value value={lastInteraction.unite} empty="ND" />
-                      </td>
-                      <td>
-                        <Value value={lastInteraction.agent} empty="ND" />
-                      </td>
-                      <td>
-                        <Value value={lastInteraction.type} empty="ND" />
-                      </td>
-                      <td>
-                        <Value value={lastInteraction.note} empty="ND" />
-                      </td>
-                      <td>
-                        <Value value={lastInteraction.suite} empty="ND" />
-                      </td>
-                    </tr>
-                  ) : (
-                    <tr key={pole}>
-                      <td>{pole}</td>
-                      <td colSpan="7">Pas de date connue</td>
-                    </tr>
-                  );
+                  if (pole === "C" || pole === "3E_SRC") {
+                    return (
+                      <tr key={pole}>
+                        <td>{pole}</td>
+                        <td colspan="7">
+                          {pole === "C"
+                            ? "Donnée bientôt disponible"
+                            : "Donnée non disponible"}
+                        </td>
+                      </tr>
+                    );
+                  } else {
+                    return lastInteraction ? (
+                      <tr key={lastInteraction}>
+                        <td>
+                          <Value value={pole} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.date} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.objet} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.unite} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.agent} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.type} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.note} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.suite} empty="ND" />
+                        </td>
+                      </tr>
+                    ) : (
+                      <tr>
+                        <td>{pole}</td>
+                        <td colspan="7">Pas de date connue</td>
+                      </tr>
+                    );
+                  }
                 }
               )}
             </tbody>

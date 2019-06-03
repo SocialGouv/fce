@@ -847,7 +847,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _Model = __webpack_require__(/*! ./Model */ \"./src/Models/Model.js\");\n\nvar _Model2 = _interopRequireDefault(_Model);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass Naf extends _Model2.default {\n  getByCode(code) {\n    return this.db.query(\"SELECT * FROM naf WHERE code = $1\", [code.replace(/\\./g, \"\")]).then(res => {\n      return res.rows && res.rows.length ? res.rows[0] : null;\n    }).catch(e => {\n      console.error(\"Naf::getByCode\", e);\n      return null;\n    });\n  }\n}\nexports.default = Naf;\n\n//# sourceURL=webpack://frentreprise/./src/Models/Naf.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _Model = __webpack_require__(/*! ./Model */ \"./src/Models/Model.js\");\n\nvar _Model2 = _interopRequireDefault(_Model);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nclass Naf extends _Model2.default {\n  getByCode(code) {\n    return this.db.query(\"SELECT * FROM naf WHERE code = $1\", [code]).then(res => {\n      return res.rows && res.rows.length ? res.rows[0] : null;\n    }).catch(e => {\n      console.error(\"Naf::getByCode\", e);\n      return null;\n    });\n  }\n}\nexports.default = Naf;\n\n//# sourceURL=webpack://frentreprise/./src/Models/Naf.js?");
 
 /***/ }),
 

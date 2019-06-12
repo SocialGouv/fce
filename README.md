@@ -31,10 +31,10 @@ ou, si vous utilisez zsh :
 
 ### Gitflow
 
-La numérotation des version de fait sur la base de : vAA.MM.I.P
+La numérotation des version de fait sur la base de : vAA.MM.JJ.P
 - AA = année (ex : 19)
 - MM = mois (ex : 04)
-- I = numéro d'itération du mois (donc 1 ou 2)
+- JJ = jour de début de sprint
 - P = patch (par defaut 0) à incrémenter pour chaque hotfix
 
 A la fin d'une itération on ouvre une branche release qu'on ne mergera que quand l'ensemble des tickets sera validés. En cas de retours, on crée une branche issue de cette release (et non develop) qu'on enverra en PR par rapport à la branche release. Une fois validé on pourra mettre à jour develop par rapport à release.

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import SearchView from "../../components/Search";
 import {
   search,
@@ -10,6 +9,7 @@ import {
 import Http from "../../services/Http";
 import Config from "../../services/Config";
 import SearchResults from "../../containers/SearchResults";
+import downloadjs from "downloadjs";
 
 class Search extends Component {
   constructor(props) {
@@ -18,16 +18,13 @@ class Search extends Component {
       nafList: [],
       hasError: false,
       loading: false,
-      redirectTo: false,
       showResults: false
     };
   }
 
   componentDidMount() {
     if (this.hasPreviousTerms(this.props.terms)) {
-      this.setState({
-        showResults: true
-      });
+      this.search();
     }
     this.loadNaf();
   }
@@ -123,42 +120,50 @@ class Search extends Component {
     this.props
       .search(this.props.terms)
       .then(response => {
-        const { query, results } = response.data;
-        let redirectTo = false;
-        let showResults = false;
-
-        if (query.isSIRET && results) {
-          redirectTo = `/establishment/${query.terms.q}`;
-          this.props.setCurrentEnterprise(results[0]);
-        } else if (query.isSIREN && results) {
-          redirectTo = `/enterprise/${query.terms.q}`;
-          this.props.setCurrentEnterprise(results[0]);
-        } else {
-          showResults = true;
-        }
-
         this.setState({
           hasError: false,
           loading: false,
-          redirectTo,
-          showResults
+          showResults: true
         });
       })
-      .catch(
-        function(error) {
+      .catch(error => {
+        this.setState({
+          hasError: true,
+          loading: false,
+          showResults: false
+        });
+      });
+  };
+
+  downloadXlsxExport = page => {
+    return Http.get("/search.xlsx", {
+      params: { ...this.props.terms, page },
+      responseType: "blob"
+    })
+      .then(response => {
+        if (response.data && response.data) {
+          downloadjs(
+            new Blob([response.data], {
+              type: response.headers["content-type"]
+            }),
+            "recherche.xlsx",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          );
+        } else {
           this.setState({
-            hasError: true,
-            loading: false
+            hasError: true
           });
-        }.bind(this)
-      );
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        this.setState({
+          hasError: true
+        });
+      });
   };
 
   render() {
-    if (this.state.redirectTo) {
-      return <Redirect push to={this.state.redirectTo} />;
-    }
-
     return (
       <>
         <SearchView
@@ -171,7 +176,9 @@ class Search extends Component {
           nafList={this.state.nafList}
           loadCommunes={this.loadCommunes}
         />
-        {this.state.showResults ? <SearchResults /> : null}
+        {this.state.showResults && (
+          <SearchResults downloadXlsxExport={this.downloadXlsxExport} />
+        )}
       </>
     );
   }

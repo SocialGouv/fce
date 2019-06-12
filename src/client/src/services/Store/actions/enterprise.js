@@ -17,7 +17,7 @@ export const loadEntreprise = siren => (dispatch, getState) => {
 };
 
 const getEnterprise = term => (dispatch, getState) => {
-  return Http.get("/search", {
+  return Http.get("/entity", {
     params: {
       q: term
     }

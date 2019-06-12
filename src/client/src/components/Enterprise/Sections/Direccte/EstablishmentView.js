@@ -1,13 +1,9 @@
 import React from "react";
 import Value from "../../../../elements/Value";
 import Data from "./../SharedComponents/Data";
+import { getLastInteraction } from "../../../../helpers/Interactions";
 
 class EstablishmentView extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   toggleElement = id => {
     this.setState({
       [id]: !this.state[id]
@@ -16,6 +12,13 @@ class EstablishmentView extends React.Component {
 
   render() {
     const { establishment } = this.props;
+
+    const lastInteractions = {
+      T: getLastInteraction(establishment.interactions_T, "T"),
+      C: getLastInteraction(establishment.interactions_C, "C"),
+      "3E_SEER": getLastInteraction(establishment.interactions_3E, "3E-SEER"),
+      "3E_SRC": getLastInteraction(establishment.interactions_3E, "3E-SRC")
+    };
 
     return (
       <section id="direccte" className="enterprise-section">
@@ -37,46 +40,70 @@ class EstablishmentView extends React.Component {
         />
 
         {establishment.interactions && establishment.interactions.length ? (
-          <table className="table is-hoverable direccte-interactions">
+          <table className="table is-bordered is-hoverable direccte-interactions">
             <thead>
               <tr>
-                <th>Date</th>
                 <th>Pôle</th>
+                <th>Date</th>
                 <th>Objet</th>
                 <th>Unité</th>
                 <th>Agent</th>
                 <th>Type</th>
-                <th>Notes</th>
+                <th>Note</th>
                 <th>Suite</th>
               </tr>
             </thead>
             <tbody>
-              {establishment.interactions.map((dirvis, index) => {
-                return (
-                  <tr key={index}>
-                    <td>
-                      <Value value={dirvis.date} empty="-" />
-                    </td>
-                    <td>
-                      <Value value={dirvis.pole} empty="-" />
-                    </td>
-                    <td> ND </td>
-                    <td>
-                      <Value value={dirvis.unite} empty="-" />
-                    </td>
-                    <td>
-                      <Value value={dirvis.agent} empty="-" />{" "}
-                    </td>
-                    <td>
-                      <Value value={dirvis.type} empty="-" />
-                    </td>
-                    <td>
-                      <Value value={dirvis.note} empty="-" />
-                    </td>
-                    <td> ND </td>
-                  </tr>
-                );
-              })}
+              {Object.entries(lastInteractions).map(
+                ([pole, lastInteraction]) => {
+                  if (pole === "C" || pole === "3E_SRC") {
+                    return (
+                      <tr key={pole}>
+                        <td>{pole}</td>
+                        <td colspan="7">
+                          {pole === "C"
+                            ? "Donnée bientôt disponible"
+                            : "Donnée non disponible"}
+                        </td>
+                      </tr>
+                    );
+                  } else {
+                    return lastInteraction ? (
+                      <tr key={lastInteraction}>
+                        <td>
+                          <Value value={pole} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.date} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.objet} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.unite} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.agent} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.type} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.note} empty="ND" />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.suite} empty="ND" />
+                        </td>
+                      </tr>
+                    ) : (
+                      <tr>
+                        <td>{pole}</td>
+                        <td colspan="7">Pas de date connue</td>
+                      </tr>
+                    );
+                  }
+                }
+              )}
             </tbody>
           </table>
         ) : null}

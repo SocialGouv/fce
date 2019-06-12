@@ -1,15 +1,27 @@
 import React from "react";
 import { Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faSquare, faCircle } from "@fortawesome/fontawesome-pro-solid";
+import {
+  faSquare,
+  faCircle,
+  faFileExcel
+} from "@fortawesome/fontawesome-pro-solid";
 import ReactTable from "react-table";
 import Value from "../../elements/Value";
 import { withRouter } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
+import Config from "./../../services/Config";
+import { isActiveEstablishment } from "../../helpers/Establishment";
 
 class SearchResults extends React.Component {
   render() {
-    const { results, pagination } = this.props;
+    const { results, pagination, downloadXlsxExport } = this.props;
+
+    const staffSizeRanges = {
+      ...Config.get("inseeSizeRanges"),
+      "0 salarié": "0 salarié"
+    };
+
     return (
       <div className="app-searchResults" style={{ marginTop: "3rem" }}>
         {results && results.length >= 1 && (
@@ -18,6 +30,21 @@ class SearchResults extends React.Component {
             {pagination.items > 1 && "s"}
           </h2>
         )}
+
+        <div className="columns">
+          <div className="column is-12">
+            <button
+              className="button is-dark is-outlined is-pulled-right"
+              onClick={e => downloadXlsxExport(pagination.page)}
+            >
+              <span className="icon">
+                <FontAwesomeIcon icon={faFileExcel} />
+              </span>
+              <span>Export Excel</span>
+            </button>
+          </div>
+        </div>
+
         <div className="columns result-row">
           <div className="column is-12">
             {!Array.isArray(results) ? (
@@ -41,6 +68,7 @@ class SearchResults extends React.Component {
                 pages={this.props.pagination && this.props.pagination.pages}
                 onFetchData={this.props.fetchData}
                 loading={this.props.loading}
+                sortable={false}
                 getTrProps={(state, rowInfo) => {
                   return {
                     onClick: e => {
@@ -75,7 +103,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "SIRET",
                     id: "siret",
-                    minWidth: 150,
+                    minWidth: 120,
                     accessor: e =>
                       Value({
                         value: e.etablissement.siret,
@@ -123,7 +151,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "Raison Sociale / Nom",
                     id: "nom",
-                    minWidth: 350,
+                    minWidth: 300,
                     accessor: e =>
                       Value({
                         value:
@@ -143,17 +171,17 @@ class SearchResults extends React.Component {
                       })
                   },
                   {
-                    Header: "Département",
-                    id: "departement",
+                    Header: "Effectif",
+                    id: "effectif",
+                    minWidth: 150,
                     accessor: e =>
                       Value({
-                        value:
-                          e.etablissement.adresse_components &&
-                          e.etablissement.adresse_components.code_postal &&
-                          e.etablissement.adresse_components.code_postal.substr(
-                            0,
-                            2
-                          ),
+                        value: isActiveEstablishment(e.etablissement)
+                          ? e.etablissement.dernier_effectif_physique ||
+                            staffSizeRanges[
+                              e.etablissement.tranche_effectif_insee
+                            ]
+                          : "0 salarié",
                         empty: "-"
                       })
                   },
@@ -179,11 +207,12 @@ class SearchResults extends React.Component {
                     id: "activite",
                     minWidth: 200,
                     accessor: e => {
+                      const { naf, libelle_naf } = e.etablissement;
                       return (
-                        e.etablissement.naf &&
+                        naf &&
                         Value({
-                          value: `${e.etablissement.naf} - ${
-                            e.etablissement.libelle_naf
+                          value: `${naf === null ? "" : naf} ${
+                            libelle_naf === null ? "" : " - " + libelle_naf
                           }`
                         })
                       );

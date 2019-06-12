@@ -14,6 +14,7 @@ import Header from "./Header";
 import Search from "../../containers/Search";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
+import MagicLink from "../../containers/MagicLink";
 import { Error403, Error404 } from "../../components/Errors";
 
 let { store, persistor } = configureStore();
@@ -52,6 +53,11 @@ class App extends React.Component {
                     component={Enterprise}
                   />
                   <Route exact path="/login" render={() => <Login />} />
+                  <Route
+                    exact
+                    path="/magic-link/:key"
+                    render={() => <MagicLink />}
+                  />
                   <Route exact path="/403" render={() => <Error403 />} />
                   <Route exact path="/404" render={() => <Error404 />} />
                   <Redirect to="/404" />

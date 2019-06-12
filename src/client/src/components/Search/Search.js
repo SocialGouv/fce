@@ -31,7 +31,7 @@ class Search extends React.Component {
             </p>
 
             {hasError ? (
-              <div className="alert is-danger">
+              <div className="notification is-danger">
                 Une erreur est survenue lors de la communication avec l'API
               </div>
             ) : (
@@ -46,7 +46,6 @@ class Search extends React.Component {
                     name="q"
                     id="term"
                     className="input is-medium"
-                    required
                     placeholder="SIRET, SIREN, raison sociale, nom"
                     onChange={evt => this.props.updateForm(evt)}
                     value={terms.q || ""}

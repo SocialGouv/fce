@@ -15,9 +15,10 @@ export default class Naf extends Model {
 
   search(q) {
     return this.db
-      .query("SELECT * FROM naf WHERE libelle ILIKE $1 OR code ILIKE $1", [
-        `%${q}%`
-      ])
+      .query(
+        "SELECT * FROM naf WHERE libelle ILIKE $1 OR code ILIKE $1 AND recherche = true",
+        [`%${q}%`]
+      )
       .then(res => {
         return res.rows;
       })

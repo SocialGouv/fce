@@ -31,10 +31,10 @@ ou, si vous utilisez zsh :
 
 ### Gitflow
 
-La numérotation des version de fait sur la base de : vAA.MM.I.P
+La numérotation des version de fait sur la base de : vAA.MM.JJ.P
 - AA = année (ex : 19)
 - MM = mois (ex : 04)
-- I = numéro d'itération du mois (donc 1 ou 2)
+- JJ = jour de début de sprint
 - P = patch (par defaut 0) à incrémenter pour chaque hotfix
 
 A la fin d'une itération on ouvre une branche release qu'on ne mergera que quand l'ensemble des tickets sera validés. En cas de retours, on crée une branche issue de cette release (et non develop) qu'on enverra en PR par rapport à la branche release. Une fois validé on pourra mettre à jour develop par rapport à release.
@@ -68,6 +68,8 @@ Quelques rêgles propre au projet
 
 ## Déploiement
 
+### Requirements
+
 ```bash
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
@@ -81,6 +83,40 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo apt-get install docker-ce
 ```
+
+### Procédure
+
+( A automatiser via Jenkins )
+
+#### Local
+
+- cloner le repo sur sa machine en récupérant la branche master
+
+- `.c42/scripts/install.sh`
+
+- `.c42/scripts/build.sh`
+
+- Dans le répertoire dist executer `yarn`
+
+- `rsync -avz dist/ fce:production/releases/AAAAMMDDHHMM`
+
+#### Serveur
+
+- `cp production/shared/.env production/releases/AAAAMMDDHHMM/.env`
+
+- `rm -rf production/current`
+
+- `cp -R production/releases/AAAAMMDDHHMM production/current`
+
+- dans `production/current` executer `docker-compose restart`
+
+## Troubleshooting
+
+- **Mes modifications dans frentreprise ne sont pas prise en compte**
+
+Au changement de branche le lien entre `frentreprise` et le `server` peuvent se casser, redémarrer le container `frentreprise` devrait régler le problème.
+
+Une manière de voir facilement si le lien est bon est d'écouter le container `server` et de faire une modification sur `frentreprise`, s'il redémarre c'est que tout fonctionne.
 
 ## Tests
 

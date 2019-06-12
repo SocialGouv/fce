@@ -1,12 +1,12 @@
-.app-login {
+.app-magicLink {
     position: absolute;
     max-width: 100%;
-    min-width: 500px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.login-form {
+.magicLink-container {
     padding: 2rem;
+    text-align: center;
 }

@@ -26,19 +26,6 @@ export const search = (terms, page = 1) => (dispatch, getState) => {
         _setSearchResponses(response.data.results, response.data.pagination)
       );
 
-      let terms = {};
-
-      if (response.data.query.isSIRET || response.data.query.isSIREN) {
-        terms = {
-          siren: response.data.results && response.data.results[0].siren
-        };
-        dispatch(
-          _setTerms({
-            ...terms
-          })
-        );
-      }
-
       return Promise.resolve(response);
     })
     .catch(function(error) {

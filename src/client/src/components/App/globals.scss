@@ -350,6 +350,10 @@
     align-items: center;
 }
 
+.is-flex-space-between {
+    display: flex;
+    justify-content: space-between;
+}
 .h-center {
     margin: 0 auto;
     width: 100%;

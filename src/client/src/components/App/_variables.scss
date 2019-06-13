@@ -1,10 +1,18 @@
+/* COLORS */
 $dark-blue: #34495e;
 $blue: #2980b9;
 $turquoise: #2aa995;
 $bright-red: #e74c3c;
+$green-washed: rgba(34, 137, 31, 0.2);
+$green: #22891f;
 $primary: $blue;
 $info: $turquoise;
 $danger: $bright-red;
 $secondary: $turquoise;
+$success: $green;
+$success-background: $green-washed;
+
+/* BORDER-RADIUS */
+$b-radius: 0.25rem;
 
 @import "~bulma/sass/utilities/all";

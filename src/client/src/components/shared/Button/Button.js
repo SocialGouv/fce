@@ -22,13 +22,17 @@ const Button = ({ value, icon, buttonClasses, callback }) => {
 
 Button.defaultProps = {
   value: "Valider",
-  buttonClasses: "button"
+  icon: null
 };
 
 Button.propTypes = {
   value: PropTypes.string,
   icon: PropTypes.oneOfType([null, PropTypes.object]),
-  buttonClasses: PropTypes.array,
+  buttonClasses: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.array
+  ]),
   callback: PropTypes.func
 };
 

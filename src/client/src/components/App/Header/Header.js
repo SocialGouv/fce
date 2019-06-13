@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { resetSearch } from "../../../services/Store/actions";
 
-import logo from "../../../assets/img/logo_gouv.png";
+import logo from "../../../assets/img/logo_gouv-65w38h.png";
 
 class Header extends React.Component {
   constructor(props) {
@@ -28,26 +28,17 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header className="app-header">
-        <nav className="navbar">
-          <div className="navbar-start">
-            <Link to="/" onClick={this.newSearch} className="navbar-brand">
-              <img src={logo} alt="Logo Marianne" /> Fiche Commune Entreprise
-            </Link>
-          </div>
-          <div className="navbar-end is-flex">
-            <Link
-              to="/"
-              onClick={this.newSearch}
-              className="navbar-brand has-text-link home-link"
-            >
-              Accueil
-            </Link>
-            <Link to="/" className="navbar-brand has-text-link">
-              Résultats
-            </Link>
-          </div>
-        </nav>
+      <header className="app-header section">
+        <div className="container">
+          <nav className="navbar">
+            <div className="navbar-start">
+              <Link to="/" onClick={this.newSearch} className="navbar-brand">
+                <img src={logo} alt="Logo Marianne" /> Fiche Commune Entreprise
+              </Link>
+            </div>
+            <div className="navbar-end is-flex" />
+          </nav>
+        </div>
       </header>
     );
   }

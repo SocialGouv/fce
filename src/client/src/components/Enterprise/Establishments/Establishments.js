@@ -4,10 +4,11 @@ import { Redirect } from "react-router-dom";
 import Establishment from "./Establishment";
 import EstablishmentsItems from "./EstablishmentsItems";
 import Value from "../../../elements/Value";
-import { faBuilding, faFileAlt } from "@fortawesome/fontawesome-pro-solid";
+import { faBuilding, faArrowRight } from "@fortawesome/fontawesome-pro-solid";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Config from "../../../services/Config";
 import { setTerm, resetSearch } from "../../../services/Store/actions";
+import Button from "../../shared/Button";
 
 class Establishments extends React.Component {
   constructor(props) {
@@ -56,24 +57,21 @@ class Establishments extends React.Component {
           } aside-contain establishments-aside column is-12-tablet`}
         >
           <section className="pb-6">
-            <h3 className="title is-size-5">
+            <h3 className="has-text-segoe has-text-weight-bold is-size-5">
               Entreprise <Value value={enterprise.raison_sociale} empty="-" />
             </h3>
-            <h5 className="has-text-grey has-text-weight-semibold">
+            <h5 className="has-text-segoe has-text-weight-normal">
               {enterprise.libelle_naf}
             </h5>
             {isEstablishmentDisplayed && (
-              <button
-                className="button is-primary has-text-light"
-                onClick={() => {
+              <Button
+                value="Voir la fiche entreprise"
+                icon={faArrowRight}
+                buttonClasses={["is-secondary", "is-outlined"]}
+                callback={() => {
                   this.setState({ isRedirectedToEnterprise: true });
                 }}
-              >
-                <span className="icon">
-                  <FontAwesomeIcon icon={faFileAlt} />
-                </span>
-                <span>Voir la fiche entreprise</span>
-              </button>
+              />
             )}
           </section>
 

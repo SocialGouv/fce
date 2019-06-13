@@ -307,3 +307,8 @@
 .text-centered {
     text-align: center;
 }
+
+/*** Bulma ***/
+.is-secondary {
+    @extend .is-info;
+}

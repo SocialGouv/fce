@@ -35,8 +35,10 @@ class App extends React.Component {
           <Router history={piwik.connectToHistory(history)}>
             <ScrollToTop>
               <Header />
-              <div className="beta-message">
-                Ce site est un travail en cours, actuellement en beta.
+              <div className="beta-message flex-center">
+                <div>
+                  Ce site est un travail en cours, actuellement en beta.
+                </div>
               </div>
               <div className="app-container" style={appStyle}>
                 <Switch>

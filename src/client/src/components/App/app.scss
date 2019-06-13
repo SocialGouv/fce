@@ -1,5 +1,6 @@
 @import "variables";
 @import "globals";
+@import "animations";
 @import "~bulma/bulma";
 @import "~bulma-extensions/bulma-accordion/dist/css/bulma-accordion";
 @import "~bulma-extensions/bulma-quickview/dist/css/bulma-quickview";
@@ -12,7 +13,7 @@
 @import "../Enterprise/Establishments/establishments";
 
 html {
-    height: 100vh;
+    min-height: 100vh;
     scroll-behavior: smooth;
 }
 
@@ -29,7 +30,7 @@ a {
 
 .app-container {
     padding: 0 1rem;
-    min-height: 100vh;
+    min-height: calc(100vh - 120px);
 
     @media print {
         padding-top: 1rem;
@@ -63,11 +64,10 @@ a {
 
 .beta-message {
     text-align: center;
-    background-color: #a5e1fa;
-    padding: .75rem 0;
+    height: 40px;
     opacity: 0.85;
+    background-color: #a5e1fa;
     z-index: 1;
-    position: relative;
 }
 
 @media print {

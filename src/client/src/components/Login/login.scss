@@ -1,4 +1,5 @@
 @import "../App/_variables.scss";
+@import "~bulma/sass/elements/button.sass";
 
 .login {
     &__title {
@@ -8,8 +9,30 @@
     &__button {
         width: 200px;
         height: 46px;
-        font-size: 18px;
-        border-radius: 4px;
+        font-size: 1.125rem;
+        border-radius: $b-radius;
+
+        &--as-link {
+            > span {
+                font-weight: normal;
+            }
+
+            &,
+            &:hover,
+            &:focus {
+                background-color: transparent;
+                border: none;
+                &:not(:active) {
+                    box-shadow: none;
+                }
+            }
+
+            &:hover,
+            &:focus {
+                color: #20638f !important;
+                text-decoration: underline;
+            }
+        }
     }
 
     &__notif {
@@ -26,6 +49,30 @@
 
             > .svg-inline--fa {
                 margin-right: 0.5rem;
+            }
+        }
+    }
+
+    &__links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &__link {
+        @extend .button;
+
+        &,
+        &:hover,
+        &:focus {
+            background-color: transparent;
+            border: none;
+        }
+
+        &:focus {
+            outline: none;
+            &:not(:active) {
+                box-shadow: none;
             }
         }
     }

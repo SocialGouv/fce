@@ -64,10 +64,14 @@ a {
 
 .beta-message {
     text-align: center;
+    font-size: 0.8rem;
     height: 40px;
     opacity: 0.85;
     background-color: #a5e1fa;
     z-index: 1;
+    @media screen and (min-width: 425px) {
+        font-size: 1rem;
+    }
 }
 
 @media print {

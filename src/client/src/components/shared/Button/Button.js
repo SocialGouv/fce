@@ -26,7 +26,7 @@ Button.defaultProps = {
 };
 
 Button.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   icon: PropTypes.oneOfType([null, PropTypes.object]),
   buttonClasses: PropTypes.oneOfType([
     PropTypes.object,

@@ -29,9 +29,8 @@ a {
 }
 
 .app-container {
-    padding: 0 1rem;
     min-height: calc(100vh - 120px);
-
+    background-color: $app-container-background;
     @media print {
         padding-top: 1rem;
     }

@@ -9,17 +9,31 @@
     }
 }
 
-.navbar {
-    &-brand {
+.header {
+    &__home-link {
+        display: flex;
+        justify-content: space-around;
         align-items: center;
         color: $dark;
+        &:hover {
+            text-decoration: none;
+        }
+        @media screen and (min-width: 425px) {
+            justify-content: flex-start;
+            max-width: 20rem;
+        }
+    }
+
+    &__logo {
+        width: 65px;
+        height: 38px;
+        @media screen and (min-width: 425px) {
+            margin-right: 2rem;
+        }
+    }
+
+    &__title {
         font-size: 1rem;
         font-weight: bold;
-
-        & > img {
-            margin-right: 2rem;
-            width: 65px;
-            height: 38px;
-        }
     }
 }

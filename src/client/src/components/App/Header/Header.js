@@ -30,13 +30,19 @@ class Header extends React.Component {
     return (
       <header className="app-header section">
         <div className="container">
-          <nav className="navbar">
-            <div className="navbar-start">
-              <Link to="/" onClick={this.newSearch} className="navbar-brand">
-                <img src={logo} alt="Logo Marianne" /> Fiche Commune Entreprise
+          <nav>
+            <div className="header__items">
+              <Link
+                className="header__home-link"
+                to="/"
+                onClick={this.newSearch}
+              >
+                <img className="header__logo" src={logo} alt="Logo Marianne" />
+                <div className="header__title is-dark">
+                  Fiche Commune Entreprise
+                </div>
               </Link>
             </div>
-            <div className="navbar-end is-flex" />
           </nav>
         </div>
       </header>

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Establishment from "./Establishment";
 import EstablishmentsItems from "./EstablishmentsItems";
-import Value from "../../../elements/Value";
+import Value from "../../shared/Value";
 import { faBuilding, faArrowRight } from "@fortawesome/fontawesome-pro-solid";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import Config from "../../../services/Config";
@@ -57,8 +57,12 @@ class Establishments extends React.Component {
           } aside-contain establishments-aside column is-12-tablet`}
         >
           <section className="pb-6">
-            <h3 className="has-text-segoe has-text-weight-bold is-size-5">
-              Entreprise <Value value={enterprise.raison_sociale} empty="-" />
+            <h3 className="is-capitalized has-text-segoe has-text-weight-bold is-size-5">
+              Entreprise{" "}
+              <Value
+                value={enterprise.raison_sociale.toLowerCase()}
+                empty="-"
+              />
             </h3>
             <h5 className="has-text-segoe has-text-weight-normal">
               {enterprise.libelle_naf}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
-import Value from "../../../../elements/Value";
+import Value from "../../../shared/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faCircle, faSquare } from "@fortawesome/fontawesome-pro-solid";
 import { isActiveEstablishment } from "../../../../helpers/Establishment";

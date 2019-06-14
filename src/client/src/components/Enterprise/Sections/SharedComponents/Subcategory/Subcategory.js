@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import Data from "../Data";
 
+import "./subcategory.scss";
+
 const Subcategory = ({ subtitle, datas }) => {
   return (
     <div className="subcategory">

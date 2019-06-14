@@ -1,5 +1,7 @@
+@import "fonts";
 @import "variables";
 @import "globals";
+@import "typography";
 @import "~bulma/bulma";
 @import "~bulma-extensions/bulma-accordion/dist/css/bulma-accordion";
 @import "~bulma-extensions/bulma-quickview/dist/css/bulma-quickview";
@@ -10,6 +12,7 @@
 @import "../SearchResults/searchResults";
 @import "../Enterprise/enterprise";
 @import "../Enterprise/Establishments/establishments";
+@import "../shared/InfoBox/infoBox";
 
 html {
     height: 100vh;

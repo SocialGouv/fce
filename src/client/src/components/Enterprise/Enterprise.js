@@ -1,13 +1,8 @@
 import React from "react";
 import withLoading from "../../services/Loading";
 import Establishments from "./Establishments";
-import {
-  Direccte,
-  EnterpriseHeader,
-  EnterpriseActivity,
-  Finances,
-  Mandataires
-} from "./Sections";
+import { Header, Activity, Finances, Mandataires } from "./Sections/Enterprise";
+import Direccte from "./Sections/Direccte";
 
 class Enterprise extends React.Component {
   render() {
@@ -42,11 +37,8 @@ class Enterprise extends React.Component {
             />
           </div>
           <div className="column main is-9-desktop is-12-tablet">
-            <EnterpriseHeader enterprise={enterprise} />
-            <EnterpriseActivity
-              enterprise={enterprise}
-              headOffice={headOffice}
-            />
+            <Header enterprise={enterprise} />
+            <Activity enterprise={enterprise} headOffice={headOffice} />
             <Finances establishment={headOffice} />
             <Direccte enterprise={enterprise} />
             <Mandataires enterprise={enterprise} />

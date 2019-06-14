@@ -9,7 +9,9 @@ class Login extends Component {
     hasError: false,
     errorMessage: null,
     hasSuccess: false,
-    loading: false
+    loading: false,
+    step: "login-home",
+    showSuccessNotif: true
   };
 
   login = evt => {
@@ -20,6 +22,10 @@ class Login extends Component {
       .then(response => {
         if (response.data && response.data.success) {
           this._loginSuccess();
+          this.setStep("magiclink-success");
+          if (this.state.showSuccessNotif === false) {
+            this.setShowSuccessNotif(true);
+          }
         } else {
           this._loginFail(
             _get(response, "data.message", "La tentative de connexion a échoué")
@@ -56,8 +62,27 @@ class Login extends Component {
     });
   };
 
+  setStep = step => {
+    this.setState({
+      step
+    });
+  };
+
+  setShowSuccessNotif = status => {
+    this.setState({
+      showSuccessNotif: status
+    });
+  };
+
   render() {
-    const { hasSuccess, hasError, loading, errorMessage } = this.state;
+    const {
+      hasError,
+      loading,
+      errorMessage,
+      email,
+      step,
+      showSuccessNotif
+    } = this.state;
 
     return (
       <LoginView
@@ -65,8 +90,12 @@ class Login extends Component {
         updateForm={this.updateLogin}
         loading={loading}
         hasError={hasError}
-        hasSuccess={hasSuccess}
         errorMessage={errorMessage}
+        email={email}
+        step={step}
+        setStep={this.setStep}
+        showSuccessNotif={showSuccessNotif}
+        setShowSuccessNotif={this.setShowSuccessNotif}
       />
     );
   }

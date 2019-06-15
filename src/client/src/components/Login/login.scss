@@ -103,4 +103,29 @@
             }
         }
     }
+
+    &__notif {
+        display: flex;
+        align-items: baseline;
+        padding: 0.5rem;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        border-radius: $b-radius;
+        &--success {
+            color: $success;
+            border: 1px solid $success;
+            background-color: $success-background;
+        }
+        &--error {
+            color: $error;
+            border: 1px solid $error;
+            background-color: $error-background;
+        }
+
+        > .svg-inline--fa {
+            padding-top: 2px;
+            width: 16px;
+            margin-right: 0.5rem;
+        }
+    }
 }

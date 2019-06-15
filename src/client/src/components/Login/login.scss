@@ -28,7 +28,7 @@
         @media screen and (min-width: 768px) {
             font-size: 2rem;
             margin-bottom: 2rem;
-    }
+        }
     }
 
     &__subtitle {
@@ -73,24 +73,6 @@
             &:focus {
                 color: #20638f !important;
                 text-decoration: underline;
-            }
-        }
-    }
-
-    &__notif {
-        &--success {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            padding: 0.5rem;
-            font-size: 14px;
-            color: $success;
-            border: 1px solid $success;
-            border-radius: $b-radius;
-            background-color: $success-background;
-
-            > .svg-inline--fa {
-                margin-right: 0.5rem;
             }
         }
     }

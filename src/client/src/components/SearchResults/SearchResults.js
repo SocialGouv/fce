@@ -7,7 +7,7 @@ import {
   faFileExcel
 } from "@fortawesome/fontawesome-pro-solid";
 import ReactTable from "react-table";
-import Value from "../../elements/Value";
+import Value from "../shared/Value";
 import { withRouter } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import Config from "./../../services/Config";

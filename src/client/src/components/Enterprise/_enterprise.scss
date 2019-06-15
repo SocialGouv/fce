@@ -1,5 +1,12 @@
+.print-section {
+    margin-top: 4rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .app-enterprise {
-    padding: 5rem 0;
+    padding: 1rem 0;
 
     .enterprise-overlay {
         min-height: 100%;
@@ -9,14 +16,6 @@
         left: 0;
         background: rgb(233, 227, 201);
         opacity: 0.75;
-    }
-
-    .subcategory {
-        margin-top: 2rem;
-
-        &-title {
-            border-bottom: solid 1px #eee;
-        }
     }
 
     .show-all-establishments {
@@ -86,8 +85,7 @@
                 top: -2rem;
                 left: 0;
                 border-radius: 0.325rem 0.325rem 0 0;
-                text-transform: uppercase;
-                font-weight: normal;
+                text-transform: capitalize;
                 color: $primary;
             }
 
@@ -120,8 +118,10 @@
 
         .enterprise-header,
         .establishment-header {
-            padding: 0 2rem;
-            position: relative;
+            scroll-margin: 7rem;
+            padding: 2rem;
+            background-color: $white;
+            border-radius: 0.325rem;
 
             .top-header {
                 display: flex;
@@ -164,11 +164,6 @@
                 background-color: $secondary;
                 border-radius: 0.325rem;
                 color: $light;
-
-                .title {
-                    text-transform: uppercase;
-                    font-weight: normal;
-                }
 
                 &--content {
                     font-weight: bold;

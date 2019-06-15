@@ -1,7 +1,6 @@
 .app-header {
     display: flex;
     align-items: center;
-    height: 80px;
     padding: 0;
     box-shadow: 0 2px 3px 2px rgba(0, 0, 0, 0.4);
 
@@ -13,22 +12,20 @@
 .header {
     &__home-link {
         display: flex;
-        justify-content: space-around;
+        justify-content: flex-start;
         align-items: center;
+        height: 80px;
         color: $dark;
         &:hover {
             text-decoration: none;
-        }
-        @media screen and (min-width: 425px) {
-            justify-content: flex-start;
-            max-width: 20rem;
         }
     }
 
     &__logo {
         width: 65px;
         height: 38px;
-        @media screen and (min-width: 425px) {
+        margin-right: 1rem;
+        @media screen and (min-width: $desktop) {
             margin-right: 2rem;
         }
     }
@@ -37,5 +34,22 @@
         font-family: "Evolventa", sans-serif;
         font-size: 1rem;
         font-weight: bold;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: 80px;
+        .button {
+            width: 11.875rem;
+            height: 2.25rem;
+            &:first-child {
+                margin-right: 1rem;
+                @media screen and (min-width: $desktop) {
+                    margin-right: 1.875rem;
+                }
+            }
+        }
     }
 }

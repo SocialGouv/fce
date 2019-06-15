@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { resetSearch } from "../../../services/Store/actions";
+import { faChevronLeft, faPlus } from "@fortawesome/fontawesome-pro-light";
+import Button from "../../shared/Button";
 
 import logo from "../../../assets/img/logo_gouv-65w38h.png";
 
@@ -31,9 +33,9 @@ class Header extends React.Component {
       <header className="app-header section">
         <div className="container">
           <nav>
-            <div className="header__items">
+            <div className="header__items columns is-tablet">
               <Link
-                className="header__home-link"
+                className="header__home-link column "
                 to="/"
                 onClick={this.newSearch}
               >
@@ -42,6 +44,28 @@ class Header extends React.Component {
                   Fiche Commune Entreprise
                 </div>
               </Link>
+              {(this.props.location.pathname.includes("/establishment") ||
+                this.props.location.pathname.includes("/enterprise")) && (
+                <div className="header__buttons column">
+                  <div className="navbar-end is-flex">
+                    <Link to="/">
+                      <Button
+                        value="Liste des résultats"
+                        icon={faChevronLeft}
+                        buttonClasses="is-outlined"
+                      />
+                    </Link>
+                    <Link to="/">
+                      <Button
+                        value="Nouvelle recherche"
+                        icon={faPlus}
+                        buttonClasses="is-secondary"
+                        onClick={this.newSearch}
+                      />
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
           </nav>
         </div>

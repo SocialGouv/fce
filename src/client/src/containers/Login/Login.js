@@ -6,9 +6,9 @@ import _get from "lodash.get";
 class Login extends Component {
   state = {
     email: "",
+    hasSuccess: false,
     hasError: false,
     errorMessage: null,
-    hasSuccess: false,
     loading: false,
     step: "login-home",
     showSuccessNotif: true
@@ -22,7 +22,7 @@ class Login extends Component {
       .then(response => {
         if (response.data && response.data.success) {
           this._loginSuccess();
-          this.setStep("magiclink-success");
+          this.setStep("login-form-success");
           if (this.state.showSuccessNotif === false) {
             this.setShowSuccessNotif(true);
           }

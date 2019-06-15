@@ -11,7 +11,7 @@
             text-align: center;
         }
 
-        &--magiclink {
+        &--form {
             max-width: 555px;
             text-align: left;
         }
@@ -97,6 +97,7 @@
 
         &:focus {
             outline: none;
+            text-decoration: underline;
             &:not(:active) {
                 box-shadow: none;
             }

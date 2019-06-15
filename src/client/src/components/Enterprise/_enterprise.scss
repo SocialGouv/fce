@@ -1,6 +1,6 @@
 .print-section {
-    margin-top: 4rem;
-    margin-bottom: 1rem;
+    margin-top: .25rem;
+    margin-bottom: 1.5rem;
     display: flex;
     justify-content: flex-end;
 }
@@ -116,8 +116,7 @@
             }
         }
 
-        .enterprise-header,
-        .establishment-header {
+        .enterprise-header {
             scroll-margin: 7rem;
             padding: 2rem;
             background-color: $white;
@@ -127,101 +126,6 @@
                 display: flex;
                 width: 100%;
                 justify-content: space-between;
-            }
-        }
-
-        .dashboard {
-            background-color: transparent;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            padding: 1rem 4rem;
-
-            &-mask {
-                background-color: $dark;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                opacity: 0;
-            }
-
-            &-item {
-                z-index: 30;
-                padding: 1rem;
-                margin: 0 1.5rem;
-                text-align: center;
-                width: 20%;
-                height: 9rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                background-color: $secondary;
-                border-radius: 0.325rem;
-                color: $light;
-
-                &--content {
-                    font-weight: bold;
-                    display: flex;
-                    flex-direction: column;
-                }
-
-                .dashboard-item--value {
-                    font-size: 1.3rem;
-                    font-weight: normal;
-                }
-
-                .dashboard-item--desc {
-                    font-size: 1.15rem;
-                }
-            }
-
-            &-indicator {
-                z-index: 30;
-                padding: 1rem;
-                margin: 0 0.5rem;
-                text-align: center;
-                width: 20%;
-                height: 9rem;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                color: $black;
-                background-color: none;
-            }
-
-            &-icon {
-                font-size: 2.25rem;
-            }
-
-            .icon--danger {
-                font-size: 1.75rem;
-            }
-
-            &-people,
-            &-interactions {
-                span {
-                    margin-left: 0.5rem;
-                    font-size: 1.6rem;
-                }
-            }
-
-            &-alerts {
-                .dashboard-icon {
-                    color: $warning;
-                }
-            }
-
-            &-people,
-            &-interactions {
-                .dashboard-icon {
-                    font-size: 1.6rem;
-                }
             }
         }
 

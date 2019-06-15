@@ -1,0 +1,12 @@
+@import './../../../../App/variables';
+
+.establishment-header {
+    padding: 2rem;
+    background-color: $white;
+    border-radius: 0.325rem;
+
+    .row {
+        margin-left: 0 !important;
+        margin-right: 0;
+    }
+}

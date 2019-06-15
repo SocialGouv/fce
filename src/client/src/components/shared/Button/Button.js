@@ -5,10 +5,7 @@ import PropTypes from "prop-types";
 
 const Button = ({ value, icon, buttonClasses, callback }) => {
   return (
-    <button
-      className={`button ${buttonClasses && ClassNames(buttonClasses)}`}
-      onClick={callback}
-    >
+    <button className={ClassNames("button", buttonClasses)} onClick={callback}>
       {icon && (
         <span className="icon">
           <FontAwesomeIcon icon={icon} />

@@ -1,6 +1,6 @@
 import React from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/fontawesome-pro-solid";
+import ClassNames from "classnames";
 import Button from "../../shared/Button";
 
 const LoginForm = ({
@@ -53,8 +53,9 @@ const LoginForm = ({
           </div>
           <Button
             value="Me connecter"
-            buttonClasses={`login__button is-secondary ${loading &&
-              "is-loading"}`}
+            buttonClasses={ClassNames("login__button", "is-secondary", {
+              "is-loading": loading
+            })}
           />
         </form>
       )}

@@ -6,8 +6,7 @@ import PropTypes from "prop-types";
 const Button = ({ value, icon, buttonClasses, callback }) => {
   return (
     <button
-      className={`button has-text-weight-semibold ${buttonClasses &&
-        ClassNames(buttonClasses)}`}
+      className={`button ${buttonClasses && ClassNames(buttonClasses)}`}
       onClick={callback}
     >
       {icon && (

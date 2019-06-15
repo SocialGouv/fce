@@ -7,6 +7,7 @@
         flex-direction: column;
         align-items: center;
         padding-top: 2rem;
+        font-family: "Segoe Pro", sans-serif;
         @media screen and (min-width: 425px) {
             text-align: center;
         }
@@ -19,13 +20,27 @@
 
     &__title {
         color: $primary;
-        line-height: 1.13;
-        max-width: 32rem;
+        font-size: 1.4rem;
+        font-weight: bold;
+        line-height: 1.2;
+        max-width: 34rem;
+        margin-bottom: 1rem;
+        @media screen and (min-width: 768px) {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+    }
     }
 
     &__subtitle {
-        line-height: 1.875rem;
-        max-width: 38rem;
+        font-family: "Evolventa", sans-serif;
+        font-size: 1.1rem;
+        line-height: 1.5;
+        max-width: 40rem;
+        margin-bottom: 1rem;
+        @media screen and (min-width: 768px) {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
     }
 
     &__info {
@@ -35,6 +50,7 @@
     &__button {
         width: 200px;
         height: 46px;
+        font-family: "Roboto", sans-serif;
         font-size: 1.125rem;
         border-radius: $b-radius;
 
@@ -87,6 +103,7 @@
 
     &__link {
         @extend .button;
+        font-family: "Roboto", sans-serif;
 
         &,
         &:hover,
@@ -127,5 +144,10 @@
             width: 16px;
             margin-right: 0.5rem;
         }
+    }
+
+    .label {
+        font-family: "Roboto", sans-serif;
+        font-weight: bold;
     }
 }

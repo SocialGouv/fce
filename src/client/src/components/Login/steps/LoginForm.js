@@ -1,5 +1,9 @@
 import React from "react";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import {
+  faCheck,
+  faExclamationTriangle
+} from "@fortawesome/fontawesome-pro-solid";
 import ClassNames from "classnames";
 import Button from "../../shared/Button";
 
@@ -30,8 +34,9 @@ const LoginForm = ({
       {step === "login-form" && (
         <form className="login-form has-mt-2" onSubmit={login}>
           {hasError && (
-            <div className="notification is-danger shake-horizontal">
-              {errorMessage}
+            <div className="login__notif login__notif--error has-mb-1 shake-horizontal">
+              <FontAwesomeIcon icon={faExclamationTriangle} />
+              <p>{errorMessage}</p>
             </div>
           )}
           <div className="field">
@@ -61,7 +66,7 @@ const LoginForm = ({
       {step === "login-form-success" && (
         <div>
           {showSuccessNotif && (
-            <div className="login__notif--success has-mt-2 has-mb-2 swing-in-top-fwd">
+            <div className="login__notif login__notif--success has-mt-2 has-mb-2 swing-in-top-fwd">
               <FontAwesomeIcon icon={faCheck} />
               <p>
                 Un message d'activation a été envoyé à {email}. Veuillez suivre

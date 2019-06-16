@@ -16,17 +16,16 @@ const LoginForm = ({
   setShowSuccessNotif
 }) => (
   <div className="login__container login__container--form container">
-    <div className="login__magiclink">
-      <h1 className="login__title is-size-4-touch is-size-3-desktop has-text-weight-bold has-mb-2">
-        Me connecter
-      </h1>
+    <div>
+      <h1 className="login__title has-mb-2">Me connecter</h1>
       <p className="has-mb-1">
         Pour accéder à l'application FCE, merci de renseigner votre adresse
         électronique (e-mail).
       </p>
       <p className="has-mb-1">
         Vous recevrez un lien de connexion qui sera valide durant 30 jours.
-        Passez ce délai vous devrez renouveler votre demande.
+        <br />
+        Passé ce délai vous devrez renouveler votre demande.
       </p>
       {step === "login-form" && (
         <form className="login-form has-mt-2" onSubmit={login}>

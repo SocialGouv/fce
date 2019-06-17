@@ -1,13 +1,15 @@
 import React from "react";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import Value from "../../../../shared/Value";
 import {
+  faChild,
+  faCalendarCheck,
   faExclamationTriangle,
-  faLifeRing
+  faMedkit
 } from "@fortawesome/fontawesome-pro-solid";
 import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
+import Item from "./Item";
+import "./dashboard.scss";
 
 class Dashboard extends React.Component {
   render() {
@@ -36,68 +38,36 @@ class Dashboard extends React.Component {
     };
 
     return (
-      <section id="dashboard" className="enterprise-section dashboard">
-        <div className="dashboard-mask" />
-        <div className="dashboard-item dashboard-people">
-          <div className="dashboard-item--content">
-            <span className="dashboard-item--desc">Effectif</span>
-            <span className="dashboard-item--value">
-              <Value
-                value={
-                  isActiveEstablishment(establishment)
-                    ? establishment.dernier_effectif_physique ||
-                      dashboardSizeRanges[establishment.tranche_effectif_insee]
-                    : "0 salarié"
-                }
-                empty="-"
-              />
-            </span>
-          </div>
-        </div>
-        <div className="dashboard-item dashboard-interactions">
-          <div className="dashboard-item--content">
-            <span className="dashboard-item--desc">
-              {hasInteractions
-                ? "Dernière intervention : "
-                : "Pas d'intervention connue"}
-            </span>
-            <span className="dashboard-item--value">
-              {hasInteractions && <Value value={lastControl} empty="-" />}
-            </span>
-          </div>
-        </div>
+      <div className="dashboard columns">
+        <Item
+          icon={faChild}
+          name="Effectif"
+          value={
+            isActiveEstablishment(establishment)
+              ? establishment.dernier_effectif_physique ||
+                dashboardSizeRanges[establishment.tranche_effectif_insee]
+              : "0 salarié"
+          }
+        />
+        <Item
+          icon={faCalendarCheck}
+          name="Visites"
+          value={hasInteractions ? lastControl : "Pas d'intervention connue"}
+        />
         {activity && (activity.pseActivity || activity.partialActivity) && (
-          <div className="dashboard-indicator dashboard-alerts">
-            <div className="dashboard-item--content">
-              <span className="dashboard-item--value">
-                <FontAwesomeIcon
-                  className="dashboard-icon dashboard-icon"
-                  icon={faExclamationTriangle}
-                />
-              </span>
-              <span className="dashboard-item--desc">
-                {activity.partialActivity && "Activité partielle"}
-                <br />
-                {activity.pseActivity && "PSE"}
-              </span>
-            </div>
-          </div>
+          <Item
+            icon={faExclamationTriangle}
+            name="Activité partielle PSE"
+            value={[
+              activity.partialActivity && "Activité partielle",
+              activity.pseActivity && "PSE"
+            ]}
+          />
         )}
-        {activity.partialActivity && (
-          <div className="dashboard-indicator dashboard-help">
-            <div className="dashboard-item--content">
-              <span className="dashboard-item--value">
-                <FontAwesomeIcon
-                  className="dashboard-icon"
-                  color="red"
-                  icon={faLifeRing}
-                />
-              </span>
-              <span className="dashboard-item--desc">Aides</span>
-            </div>
-          </div>
+        {activity && activity.partialActivity && (
+          <Item icon={faMedkit} name="Aides" value="Oui" />
         )}
-      </section>
+      </div>
     );
   }
 }

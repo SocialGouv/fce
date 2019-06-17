@@ -5,11 +5,7 @@ import Value from "../Value";
 
 const InfoBox = ({ value, infoBoxClasses }) => {
   return (
-    <span
-      className={`infoBox has-text-primary is-size-5 has-text-weight-semi-bold ${ClassNames(
-        infoBoxClasses
-      )}`}
-    >
+    <span className={`infoBox has-text-primary ${ClassNames(infoBoxClasses)}`}>
       <Value value={value} empty="" />
     </span>
   );

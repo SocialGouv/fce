@@ -2,7 +2,6 @@ import React from "react";
 import withLoading from "../../services/Loading";
 import Establishments from "./Establishments";
 import {
-  Dashboard,
   Header,
   Activity,
   Muteco,
@@ -11,7 +10,7 @@ import {
 } from "./Sections/Establishment";
 import Direccte from "./Sections/Direccte";
 import QuickAccess from "./Sections/SharedComponents/QuickAccess";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import Button from "../shared/Button";
 import { faPrint } from "@fortawesome/fontawesome-pro-solid";
 
 class Establishment extends React.Component {
@@ -24,17 +23,14 @@ class Establishment extends React.Component {
     } = this.props;
 
     return (
-      <section className="app-enterprise">
+      <section className="app-enterprise container">
         <div className="print-section w-100">
-          <button
-            className="button is-primary has-text-light"
-            onClick={() => window.print()}
-          >
-            <span className="icon">
-              <FontAwesomeIcon icon={faPrint} />
-            </span>
-            <span>Imprimer</span>
-          </button>
+          <Button
+            value="Imprimer"
+            buttonClasses={["is-grey"]}
+            icon={faPrint}
+            callback={() => window.print()}
+          />
         </div>
         <div className="columns">
           <div className="column is-3 aside-box is-hidden-touch">
@@ -46,12 +42,7 @@ class Establishment extends React.Component {
             />
           </div>
           <div className="main establishment column is-9-desktop is-12-tablet">
-            <div className="row w-100">
-              <Header establishment={establishment} enterprise={enterprise} />
-            </div>
-            <div className="establishment-keys row w-100">
-              <Dashboard establishment={establishment} />
-            </div>
+            <Header establishment={establishment} enterprise={enterprise} />
             <div className="w-100">
               <QuickAccess />
             </div>

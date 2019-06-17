@@ -375,3 +375,9 @@
 .is-secondary {
     @extend .is-info;
 }
+
+.is-grey {
+    @extend .is-white;
+    color: #808080 !important;
+    border-color: #808080 !important;
+}

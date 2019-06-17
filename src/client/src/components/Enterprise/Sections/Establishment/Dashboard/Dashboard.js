@@ -64,7 +64,7 @@ class Dashboard extends React.Component {
             ]}
           />
         )}
-        {activity.partialActivity && (
+        {activity && activity.partialActivity && (
           <Item icon={faMedkit} name="Aides" value="Oui" />
         )}
       </div>

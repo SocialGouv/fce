@@ -33,9 +33,9 @@ class Header extends React.Component {
       <header className="app-header section">
         <div className="container">
           <nav>
-            <div className="header__items columns is-tablet">
+            <div className="header__items is-tablet">
               <Link
-                className="header__home-link column "
+                className="header__home-link"
                 to="/"
                 onClick={this.newSearch}
               >
@@ -46,7 +46,7 @@ class Header extends React.Component {
               </Link>
               {(this.props.location.pathname.includes("/establishment") ||
                 this.props.location.pathname.includes("/enterprise")) && (
-                <div className="header__buttons column">
+                <div className="header__buttons">
                   <div className="navbar-end is-flex">
                     <Link to="/">
                       <Button

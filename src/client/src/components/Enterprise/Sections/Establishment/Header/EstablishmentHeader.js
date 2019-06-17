@@ -35,8 +35,9 @@ class EstablishmentHeader extends React.Component {
         <h1 className="columns mb-4 is-capitalized has-text-weight-bold is-size-3">
           <Value
             value={
-              establishment.nom_commercial.toLowerCase() ||
-              `${establishment.nom.toLowerCase() ||
+              (establishment.nom_commercial &&
+                establishment.nom_commercial.toLowerCase()) ||
+              `${(establishment.nom && establishment.nom.toLowerCase()) ||
                 ""} ${establishment.prenom.toLowerCase() || ""}`.trim() ||
               null
             }

@@ -22,10 +22,6 @@ let history = createBrowserHistory();
 
 const piwik = PiwikReactRouter(Config.get("piwik"));
 
-const appStyle = {
-  backgroundColor: `#ededed`
-};
-
 class App extends React.Component {
   render() {
     console.debug("render app");
@@ -35,10 +31,12 @@ class App extends React.Component {
           <Router history={piwik.connectToHistory(history)}>
             <ScrollToTop>
               <Header />
-              <div className="beta-message">
-                Ce site est un travail en cours, actuellement en beta.
+              <div className="beta-message flex-center">
+                <div>
+                  Ce site est un travail en cours, actuellement en beta.
+                </div>
               </div>
-              <div className="app-container" style={appStyle}>
+              <div className="app-container">
                 <Switch>
                   <PrivateRoute exact path="/" component={Search} />
                   <PrivateRoute exact path="/search" component={Search} />

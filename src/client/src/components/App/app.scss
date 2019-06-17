@@ -1,6 +1,7 @@
 @import "fonts";
 @import "variables";
 @import "globals";
+@import "animations";
 @import "typography";
 @import "~bulma/bulma";
 @import "~bulma-extensions/bulma-accordion/dist/css/bulma-accordion";
@@ -15,7 +16,7 @@
 @import "../shared/InfoBox/infoBox";
 
 html {
-    height: 100vh;
+    min-height: 100vh;
     scroll-behavior: smooth;
 }
 
@@ -31,9 +32,8 @@ a {
 }
 
 .app-container {
-    padding: 0 1rem;
-    min-height: 100vh;
-
+    min-height: calc(100vh - 120px);
+    background-color: $app-container-background;
     @media print {
         padding-top: 1rem;
     }
@@ -66,11 +66,14 @@ a {
 
 .beta-message {
     text-align: center;
-    background-color: #a5e1fa;
-    padding: .75rem 0;
+    font-size: 0.8rem;
+    height: 40px;
     opacity: 0.85;
+    background-color: #a5e1fa;
     z-index: 1;
-    position: relative;
+    @media screen and (min-width: 425px) {
+        font-size: 1rem;
+    }
 }
 
 @media print {

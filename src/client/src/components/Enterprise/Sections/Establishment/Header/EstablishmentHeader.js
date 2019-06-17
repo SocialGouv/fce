@@ -13,11 +13,8 @@ import "./establishmentHeader.scss";
 
 class EstablishmentHeader extends React.Component {
   render() {
-    const { enterprise, establishment } = this.props;
+    const { establishment } = this.props;
     const adrComponents = establishment.adresse_components;
-    const slugSocieteCom = enterprise.raison_sociale
-      ? enterprise.raison_sociale.toLowerCase().replace(" ", "-")
-      : "#";
     const isActive = isActiveEstablishment(establishment);
     const stateClass = isActive ? "icon--success" : "icon--danger";
 

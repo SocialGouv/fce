@@ -2,7 +2,6 @@ import React from "react";
 import withLoading from "../../services/Loading";
 import Establishments from "./Establishments";
 import {
-  Dashboard,
   Header,
   Activity,
   Muteco,
@@ -12,7 +11,6 @@ import {
 import Direccte from "./Sections/Direccte";
 import QuickAccess from "./Sections/SharedComponents/QuickAccess";
 import Button from "../shared/Button";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/fontawesome-pro-solid";
 
 class Establishment extends React.Component {

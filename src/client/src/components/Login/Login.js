@@ -39,16 +39,16 @@ const Login = ({
 };
 
 Login.propTypes = {
-  login: PropTypes.func,
-  hasError: PropTypes.bool,
+  login: PropTypes.func.isRequired,
+  hasError: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
-  updateForm: PropTypes.func,
-  loading: PropTypes.bool,
+  updateForm: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
   email: PropTypes.string,
-  step: PropTypes.string,
-  setStep: PropTypes.func,
-  showSuccessNotif: PropTypes.bool,
-  setShowSuccessNotif: PropTypes.func
+  step: PropTypes.string.isRequired,
+  setStep: PropTypes.func.isRequired,
+  showSuccessNotif: PropTypes.bool.isRequired,
+  setShowSuccessNotif: PropTypes.func.isRequired
 };
 
 export default Login;

@@ -27,7 +27,7 @@ const LoginHome = ({ setStep }) => (
 );
 
 LoginHome.propTypes = {
-  setStep: PropTypes.func
+  setStep: PropTypes.func.isRequired
 };
 
 export default LoginHome;

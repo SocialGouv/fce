@@ -108,14 +108,14 @@
         font-size: 14px;
         border-radius: $b-radius;
         &--success {
-            color: $success;
-            border: 1px solid $success;
-            background-color: $success-background;
+            color: $info-success;
+            border: 1px solid $info-success;
+            background-color: $info-success-bg;
         }
         &--error {
-            color: $error;
-            border: 1px solid $error;
-            background-color: $error-background;
+            color: $info-error;
+            border: 1px solid $info-error;
+            background-color: $info-error-bg;
         }
 
         > .svg-inline--fa {

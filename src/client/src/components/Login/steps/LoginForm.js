@@ -51,7 +51,7 @@ const LoginForm = ({
                 name="email"
                 className="input"
                 required
-                value={email ? email : null}
+                value={email ? email : ""}
                 onChange={evt => updateForm(evt)}
               />
             </div>
@@ -110,16 +110,16 @@ const LoginForm = ({
 );
 
 LoginForm.propTypes = {
-  login: PropTypes.func,
-  hasError: PropTypes.bool,
+  login: PropTypes.func.isRequired,
+  hasError: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
-  updateForm: PropTypes.func,
-  loading: PropTypes.bool,
+  updateForm: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
   email: PropTypes.string,
-  step: PropTypes.string,
-  setStep: PropTypes.func,
-  showSuccessNotif: PropTypes.bool,
-  setShowSuccessNotif: PropTypes.func
+  step: PropTypes.string.isRequired,
+  setStep: PropTypes.func.isRequired,
+  showSuccessNotif: PropTypes.bool.isRequired,
+  setShowSuccessNotif: PropTypes.func.isRequired
 };
 
 export default LoginForm;

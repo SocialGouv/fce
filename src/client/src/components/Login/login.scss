@@ -1,12 +1,135 @@
-.app-login {
-    position: absolute;
-    max-width: 100%;
-    min-width: 500px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+@import "../App/_variables.scss";
+@import "~bulma/sass/elements/button.sass";
 
-.login-form {
-    padding: 2rem;
+.login {
+    &__container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 2rem;
+        font-family: $segoe;
+        @media screen and (min-width: 425px) {
+            text-align: center;
+        }
+
+        &--form {
+            max-width: 555px;
+            text-align: left;
+        }
+    }
+
+    &__title {
+        color: $primary;
+        font-size: 1.4rem;
+        font-weight: bold;
+        line-height: 1.2;
+        max-width: 34rem;
+        margin-bottom: 1rem;
+        @media screen and (min-width: 768px) {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    &__subtitle {
+        font-family: $evolventa;
+        font-size: 1.1rem;
+        line-height: 1.5;
+        max-width: 40rem;
+        margin-bottom: 1rem;
+        @media screen and (min-width: 768px) {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+    }
+
+    &__info {
+        line-height: 1.2;
+    }
+
+    &__button {
+        width: 200px;
+        height: 46px;
+        font-family: $roboto;
+        font-size: 1.125rem;
+        border-radius: $b-radius;
+
+        &--as-link {
+            > span {
+                font-weight: normal;
+            }
+
+            &,
+            &:hover,
+            &:focus {
+                background-color: transparent;
+                border: none;
+                &:not(:active) {
+                    box-shadow: none;
+                }
+            }
+
+            &:hover,
+            &:focus {
+                color: #20638f !important;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__links {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    &__link {
+        @extend .button;
+        font-family: $roboto;
+
+        &,
+        &:hover,
+        &:focus {
+            background-color: transparent;
+            border: none;
+        }
+
+        &:focus {
+            outline: none;
+            text-decoration: underline;
+            &:not(:active) {
+                box-shadow: none;
+            }
+        }
+    }
+
+    &__notif {
+        display: flex;
+        align-items: baseline;
+        padding: 0.5rem;
+        font-family: $roboto;
+        font-size: 14px;
+        border-radius: $b-radius;
+        &--success {
+            color: $success;
+            border: 1px solid $success;
+            background-color: $success-background;
+        }
+        &--error {
+            color: $error;
+            border: 1px solid $error;
+            background-color: $error-background;
+        }
+
+        > .svg-inline--fa {
+            padding-top: 2px;
+            width: 16px;
+            margin-right: 0.5rem;
+        }
+    }
+
+    .label {
+        font-family: $roboto;
+        font-weight: bold;
+    }
 }

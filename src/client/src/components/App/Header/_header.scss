@@ -1,32 +1,55 @@
-.navbar {
-    background-color: $light;
+.app-header {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    box-shadow: 0 2px 3px 2px rgba(0, 0, 0, 0.4);
 
-    &-brand {
+    &.columns {
+        margin-bottom: 0;
+    }
+}
+
+.header {
+    &__home-link {
+        display: flex;
+        justify-content: flex-start;
         align-items: center;
+        height: 80px;
         color: $dark;
-
-        &>img {
-            width: 80px;
-            height: 47px;
-            margin-right: 1rem;
-        }
-    }
-
-    a.navbar-item {
-        color: $dark;
-
         &:hover {
-            background-color: $primary !important;
-            color: $light;
             text-decoration: none;
-            font-weight: bold;
         }
     }
 
-    .home-link {
-        &:after {
-            content: "|";
-            padding-left: 1rem;
+    &__logo {
+        width: 65px;
+        height: 38px;
+        margin-right: 1rem;
+        @media screen and (min-width: $desktop) {
+            margin-right: 2rem;
+        }
+    }
+
+    &__title {
+        font-family: $evolventa;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: 80px;
+        .button {
+            width: 11.875rem;
+            height: 2.25rem;
+            &:first-child {
+                margin-right: 1rem;
+                @media screen and (min-width: $desktop) {
+                    margin-right: 1.875rem;
+                }
+            }
         }
     }
 }

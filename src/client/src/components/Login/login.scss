@@ -7,7 +7,7 @@
         flex-direction: column;
         align-items: center;
         padding-top: 2rem;
-        font-family: "Segoe Pro", sans-serif;
+        font-family: $segoe;
         @media screen and (min-width: 425px) {
             text-align: center;
         }
@@ -32,7 +32,7 @@
     }
 
     &__subtitle {
-        font-family: "Evolventa", sans-serif;
+        font-family: $evolventa;
         font-size: 1.1rem;
         line-height: 1.5;
         max-width: 40rem;
@@ -50,7 +50,7 @@
     &__button {
         width: 200px;
         height: 46px;
-        font-family: "Roboto", sans-serif;
+        font-family: $roboto;
         font-size: 1.125rem;
         border-radius: $b-radius;
 
@@ -85,7 +85,7 @@
 
     &__link {
         @extend .button;
-        font-family: "Roboto", sans-serif;
+        font-family: $roboto;
 
         &,
         &:hover,
@@ -107,7 +107,7 @@
         display: flex;
         align-items: baseline;
         padding: 0.5rem;
-        font-family: "Roboto", sans-serif;
+        font-family: $roboto;
         font-size: 14px;
         border-radius: $b-radius;
         &--success {
@@ -129,7 +129,7 @@
     }
 
     .label {
-        font-family: "Roboto", sans-serif;
+        font-family: $roboto;
         font-weight: bold;
     }
 }

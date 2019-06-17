@@ -21,4 +21,9 @@ $app-container-background: $white-smoke;
 /* BORDER-RADIUS */
 $b-radius: 0.25rem;
 
+/* TYPOGRAPHY */
+$segoe: "Segoe Pro", sans-serif;
+$evolventa: "Evolventa", sans-serif;
+$roboto: "Roboto", sans-serif;
+
 @import "~bulma/sass/utilities/all";

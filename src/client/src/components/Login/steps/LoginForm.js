@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -107,5 +108,18 @@ const LoginForm = ({
     </div>
   </div>
 );
+
+LoginForm.propTypes = {
+  login: PropTypes.func,
+  hasError: PropTypes.bool,
+  errorMessage: PropTypes.string,
+  updateForm: PropTypes.func,
+  loading: PropTypes.bool,
+  email: PropTypes.string,
+  step: PropTypes.string,
+  setStep: PropTypes.func,
+  showSuccessNotif: PropTypes.bool,
+  setShowSuccessNotif: PropTypes.func
+};
 
 export default LoginForm;

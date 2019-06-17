@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Button from "../../shared/Button";
 
 const LoginHome = ({ setStep }) => (
@@ -24,5 +25,9 @@ const LoginHome = ({ setStep }) => (
     />
   </div>
 );
+
+LoginHome.propTypes = {
+  setStep: PropTypes.func
+};
 
 export default LoginHome;

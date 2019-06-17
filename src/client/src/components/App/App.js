@@ -36,7 +36,7 @@ class App extends React.Component {
                   Ce site est un travail en cours, actuellement en beta.
                 </div>
               </div>
-              <div className="app-container section is-paddingless">
+              <div className="app-container">
                 <Switch>
                   <PrivateRoute exact path="/" component={Search} />
                   <PrivateRoute exact path="/search" component={Search} />

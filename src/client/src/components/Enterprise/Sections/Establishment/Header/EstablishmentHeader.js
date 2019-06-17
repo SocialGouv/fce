@@ -19,7 +19,7 @@ class EstablishmentHeader extends React.Component {
     const stateClass = isActive ? "icon--success" : "icon--danger";
 
     return (
-      <section id="header" className="establishment-header w-100">
+      <section id="header" className="establishment-header w-100 mb-4">
         <div className="has-text-link show-all-enterprise">
           <div
             className="responsive-item"

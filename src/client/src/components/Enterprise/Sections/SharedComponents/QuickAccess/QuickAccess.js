@@ -1,8 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Sticky from "react-sticky-el";
+import Scrollspy from "react-scrollspy";
 
-const QuickAccess = () => {
-  const anchors = [
+import "./quickAccess.scss";
+import { Muteco } from "../../Establishment";
+
+const QuickAccess = ({ anchors }) => {
+  anchors = [
     { label: "activité", link: "activity" },
     { label: "visites et contrôles", link: "direccte" },
     { label: "relation travail", link: "relation" },
@@ -12,23 +17,31 @@ const QuickAccess = () => {
 
   return (
     <Sticky>
-      <section id="quick-access" className="enterprise-section quick-access">
-        <span className="quick-access--text has-text-grey-darker has-text-weight-medium">
-          Accès rapide :{" "}
-        </span>
-        <ul className="quick-access-list">
-          {anchors.map(anchor => (
-            <li
-              key={anchor.label}
-              className="quick-access--item has-text-link is-uppercase"
-            >
-              <a href={`#${anchor.link}`}>{anchor.label}</a>
-            </li>
-          ))}
-        </ul>
+      <section className="quick-access">
+        <div className="tabs is-centered">
+          <Scrollspy
+            items={["activity", "direccte", "relation", "muteco", "helps"]}
+            className="quick-access__list"
+            currentClassName="is-active"
+            offset={-80}
+          >
+            {anchors.map(anchor => (
+              <li
+                key={anchor.label}
+                className="quick-access__item is-capitalized has-text-weight-semibold has-text-grey"
+              >
+                <a href={`#${anchor.link}`}>{anchor.label}</a>
+              </li>
+            ))}
+          </Scrollspy>
+        </div>
       </section>
     </Sticky>
   );
+};
+
+QuickAccess.propTypes = {
+  anchors: PropTypes.arrayOf(PropTypes.number)
 };
 
 export default QuickAccess;

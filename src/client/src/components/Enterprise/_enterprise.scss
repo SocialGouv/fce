@@ -316,21 +316,6 @@
             .responsive-item {
                 display: flex;
             }
-
-            .quick-access {
-                padding: 2rem 1rem;
-                margin: 0;
-
-                &--text {
-                    display: none;
-                }
-
-                &-list {
-                    justify-content: center;
-                    align-items: center;
-                    padding: 0 .25rem;
-                }
-            }
         }
     }
 }

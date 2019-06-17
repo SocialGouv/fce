@@ -38,7 +38,10 @@ class App extends React.Component {
               <div className="beta-message">
                 Ce site est un travail en cours, actuellement en beta.
               </div>
-              <div className="app-container" style={appStyle}>
+              <div
+                className="app-container section is-paddingless"
+                style={appStyle}
+              >
                 <Switch>
                   <PrivateRoute exact path="/" component={Search} />
                   <PrivateRoute exact path="/search" component={Search} />

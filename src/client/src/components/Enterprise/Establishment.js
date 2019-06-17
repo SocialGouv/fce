@@ -25,7 +25,7 @@ class Establishment extends React.Component {
     } = this.props;
 
     return (
-      <section className="app-enterprise">
+      <section className="app-enterprise container">
         <div className="print-section w-100">
           <Button
             value="Imprimer"

@@ -5,20 +5,23 @@
     flex-direction: row;
     justify-content: flex-start;
 
-    &--item {
+    &-item {
         margin-right: 2rem;
         border: solid 1px $primary;
         border-radius: 0.35rem;
         padding: .75rem;
-        width: 9rem;
-        height: 9rem;
+        width: 10rem;
+        height: 11rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
-        &-header {
+        &--header {
             padding: .25rem;
             border-bottom: solid 2px $secondary;
             display: flex;
 
-            &--icon {
+            &-icon {
                 color: $primary;
                 width: 1rem;
                 margin-right: .5rem;
@@ -26,9 +29,8 @@
         }
 
         &-data {
-            display: flex;
-            justify-content: center;
-            padding-top: 1.5rem;
+            text-align: center;
+            flex: 1;
         }
     }
 }

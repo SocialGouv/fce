@@ -17,7 +17,7 @@ const Login = ({
   setShowSuccessNotif
 }) => {
   return (
-    <section className="login section is-paddingless">
+    <section className="login">
       {step === "login-home" ? (
         <LoginHome setStep={setStep} />
       ) : (

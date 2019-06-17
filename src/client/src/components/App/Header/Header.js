@@ -30,7 +30,7 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header className="app-header section">
+      <header className="app-header">
         <div className="container">
           <nav>
             <div className="header__items is-tablet">

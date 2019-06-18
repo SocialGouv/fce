@@ -1,16 +1,18 @@
 import React from "react";
-import withLoading from "../../services/Loading";
-import Establishments from "./Establishments";
-import { Header, Activity, Finances, Mandataires } from "./Sections/Enterprise";
-import Direccte from "./Sections/Direccte";
+import withLoading from "../../../../services/Loading";
+import Establishments from "../../Establishments";
+import Header from "./Header";
+import Activity from "./Activity";
+import Finances from "./Finances";
+import Mandataires from "./Mandataires";
+import Direccte from "../SharedComponents/Direccte";
 
 class Enterprise extends React.Component {
   render() {
     const { enterprise, headOffice, establishments } = this.props;
 
     return (
-      <section className="app-enterprise">
-        <div className="enterprise-overlay" />
+      <section className="data-sheet">
         <div className="columns">
           <div id="establishments" className="quickview responsive-item">
             <div className="quickview-body">

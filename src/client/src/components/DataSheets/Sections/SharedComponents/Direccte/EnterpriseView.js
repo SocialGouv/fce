@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/fontawesome-pro-solid";
-import { getLastDateInteraction } from "../../../../helpers/Date";
+import { getLastDateInteraction } from "../../../../../helpers/Date";
 import _get from "lodash.get";
 
 class EstablishmentView extends React.Component {

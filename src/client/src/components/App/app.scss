@@ -11,8 +11,8 @@
 @import "Footer/footer";
 @import "../Search/search";
 @import "../SearchResults/searchResults";
-@import "../Enterprise/enterprise";
-@import "../Enterprise/Establishments/establishments";
+@import "../DataSheets/dataSheets";
+@import "../DataSheets/Establishments/establishments";
 @import "../shared/InfoBox/infoBox";
 
 html {
@@ -37,11 +37,13 @@ a {
     min-height: calc(100vh - 270px);
     background-color: $app-container-background;
     padding-bottom: 2rem;
+
     @include from($tablet) {
         // full-height if not enough content
         // 270px = header 120px + foooter 150px
         min-height: calc(100vh - 320px);
     }
+
     @media print {
         padding-top: 1rem;
     }
@@ -86,6 +88,7 @@ a {
     opacity: 0.85;
     background-color: #a5e1fa;
     z-index: 1;
+
     @include from(425px) {
         font-size: 1rem;
     }

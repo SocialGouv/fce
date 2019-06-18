@@ -30,7 +30,7 @@
         width: 65px;
         height: 38px;
         margin-right: 1rem;
-        @media screen and (min-width: $desktop) {
+        @include from($desktop) {
             margin-right: 2rem;
         }
     }
@@ -51,7 +51,7 @@
             height: 2.25rem;
             &:first-child {
                 margin-right: 1rem;
-                @media screen and (min-width: $desktop) {
+                @include from($desktop) {
                     margin-right: 1.875rem;
                 }
             }

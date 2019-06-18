@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/fontawesome-pro-solid";
 import ClassNames from "classnames";
 import Button from "../../shared/Button";
+import Config from "../../../services/Config";
 
 const LoginForm = ({
   login,
@@ -95,7 +96,7 @@ const LoginForm = ({
             />
             <a
               className="login__link has-text-link"
-              href="mailto:chloe.mandelblat@direccte.gouv.fr"
+              href={`mailto:${Config.get("contact.mailto")}`}
             >
               <span className="icon">
                 <FontAwesomeIcon icon="chevron-right" />

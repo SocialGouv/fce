@@ -98,7 +98,7 @@ const LoginForm = ({
               className="login__link has-text-link"
               href={`mailto:${Config.get("contact.mailto")}`}
             >
-              <span className="icon">
+              <span className="button__icon">
                 <FontAwesomeIcon icon="chevron-right" />
               </span>
               <span>Nous contacter</span>

@@ -5,18 +5,22 @@ $turquoise: #2aa995;
 $red-bright: #e74c3c;
 $red-washed: rgba(189, 10, 10, 0.14);
 $green-washed: rgba(34, 137, 31, 0.2);
-$green: #22891f;
+$green-forest: #22891f;
 $white-smoke: #f5f5f5;
+$grey-geyser: #dde1e5;
+$grey-tundora: #4a4a4a;
 
 $primary: $blue;
 $info: $turquoise;
 $danger: $red-bright;
 $secondary: $turquoise;
-$success: $green;
-$success-background: $green-washed;
-$error: $red-bright;
-$error-background: $red-washed;
+$info-success: $green-forest;
+$info-success-bg: $green-washed;
+$info-error: $red-bright;
+$info-error-bg: $red-washed;
 $app-container-background: $white-smoke;
+$footer-bg: $grey-geyser;
+$footer-link: $grey-tundora;
 
 /* BORDER-RADIUS */
 $b-radius: 0.25rem;

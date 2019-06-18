@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/fontawesome-pro-solid";
 import ClassNames from "classnames";
 import Button from "../../shared/Button";
+import Config from "../../../services/Config";
 
 const LoginForm = ({
   login,
@@ -79,7 +80,7 @@ const LoginForm = ({
             <Button
               value="Renvoyer le lien d'activation"
               icon="chevron-right"
-              buttonClasses="login__button--as-link has-text-link"
+              buttonClasses="login__button login__button--as-link has-text-link"
               callback={() => {
                 setShowSuccessNotif(false);
                 login();
@@ -88,16 +89,16 @@ const LoginForm = ({
             <Button
               value="Modifier l'adresse électronique"
               icon="chevron-right"
-              buttonClasses="login__button--as-link has-text-link"
+              buttonClasses="login__button login__button--as-link has-text-link"
               callback={() => {
                 setStep("login-form");
               }}
             />
             <a
               className="login__link has-text-link"
-              href="mailto:chloe.mandelblat@direccte.gouv.fr"
+              href={`mailto:${Config.get("contact.mailto")}`}
             >
-              <span className="icon">
+              <span className="button__icon">
                 <FontAwesomeIcon icon="chevron-right" />
               </span>
               <span>Nous contacter</span>

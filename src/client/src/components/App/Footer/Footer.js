@@ -1,23 +1,32 @@
 import React, { Component } from "react";
-import PaperBG from "../../../assets/img/paper.png";
 
-const footerStyle = {
-  background: `url(${PaperBG})`
-};
+import Config from "../../../services/Config";
+import mariane from "../../../assets/img/logo_gouv.png";
 
-class Footer extends Component {
-  render() {
-    return (
-      <footer className="app-footer" style={footerStyle}>
+const Footer = () => (
+  <footer className="footer">
+    <div className="container">
+      <div className="footer__gouv">
+        <div className="footer__gouv-text">
+          Un service fourni par l'incubateur des ministères sociaux
+        </div>
         <img
-          src="/img/la_direccte.png"
-          alt="La DIRECCTE Occitanie"
-          className="img-direccte"
+          src={mariane}
+          alt="Logo des institutions du gouvernement français"
+          className="footer__gouv-logo"
         />
-        <img src="/img/labo.png" alt="Le labO" className="img-labo" />
-      </footer>
-    );
-  }
-}
+      </div>
+
+      <div className="footer__links">
+        <a
+          className="footer__link"
+          href={`mailto:${Config.get("contact.mailto")}`}
+        >
+          Contact
+        </a>
+      </div>
+    </div>
+  </footer>
+);
 
 export default Footer;

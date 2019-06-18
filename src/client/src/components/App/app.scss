@@ -1,5 +1,6 @@
 @import "fonts";
 @import "variables";
+@import "mixins";
 @import "globals";
 @import "animations";
 @import "typography";
@@ -15,15 +16,15 @@
 @import "../shared/InfoBox/infoBox";
 
 html {
-    min-height: 100vh;
+    height: 100%;
     scroll-behavior: smooth;
 }
 
 body {
+    height: 100%;
     background: $white;
     position: relative;
     margin: 0;
-    min-height: 100vh;
 }
 
 a {
@@ -31,9 +32,20 @@ a {
 }
 
 .app-container {
-    min-height: calc(100vh - 120px);
+    // full-height if not enough content
+    // 320px = header 120px + foooter 200px
+    min-height: calc(100vh - 270px);
     background-color: $app-container-background;
+<<<<<<< HEAD
 
+=======
+    padding-bottom: 2rem;
+    @include from($tablet) {
+        // full-height if not enough content
+        // 270px = header 120px + foooter 150px
+        min-height: calc(100vh - 320px);
+    }
+>>>>>>> 15bce8f1f12344a5becc3cbb96fb5324300711f1
     @media print {
         padding-top: 1rem;
     }
@@ -44,9 +56,28 @@ a {
     }
 }
 
+<<<<<<< HEAD
 .icon {
-    font-size: 1rem;
+=======
+.container {
+    width: 100%;
+}
 
+.button {
+    height: initial;
+}
+
+.title {
+    margin: 0 0 1rem;
+}
+
+.button__icon {
+>>>>>>> 15bce8f1f12344a5becc3cbb96fb5324300711f1
+    font-size: 1rem;
+    margin-right: 0.5rem;
+}
+
+.icon {
     &--success {
         color: $success;
     }
@@ -63,8 +94,12 @@ a {
     opacity: 0.85;
     background-color: #a5e1fa;
     z-index: 1;
+<<<<<<< HEAD
 
     @media screen and (min-width: 425px) {
+=======
+    @include from(425px) {
+>>>>>>> 15bce8f1f12344a5becc3cbb96fb5324300711f1
         font-size: 1rem;
     }
 }

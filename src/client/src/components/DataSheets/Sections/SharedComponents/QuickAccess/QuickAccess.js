@@ -6,11 +6,7 @@ import Scrollspy from "react-scrollspy";
 import "./quickAccess.scss";
 
 const QuickAccess = ({ anchors }) => {
-  const links = [];
-
-  anchors.map(anchor => {
-    links.push(anchor.link);
-  });
+  const links = anchors.map(anchor => anchor.link);
 
   return (
     <Sticky>
@@ -38,7 +34,7 @@ const QuickAccess = ({ anchors }) => {
 };
 
 QuickAccess.propTypes = {
-  anchors: PropTypes.arrayOf(PropTypes.object)
+  anchors: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 export default QuickAccess;

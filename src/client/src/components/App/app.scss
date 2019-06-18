@@ -36,16 +36,14 @@ a {
     // 320px = header 120px + foooter 200px
     min-height: calc(100vh - 270px);
     background-color: $app-container-background;
-<<<<<<< HEAD
-
-=======
     padding-bottom: 2rem;
+
     @include from($tablet) {
         // full-height if not enough content
         // 270px = header 120px + foooter 150px
         min-height: calc(100vh - 320px);
     }
->>>>>>> 15bce8f1f12344a5becc3cbb96fb5324300711f1
+
     @media print {
         padding-top: 1rem;
     }
@@ -56,9 +54,6 @@ a {
     }
 }
 
-<<<<<<< HEAD
-.icon {
-=======
 .container {
     width: 100%;
 }
@@ -72,7 +67,6 @@ a {
 }
 
 .button__icon {
->>>>>>> 15bce8f1f12344a5becc3cbb96fb5324300711f1
     font-size: 1rem;
     margin-right: 0.5rem;
 }
@@ -94,12 +88,8 @@ a {
     opacity: 0.85;
     background-color: #a5e1fa;
     z-index: 1;
-<<<<<<< HEAD
 
-    @media screen and (min-width: 425px) {
-=======
     @include from(425px) {
->>>>>>> 15bce8f1f12344a5becc3cbb96fb5324300711f1
         font-size: 1rem;
     }
 }

@@ -1,14 +1,60 @@
-.app-footer {
-  position: relative;
-  font-size: 0.7em;
-  text-align: center;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: transparent;
-}
+.footer {
+    display: flex;
+    align-items: center;
+    height: 150px;
+    padding: 0;
+    background-color: $footer-bg;
+    @media screen and (min-width: $tablet) {
+        height: 200px;
+    }
 
-.img-labo {
-  width: 10rem;
+    .container {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        @media screen and (min-width: $tablet) {
+            flex-direction: row;
+        }
+    }
+
+    &__gouv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        @media screen and (min-width: $tablet) {
+            align-items: flex-start;
+        }
+    }
+
+    &__gouv-text {
+        font-family: $segoe;
+        font-size: 1rem;
+        font-style: italic;
+        text-align: center;
+        padding-bottom: 0.5rem;
+        @media screen and (min-width: $tablet) {
+            max-width: 16rem;
+            text-align: left;
+        }
+    }
+
+    &__gouv-logo {
+        width: 80px;
+        background: #fff;
+        @media screen and (min-width: $tablet) {
+            width: 150px;
+            padding: 5px;
+        }
+    }
+
+    &__links {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        font-family: $segoe;
+        text-align: center;
+    }
+
+    &__link {
+        color: $footer-link;
+    }
 }

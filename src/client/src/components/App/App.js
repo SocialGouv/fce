@@ -11,6 +11,7 @@ import Config from "../../services/Config";
 import PrivateRoute from "../../services/PrivateRoute";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
+import Footer from "./Footer";
 import Search from "../../containers/Search";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
@@ -61,6 +62,7 @@ class App extends React.Component {
                   <Redirect to="/404" />
                 </Switch>
               </div>
+              <Footer />
             </ScrollToTop>
           </Router>
         </PersistGate>

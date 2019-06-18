@@ -1,4 +1,5 @@
-@import "../App/_variables.scss";
+@import "../App/variables";
+@import "../App/mixins";
 
 .magiclink {
     &__container {
@@ -13,8 +14,6 @@
         font-family: $roboto;
         font-size: 14px;
         border-radius: $b-radius;
-        color: $info-error;
-        border: 1px solid $info-error;
-        background-color: $info-error-bg;
+        @include error;
     }
 }

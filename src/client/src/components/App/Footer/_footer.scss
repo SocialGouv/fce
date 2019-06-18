@@ -4,7 +4,7 @@
     height: 150px;
     padding: 0;
     background-color: $footer-bg;
-    @media screen and (min-width: $tablet) {
+    @include from($tablet) {
         height: 200px;
     }
 
@@ -12,7 +12,7 @@
         display: flex;
         flex-direction: column-reverse;
         justify-content: space-between;
-        @media screen and (min-width: $tablet) {
+        @include from($tablet) {
             flex-direction: row;
         }
     }
@@ -21,18 +21,20 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        @media screen and (min-width: $tablet) {
+        @include from($tablet) {
             align-items: flex-start;
         }
     }
 
     &__gouv-text {
         font-family: $segoe;
-        font-size: 1rem;
+        font-size: 0.9rem;
+        max-width: 13rem;
         font-style: italic;
         text-align: center;
         padding-bottom: 0.5rem;
-        @media screen and (min-width: $tablet) {
+        @include from($tablet) {
+            font-size: 1rem;
             max-width: 16rem;
             text-align: left;
         }
@@ -41,17 +43,20 @@
     &__gouv-logo {
         width: 80px;
         background: #fff;
-        @media screen and (min-width: $tablet) {
+        @include from($tablet) {
             width: 150px;
             padding: 5px;
         }
     }
 
     &__links {
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         font-size: 1rem;
         font-family: $segoe;
         text-align: center;
+        @include from($tablet) {
+            margin-bottom: 1rem;
+        }
     }
 
     &__link {

@@ -21,9 +21,16 @@ $app-container-background: $white-smoke;
 /* BORDER-RADIUS */
 $b-radius: 0.25rem;
 
+/* Box-shadow */
+$fce-shadow: 0 0 6px rgba(100, 100, 100, 0.06),
+0 0 15px rgba(100, 100, 100, 0.15);
+
 /* TYPOGRAPHY */
-$segoe: "Segoe Pro", sans-serif;
-$evolventa: "Evolventa", sans-serif;
-$roboto: "Roboto", sans-serif;
+$segoe: "Segoe Pro",
+sans-serif;
+$evolventa: "Evolventa",
+sans-serif;
+$roboto: "Roboto",
+sans-serif;
 
 @import "~bulma/sass/utilities/all";

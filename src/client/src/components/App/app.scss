@@ -10,8 +10,8 @@
 @import "Footer/footer";
 @import "../Search/search";
 @import "../SearchResults/searchResults";
-@import "../Enterprise/enterprise";
-@import "../Enterprise/Establishments/establishments";
+@import "../DataSheets/dataSheets";
+@import "../DataSheets/Establishments/establishments";
 @import "../shared/InfoBox/infoBox";
 
 html {
@@ -33,6 +33,7 @@ a {
 .app-container {
     min-height: calc(100vh - 120px);
     background-color: $app-container-background;
+
     @media print {
         padding-top: 1rem;
     }
@@ -41,14 +42,6 @@ a {
         color: white;
         text-decoration: underline;
     }
-}
-
-.button {
-    height: initial;
-}
-
-.title {
-    margin: 0 0 1rem;
 }
 
 .icon {
@@ -70,6 +63,7 @@ a {
     opacity: 0.85;
     background-color: #a5e1fa;
     z-index: 1;
+
     @media screen and (min-width: 425px) {
         font-size: 1rem;
     }

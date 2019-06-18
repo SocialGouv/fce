@@ -9,7 +9,7 @@ import {
 import {
   Establishment as EstablishmentView,
   Enterprise as EnterpriseView
-} from "../../components/Enterprise";
+} from "../../components/DataSheets";
 
 class Enterprise extends React.Component {
   constructor(props) {

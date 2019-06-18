@@ -1,30 +1,24 @@
-.print-section {
-    margin-top: .25rem;
-    margin-bottom: 1.5rem;
-    display: flex;
-    justify-content: flex-end;
-}
+@import '../App//variables';
 
-.app-enterprise {
+.data-sheet {
     padding: 1rem 0;
 
-    .enterprise-overlay {
-        min-height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: rgb(233, 227, 201);
-        opacity: 0.75;
+    &__print-section {
+        margin-top: .25rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        justify-content: flex-end;
     }
 
-    .show-all-establishments {
-        position: absolute;
-        top: -4rem;
-        right: 0;
+    &__main-container {
+        background-color: $white;
+        border-radius: .325rem;
+        padding: 1rem;
+
     }
 
-    .main {
+    &__main-content {
+
         @media print {
             flex: 0 0 100%;
             max-width: 100%;
@@ -54,16 +48,6 @@
                 &.back-button {
                     background-color: lighten($dark, 10%);
                 }
-            }
-        }
-
-        .establishment-keys {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-
-            #identity-et {
-                width: 60%;
             }
         }
 
@@ -139,34 +123,12 @@
                 opacity: 1;
             }
         }
+    }
 
-        .quick-access {
-            padding: 1.5rem;
-            margin: 0;
-            border-radius: 0.325rem;
-            position: relative;
-            display: flex;
-            flex-direction: row;
-
-            &-list {
-                display: flex;
-                flex-direction: row;
-                padding: 0 1rem;
-            }
-
-            &--item {
-                &:after {
-                    padding: 0 1rem;
-                    content: "|";
-                }
-            }
-
-            &--item:last-child {
-                &:after {
-                    content: "";
-                }
-            }
-        }
+    .show-all-establishments {
+        position: absolute;
+        top: -4rem;
+        right: 0;
     }
 
     small {
@@ -228,10 +190,6 @@
     }
 }
 
-.columns {
-    align-items: flex-start;
-}
-
 .mandataire {
     padding: 1rem 0;
 
@@ -274,9 +232,6 @@
 @include touch {
     .app-enterprise {
         .main {
-            .establishment-keys {
-                flex-direction: column;
-            }
 
             .task-bar {
                 width: 100%;

@@ -1,7 +1,7 @@
 import React from "react";
-import Value from "../../../shared/Value";
-import Data from "../SharedComponents/Data";
-import { getLastInteraction } from "../../../../helpers/Interactions";
+import Value from "../../../../shared/Value";
+import Data from "../Data";
+import { getLastInteraction } from "../../../../../helpers/Interactions";
 
 class EstablishmentView extends React.Component {
   toggleElement = id => {

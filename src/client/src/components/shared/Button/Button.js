@@ -7,7 +7,7 @@ const Button = ({ value, icon, buttonClasses, callback }) => {
   return (
     <button className={ClassNames("button", buttonClasses)} onClick={callback}>
       {icon && (
-        <span className="icon">
+        <span className="button__icon">
           <FontAwesomeIcon icon={icon} />
         </span>
       )}

@@ -52,6 +52,10 @@ a {
     }
 }
 
+.container {
+    width: 100%;
+}
+
 .button {
     height: initial;
 }
@@ -60,9 +64,12 @@ a {
     margin: 0 0 1rem;
 }
 
-.icon {
+.button__icon {
     font-size: 1rem;
+    margin-right: 0.5rem;
+}
 
+.icon {
     &--success {
         color: $success;
     }

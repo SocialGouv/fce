@@ -73,7 +73,6 @@ class Establishment extends React.Component {
                   headOffice={headOffice}
                   establishments={establishments}
                 />
-                <footer className="quickview-footer" />
               </div>
             </div>
           </div>

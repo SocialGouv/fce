@@ -17,7 +17,7 @@ class Search extends React.Component {
     const { terms, hasError, search, nafList } = this.props;
 
     return (
-      <div className="app-search">
+      <div className="app-search pb-4">
         <div className="columns app-search--container">
           <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
             <h2 className="title pb-2">

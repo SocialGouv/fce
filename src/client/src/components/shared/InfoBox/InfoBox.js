@@ -3,6 +3,8 @@ import ClassNames from "classnames";
 import PropTypes from "prop-types";
 import Value from "../Value";
 
+import "./infoBox.scss";
+
 const InfoBox = ({ value, infoBoxClasses }) => {
   return (
     <span className={`infoBox has-text-primary ${ClassNames(infoBoxClasses)}`}>

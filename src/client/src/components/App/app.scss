@@ -13,7 +13,6 @@
 @import "../SearchResults/searchResults";
 @import "../DataSheets/dataSheets";
 @import "../DataSheets/Establishments/establishments";
-@import "../shared/InfoBox/infoBox";
 
 html {
     height: 100%;
@@ -36,7 +35,6 @@ a {
     // 320px = header 120px + foooter 200px
     min-height: calc(100vh - 270px);
     background-color: $app-container-background;
-    padding-bottom: 2rem;
 
     @include from($tablet) {
         // full-height if not enough content

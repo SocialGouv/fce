@@ -24,6 +24,7 @@
         border-radius: 0.325rem;
         z-index: 10;
         padding: 1rem 0 1rem 1rem;
+        box-shadow: $fce-shadow;
 
         >section:not(.establishments) {
             padding-right: 1rem;

@@ -10,7 +10,9 @@ import Config from "../../../services/Config";
 import { setTerm, resetSearch } from "../../../services/Store/actions";
 import Button from "../../shared/Button";
 
-class Establishments extends React.Component {
+import "./sidebar.scss";
+
+class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,7 +83,6 @@ class Establishments extends React.Component {
 
           <section>
             <h3 className="title is-size-5">Siège social</h3>
-
             <Establishment establishment={headOffice} />
           </section>
 
@@ -125,4 +126,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   null,
   mapDispatchToProps
-)(Establishments);
+)(Sidebar);

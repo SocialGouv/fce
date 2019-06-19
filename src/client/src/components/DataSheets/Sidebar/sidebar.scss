@@ -1,5 +1,7 @@
+@import "../../App/variables";
+
 .main.column {
-    padding: 0 .75rem;
+    padding: 0 0.75rem;
 }
 
 .aside-box {
@@ -16,19 +18,14 @@
         margin-bottom: 1rem;
     }
 
-
-    >.aside-contain {
+    > .aside-contain {
         position: relative;
         display: block;
         overflow: auto;
         border-radius: 0.325rem;
         z-index: 10;
-        padding: 1rem 0 1rem 1rem;
+        padding: 1rem;
         box-shadow: $fce-shadow;
-
-        >section:not(.establishments) {
-            padding-right: 1rem;
-        }
 
         .establishments {
             overflow-y: hidden;

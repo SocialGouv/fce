@@ -1,6 +1,6 @@
 import React from "react";
 import withLoading from "../../../../services/Loading";
-import Establishments from "../../Establishments";
+import Sidebar from "../../Sidebar";
 import Header from "./Header";
 import Activity from "./Activity";
 import Finances from "./Finances";
@@ -21,7 +21,7 @@ class Enterprise extends React.Component {
                 <span className="delete" data-dismiss="quickview" />
               </header>
               <div className="quickview-block">
-                <Establishments
+                <Sidebar
                   enterprise={enterprise}
                   headOffice={headOffice}
                   establishments={establishments}
@@ -32,7 +32,7 @@ class Enterprise extends React.Component {
             </div>
           </div>
           <div className="column is-3 aside-box is-hidden-touch">
-            <Establishments
+            <Sidebar
               enterprise={enterprise}
               headOffice={headOffice}
               establishments={establishments}

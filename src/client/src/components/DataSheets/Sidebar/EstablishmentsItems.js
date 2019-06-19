@@ -1,16 +1,27 @@
 import React from "react";
 import Establishment from "./Establishment";
 
-const EstablishmentsItems = ({ establishments, limit = null }) => {
-  const establishmentsList = limit
+const EstablishmentsItems = ({
+  establishments,
+  establishmentType,
+  limit = null
+}) => {
+  const limitedEstablishmentsList = limit
     ? establishments.slice(0, limit)
     : establishments;
 
-  return establishmentsList.map((establishment, index) => (
-    <article key={establishment.siret}>
+  const establishmentsList = limitedEstablishmentsList.map(establishment => (
+    <li key={establishment.siret} className="sidebar__establishment">
       <Establishment establishment={establishment} effectif={false} />
-    </article>
+    </li>
   ));
+
+  return (
+    <>
+      <h4 className="sidebar__establishments-type">{establishmentType}</h4>
+      <ul>{establishmentsList}</ul>
+    </>
+  );
 };
 
 export default EstablishmentsItems;

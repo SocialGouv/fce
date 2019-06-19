@@ -47,6 +47,10 @@ class Sidebar extends React.Component {
       isLimited
     } = this.state;
 
+    const closedEstablishmentsCount = establishments.filter(
+      establishment => establishment.etat_etablissement === "F"
+    ).length;
+
     return (
       <>
         {isRedirectedToEnterprise && (
@@ -56,24 +60,26 @@ class Sidebar extends React.Component {
         <aside
           className={`${
             isEstablishmentDisplayed ? "establishment" : "enterprise"
-          } aside-contain establishments-aside column is-12-tablet`}
+          } aside-contain`}
         >
-          <section className="pb-6">
-            <h3 className="is-capitalized has-text-segoe has-text-weight-bold is-size-5">
+          <section className="sidebar__enterprise">
+            <h3 className="sidebar__enterprise-title">
               Entreprise{" "}
               <Value
                 value={enterprise.raison_sociale.toLowerCase()}
                 empty="-"
               />
             </h3>
-            <h5 className="has-text-segoe has-text-weight-normal">
-              {enterprise.libelle_naf}
-            </h5>
+            <p className="sidebar__enterprise-naf">{enterprise.libelle_naf}</p>
             {isEstablishmentDisplayed && (
               <Button
                 value="Voir la fiche entreprise"
                 icon={faArrowRight}
-                buttonClasses={["is-secondary", "is-outlined"]}
+                buttonClasses={[
+                  "sidebar__enterprise-button",
+                  "is-secondary",
+                  "is-outlined"
+                ]}
                 callback={() => {
                   this.setState({ isRedirectedToEnterprise: true });
                 }}
@@ -81,32 +87,51 @@ class Sidebar extends React.Component {
             )}
           </section>
 
-          <section>
-            <h3 className="title is-size-5">Siège social</h3>
-            <Establishment establishment={headOffice} />
-          </section>
+          <section className="sidebar__establishments">
+            <p className="sidebar__establishments-count">
+              <strong>
+                {establishments.length} établissement
+                {establishments.length > 1 && "s"}
+              </strong>
 
-          <hr />
+              {!!closedEstablishmentsCount && (
+                <>
+                  <br />
+                  <span>
+                    dont {closedEstablishmentsCount} fermé
+                    {closedEstablishmentsCount > 1 && "s"}
+                  </span>
+                </>
+              )}
+            </p>
 
-          <p className="title is-size-5">
-            {establishments.length} Établissements
-          </p>
-          <section className={`establishments ${!isLimited && "with-lift"}`}>
-            <EstablishmentsItems
-              establishments={establishments}
-              limit={isLimited && limitItems}
-            />
-            {establishments.length > limitItems && isLimited && (
-              <button
-                className="button is-primary has-text-light toggle-all-establishments"
-                onClick={() => this.redirectToResearch(enterprise.siren)}
-              >
-                <span className="icon">
-                  <FontAwesomeIcon icon={faBuilding} />
-                </span>
-                <span>Voir tous les établissements</span>
-              </button>
-            )}
+            <section>
+              <EstablishmentsItems
+                establishments={[headOffice]}
+                establishmentType="Siège social"
+              />
+            </section>
+
+            <section
+              className={`sidebar__establishments ${!isLimited && "with-lift"}`}
+            >
+              <EstablishmentsItems
+                establishments={establishments}
+                establishmentType="Autres établissements"
+                limit={isLimited && limitItems}
+              />
+              {establishments.length > limitItems && isLimited && (
+                <button
+                  className="button is-secondary is-outlined"
+                  onClick={() => this.redirectToResearch(enterprise.siren)}
+                >
+                  <span className="icon">
+                    <FontAwesomeIcon icon={faBuilding} />
+                  </span>
+                  <span>Voir tous les établissements</span>
+                </button>
+              )}
+            </section>
           </section>
         </aside>
       </>

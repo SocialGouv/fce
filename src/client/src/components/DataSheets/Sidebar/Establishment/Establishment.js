@@ -23,10 +23,6 @@ class Establishment extends React.Component {
           </Link>
         </li>
         <li>
-          <FontAwesomeIcon
-            className={classNames(stateClass)}
-            icon={isActive ? faCircle : faSquare}
-          />{" "}
           <Value
             value={
               establishment.departement ||

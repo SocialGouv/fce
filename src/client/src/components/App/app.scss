@@ -15,15 +15,15 @@
 @import "../DataSheets/Establishments/establishments";
 
 html {
-    height: 100%;
+    min-height: 100%;
     scroll-behavior: smooth;
 }
 
 body {
     height: 100%;
-    background: $white;
     position: relative;
     margin: 0;
+    background-color: $app-container-background;
 }
 
 a {
@@ -34,7 +34,6 @@ a {
     // full-height if not enough content
     // 320px = header 120px + foooter 200px
     min-height: calc(100vh - 270px);
-    background-color: $app-container-background;
 
     @include from($tablet) {
         // full-height if not enough content

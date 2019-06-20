@@ -1,5 +1,6 @@
 import React from "react";
 import Prototype from "prop-types";
+import _get from "lodash.get";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
@@ -63,18 +64,24 @@ const EstablishmentHelps = ({ establishment }) => {
                     <th>{label}</th>
                     <td>
                       <Value
-                        value={establishment.agrements_iae[key].agrement}
+                        value={_get(
+                          establishment,
+                          `agrements_iae[${key}].agrement`
+                        )}
                       />
                     </td>
                     <td>
                       <Value
-                        value={
-                          establishment.agrements_iae[key].salariesInsertion
-                        }
+                        value={_get(
+                          establishment,
+                          `agrements_iae[${key}].salariesInsertion`
+                        )}
                       />
                     </td>
                     <td>
-                      <Value value={establishment.agrements_iae[key].etp} />
+                      <Value
+                        value={_get(establishment, `agrements_iae[${key}].etp`)}
+                      />
                     </td>
                   </tr>
                 )
@@ -95,38 +102,34 @@ const EstablishmentHelps = ({ establishment }) => {
           ]}
         />
         {establishment.contrat_aide && (
-          <>
-            <table className="table is-bordered mt-3">
-              <thead>
-                <tr>
-                  <th>
-                    Nombre de salariés présents au 31/12/{getCustomPastYear(1)}
-                  </th>
-                  <th>
-                    Nombre de salariés embauchés en {getCustomPastYear(1)}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <Value
-                      value={establishment.contrat_aide_salaries_n1}
-                      empty="-"
-                      nonEmptyValue={[0]}
-                    />
-                  </td>
-                  <td>
-                    <Value
-                      value={establishment.contrat_aide_embauches_n1}
-                      empty="-"
-                      nonEmptyValue={[0]}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </>
+          <table className="table is-bordered mt-3">
+            <thead>
+              <tr>
+                <th>
+                  Nombre de salariés présents au 31/12/{getCustomPastYear(1)}
+                </th>
+                <th>Nombre de salariés embauchés en {getCustomPastYear(1)}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <Value
+                    value={establishment.contrat_aide_salaries_n1}
+                    empty="-"
+                    nonEmptyValue={[0]}
+                  />
+                </td>
+                <td>
+                  <Value
+                    value={establishment.contrat_aide_embauches_n1}
+                    empty="-"
+                    nonEmptyValue={[0]}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
         )}
         <Data
           name={`Embauche en contrat en alternance en année ${getCustomPastYear(

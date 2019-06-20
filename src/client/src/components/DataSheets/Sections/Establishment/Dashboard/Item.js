@@ -24,7 +24,7 @@ const Item = ({ icon, name, value }) => {
   );
 };
 
-Item.protoTypes = {
+Item.propTypes = {
   icon: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([

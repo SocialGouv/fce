@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import Establishment from "./Establishment";
-import EstablishmentsItems from "./EstablishmentsItems";
+import EstablishmentsItems from "./EstablishmentsItems/EstablishmentsItems";
 import Value from "../../shared/Value";
 import { faBuilding, faArrowRight } from "@fortawesome/fontawesome-pro-solid";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
@@ -17,8 +16,7 @@ class Sidebar extends React.Component {
     super(props);
     this.state = {
       isRedirectedToEnterprise: false,
-      isRedirectedToResearch: false,
-      isLimited: true
+      isRedirectedToResearch: false
     };
   }
 
@@ -41,11 +39,7 @@ class Sidebar extends React.Component {
       isEstablishmentDisplayed
     } = this.props;
 
-    const {
-      isRedirectedToEnterprise,
-      isRedirectedToResearch,
-      isLimited
-    } = this.state;
+    const { isRedirectedToEnterprise, isRedirectedToResearch } = this.state;
 
     const closedEstablishmentsCount = establishments.filter(
       establishment => establishment.etat_etablissement === "F"
@@ -105,33 +99,35 @@ class Sidebar extends React.Component {
               )}
             </p>
 
-            <section>
+            <div>
               <EstablishmentsItems
                 establishments={[headOffice]}
                 establishmentType="Siège social"
+                headOffice
               />
-            </section>
+            </div>
+          </section>
 
-            <section
-              className={`sidebar__establishments ${!isLimited && "with-lift"}`}
-            >
-              <EstablishmentsItems
-                establishments={establishments}
-                establishmentType="Autres établissements"
-                limit={isLimited && limitItems}
+          <section className="sidebar__establishments">
+            <EstablishmentsItems
+              establishments={establishments}
+              establishmentType="Autres établissements"
+              limit={limitItems}
+            />
+            {establishments.length > limitItems && (
+              <Button
+                value="Voir tous les établissements"
+                icon={faArrowRight}
+                buttonClasses={[
+                  "is-secondary",
+                  "is-outlined",
+                  "sidebar__view-all-button"
+                ]}
+                callback={() => {
+                  this.redirectToResearch(enterprise.siren);
+                }}
               />
-              {establishments.length > limitItems && isLimited && (
-                <button
-                  className="button is-secondary is-outlined"
-                  onClick={() => this.redirectToResearch(enterprise.siren)}
-                >
-                  <span className="icon">
-                    <FontAwesomeIcon icon={faBuilding} />
-                  </span>
-                  <span>Voir tous les établissements</span>
-                </button>
-              )}
-            </section>
+            )}
           </section>
         </aside>
       </>

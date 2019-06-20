@@ -11,7 +11,7 @@ class Mandataires extends React.Component {
     });
 
     return (
-      <section id="mandataire" className="enterprise-section">
+      <section id="mandataires" className="enterprise-section">
         <h2 className="title is-size-4">Mandataires sociaux</h2>
 
         {items.length ? (

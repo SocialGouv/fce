@@ -1,10 +1,13 @@
 import React from "react";
 import Prototype from "prop-types";
+import _get from "lodash.get";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
 import Config from "../../../../../services/Config";
 import { getCustomPastYear } from "../../../../../helpers/Date/Date";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faMedkit } from "@fortawesome/fontawesome-pro-solid";
 
 const EstablishmentHelps = ({ establishment }) => {
   const hasAgrements = !!(
@@ -15,74 +18,90 @@ const EstablishmentHelps = ({ establishment }) => {
   );
 
   return (
-    <section id="helps" className="enterprise-section">
-      <h2 className="title is-size-4">Aides et agréments</h2>
+    <section id="helps" className="data-sheet__section">
+      <div className="section-header">
+        <span className="icon">
+          <FontAwesomeIcon icon={faMedkit} />
+        </span>
+        <h2 className="title">Aides et agréments</h2>
+      </div>
+      <div className="section-datas">
+        <Subcategory
+          subtitle="Agréments"
+          datas={[
+            {
+              name: "Agrément Entreprise adaptée",
+              value: establishment.ea,
+              emptyValue: "Information en cours de négociation",
+              nonEmptyValue: ""
+            },
+            {
+              name: "Agrément(s) Insertion par l’activité économique (IAE)",
+              value: hasAgrements,
+              nonEmptyValue: ""
+            }
+          ]}
+        />
 
-      <Subcategory
-        subtitle="Agréments"
-        datas={[
-          {
-            name: "Agrément Entreprise adaptée",
-            value: establishment.ea,
-            emptyValue: "Information en cours de négociation",
-            nonEmptyValue: ""
-          },
-          {
-            name: "Agrément(s) Insertion par l’activité économique (IAE)",
-            value: hasAgrements,
-            nonEmptyValue: ""
-          }
-        ]}
-      />
-
-      {hasAgrements && (
-        <table className="table is-hoverable">
-          <thead>
-            <tr>
-              <th />
-              <th>Agrément(s) en {getCustomPastYear(1)}</th>
-              <th>
-                Nombre de salariés en insertion présents en{" "}
-                {getCustomPastYear(1)}
-              </th>
-              <th>Nombre d’ETP en année {getCustomPastYear(1)}</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {Object.entries(Config.get("agrementsIae")).map(([key, label]) => (
-              <tr key={key}>
-                <th>{label}</th>
-                <td>
-                  <Value value={establishment.agrements_iae[key].agrement} />
-                </td>
-                <td>
-                  <Value
-                    value={establishment.agrements_iae[key].salariesInsertion}
-                  />
-                </td>
-                <td>
-                  <Value value={establishment.agrements_iae[key].etp} />
-                </td>
+        {hasAgrements && (
+          <table className="table is-hoverable">
+            <thead>
+              <tr>
+                <th />
+                <th>Agrément(s) en {getCustomPastYear(1)}</th>
+                <th>
+                  Nombre de salariés en insertion présents en{" "}
+                  {getCustomPastYear(1)}
+                </th>
+                <th>Nombre d’ETP en année {getCustomPastYear(1)}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
 
-      <Subcategory
-        subtitle="Contrats aidés et alternance"
-        datas={[
-          {
-            name:
-              "Parcours emploi – compétences (PEC) ou Emploi d’avenir en " +
-              getCustomPastYear(1),
-            value: !!establishment.contrat_aide
-          }
-        ]}
-      />
-      {establishment.contrat_aide && (
-        <>
+            <tbody>
+              {Object.entries(Config.get("agrementsIae")).map(
+                ([key, label]) => (
+                  <tr key={key}>
+                    <th>{label}</th>
+                    <td>
+                      <Value
+                        value={_get(
+                          establishment,
+                          `agrements_iae[${key}].agrement`
+                        )}
+                      />
+                    </td>
+                    <td>
+                      <Value
+                        value={_get(
+                          establishment,
+                          `agrements_iae[${key}].salariesInsertion`
+                        )}
+                      />
+                    </td>
+                    <td>
+                      <Value
+                        value={_get(establishment, `agrements_iae[${key}].etp`)}
+                      />
+                    </td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
+        )}
+
+        <Subcategory
+          subtitle="Contrats aidés et alternance"
+          datas={[
+            {
+              name:
+                "Parcours emploi – compétences (PEC) ou Emploi d’avenir en " +
+                getCustomPastYear(1),
+              value: !!establishment.contrat_aide
+            }
+          ]}
+        />
+        {establishment.contrat_aide && (
           <table className="table is-bordered mt-3">
             <thead>
               <tr>
@@ -111,14 +130,14 @@ const EstablishmentHelps = ({ establishment }) => {
               </tr>
             </tbody>
           </table>
-        </>
-      )}
-      <Data
-        name={`Embauche en contrat en alternance en année ${getCustomPastYear(
-          1
-        )} ou ${getCustomPastYear(2)}`}
-        value="pas encore disponible"
-      />
+        )}
+        <Data
+          name={`Embauche en contrat en alternance en année ${getCustomPastYear(
+            1
+          )} ou ${getCustomPastYear(2)}`}
+          value="pas encore disponible"
+        />
+      </div>
     </section>
   );
 };

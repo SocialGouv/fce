@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/fontawesome-pro-solid";
+import { faCircle, faCalendarCheck } from "@fortawesome/fontawesome-pro-solid";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import _get from "lodash.get";
 
@@ -67,51 +67,60 @@ class EstablishmentView extends React.Component {
     );
 
     return (
-      <section id="direccte" className="enterprise-section">
-        <h2 className="title is-size-4">visites et controles</h2>
-        <div className="direccte-excerpt">
-          <div className="direccte-excerpt--pole">
-            <span className="direccte-excerpt--pole-value">
-              {interactions.length}
-            </span>
-            <span className="direccte-ex cerpt--pole-key">
-              établissements avec une intervention
-            </span>
-          </div>
+      <section id="direccte" className="data-sheet__section">
+        <div className="section-header">
+          <span className="icon">
+            <FontAwesomeIcon icon={faCalendarCheck} />
+          </span>
+          <h2 className="title">Visites et controles</h2>
         </div>
-        <table className="table is-striped direccte-interactions">
-          <thead>
-            <tr>
-              <th>SIRET</th>
-              <th>Etat</th>
-              <th>Département</th>
-              <th>Commune</th>
-              <th>Dernière intervention</th>
-            </tr>
-          </thead>
-          <tbody>
-            {interactions.map(etab => (
-              <tr key={etab.siret}>
-                <td>
-                  <Link to={`/establishment/${etab.siret}`}>{etab.siret}</Link>
-                </td>
-                <td>
-                  {etab.etat && (
-                    <FontAwesomeIcon
-                      className={
-                        etab.etat === "A" ? "icon--success" : "icon--danger"
-                      }
-                      icon={faCircle}
-                    />
-                  )}
-                </td>
-                <td>{etab.dep}</td>
-                <td>{etab.commune}</td>
-                <td>{etab.lastControlDate}</td>
+        <div className="section-datas">
+          <div className="direccte-excerpt">
+            <div className="direccte-excerpt--pole">
+              <span className="direccte-excerpt--pole-value">
+                {interactions.length}
+              </span>
+              <span className="direccte-ex cerpt--pole-key">
+                établissements avec une intervention
+              </span>
+            </div>
+          </div>
+          <table className="table is-striped direccte-interactions">
+            <thead>
+              <tr>
+                <th>SIRET</th>
+                <th>Etat</th>
+                <th>Département</th>
+                <th>Commune</th>
+                <th>Dernière intervention</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {interactions.map(etab => (
+                <tr key={etab.siret}>
+                  <td>
+                    <Link to={`/establishment/${etab.siret}`}>
+                      {etab.siret}
+                    </Link>
+                  </td>
+                  <td>
+                    {etab.etat && (
+                      <FontAwesomeIcon
+                        className={
+                          etab.etat === "A" ? "icon--success" : "icon--danger"
+                        }
+                        icon={faCircle}
+                      />
+                    )}
+                  </td>
+                  <td>{etab.dep}</td>
+                  <td>{etab.commune}</td>
+                  <td>{etab.lastControlDate}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
     );
   }

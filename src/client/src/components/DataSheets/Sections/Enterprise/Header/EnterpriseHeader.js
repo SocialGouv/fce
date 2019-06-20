@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import Value from "../../../../shared/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import {
@@ -10,15 +11,26 @@ import {
 } from "@fortawesome/fontawesome-pro-solid";
 import InfoBox from "../../../../shared/InfoBox";
 import Button from "../../../../shared/Button";
+import { setTerm, resetSearch } from "../../../../../services/Store/actions";
 
 import "./enterpriseHeader.scss";
 class EnterpriseHeader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isRedirectedToHeadOffice: false
+      isRedirectedToHeadOffice: false,
+      isRedirectedToResearch: false
     };
   }
+
+  redirectToResearch = siren => {
+    Promise.all([
+      this.props.resetSearch(),
+      this.props.setTerm("q", siren)
+    ]).then(() => {
+      this.setState({ isRedirectedToResearch: true });
+    });
+  };
 
   render() {
     const { enterprise } = this.props;
@@ -28,11 +40,14 @@ class EnterpriseHeader extends React.Component {
     const isActiveEnterprise = enterprise.etat_entreprise === "A";
     const stateClass = isActiveEnterprise ? "icon--success" : "icon--danger";
 
+    const { isRedirectedToHeadOffice, isRedirectedToResearch } = this.state;
+
     return (
       <>
-        {this.state.isRedirectedToHeadOffice && (
+        {isRedirectedToHeadOffice && (
           <Redirect to={`/establishment/${enterprise.siret_siege_social}`} />
         )}
+        {isRedirectedToResearch && <Redirect to="/" />}
         <section id="header" className="enterprise-header w-100 mb-4">
           <div className="has-text-link show-all-establishments">
             <div
@@ -115,7 +130,7 @@ class EnterpriseHeader extends React.Component {
                 value="Voir tous les établissements"
                 icon={faArrowRight}
                 buttonClasses={["is-secondary", "is-outlined"]}
-                callback={() => console.log("voir tous les établissements")}
+                callback={() => this.redirectToResearch(enterprise.siren)}
               />
             </div>
           </div>
@@ -138,4 +153,16 @@ class EnterpriseHeader extends React.Component {
   }
 }
 
-export default EnterpriseHeader;
+const mapDispatchToProps = dispatch => {
+  return {
+    setTerm: (termKey, termValue) => {
+      return dispatch(setTerm(termKey, termValue));
+    },
+    resetSearch: () => dispatch(resetSearch())
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(EnterpriseHeader);

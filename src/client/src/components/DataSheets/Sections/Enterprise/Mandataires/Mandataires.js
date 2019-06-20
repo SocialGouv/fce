@@ -1,5 +1,7 @@
 import React from "react";
 import Mandataire from "./Mandataire";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/fontawesome-pro-solid";
 
 class Mandataires extends React.Component {
   render() {
@@ -11,14 +13,20 @@ class Mandataires extends React.Component {
     });
 
     return (
-      <section id="mandataire" className="enterprise-section">
-        <h2 className="title is-size-4">Mandataires sociaux</h2>
-
-        {items.length ? (
-          items
-        ) : (
-          <p className="has-text-center">Aucun mandataire n'a été trouvé</p>
-        )}
+      <section id="mandataires" className="data-sheet__section">
+        <div className="section-header">
+          <span className="icon">
+            <FontAwesomeIcon icon={faUsers} />
+          </span>
+          <h2 className="title">Mandataires sociaux</h2>
+        </div>
+        <div className="section-datas">
+          {items.length ? (
+            items
+          ) : (
+            <p className="has-text-center">Aucun mandataire n'a été trouvé</p>
+          )}
+        </div>
       </section>
     );
   }

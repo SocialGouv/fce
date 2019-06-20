@@ -3,6 +3,8 @@ import Value from "../../../../shared/Value";
 import { toI18nDate } from "../../../../../helpers/Date";
 import Config from "../../../../../services/Config";
 import Data from "../../SharedComponents/Data";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faHistory } from "@fortawesome/fontawesome-pro-solid";
 
 const EnterpriseActivity = ({ enterprise }) => {
   const dashboardSizeRanges = {
@@ -11,94 +13,103 @@ const EnterpriseActivity = ({ enterprise }) => {
   };
 
   return (
-    <section className="enterprise-section">
-      <h2 className="title is-size-4">Informations légales sur l’entreprise</h2>
-
-      <Data name="Forme juridique" value={enterprise.categorie_juridique} />
-      <Data
-        name="Activité principale"
-        value={`${enterprise.naf ? enterprise.naf : "-"} ${
-          enterprise.libelle_naf ? enterprise.libelle_naf : ""
-        }`}
-      />
-      <Data name="Date de création" value={enterprise.date_de_creation} />
-      <Data
-        name="Date immatriculation RCS"
-        value={enterprise.rcs_date_immatriculation}
-      />
-      {enterprise.rcs_information_libelle && (
+    <section id="infos" className="data-sheet__section">
+      <div className="section-header">
+        <span className="icon">
+          <FontAwesomeIcon icon={faHistory} />
+        </span>
+        <h2 className="title">Informations légales sur l’entreprise</h2>
+      </div>
+      <div className="section-datas">
+        <Data name="Forme juridique" value={enterprise.categorie_juridique} />
         <Data
-          name="Observation RCS"
-          value={`${toI18nDate(enterprise.rcs_information_date, "L")} - ${
-            enterprise.rcs_information_libelle
+          name="Activité principale"
+          value={`${enterprise.naf ? enterprise.naf : "-"} ${
+            enterprise.libelle_naf ? enterprise.libelle_naf : ""
           }`}
         />
-      )}
-      <Data name="Catégorie" value={enterprise.categorie_entreprise} />
-      <Data
-        name="Tranche d'effectif"
-        value={dashboardSizeRanges[enterprise.tranche_effectif]}
-      />
-      <Data
-        name="Année tranche d'effectif"
-        value={enterprise.annee_tranche_effectif}
-      />
-      <Data name="Siège social (SIRET)" value={enterprise.siret_siege_social} />
-      <Data
-        name="Etablissements"
-        value={`${
-          enterprise.nombre_etablissements_actifs
-        } actif(s) et ${enterprise.etablissements.length -
-          enterprise.nombre_etablissements_actifs} fermé(s)`}
-      />
+        <Data name="Date de création" value={enterprise.date_de_creation} />
+        <Data
+          name="Date immatriculation RCS"
+          value={enterprise.rcs_date_immatriculation}
+        />
+        {enterprise.rcs_information_libelle && (
+          <Data
+            name="Observation RCS"
+            value={`${toI18nDate(enterprise.rcs_information_date, "L")} - ${
+              enterprise.rcs_information_libelle
+            }`}
+          />
+        )}
+        <Data name="Catégorie" value={enterprise.categorie_entreprise} />
+        <Data
+          name="Tranche d'effectif"
+          value={dashboardSizeRanges[enterprise.tranche_effectif]}
+        />
+        <Data
+          name="Année tranche d'effectif"
+          value={enterprise.annee_tranche_effectif}
+        />
+        <Data
+          name="Siège social (SIRET)"
+          value={enterprise.siret_siege_social}
+        />
+        <Data
+          name="Etablissements"
+          value={`${
+            enterprise.nombre_etablissements_actifs
+          } actif(s) et ${enterprise.etablissements.length -
+            enterprise.nombre_etablissements_actifs} fermé(s)`}
+        />
 
-      {enterprise.attestation_dgfip && (
-        <div className="columns">
-          <h5 className="column is-3">Attestation fiscale DGFIP</h5>
-          <span className="column is-8">
-            <Value
-              value={!!enterprise.attestation_dgfip}
-              empty="Non Disponible"
-              no="Non Disponible"
-            />
-          </span>
-          {enterprise.attestation_dgfip && (
-            <span className="span col-md-5">
-              <a
-                href={enterprise.attestation_dgfip}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                télécharger le document
-              </a>
+        {enterprise.attestation_dgfip && (
+          <div className="columns">
+            <h5 className="column is-3">Attestation fiscale DGFIP</h5>
+            <span className="column is-8">
+              <Value
+                value={!!enterprise.attestation_dgfip}
+                empty="Non Disponible"
+                no="Non Disponible"
+              />
             </span>
-          )}
-        </div>
-      )}
+            {enterprise.attestation_dgfip && (
+              <span className="span col-md-5">
+                <a
+                  href={enterprise.attestation_dgfip}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  télécharger le document
+                </a>
+              </span>
+            )}
+          </div>
+        )}
 
-      {enterprise.attestation_acoss && (
-        <div className="columns">
-          <h5 className="column is-3">Attestation sociale ACOSS</h5>
-          <span className="column is-8">
-            <Value
-              value={!!enterprise.attestation_acoss}
-              empty="Non Disponible"
-              no="Non Disponible"
-            />
-          </span>
-          {enterprise.attestation_acoss && (
-            <span className="span col-md-5">
-              <a
-                href={enterprise.attestation_acoss}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                télécharger le document
-              </a>
+        {enterprise.attestation_acoss && (
+          <div className="columns">
+            <h5 className="column is-3">Attestation sociale ACOSS</h5>
+            <span className="column is-8">
+              <Value
+                value={!!enterprise.attestation_acoss}
+                empty="Non Disponible"
+                no="Non Disponible"
+              />
             </span>
-          )}
-        </div>
-      )}
+            {enterprise.attestation_acoss && (
+              <span className="span col-md-5">
+                <a
+                  href={enterprise.attestation_acoss}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  télécharger le document
+                </a>
+              </span>
+            )}
+          </div>
+        )}
+      </div>
     </section>
   );
 };

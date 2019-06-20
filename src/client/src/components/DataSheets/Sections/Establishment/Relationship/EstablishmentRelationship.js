@@ -4,6 +4,8 @@ import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import Config from "../../../../../services/Config";
 import { getCustomPastYear } from "../../../../../helpers/Date/Date";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/fontawesome-pro-solid";
 
 const EstablishmentRelationship = ({ establishment }) => {
   const { code_idcc, libelle_idcc, accords } = establishment;
@@ -17,45 +19,52 @@ const EstablishmentRelationship = ({ establishment }) => {
     : 0;
 
   return (
-    <section id="relation" className="enterprise-section">
-      <h2 className="title is-size-4">Relation travail</h2>
-      <Data
-        name="Convention collective (IDCC)"
-        value={`${code_idcc ? code_idcc : ""} - ${
-          libelle_idcc ? libelle_idcc : ""
-        }`}
-      />
-      <Data
-        name={`Nombre d'accords d'entreprise déposés en année ${getCustomPastYear(
-          1
-        )} ${getCustomPastYear(2)}`}
-        value={nbAccords}
-        emptyValue="aucun accord connu"
-      />
-      {nbAccords > 0 && (
-        <table className="table is-hoverable">
-          <thead>
-            <tr>
-              <th className="th"> Thématique</th>
-              <th className="th"> Nombre accords concernés </th>
-            </tr>
-          </thead>
-          <tbody>
-            {Config.get("accords").map(typeAccord => (
-              <tr key={`accord-${typeAccord.key}`}>
-                <td>{typeAccord.value}</td>
-                <td>
-                  <Value
-                    value={accords && accords[typeAccord.key]}
-                    empty="-"
-                    nonEmptyValues={[0, "0"]}
-                  />
-                </td>
+    <section id="relation" className="data-sheet__section">
+      <div className="section-header">
+        <span className="icon">
+          <FontAwesomeIcon icon={faUsers} />
+        </span>
+        <h2 className="title">Relation travail</h2>
+      </div>
+      <div className="section-datas">
+        <Data
+          name="Convention collective (IDCC)"
+          value={`${code_idcc ? code_idcc : ""} - ${
+            libelle_idcc ? libelle_idcc : ""
+          }`}
+        />
+        <Data
+          name={`Nombre d'accords d'entreprise déposés en année ${getCustomPastYear(
+            1
+          )} ${getCustomPastYear(2)}`}
+          value={nbAccords}
+          emptyValue="aucun accord connu"
+        />
+        {nbAccords > 0 && (
+          <table className="table is-hoverable">
+            <thead>
+              <tr>
+                <th className="th"> Thématique</th>
+                <th className="th"> Nombre accords concernés </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            <tbody>
+              {Config.get("accords").map(typeAccord => (
+                <tr key={`accord-${typeAccord.key}`}>
+                  <td>{typeAccord.value}</td>
+                  <td>
+                    <Value
+                      value={accords && accords[typeAccord.key]}
+                      empty="-"
+                      nonEmptyValues={[0, "0"]}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </section>
   );
 };

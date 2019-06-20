@@ -11,7 +11,7 @@
     &__main-container {
         background-color: $white;
         border-radius: .325rem .325rem 0 0;
-        padding: 1rem;
+        padding: 1rem 2rem;
         box-shadow: $fce-shadow;
     }
 
@@ -49,54 +49,6 @@
             }
         }
 
-        .enterprise-section {
-            scroll-margin: 7rem;
-            padding: 2rem;
-            margin: 4rem 0 0;
-            padding-top: 2rem;
-            background-color: $white;
-            border-radius: 0.325rem;
-            position: relative;
-
-            >.title {
-                margin-bottom: 1rem;
-                font-size: 1.4rem;
-                background-color: $white;
-                padding: 1rem 2rem;
-                position: absolute;
-                top: -2rem;
-                left: 0;
-                border-radius: 0.325rem 0.325rem 0 0;
-                text-transform: capitalize;
-                color: $primary;
-            }
-
-            .subtitle {
-                text-align: left;
-                color: $primary;
-                font-weight: bold;
-                margin-top: 0;
-
-                &:not(:first-of-type) {
-                    margin-top: 1rem;
-                }
-            }
-
-            >.dl {
-                margin-bottom: 0;
-            }
-
-            >.dd,
-            >.dt {
-                padding: 1rem 0;
-                word-wrap: break-word;
-            }
-
-            .toggle-element {
-                padding: 1rem;
-                background-color: #e9ecef;
-            }
-        }
 
         .enterprise-header {
             scroll-margin: 7rem;
@@ -113,13 +65,97 @@
 
         .sticky {
             box-shadow: $fce-shadow;
-            z-index: 1;
+            z-index: 2;
             transition: opacity .2s;
             opacity: 0.9;
 
             &:hover {
                 opacity: 1;
             }
+        }
+    }
+
+    &__section {
+        scroll-margin: 7rem;
+        margin: 2rem 0;
+        background-color: $white;
+        border-radius: 0.325rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .section-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            border-radius: 0.325rem 0.325rem 0 0;
+            background: $white;
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+            position: relative;
+            padding: 0 2rem;
+
+            &:before {
+                content: '';
+                background: white;
+                position: absolute;
+                bottom: -0.5em;
+                height: 0.5em;
+                width: 110%;
+                left: 0;
+            }
+
+            >.icon {
+                color: $primary;
+                width: 1.15rem;
+                height: 1.25rem;
+                margin-right: .5rem;
+                padding: .9rem;
+                border-radius: 100%;
+                background-color: $pale-grey;
+            }
+
+            >.title {
+                font-family: $roboto;
+                font-weight: bold;
+                font-size: $section-title-size;
+                color: $primary;
+                background-color: $white;
+                padding-top: 1rem;
+                text-transform: capitalize;
+            }
+
+        }
+
+        .section-datas {
+            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            align-self: stretch;
+        }
+
+        .subtitle {
+            font-size: $section-subtitle-size;
+            font-weight: bold;
+            color: $dark-grey;
+            text-align: left;
+            margin-top: 0;
+        }
+
+        >.dl {
+            margin-bottom: 0;
+        }
+
+        >.dd,
+        >.dt {
+            padding: 1rem 0;
+            word-wrap: break-word;
+            color: $grey-tundora;
+        }
+
+        .toggle-element {
+            padding: 1rem;
+            background-color: #e9ecef;
         }
     }
 
@@ -154,35 +190,6 @@
             &-value {
                 font-weight: bold;
                 margin-right: 0.5rem;
-            }
-        }
-    }
-
-    .quick-access-aside {
-        .title {
-            text-align: center;
-        }
-
-        .menu-list {
-            li {
-                width: 100%;
-                padding: 1rem 0;
-
-                &:not(:last-child) {
-                    border-bottom: solid 1px #e9ecef;
-                }
-
-                &:hover {
-                    background-color: #e9ecef;
-                }
-
-                >.link {
-                    background-color: transparent;
-
-                    &:hover {
-                        text-decoration: none;
-                    }
-                }
             }
         }
     }

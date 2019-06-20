@@ -2,13 +2,16 @@
 $dark-blue: #34495e;
 $blue: #2980b9;
 $turquoise: #2aa995;
+$faced-blue: #5499c6;
 $red-bright: #e74c3c;
 $red-washed: rgba(189, 10, 10, 0.14);
 $green-washed: rgba(34, 137, 31, 0.2);
 $green-forest: #22891f;
 $white-smoke: #f5f5f5;
+$pale-grey: #f5f5f7;
 $grey-geyser: #dde1e5;
 $grey-tundora: #4a4a4a;
+$dark-grey: #363636;
 
 $primary: $blue;
 $info: $turquoise;
@@ -28,6 +31,10 @@ $b-radius: 0.25rem;
 /* Box-shadow */
 $fce-shadow: 0 0 6px rgba(100, 100, 100, 0.06),
 0 0 15px rgba(100, 100, 100, 0.15);
+
+/* Font-size */
+$section-title-size: 1.25rem;
+$section-subtitle-size: 1.15rem;
 
 /* TYPOGRAPHY */
 $segoe: "Segoe Pro",

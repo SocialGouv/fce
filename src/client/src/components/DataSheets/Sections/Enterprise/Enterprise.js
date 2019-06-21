@@ -55,7 +55,7 @@ class Enterprise extends React.Component {
               <span className="delete" data-dismiss="quickview" />
             </header>
             <div className="quickview-block">
-              <Establishments
+              <Sidebar
                 enterprise={enterprise}
                 headOffice={headOffice}
                 establishments={establishments}

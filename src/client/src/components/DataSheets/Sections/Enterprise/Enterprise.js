@@ -1,6 +1,6 @@
 import React from "react";
 import withLoading from "../../../../services/Loading";
-import Establishments from "../../Establishments";
+import Sidebar from "../../Sidebar";
 import Header from "./Header";
 import Infos from "./Infos";
 import Mandataires from "./Mandataires";
@@ -25,7 +25,7 @@ class Enterprise extends React.Component {
         </div>
         <div className="columns">
           <div className="column is-3 aside-box is-hidden-touch">
-            <Establishments
+            <Sidebar
               enterprise={enterprise}
               headOffice={headOffice}
               establishments={establishments}

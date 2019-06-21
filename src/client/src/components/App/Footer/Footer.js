@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 import Config from "../../../services/Config";
 import mariane from "../../../assets/img/logo_gouv.png";

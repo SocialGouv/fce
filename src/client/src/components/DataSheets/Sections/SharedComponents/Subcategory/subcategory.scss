@@ -1,0 +1,9 @@
+@import "./../../../../App/variables";
+
+.subcategory {
+    margin: 1rem 0 2rem 0;
+
+    &-title {
+        border-bottom: solid 2px $faced-blue;
+    }
+}

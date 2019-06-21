@@ -11,6 +11,7 @@ import Config from "../../services/Config";
 import PrivateRoute from "../../services/PrivateRoute";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
+import Footer from "./Footer";
 import Search from "../../containers/Search";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
@@ -22,10 +23,6 @@ let history = createBrowserHistory();
 
 const piwik = PiwikReactRouter(Config.get("piwik"));
 
-const appStyle = {
-  backgroundColor: `#ededed`
-};
-
 class App extends React.Component {
   render() {
     console.debug("render app");
@@ -35,10 +32,12 @@ class App extends React.Component {
           <Router history={piwik.connectToHistory(history)}>
             <ScrollToTop>
               <Header />
-              <div className="beta-message">
-                Ce site est un travail en cours, actuellement en beta.
+              <div className="beta-message flex-center">
+                <div>
+                  Ce site est un travail en cours, actuellement en beta.
+                </div>
               </div>
-              <div className="app-container" style={appStyle}>
+              <div className="app-container">
                 <Switch>
                   <PrivateRoute exact path="/" component={Search} />
                   <PrivateRoute exact path="/search" component={Search} />
@@ -63,6 +62,7 @@ class App extends React.Component {
                   <Redirect to="/404" />
                 </Switch>
               </div>
+              <Footer />
             </ScrollToTop>
           </Router>
         </PersistGate>

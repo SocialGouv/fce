@@ -1,0 +1,16 @@
+@import '../../../../App/variables';
+
+.quick-access {
+    background-color: $white;
+    border-radius: 0.325rem;
+}
+
+.tabs li.is-active a {
+    color: $secondary;
+    border-color: $secondary;
+    border-width: 3px;
+}
+
+.tabs {
+    width: 100%;
+}

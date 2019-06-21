@@ -1,0 +1,11 @@
+@mixin success() {
+    color: $info-success;
+    border: 1px solid $info-success;
+    background-color: $info-success-bg;
+}
+
+@mixin error() {
+    color: $info-error;
+    border: 1px solid $info-error;
+    background-color: $info-error-bg;
+}

@@ -1,26 +1,28 @@
+@import "fonts";
 @import "variables";
+@import "mixins";
 @import "globals";
+@import "animations";
+@import "typography";
 @import "~bulma/bulma";
-@import "~bulma-extensions/bulma-accordion/dist/css/bulma-accordion";
 @import "~bulma-extensions/bulma-quickview/dist/css/bulma-quickview";
 @import "~bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio";
 @import "Header/header";
 @import "Footer/footer";
 @import "../Search/search";
 @import "../SearchResults/searchResults";
-@import "../Enterprise/enterprise";
-@import "../Enterprise/Establishments/establishments";
+@import "../DataSheets/dataSheets";
 
 html {
-    height: 100vh;
+    min-height: 100%;
     scroll-behavior: smooth;
 }
 
 body {
-    background: $white;
+    height: 100%;
     position: relative;
     margin: 0;
-    min-height: 100vh;
+    background-color: $app-container-background;
 }
 
 a {
@@ -28,8 +30,15 @@ a {
 }
 
 .app-container {
-    padding: 0 1rem;
-    min-height: 100vh;
+    // full-height if not enough content
+    // 320px = header 120px + foooter 200px
+    min-height: calc(100vh - 270px);
+
+    @include from($tablet) {
+        // full-height if not enough content
+        // 270px = header 120px + foooter 150px
+        min-height: calc(100vh - 320px);
+    }
 
     @media print {
         padding-top: 1rem;
@@ -41,6 +50,10 @@ a {
     }
 }
 
+.container {
+    width: 100%;
+}
+
 .button {
     height: initial;
 }
@@ -49,9 +62,12 @@ a {
     margin: 0 0 1rem;
 }
 
-.icon {
+.button__icon {
     font-size: 1rem;
+    margin-right: 0.5rem;
+}
 
+.icon {
     &--success {
         color: $success;
     }
@@ -63,11 +79,15 @@ a {
 
 .beta-message {
     text-align: center;
-    background-color: #a5e1fa;
-    padding: .75rem 0;
+    font-size: 0.8rem;
+    height: 40px;
     opacity: 0.85;
+    background-color: #a5e1fa;
     z-index: 1;
-    position: relative;
+
+    @include from(425px) {
+        font-size: 1rem;
+    }
 }
 
 @media print {

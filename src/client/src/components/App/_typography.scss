@@ -1,0 +1,46 @@
+body {
+    font-family: $roboto;
+}
+
+h1,
+h2 {
+    font-family: $evolventa;
+    font-weight: bold;
+    letter-spacing: normal;
+}
+
+h3,
+h4,
+h5,
+h6 {
+    font-family: $roboto;
+    letter-spacing: normal;
+    font-weight: bold;
+}
+
+button {
+    font-family: $roboto;
+    font-weight: bold;
+}
+
+.has-text-segoe {
+    font-family: $segoe;
+}
+
+.has-text-evolventa-bold {
+    font-family: $evolventa;
+    font-weight: bold;
+}
+
+.has-text-roboto-bold {
+    font-family: $roboto;
+    font-weight: bold;
+}
+
+.has-text-roboto {
+    font-family: Roboto Pro, sans-serif;
+}
+
+.has-text-evolventa {
+    font-family: Evolventa Pro, sans-serif;
+}

@@ -7,7 +7,7 @@ import {
   faFileExcel
 } from "@fortawesome/fontawesome-pro-solid";
 import ReactTable from "react-table";
-import Value from "../../elements/Value";
+import Value from "../shared/Value";
 import { withRouter } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import Config from "./../../services/Config";
@@ -23,9 +23,9 @@ class SearchResults extends React.Component {
     };
 
     return (
-      <div className="app-searchResults" style={{ marginTop: "3rem" }}>
+      <div className="app-searchResults container">
         {results && results.length >= 1 && (
-          <h2 className="title">
+          <h2 className="title my-2">
             {pagination.items} établissement{pagination.items > 1 && "s"} trouvé
             {pagination.items > 1 && "s"}
           </h2>
@@ -103,7 +103,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "SIRET",
                     id: "siret",
-                    minWidth: 120,
+                    minWidth: 150,
                     accessor: e =>
                       Value({
                         value: e.etablissement.siret,
@@ -151,7 +151,7 @@ class SearchResults extends React.Component {
                   {
                     Header: "Raison Sociale / Nom",
                     id: "nom",
-                    minWidth: 300,
+                    minWidth: 280,
                     accessor: e =>
                       Value({
                         value:

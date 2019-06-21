@@ -13,6 +13,9 @@ const globalConfig = {
   region: {
     occitanie: 76
   },
+  contact: {
+    mailto: "chloe.mandelblat@direccte.gouv.fr"
+  },
   emailInformation: {
     to: "oc.documentation@direccte.gouv.fr",
     subject: "FCE - demande d’informations complémentaires"

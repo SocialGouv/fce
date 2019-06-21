@@ -29,7 +29,6 @@ class Enterprise extends React.Component {
               enterprise={enterprise}
               headOffice={headOffice}
               establishments={establishments}
-              isEstablishmentDisplayed={true}
             />
           </div>
           <div className="data-sheet__main-content column is-9-desktop is-12-tablet">

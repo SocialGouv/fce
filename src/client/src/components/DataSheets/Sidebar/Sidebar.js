@@ -64,7 +64,9 @@ class Sidebar extends React.Component {
                 empty="-"
               />
             </h3>
-            <p className="sidebar__enterprise-naf">{enterprise.libelle_naf}</p>
+            <p className="sidebar__enterprise-naf">
+              <Value value={enterprise.libelle_naf} empty="-" />
+            </p>
             {isEstablishmentDisplayed && (
               <Button
                 value="Voir la fiche entreprise"
@@ -84,7 +86,8 @@ class Sidebar extends React.Component {
           <section className="sidebar__establishments">
             <p className="sidebar__establishments-count">
               <strong>
-                {establishments.length} établissement
+                <Value value={establishments.length} empty="Aucun " />{" "}
+                établissement
                 {establishments.length > 1 && "s"}
               </strong>
 
@@ -110,7 +113,9 @@ class Sidebar extends React.Component {
 
           <section className="sidebar__establishments">
             <EstablishmentsItems
-              establishments={establishments}
+              establishments={establishments.filter(
+                establishment => establishment.siret !== headOffice.siret
+              )}
               establishmentType="Autres établissements"
               limit={limitItems}
             />

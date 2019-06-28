@@ -5,6 +5,7 @@ import Header from "./Header";
 import Infos from "./Infos";
 import Mandataires from "./Mandataires";
 import Direccte from "../SharedComponents/Direccte";
+import Finances from "./Finances";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
 import { faPrint } from "@fortawesome/fontawesome-pro-solid";
@@ -38,11 +39,13 @@ class Enterprise extends React.Component {
                 anchors={[
                   { label: "Informations légales", link: "infos" },
                   { label: "Visites et contrôles", link: "direccte" },
+                  { label: "Données financières", link: "finances" },
                   { label: "Mandataires sociaux", link: "mandataires" }
                 ]}
               />
               <Infos enterprise={enterprise} headOffice={headOffice} />
               <Direccte enterprise={enterprise} />
+              <Finances establishment={headOffice} />
               <Mandataires enterprise={enterprise} />
             </div>
           </div>

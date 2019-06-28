@@ -1,7 +1,7 @@
 import React from "react";
 import Value from "../../../../shared/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faDollarSign } from "@fortawesome/fontawesome-pro-solid";
+import { faEuroSign } from "@fortawesome/fontawesome-pro-solid";
 
 class Finances extends React.Component {
   render() {
@@ -42,13 +42,13 @@ class Finances extends React.Component {
       <section id="finances" className="data-sheet__section">
         <div className="section-header">
           <span className="icon">
-            <FontAwesomeIcon icon={faDollarSign} />
+            <FontAwesomeIcon icon={faEuroSign} />
           </span>
           <h2 className="title">Données financières</h2>
         </div>
         <div className="section-datas">
           {establishment.donnees_ecofi ? (
-            <table className="table is-hoverable is-bordered">
+            <table className="table is-hoverable is-striped">
               <thead>
                 <tr>
                   <th>Date fin exercice</th>

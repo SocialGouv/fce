@@ -44,6 +44,7 @@ class Finances extends React.Component {
           <span className="icon">
             <FontAwesomeIcon icon={faDollarSign} />
           </span>
+          <h2 className="title">Données financières</h2>
         </div>
         <div className="section-datas">
           {establishment.donnees_ecofi ? (

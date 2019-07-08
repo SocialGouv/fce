@@ -1,5 +1,7 @@
 import React from "react";
 import Value from "../../../../shared/Value";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faEuroSign } from "@fortawesome/fontawesome-pro-solid";
 
 class Finances extends React.Component {
   render() {
@@ -37,34 +39,41 @@ class Finances extends React.Component {
     }
 
     return (
-      <section id="finances" className="enterprise-section">
-        <h2 className="title is-size-4">Données économiques et financières</h2>
-        {establishment.donnees_ecofi ? (
-          <table className="table is-hoverable is-bordered">
-            <thead>
-              <tr>
-                <th>Date fin exercice</th>
-                {dates}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Chiffre d'affaires</th>
-                {caList}
-              </tr>
-              <tr>
-                <th scope="row">Résultats</th>
-                {emptyList}
-              </tr>
-              <tr>
-                <th scope="row">Capitaux propres</th>
-                {emptyList}
-              </tr>
-            </tbody>
-          </table>
-        ) : (
-          <p className="text-center">Non disponible</p>
-        )}
+      <section id="finances" className="data-sheet__section">
+        <div className="section-header">
+          <span className="icon">
+            <FontAwesomeIcon icon={faEuroSign} />
+          </span>
+          <h2 className="title">Données financières</h2>
+        </div>
+        <div className="section-datas">
+          {establishment.donnees_ecofi ? (
+            <table className="table is-hoverable is-striped">
+              <thead>
+                <tr>
+                  <th>Date fin exercice</th>
+                  {dates}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Chiffre d'affaires</th>
+                  {caList}
+                </tr>
+                <tr>
+                  <th scope="row">Résultats</th>
+                  {emptyList}
+                </tr>
+                <tr>
+                  <th scope="row">Capitaux propres</th>
+                  {emptyList}
+                </tr>
+              </tbody>
+            </table>
+          ) : (
+            <p className="text-center">Non disponible</p>
+          )}
+        </div>
       </section>
     );
   }

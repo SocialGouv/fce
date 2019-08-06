@@ -111,7 +111,7 @@ class Sidebar extends React.Component {
           </section>
 
           <section className="sidebar__establishments">
-            {establishments.length > 2 && (
+            {establishments.length > 1 && (
               <>
                 <EstablishmentsItems
                   establishments={establishments.filter(

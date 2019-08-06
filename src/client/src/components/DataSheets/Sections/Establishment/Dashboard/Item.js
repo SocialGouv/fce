@@ -16,7 +16,11 @@ const Item = ({ icon, name, value }) => {
         </span>
       </div>
       <div className="flex-center dashboard-item-data">
-        <div className="has-text-roboto has-text-grey-dark is-size-5">
+        <div
+          className={`has-text-roboto has-text-grey-dark ${
+            value === "Pas d'intervention connue" ? "is-size-6" : "is-size-5"
+          }`}
+        >
           <Value value={value} empty="-" />
         </div>
       </div>

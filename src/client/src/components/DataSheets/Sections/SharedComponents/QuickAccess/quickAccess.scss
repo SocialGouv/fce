@@ -3,11 +3,16 @@
 .quick-access {
     background-color: $white;
     border-radius: 0.325rem;
+
+    a,
+    &__item {
+        border-bottom: none;
+    }
 }
 
 .tabs li.is-active a {
     color: $secondary;
-    border-color: $secondary;
+    border-bottom: solid;
     border-width: 3px;
 }
 

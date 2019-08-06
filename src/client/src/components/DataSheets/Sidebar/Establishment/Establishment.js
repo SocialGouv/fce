@@ -20,7 +20,10 @@ const Establishment = ({ establishment }) => {
           className={classNames("establishment__state-icon", stateClass)}
           icon={isActive ? faCircle : faSquare}
         />
-        <Link to={`/establishment/${establishment.siret}`}>
+        <Link
+          to={`/establishment/${establishment.siret}`}
+          className="establishment__siret"
+        >
           <Value value={establishment.siret} empty="" />
         </Link>
       </div>

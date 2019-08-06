@@ -4,6 +4,7 @@ import Entreprises from "./Entreprises";
 import InteractionsPole3E from "../../../models/InteractionsPole3E";
 import InteractionsPole3T from "../../../models/InteractionsPole3T";
 import UcEff from "../../../models/UcEff";
+import DsnEff from "../../../models/DsnEff";
 import Idcc from "../../../models/Idcc";
 import Accords from "../../../models/Accords";
 import PolesCompetitivite from "../../../models/PolesCompetitivite";
@@ -22,6 +23,7 @@ export default class PG extends DataSource {
       [Etablissements.getInteractionsPole3E, new InteractionsPole3E()],
       [Etablissements.getInteractionsPole3T, new InteractionsPole3T()],
       [Etablissements.getUcEff, new UcEff()],
+      [Etablissements.getDsnEff, new DsnEff()],
       [Etablissements.getIdcc, new Idcc()],
       [Etablissements.getAccords, new Accords()],
       [Etablissements.getPolesCompetitivite, new PolesCompetitivite()],

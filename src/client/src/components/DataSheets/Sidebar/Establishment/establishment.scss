@@ -14,4 +14,11 @@
     &__location {
         font-family: $segoe;
     }
+
+    &__siret {
+        &:hover {
+            color: $blue;
+            text-decoration: underline;
+        }
+    }
 }

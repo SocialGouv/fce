@@ -27,6 +27,10 @@ body {
 
 a {
     color: $primary;
+
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 .app-container {

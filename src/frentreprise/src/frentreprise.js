@@ -1,7 +1,7 @@
 import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
-import SireneAPI from "./DataSources/SireneAPI";
+import SirenePG from "./DataSources/SirenePG";
 
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
@@ -26,9 +26,9 @@ class frentreprise {
       source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/")
     });
     this.addDataSource({
-      name: "SireneAPI",
+      name: "SirenePG",
       priority: 100, // higher prevail
-      source: new SireneAPI("https://api.insee.fr/entreprises/sirene/V3/"),
+      source: new SirenePG(),
       pagination: {
         itemsByPage: 25
       }

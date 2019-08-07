@@ -2,7 +2,6 @@ import tunnel from "tunnel";
 import DataSource from "../DataSource";
 import Siren from "./Siren";
 import Siret from "./Siret";
-import search from "./Search";
 import axios from "../../../lib/axios";
 import qs from "qs";
 
@@ -39,15 +38,8 @@ export default class SireneAPI extends DataSource {
     );
   }
 
-  async search(terms, page) {
-    const res = await search(
-      terms,
-      page,
-      this[_.axios],
-      await this.getAxiosConfig(),
-      this.db
-    );
-    return res;
+  async search() {
+    return false;
   }
 
   async [_.requestAPIs](identifier, ...apiCalls) {

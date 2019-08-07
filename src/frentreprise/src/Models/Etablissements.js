@@ -105,6 +105,7 @@ export default class Etablissements extends Model {
       where.push(`(
         ent.nomunitelegale ILIKE $${currentVar}
         OR ent.nomusageunitelegale ILIKE $${currentVar}
+        OR ent.denominationunitelegale ILIKE $${currentVar}
         OR etab.enseigne1etablissement ILIKE $${currentVar}
         OR etab.siren ILIKE $${currentVar}
         OR etab.siret ILIKE $${currentVar}

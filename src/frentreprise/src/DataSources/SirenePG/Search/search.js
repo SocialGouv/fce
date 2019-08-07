@@ -1,5 +1,4 @@
 import Etablissement from "../../../Models/Etablissements";
-import utils from "../../../Utils/utils";
 import helpers from "../Helpers/helpers";
 
 export default async (terms, pagination, db) => {

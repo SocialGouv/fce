@@ -1,6 +1,54 @@
 import Model from "./Model";
 
 export default class Etablissements extends Model {
+  async getBySiret(siret) {
+    const columns = await this._selectEntrepriseColumns();
+
+    return this.db
+      .query(
+        `
+        SELECT etab.*, ${columns.map(
+          ({ column_name }) => `ent.${column_name} as entreprise_${column_name}`
+        )}, naf.libelle as activiteprincipaleetablissement_libelle
+        FROM etablissements etab
+        INNER JOIN entreprises ent ON etab.siren = ent.siren
+        LEFT JOIN naf ON naf.code = etab.activiteprincipaleetablissement
+        WHERE etab.siret = $1`,
+        [siret]
+      )
+      .then(res => {
+        return res.rows && res.rows.length ? res.rows[0] : null;
+      })
+      .catch(e => {
+        console.error("Etablissements::getBySiret", e);
+        return null;
+      });
+  }
+
+  async findBySiren(siren) {
+    const columns = await this._selectEntrepriseColumns();
+
+    return this.db
+      .query(
+        `
+        SELECT etab.*, ${columns.map(
+          ({ column_name }) => `ent.${column_name} as entreprise_${column_name}`
+        )}, naf.libelle as activiteprincipaleetablissement_libelle
+        FROM etablissements etab
+        INNER JOIN entreprises ent ON etab.siren = ent.siren
+        LEFT JOIN naf ON naf.code = etab.activiteprincipaleetablissement
+        WHERE etab.siren = $1`,
+        [siren]
+      )
+      .then(res => {
+        return res.rows;
+      })
+      .catch(e => {
+        console.error("Etablissements::findBySiren", e);
+        return null;
+      });
+  }
+
   async search({ q }, { startIndex, itemsByPage }) {
     const columns = await this._selectEntrepriseColumns();
 
@@ -35,7 +83,7 @@ export default class Etablissements extends Model {
         return res.rows && res.rows.length ? +res.rows[0].items : 0;
       })
       .catch(e => {
-        console.error("Etablissements::search", e);
+        console.error("Etablissements::searchCount", e);
         return null;
       });
   }

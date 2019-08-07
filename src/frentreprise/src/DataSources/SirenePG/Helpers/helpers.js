@@ -1,9 +1,7 @@
 import utils from "../../../Utils/utils";
 import getData from "../../getData";
-import axios from "../../../../lib/axios";
-import NafModel from "../../../Models/Naf";
 
-const formatEtab = async (etab, params, db) => {
+const formatEtab = async etab => {
   const getAdresseComponent = ({
     numerovoieetablissement,
     indicerepetitionetablissement,
@@ -138,140 +136,109 @@ const formatEtab = async (etab, params, db) => {
   return typeof etab === "object" ? await getData(etab, fields) : {};
 };
 
-const formatEnt = async (ent, params, db) => {
+const formatEnt = async ent => {
   const fields = [
     "siren",
     {
-      in: "periodesUniteLegale[0].denominationUniteLegale",
+      in: "denominationunitelegale",
       out: "raison_sociale"
     },
-    { in: "sigleUniteLegale", out: "sigle" },
-    { in: "periodesUniteLegale[0]nomUniteLegale", out: "nom" },
+    { in: "sigleunitelegale", out: "sigle" },
+    { in: "nomunitelegale", out: "nom" },
     {
-      in: "prenom1UniteLegale",
+      in: "prenom1unitelegale",
       out: "prenom",
       callback: (p1, ent) =>
         utils.isEmpty(
           [
-            ent.prenom1UniteLegale,
-            ent.prenom2UniteLegale,
-            ent.prenom3UniteLegale,
-            ent.prenom4UniteLegale
+            ent.prenom1unitelegale,
+            ent.prenom2unitelegale,
+            ent.prenom3unitelegale,
+            ent.prenom4unitelegale
           ]
             .filter(a => a)
             .join(" ")
         )
           ? undefined
           : [
-              ent.prenom1UniteLegale,
-              ent.prenom2UniteLegale,
-              ent.prenom3UniteLegale,
-              ent.prenom4UniteLegale
+              ent.prenom1unitelegale,
+              ent.prenom2unitelegale,
+              ent.prenom3unitelegale,
+              ent.prenom4unitelegale
             ]
               .filter(a => a)
               .join(" ")
     },
     {
-      in: "periodesUniteLegale[0].nomUsageUniteLegale",
+      in: "nomusageunitelegale",
       out: "nom_commercial"
     },
     {
-      in: "categorieEntreprise",
+      in: "categorieentreprise",
       out: "categorie_entreprise"
     },
     {
-      in: "periodesUniteLegale[0]",
+      in: "siren",
       out: "siret_siege_social",
-      defaultValue: {},
-      callback: (uniteLegale, ent) =>
-        utils.isEmpty(ent.siren) ||
-        utils.isEmpty(uniteLegale.nicSiegeUniteLegale)
+      callback: (siren, { nicsiegeunitelegale }) =>
+        utils.isEmpty(siren) || utils.isEmpty(nicsiegeunitelegale)
           ? undefined
-          : `${ent.siren}${uniteLegale.nicSiegeUniteLegale}`
+          : `${siren}${nicsiegeunitelegale}`
     },
     {
-      in: "periodesUniteLegale[0].categorieJuridiqueUniteLegale",
-      out: "categorie_juridique",
-      callback: async category =>
-        utils.isEmpty(category)
-          ? undefined
-          : await getLegalCode(category, params)
+      in: "categoriejuridiqueunitelegale_libelle",
+      out: "categorie_juridique"
     },
     {
-      in: "periodesUniteLegale[0].categorieJuridiqueUniteLegale",
+      in: "categoriejuridiqueunitelegale",
       out: "categorie_juridique_code"
     },
     {
-      in: "periodesUniteLegale[0].activitePrincipaleUniteLegale",
+      in: "activiteprincipaleunitelegale",
       out: "naf"
     },
     {
-      in: "periodesUniteLegale[0].activitePrincipaleUniteLegale",
-      out: "libelle_naf",
-      callback: async naf =>
-        utils.isEmpty(naf) ? undefined : await getLibelleNaf(naf, db)
+      in: "activiteprincipaleunitelegale_libelle",
+      out: "libelle_naf"
     },
     {
-      in: "dateCreationUniteLegale",
+      in: "datecreationunitelegale",
       out: "date_de_creation"
     },
     {
-      in: "periodesUniteLegale[0].etatAdministratifUniteLegale",
+      in: "etatadministratifunitelegale",
       out: "etat_entreprise"
     },
     {
-      in: "periodesUniteLegale[0]",
+      in: "etatadministratifunitelegale",
       out: "date_mise_a_jour",
-      defaultValue: {},
-      callback: (uniteLegale, ent) =>
-        uniteLegale.etatAdministratifUniteLegale === "C"
-          ? uniteLegale.dateDebut
-          : ent.dateDernierTraitementUniteLegale
+      callback: (
+        etatadministratifunitelegale,
+        { datedebut, datederniertraitementunitelegale }
+      ) =>
+        etatadministratifunitelegale === "C"
+          ? datedebut
+          : datederniertraitementunitelegale
     },
     {
-      in: "periodesUniteLegale[0].dateDebut",
+      in: "datedebut",
       out: "date_de_radiation"
     },
     {
-      in: "periodesUniteLegale[0].caractereEmployeurUniteLegale",
+      in: "caractereemployeurunitelegale",
       out: "entreprise_employeur"
     },
     {
-      in: "anneeEffectifsUniteLegale",
+      in: "anneeeffectifsunitelegale",
       out: "annee_tranche_effectif"
     },
     {
-      in: "trancheEffectifsUniteLegale",
+      in: "trancheeffectifsunitelegale",
       out: "tranche_effectif"
     }
   ];
 
   return typeof ent === "object" ? await getData(ent, fields) : {};
-};
-
-const getLibelleNaf = async (codeNaf, db) => {
-  if (!db) {
-    return undefined;
-  }
-  const nafModel = new NafModel(db);
-  const naf = await nafModel.getByCode(codeNaf);
-
-  return naf ? naf.libelle : null;
-};
-
-const getLegalCode = async (category, params) => {
-  if (!params) {
-    return undefined;
-  }
-  const Axios = axios.create({
-    baseURL: "https://api.insee.fr/metadonnees/nomenclatures/v1/codes/cj/n3/",
-    timeout: 5000
-  });
-  params.timeout = 5000;
-
-  return await utils
-    .requestAPI(Axios, `${category}`, params)
-    .then(data => (utils.isEmpty(data.intitule) ? undefined : data.intitule));
 };
 
 export default {

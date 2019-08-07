@@ -1,16 +1,16 @@
-import utils from "../../../Utils/utils";
+import Entreprises from "../../../Models/Entreprises";
 import helpers from "../Helpers/helpers";
 
 const getEntreprise = async (SIREN, db) => {
-  return await utils
-    .requestAPI(Axios, `siren/${SIREN}`, params)
-    .then(async data => {
-      if (!data.uniteLegale) {
-        return {};
-      }
+  const entreprisesModel = new Entreprises(db);
 
-      return await helpers.formatEnt(data.uniteLegale, params, db);
-    });
+  const entreprise = await entreprisesModel.getBySiren(SIREN);
+
+  if (!entreprise) {
+    return {};
+  }
+
+  return await helpers.formatEnt(entreprise);
 };
 
 export default getEntreprise;

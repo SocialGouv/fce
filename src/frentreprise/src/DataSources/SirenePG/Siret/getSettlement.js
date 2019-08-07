@@ -1,15 +1,16 @@
-import utils from "../../../Utils/utils";
+import Etablissement from "../../../Models/Etablissements";
 import helpers from "../Helpers/helpers";
 
 const getSettlement = async (SIRET, db) => {
-  return await utils
-    .requestAPI(Axios, `siret/${SIRET}`, params)
-    .then(async data => {
-      if (!data.etablissement) {
-        return {};
-      }
-      return await helpers.formatEtab(data.etablissement, params, db);
-    });
+  const etablissementModel = new Etablissement(db);
+
+  const etablissement = await etablissementModel.getBySiret(SIRET);
+
+  if (!etablissement) {
+    return {};
+  }
+
+  return await helpers.formatEtab(etablissement);
 };
 
 export default getSettlement;

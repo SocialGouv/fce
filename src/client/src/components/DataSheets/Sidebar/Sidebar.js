@@ -111,26 +111,30 @@ class Sidebar extends React.Component {
           </section>
 
           <section className="sidebar__establishments">
-            <EstablishmentsItems
-              establishments={establishments.filter(
-                establishment => establishment.siret !== headOffice.siret
-              )}
-              establishmentType="Autres établissements"
-              limit={limitItems}
-            />
-            {establishments.length > limitItems && (
-              <Button
-                value="Voir tous les établissements"
-                icon={faArrowRight}
-                buttonClasses={[
-                  "is-secondary",
-                  "is-outlined",
-                  "sidebar__view-all-button"
-                ]}
-                callback={() => {
-                  this.redirectToResearch(enterprise.siren);
-                }}
-              />
+            {establishments.length > 1 && (
+              <>
+                <EstablishmentsItems
+                  establishments={establishments.filter(
+                    establishment => establishment.siret !== headOffice.siret
+                  )}
+                  establishmentType="Autres établissements"
+                  limit={limitItems}
+                />
+                {establishments.length > limitItems && (
+                  <Button
+                    value="Voir tous les établissements"
+                    icon={faArrowRight}
+                    buttonClasses={[
+                      "is-secondary",
+                      "is-outlined",
+                      "sidebar__view-all-button"
+                    ]}
+                    callback={() => {
+                      this.redirectToResearch(enterprise.siren);
+                    }}
+                  />
+                )}
+              </>
             )}
           </section>
         </aside>

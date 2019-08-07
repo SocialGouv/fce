@@ -49,8 +49,9 @@ export default class Etablissements extends Model {
       });
   }
 
-  async search({ q }, { startIndex, itemsByPage }) {
+  async search(terms, pagination) {
     const columns = await this._selectEntrepriseColumns();
+    const { query, params } = this._buildSearchQuery(terms, pagination);
 
     return this.db
       .query(
@@ -58,9 +59,9 @@ export default class Etablissements extends Model {
         SELECT etab.*, ${columns.map(
           ({ column_name }) => `ent.${column_name} as entreprise_${column_name}`
         )}, naf.libelle as activiteprincipaleetablissement_libelle
-        ${this._buildSearchQuery()}
-        LIMIT $2 OFFSET $3`,
-        [`%${q}%`, itemsByPage, startIndex]
+        ${query}
+        `,
+        params
       )
       .then(res => {
         return res.rows;
@@ -72,12 +73,15 @@ export default class Etablissements extends Model {
   }
 
   searchCount(terms) {
+    const { query, params } = this._buildSearchQuery(terms);
+
     return this.db
       .query(
         `
         SELECT count(etab.*) as items
-        ${this._buildSearchQuery()}`,
-        [`%${terms.q}%`]
+        ${query}
+        `,
+        params
       )
       .then(res => {
         return res.rows && res.rows.length ? +res.rows[0].items : 0;
@@ -88,13 +92,73 @@ export default class Etablissements extends Model {
       });
   }
 
-  _buildSearchQuery() {
-    return `
+  _buildSearchQuery(
+    { q, commune, codePostal, departement, naf, siegeSocial },
+    pagination = null
+  ) {
+    const where = [];
+    const params = [];
+    let currentVar = 1;
+    let limit = "";
+
+    if (q) {
+      where.push(`(
+        ent.nomunitelegale ILIKE $${currentVar}
+        OR ent.nomusageunitelegale ILIKE $${currentVar}
+        OR etab.enseigne1etablissement ILIKE $${currentVar}
+        OR etab.siren ILIKE $${currentVar}
+        OR etab.siret ILIKE $${currentVar}
+      )`);
+      params.push(`%${q}%`);
+      currentVar++;
+    }
+
+    if (commune) {
+      where.push(`etab.codecommuneetablissement = $${currentVar}`);
+      params.push(commune);
+      currentVar++;
+    }
+
+    if (codePostal) {
+      where.push(`etab.codepostaletablissement = $${currentVar}`);
+      params.push(codePostal);
+      currentVar++;
+    }
+
+    if (departement) {
+      where.push(`etab.codepostaletablissement ILIKE $${currentVar}`);
+      params.push(`${departement}%`);
+      currentVar++;
+    }
+
+    if (Array.isArray(naf) && naf.length) {
+      where.push(`etab.activiteprincipaleetablissement = ANY($${currentVar})`);
+      params.push(naf);
+      currentVar++;
+    }
+
+    if (siegeSocial) {
+      where.push(`etab.etablissementsiege = 'true'`);
+    }
+
+    if (pagination) {
+      const { itemsByPage, startIndex } = pagination;
+      limit = `LIMIT $${currentVar} OFFSET $${currentVar + 1}`;
+      params.push(itemsByPage, startIndex);
+    }
+
+    const query = `
       FROM etablissements etab
       INNER JOIN entreprises ent ON etab.siren = ent.siren
       LEFT JOIN naf ON naf.code = etab.activiteprincipaleetablissement
-      WHERE ent.denominationunitelegale ILIKE $1
+      WHERE ${where.join(" AND ")}
+      ${limit}
     `;
+
+    return {
+      query,
+      params
+    };
   }
 
   _selectEntrepriseColumns() {

@@ -46,11 +46,12 @@ router.get("/entity", withAuth, function(req, res) {
 
 router.get("/search(.:format)?", withAuth, function(req, res) {
   const query = (req.query["q"] || "").trim();
-  const page = +req.query["page"] || 1;
+  const format = req.params["format"] || "json";
+  const page = format === "xlsx" ? null : +req.query["page"] || 1;
 
   const data = {
     query: {
-      format: req.params["format"] || "json",
+      format,
       terms: {
         q: query,
         commune: (req.query["commune"] || "").trim(),

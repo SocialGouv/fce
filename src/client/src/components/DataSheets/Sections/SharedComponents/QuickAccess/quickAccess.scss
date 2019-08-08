@@ -1,8 +1,11 @@
 @import '../../../../App/variables';
+@import "../../../../App/placeholders";
+
 
 .quick-access {
     background-color: $white;
     border-radius: 0.325rem;
+    @extend %print-hidden;
 
     a,
     &__item {

@@ -1,6 +1,7 @@
 @import "fonts";
 @import "variables";
 @import "mixins";
+@import "placeholders";
 @import "globals";
 @import "animations";
 @import "typography";
@@ -12,6 +13,7 @@
 @import "../Search/search";
 @import "../SearchResults/searchResults";
 @import "../DataSheets/dataSheets";
+
 
 html {
     min-height: 100%;
@@ -31,6 +33,10 @@ a {
     &:hover {
         text-decoration: none;
     }
+}
+
+.print-wrapper {
+    @extend %print-block;
 }
 
 .app-container {
@@ -88,14 +94,9 @@ a {
     opacity: 0.85;
     background-color: #a5e1fa;
     z-index: 1;
+    @extend %print-hidden;
 
     @include from(425px) {
         font-size: 1rem;
-    }
-}
-
-@media print {
-    .d-print-none {
-        display: none;
     }
 }

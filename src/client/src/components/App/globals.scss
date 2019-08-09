@@ -150,6 +150,7 @@
 .has-mt-6 {
     margin-top: 6rem;
 }
+
 .has-mb-05 {
     margin-bottom: 0.5rem;
 }
@@ -371,6 +372,30 @@
     text-align: center;
 }
 
+.w-100 {
+    width: 100%;
+}
+
+.w-75 {
+    width: 75%;
+}
+
+.w-50 {
+    width: 50%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.w-25 {
+    width: 25%;
+}
+
 /*** Bulma ***/
 .is-secondary {
     @extend .is-info;
@@ -380,4 +405,42 @@
     @extend .is-white;
     color: #808080 !important;
     border-color: #808080 !important;
+}
+
+.is-prev-button {
+    @extend .is-white;
+    color: #4c4c4c !important;
+    background-color: #e6e6e6 !important;
+    border: 0;
+    height: 3rem !important;
+    width: 30%;
+
+    &:hover {
+        background-color: darken(#e6e6e6, 10%) !important;
+    }
+
+    .icon {
+        position: absolute;
+        left: 1rem;
+        width: 30%;
+    }
+}
+
+.is-next-button {
+    @extend .is-white;
+    color: #4c4c4c !important;
+    background-color: #ccc !important;
+    border: 0;
+    height: 3rem !important;
+    width: 30%;
+
+    &:hover {
+        background-color: darken(#ccc, 10%) !important;
+    }
+
+    .icon {
+        position: absolute;
+        right: 1rem;
+        width: 30%;
+    }
 }

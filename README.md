@@ -171,18 +171,21 @@ psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3t(siret, date
 - https://bersace.cae.li/fts-recherche-plein-texte-postgres.html
 - https://bersace.cae.li/fts-postgres-insert.html
 
-Créer un champ de recherche fulltext :
+Créer le champ de recherche fulltext unique pour les établissements :
 
 ```sql
-ALTER TABLE entreprises ADD COLUMN denominationunitelegale_vector tsvector;
-UPDATE entreprises SET denominationunitelegale_vector = to_tsvector('french', denominationunitelegale) WHERE denominationunitelegale_vector IS NULL AND denominationunitelegale IS NOT NULL;
-CREATE INDEX denominationunitelegale_vector_idx ON entreprises USING GIST (denominationunitelegale_vector);
-```
+ALTER TABLE etablissements ADD COLUMN search_vector tsvector;
 
-Créer un champ de recherche fulltext multi colonne
+UPDATE etablissements AS etab
+SET search_vector =
+	setweight(to_tsvector(coalesce(ent.denominationunitelegale,'')), 'A')    ||
+	setweight(to_tsvector(coalesce(ent.nomunitelegale,'')), 'A')  ||
+    setweight(to_tsvector(coalesce(ent.nomusageunitelegale,'')), 'A') ||
+    setweight(to_tsvector(coalesce(etab.enseigne1etablissement,'')), 'A') ||
+    setweight(to_tsvector(coalesce(etab.siren,'')), 'A') ||
+    setweight(to_tsvector(coalesce(etab.siret,'')), 'A')
+FROM entreprises as ent
+WHERE ent.siren = etab.siren;
 
-```sql
-ALTER TABLE entreprises ADD COLUMN name_vector tsvector;
-UPDATE entreprises SET name_vector = to_tsvector('french', denominationunitelegale||' '||nomunitelegale||' '||nomusageunitelegale) WHERE name_vector IS NULL;
-CREATE INDEX name_vector_idx ON entreprises USING GIST (name_vector);
+CREATE INDEX search_vector_idx ON etablissements USING GIST (search_vector);
 ```

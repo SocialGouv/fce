@@ -103,9 +103,7 @@ export default class Etablissements extends Model {
 
     if (q) {
       where.push(`(
-        plainto_tsquery('french', $${currentVar}) @@ ent.name_vector
-        OR etab.siren = $${currentVar}
-        OR etab.siret = $${currentVar}
+        plainto_tsquery('french', $${currentVar}) @@ etab.search_vector
       )`);
       params.push(q);
       currentVar++;

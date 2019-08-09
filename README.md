@@ -176,4 +176,5 @@ Créer un champ de recherche fulltext :
 ```sql
 ALTER TABLE entreprises ADD COLUMN denominationunitelegale_vector tsvector;
 UPDATE entreprises SET denominationunitelegale_vector = to_tsvector('french', denominationunitelegale) WHERE denominationunitelegale_vector IS NULL AND denominationunitelegale IS NOT NULL;
+CREATE INDEX denominationunitelegale_vector_idx ON entreprises USING GIST (denominationunitelegale_vector);
 ```

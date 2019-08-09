@@ -1,8 +1,10 @@
 @import './../../../../App/variables';
+@import './../../../../App/placeholders';
 
 .establishment-header {
     padding: 2rem;
     background-color: $white;
     border-radius: 0.325rem;
     box-shadow: $fce-shadow;
+    @extend %print-margin-padding
 }

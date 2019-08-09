@@ -6,6 +6,7 @@
         margin-bottom: 1.5rem;
         display: flex;
         justify-content: flex-end;
+        @extend %print-hidden;
     }
 
     &__main-container {
@@ -13,14 +14,12 @@
         border-radius: .325rem .325rem 0 0;
         padding: 1rem 2rem;
         box-shadow: $fce-shadow;
+        @extend %print-margin-padding;
     }
 
     &__main-content {
-
-        @media print {
-            flex: 0 0 100%;
-            max-width: 100%;
-        }
+        @extend %print-block;
+        @extend %print-margin-padding;
 
         >.title,
         .subtitle {
@@ -132,6 +131,7 @@
             box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
             padding: 2rem;
             align-self: stretch;
+            @extend %print-margin-padding;
         }
 
         .subtitle {

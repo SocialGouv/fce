@@ -103,14 +103,14 @@ export default class Etablissements extends Model {
 
     if (q) {
       where.push(`(
-        ent.nomunitelegale ILIKE $${currentVar}
-        OR ent.nomusageunitelegale ILIKE $${currentVar}
-        OR ent.denominationunitelegale ILIKE $${currentVar}
-        OR etab.enseigne1etablissement ILIKE $${currentVar}
-        OR etab.siren ILIKE $${currentVar}
-        OR etab.siret ILIKE $${currentVar}
+        plainto_tsquery('french', $${currentVar}) @@ ent.nomunitelegale_vector
+        OR plainto_tsquery('french', $${currentVar}) @@ ent.nomusageunitelegale_vector
+        OR plainto_tsquery('french', $${currentVar}) @@ ent.denominationunitelegale_vector
+        OR plainto_tsquery('french', $${currentVar}) @@ etab.enseigne1etablissement_vector
+        OR etab.siren = $${currentVar}
+        OR etab.siret = $${currentVar}
       )`);
-      params.push(`%${q}%`);
+      params.push(q);
       currentVar++;
     }
 

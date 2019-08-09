@@ -163,3 +163,17 @@ psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3e(siret, date
 ```shell
 psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3t(siret, date, realise_pour) FROM '/tmp/interactions_pole_t_20190417.csv' with (format csv, header true, delimiter ',');"
 ```
+
+## Postgres
+
+### Full text
+
+- https://bersace.cae.li/fts-recherche-plein-texte-postgres.html
+- https://bersace.cae.li/fts-postgres-insert.html
+
+Créer un champ de recherche fulltext :
+
+```sql
+ALTER TABLE entreprises ADD COLUMN denominationunitelegale_vector tsvector;
+UPDATE entreprises SET denominationunitelegale_vector = to_tsvector('french', denominationunitelegale) WHERE denominationunitelegale_vector IS NULL AND denominationunitelegale IS NOT NULL;
+```

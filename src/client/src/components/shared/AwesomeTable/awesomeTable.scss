@@ -1,4 +1,5 @@
 @import '../../App/variables';
+@import "~bulma/bulma";
 
 .at {
     overflow: hidden;
@@ -73,5 +74,43 @@
 @media print {
     .table {
         overflow: hidden;
+    }
+}
+
+.is-prev-button {
+    @extend .is-white;
+    color: #4c4c4c !important;
+    background-color: #e6e6e6 !important;
+    border: 0;
+    height: 3rem !important;
+    width: 30%;
+
+    &:hover {
+        background-color: darken(#e6e6e6, 10%) !important;
+    }
+
+    .icon {
+        position: absolute;
+        left: 1rem;
+        width: 30%;
+    }
+}
+
+.is-next-button {
+    @extend .is-white;
+    color: #4c4c4c !important;
+    background-color: #ccc !important;
+    border: 0;
+    height: 3rem !important;
+    width: 30%;
+
+    &:hover {
+        background-color: darken(#ccc, 10%) !important;
+    }
+
+    .icon {
+        position: absolute;
+        right: 1rem;
+        width: 30%;
     }
 }

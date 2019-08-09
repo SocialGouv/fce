@@ -4,17 +4,9 @@ import SearchResultsView from "../../components/SearchResults";
 import { search } from "../../services/Store/actions";
 
 class SearchResults extends React.Component {
-  state = { loading: false, initialize: true };
+  state = { loading: false };
 
-  fetchData = (state, instance) => {
-    const { page: pageIndex } = state;
-    const page = pageIndex + 1;
-
-    if (this.state.initialize) {
-      this.setState({ initialize: false });
-      return;
-    }
-
+  fetchData = (page, instance) => {
     this.setState({ loading: true });
 
     this.props.search(this.props.terms, page).then(response => {

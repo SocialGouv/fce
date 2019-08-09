@@ -6,8 +6,9 @@ import {
   faCircle,
   faFileExcel
 } from "@fortawesome/fontawesome-pro-solid";
-import ReactTable from "react-table";
 import Value from "../shared/Value";
+import Button from "../shared/Button";
+import AwesomeTable from "../shared/AwesomeTable";
 import { withRouter } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import Config from "./../../services/Config";
@@ -15,12 +16,38 @@ import { isActiveEstablishment } from "../../helpers/Establishment";
 
 class SearchResults extends React.Component {
   render() {
-    const { results, pagination, downloadXlsxExport } = this.props;
+    const {
+      results,
+      pagination,
+      downloadXlsxExport,
+      fetchData,
+      loading
+    } = this.props;
 
     const staffSizeRanges = {
       ...Config.get("inseeSizeRanges"),
       "0 salarié": "0 salarié"
     };
+
+    function nextPage() {
+      const nextPage = pagination.page + 1;
+
+      if (nextPage <= pagination.pages) {
+        fetchData(nextPage);
+      }
+    }
+
+    function prevPage() {
+      const prevPage = pagination.page - 1;
+
+      if (prevPage > 0) {
+        fetchData(prevPage);
+      }
+    }
+
+    function selectedPage(page) {
+      fetchData(page);
+    }
 
     return (
       <div className="app-searchResults container">
@@ -33,15 +60,12 @@ class SearchResults extends React.Component {
 
         <div className="columns">
           <div className="column is-12">
-            <button
-              className="button is-dark is-outlined is-pulled-right"
-              onClick={e => downloadXlsxExport(pagination.page)}
-            >
-              <span className="icon">
-                <FontAwesomeIcon icon={faFileExcel} />
-              </span>
-              <span>Export Excel</span>
-            </button>
+            <Button
+              buttonClasses={["is-grey", "is-pulled-right"]}
+              value="Export Excel"
+              callback={e => downloadXlsxExport(pagination.page)}
+              icon={faFileExcel}
+            />
           </div>
         </div>
 
@@ -56,79 +80,50 @@ class SearchResults extends React.Component {
             )}
 
             {Array.isArray(results) && results.length ? (
-              <ReactTable
+              <AwesomeTable
+                showPagination={pagination && pagination.pages > 1}
+                page={{
+                  min: 1,
+                  max: pagination.pages,
+                  currentPage: pagination.page
+                }}
+                prevText="Précédent"
+                nextText="Suivant"
+                nextPage={nextPage}
+                prevPage={prevPage}
+                selectedPage={page => selectedPage(page)}
+                loading={loading}
                 data={results}
-                className="table is-striped is-hoverable"
-                defaultPageSize={results.length}
-                showPagination={
-                  this.props.pagination && this.props.pagination.pages > 1
-                }
-                showPageSizeOptions={false}
-                manual // Forces table not to paginate or sort automatically, so we can handle it server-side
-                pages={this.props.pagination && this.props.pagination.pages}
-                onFetchData={this.props.fetchData}
-                loading={this.props.loading}
-                sortable={false}
-                getTrProps={(state, rowInfo) => {
-                  return {
-                    onClick: e => {
-                      e && e.preventDefault();
-                      this.props.history.push(rowInfo.row.siret.props.to);
-                    }
-                  };
-                }}
-                defaultFilterMethod={(filter, row) => {
-                  const id = filter.pivotId || filter.id;
-                  const filterValue = filter.value.toLowerCase();
-                  let rowValue = row[id];
-
-                  if (
-                    typeof rowValue === "object" &&
-                    rowValue.props &&
-                    rowValue.props.children
-                  ) {
-                    // If is a component not rendered
-                    rowValue = rowValue.props.children;
-                  }
-
-                  if (typeof rowValue === "string") {
-                    rowValue = rowValue.toLowerCase();
-                  }
-
-                  return rowValue !== undefined
-                    ? String(rowValue).includes(filterValue)
-                    : true;
-                }}
-                columns={[
+                genericRowLink="{`/establishment/${element.etablissement.siret}`}"
+                fields={[
                   {
-                    Header: "SIRET",
-                    id: "siret",
-                    minWidth: 150,
-                    accessor: e =>
+                    headName: "SIRET",
+                    accessor: enterprise =>
                       Value({
-                        value: e.etablissement.siret,
+                        value: enterprise.etablissement.siret,
                         empty: "-",
-                        link: `/establishment/${e.etablissement.siret}`
-                      })
+                        link: `/establishment/${enterprise.etablissement.siret}`
+                      }),
+                    link: enterprise =>
+                      `/establishment/${enterprise.etablissement.siret}`
                   },
                   {
-                    Header: "État",
-                    id: "etat",
-                    minWidth: 80,
-                    accessor: e => (
+                    headName: "Etat",
+                    accessor: enterprise => (
                       <>
-                        {e.etablissement.etat_etablissement &&
-                        e.etablissement.etat_etablissement === "A" ? (
+                        {enterprise.etablissement.etat_etablissement &&
+                        enterprise.etablissement.etat_etablissement === "A" ? (
                           <div style={{ textAlign: "center" }}>
                             <FontAwesomeIcon
                               data-tip
                               data-for="active"
-                              className="icon--success"
+                              className="icon--success mr-1"
                               icon={faCircle}
                               id="active"
                             />
+                            <span>Ouvert</span>
                             <ReactTooltip id="active" effect="solid">
-                              <span>Actif</span>
+                              <span>Ouvert</span>
                             </ReactTooltip>
                           </div>
                         ) : (
@@ -136,10 +131,11 @@ class SearchResults extends React.Component {
                             <FontAwesomeIcon
                               data-tip
                               data-for="closed"
-                              className="icon--danger"
+                              className="icon--danger mr-1"
                               icon={faSquare}
                               id="closed"
                             />
+                            <span>Fermé</span>
                             <ReactTooltip id="closed" effect="solid">
                               <span>Fermé</span>
                             </ReactTooltip>
@@ -149,31 +145,43 @@ class SearchResults extends React.Component {
                     )
                   },
                   {
-                    Header: "Raison Sociale / Nom",
-                    id: "nom",
-                    minWidth: 280,
-                    accessor: e =>
+                    headName: "Raison sociale / Nom",
+                    accessor: enterprise =>
                       Value({
                         value:
-                          e.etablissement.nom_commercial ||
-                          `${e.etablissement.prenom} ${e.etablissement.nom}`,
+                          enterprise.etablissement.nom_commercial ||
+                          `${enterprise.etablissement.prenom} ${
+                            enterprise.etablissement.nom
+                          }`,
                         empty: "-"
                       })
                   },
                   {
-                    Header: "Cat. Etablissement",
-                    id: "categorie_etablissement",
-                    minWidth: 200,
-                    accessor: e =>
+                    headName: "Catégorie établissement",
+                    accessor: enterprise =>
                       Value({
-                        value: e.etablissement.categorie_etablissement,
+                        value: enterprise.etablissement.categorie_etablissement,
                         empty: "-"
                       })
                   },
                   {
-                    Header: "Effectif",
-                    id: "effectif",
-                    minWidth: 150,
+                    headName: "Code postal",
+                    accessor: enterprise =>
+                      `${Value({
+                        value:
+                          enterprise.etablissement.adresse_components &&
+                          enterprise.etablissement.adresse_components
+                            .code_postal,
+                        empty: "-"
+                      })}\u00A0(${Value({
+                        value:
+                          enterprise.etablissement.adresse_components &&
+                          enterprise.etablissement.adresse_components.localite,
+                        empty: "-"
+                      })})`
+                  },
+                  {
+                    headName: "Effectif",
                     accessor: e =>
                       Value({
                         value: isActiveEstablishment(e.etablissement)
@@ -186,28 +194,9 @@ class SearchResults extends React.Component {
                       })
                   },
                   {
-                    Header: "Code postal",
-                    id: "code_postal",
-                    minWidth: 200,
-                    accessor: e =>
-                      `${Value({
-                        value:
-                          e.etablissement.adresse_components &&
-                          e.etablissement.adresse_components.code_postal,
-                        empty: "-"
-                      })}\u00A0(${Value({
-                        value:
-                          e.etablissement.adresse_components &&
-                          e.etablissement.adresse_components.localite,
-                        empty: "-"
-                      })})`
-                  },
-                  {
-                    Header: "Activité",
-                    id: "activite",
-                    minWidth: 200,
-                    accessor: e => {
-                      const { naf, libelle_naf } = e.etablissement;
+                    headName: "Activité",
+                    accessor: enterprise => {
+                      const { naf, libelle_naf } = enterprise.etablissement;
                       return (
                         naf &&
                         Value({
@@ -219,13 +208,6 @@ class SearchResults extends React.Component {
                     }
                   }
                 ]}
-                previousText="Précédent"
-                nextText="Suivant"
-                loadingText="Chargement..."
-                noDataText="Aucune données"
-                pageText="Page"
-                ofText="/"
-                rowsText="lignes"
               />
             ) : (
               ""

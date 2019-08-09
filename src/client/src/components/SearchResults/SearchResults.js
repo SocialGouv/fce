@@ -30,15 +30,19 @@ class SearchResults extends React.Component {
     };
 
     function nextPage() {
-      if (pagination.page + 1 <= pagination.pages) {
-        fetchData(pagination.page + 1);
-      } else console.log("limite atteinte");
+      const nextPage = pagination.page + 1;
+
+      if (nextPage <= pagination.pages) {
+        fetchData(nextPage);
+      }
     }
 
     function prevPage() {
-      if (pagination.page - 1 > 0) {
-        fetchData(pagination.page - 1);
-      } else console.log("limite atteinte");
+      const prevPage = pagination.page - 1;
+
+      if (prevPage > 0) {
+        fetchData(prevPage);
+      }
     }
 
     function selectedPage(page) {
@@ -90,6 +94,7 @@ class SearchResults extends React.Component {
                 selectedPage={page => selectedPage(page)}
                 loading={loading}
                 data={results}
+                genericRowLink="{`/establishment/${element.etablissement.siret}`}"
                 fields={[
                   {
                     headName: "SIRET",
@@ -98,7 +103,9 @@ class SearchResults extends React.Component {
                         value: enterprise.etablissement.siret,
                         empty: "-",
                         link: `/establishment/${enterprise.etablissement.siret}`
-                      })
+                      }),
+                    link: enterprise =>
+                      `/establishment/${enterprise.etablissement.siret}`
                   },
                   {
                     headName: "Etat",

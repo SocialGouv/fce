@@ -178,3 +178,11 @@ ALTER TABLE entreprises ADD COLUMN denominationunitelegale_vector tsvector;
 UPDATE entreprises SET denominationunitelegale_vector = to_tsvector('french', denominationunitelegale) WHERE denominationunitelegale_vector IS NULL AND denominationunitelegale IS NOT NULL;
 CREATE INDEX denominationunitelegale_vector_idx ON entreprises USING GIST (denominationunitelegale_vector);
 ```
+
+Créer un champ de recherche fulltext multi colonne
+
+```sql
+ALTER TABLE entreprises ADD COLUMN name_vector tsvector;
+UPDATE entreprises SET name_vector = to_tsvector('french', denominationunitelegale||' '||nomunitelegale||' '||nomusageunitelegale) WHERE name_vector IS NULL;
+CREATE INDEX name_vector_idx ON entreprises USING GIST (name_vector);
+```

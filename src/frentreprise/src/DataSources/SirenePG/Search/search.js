@@ -3,13 +3,15 @@ import helpers from "../Helpers/helpers";
 
 export default async (terms, pagination, db) => {
   const etablissement = new Etablissement(db);
-  const { itemsByPage, page } = pagination;
-  const startIndex = itemsByPage * (page - 1);
+  const page = pagination && pagination.page
+  const itemsByPage = pagination && pagination.itemsByPage
 
-  const etablissements = await etablissement.search(terms, {
-    startIndex,
-    itemsByPage
-  });
+  const limit = pagination && {
+    itemsByPage: itemsByPage,
+    startIndex: itemsByPage * (page - 1)
+  };
+
+  const etablissements = await etablissement.search(terms, limit);
   const total = await etablissement.searchCount(terms);
 
   if (!etablissements) {

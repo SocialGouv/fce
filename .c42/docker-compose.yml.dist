@@ -84,7 +84,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: root
 
   frentreprise:
-    build: .c42/docker/server
+    build: .c42/docker/frentreprise
     image: node_server
     networks:
       - traefik

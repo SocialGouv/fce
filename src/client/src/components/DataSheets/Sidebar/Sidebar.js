@@ -59,7 +59,10 @@ class Sidebar extends React.Component {
             <h3 className="sidebar__enterprise-title">
               Entreprise{" "}
               <Value
-                value={enterprise.raison_sociale.toLowerCase()}
+                value={
+                  enterprise.raison_sociale &&
+                  enterprise.raison_sociale.toLowerCase()
+                }
                 empty="-"
               />
             </h3>

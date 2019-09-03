@@ -12,3 +12,4 @@ src/*/dist/
 
 vendor/
 node_modules/
+/.bundle/

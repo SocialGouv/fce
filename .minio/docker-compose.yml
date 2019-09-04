@@ -1,0 +1,22 @@
+---
+
+version: "2"
+services:
+  createbuckets:
+    image: minio/mc:RELEASE.2019-08-29T00-40-57Z
+    volumes:
+    - ./values.yaml:/tmp/values.yaml
+    - ./create_account.py:/tmp/create_account.py
+    - ./requirements.txt:/tmp/requirements.txt
+    entrypoint: >
+      /bin/sh -c "
+      apk add python3;
+      which python3
+      apk add py-pip;
+      cd /tmp;
+      pip3 install --requirement requirements.txt;
+      python3 ./create_account.py
+      /bin/sleep 5000;
+      exit 0;
+      "
+...

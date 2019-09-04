@@ -6,7 +6,7 @@ import Data from "../../SharedComponents/Data";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faHistory } from "@fortawesome/fontawesome-pro-solid";
 
-const EnterpriseActivity = ({ enterprise }) => {
+const EnterpriseActivity = ({ enterprise, headOffice }) => {
   const dashboardSizeRanges = {
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
@@ -109,6 +109,22 @@ const EnterpriseActivity = ({ enterprise }) => {
             )}
           </div>
         )}
+
+        <Data name="Association" value={!!headOffice.association} />
+        {headOffice.association &&
+        headOffice.document_association &&
+        headOffice.document_association.url ? (
+          <span>
+            <span>télécharger le document de l'association </span>
+            <a
+              href={headOffice.document_association.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              les derniers statuts
+            </a>
+          </span>
+        ) : null}
       </div>
     </section>
   );

@@ -14,7 +14,6 @@ const AwesomeTable = ({
   page,
   loading,
   data,
-  genericRowLink,
   fields,
   history,
   prevText,

@@ -94,7 +94,6 @@ class SearchResults extends React.Component {
                 selectedPage={page => selectedPage(page)}
                 loading={loading}
                 data={results}
-                genericRowLink="{`/establishment/${element.etablissement.siret}`}"
                 fields={[
                   {
                     headName: "SIRET",

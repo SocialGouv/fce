@@ -50,7 +50,7 @@ class SearchResults extends React.Component {
     }
 
     return (
-      <div className="app-searchResults container">
+      <div className="app-searchResults mx-6">
         {results && results.length >= 1 && (
           <h2 className="title my-2">
             {pagination.items} établissement{pagination.items > 1 && "s"} trouvé
@@ -98,6 +98,7 @@ class SearchResults extends React.Component {
                 fields={[
                   {
                     headName: "SIRET",
+                    importantHead: true,
                     accessor: enterprise =>
                       Value({
                         value: enterprise.etablissement.siret,

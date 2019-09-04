@@ -14,7 +14,6 @@ const AwesomeTable = ({
   page,
   loading,
   data,
-  genericRowLink,
   fields,
   history,
   prevText,
@@ -28,7 +27,12 @@ const AwesomeTable = ({
       <thead className="at__head">
         <tr className="at__head__tr">
           {fields.map(field => (
-            <th key={field.headName} className="at__head__th">
+            <th
+              key={field.headName}
+              className={`${
+                field.importantHead ? "at__head__important" : "at__head__th"
+              }`}
+            >
               {field.headName}
             </th>
           ))}
@@ -46,7 +50,9 @@ const AwesomeTable = ({
             <tr
               key={index}
               className="at__body__tr"
-              onClick={() => history.push({ genericRowLink })}
+              onClick={() =>
+                history.push(`/establishment/${element.etablissement.siret}`)
+              }
             >
               {fields.map((field, index) => (
                 <td key={index} className="at__body__td">

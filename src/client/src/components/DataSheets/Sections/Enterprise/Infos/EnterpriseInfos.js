@@ -111,6 +111,9 @@ const EnterpriseActivity = ({ enterprise, headOffice }) => {
         )}
 
         <Data name="Association" value={!!headOffice.association} />
+        {headOffice.association && (
+          <Data name="Numéro RNA" value={headOffice.association.id} />
+        )}
         {headOffice.association &&
         headOffice.document_association &&
         headOffice.document_association.url ? (

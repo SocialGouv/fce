@@ -17,6 +17,7 @@ import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import MagicLink from "../../containers/MagicLink";
 import LegalNotices from "../../components/LegalNotices";
+import Cgu from "../../components/Cgu";
 import { Error403, Error404 } from "../../components/Errors";
 
 let { store, persistor } = configureStore();
@@ -63,6 +64,7 @@ class App extends React.Component {
                     path="/mentions-legales"
                     render={() => <LegalNotices />}
                   />
+                  <Route exact path="/cgu" render={() => <Cgu />} />
                   <Route exact path="/403" render={() => <Error403 />} />
                   <Route exact path="/404" render={() => <Error404 />} />
                   <Redirect to="/404" />

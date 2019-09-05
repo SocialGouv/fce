@@ -50,11 +50,14 @@
     "postinstall": "chown -R --reference=package.json .",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "prettier": "prettier --write 'src/**/*.{js,scss}'"
+    "prettier": "prettier --write 'src/**/*.{js,scss}'",
+    "lint": "eslint --ignore-path .gitignore src",
+    "pretest": "npm run lint"
   },
   "devDependencies": {
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-react": "^7.14.3",
     "prettier": "^1.9.2",
     "redux-devtools": "^3.4.1",
     "redux-logger": "^3.0.6"

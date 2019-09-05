@@ -97,7 +97,7 @@ services:
       - "traefik.port=8081"
 
   frentreprise:
-    build: .c42/docker/server
+    build: .c42/docker/frentreprise
     image: node_server
     networks:
       - traefik

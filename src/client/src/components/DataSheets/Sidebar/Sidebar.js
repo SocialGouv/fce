@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import EstablishmentsItems from "./EstablishmentsItems/EstablishmentsItems";
 import Value from "../../shared/Value";
-import { faBuilding, faArrowRight } from "@fortawesome/fontawesome-pro-solid";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/fontawesome-pro-solid";
 import Config from "../../../services/Config";
 import { setTerm, resetSearch } from "../../../services/Store/actions";
 import Button from "../../shared/Button";
@@ -60,7 +59,10 @@ class Sidebar extends React.Component {
             <h3 className="sidebar__enterprise-title">
               Entreprise{" "}
               <Value
-                value={enterprise.raison_sociale.toLowerCase()}
+                value={
+                  enterprise.raison_sociale &&
+                  enterprise.raison_sociale.toLowerCase()
+                }
                 empty="-"
               />
             </h3>
@@ -112,26 +114,30 @@ class Sidebar extends React.Component {
           </section>
 
           <section className="sidebar__establishments">
-            <EstablishmentsItems
-              establishments={establishments.filter(
-                establishment => establishment.siret !== headOffice.siret
-              )}
-              establishmentType="Autres établissements"
-              limit={limitItems}
-            />
-            {establishments.length > limitItems && (
-              <Button
-                value="Voir tous les établissements"
-                icon={faArrowRight}
-                buttonClasses={[
-                  "is-secondary",
-                  "is-outlined",
-                  "sidebar__view-all-button"
-                ]}
-                callback={() => {
-                  this.redirectToResearch(enterprise.siren);
-                }}
-              />
+            {establishments.length > 1 && (
+              <>
+                <EstablishmentsItems
+                  establishments={establishments.filter(
+                    establishment => establishment.siret !== headOffice.siret
+                  )}
+                  establishmentType="Autres établissements"
+                  limit={limitItems}
+                />
+                {establishments.length > limitItems && (
+                  <Button
+                    value="Voir tous les établissements"
+                    icon={faArrowRight}
+                    buttonClasses={[
+                      "is-secondary",
+                      "is-outlined",
+                      "sidebar__view-all-button"
+                    ]}
+                    callback={() => {
+                      this.redirectToResearch(enterprise.siren);
+                    }}
+                  />
+                )}
+              </>
             )}
           </section>
         </aside>

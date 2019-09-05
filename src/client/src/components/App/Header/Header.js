@@ -59,7 +59,7 @@ class Header extends React.Component {
                       <Button
                         value="Nouvelle recherche"
                         icon={faPlus}
-                        buttonClasses="is-secondary"
+                        buttonClasses={["is-secondary"]}
                         onClick={this.newSearch}
                       />
                     </Link>

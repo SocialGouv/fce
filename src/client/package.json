@@ -20,6 +20,7 @@
     "json2csv": "^4.5.1",
     "lodash.find": "^4.6.0",
     "lodash.get": "^4.4.2",
+    "mdx.macro": "^0.2.8",
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",
     "piwik-react-router": "^0.12.1",

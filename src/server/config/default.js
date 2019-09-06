@@ -39,6 +39,29 @@ const config = {
   jwt: {
     secret: process.env.JWT_SECRET,
     expire: process.env.JWT_EXPIRE
+  },
+  elasticIndexer: {
+    client_address: "http://172.10.0.2:9200/",
+    cursor_size: 30000,
+    enterpriseFields: [
+      "denominationunitelegale",
+      "nomunitelegale",
+      "nomusageunitelegale",
+      "siren"
+    ],
+    properties: {
+      id: { type: "keyword" },
+      siren: { type: "keyword" },
+      siret: { type: "keyword" },
+      trancheeffectifsetablissement: { type: "keyword" },
+      etablissementsiege: { type: "keyword" },
+      etatadministratifetablissement: { type: "keyword" },
+      codepostaletablissement: { type: "keyword" },
+      libellecommuneetablissement: { type: "keyword" },
+      trancheeffectifsetablissement: { type: "keyword" },
+      activiteprincipaleetablissement: { type: "keyword" },
+      activiteprincipaleetablissement_libelle: { type: "keyword" }
+    }
   }
 };
 

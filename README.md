@@ -164,6 +164,14 @@ psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3e(siret, date
 psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3t(siret, date, realise_pour) FROM '/tmp/interactions_pole_t_20190417.csv' with (format csv, header true, delimiter ',');"
 ```
 
+```shell
+psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3t(siret, date, realise_pour) FROM '/tmp/interactions_pole_t_20190417.csv' with (format csv, header true, delimiter ',');"
+```
+
+```shell
+psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_accords(num_dos,siret,dt_sign,epargne,remuneration,temps_travail,conditions_travail,emploi,egalite_pro,classifications,formation,protection_sociale,droit_syndical,autres,nouvelles_technologies) FROM '/tmp/accords.csv' with (format csv, header true, delimiter ';');"
+```
+
 ## Postgres
 
 ### Full text

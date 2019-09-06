@@ -83,6 +83,19 @@ services:
       PGADMIN_DEFAULT_EMAIL: contact@commit42.fr
       PGADMIN_DEFAULT_PASSWORD: root
 
+  pgweb:
+    image: sosedoff/pgweb
+    networks:
+      - traefik
+      - default
+    ports:
+      - "8081:8081"
+    links:
+      - db
+    labels:
+      - "traefik.frontend.rule=Host:pgweb.fce.test"
+      - "traefik.port=8081"
+
   frentreprise:
     build: .c42/docker/frentreprise
     image: node_server

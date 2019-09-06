@@ -23,7 +23,7 @@ import { Error403, Error404 } from "../../components/Errors";
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
 
-if (process.env.NODE_ENV === "production") {
+if (Config.get("piwik")) {
   const piwik = PiwikReactRouter(Config.get("piwik"));
   history = piwik.connectToHistory(history);
 }

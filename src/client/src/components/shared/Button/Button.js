@@ -31,14 +31,14 @@ const Button = ({
 
 Button.defaultProps = {
   value: "Valider",
-  icon: null,
+  icon: {},
   rowReverse: false,
   isDisabled: false
 };
 
 Button.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  icon: PropTypes.oneOfType([null, PropTypes.object]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  icon: PropTypes.object,
   buttonClasses: PropTypes.arrayOf(PropTypes.string),
   callback: PropTypes.func,
   rowReverse: PropTypes.bool,

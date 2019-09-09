@@ -42,7 +42,7 @@ Data.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.boolean
+    PropTypes.bool
   ]),
   emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   nonEmptyValue: PropTypes.oneOfType([

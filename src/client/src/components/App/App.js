@@ -16,20 +16,24 @@ import Search from "../../containers/Search";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import MagicLink from "../../containers/MagicLink";
+import LegalNotices from "../../components/LegalNotices";
+import Cgu from "../../components/Cgu";
 import { Error403, Error404 } from "../../components/Errors";
 
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
 
-const piwik = PiwikReactRouter(Config.get("piwik"));
-
+if (Config.get("piwik")) {
+  const piwik = PiwikReactRouter(Config.get("piwik"));
+  history = piwik.connectToHistory(history);
+}
 class App extends React.Component {
   render() {
     console.debug("render app");
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Router history={piwik.connectToHistory(history)}>
+          <Router history={history}>
             <ScrollToTop>
               <Header />
               <div className="beta-message flex-center">
@@ -57,6 +61,12 @@ class App extends React.Component {
                     path="/magic-link/:key"
                     render={() => <MagicLink />}
                   />
+                  <Route
+                    exact
+                    path="/mentions-legales"
+                    render={() => <LegalNotices />}
+                  />
+                  <Route exact path="/cgu" render={() => <Cgu />} />
                   <Route exact path="/403" render={() => <Error403 />} />
                   <Route exact path="/404" render={() => <Error404 />} />
                   <Redirect to="/404" />

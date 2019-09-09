@@ -5,7 +5,7 @@ export default class Accords extends Model {
     return this.db
       .query("SELECT * FROM etablissements_accords WHERE siret = $1", [siret])
       .then(res => {
-        return res.rows && res.rows.length ? res.rows[0] : null;
+        return res.rows;
       })
       .catch(e => {
         console.error("Accords::getBySIRET", e);

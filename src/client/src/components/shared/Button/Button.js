@@ -3,33 +3,47 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import ClassNames from "classnames";
 import PropTypes from "prop-types";
 
-const Button = ({ value, icon, buttonClasses, callback }) => {
+const Button = ({
+  value,
+  icon,
+  iconClasses,
+  rowReverse,
+  buttonClasses,
+  callback,
+  isDisabled
+}) => {
   return (
-    <button className={ClassNames("button", buttonClasses)} onClick={callback}>
+    <button
+      className={ClassNames("button", buttonClasses)}
+      onClick={callback}
+      disabled={isDisabled}
+    >
+      {rowReverse && <span className="pr-2">{value}</span>}
       {icon && (
-        <span className="button__icon">
-          <FontAwesomeIcon icon={icon} />
+        <span className="icon">
+          <FontAwesomeIcon className={ClassNames(iconClasses)} icon={icon} />
         </span>
       )}
-      <span>{value}</span>
+      {!rowReverse && <span className="pl-2">{value}</span>}
     </button>
   );
 };
 
 Button.defaultProps = {
   value: "Valider",
-  icon: null
+  icon: {},
+  rowReverse: false,
+  isDisabled: false
 };
 
 Button.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  icon: PropTypes.oneOfType([null, PropTypes.object]),
-  buttonClasses: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.string,
-    PropTypes.array
-  ]),
-  callback: PropTypes.func
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  icon: PropTypes.object,
+  buttonClasses: PropTypes.arrayOf(PropTypes.string),
+  callback: PropTypes.func,
+  rowReverse: PropTypes.bool,
+  iconClasses: PropTypes.arrayOf(PropTypes.string),
+  isDisabled: PropTypes.bool
 };
 
 export default Button;

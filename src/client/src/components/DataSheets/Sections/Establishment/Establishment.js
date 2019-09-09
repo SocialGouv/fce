@@ -32,7 +32,7 @@ class Establishment extends React.Component {
             callback={() => window.print()}
           />
         </div>
-        <div className="columns">
+        <div className="columns print-wrapper">
           <div className="column is-3 aside-box is-hidden-touch">
             <Sidebar
               enterprise={enterprise}

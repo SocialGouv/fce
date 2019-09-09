@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import Data from "../Data";
 import { getLastInteraction } from "../../../../../helpers/Interactions";
@@ -67,7 +68,7 @@ class EstablishmentView extends React.Component {
                       return (
                         <tr key={pole}>
                           <td>{pole}</td>
-                          <td colspan="7">
+                          <td colSpan="7">
                             {pole === "C"
                               ? "Donnée bientôt disponible"
                               : "Donnée non disponible"}
@@ -103,9 +104,9 @@ class EstablishmentView extends React.Component {
                           </td>
                         </tr>
                       ) : (
-                        <tr>
+                        <tr key={pole}>
                           <td>{pole}</td>
-                          <td colspan="7">Pas de date connue</td>
+                          <td colSpan="7">Pas de date connue</td>
                         </tr>
                       );
                     }
@@ -119,5 +120,9 @@ class EstablishmentView extends React.Component {
     );
   }
 }
+
+EstablishmentView.propTypes = {
+  establishment: PropTypes.object
+};
 
 export default EstablishmentView;

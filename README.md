@@ -163,3 +163,37 @@ psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3e(siret, date
 ```shell
 psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3t(siret, date, realise_pour) FROM '/tmp/interactions_pole_t_20190417.csv' with (format csv, header true, delimiter ',');"
 ```
+
+```shell
+psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3t(siret, date, realise_pour) FROM '/tmp/interactions_pole_t_20190417.csv' with (format csv, header true, delimiter ',');"
+```
+
+```shell
+psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_accords(num_dos,siret,dt_sign,epargne,remuneration,temps_travail,conditions_travail,emploi,egalite_pro,classifications,formation,protection_sociale,droit_syndical,autres,nouvelles_technologies) FROM '/tmp/accords.csv' with (format csv, header true, delimiter ';');"
+```
+
+## Postgres
+
+### Full text
+
+- https://bersace.cae.li/fts-recherche-plein-texte-postgres.html
+- https://bersace.cae.li/fts-postgres-insert.html
+
+Créer le champ de recherche fulltext unique pour les établissements :
+
+```sql
+ALTER TABLE etablissements ADD COLUMN search_vector tsvector;
+
+UPDATE etablissements AS etab
+SET search_vector =
+	setweight(to_tsvector(coalesce(ent.denominationunitelegale,'')), 'A')    ||
+	setweight(to_tsvector(coalesce(ent.nomunitelegale,'')), 'A')  ||
+    setweight(to_tsvector(coalesce(ent.nomusageunitelegale,'')), 'A') ||
+    setweight(to_tsvector(coalesce(etab.enseigne1etablissement,'')), 'A') ||
+    setweight(to_tsvector(coalesce(etab.siren,'')), 'A') ||
+    setweight(to_tsvector(coalesce(etab.siret,'')), 'A')
+FROM entreprises as ent
+WHERE ent.siren = etab.siren;
+
+CREATE INDEX search_vector_idx ON etablissements USING GIST (search_vector);
+```

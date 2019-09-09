@@ -81,7 +81,8 @@ class EstablishmentView extends React.Component {
                 {interactions.length}
               </span>
               <span className="direccte-ex cerpt--pole-key">
-                établissements avec une intervention
+                établissement{interactions.length > 1 && "s"} avec une
+                intervention
               </span>
             </div>
           </div>

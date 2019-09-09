@@ -55,12 +55,11 @@ class Header extends React.Component {
                         buttonClasses="is-outlined"
                       />
                     </Link>
-                    <Link to="/">
+                    <Link to="/" onClick={this.newSearch}>
                       <Button
                         value="Nouvelle recherche"
                         icon={faPlus}
                         buttonClasses={["is-secondary"]}
-                        onClick={this.newSearch}
                       />
                     </Link>
                   </div>

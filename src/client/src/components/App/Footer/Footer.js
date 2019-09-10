@@ -17,26 +17,28 @@ const Footer = () => (
         />
       </div>
 
-      <ul className="footer__links">
-        <li>
-          <a className="footer__link" href="mentions-legales">
-            Mentions légales
-          </a>
-        </li>
-        <li>
-          <a className="footer__link" href="cgu">
-            CGU
-          </a>
-        </li>
-        <li>
-          <a
-            className="footer__link"
-            href={`mailto:${Config.get("contact.mailto")}`}
-          >
-            Contact
-          </a>
-        </li>
-      </ul>
+      <div>
+        <ul className="footer__links">
+          <li className="footer__linkItem">
+            <a className="footer__link" href="mentions-legales">
+              Mentions légales
+            </a>
+          </li>
+          <li className="footer__linkItem">
+            <a className="footer__link" href="cgu">
+              CGU
+            </a>
+          </li>
+          <li className="footer__linkItem">
+            <a
+              className="footer__link"
+              href={`mailto:${Config.get("contact.mailto")}`}
+            >
+              Contact
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </footer>
 );

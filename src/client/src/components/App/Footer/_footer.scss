@@ -50,12 +50,26 @@
     }
 
     &__links {
+        margin-top: 2rem;
         margin-bottom: 0.5rem;
         font-size: 1rem;
         font-family: $segoe;
         text-align: center;
         @include from($tablet) {
+            margin-top: 0;
             margin-bottom: 1rem;
+            display: flex;
+        }
+    }
+
+    &__linkItem {
+        @include from($tablet) {
+            padding: 0 0.5rem;
+            border-right: solid 1px;
+
+            &:last-child {
+                border-right: none;
+            }
         }
     }
 

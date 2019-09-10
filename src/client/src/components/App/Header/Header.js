@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
@@ -8,73 +9,55 @@ import Button from "../../shared/Button";
 
 import logo from "../../../assets/img/logo_gouv-65w38h.png";
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
-
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
-
-  newSearch = event => {
-    this.props.resetSearch();
-  };
-
-  render() {
-    return (
-      <header className="app-header">
-        <div className="container">
-          <nav>
-            <div className="header__items is-tablet">
-              <Link
-                className="header__home-link"
-                to="/"
-                onClick={this.newSearch}
-              >
-                <img className="header__logo" src={logo} alt="Logo Marianne" />
-                <div className="header__title is-dark">
-                  Fiche Commune Entreprise
+const Header = ({ resetSearch, location }) => {
+  return (
+    <header className="app-header">
+      <div className="container">
+        <nav>
+          <div className="header__items is-tablet">
+            <Link
+              className="header__home-link"
+              to="/"
+              onClick={() => {
+                resetSearch();
+              }}
+            >
+              <img className="header__logo" src={logo} alt="Logo Marianne" />
+              <div className="header__title is-dark">
+                Fiche Commune Entreprise
+              </div>
+            </Link>
+            {(location.pathname.includes("/establishment") ||
+              location.pathname.includes("/enterprise")) && (
+              <div className="header__buttons">
+                <div className="navbar-end is-flex">
+                  <Link to="/">
+                    <Button
+                      value="Liste des résultats"
+                      icon={faChevronLeft}
+                      buttonClasses={["is-outlined"]}
+                    />
+                  </Link>
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      resetSearch();
+                    }}
+                  >
+                    <Button
+                      value="Nouvelle recherche"
+                      icon={faPlus}
+                      buttonClasses={["is-secondary"]}
+                    />
+                  </Link>
                 </div>
-              </Link>
-              {(this.props.location.pathname.includes("/establishment") ||
-                this.props.location.pathname.includes("/enterprise")) && (
-                <div className="header__buttons">
-                  <div className="navbar-end is-flex">
-                    <Link to="/">
-                      <Button
-                        value="Liste des résultats"
-                        icon={faChevronLeft}
-                        buttonClasses="is-outlined"
-                      />
-                    </Link>
-                    <Link to="/" onClick={this.newSearch}>
-                      <Button
-                        value="Nouvelle recherche"
-                        icon={faPlus}
-                        buttonClasses={["is-secondary"]}
-                      />
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-          </nav>
-        </div>
-      </header>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {};
+              </div>
+            )}
+          </div>
+        </nav>
+      </div>
+    </header>
+  );
 };
 
 const mapDispatchToProps = dispatch => {
@@ -85,9 +68,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Header)
-);
+Header.propTypes = {
+  resetSearch: PropTypes.func,
+  location: PropTypes.object
+};
+
+export default withRouter(connect(mapDispatchToProps)(Header));

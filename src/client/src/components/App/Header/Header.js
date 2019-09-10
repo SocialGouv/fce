@@ -38,14 +38,16 @@ const Header = ({ resetSearch, location }) => {
                       buttonClasses={["is-outlined"]}
                     />
                   </Link>
-                  <Link to="/">
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      resetSearch();
+                    }}
+                  >
                     <Button
                       value="Nouvelle recherche"
                       icon={faPlus}
                       buttonClasses={["is-secondary"]}
-                      onClick={() => {
-                        resetSearch();
-                      }}
                     />
                   </Link>
                 </div>

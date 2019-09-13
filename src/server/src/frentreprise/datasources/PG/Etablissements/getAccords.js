@@ -12,7 +12,7 @@ export default async (SIRET, Accords) => {
             typeof value === "number" &&
             value > 0
           ) {
-            acc[key].count += value;
+            acc[key].count += 1;
 
             if (!acc[key].lastDate || acc[key].lastDate < accord.dt_sign) {
               acc[key].lastDate = accord.dt_sign;

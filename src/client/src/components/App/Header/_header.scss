@@ -47,6 +47,8 @@
         justify-content: flex-end;
         align-items: center;
         height: 80px;
+        @extend %print-hidden;
+
         .button {
             width: 11.875rem;
             height: 2.25rem;

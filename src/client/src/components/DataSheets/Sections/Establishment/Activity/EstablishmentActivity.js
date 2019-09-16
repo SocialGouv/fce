@@ -30,21 +30,7 @@ class EstablishmentActivity extends React.Component {
             }`}
           />
           <Data name="Date de création" value={establishment.date_creation} />
-          <Data name="Association" value={!!establishment.association} />
-          {establishment.association &&
-          establishment.document_association &&
-          establishment.document_association.url ? (
-            <span>
-              <span>télécharger le document de l'association</span>
-              <a
-                href={establishment.document_association.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                les derniers statuts
-              </a>
-            </span>
-          ) : null}
+
           <Subcategory
             subtitle="Lien de succession"
             datas={[

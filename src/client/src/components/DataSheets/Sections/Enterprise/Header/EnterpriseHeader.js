@@ -112,7 +112,7 @@ class EnterpriseHeader extends React.Component {
                 />
               </span>
               <span className="is-size-6 has-text-segoe has-text-grey-dark">
-                {isActiveEnterprise ? "Ouvert depuis le " : "Fermé depuis le "}
+                {isActiveEnterprise ? "Ouverte depuis le " : "Fermée depuis le "}
               </span>
               <span className="is-size-6 has-text-segoe has-text-grey-dark">
                 <Value

@@ -44,8 +44,3 @@ const _setSearchResponses = (results, pagination) => ({
   results,
   pagination
 });
-
-const _setTerms = terms => ({
-  type: types.SEARCH_TERMS,
-  terms
-});

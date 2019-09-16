@@ -2,9 +2,9 @@ import tunnel from "tunnel";
 import DataSource from "../DataSource";
 import Siren from "./Siren";
 import Siret from "./Siret";
-import search from "./Search";
 import axios from "../../../lib/axios";
 import qs from "qs";
+import search from "./Search";
 
 export const _ = {
   axios: Symbol("_axios"),
@@ -47,6 +47,7 @@ export default class SireneAPI extends DataSource {
       await this.getAxiosConfig(),
       this.db
     );
+
     return res;
   }
 

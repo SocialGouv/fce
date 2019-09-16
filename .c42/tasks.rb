@@ -7,7 +7,7 @@ NODE = ENV['NODE'] || 'docker-compose run --rm %container% node'
 CYPRESS = 'docker-compose run --rm cypress'
 DB_NAME = 'fce'
 REMOTE_HOST = 'commit42@commit42.fr'.freeze
-REMOTE_DUMP = 'commit42_fce.sql.gz'.freeze
+REMOTE_DUMP = 'commit42_fce.sql.xz'.freeze
 
 desc 'docker:run', 'Lance docker-compose up'
 task 'docker:run' do
@@ -29,7 +29,7 @@ shell_task 'pg:dump', "docker exec -i $(docker-compose ps -q db | sed -n 1p) /bi
 
 desc 'dump:get DATE', 'Recupère le dump de la bdd en fonction de la date'
 task 'dump:get' do |date|
-  run("rsync -avz #{REMOTE_HOST}:admin/backup/#{date}/postgresql/#{REMOTE_DUMP} .c42/tmp/dump.sql.gz")
+  run("rsync -avz #{REMOTE_HOST}:admin/backup/#{date}/postgresql/#{REMOTE_DUMP} .c42/tmp/dump.sql.xz")
 end
 
 # Front
@@ -131,9 +131,9 @@ task :install do
   invoke 'dump:get', [Time.now.strftime('%Y-%m-%d')]
 
   sql_cat_cmd = 'cat .c42/tmp/fce-base.sql' if File.exists?('.c42/tmp/fce-base.sql')
-  sql_cat_cmd = 'cat .c42/tmp/dump.sql' if File.exists?('.c42/tmp/dump.sql')
   sql_cat_cmd = 'zcat .c42/tmp/dump.sql.gz' if File.exists?('.c42/tmp/dump.sql.gz')
-  fatal('Could not find .c42/tmp/[dump|fce-base].sql[.gz]') unless defined?(sql_cat_cmd) && !sql_cat_cmd.nil?
+  sql_cat_cmd = 'xzcat .c42/tmp/dump.sql.xz' if File.exists?('.c42/tmp/dump.sql.xz')
+  fatal('Could not find .c42/tmp/[dump|fce-base].sql[.xz]') unless defined?(sql_cat_cmd) && !sql_cat_cmd.nil?
 
   copy_file('../src/server/.env.dist', './src/server/.env')
 

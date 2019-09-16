@@ -1,13 +1,27 @@
 @import '../../../../App/variables';
+@import "../../../../App/placeholders";
+
 
 .quick-access {
     background-color: $white;
     border-radius: 0.325rem;
+    @extend %print-hidden;
+
+    a,
+    &__item {
+        border-bottom: none;
+    }
+}
+
+.tabs a {
+    &:hover {
+        border-bottom: 3px solid;
+    }
 }
 
 .tabs li.is-active a {
     color: $secondary;
-    border-color: $secondary;
+    border-bottom: solid;
     border-width: 3px;
 }
 

@@ -26,6 +26,25 @@ function init() {
     apiGouv.axiosConfig.timeout = config.get("apiTimeout");
   }
 
+  const sireneAPIConfig =
+    (config.has("SireneAPI") && config.get("SireneAPI")) || null;
+  if (sireneAPIConfig && sireneAPIConfig.enable) {
+    const sireneAPI = frentreprise.getDataSource("SireneAPI").source;
+    sireneAPI.basicAuth = sireneAPIConfig.basicAuth;
+
+    if (sireneAPIConfig.pagination) {
+      frentreprise.getDataSource("SireneAPI").pagination =
+        sireneAPIConfig.pagination;
+    }
+    sireneAPI.axiosConfig = {
+      ...sireneAPI.axiosConfig,
+      proxy: (config.has("proxy") && config.get("proxy")) || false
+    };
+    if (config.has("apiTimeout")) {
+      sireneAPI.axiosConfig.timeout = config.get("apiTimeout");
+    }
+  }
+
   if (config.has("postgres")) {
     frentreprise.addDataSource({
       name: "Postgres",

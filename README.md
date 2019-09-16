@@ -174,6 +174,12 @@ psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_accords(num_dos,s
 
 ## Postgres
 
+### Générer un dump de la preprod pour mettre à jour la production
+
+```bash
+pg_dump commit42_fce -U commit42_fce --exclude-table=categorie_juridique --exclude-table=communes --exclude-table=departements --exclude-table=entreprises --exclude-table=etablissements --exclude-table=magic_links --exclude-table=naf --clean | gzip > dump.sql.gz
+```
+
 ### Full text
 
 - https://bersace.cae.li/fts-recherche-plein-texte-postgres.html

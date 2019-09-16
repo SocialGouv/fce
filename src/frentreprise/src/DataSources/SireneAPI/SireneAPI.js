@@ -4,6 +4,7 @@ import Siren from "./Siren";
 import Siret from "./Siret";
 import axios from "../../../lib/axios";
 import qs from "qs";
+import search from "./Search";
 
 export const _ = {
   axios: Symbol("_axios"),
@@ -38,8 +39,16 @@ export default class SireneAPI extends DataSource {
     );
   }
 
-  async search() {
-    return false;
+  async search(terms, page) {
+    const res = await search(
+      terms,
+      page,
+      this[_.axios],
+      await this.getAxiosConfig(),
+      this.db
+    );
+
+    return res;
   }
 
   async [_.requestAPIs](identifier, ...apiCalls) {

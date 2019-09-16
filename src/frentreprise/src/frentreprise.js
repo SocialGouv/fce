@@ -2,6 +2,7 @@ import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
 import SirenePG from "./DataSources/SirenePG";
+import SireneAPI from "./DataSources/SireneAPI";
 
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
@@ -25,10 +26,18 @@ class frentreprise {
       priority: 80, // higher prevail
       source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/")
     });
+    // this.addDataSource({
+    //   name: "SirenePG",
+    //   priority: 100, // higher prevail
+    //   source: new SirenePG(),
+    //   pagination: {
+    //     itemsByPage: 25
+    //   }
+    // });
     this.addDataSource({
-      name: "SirenePG",
+      name: "SireneAPI",
       priority: 100, // higher prevail
-      source: new SirenePG(),
+      source: new SireneAPI("https://api.insee.fr/entreprises/sirene/V3/"),
       pagination: {
         itemsByPage: 25
       }
@@ -60,9 +69,7 @@ class frentreprise {
 
     await this[_.askDataSource]("getSIREN", SIREN, null, result => {
       console.log(
-        `Using response from dataSource named ${
-          result.source.name
-        } with priority : ${result.source.priority}`
+        `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
       );
 
       entreprise.updateData({
@@ -88,9 +95,7 @@ class frentreprise {
         if (Validator.validateSIRET(lookSIRET)) {
           return this[_.askDataSource]("getSIRET", lookSIRET, null, result => {
             console.log(
-              `Using response from dataSource named ${
-                result.source.name
-              } with priority : ${result.source.priority}`
+              `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
             );
 
             const ets = entreprise.getEtablissement(lookSIRET);
@@ -131,9 +136,7 @@ class frentreprise {
 
       if (source_results === false) {
         console.log(
-          `Source named ${
-            searchResult.source.name
-          } doesn't support search. (it returned false)`
+          `Source named ${searchResult.source.name} doesn't support search. (it returned false)`
         );
       } else if (!Array.isArray(source_results)) {
         if (
@@ -144,16 +147,12 @@ class frentreprise {
           hasError = true;
         }
         console.error(
-          `Source named ${
-            searchResult.source.name
-          } returned invalid data for search, array expected. Received:`,
+          `Source named ${searchResult.source.name} returned invalid data for search, array expected. Received:`,
           source_results
         );
       } else {
         console.log(
-          `Using response from dataSource named ${
-            searchResult.source.name
-          } with priority : ${searchResult.source.priority}`
+          `Using response from dataSource named ${searchResult.source.name} with priority : ${searchResult.source.priority}`
         );
 
         source_results.forEach(result => {

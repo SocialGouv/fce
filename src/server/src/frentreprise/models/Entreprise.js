@@ -42,6 +42,7 @@ export default class DireccteEntreprise extends Entreprise {
         "rcs_date_immatriculation",
         "rcs_information_libelle",
         "rcs_information_date",
+        "accords",
         "_dataSources",
         "_success"
       ],

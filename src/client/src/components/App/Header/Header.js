@@ -75,7 +75,7 @@ Header.propTypes = {
 
 export default withRouter(
   connect(
-    () => {
+    () => ({});
       return {};
     },
     mapDispatchToProps

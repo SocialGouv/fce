@@ -8,7 +8,17 @@ import _get from "lodash.get";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faUsers, faCircle } from "@fortawesome/fontawesome-pro-solid";
 
-const Accords = ({ enterprise: { accords, etablissements } }) => {
+const Accords = ({
+  enterprise: {
+    accords,
+    etablissements,
+    raison_sociale,
+    sigle,
+    nom_commercial,
+    nom,
+    prenom
+  }
+}) => {
   const nbAccords = Object.values(accords).reduce(
     (total, { count: totalEtab }) => total + totalEtab,
     0
@@ -76,6 +86,21 @@ const Accords = ({ enterprise: { accords, etablissements } }) => {
                 )}
               </tbody>
             </table>
+
+            <Data
+              name="Rechercher l'accord sur legifrance"
+              value={
+                <a
+                  href={`https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale=${raison_sociale ||
+                    sigle ||
+                    nom_commercial ||
+                    `${nom || ""} ${prenom || ""}`.trim() ||
+                    null}`}
+                >
+                  Lancer la recherche
+                </a>
+              }
+            />
           </>
         )}
       </div>

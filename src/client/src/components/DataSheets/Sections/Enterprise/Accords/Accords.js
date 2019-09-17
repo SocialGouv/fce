@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Data from "../../SharedComponents/Data";
+import Config from "../../../../../services/Config";
 import _get from "lodash.get";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faUsers, faCircle } from "@fortawesome/fontawesome-pro-solid";
@@ -21,6 +22,12 @@ const Accords = ({
     (total, { count: totalEtab }) => total + totalEtab,
     0
   );
+  const raisonSociale =
+    raison_sociale ||
+    sigle ||
+    nom_commercial ||
+    `${nom || ""} ${prenom || ""}`.trim() ||
+    null;
 
   return (
     <section id="accords" className="data-sheet__section">
@@ -88,13 +95,7 @@ const Accords = ({
             <Data
               name="Rechercher l'accord sur legifrance"
               value={
-                <a
-                  href={`https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale=${raison_sociale ||
-                    sigle ||
-                    nom_commercial ||
-                    `${nom || ""} ${prenom || ""}`.trim() ||
-                    null}`}
-                >
+                <a href={Config.get("legifranceSearchUrl") + raisonSociale}>
                   Lancer la recherche
                 </a>
               }

@@ -1,5 +1,5 @@
 import React from "react";
-import Prototype from "prop-types";
+import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import Config from "../../../../../services/Config";
@@ -10,6 +10,12 @@ import { faUsers } from "@fortawesome/fontawesome-pro-solid";
 const EstablishmentRelationship = ({ establishment }) => {
   const { code_idcc, libelle_idcc } = establishment;
   const nbAccords = _get(establishment, "accords.total.count");
+  const raisonSociale =
+    (establishment.nom_commercial &&
+      establishment.nom_commercial.toLowerCase()) ||
+    `${(establishment.nom && establishment.nom.toLowerCase()) ||
+      ""} ${establishment.prenom.toLowerCase() || ""}`.trim() ||
+    null;
 
   return (
     <section id="relation" className="data-sheet__section">
@@ -71,13 +77,7 @@ const EstablishmentRelationship = ({ establishment }) => {
             <Data
               name="Rechercher l'accord sur legifrance"
               value={
-                <a
-                  href={`https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale=${(establishment.nom_commercial &&
-                    establishment.nom_commercial.toLowerCase()) ||
-                    `${(establishment.nom && establishment.nom.toLowerCase()) ||
-                      ""} ${establishment.prenom.toLowerCase() || ""}`.trim() ||
-                    null}`}
-                >
+                <a href={Config.get("legifranceSearchUrl") + raisonSociale}>
                   Lancer la recherche
                 </a>
               }
@@ -89,8 +89,8 @@ const EstablishmentRelationship = ({ establishment }) => {
   );
 };
 
-EstablishmentRelationship.Prototype = {
-  establishment: Prototype.object.isRequired
+EstablishmentRelationship.propTypes = {
+  establishment: PropTypes.object.isRequired
 };
 
 export default EstablishmentRelationship;

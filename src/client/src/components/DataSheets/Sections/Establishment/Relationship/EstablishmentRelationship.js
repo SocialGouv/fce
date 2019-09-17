@@ -67,6 +67,21 @@ const EstablishmentRelationship = ({ establishment }) => {
                 ))}
               </tbody>
             </table>
+
+            <Data
+              name="Rechercher l'accord sur legifrance"
+              value={
+                <a
+                  href={`https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale=${(establishment.nom_commercial &&
+                    establishment.nom_commercial.toLowerCase()) ||
+                    `${(establishment.nom && establishment.nom.toLowerCase()) ||
+                      ""} ${establishment.prenom.toLowerCase() || ""}`.trim() ||
+                    null}`}
+                >
+                  Lancer la recherche
+                </a>
+              }
+            />
           </>
         )}
       </div>

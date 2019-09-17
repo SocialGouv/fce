@@ -42,7 +42,8 @@ Data.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.bool
+    PropTypes.bool,
+    PropTypes.node
   ]),
   emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   nonEmptyValue: PropTypes.oneOfType([

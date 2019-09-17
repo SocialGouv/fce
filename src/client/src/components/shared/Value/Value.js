@@ -12,6 +12,10 @@ export default ({
   link = false,
   nonEmptyValues = []
 }) => {
+  if (value && React.isValidElement(value)) {
+    return value;
+  }
+
   if (value && typeof value === "object") {
     return "error";
   }

@@ -1,13 +1,8 @@
 import React from "react";
 import { Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import {
-  faSquare,
-  faCircle,
-  faFileExcel
-} from "@fortawesome/fontawesome-pro-solid";
+import { faSquare, faCircle } from "@fortawesome/fontawesome-pro-solid";
 import Value from "../shared/Value";
-import Button from "../shared/Button";
 import AwesomeTable from "../shared/AwesomeTable";
 import { withRouter } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
@@ -16,13 +11,7 @@ import { isActiveEstablishment } from "../../helpers/Establishment";
 
 class SearchResults extends React.Component {
   render() {
-    const {
-      results,
-      pagination,
-      downloadXlsxExport,
-      fetchData,
-      loading
-    } = this.props;
+    const { results, pagination, fetchData, loading } = this.props;
 
     const staffSizeRanges = {
       ...Config.get("inseeSizeRanges"),

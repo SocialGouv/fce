@@ -58,17 +58,6 @@ class SearchResults extends React.Component {
           </h2>
         )}
 
-        <div className="columns">
-          <div className="column is-12">
-            <Button
-              buttonClasses={["is-grey", "is-pulled-right"]}
-              value="Export Excel"
-              callback={e => downloadXlsxExport(pagination.page)}
-              icon={faFileExcel}
-            />
-          </div>
-        </div>
-
         <div className="columns result-row">
           <div className="column is-12">
             {!Array.isArray(results) ? (

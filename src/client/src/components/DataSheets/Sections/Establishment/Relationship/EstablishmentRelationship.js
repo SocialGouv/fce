@@ -8,7 +8,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/fontawesome-pro-solid";
 
 const EstablishmentRelationship = ({ establishment }) => {
-  const { code_idcc, libelle_idcc, accords } = establishment;
+  const { code_idcc, libelle_idcc } = establishment;
   const nbAccords = _get(establishment, "accords.total.count");
 
   return (

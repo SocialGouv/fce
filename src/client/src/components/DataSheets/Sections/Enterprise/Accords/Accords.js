@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Prototype from "prop-types";
+import PropTypes from "prop-types";
 import Data from "../../SharedComponents/Data";
 import _get from "lodash.get";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
@@ -106,8 +106,8 @@ const Accords = ({
   );
 };
 
-Accords.Prototype = {
-  enterprise: Prototype.object.isRequired
+Accords.propTypes = {
+  enterprise: PropTypes.object.isRequired
 };
 
 export default Accords;

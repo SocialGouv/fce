@@ -34,12 +34,12 @@ const EstablishmentMuteco = ({ establishment }) => {
           <table className="table is-hoverable is-bordered mt-2">
             <thead>
               <tr>
-                <th>Numéro de convention</th>
-                <th>Nombre d'avenants</th>
-                <th>Date de décision (convention initiale)</th>
-                <th>Nombre total d'heures autorisées</th>
-                <th>Nombre total d'heures consommées</th>
-                <th>Motif</th>
+                <th className="th">Numéro de convention</th>
+                <th className="th">Nombre d'avenants</th>
+                <th className="th">Date de décision (convention initiale)</th>
+                <th className="th">Nombre total d'heures autorisées</th>
+                <th className="th">Nombre total d'heures consommées</th>
+                <th className="th">Motif</th>
               </tr>
             </thead>
             <tbody>
@@ -66,10 +66,12 @@ const EstablishmentMuteco = ({ establishment }) => {
 
             {totalActivitePartielle && (
               <tfoot>
-                <th colSpan="3">Total : </th>
-                <td>{totalActivitePartielle.nbHeuresAutorisees}</td>
-                <td>{totalActivitePartielle.nbHeuresConsommees}</td>
-                <td />
+                <tr>
+                  <th colSpan="3">Total : </th>
+                  <td>{totalActivitePartielle.nbHeuresAutorisees}</td>
+                  <td>{totalActivitePartielle.nbHeuresConsommees}</td>
+                  <td />
+                </tr>
               </tfoot>
             )}
           </table>

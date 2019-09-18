@@ -19,7 +19,7 @@ export default class ActivitePartielle extends Model {
   getBySiren(siren) {
     return this.db
       .query(
-        "SELECT * FROM etablissements_activite_partielle WHERE siret ILIKE $1 ORDER BY date_decision, num_avenant",
+        "SELECT * FROM etablissements_activite_partielle WHERE siret ILIKE $1 ORDER BY siret, date_decision, num_avenant",
         [`${siren}%`]
       )
       .then(res => {

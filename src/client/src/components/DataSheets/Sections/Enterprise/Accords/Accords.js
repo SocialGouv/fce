@@ -18,7 +18,7 @@ const Accords = ({
     prenom
   }
 }) => {
-  const nbAccords = Object.values(accords).reduce(
+  const nbAccords = accords && Object.values(accords).reduce(
     (total, { count: totalEtab }) => total + totalEtab,
     0
   );

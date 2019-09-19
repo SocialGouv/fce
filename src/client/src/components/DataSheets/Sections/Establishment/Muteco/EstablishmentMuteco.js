@@ -1,12 +1,25 @@
 import React from "react";
 import Value from "../../../../shared/Value";
-import Prototype from "prop-types";
+import Proptypes from "prop-types";
 import _get from "lodash.get";
 import Data from "../../SharedComponents/Data";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faUmbrella } from "@fortawesome/fontawesome-pro-solid";
 
 const EstablishmentMuteco = ({ establishment }) => {
+  const hasActivitePartielle = !!_get(establishment, `activite_partielle`);
+  const totalActivitePartielle =
+    hasActivitePartielle &&
+    establishment.activite_partielle.length > 1 &&
+    establishment.activite_partielle.reduce(
+      (totals, { nbHeuresAutorisees, nbHeuresConsommees }) => {
+        totals.nbHeuresAutorisees += parseFloat(nbHeuresAutorisees);
+        totals.nbHeuresConsommees += parseFloat(nbHeuresConsommees);
+        return totals;
+      },
+      { nbHeuresAutorisees: 0, nbHeuresConsommees: 0 }
+    );
+
   return (
     <section id="muteco" className="data-sheet__section">
       <div className="section-header">
@@ -16,68 +29,53 @@ const EstablishmentMuteco = ({ establishment }) => {
         <h2 className="title">Mutations Economiques</h2>
       </div>
       <div className="section-datas">
-        <Data
-          name="Activité partielle"
-          value={
-            _get(establishment, `activite_partielle_24_derniers_mois`)
-              ? "Oui"
-              : "Information bientôt disponible"
-          }
-        />
-        {Array.isArray(establishment.activite_partielle_24_derniers_mois) &&
-          establishment.activite_partielle_24_derniers_mois.length > 0 && (
-            <table className="table is-hoverable is-bordered mt-2">
-              <thead>
+        <Data name="Activité partielle" value={hasActivitePartielle} />
+        {hasActivitePartielle && (
+          <table className="table is-hoverable is-bordered mt-2">
+            <thead>
+              <tr>
+                <th className="th">Numéro de convention</th>
+                <th className="th">Nombre d'avenants</th>
+                <th className="th">Date de décision (convention initiale)</th>
+                <th className="th">Nombre total d'heures autorisées</th>
+                <th className="th">Nombre total d'heures consommées</th>
+                <th className="th">Motif</th>
+              </tr>
+            </thead>
+            <tbody>
+              {establishment.activite_partielle.map(
+                ({
+                  numConvention,
+                  nbAvenants,
+                  date,
+                  nbHeuresAutorisees,
+                  nbHeuresConsommees,
+                  motif
+                }) => (
+                  <tr key={numConvention}>
+                    <td>{numConvention}</td>
+                    <td>{nbAvenants}</td>
+                    <td>{<Value value={date} />}</td>
+                    <td>{nbHeuresAutorisees}</td>
+                    <td>{nbHeuresConsommees}</td>
+                    <td>{motif}</td>
+                  </tr>
+                )
+              )}
+            </tbody>
+
+            {totalActivitePartielle && (
+              <tfoot>
                 <tr>
-                  <th />
-                  {Object.keys(
-                    _get(establishment, `activite_partielle_24_derniers_mois`)
-                  ).map(year => (
-                    <th key={year}>
-                      {_get(
-                        establishment,
-                        `activite_partielle_24_derniers_mois[${year}].year`
-                      )}
-                    </th>
-                  ))}
+                  <th colSpan="3">Total : </th>
+                  <td>{totalActivitePartielle.nbHeuresAutorisees}</td>
+                  <td>{totalActivitePartielle.nbHeuresConsommees}</td>
+                  <td />
                 </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Nombre d'heures demandées</th>
-                  {Object.keys(
-                    _get(establishment, `activite_partielle_24_derniers_mois`)
-                  ).map(year => (
-                    <td key={year}>
-                      <Value
-                        value={_get(
-                          establishment,
-                          `activite_partielle_24_derniers_mois[${year}].heures_demandees`
-                        )}
-                        empty="-"
-                      />
-                    </td>
-                  ))}
-                </tr>
-                <tr>
-                  <th scope="row">Nombre d'heures consommées</th>
-                  {Object.keys(
-                    _get(establishment, `activite_partielle_24_derniers_mois`)
-                  ).map(year => (
-                    <td key={year}>
-                      <Value
-                        value={_get(
-                          establishment,
-                          `activite_partielle_24_derniers_mois[${year}].heures_consommees`
-                        )}
-                        empty="-"
-                      />
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          )}
+              </tfoot>
+            )}
+          </table>
+        )}
 
         <Data
           name="PSE"
@@ -146,8 +144,8 @@ const EstablishmentMuteco = ({ establishment }) => {
   );
 };
 
-EstablishmentMuteco.Prototype = {
-  establishment: Prototype.object.isRequired
+EstablishmentMuteco.propTypes = {
+  establishment: Proptypes.object.isRequired
 };
 
 export default EstablishmentMuteco;

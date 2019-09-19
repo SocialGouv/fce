@@ -39,7 +39,7 @@ class DireccteEtablissement extends Etablissement {
           "filiere_strategique",
           "structure_insertion_activite_economique",
           "structure_insertion_activite_economique_types",
-          "activite_partielle_24_derniers_mois",
+          "activite_partielle",
           "pse_en_projet_ou_en_cours",
           "interactions_3E",
           "interactions_T",

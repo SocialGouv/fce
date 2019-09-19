@@ -5,6 +5,7 @@ import Header from "./Header";
 import Infos from "./Infos";
 import Mandataires from "./Mandataires";
 import Accords from "./Accords";
+import ActivitePartielle from "./ActivitePartielle";
 import Direccte from "../SharedComponents/Direccte";
 import Finances from "./Finances";
 import QuickAccess from "../SharedComponents/QuickAccess";
@@ -41,6 +42,7 @@ class Enterprise extends React.Component {
                   { label: "Informations légales", link: "infos" },
                   { label: "Visites et contrôles", link: "direccte" },
                   { label: "Accords d'entreprise", link: "accords" },
+                  { label: "Activité partielle", link: "activite-partielle" },
                   { label: "Données financières", link: "finances" },
                   { label: "Mandataires sociaux", link: "mandataires" }
                 ]}
@@ -48,6 +50,7 @@ class Enterprise extends React.Component {
               <Infos enterprise={enterprise} headOffice={headOffice} />
               <Direccte enterprise={enterprise} />
               <Accords enterprise={enterprise} />
+              <ActivitePartielle enterprise={enterprise} />
               <Finances establishment={headOffice} />
               <Mandataires enterprise={enterprise} />
             </div>

@@ -12,6 +12,7 @@ export default ({
   link = false,
   nonEmptyValues = []
 }) => {
+  console.log(no, empty, value);
   if (value && React.isValidElement(value)) {
     return value;
   }
@@ -22,6 +23,10 @@ export default ({
 
   if (value === true && yes) {
     return yes;
+  }
+
+  if (value === false && empty === "0") {
+    return "0";
   }
 
   if (value === false && no) {

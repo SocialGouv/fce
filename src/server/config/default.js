@@ -41,8 +41,12 @@ const config = {
     expire: process.env.JWT_EXPIRE
   },
   elasticIndexer: {
-    client_address: "http://172.10.0.2:9200/",
-    cursor_size: 30000,
+    appsearch_address: "http://appsearch:3002/api/as/v1/",
+    appsearch_apiKey: "private-a516hz2kz11c17f9n9ma9jgf",
+    appsearch_engineName: "fce",
+    appsearch_concurencyLimit: 3,
+    client_address: "http://elasticsearch:9200/",
+    cursor_size: 50,
     enterpriseFields: [
       "denominationunitelegale",
       "nomunitelegale",

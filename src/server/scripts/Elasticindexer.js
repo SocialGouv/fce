@@ -28,8 +28,7 @@ let mainProcess = async () => {
   const establishmentResultCursor = PgClient.query(new Cursor(query));
 
   console.log("Create Elastic client");
-  /  console.log("Start process Data");
-  await processData(establishmentResultCursor, PgClient);/Init Elastic Client
+  //Init Elastic Client
   await elasticClient.indices
     .delete({
       index: "_all"

@@ -11,9 +11,8 @@
     "build": "NODE_ENV=production webpack --color",
     "postbuild": "chown -R --reference=package.json .",
     "test": "jest",
-    "elastic-indexer": "node scripts/Elasticindexer.js",
     "appsearch-indexer": "node scripts/appsearchIndexer.js",
-    "appsearch-updater": "node scripts/updater.js"
+    "appsearch-updater": "node scripts/appsearchUpdater.js"
   },
   "dependencies": {
     "@elastic/app-search-node": "^7.3.0",

@@ -20,6 +20,11 @@ const EstablishmentMuteco = ({ establishment }) => {
       { nbHeuresAutorisees: 0, nbHeuresConsommees: 0 }
     );
 
+  const hasPse =
+    establishment.pse &&
+    (establishment.pse.rupture_contrat_debut !== 0 ||
+      establishment.pse.rupture_contrat_fin !== 0);
+
   return (
     <section id="muteco" className="data-sheet__section">
       <div className="section-header">
@@ -77,68 +82,33 @@ const EstablishmentMuteco = ({ establishment }) => {
           </table>
         )}
 
-        <Data
-          name="PSE"
-          value={
-            _get(establishment, `pse_en_projet_ou_en_cours`)
-              ? "Oui"
-              : "Information en cours de négociation"
-          }
-        />
-        {Array.isArray(establishment.pse_en_projet_ou_en_cours) &&
-          establishment.pse_en_projet_ou_en_cours.length > 0 && (
-            <table className="table is-hoverable is-bordered mt-2">
-              <thead>
-                <tr>
-                  <th />
-                  {Object.keys(establishment.pse_en_projet_ou_en_cours).map(
-                    year => (
-                      <th key={year}>
-                        {_get(
-                          establishment,
-                          `pse_en_projet_ou_en_cours[${year}].year`
-                        )}
-                      </th>
-                    )
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Etat</th>
-                  {Object.keys(establishment.pse_en_projet_ou_en_cours).map(
-                    year => (
-                      <td key={year}>
-                        <Value
-                          value={_get(
-                            establishment,
-                            `pse_en_projet_ou_en_cours[${year}].etat`
-                          )}
-                          empty="-"
-                        />
-                      </td>
-                    )
-                  )}
-                </tr>
-                <tr>
-                  <th scope="row">Poste</th>
-                  {Object.keys(establishment.pse_en_projet_ou_en_cours).map(
-                    year => (
-                      <td key={year}>
-                        <Value
-                          value={_get(
-                            establishment,
-                            `pse_en_projet_ou_en_cours[${year}].poste`
-                          )}
-                          empty="-"
-                        />
-                      </td>
-                    )
-                  )}
-                </tr>
-              </tbody>
-            </table>
-          )}
+        <Data name="PSE" value={hasPse ? "oui" : "aucun pse connu"} />
+        {hasPse && (
+          <table className="table is-bordered mt-2">
+            <thead>
+              <tr>
+                <th>Nbr de ruptures de contrats en début de procédure</th>
+                <th>Nbr de ruptures de contrats en fin de procédure</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="has-text-centered">
+                  <Value
+                    value={establishment.pse.rupture_contrat_debut}
+                    empty="-"
+                  />
+                </td>
+                <td className="has-text-centered">
+                  <Value
+                    value={establishment.pse.rupture_contrat_fin}
+                    empty="-"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        )}
       </div>
     </section>
   );

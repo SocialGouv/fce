@@ -1,21 +1,15 @@
-export default async (SIRET, PSE) => {
-  return PSE.getBySIRET(SIRET).then(pse => {
-    if (!pse || !pse.length) {
+export default async (SIRET, rows) => {
+  return rows.getBySIRET(SIRET).then(row => {
+    if (!row || !row.length) {
       return {};
     }
 
-    const rupturecontratdebut = pse.map(pse => {
-      return pse.rupturecontratdebut;
-    });
-
-    const rupturecontratfin = pse.map(pse => {
-      return pse.rupturecontratfin;
-    });
+    const pse = row[0];
 
     return {
       pse: {
-        rupturecontratdebut: rupturecontratdebut,
-        rupturecontratfin: rupturecontratfin
+        rupture_contrat_debut: pse.rupturecontratdebut,
+        rupture_contrat_fin: pse.rupturecontratfin
       }
     };
   });

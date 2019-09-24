@@ -12,18 +12,17 @@ import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import Item from "./Item";
 import "./dashboard.scss";
 
-const Dashboard = ({ ...props }) => {
-  const { establishment } = props;
-
-  const {
+const Dashboard = ({
+  establishment,
+  establishment: {
     pse,
     activite_partielle_24_derniers_mois,
     totalInteractions,
     interactions,
     dernier_effectif_physique,
     tranche_effectif_insee
-  } = establishment;
-
+  }
+}) => {
   const hasInteractions = totalInteractions && totalInteractions.total > 0;
 
   const activity = {

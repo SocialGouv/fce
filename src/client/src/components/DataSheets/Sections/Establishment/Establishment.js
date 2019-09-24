@@ -14,9 +14,12 @@ import { faPrint } from "@fortawesome/fontawesome-pro-solid";
 
 import "./establishment.scss";
 
-const Establishment = ({ ...props }) => {
-  const { establishment, establishments, enterprise, headOffice } = props;
-
+const Establishment = ({
+  establishment,
+  establishments,
+  enterprise,
+  headOffice
+}) => {
   return (
     <section className="data-sheet container">
       <div className="data-sheet__print-section w-100">

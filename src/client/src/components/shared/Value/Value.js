@@ -12,7 +12,6 @@ export default ({
   link = false,
   nonEmptyValues = []
 }) => {
-  console.log(no, empty, value);
   if (value && React.isValidElement(value)) {
     return value;
   }

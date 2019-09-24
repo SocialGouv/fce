@@ -1,10 +1,8 @@
 export default async (SIRET, rows) => {
-  return rows.getBySIRET(SIRET).then(row => {
-    if (!row || !row.length) {
+  return rows.getBySIRET(SIRET).then(pse => {
+    if (!pse) {
       return {};
     }
-
-    const pse = row[0];
 
     return {
       pse: {

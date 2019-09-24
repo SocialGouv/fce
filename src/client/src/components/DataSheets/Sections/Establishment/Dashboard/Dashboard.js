@@ -56,7 +56,8 @@ const Dashboard = ({
         value={
           isActiveEstablishment(establishment)
             ? dernier_effectif_physique ||
-              dashboardSizeRanges[tranche_effectif_insee]
+              dashboardSizeRanges[tranche_effectif_insee] ||
+              ""
             : "0 salarié"
         }
       />

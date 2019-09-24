@@ -4,7 +4,7 @@ import Value from "../../../../shared/Value";
 import PropTypes from "prop-types";
 import "./dashboard.scss";
 
-const Item = ({ icon, name, value }) => {
+const Item = ({ icon, name, value, smallText, multiline }) => {
   return (
     <div className="dashboard-item">
       <div className="dashboard-item--header">
@@ -18,14 +18,19 @@ const Item = ({ icon, name, value }) => {
       <div className="flex-center dashboard-item-data">
         <div
           className={`has-text-roboto has-text-grey-dark ${
-            value === "Pas d'intervention connue" ? "is-size-6" : "is-size-5"
-          }`}
+            smallText ? "is-size-6" : "is-size-5"
+          } ${multiline && "multiline"}`}
         >
           <Value value={value} empty="-" />
         </div>
       </div>
     </div>
   );
+};
+
+Item.defaultProps = {
+  smallText: false,
+  multiline: false
 };
 
 Item.propTypes = {
@@ -35,7 +40,9 @@ Item.propTypes = {
     PropTypes.string,
     PropTypes.array,
     PropTypes.number
-  ])
+  ]).isRequired,
+  smallText: PropTypes.bool,
+  multiline: PropTypes.bool
 };
 
 export default Item;

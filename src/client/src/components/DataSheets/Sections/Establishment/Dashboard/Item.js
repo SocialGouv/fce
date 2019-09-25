@@ -34,7 +34,8 @@ Item.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.array,
-    PropTypes.number
+    PropTypes.number,
+    PropTypes.element
   ]).isRequired,
   smallText: PropTypes.bool
 };

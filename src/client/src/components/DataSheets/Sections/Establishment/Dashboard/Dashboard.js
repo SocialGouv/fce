@@ -34,11 +34,6 @@ const Dashboard = ({
       (pse.rupture_contrat_debut !== "0" || pse.rupture_contrat_fin !== "0")
   };
 
-  const activityContent = "".concat(
-    activity.pseActivity ? "PSE \n " : "",
-    true ? "Activité partielle" : ""
-  );
-
   const lastControl = hasInteractions
     ? getLastDateInteraction(interactions)
     : "";
@@ -72,8 +67,12 @@ const Dashboard = ({
           icon={faExclamationTriangle}
           name="Activité"
           smallText={true}
-          multiline={true}
-          value={activityContent}
+          value={
+            <>
+              {activity.pseActivity && <div>PSE</div>}
+              {activity.partialActivity && <div>Activité partielle</div>}
+            </>
+          }
         />
       )}
       {activity && activity.partialActivity && (

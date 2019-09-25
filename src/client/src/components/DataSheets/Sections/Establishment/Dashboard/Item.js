@@ -19,7 +19,7 @@ const Item = ({ icon, name, value, smallText, multiline }) => {
         <div
           className={`has-text-roboto has-text-grey-dark ${
             smallText ? "is-size-6" : "is-size-5"
-          } ${multiline && "multiline"}`}
+          }`}
         >
           <Value value={value} empty="-" />
         </div>

@@ -8,6 +8,7 @@ import getPolesCompetitivite from "./getPolesCompetitivite";
 import getIae from "./getIae";
 import getContratsAides from "./getContratsAides";
 import getActivitePartielle from "./getActivitePartielle";
+import getPse from "./getPse";
 
 export default {
   getInteractionsPole3E,
@@ -19,5 +20,6 @@ export default {
   getPolesCompetitivite,
   getIae,
   getContratsAides,
-  getActivitePartielle
+  getActivitePartielle,
+  getPse
 };

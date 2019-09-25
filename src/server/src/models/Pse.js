@@ -12,16 +12,4 @@ export default class Pse extends Model {
         return null;
       });
   }
-
-  getBySiren(siren) {
-    return this.db
-      .query("SELECT * FROM etablissements_pse WHERE siret = $1", [`${siren}%`])
-      .then(res => {
-        return res.rows && res.rows.length ? res.rows[0] : null;
-      })
-      .catch(e => {
-        console.error("Pse::getBySiren", e);
-        return null;
-      });
-  }
 }

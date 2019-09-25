@@ -4,7 +4,7 @@ import Value from "../../../../shared/Value";
 import PropTypes from "prop-types";
 import "./dashboard.scss";
 
-const Item = ({ icon, name, value, smallText, multiline }) => {
+const Item = ({ icon, name, value = "", smallText = false }) => {
   return (
     <div className="dashboard-item">
       <div className="dashboard-item--header">
@@ -28,11 +28,6 @@ const Item = ({ icon, name, value, smallText, multiline }) => {
   );
 };
 
-Item.defaultProps = {
-  smallText: false,
-  multiline: false
-};
-
 Item.propTypes = {
   icon: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
@@ -41,8 +36,7 @@ Item.propTypes = {
     PropTypes.array,
     PropTypes.number
   ]).isRequired,
-  smallText: PropTypes.bool,
-  multiline: PropTypes.bool
+  smallText: PropTypes.bool
 };
 
 export default Item;

@@ -3,7 +3,9 @@
         background-color: $primary;
         padding: 3rem 0;
         color: $light;
-        margin: 0 -3rem;
+        &.columns {
+            margin: 0 -3rem;
+        }
     }
 
     .title {

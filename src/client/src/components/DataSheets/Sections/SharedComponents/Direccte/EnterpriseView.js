@@ -86,14 +86,14 @@ class EstablishmentView extends React.Component {
               </span>
             </div>
           </div>
-          <table className="table is-striped direccte-interactions">
+          <table className="table is-striped is-hoverable direccte-interactions">
             <thead>
               <tr>
-                <th>SIRET</th>
-                <th>Etat</th>
-                <th>Département</th>
-                <th>Commune</th>
-                <th>Dernière intervention</th>
+                <th className="th">SIRET</th>
+                <th className="th table__center-cell">État</th>
+                <th className="th">Département</th>
+                <th className="th">Commune</th>
+                <th className="th">Dernière intervention</th>
               </tr>
             </thead>
             <tbody>
@@ -104,7 +104,7 @@ class EstablishmentView extends React.Component {
                       {etab.siret}
                     </Link>
                   </td>
-                  <td>
+                  <td className="table__center-cell">
                     {etab.etat && (
                       <FontAwesomeIcon
                         className={

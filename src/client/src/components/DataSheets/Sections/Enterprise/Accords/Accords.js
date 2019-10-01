@@ -18,10 +18,12 @@ const Accords = ({
     prenom
   }
 }) => {
-  const nbAccords = accords && Object.values(accords).reduce(
-    (total, { count: totalEtab }) => total + totalEtab,
-    0
-  );
+  const nbAccords =
+    accords &&
+    Object.values(accords).reduce(
+      (total, { count: totalEtab }) => total + totalEtab,
+      0
+    );
   const raisonSociale =
     raison_sociale ||
     sigle ||
@@ -50,7 +52,7 @@ const Accords = ({
                 <tr>
                   <th className="th">SIRET</th>
                   <th className="th">Catégorie établissement</th>
-                  <th className="th">État</th>
+                  <th className="th table__center-cell">État</th>
                   <th className="th">Nb accords déposés</th>
                   <th className="th">Date signature dernier accord</th>
                 </tr>
@@ -73,7 +75,7 @@ const Accords = ({
                           <Link to={`/establishment/${siret}`}>{siret}</Link>
                         </td>
                         <td>{categorie}</td>
-                        <td>
+                        <td className="table__center-cell">
                           {etat && (
                             <FontAwesomeIcon
                               className={

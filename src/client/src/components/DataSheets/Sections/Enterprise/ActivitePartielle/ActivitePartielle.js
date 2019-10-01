@@ -31,7 +31,7 @@ const ActivitePartielle = ({
         <span className="icon">
           <FontAwesomeIcon icon={faUsers} />
         </span>
-        <h2 className="title">Activité partielle</h2>
+        <h2 className="title">Mutations économiques</h2>
       </div>
       <div className="section-datas">
         <Data
@@ -46,7 +46,7 @@ const ActivitePartielle = ({
                 <tr>
                   <th className="th">SIRET</th>
                   <th className="th">Catégorie établissement</th>
-                  <th className="th">État</th>
+                  <th className="th table__center-cell">État</th>
                   <th className="th">Nombre total d'heures autorisées</th>
                   <th className="th">Nombre total d'heures consommées</th>
                   <th className="th">
@@ -72,7 +72,7 @@ const ActivitePartielle = ({
                           <Link to={`/establishment/${siret}`}>{siret}</Link>
                         </td>
                         <td>{categorie}</td>
-                        <td>
+                        <td className="table__center-cell">
                           {etat && (
                             <FontAwesomeIcon
                               className={

@@ -86,7 +86,7 @@ class SearchResults extends React.Component {
                       `/establishment/${enterprise.etablissement.siret}`
                   },
                   {
-                    headName: "Etat",
+                    headName: "État",
                     accessor: enterprise => (
                       <>
                         {enterprise.etablissement.etat_etablissement &&

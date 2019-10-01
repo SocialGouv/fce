@@ -39,9 +39,9 @@ export default async (SIRET, Accords) => {
 
     totalAccords.total = {
       count: accords.length,
-      lastDate: Object.values(accords).reduce(
-        (lastDate, { dt_sign }) =>
-          !lastDate || lastDate < dt_sign ? dt_sign : lastDate,
+      lastDate: Object.values(totalAccords).reduce(
+        (lastDateFinal, { lastDate }) =>
+          !lastDateFinal || lastDateFinal < lastDate ? lastDate : lastDateFinal,
         null
       )
     };

@@ -16,7 +16,7 @@ const config = {
       itemsByPage: 15
     }
   },
-  postgres: {
+  db: {
     host: process.env.PG_HOST,
     user: process.env.PG_USER,
     password: process.env.PG_PASSWORD,

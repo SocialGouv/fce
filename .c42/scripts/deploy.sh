@@ -24,8 +24,8 @@ ln -nfs ~/deployment/fce/shared/.env ~/deployment/fce/releases/$RELEASEN/.env
 echo "Launching npm install"
 cd ~/deployment/fce/releases/$RELEASEN && npm install
 
-echo "execute migrations"
-cd ~/deployment/fce/releases/$RELEASEN && ./node_modules/.bin/node-pg-migrate up
+echo "Launching migrations"
+cd ~/deployment/fce/releases/$RELEASEN && node ./shell/run.js Migrations
 
 echo "Linking release"
 ln -nfs ~/deployment/fce/releases/$RELEASEN ~/deployment/fce/current;

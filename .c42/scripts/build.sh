@@ -45,6 +45,7 @@ cp -rv .c42/dist ./dist
 cp -rv src/frentreprise ./dist
 cp -rv src/server/build/. ./dist
 cp -rv src/server/migrations/. ./dist/migrations
+cp -rv src/server/src/shell/. ./dist/shell
 cp -rv src/client/build/. ./dist/htdocs
 sed -i 's/\.\.\/frentreprise/.\/frentreprise/g' ./dist/package.json
 chmod 755 ./dist/*.sh

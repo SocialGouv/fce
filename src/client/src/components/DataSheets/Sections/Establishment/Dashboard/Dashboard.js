@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   faChild,
   faCalendarCheck,
@@ -11,65 +12,77 @@ import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import Item from "./Item";
 import "./dashboard.scss";
 
-class Dashboard extends React.Component {
-  render() {
-    const { establishment } = this.props;
+const Dashboard = ({
+  establishment,
+  establishment: {
+    pse,
+    activite_partielle_24_derniers_mois,
+    totalInteractions,
+    interactions,
+    dernier_effectif_physique,
+    tranche_effectif_insee
+  }
+}) => {
+  const hasInteractions = totalInteractions && totalInteractions.total > 0;
 
-    const hasInteractions =
-      establishment.totalInteractions &&
-      establishment.totalInteractions.total > 0;
+  const activity = {
+    partialActivity:
+      activite_partielle_24_derniers_mois &&
+      activite_partielle_24_derniers_mois.length > 0,
+    pseActivity:
+      pse &&
+      (pse.rupture_contrat_debut !== "0" || pse.rupture_contrat_fin !== "0")
+  };
 
-    const activity = {
-      partialActivity:
-        establishment.activite_partielle_24_derniers_mois &&
-        establishment.activite_partielle_24_derniers_mois.length > 0,
-      pseActivity:
-        establishment.pse_en_projet_ou_en_cours &&
-        establishment.pse_en_projet_ou_en_cours.length > 0
-    };
+  const lastControl = hasInteractions
+    ? getLastDateInteraction(interactions)
+    : "";
 
-    const lastControl = hasInteractions
-      ? getLastDateInteraction(establishment.interactions)
-      : "";
+  const dashboardSizeRanges = {
+    ...Config.get("inseeSizeRanges"),
+    "0 salarié": "0 salarié"
+  };
 
-    const dashboardSizeRanges = {
-      ...Config.get("inseeSizeRanges"),
-      "0 salarié": "0 salarié"
-    };
-
-    return (
-      <div className="dashboard columns">
+  return (
+    <div className="dashboard columns">
+      <Item
+        icon={faChild}
+        name="Effectif"
+        value={
+          isActiveEstablishment(establishment)
+            ? dernier_effectif_physique ||
+              dashboardSizeRanges[tranche_effectif_insee]
+            : "0 salarié"
+        }
+      />
+      <Item
+        icon={faCalendarCheck}
+        name="Visites"
+        smallText={!hasInteractions}
+        value={hasInteractions ? lastControl : "Pas d'intervention connue"}
+      />
+      {activity && (activity.pseActivity || activity.partialActivity) && (
         <Item
-          icon={faChild}
-          name="Effectif"
+          icon={faExclamationTriangle}
+          name="Activité"
+          smallText={true}
           value={
-            isActiveEstablishment(establishment)
-              ? establishment.dernier_effectif_physique ||
-                dashboardSizeRanges[establishment.tranche_effectif_insee]
-              : "0 salarié"
+            <>
+              {activity.pseActivity && <div>PSE</div>}
+              {activity.partialActivity && <div>Activité partielle</div>}
+            </>
           }
         />
-        <Item
-          icon={faCalendarCheck}
-          name="Visites"
-          value={hasInteractions ? lastControl : "Pas d'intervention connue"}
-        />
-        {activity && (activity.pseActivity || activity.partialActivity) && (
-          <Item
-            icon={faExclamationTriangle}
-            name="Activité partielle PSE"
-            value={[
-              activity.partialActivity && "Activité partielle",
-              activity.pseActivity && "PSE"
-            ]}
-          />
-        )}
-        {activity && activity.partialActivity && (
-          <Item icon={faMedkit} name="Aides" value="Oui" />
-        )}
-      </div>
-    );
-  }
-}
+      )}
+      {activity && activity.partialActivity && (
+        <Item icon={faMedkit} name="Aides" value="Oui" />
+      )}
+    </div>
+  );
+};
+
+Dashboard.propTypes = {
+  establishment: PropTypes.object.isRequired
+};
 
 export default Dashboard;

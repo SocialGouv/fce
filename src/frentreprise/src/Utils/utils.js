@@ -20,10 +20,12 @@ export default {
   },
 
   isEmpty(value) {
-    return value === undefined ||
+    return (
+      value === undefined ||
       value === null ||
-      (typeof value === 'object' && Object.keys(value).length === 0) ||
-      (typeof value === 'string' && value.trim().length === 0)
+      (typeof value === "object" && Object.keys(value).length === 0) ||
+      (typeof value === "string" && value.trim().length === 0)
+    );
   },
 
   requestAPI: async (Axios, URL, params = {}) => {
@@ -40,37 +42,30 @@ export default {
       }
     } catch (exception) {
       if (exception && "request" in exception) {
-        let {
-          message,
-          request,
-          response,
-          config
-        } = exception;
+        let { message, request, response, config } = exception;
 
         if (typeof config !== "object") config = {};
         if (typeof request.res !== "object") request.res = {};
         if (typeof response !== "object") response = {};
         if (!response.data) response.data = "(no data)";
 
-        let {
-          responseUrl
-        } = request.res;
+        let { responseUrl } = request.res;
         responseUrl =
           responseUrl ||
           request._currentUrl ||
           (typeof request._currentRequest === "object" ||
-            typeof request.path === "string" ?
-            `${("" + (config.baseURL || "(unknown host)")).replace(
+          typeof request.path === "string"
+            ? `${("" + (config.baseURL || "(unknown host)")).replace(
                 /^(https?:\/\/[^\/]*).*$/i,
                 "$1"
               )}${(request._currentRequest && request._currentRequest.path) ||
-                request.path}` :
-            "unknown url");
+                request.path}`
+            : "unknown url");
 
         const bodyData =
-          typeof response.data === "object" ?
-          JSON.stringify(response.data, true, 2) :
-          response.data;
+          typeof response.data === "object"
+            ? JSON.stringify(response.data, true, 2)
+            : response.data;
 
         const proxy = JSON.stringify(config.proxy || false, true, 2);
         console.error(

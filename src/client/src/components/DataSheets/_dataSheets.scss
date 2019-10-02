@@ -1,4 +1,4 @@
-@import '../App//variables';
+@import "../App//variables";
 
 .data-sheet {
     &__print-section {
@@ -11,7 +11,7 @@
 
     &__main-container {
         background-color: $white;
-        border-radius: .325rem .325rem 0 0;
+        border-radius: 0.325rem 0.325rem 0 0;
         padding: 1rem 2rem;
         box-shadow: $fce-shadow;
         @extend %print-margin-padding;
@@ -21,7 +21,7 @@
         @extend %print-block;
         @extend %print-margin-padding;
 
-        >.title,
+        > .title,
         .subtitle {
             text-align: center;
             margin-bottom: 1.5rem;
@@ -31,7 +31,7 @@
             font-weight: bold;
         }
 
-        >.task-bar {
+        > .task-bar {
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -47,7 +47,6 @@
                 }
             }
         }
-
 
         .enterprise-header {
             scroll-margin: 7rem;
@@ -65,7 +64,7 @@
         .sticky {
             box-shadow: $fce-shadow;
             z-index: 2;
-            transition: opacity .2s;
+            transition: opacity 0.2s;
             opacity: 0.9;
 
             &:hover {
@@ -97,7 +96,7 @@
             padding: 0 2rem;
 
             &:before {
-                content: '';
+                content: "";
                 background: white;
                 position: absolute;
                 bottom: -0.5em;
@@ -106,17 +105,17 @@
                 left: 0;
             }
 
-            >.icon {
+            > .icon {
                 color: $primary;
                 width: 1.15rem;
                 height: 1.25rem;
-                margin-right: .5rem;
-                padding: .9rem;
+                margin-right: 0.5rem;
+                padding: 0.9rem;
                 border-radius: 100%;
                 background-color: $pale-grey;
             }
 
-            >.title {
+            > .title {
                 font-family: $roboto;
                 font-weight: bold;
                 font-size: $section-title-size;
@@ -125,7 +124,6 @@
                 padding-top: 1rem;
                 text-transform: capitalize;
             }
-
         }
 
         .section-datas {
@@ -143,12 +141,12 @@
             margin-top: 0;
         }
 
-        >.dl {
+        > .dl {
             margin-bottom: 0;
         }
 
-        >.dd,
-        >.dt {
+        > .dd,
+        > .dt {
             padding: 1rem 0;
             word-wrap: break-word;
             color: $grey-tundora;
@@ -192,6 +190,14 @@
                 font-weight: bold;
                 margin-right: 0.5rem;
             }
+        }
+    }
+
+    .rcs-observations {
+        list-style: circle;
+
+        &-item {
+            margin-bottom: 0.5rem;
         }
     }
 }
@@ -239,7 +245,6 @@
 @include touch {
     .app-enterprise {
         .main {
-
             .task-bar {
                 width: 100%;
             }

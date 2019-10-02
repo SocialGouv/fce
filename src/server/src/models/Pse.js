@@ -5,7 +5,7 @@ export default class Pse extends Model {
     return this.db
       .query("SELECT * FROM etablissements_pse WHERE siret = $1", [siret])
       .then(res => {
-        return res.rows && res.rows.length ? res.rows[0] : null;
+        return res.rows;
       })
       .catch(e => {
         console.error("Pse::getBySIRET", e);

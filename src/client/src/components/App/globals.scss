@@ -403,6 +403,7 @@
     }
 }
 
+/*** Bulma override ***/
 .is-secondary {
     @extend .is-info;
 }
@@ -411,4 +412,8 @@
     @extend .is-white;
     color: #808080 !important;
     border-color: #808080 !important;
+}
+
+.table {
+    @extend .is-striped;
 }

@@ -74,7 +74,7 @@
     }
 
     &__section {
-        scroll-margin: 7rem;
+        scroll-margin: 3rem;
         margin: 2rem 0;
         background-color: $white;
         border-radius: 0.325rem;
@@ -133,6 +133,7 @@
             @extend %print-margin-padding;
 
             & .table {
+                padding: 2rem 0;
                 &__center-cell {
                     text-align: center;
                 }
@@ -174,30 +175,6 @@
         display: block;
         margin-bottom: 1rem;
     }
-
-    .direccte-excerpt {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        margin: 1rem 0;
-
-        &--pole {
-            padding: 0.75rem 1.25rem;
-            background-color: $primary;
-            color: $light;
-            margin-right: 1rem;
-            border-radius: 0.325rem;
-
-            &-key {
-                margin-right: 1rem;
-            }
-
-            &-value {
-                font-weight: bold;
-                margin-right: 0.5rem;
-            }
-        }
-    }
 }
 
 .mandataire {
@@ -209,11 +186,11 @@
     }
 
     h5 {
-        padding-bottom: 0;
+        padding: 0.5rem 0;
     }
 
     span {
-        padding-top: 0;
+        padding: 0.5rem 0;
     }
 }
 

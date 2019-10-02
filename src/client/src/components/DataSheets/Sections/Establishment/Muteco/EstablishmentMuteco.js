@@ -65,8 +65,8 @@ const EstablishmentMuteco = ({ establishment }) => {
                     <td>{numConvention}</td>
                     <td>{nbAvenants}</td>
                     <td>{<Value value={date} />}</td>
-                    <td>{nbHeuresAutorisees}</td>
-                    <td>{nbHeuresConsommees}</td>
+                    <td>{Math.round(nbHeuresAutorisees)}</td>
+                    <td>{Math.round(nbHeuresConsommees)}</td>
                     <td>{motif}</td>
                   </tr>
                 )
@@ -77,8 +77,12 @@ const EstablishmentMuteco = ({ establishment }) => {
               <tfoot>
                 <tr>
                   <th colSpan="3">Total : </th>
-                  <td>{totalActivitePartielle.nbHeuresAutorisees}</td>
-                  <td>{totalActivitePartielle.nbHeuresConsommees}</td>
+                  <td>
+                    {Math.round(totalActivitePartielle.nbHeuresAutorisees)}
+                  </td>
+                  <td>
+                    {Math.round(totalActivitePartielle.nbHeuresConsommees)}
+                  </td>
                   <td />
                 </tr>
               </tfoot>

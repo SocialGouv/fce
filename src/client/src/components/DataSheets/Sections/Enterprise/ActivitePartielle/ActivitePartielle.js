@@ -38,6 +38,7 @@ const ActivitePartielle = ({
           name="Nb d'établissements ayant eu recours à l'activité partielle au cours des 24 derniers mois"
           value={hasActivitePartielle && activite_partielle.length}
           emptyValue="0"
+          columnClasses={["is-9", "is-3"]}
         />
         {hasActivitePartielle && (
           <>

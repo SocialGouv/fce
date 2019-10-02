@@ -44,6 +44,7 @@ const Accords = ({
           name="Nb total d'accords déposés par les différents établissements de l'entreprise"
           value={nbAccords}
           emptyValue="aucun accord connu"
+          columnClasses={["is-9", "is-3"]}
         />
         {nbAccords > 0 && (
           <>
@@ -68,6 +69,10 @@ const Accords = ({
                       establishment,
                       "categorie_etablissement"
                     );
+                    const date = lastDate
+                      .split("-")
+                      .reverse()
+                      .join("/");
 
                     return (
                       <tr key={siret}>
@@ -86,7 +91,7 @@ const Accords = ({
                           )}
                         </td>
                         <td>{totalEtab}</td>
-                        <td>{lastDate}</td>
+                        <td>{date}</td>
                       </tr>
                     );
                   }
@@ -101,6 +106,7 @@ const Accords = ({
                   Lancer la recherche
                 </a>
               }
+              columnClasses={["is-9", "is-3"]}
             />
           </>
         )}

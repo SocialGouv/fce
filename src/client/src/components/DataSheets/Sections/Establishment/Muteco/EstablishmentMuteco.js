@@ -20,10 +20,20 @@ const EstablishmentMuteco = ({ establishment }) => {
       { nbHeuresAutorisees: 0, nbHeuresConsommees: 0 }
     );
 
-  const hasPse =
-    establishment.pse &&
-    (establishment.pse.rupture_contrat_debut !== 0 ||
-      establishment.pse.rupture_contrat_fin !== 0);
+  const hasPse = establishment.pse && establishment.pse.length;
+
+  const pse = {
+    inProcess:
+      hasPse &&
+      establishment.pse.find(
+        pse => pse.etat_du_dossier === "en_cours_procedure"
+      ),
+    validsOrProbates:
+      hasPse &&
+      establishment.pse.filter(
+        pse => pse.etat_du_dossier !== "en_cours_procedure"
+      )
+  };
 
   return (
     <section id="muteco" className="data-sheet__section">
@@ -82,30 +92,55 @@ const EstablishmentMuteco = ({ establishment }) => {
           </table>
         )}
 
-        <Data name="PSE" value={hasPse ? "oui" : "aucun pse connu"} />
-        {hasPse && (
-          <table className="table is-bordered mt-2">
+        <Data name="Procédure en cours" value={pse.inProcess ? "Oui" : "Non"} />
+        {pse.inProcess && (
+          <Data
+            name="Date d'enregistrement"
+            value={pse.inProcess.date_enregistrement}
+          />
+        )}
+        {pse.validsOrProbates && (
+          <table className="table mt-2">
             <thead>
               <tr>
-                <th>Nbr de ruptures de contrats en début de procédure</th>
-                <th>Nbr de ruptures de contrats en fin de procédure</th>
+                <th>Numéro de dossier</th>
+                <th>Date d'enregistrement</th>
+                <th>
+                  Nombre maximum de ruptures de contrats de travail envisagées
+                  dans l'établissement
+                </th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="has-text-centered">
-                  <Value
-                    value={establishment.pse.rupture_contrat_debut}
-                    empty="-"
-                  />
-                </td>
-                <td className="has-text-centered">
-                  <Value
-                    value={establishment.pse.rupture_contrat_fin}
-                    empty="-"
-                  />
-                </td>
-              </tr>
+              {pse.validsOrProbates.map((folder, index) => {
+                const totalContrat =
+                  folder.rupture_contrat_debut + folder.rupture_contrat_fin;
+
+                if (folder.type_de_dossier === "pse" && totalContrat === 0) {
+                  return false;
+                } else {
+                  return (
+                    <tr key={folder.numero_de_dossier.concat(index)}>
+                      <td className="has-text-centered">
+                        <Value value={folder.numero_de_dossier} empty="-" />
+                      </td>
+                      <td className="has-text-centered">
+                        <Value value={folder.date_enregistrement} empty="-" />
+                      </td>
+                      <td className="has-text-centered">
+                        <Value
+                          value={
+                            folder.rupture_contrat_fin ||
+                            folder.rupture_contrat_debut
+                          }
+                          empty="-"
+                          nonEmptyValues="0"
+                        />
+                      </td>
+                    </tr>
+                  );
+                }
+              })}
             </tbody>
           </table>
         )}

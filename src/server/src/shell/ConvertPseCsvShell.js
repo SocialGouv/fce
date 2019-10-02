@@ -4,7 +4,13 @@
  * Fix wrong encoding : iconv -f windows-1252 -t UTF-8
  * Hide yarn output in stdout: --silent
  *
- * Commande: cat .c42/tmp/input.csv | iconv -f windows-1252 -t UTF-8 | c42 server:yarn --silent shell ConvertPseCsv > output.csv
+ * Commande:
+ * cat .c42/tmp/input.csv | iconv -f windows-1252 -t UTF-8 | c42 server:yarn --silent shell ConvertPseCsv > .c42/tmp/output.csv
+ *
+ * Import dans postgres:
+ * docker-compose exec db bash
+ * psql -d fce -U postgres  -c "\copy etablissements_pse(numero_de_dossier,type_de_dossier,etat_du_dossier,accord_signe,date_de_jugement,date_d_enregistrement,situation_juridique,siret,nombre_de_ruptures_de_contrats_en_debut_de_procedure,nombre_de_ruptures_de_contrats_en_fin_de_procedure) FROM './tmp/output.csv' with (format csv, header true, delimiter ',');"
+ *
  */
 
 const Shell = require("./Shell");
@@ -13,10 +19,10 @@ const csv = require("fast-csv");
 class ConvertPseCsvShell extends Shell {
   execute() {
     const stream = csv.format({ headers: true });
-    stream.pipe(process.stdout).on("end", process.exit);
+    stream.pipe(process.stdout);
 
     csv
-      .parseStream(process.stdin, { headers: true, delimiter: ";" })
+      .parseStream(process.stdin, { headers: true, delimiter: "," })
       .transform(data => {
         const establishmentLabels = Object.entries(data)
           .filter(([key, value]) => key.includes("SIRET_Etab") && value !== "")

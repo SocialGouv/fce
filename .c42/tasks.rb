@@ -151,6 +151,9 @@ task :install do
   info('Piping sql dump into pg:console')
   run("#{sql_cat_cmd} | c42 pg:console")
 
+  info('Execute migrations')
+  invoke 'server:yarn', ['migrate up']
+
   info('Restart front')
   invoke 'docker:restart', ['front']
 

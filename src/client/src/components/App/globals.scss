@@ -396,7 +396,13 @@
     width: 25%;
 }
 
-/*** Bulma ***/
+/*** Text ***/
+.is-first-letter-uppercase {
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}
+
 .is-secondary {
     @extend .is-info;
 }

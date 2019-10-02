@@ -97,6 +97,7 @@ task 'build' do
     info("Packaging...")
     directory "dist" # copy .c42/dist/ to dist/
     directory "../src/server/build", "dist" # copy .c42/../server/build to dist/
+    directory "../src/server/migrations", "dist/migrations" # copy .c42/../server/build to dist/
     directory "../src/client/build", "dist/htdocs" # copy .c42/../client/build to dist/htdocs
     directory "../src/frentreprise", "frentreprise"
     chmod "dist/run.sh", 0755

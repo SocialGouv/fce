@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSquare, faCircle } from "@fortawesome/fontawesome-pro-solid";
@@ -8,6 +9,7 @@ import { withRouter } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import Config from "./../../services/Config";
 import { isActiveEstablishment } from "../../helpers/Establishment";
+import { joinNoFalsy } from "../../helpers/utils";
 
 class SearchResults extends React.Component {
   render() {
@@ -144,19 +146,19 @@ class SearchResults extends React.Component {
                   },
                   {
                     headName: "Code postal",
-                    accessor: enterprise =>
-                      `${Value({
-                        value:
-                          enterprise.etablissement.adresse_components &&
-                          enterprise.etablissement.adresse_components
-                            .code_postal,
+                    accessor: enterprise => {
+                      const postalCode =
+                        enterprise.etablissement.adresse_components &&
+                        enterprise.etablissement.adresse_components.code_postal;
+                      const town =
+                        enterprise.etablissement.adresse_components &&
+                        enterprise.etablissement.adresse_components.localite;
+
+                      return `${Value({
+                        value: joinNoFalsy([postalCode, town], " - "),
                         empty: "-"
-                      })}\u00A0(${Value({
-                        value:
-                          enterprise.etablissement.adresse_components &&
-                          enterprise.etablissement.adresse_components.localite,
-                        empty: "-"
-                      })})`
+                      })}`;
+                    }
                   },
                   {
                     headName: "Effectif",
@@ -196,5 +198,12 @@ class SearchResults extends React.Component {
     );
   }
 }
+
+SearchResults.propTypes = {
+  results: PropTypes.array.isRequired,
+  pagination: PropTypes.object.isRequired,
+  fetchData: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired
+};
 
 export default withRouter(SearchResults);

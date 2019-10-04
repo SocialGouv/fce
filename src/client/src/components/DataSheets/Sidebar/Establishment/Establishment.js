@@ -6,12 +6,16 @@ import Value from "../../../shared/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faCircle, faSquare } from "@fortawesome/fontawesome-pro-solid";
 import { isActiveEstablishment } from "../../../../helpers/Establishment";
+import _get from "lodash.get";
 
 import "./establishment.scss";
 
 const Establishment = ({ establishment }) => {
   const isActive = isActiveEstablishment(establishment);
   const stateClass = isActive ? "icon--success" : "icon--danger";
+
+  const codePostal = _get(establishment, "adresse_components.code_postal");
+  const formatedPostalCode = codePostal ? `${codePostal.slice(0, 2)} - ` : "";
 
   return (
     <section>
@@ -28,17 +32,8 @@ const Establishment = ({ establishment }) => {
         </Link>
       </div>
       <div className="establishment__location">
-        <Value
-          value={
-            establishment.departement ||
-            (establishment.adresse_components &&
-              establishment.adresse_components.code_postal &&
-              establishment.adresse_components.code_postal.slice(0, 2)) ||
-            ""
-          }
-          empty=""
-        />
-        {" - "}
+        <Value value={formatedPostalCode} empty="" />
+
         <Value
           value={
             establishment.adresse_components &&

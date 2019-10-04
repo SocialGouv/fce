@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import SearchResultsView from "../../components/SearchResults";
 import { search } from "../../services/Store/actions";
@@ -15,6 +16,7 @@ class SearchResults extends React.Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <SearchResultsView
         results={this.props.results}
@@ -42,6 +44,14 @@ const mapDispatchToProps = dispatch => {
       return dispatch(search(term, page));
     }
   };
+};
+
+SearchResults.propTypes = {
+  results: PropTypes.array.isRequired,
+  terms: PropTypes.object.isRequired,
+  pagination: PropTypes.object.isRequired,
+  search: PropTypes.func.isRequired,
+  downloadXlsxExport: PropTypes.func.isRequired
 };
 
 export default connect(

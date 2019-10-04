@@ -5,32 +5,26 @@ export default async (SIRET, rows) => {
     }
 
     const pse = pseRows.map(pseRow => {
-      return {
-        numero_de_dossier: pseRow.numero_de_dossier
-          ? pseRow.numero_de_dossier.trim()
-          : null,
-        type_de_dossier: pseRow.type_de_dossier
-          ? pseRow.type_de_dossier.trim()
-          : null,
-        date_enregistrement: pseRow.date_d_enregistrement,
-        etat_du_dossier: pseRow.etat_du_dossier
-          ? pseRow.etat_du_dossier.trim()
-          : null,
-        accord_signe: pseRow.accord_signe,
-        date_de_jugement: pseRow.date_de_jugement,
-        situation_juridique: pseRow.situation_juridique
-          ? pseRow.situation_juridique.trim()
-          : null,
-        siret: pseRow.siret,
-        rupture_contrat_debut:
-          pseRow.nombre_de_ruptures_de_contrats_en_debut_de_procedure,
-        rupture_contrat_fin:
-          pseRow.nombre_de_ruptures_de_contrats_en_fin_de_procedure
-      };
+      [
+        "numero_de_dossier",
+        "type_de_dossier",
+        "etat_du_dossier",
+        "situation_juridique"
+      ].forEach(field => {
+        pseRow[field] =
+          typeof pseRow[field] === "string" && pseRow[field].trim();
+      });
+
+      pseRow.rupture_contrat_debut =
+        pseRow.nombre_de_ruptures_de_contrats_en_debut_de_procedure;
+      pseRow.rupture_contrat_fin =
+        pseRow.nombre_de_ruptures_de_contrats_en_fin_de_procedure;
+
+      return pseRow;
     });
 
     return {
-      pse: pse
+      pse
     };
   });
 };

@@ -31,7 +31,10 @@ const EstablishmentMuteco = ({ establishment }) => {
     validsOrProbates:
       hasPse &&
       establishment.pse.filter(
-        pse => pse.etat_du_dossier !== "en_cours_procedure"
+        pse =>
+          pse.etat_du_dossier !== "en_cours_procedure" &&
+          (pse.type_de_dossier !== "pse" ||
+            pse.rupture_contrat_debut + pse.rupture_contrat_fin !== 0)
       )
   };
 
@@ -92,7 +95,7 @@ const EstablishmentMuteco = ({ establishment }) => {
           </table>
         )}
 
-        <Data name="Procédure en cours" value={pse.inProcess ? "Oui" : "Non"} />
+        <Data name="Procédure en cours" value={!!pse.inProcess} />
         {pse.inProcess && (
           <Data
             name="Date d'enregistrement"
@@ -112,35 +115,26 @@ const EstablishmentMuteco = ({ establishment }) => {
               </tr>
             </thead>
             <tbody>
-              {pse.validsOrProbates.map((folder, index) => {
-                const totalContrat =
-                  folder.rupture_contrat_debut + folder.rupture_contrat_fin;
-
-                if (folder.type_de_dossier === "pse" && totalContrat === 0) {
-                  return false;
-                } else {
-                  return (
-                    <tr key={folder.numero_de_dossier.concat(index)}>
-                      <td className="has-text-centered">
-                        <Value value={folder.numero_de_dossier} empty="-" />
-                      </td>
-                      <td className="has-text-centered">
-                        <Value value={folder.date_enregistrement} empty="-" />
-                      </td>
-                      <td className="has-text-centered">
-                        <Value
-                          value={
-                            folder.rupture_contrat_fin ||
-                            folder.rupture_contrat_debut
-                          }
-                          empty="-"
-                          nonEmptyValues="0"
-                        />
-                      </td>
-                    </tr>
-                  );
-                }
-              })}
+              {pse.validsOrProbates.map((folder, index) => (
+                <tr key={folder.numero_de_dossier.concat(index)}>
+                  <td className="has-text-centered">
+                    <Value value={folder.numero_de_dossier} empty="-" />
+                  </td>
+                  <td className="has-text-centered">
+                    <Value value={folder.date_enregistrement} empty="-" />
+                  </td>
+                  <td className="has-text-centered">
+                    <Value
+                      value={
+                        folder.rupture_contrat_fin ||
+                        folder.rupture_contrat_debut
+                      }
+                      empty="-"
+                      nonEmptyValues="0"
+                    />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         )}

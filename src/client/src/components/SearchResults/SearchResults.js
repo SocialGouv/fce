@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import _get from "lodash.get";
 import { Alert } from "reactstrap";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSquare, faCircle } from "@fortawesome/fontawesome-pro-solid";

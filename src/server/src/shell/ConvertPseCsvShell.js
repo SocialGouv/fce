@@ -21,12 +21,16 @@ class ConvertPseCsvShell extends Shell {
     const stream = csv.format({ headers: true });
     stream.pipe(process.stdout);
 
+    const NUMBER_OF_CHARACTERS_TO_REMOVE_FROM_KEY = 6;
+
     csv
       .parseStream(process.stdin, { headers: true, delimiter: "," })
       .transform(data => {
         Object.entries(data)
           .filter(([key, value]) => key.includes("SIRET_Etab") && value !== "")
-          .map(establishments => establishments[0].slice(6))
+          .map(establishments =>
+            establishments[0].slice(NUMBER_OF_CHARACTERS_TO_REMOVE_FROM_KEY)
+          )
           .forEach(establishment => {
             stream.write({
               numero_de_dossier: data.Numero_de_dossier,

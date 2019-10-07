@@ -147,12 +147,14 @@ class SearchResults extends React.Component {
                   {
                     headName: "Code postal",
                     accessor: enterprise => {
-                      const postalCode =
-                        enterprise.etablissement.adresse_components &&
-                        enterprise.etablissement.adresse_components.code_postal;
-                      const town =
-                        enterprise.etablissement.adresse_components &&
-                        enterprise.etablissement.adresse_components.localite;
+                      const postalCode = _get(
+                        enterprise,
+                        "etablissement.adresse_components.code_postal"
+                      );
+                      const town = _get(
+                        enterprise,
+                        "etablissement.adresse_components.localite"
+                      );
 
                       return `${Value({
                         value: joinNoFalsy([postalCode, town], " - "),

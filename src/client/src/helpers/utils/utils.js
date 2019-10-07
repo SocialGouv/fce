@@ -1,5 +1,5 @@
 export const joinNoFalsy = (arr, delimiter = "") =>
-  arr.filter(element => element && element).join(delimiter);
+  arr.filter(element => !!element).join(delimiter);
 
 export const capitalize = str =>
   str &&

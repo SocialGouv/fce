@@ -1,0 +1,11 @@
+// postgres sql query
+SELECT etablissements.siren, siret, etatadministratifetablissement, trancheeffectifsetablissement, etablissementsiege, activiteprincipaleetablissement, libelle, denominationunitelegale, enseigne1etablissement, enseigne2etablissement, enseigne3etablissement, codepostaletablissement, libellecommuneetablissement
+FROM etablissements
+LEFT OUTER JOIN entreprises
+ON etablissements.siren = entreprises.siren
+LEFT OUTER JOIN naf
+ON  etablissements.activiteprincipaleetablissement = naf.code
+WHERE codepostaletablissement='31000' AND (denominationunitelegale is not null or enseigne1etablissement is not null or enseigne2etablissement is not null or enseigne3etablissement is not null)
+LIMIT 5000
+
+// OFFSET 5000

@@ -36,11 +36,12 @@ export const formatAddress = ({
   const street = joinNoFalsy([streetType, formatedStreetName], " ");
   const locality = joinNoFalsy([code_postal, localite], " ");
   const formatedStreet = joinNoFalsy([streetNumber, street], " ");
-  const additionalAddress =
+  const isNeededAdditionalAddress =
     nom_voie &&
-    nom_voie.toLowerCase() === complement_adresse &&
-    complement_adresse.toLowerCase()
-      ? null
-      : capitalize(complement_adresse);
+    complement_adresse &&
+    nom_voie.toLowerCase() !== complement_adresse.toLowerCase();
+  const additionalAddress = isNeededAdditionalAddress
+    ? capitalize(complement_adresse)
+    : null;
   return joinNoFalsy([formatedStreet, additionalAddress, locality], " - ");
 };

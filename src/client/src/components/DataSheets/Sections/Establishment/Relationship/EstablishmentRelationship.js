@@ -31,11 +31,13 @@ const EstablishmentRelationship = ({ establishment }) => {
           value={`${code_idcc ? code_idcc : ""} - ${
             libelle_idcc ? libelle_idcc : ""
           }`}
+          columnClasses={["is-8", "is-4"]}
         />
         <Data
           name="Nombre total d'accords d'entreprise déposés depuis 1980"
           value={nbAccords}
           emptyValue="aucun accord connu"
+          columnClasses={["is-8", "is-4"]}
         />
         {nbAccords > 0 && (
           <>
@@ -43,6 +45,7 @@ const EstablishmentRelationship = ({ establishment }) => {
               name="Date de signature du dernier accord d'entreprise déposé"
               value={_get(establishment, "accords.total.lastDate")}
               emptyValue="aucun accord connu"
+              columnClasses={["is-8", "is-4"]}
             />
             <table className="table is-hoverable">
               <thead>
@@ -81,6 +84,7 @@ const EstablishmentRelationship = ({ establishment }) => {
                   Lancer la recherche
                 </a>
               }
+              columnClasses={["is-8", "is-4"]}
             />
           </>
         )}

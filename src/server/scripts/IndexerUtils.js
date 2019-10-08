@@ -47,7 +47,6 @@ class IndexerUtils {
           if (error) console.log(error);
 
           console.log(result.length);
-
           if (result.length !== 0) {
             tasks.push(
               limit(() =>
@@ -125,12 +124,40 @@ class IndexerUtils {
         libellecommuneetablissement,
         activiteprincipaleetablissement,
         activiteprincipaleetablissement_libelle,
-        entreprise_nomunitelegale
+        denominationusuelleetablissement,
+        enseigne1etablissement,
+        enseigne2etablissement,
+        enseigne3etablissement,
+        entreprise_nomunitelegale,
+        entreprise_categoriejuridiqueunitelegale,
+        entreprise_prenomusuelunitelegale,
+        entreprise_denominationunitelegale,
+        entreprise_denominationusuelle1unitelegale,
+        entreprise_denominationusuelle2unitelegale,
+        entreprise_denominationusuelle3unitelegale,
+        entreprise_prenom1unitelegale,
+        entreprise_nomusageunitelegale
       }) => {
+        let enterprise_name = entreprise_denominationunitelegale;
+        let establishment_name =
+          denominationusuelleetablissement ||
+          enseigne1etablissement ||
+          enseigne2etablissement ||
+          enseigne3etablissement;
+
+        if (
+          entreprise_categoriejuridiqueunitelegale ===
+          config.elasticIndexer.appSearchConst.physicPersonJuridicCode
+        ) {
+          enterprise_name = `${entreprise_prenomusuelunitelegale} ${entreprise_nomunitelegale}`;
+        }
+
         bulkChunk.push({
           id: siret,
           siren,
           siret,
+          enterprise_name,
+          establishment_name,
           trancheeffectifsetablissement,
           etablissementsiege,
           etatadministratifetablissement,
@@ -138,7 +165,18 @@ class IndexerUtils {
           libellecommuneetablissement,
           activiteprincipaleetablissement,
           activiteprincipaleetablissement_libelle,
-          entreprise_nomunitelegale
+          denominationusuelleetablissement,
+          enseigne1etablissement,
+          enseigne2etablissement,
+          enseigne3etablissement,
+          entreprise_denominationusuelle1unitelegale,
+          entreprise_denominationusuelle2unitelegale,
+          entreprise_denominationusuelle3unitelegale,
+          entreprise_prenomusuelunitelegale,
+          entreprise_nomunitelegale,
+          entreprise_prenom1unitelegale,
+          entreprise_nomusageunitelegale,
+          entreprise_categoriejuridiqueunitelegale
         });
       }
     );

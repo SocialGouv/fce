@@ -51,20 +51,16 @@ const config = {
       "denominationunitelegale",
       "nomunitelegale",
       "nomusageunitelegale",
-      "siren"
+      "prenomusuelunitelegale",
+      "prenom1unitelegale",
+      "siren",
+      "categoriejuridiqueunitelegale",
+      "denominationusuelle1unitelegale",
+      "denominationusuelle2unitelegale",
+      "denominationusuelle3unitelegale"
     ],
-    properties: {
-      id: { type: "keyword" },
-      siren: { type: "keyword" },
-      siret: { type: "keyword" },
-      trancheeffectifsetablissement: { type: "keyword" },
-      etablissementsiege: { type: "keyword" },
-      etatadministratifetablissement: { type: "keyword" },
-      codepostaletablissement: { type: "keyword" },
-      libellecommuneetablissement: { type: "keyword" },
-      trancheeffectifsetablissement: { type: "keyword" },
-      activiteprincipaleetablissement: { type: "keyword" },
-      activiteprincipaleetablissement_libelle: { type: "keyword" }
+    appSearchConst: {
+      physicPersonJuridicCode: "1000"
     }
   }
 };

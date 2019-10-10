@@ -11,7 +11,9 @@ export default async (SIREN, rows) => {
           "type_de_dossier",
           "etat_du_dossier",
           "situation_juridique",
-          "siret"
+          "siret",
+          "date_de_jugement",
+          "date_enregistrement"
         ].forEach(field => {
           pseRow[field] =
             typeof pseRow[field] === "string" && pseRow[field].trim();

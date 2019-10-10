@@ -1,6 +1,6 @@
 export default async (SIRET, rows) => {
   return rows.getBySIRET(SIRET).then(pseRows => {
-    if (!pseRows || pseRows.length === 0) {
+    if (!pseRows || !pseRows.length) {
       return {};
     }
 

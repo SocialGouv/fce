@@ -43,7 +43,7 @@ export default class PG extends DataSource {
       [Entreprises.getInteractionsPole3T, new InteractionsPole3T()],
       [Entreprises.getAccords, new Accords()],
       [Entreprises.getActivitePartielle, new ActivitePartielle()],
-      [Etablissements.getPse, new Pse()]
+      [Entreprises.getPseList, new Pse()]
     );
   }
 

@@ -16,7 +16,7 @@ import "@elastic/react-search-ui-views/lib/styles/styles.css";
 import { createSecureContext } from "tls";
 
 const connector = new AppSearchAPIConnector({
-  searchKey: "search-37cj9814zm5zcbhqf4q1byqm",
+  searchKey: "private-a516hz2kz11c17f9n9ma9jgf",
   engineName: "fce",
   endpointBase: "https://appsearch.fce.test",
   hostIdentifier: "dumbValueToAvoidError"

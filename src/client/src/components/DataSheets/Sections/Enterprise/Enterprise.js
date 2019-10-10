@@ -6,6 +6,7 @@ import Infos from "./Infos";
 import Mandataires from "./Mandataires";
 import Accords from "./Accords";
 import ActivitePartielle from "./ActivitePartielle";
+import Muteco from "./Muteco";
 import Direccte from "../SharedComponents/Direccte";
 import Finances from "./Finances";
 import QuickAccess from "../SharedComponents/QuickAccess";
@@ -50,6 +51,7 @@ class Enterprise extends React.Component {
               <Infos enterprise={enterprise} headOffice={headOffice} />
               <Direccte enterprise={enterprise} />
               <Accords enterprise={enterprise} />
+              <Muteco enterprise={enterprise} />
               <ActivitePartielle enterprise={enterprise} />
               <Finances establishment={headOffice} />
               <Mandataires enterprise={enterprise} />

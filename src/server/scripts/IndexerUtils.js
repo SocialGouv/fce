@@ -157,6 +157,7 @@ class IndexerUtils {
           siren,
           siret,
           enterprise_name,
+          entreprise_denominationunitelegale,
           establishment_name,
           trancheeffectifsetablissement,
           etablissementsiege,

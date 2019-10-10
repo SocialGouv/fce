@@ -25,11 +25,6 @@ class Search extends React.Component {
               entreprises
             </h2>
 
-            <p className="lead pb-4">
-              L'état civil, l'activité et les données de l'administration dans
-              une seule fiche entreprise accessible pour les agents publics
-            </p>
-
             {hasError ? (
               <div className="notification is-danger">
                 Une erreur est survenue lors de la communication avec l'API

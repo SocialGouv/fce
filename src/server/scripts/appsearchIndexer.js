@@ -6,6 +6,6 @@ let query = `SELECT etab.*, ${config.elasticIndexer.enterpriseFields.map(
 )}, naf.libelle as activiteprincipaleetablissement_libelle
         FROM etablissements etab
         INNER JOIN entreprises ent ON etab.siren = ent.siren
-        LEFT JOIN naf ON naf.code = etab.activiteprincipaleetablissement`;
+        LEFT JOIN naf ON naf.code = etab.activiteprincipaleetablissement LIMIT 100000`;
 
 new IndexerUtils(query, "index");

@@ -11,7 +11,7 @@ const EnterpriseMuteco = ({ enterprise }) => {
   const pseList = {
     inProcess:
       enterprise.liste_pse &&
-      enterprise.liste_pse.filter(
+      enterprise.liste_pse.find(
         pse => pse.dossier.etat_du_dossier === "en_cours_procedure"
       ),
     validsOrProbates:
@@ -39,7 +39,7 @@ const EnterpriseMuteco = ({ enterprise }) => {
         {pseList.inProcess && (
           <Data
             name="Date d'enregistrement"
-            value={pseList.inProcess.date_enregistrement}
+            value={pseList.inProcess.dossier.date_enregistrement}
           />
         )}
         {pseList.validsOrProbates && pseList.validsOrProbates.length && (
@@ -71,7 +71,13 @@ const EnterpriseMuteco = ({ enterprise }) => {
                     <Value value={pse.dossier.situation_juridique} />
                   </td>
                   <td className="has-text-centered">
-                    <Value value={pse.dossier.date_de_jugement} />
+                    <Value
+                      value={
+                        pse.dossier.date_de_jugement
+                          ? pse.dossier.date_de_jugement
+                          : "-"
+                      }
+                    />
                   </td>
                   <td className="has-text-centered">
                     <Value

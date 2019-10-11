@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Data from "../../SharedComponents/Data";
-import Config from "../../../../../services/Config";
 import _get from "lodash.get";
 import Value from "../../../../shared/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";

@@ -3,21 +3,27 @@ import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import _get from "lodash.get";
 import Data from "../../SharedComponents/Data";
+import Subcategory from "../../SharedComponents/Subcategory";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faUmbrella } from "@fortawesome/fontawesome-pro-solid";
-import { CountValueInArray } from "../../../../../helpers/Utils";
+import { CountValueInArray, hasInclude } from "../../../../../helpers/Utils";
 
 const EnterpriseMuteco = ({ enterprise }) => {
+  console.log({ enterprise });
+
   const pseList = {
     inProcess:
       enterprise.liste_pse &&
       enterprise.liste_pse.find(
-        pse => pse.dossier.etat_du_dossier === "en_cours_procedure"
+        pse =>
+          hasInclude(pse.dossier.type_de_dossier, ["PSE", "pse"]) &&
+          pse.dossier.etat_du_dossier === "en_cours_procedure"
       ),
     validsOrProbates:
       enterprise.liste_pse &&
       enterprise.liste_pse.filter(
         pse =>
+          hasInclude(pse.dossier.type_de_dossier, ["PSE", "pse"]) &&
           pse.dossier.etat_du_dossier !== "en_cours_procedure" &&
           (pse.dossier.type_de_dossier !== "pse" ||
             pse.dossier.rupture_contrat_debut +
@@ -25,6 +31,28 @@ const EnterpriseMuteco = ({ enterprise }) => {
               0)
       )
   };
+
+  const rccList = {
+    inProcess:
+      enterprise.liste_pse &&
+      enterprise.liste_pse.find(
+        pse =>
+          hasInclude(pse.dossier.type_de_dossier, ["RCC", "rcc"]) &&
+          pse.dossier.etat_du_dossier === "en_cours_procedure"
+      ),
+    validsOrProbates:
+      enterprise.liste_pse &&
+      enterprise.liste_pse.filter(
+        pse =>
+          hasInclude(pse.dossier.type_de_dossier, ["RCC", "rcc"]) &&
+          pse.dossier.etat_du_dossier !== "en_cours_procedure" &&
+          (pse.dossier.type_de_dossier !== "pse" ||
+            pse.dossier.rupture_contrat_debut +
+              pse.dossier.rupture_contrat_fin !==
+              0)
+      )
+  };
+  console.log({ rccList });
 
   return (
     <section id="muteco" className="data-sheet__section">
@@ -35,7 +63,15 @@ const EnterpriseMuteco = ({ enterprise }) => {
         <h2 className="title">Mutations Economiques</h2>
       </div>
       <div className="section-datas">
-        <Data name="Procédure en cours" value={!!pseList.inProcess} />
+        <Subcategory
+          subtitle="PSE"
+          datas={[
+            {
+              name: "Procédure en cours",
+              value: !!pseList.inProcess
+            }
+          ]}
+        />
         {pseList.inProcess && (
           <Data
             name="Date d'enregistrement"
@@ -102,6 +138,21 @@ const EnterpriseMuteco = ({ enterprise }) => {
               ))}
             </tbody>
           </table>
+        )}
+        <Subcategory
+          subtitle="RCC"
+          datas={[
+            {
+              name: "Procédure en cours",
+              value: !!rccList.inProcess
+            }
+          ]}
+        />
+        {rccList.inProcess && (
+          <Data
+            name="Date d'enregistrement"
+            value={rccList.inProcess.dossier.date_enregistrement}
+          />
         )}
       </div>
     </section>

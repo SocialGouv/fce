@@ -45,7 +45,7 @@ function init() {
     }
   }
 
-  if (config.has("postgres")) {
+  if (config.has("db")) {
     frentreprise.addDataSource({
       name: "Postgres",
       priority: 50,

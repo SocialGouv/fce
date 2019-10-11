@@ -6,4 +6,8 @@
     &-title {
         border-bottom: solid 2px $faced-blue;
     }
+
+    * + & {
+        margin-top: 4rem;
+    }
 }

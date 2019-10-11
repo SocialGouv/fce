@@ -18,94 +18,81 @@ const SearchUIAwesomeTable = ({
   data,
   fields,
   history
-}) => {
-  console.log("from SearchUIAwesomeTable.js", {
-    showPagination,
-    pagination,
-    prevText,
-    nextText,
-    isLoading,
-    data,
-    fields,
-    history
-  });
-
-  return (
-    <table className="table at">
-      <thead className="at__head">
-        <tr className="at__head__tr">
-          {fields.map(field => (
-            <th
-              key={field.headName}
-              className={`${
-                field.importantHead ? "at__head__important" : "at__head__th"
-              }`}
-            >
-              {field.headName}
-            </th>
-          ))}
+}) => (
+  <table className="table at">
+    <thead className="at__head">
+      <tr className="at__head__tr">
+        {fields.map(field => (
+          <th
+            key={field.headName}
+            className={`${
+              field.importantHead ? "at__head__important" : "at__head__th"
+            }`}
+          >
+            {field.headName}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody className="at__body">
+      {isLoading ? (
+        <tr>
+          <td colSpan={fields.length}>
+            <LoadSpinner />
+          </td>
         </tr>
-      </thead>
-      <tbody className="at__body">
-        {isLoading ? (
-          <tr>
-            <td colSpan={fields.length}>
-              <LoadSpinner />
-            </td>
+      ) : (
+        data.map((element, index) => (
+          <tr
+            key={index}
+            className="at__body__tr"
+            onClick={() => history.push(`/establishment/${element.siret.raw}`)}
+          >
+            {fields.map((field, index) => (
+              <td key={index} className="at__body__td">
+                {field.accessor(element)}
+              </td>
+            ))}
           </tr>
-        ) : (
-          data.map((element, index) => (
-            <tr
-              key={index}
-              className="at__body__tr"
-              onClick={() => history.push(`/establishment/${element.siret}`)}
-            >
-              {fields.map((field, index) => (
-                <td key={index} className="at__body__td">
-                  {field.accessor(element)}
-                </td>
-              ))}
-            </tr>
-          ))
-        )}
-      </tbody>
-      {showPagination && (
-        <tfoot className="at__footer">
-          <tr className="at__footer__tr">
-            <td className="at__footer__td" colSpan={fields.length}>
-              <Button
-                value={prevText}
-                icon={faAngleLeft}
-                iconClasses={["fa-2x"]}
-                buttonClasses={["is-prev-button", "is-pulled-left"]}
-                isDisabled={pagination.current === pagination.min}
-                callback={() => {
-                  pagination.setCurrent(--pagination.current);
-                }}
-              />
-              <Pager
-                setCurrent={pagination.setCurrent}
-                currentPage={pagination.current}
-                max={pagination.pages}
-              />
-              <Button
-                value={nextText}
-                icon={faAngleRight}
-                iconClasses={["fa-2x"]}
-                rowReverse={true}
-                buttonClasses={["is-next-button", "is-pulled-right"]}
-                isDisabled={pagination.current === pagination.pages}
-                callback={() => {
-                  pagination.setCurrent(++pagination.current);
-                }}
-              />
-            </td>
-          </tr>
-        </tfoot>
+        ))
       )}
-    </table>
-  );
-};
+    </tbody>
+    {showPagination && (
+      <tfoot className="at__footer">
+        <tr className="at__footer__tr">
+          <td className="at__footer__td" colSpan={fields.length}>
+            <Button
+              value={prevText}
+              icon={faAngleLeft}
+              iconClasses={["fa-2x"]}
+              buttonClasses={["is-prev-button", "is-pulled-left"]}
+              isDisabled={pagination.current === pagination.min}
+              callback={() => {
+                pagination.setCurrent(--pagination.current);
+              }}
+            />
+            <Pager
+              setCurrent={pagination.setCurrent}
+              currentPage={pagination.current}
+              max={pagination.pages}
+            />
+            <Button
+              value={nextText}
+              icon={faAngleRight}
+              iconClasses={["fa-2x"]}
+              rowReverse={true}
+              buttonClasses={["is-next-button", "is-pulled-right"]}
+              isDisabled={pagination.current === pagination.pages}
+              callback={() => {
+                pagination.setCurrent(++pagination.current);
+              }}
+            />
+          </td>
+        </tr>
+      </tfoot>
+    )}
+  </table>
+);
 
 SearchUIAwesomeTable.defaultProps = {
   showPagination: false,
@@ -116,9 +103,7 @@ SearchUIAwesomeTable.defaultProps = {
 
 SearchUIAwesomeTable.propTypes = {
   showPagination: PropTypes.bool,
-  page: PropTypes.objectOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-  ),
+  pagination: PropTypes.object.isRequired,
   isLoading: PropTypes.bool,
   data: PropTypes.array.isRequired,
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -126,7 +111,8 @@ SearchUIAwesomeTable.propTypes = {
   nextText: PropTypes.string,
   prevPage: PropTypes.func,
   nextPage: PropTypes.func,
-  selectedPage: PropTypes.func
+  selectedPage: PropTypes.func,
+  history: PropTypes.object.isRequired
 };
 
 export default withRouter(SearchUIAwesomeTable);

@@ -5,12 +5,23 @@ import Value from "../../../../shared/Value";
 
 import "./data.scss";
 
-const Data = ({ name, value, emptyValue, nonEmptyValue, link }) => {
+const Data = ({
+  name,
+  value,
+  emptyValue = "-",
+  nonEmptyValue,
+  link = null,
+  columnClasses = ["is-4", "is-8"]
+}) => {
   return (
     <>
       <dl className="data dl columns">
-        <dt className="dt column is-3">{name}</dt>
-        <dd className="dd column is-8">
+        <dt
+          className={`dt column ${columnClasses[0]} is-first-letter-uppercase`}
+        >
+          {name}
+        </dt>
+        <dd className={`dd column ${columnClasses[1]}`}>
           {link ? (
             <Link to={link}>
               <Value
@@ -32,13 +43,9 @@ const Data = ({ name, value, emptyValue, nonEmptyValue, link }) => {
   );
 };
 
-Data.defaultProps = {
-  emptyValue: "-",
-  link: null
-};
-
 Data.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.element]),
+  columnClasses: PropTypes.array,
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,

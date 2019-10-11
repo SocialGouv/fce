@@ -40,7 +40,7 @@ class DireccteEtablissement extends Etablissement {
           "structure_insertion_activite_economique",
           "structure_insertion_activite_economique_types",
           "activite_partielle",
-          "pse_en_projet_ou_en_cours",
+          "pse",
           "interactions_3E",
           "interactions_T",
           "interactions_C",

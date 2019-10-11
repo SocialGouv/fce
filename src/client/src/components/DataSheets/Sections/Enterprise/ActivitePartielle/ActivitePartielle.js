@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Data from "../../SharedComponents/Data";
-import Config from "../../../../../services/Config";
 import _get from "lodash.get";
 import Value from "../../../../shared/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
@@ -31,13 +30,14 @@ const ActivitePartielle = ({
         <span className="icon">
           <FontAwesomeIcon icon={faUsers} />
         </span>
-        <h2 className="title">Activité partielle</h2>
+        <h2 className="title">Mutations économiques</h2>
       </div>
       <div className="section-datas">
         <Data
           name="Nb d'établissements ayant eu recours à l'activité partielle au cours des 24 derniers mois"
           value={hasActivitePartielle && activite_partielle.length}
           emptyValue="0"
+          columnClasses={["is-9", "is-3"]}
         />
         {hasActivitePartielle && (
           <>
@@ -46,7 +46,7 @@ const ActivitePartielle = ({
                 <tr>
                   <th className="th">SIRET</th>
                   <th className="th">Catégorie établissement</th>
-                  <th className="th">État</th>
+                  <th className="th table__center-cell">État</th>
                   <th className="th">Nombre total d'heures autorisées</th>
                   <th className="th">Nombre total d'heures consommées</th>
                   <th className="th">
@@ -72,7 +72,7 @@ const ActivitePartielle = ({
                           <Link to={`/establishment/${siret}`}>{siret}</Link>
                         </td>
                         <td>{categorie}</td>
-                        <td>
+                        <td className="table__center-cell">
                           {etat && (
                             <FontAwesomeIcon
                               className={

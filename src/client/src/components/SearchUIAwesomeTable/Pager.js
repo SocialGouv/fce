@@ -10,8 +10,6 @@ const Pager = ({ currentPage, max, setCurrent }) => {
     return el;
   }
 
-  console.log("from Pager.js", { currentPage, max, setCurrent });
-
   return (
     <div className="pager">
       <span className="pr-2 has-text-grey-dark">Page </span>

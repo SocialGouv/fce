@@ -8,6 +8,7 @@ import DsnEff from "../../../models/DsnEff";
 import Idcc from "../../../models/Idcc";
 import Accords from "../../../models/Accords";
 import ActivitePartielle from "../../../models/ActivitePartielle";
+import Pse from "../../../models/Pse";
 import PolesCompetitivite from "../../../models/PolesCompetitivite";
 import Iae from "../../../models/Iae";
 import ContratsAides from "../../../models/ContratsAides";
@@ -30,7 +31,8 @@ export default class PG extends DataSource {
       [Etablissements.getPolesCompetitivite, new PolesCompetitivite()],
       [Etablissements.getIae, new Iae()],
       [Etablissements.getContratsAides, new ContratsAides()],
-      [Etablissements.getActivitePartielle, new ActivitePartielle()]
+      [Etablissements.getActivitePartielle, new ActivitePartielle()],
+      [Etablissements.getPse, new Pse()]
     );
   }
 
@@ -40,7 +42,8 @@ export default class PG extends DataSource {
       [Entreprises.getInteractionsPole3E, new InteractionsPole3E()],
       [Entreprises.getInteractionsPole3T, new InteractionsPole3T()],
       [Entreprises.getAccords, new Accords()],
-      [Entreprises.getActivitePartielle, new ActivitePartielle()]
+      [Entreprises.getActivitePartielle, new ActivitePartielle()],
+      [Etablissements.getPse, new Pse()]
     );
   }
 

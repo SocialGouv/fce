@@ -20,16 +20,25 @@ const EstablishmentMuteco = ({ establishment }) => {
       { nbHeuresAutorisees: 0, nbHeuresConsommees: 0 }
     );
 
+  const hasPse =
+    establishment.pse &&
+    (establishment.pse.rupture_contrat_debut !== 0 ||
+      establishment.pse.rupture_contrat_fin !== 0);
+
   return (
     <section id="muteco" className="data-sheet__section">
       <div className="section-header">
         <span className="icon">
           <FontAwesomeIcon icon={faUmbrella} />
         </span>
-        <h2 className="title">Mutations Economiques</h2>
+        <h2 className="title">Mutations Économiques</h2>
       </div>
       <div className="section-datas">
-        <Data name="Activité partielle" value={hasActivitePartielle} />
+        <Data
+          name="Recours sur les 24 derniers mois"
+          value={hasActivitePartielle}
+          columnClasses={["is-8", "is-4"]}
+        />
         {hasActivitePartielle && (
           <table className="table is-hoverable is-bordered mt-2">
             <thead>
@@ -56,8 +65,8 @@ const EstablishmentMuteco = ({ establishment }) => {
                     <td>{numConvention}</td>
                     <td>{nbAvenants}</td>
                     <td>{<Value value={date} />}</td>
-                    <td>{nbHeuresAutorisees}</td>
-                    <td>{nbHeuresConsommees}</td>
+                    <td>{Math.round(nbHeuresAutorisees)}</td>
+                    <td>{Math.round(nbHeuresConsommees)}</td>
                     <td>{motif}</td>
                   </tr>
                 )
@@ -68,8 +77,12 @@ const EstablishmentMuteco = ({ establishment }) => {
               <tfoot>
                 <tr>
                   <th colSpan="3">Total : </th>
-                  <td>{totalActivitePartielle.nbHeuresAutorisees}</td>
-                  <td>{totalActivitePartielle.nbHeuresConsommees}</td>
+                  <td>
+                    {Math.round(totalActivitePartielle.nbHeuresAutorisees)}
+                  </td>
+                  <td>
+                    {Math.round(totalActivitePartielle.nbHeuresConsommees)}
+                  </td>
                   <td />
                 </tr>
               </tfoot>
@@ -79,66 +92,35 @@ const EstablishmentMuteco = ({ establishment }) => {
 
         <Data
           name="PSE"
-          value={
-            _get(establishment, `pse_en_projet_ou_en_cours`)
-              ? "Oui"
-              : "Information en cours de négociation"
-          }
+          value={hasPse ? "oui" : "aucun pse connu"}
+          columnClasses={["is-8", "is-4"]}
         />
-        {Array.isArray(establishment.pse_en_projet_ou_en_cours) &&
-          establishment.pse_en_projet_ou_en_cours.length > 0 && (
-            <table className="table is-hoverable is-bordered mt-2">
-              <thead>
-                <tr>
-                  <th />
-                  {Object.keys(establishment.pse_en_projet_ou_en_cours).map(
-                    year => (
-                      <th key={year}>
-                        {_get(
-                          establishment,
-                          `pse_en_projet_ou_en_cours[${year}].year`
-                        )}
-                      </th>
-                    )
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Etat</th>
-                  {Object.keys(establishment.pse_en_projet_ou_en_cours).map(
-                    year => (
-                      <td key={year}>
-                        <Value
-                          value={_get(
-                            establishment,
-                            `pse_en_projet_ou_en_cours[${year}].etat`
-                          )}
-                          empty="-"
-                        />
-                      </td>
-                    )
-                  )}
-                </tr>
-                <tr>
-                  <th scope="row">Poste</th>
-                  {Object.keys(establishment.pse_en_projet_ou_en_cours).map(
-                    year => (
-                      <td key={year}>
-                        <Value
-                          value={_get(
-                            establishment,
-                            `pse_en_projet_ou_en_cours[${year}].poste`
-                          )}
-                          empty="-"
-                        />
-                      </td>
-                    )
-                  )}
-                </tr>
-              </tbody>
-            </table>
-          )}
+        {hasPse && (
+          <table className="table is-bordered mt-2">
+            <thead>
+              <tr>
+                <th>Nbr de ruptures de contrats en début de procédure</th>
+                <th>Nbr de ruptures de contrats en fin de procédure</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="has-text-centered">
+                  <Value
+                    value={establishment.pse.rupture_contrat_debut}
+                    empty="-"
+                  />
+                </td>
+                <td className="has-text-centered">
+                  <Value
+                    value={establishment.pse.rupture_contrat_fin}
+                    empty="-"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        )}
       </div>
     </section>
   );

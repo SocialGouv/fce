@@ -18,10 +18,12 @@ const Accords = ({
     prenom
   }
 }) => {
-  const nbAccords = accords && Object.values(accords).reduce(
-    (total, { count: totalEtab }) => total + totalEtab,
-    0
-  );
+  const nbAccords =
+    accords &&
+    Object.values(accords).reduce(
+      (total, { count: totalEtab }) => total + totalEtab,
+      0
+    );
   const raisonSociale =
     raison_sociale ||
     sigle ||
@@ -42,6 +44,7 @@ const Accords = ({
           name="Nb total d'accords déposés par les différents établissements de l'entreprise"
           value={nbAccords}
           emptyValue="aucun accord connu"
+          columnClasses={["is-9", "is-3"]}
         />
         {nbAccords > 0 && (
           <>
@@ -50,7 +53,7 @@ const Accords = ({
                 <tr>
                   <th className="th">SIRET</th>
                   <th className="th">Catégorie établissement</th>
-                  <th className="th">État</th>
+                  <th className="th table__center-cell">État</th>
                   <th className="th">Nb accords déposés</th>
                   <th className="th">Date signature dernier accord</th>
                 </tr>
@@ -66,6 +69,10 @@ const Accords = ({
                       establishment,
                       "categorie_etablissement"
                     );
+                    const date = lastDate
+                      .split("-")
+                      .reverse()
+                      .join("/");
 
                     return (
                       <tr key={siret}>
@@ -73,7 +80,7 @@ const Accords = ({
                           <Link to={`/establishment/${siret}`}>{siret}</Link>
                         </td>
                         <td>{categorie}</td>
-                        <td>
+                        <td className="table__center-cell">
                           {etat && (
                             <FontAwesomeIcon
                               className={
@@ -84,7 +91,7 @@ const Accords = ({
                           )}
                         </td>
                         <td>{totalEtab}</td>
-                        <td>{lastDate}</td>
+                        <td>{date}</td>
                       </tr>
                     );
                   }
@@ -99,6 +106,7 @@ const Accords = ({
                   Lancer la recherche
                 </a>
               }
+              columnClasses={["is-9", "is-3"]}
             />
           </>
         )}

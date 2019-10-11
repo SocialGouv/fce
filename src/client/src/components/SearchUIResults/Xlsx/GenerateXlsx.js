@@ -1,3 +1,5 @@
+import Http from "./../../../services/Http";
+import downloadjs from "downloadjs";
 const xlsx = require("xlsx");
 
 class GenerateXlsx {
@@ -5,29 +7,47 @@ class GenerateXlsx {
     this.props = props;
   }
 
-  download() {
-    this.formatData({ ...this.props });
+  async download() {
+    const cleanData = await this.preparePayload({ ...this.props });
+
+    Http.post(
+      "/downloadCsv",
+      {
+        payload: cleanData
+      },
+      {
+        responseType: "blob"
+      }
+    )
+      .then(response => {
+        if (response.data && response.data) {
+          const date = new Date()
+            .toISOString()
+            .replace(/T/, "_")
+            .replace(/\..+/, "")
+            .replace(/:/g, "-");
+
+          const fileName = `FceExport-${date}.xlsx`;
+
+          downloadjs(
+            new Blob([response.data], {
+              type: response.headers["content-type"]
+            }),
+            fileName,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          );
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
-  formatData(data) {
-    const wb = { SheetNames: [], Sheets: {} };
-    let dataJson = Object.values(data).map(tmpData => {
-      const cleanTmpData = [];
-
-      delete tmpData._meta;
-
-      Object.entries(tmpData).forEach(([key, value]) => {
-        cleanTmpData[key] = value.raw;
-      });
-
-      return cleanTmpData;
-    });
-
-    const ws = xlsx.utils.json_to_sheet(dataJson);
-    const wsName = "FceExport.xlsx";
-    xlsx.utils.book_append_sheet(wb, ws, wsName);
-
-    xlsx.writeFile(wb, wsName, { bookType: "xlsx", type: "buffer" });
+  preparePayload(data) {
+    return {
+      totalItems: data.items,
+      searchTerm: data.searchTerm
+    };
   }
 }
 

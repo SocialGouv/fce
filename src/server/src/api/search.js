@@ -4,8 +4,17 @@ import Departements from "../models/Departements";
 import withAuth from "../middlewares/auth";
 
 const express = require("express");
-const XLSX = require("xlsx");
+const xlsx = require("xlsx");
 const router = express.Router();
+const config = require("config");
+
+const AppSearchClient = require("@elastic/app-search-node");
+/** Create App-search client */
+const apiKey = config.elasticIndexer.appsearch_apiKey;
+const baseUrlFn = () => config.elasticIndexer.appsearch_address;
+const engineName = config.elasticIndexer.appsearch_engineName;
+const client = new AppSearchClient(undefined, apiKey, baseUrlFn);
+/** End creating App-search client */
 
 const frentreprise = require("frentreprise");
 
@@ -44,7 +53,7 @@ router.get("/entity", withAuth, function(req, res) {
   });
 });
 
-router.get("/search(.:format)?", withAuth, function(req, res) {
+router.get("/search", withAuth, function(req, res) {
   const query = (req.query["q"] || "").trim();
   const format = req.params["format"] || "json";
   const page = format === "xlsx" ? null : +req.query["page"] || 1;
@@ -79,93 +88,64 @@ router.get("/search(.:format)?", withAuth, function(req, res) {
   });
 });
 
-const sendResult = (data, response) => {
-  if (data.query.format === "xlsx") {
-    sendResultXlsx(data, response);
-  } else {
-    response.send(data);
-  }
-};
+router.post("/downloadCsv", withAuth, function(req, res) {
+  console.log("TEST BODY =>", req.body);
 
-const sendResultXlsx = (data, response) => {
-  let flattenResults = [];
+  const payload = req.body.payload;
 
-  data.results.forEach(enterprise => {
-    if (Array.isArray(enterprise.etablissements)) {
-      enterprise.etablissements.forEach(establishment => {
-        flattenResults.push({ ...enterprise, etablissement: establishment });
+  if (payload && payload.searchTerm && payload.totalItems) {
+    const searchTerm = payload.searchTerm;
+    const totalItems = payload.totalItems;
+
+    client
+      .search(engineName, searchTerm, { page: { size: totalItems } })
+      .then(response => {
+        const data = response.results;
+
+        const wb = { SheetNames: [], Sheets: {} };
+        let dataJson = Object.values(data).map(tmpData => {
+          const cleanTmpData = [];
+
+          delete tmpData._meta;
+
+          Object.entries(tmpData).forEach(([key, value]) => {
+            cleanTmpData[key] = value.raw;
+          });
+
+          return cleanTmpData;
+        });
+
+        const ws = xlsx.utils.json_to_sheet(dataJson);
+        const wsName = "FceExport";
+        xlsx.utils.book_append_sheet(wb, ws, wsName);
+
+        const wbout = Buffer.from(
+          xlsx.write(wb, { bookType: "xlsx", type: "buffer" })
+        );
+
+        res.set({
+          "Content-type": "application/octet-stream"
+        });
+
+        res.send(wbout);
+      })
+      .catch(error => {
+        console.log(error);
+        res.send({
+          code: 500,
+          message: error
+        });
       });
-    }
-  });
-
-  let dataToExport = [];
-  let filename = "export";
-
-  if (data.query.isSIREN || data.query.isSIRET) {
-    // Common etablissement and entreprise fields
-
-    if (data.query.isSIREN) {
-      // Entreprise fields
-    } else if (data.query.isSIRET) {
-      // Etablissement fields
-    }
   } else {
-    // Search
-    filename = "recherche";
-
-    dataToExport = flattenResults.map(entreprise => {
-      const {
-        siret,
-        etat_etablissement,
-        nom_commercial,
-        prenom,
-        nom,
-        categorie_etablissement,
-        naf,
-        libelle_naf,
-        adresse_components
-      } = entreprise.etablissement;
-
-      const codePostal = adresse_components && adresse_components.code_postal;
-      const localite = adresse_components && adresse_components.localite;
-      return {
-        SIRET: siret,
-        État: etat_etablissement === "A" ? "Actif" : "Fermé",
-        "Raison Sociale / Nom": nom_commercial || `${prenom} ${nom}`,
-        "Cat. Etablissement": categorie_etablissement,
-        "Code Postal": codePostal + (localite ? ` (${localite})` : ""),
-        Activité: `${naf === null ? "" : naf} ${
-          libelle_naf === null ? "" : " - " + libelle_naf
-        }`
-      };
+    res.send({
+      code: 500,
+      error: "Un export ne peux pas être effectué sur une recherche vide"
     });
   }
-  const wb = { SheetNames: [], Sheets: {} };
-  wb.Props = {
-    Title: filename,
-    Author: "Direccte"
-  };
+});
 
-  const ws = XLSX.utils.json_to_sheet(dataToExport);
-  const wsName = "Export";
-  XLSX.utils.book_append_sheet(wb, ws, wsName);
-
-  const wbout = new Buffer(
-    XLSX.write(wb, { bookType: "xlsx", type: "buffer" })
-  );
-
-  const date = new Date()
-    .toISOString()
-    .replace(/T/, "_")
-    .replace(/\..+/, "")
-    .replace(/:/g, "-");
-
-  response.setHeader(
-    "Content-Disposition",
-    `attachment; filename=${filename}_${date}.xlsx`
-  );
-  response.type("application/octet-stream");
-  response.send(wbout);
+const sendResult = (data, response) => {
+  response.send(data);
 };
 
 router.get("/communes", withAuth, function(req, res) {

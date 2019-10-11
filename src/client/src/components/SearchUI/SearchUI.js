@@ -41,7 +41,8 @@ const SearchUI = () => {
           current,
           setCurrent,
           resultsPerPage,
-          totalPages
+          totalPages,
+          searchTerm
         }) =>
           isLoading ? (
             <div>Loading</div>
@@ -72,7 +73,8 @@ const SearchUI = () => {
                     itemsPerPage: resultsPerPage,
                     pages: totalPages,
                     items: totalResults,
-                    currentItems: results
+                    currentItems: results,
+                    searchTerm
                   }}
                   isLoading={isLoading}
                 />

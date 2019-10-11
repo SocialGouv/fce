@@ -21,7 +21,7 @@ const SearchResults = ({ results, pagination, isLoading }) => {
 
   function generateXlxs() {
     if (results && results.length) {
-      return new GenerateXlxs(results).download();
+      return new GenerateXlxs(pagination).download();
     }
   }
 

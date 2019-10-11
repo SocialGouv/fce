@@ -35,16 +35,26 @@ class EstablishmentView extends React.Component {
           <Data
             name="Unité de contrôle compétente (inspection du travail)"
             value={establishment.unite_controle_competente}
+            columnClasses={["is-8", "is-4"]}
           />
 
           <Data
-            name="Dernier contrôle / dernière visite au cours des 24 derniers mois (Pôle T, Pôle C et Pôle E - SEER)"
+            name={
+              <div>
+                <div>
+                  Dernier contrôle / dernière visite au cours des 24 derniers
+                  mois
+                </div>
+                <div>(Pôle T, Pôle C et Pôle E - SEER)</div>
+              </div>
+            }
             value={
               establishment.totalInteractions &&
               establishment.totalInteractions.total === 0
                 ? "pas de contrôle connu"
                 : ""
             }
+            columnClasses={["is-8", "is-4"]}
           />
 
           {establishment.interactions && establishment.interactions.length ? (

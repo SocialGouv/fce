@@ -396,7 +396,14 @@
     width: 25%;
 }
 
-/*** Bulma ***/
+/*** Text ***/
+.is-first-letter-uppercase {
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}
+
+/*** Bulma override ***/
 .is-secondary {
     @extend .is-info;
 }
@@ -405,4 +412,8 @@
     @extend .is-white;
     color: #808080 !important;
     border-color: #808080 !important;
+}
+
+.table {
+    @extend .is-striped;
 }

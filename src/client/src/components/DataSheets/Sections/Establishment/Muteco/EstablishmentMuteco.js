@@ -44,10 +44,14 @@ const EstablishmentMuteco = ({ establishment }) => {
         <span className="icon">
           <FontAwesomeIcon icon={faUmbrella} />
         </span>
-        <h2 className="title">Mutations Economiques</h2>
+        <h2 className="title">Mutations Économiques</h2>
       </div>
       <div className="section-datas">
-        <Data name="Activité partielle" value={hasActivitePartielle} />
+        <Data
+          name="Recours sur les 24 derniers mois"
+          value={hasActivitePartielle}
+          columnClasses={["is-8", "is-4"]}
+        />
         {hasActivitePartielle && (
           <table className="table is-hoverable is-bordered mt-2">
             <thead>
@@ -74,8 +78,8 @@ const EstablishmentMuteco = ({ establishment }) => {
                     <td>{numConvention}</td>
                     <td>{nbAvenants}</td>
                     <td>{<Value value={date} />}</td>
-                    <td>{nbHeuresAutorisees}</td>
-                    <td>{nbHeuresConsommees}</td>
+                    <td>{Math.round(nbHeuresAutorisees)}</td>
+                    <td>{Math.round(nbHeuresConsommees)}</td>
                     <td>{motif}</td>
                   </tr>
                 )
@@ -86,8 +90,12 @@ const EstablishmentMuteco = ({ establishment }) => {
               <tfoot>
                 <tr>
                   <th colSpan="3">Total : </th>
-                  <td>{totalActivitePartielle.nbHeuresAutorisees}</td>
-                  <td>{totalActivitePartielle.nbHeuresConsommees}</td>
+                  <td>
+                    {Math.round(totalActivitePartielle.nbHeuresAutorisees)}
+                  </td>
+                  <td>
+                    {Math.round(totalActivitePartielle.nbHeuresConsommees)}
+                  </td>
                   <td />
                 </tr>
               </tfoot>

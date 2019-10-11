@@ -1,5 +1,11 @@
-@import './../../../../App/variables';
+@import "./../../../../App/variables";
 
 .data {
+    display: flex;
+    align-items: center;
     border-bottom: solid 1px $grey-geyser;
+    & + .table,
+    .table + & {
+        margin-top: 2rem;
+    }
 }

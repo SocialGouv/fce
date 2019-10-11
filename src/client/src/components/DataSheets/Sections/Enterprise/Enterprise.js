@@ -43,7 +43,10 @@ class Enterprise extends React.Component {
                   { label: "Informations légales", link: "infos" },
                   { label: "Visites et contrôles", link: "direccte" },
                   { label: "Accords d'entreprise", link: "accords" },
-                  { label: "Activité partielle", link: "activite-partielle" },
+                  {
+                    label: "Mutations économiques",
+                    link: "activite-partielle"
+                  },
                   { label: "Données financières", link: "finances" },
                   { label: "Mandataires sociaux", link: "mandataires" }
                 ]}

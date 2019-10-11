@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faCircle, faCalendarCheck } from "@fortawesome/fontawesome-pro-solid";
-import { getLastDateInteraction } from "../../../../../helpers/Date";
 import _get from "lodash.get";
+import { getLastDateInteraction } from "../../../../../helpers/Date";
+import Data from "../Data";
 
 class EstablishmentView extends React.Component {
   constructor(props) {
@@ -75,25 +76,19 @@ class EstablishmentView extends React.Component {
           <h2 className="title">Visites et controles</h2>
         </div>
         <div className="section-datas">
-          <div className="direccte-excerpt">
-            <div className="direccte-excerpt--pole">
-              <span className="direccte-excerpt--pole-value">
-                {interactions.length}
-              </span>
-              <span className="direccte-ex cerpt--pole-key">
-                établissement{interactions.length > 1 && "s"} avec une
-                intervention
-              </span>
-            </div>
-          </div>
-          <table className="table is-striped direccte-interactions">
+          <Data
+            name="nb d'établissements avec une intervention"
+            value={interactions.length}
+            columnClasses={["is-9", "is-3"]}
+          />
+          <table className="table is-hoverable direccte-interactions">
             <thead>
               <tr>
-                <th>SIRET</th>
-                <th>Etat</th>
-                <th>Département</th>
-                <th>Commune</th>
-                <th>Dernière intervention</th>
+                <th className="th">SIRET</th>
+                <th className="th table__center-cell">État</th>
+                <th className="th">Département</th>
+                <th className="th">Commune</th>
+                <th className="th">Dernière intervention</th>
               </tr>
             </thead>
             <tbody>
@@ -104,7 +99,7 @@ class EstablishmentView extends React.Component {
                       {etab.siret}
                     </Link>
                   </td>
-                  <td>
+                  <td className="table__center-cell">
                     {etab.etat && (
                       <FontAwesomeIcon
                         className={

@@ -36,35 +36,35 @@ class ImportCsvShell extends Shell {
       terminal: true
     });
 
+    await new Promise((res, rej) => {
+      rlp.question(
+        `Le délimiteur par défaut est ${delimiter} souhaitez vous le remplacer ? (N/nouveau délimiteur) : `,
+        answer => {
+          if (answer.toUpperCase() !== "N" && answer !== "") {
+            delimiter = answer;
+          }
+
+          console.log(`Le délimiteur est : ${delimiter}`);
+          res();
+        }
+      );
+    });
+
+    await new Promise((res, rej) => {
+      rlp.question(
+        `Dans quelle table voulez vous importer le csv ? : `,
+        answer => {
+          tableName = answer;
+          res();
+        }
+      );
+    });
+
     let csvHeaders = [];
     const choseHeaderName = new Promise((resolve, reject) => {
       fs.createReadStream(completeFilePath)
-        .pipe(csv())
+        .pipe(csv({ separator: delimiter }))
         .on("headers", async headers => {
-          await new Promise((res, rej) => {
-            rlp.question(
-              `Le délimiteur par défaut est ${delimiter} souhaitez vous le remplacer ? (N/nouveau délimiteur) : `,
-              answer => {
-                if (answer.toUpperCase() !== "N" && answer !== "") {
-                  delimiter = answer;
-                }
-
-                console.log(`Le délimiteur est : ${delimiter}`);
-                res();
-              }
-            );
-          });
-
-          await new Promise((res, rej) => {
-            rlp.question(
-              `Dans quelle table voulez vous importer le csv ? : `,
-              answer => {
-                tableName = answer;
-                res();
-              }
-            );
-          });
-
           for await (let header of headers) {
             await new Promise((res, rej) => {
               rlp.question(
@@ -98,7 +98,7 @@ class ImportCsvShell extends Shell {
         .on("end", () => {
           console.log("-----------> Csv clean ! :)");
           console.log("Run import.");
-          const psqlQuery = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c "\\copy ${tableName}(${stringCsvHeaders}) FROM '${tmpFile}' with (format csv, header true, delimiter ',');"`;
+          const psqlQuery = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c "\\copy ${tableName}(${stringCsvHeaders}) FROM '${tmpFile}' with (format csv, header true, delimiter '${delimiter}');"`;
 
           execSync(psqlQuery);
           execSync(`rm ${tmpFile}`);

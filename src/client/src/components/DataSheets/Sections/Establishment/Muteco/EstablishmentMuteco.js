@@ -138,8 +138,8 @@ const EstablishmentMuteco = ({ establishment }) => {
               <thead>
                 <tr>
                   <th>Numéro de dossier</th>
-                  <th>Date d'enregistrement</th>
-                  <th>
+                  <th className="has-text-centered">Date d'enregistrement</th>
+                  <th className="has-text-centered">
                     Nombre maximum de ruptures de contrats de travail envisagées
                     dans l'établissement
                   </th>
@@ -148,19 +148,18 @@ const EstablishmentMuteco = ({ establishment }) => {
               <tbody>
                 {pseList.validsOrProbates.map((dossier, index) => (
                   <tr key={dossier.numero_de_dossier.concat(index)}>
-                    <td className="has-text-centered">
-                      <Value value={dossier.numero_de_dossier} empty="-" />
+                    <td className="w-25">
+                      <Value value={dossier.numero_de_dossier} />
                     </td>
-                    <td className="has-text-centered">
-                      <Value value={dossier.date_enregistrement} empty="-" />
+                    <td className="has-text-centered w-25">
+                      <Value value={dossier.date_enregistrement} />
                     </td>
-                    <td className="has-text-centered">
+                    <td className="has-text-centered w-50">
                       <Value
                         value={
                           dossier.contrats_ruptures_fin ||
                           dossier.contrats_ruptures_debut
                         }
-                        empty="-"
                         nonEmptyValues="0"
                       />
                     </td>
@@ -183,9 +182,9 @@ const EstablishmentMuteco = ({ establishment }) => {
               <thead>
                 <tr>
                   <th>Numéro de dossier</th>
-                  <th>Date d'enregistrement</th>
-                  <th>Type de RCC</th>
-                  <th>
+                  <th className="has-text-centered">Date d'enregistrement</th>
+                  <th className="has-text-centered">Type de RCC</th>
+                  <th className="has-text-centered">
                     Nombre maximum de ruptures de contrats de travail envisagées
                   </th>
                 </tr>
@@ -193,13 +192,13 @@ const EstablishmentMuteco = ({ establishment }) => {
               <tbody>
                 {rccList.validsOrProbates.map((dossier, index) => (
                   <tr key={`pse-${dossier.numero_de_dossier}-${index}`}>
-                    <td className="has-text-centered">
+                    <td className="w-25">
                       <Value value={dossier.numero_de_dossier} />
                     </td>
-                    <td className="has-text-centered">
+                    <td className="has-text-centered w-20">
                       <Value value={dossier.date_enregistrement} />
                     </td>
-                    <td className="has-text-centered">
+                    <td className="has-text-centered w-30">
                       <Value
                         value={
                           dossier.type_de_dossier &&

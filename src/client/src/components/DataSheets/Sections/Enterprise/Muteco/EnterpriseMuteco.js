@@ -63,66 +63,71 @@ const EnterpriseMuteco = ({ enterprise }) => {
             />
           )}
           {pseList.validsOrProbates && pseList.validsOrProbates.length && (
-            <table className="table mt-2">
-              <thead>
-                <tr>
-                  <th>Numéro de dossier</th>
-                  <th>Date d'enregistrement</th>
-                  <th>
-                    Situation juridique de l'entreprise au moment de la
-                    procédure
-                  </th>
-                  <th>Date du jugement</th>
-                  <th>
-                    Nombre maximum de ruptures de contrats de travail envisagées
-                  </th>
-                  <th>Nombre d'établissements impactés</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pseList.validsOrProbates.map((pse, index) => (
-                  <tr key={`pse-${pse.dossier.numero_de_dossier}-${index}`}>
-                    <td className="has-text-centered">
-                      <Value value={pse.dossier.numero_de_dossier} />
-                    </td>
-                    <td className="has-text-centered">
-                      <Value value={pse.dossier.date_enregistrement} />
-                    </td>
-                    <td className="has-text-centered">
-                      <Value value={pse.dossier.situation_juridique} />
-                    </td>
-                    <td className="has-text-centered">
-                      <Value
-                        value={
-                          pse.dossier.date_de_jugement
-                            ? pse.dossier.date_de_jugement
-                            : "-"
-                        }
-                      />
-                    </td>
-                    <td className="has-text-centered">
-                      <Value
-                        value={
-                          pse.establishments.contrats_ruptures_fin > 0
-                            ? countValueInArray(
-                                pse.establishments,
-                                "contrats_ruptures_fin"
-                              )
-                            : countValueInArray(
-                                pse.establishments,
-                                "contrats_ruptures_debut"
-                              )
-                        }
-                        nonEmptyValues="0"
-                      />
-                    </td>
-                    <td className="has-text-centered has-text-link">
-                      <Value value={pse.establishments.length} />
-                    </td>
+            <div className="is-overflow-x">
+              <table className="table mt-2 is-max-content">
+                <thead>
+                  <tr>
+                    <th>Numéro de dossier</th>
+                    <th className="has-text-centered">Date d'enregistrement</th>
+                    <th className="has-text-centered">
+                      Situation juridique de l'entreprise au moment de la
+                      procédure
+                    </th>
+                    <th className="has-text-centered">Date du jugement</th>
+                    <th className="has-text-centered">
+                      Nombre maximum de ruptures de contrats de travail
+                      envisagées
+                    </th>
+                    <th className="has-text-centered">
+                      Nombre d'établissements impactés
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {pseList.validsOrProbates.map((pse, index) => (
+                    <tr key={`pse-${pse.dossier.numero_de_dossier}-${index}`}>
+                      <td className="w-15">
+                        <Value value={pse.dossier.numero_de_dossier} />
+                      </td>
+                      <td className="has-text-centered w-10">
+                        <Value value={pse.dossier.date_enregistrement} />
+                      </td>
+                      <td className="has-text-centered w-15">
+                        <Value value={pse.dossier.situation_juridique} />
+                      </td>
+                      <td className="has-text-centered w-10">
+                        <Value
+                          value={
+                            pse.dossier.date_de_jugement
+                              ? pse.dossier.date_de_jugement
+                              : "-"
+                          }
+                        />
+                      </td>
+                      <td className="has-text-centered w-15">
+                        <Value
+                          value={
+                            pse.establishments.contrats_ruptures_fin > 0
+                              ? countValueInArray(
+                                  pse.establishments,
+                                  "contrats_ruptures_fin"
+                                )
+                              : countValueInArray(
+                                  pse.establishments,
+                                  "contrats_ruptures_debut"
+                                )
+                          }
+                          nonEmptyValues="0"
+                        />
+                      </td>
+                      <td className="has-text-centered has-text-link w-15">
+                        <Value value={pse.establishments.length} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </Subcategory>
         <Subcategory subtitle="RCC">
@@ -138,9 +143,9 @@ const EnterpriseMuteco = ({ enterprise }) => {
               <thead>
                 <tr>
                   <th>Numéro de dossier</th>
-                  <th>Date d'enregistrement</th>
-                  <th>Type de RCC</th>
-                  <th>
+                  <th className="has-text-centered">Date d'enregistrement</th>
+                  <th className="has-text-centered">Type de RCC</th>
+                  <th className="has-text-centered">
                     Nombre maximum de ruptures de contrats de travail envisagées
                   </th>
                 </tr>
@@ -148,13 +153,13 @@ const EnterpriseMuteco = ({ enterprise }) => {
               <tbody>
                 {rccList.validsOrProbates.map((rcc, index) => (
                   <tr key={`pse-${rcc.dossier.numero_de_dossier}-${index}`}>
-                    <td className="has-text-centered">
+                    <td className="w-25">
                       <Value value={rcc.dossier.numero_de_dossier} />
                     </td>
-                    <td className="has-text-centered">
+                    <td className="has-text-centered w-15">
                       <Value value={rcc.dossier.date_enregistrement} />
                     </td>
-                    <td className="has-text-centered">
+                    <td className="has-text-centered w-25">
                       <Value
                         value={
                           rcc.dossier.type_de_dossier &&

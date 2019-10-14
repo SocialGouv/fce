@@ -1,6 +1,7 @@
+require("dotenv").config();
 const { execSync } = require("child_process");
 const readline = require("readline");
-const config = require("config");
+const process = require("process");
 const csv = require("csv-parser");
 const fs = require("fs");
 const Shell = require("./Shell");
@@ -97,9 +98,7 @@ class ImportCsvShell extends Shell {
         .on("end", () => {
           console.log("-----------> Csv clean ! :)");
           console.log("Run import.");
-          const psqlQuery = `psql -h ${config.get("db.host")} -d ${config.get(
-            "db.database"
-          )} -U ${config.get("db.user")} -p ${config.get("db.password")}
+          const psqlQuery = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -p ${process.env.PG_PASSWORD}
         -c "\copy ${tableName}(${stringCsvHeaders}) FROM '${completeFilePath}'
         with (format csv, header true, delimiter ',');"`;
 

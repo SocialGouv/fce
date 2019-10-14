@@ -5,22 +5,7 @@ export default async (SIREN, rows) => {
     }
 
     const pseObject = pseRows
-      .map(pseRow => {
-        [
-          "numero_de_dossier",
-          "type_de_dossier",
-          "etat_du_dossier",
-          "situation_juridique",
-          "siret",
-          "date_de_jugement",
-          "date_enregistrement"
-        ].forEach(field => {
-          pseRow[field] =
-            typeof pseRow[field] === "string" && pseRow[field].trim();
-        });
-
-        return pseRow;
-      })
+      .map(pseRow => (typeof pseRow === "string" ? pseRow.trim() : pseRow))
       .reduce((acc, currentPse) => {
         const establishmentList =
           (acc[currentPse.numero_de_dossier] &&

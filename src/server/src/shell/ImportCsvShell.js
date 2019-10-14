@@ -1,6 +1,6 @@
 const { execSync } = require("child_process");
 const readline = require("readline");
-const process = require("process");
+const config = require("config");
 const csv = require("csv-parser");
 const fs = require("fs");
 const Shell = require("./Shell");
@@ -13,10 +13,11 @@ class ImportCsvShell extends Shell {
   async execute() {
     let fileName = this._args[0];
     let pathName = process.cwd();
+    const tmpFile = "/tmp/fce_import.csv";
     let completeFilePath = pathName + "/" + fileName;
 
     let delimiter = ",";
-    let databaseName = "default";
+    let tableName = "";
 
     if (
       !fileName ||
@@ -27,7 +28,7 @@ class ImportCsvShell extends Shell {
       return false;
     }
 
-    let writeStream = fs.createWriteStream("tmp.csv");
+    let writeStream = fs.createWriteStream(tmpFile);
     let rlp = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -43,7 +44,7 @@ class ImportCsvShell extends Shell {
             rlp.question(
               `Le délimiteur par défaut est ${delimiter} souhaitez vous le remplacer ? (N/nouveau délimiteur) : `,
               answer => {
-                if (answer.toUpperCase() !== "N") {
+                if (answer.toUpperCase() !== "N" && answer !== "") {
                   delimiter = answer;
                 }
 
@@ -55,9 +56,9 @@ class ImportCsvShell extends Shell {
 
           await new Promise((res, rej) => {
             rlp.question(
-              `Dans quelle database voulez vous importer le csv ? : `,
+              `Dans quelle table voulez vous importer le csv ? : `,
               answer => {
-                databaseName = answer;
+                tableName = answer;
                 res();
               }
             );
@@ -96,12 +97,14 @@ class ImportCsvShell extends Shell {
         .on("end", () => {
           console.log("-----------> Csv clean ! :)");
           console.log("Run import.");
-          const psqlQuery = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -p ${process.env.PG_PASSWORD}
-        -c "\copy ${databaseName}(${stringCsvHeaders}) FROM '${completeFilePath}' 
+          const psqlQuery = `psql -h ${config.get("db.host")} -d ${config.get(
+            "db.database"
+          )} -U ${config.get("db.user")} -p ${config.get("db.password")}
+        -c "\copy ${tableName}(${stringCsvHeaders}) FROM '${completeFilePath}'
         with (format csv, header true, delimiter ',');"`;
 
           execSync(psqlQuery);
-          execSync("rm tpm.csv");
+          execSync(`rm ${tmpFile}`);
         });
     });
   }

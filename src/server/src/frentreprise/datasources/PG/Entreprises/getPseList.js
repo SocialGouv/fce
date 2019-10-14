@@ -56,7 +56,7 @@ export default async (SIREN, rows) => {
         };
       }, {});
 
-    const pseArray = Object.values(pseObject).map(pse => pse);
+    const pseArray = Object.values(pseObject);
 
     return {
       liste_pse: pseArray

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { toI18nDate } from "../../../helpers/Date";
 
 export default ({
-  value = "-",
+  value,
   empty = "-",
   no = "Non",
   yes = "Oui",

@@ -22,10 +22,9 @@ const EnterpriseMuteco = ({ enterprise }) => {
         pse =>
           hasInclude(pse.dossier.type_de_dossier, ["PSE", "pse"]) &&
           pse.dossier.etat_du_dossier !== "en_cours_procedure" &&
-          (pse.dossier.type_de_dossier !== "pse" ||
-            pse.dossier.rupture_contrat_debut +
-              pse.dossier.rupture_contrat_fin !==
-              0)
+          pse.dossier.rupture_contrat_debut +
+            pse.dossier.rupture_contrat_fin !==
+            0
       )
   };
 
@@ -140,15 +139,10 @@ const EnterpriseMuteco = ({ enterprise }) => {
                 <tr>
                   <th>Numéro de dossier</th>
                   <th>Date d'enregistrement</th>
-                  <th>
-                    Situation juridique de l'entreprise au moment de la
-                    procédure
-                  </th>
-                  <th>Date du jugement</th>
+                  <th>Type de RCC</th>
                   <th>
                     Nombre maximum de ruptures de contrats de travail envisagées
                   </th>
-                  <th>Nombre d'établissements impactés</th>
                 </tr>
               </thead>
               <tbody>
@@ -161,14 +155,10 @@ const EnterpriseMuteco = ({ enterprise }) => {
                       <Value value={rcc.dossier.date_enregistrement} />
                     </td>
                     <td className="has-text-centered">
-                      <Value value={rcc.dossier.situation_juridique} />
-                    </td>
-                    <td className="has-text-centered">
                       <Value
                         value={
-                          rcc.dossier.date_de_jugement
-                            ? rcc.dossier.date_de_jugement
-                            : "-"
+                          rcc.dossier.type_de_dossier &&
+                          rcc.dossier.type_de_dossier.split(":")[1].trim()
                         }
                       />
                     </td>
@@ -187,9 +177,6 @@ const EnterpriseMuteco = ({ enterprise }) => {
                         }
                         nonEmptyValues="0"
                       />
-                    </td>
-                    <td className="has-text-centered has-text-link">
-                      <Value value={rcc.establishments.length} />
                     </td>
                   </tr>
                 ))}

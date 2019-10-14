@@ -40,7 +40,7 @@ const EnterpriseActivity = ({ enterprise, headOffice }) => {
               <ul className="rcs-observations">
                 {enterprise.rcs_observations.map(({ date, libelle }) => (
                   <li
-                    key={`rcs-obs-${date}`}
+                    key={`rcs-obs-${date}-${libelle}`}
                     className="rcs-observations-item"
                   >{`${toI18nDate(date, "L")} - ${libelle}`}</li>
                 ))}

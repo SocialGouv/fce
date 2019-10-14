@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Value from "../../../../shared/Value";
+import { Link } from "react-router-dom";
 import Data from "../../SharedComponents/Data";
+import Button from "../../../../shared/Button";
+import Value from "../../../../shared/Value";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faUsers } from "@fortawesome/fontawesome-pro-solid";
+import { faUsers, faSearch } from "@fortawesome/fontawesome-pro-solid";
 
 const EstablishmentRelationship = ({ establishment }) => {
   const { code_idcc, libelle_idcc } = establishment;
@@ -50,23 +52,27 @@ const EstablishmentRelationship = ({ establishment }) => {
             <table className="table is-hoverable">
               <thead>
                 <tr>
-                  <th className="th">Thématique</th>
-                  <th className="th">Nombre accords concernés</th>
-                  <th className="th">Date de signature du dernier accord</th>
+                  <th>Thématique</th>
+                  <th className="has-text-centered">
+                    Nombre accords concernés
+                  </th>
+                  <th className="has-text-centered">
+                    Date de signature du dernier accord
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {Config.get("accords").map(({ key, value }) => (
                   <tr key={`accord-${key}`}>
-                    <td>{value}</td>
-                    <td>
+                    <td className="w-40">{value}</td>
+                    <td className="has-text-centered">
                       <Value
                         value={_get(establishment, `accords.${key}.count`)}
                         empty="-"
                         nonEmptyValues={[0, "0"]}
                       />
                     </td>
-                    <td>
+                    <td className="has-text-centered">
                       <Value
                         value={_get(establishment, `accords.${key}.lastDate`)}
                         empty="-"
@@ -80,9 +86,17 @@ const EstablishmentRelationship = ({ establishment }) => {
             <Data
               name="Rechercher l'accord sur legifrance"
               value={
-                <a href={Config.get("legifranceSearchUrl") + raisonSociale}>
-                  Lancer la recherche
-                </a>
+                <Link
+                  to={{
+                    pathname: Config.get("legifranceSearchUrl") + raisonSociale
+                  }}
+                >
+                  <Button
+                    value="Lancer la recherche"
+                    icon={faSearch}
+                    buttonClasses={["is-outlined", "is-link"]}
+                  />
+                </Link>
               }
               columnClasses={["is-8", "is-4"]}
             />

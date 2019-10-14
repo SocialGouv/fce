@@ -4,7 +4,7 @@ import { toI18nDate } from "../../../helpers/Date";
 
 export default ({
   value,
-  empty,
+  empty = "-",
   no = "Non",
   yes = "Oui",
   dateFormat = "L",

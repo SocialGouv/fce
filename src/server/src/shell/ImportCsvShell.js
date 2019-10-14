@@ -98,9 +98,7 @@ class ImportCsvShell extends Shell {
         .on("end", () => {
           console.log("-----------> Csv clean ! :)");
           console.log("Run import.");
-          const psqlQuery = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -p ${process.env.PG_PASSWORD}
-        -c "\copy ${tableName}(${stringCsvHeaders}) FROM '${completeFilePath}'
-        with (format csv, header true, delimiter ',');"`;
+          const psqlQuery = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c "\\copy ${tableName}(${stringCsvHeaders}) FROM '${tmpFile}' with (format csv, header true, delimiter ',');"`;
 
           execSync(psqlQuery);
           execSync(`rm ${tmpFile}`);

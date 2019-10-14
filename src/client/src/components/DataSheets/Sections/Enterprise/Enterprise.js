@@ -55,7 +55,6 @@ class Enterprise extends React.Component {
               <Direccte enterprise={enterprise} />
               <Accords enterprise={enterprise} />
               <Muteco enterprise={enterprise} />
-              <ActivitePartielle enterprise={enterprise} />
               <Finances establishment={headOffice} />
               <Mandataires enterprise={enterprise} />
             </div>

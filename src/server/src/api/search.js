@@ -88,9 +88,7 @@ router.get("/search", withAuth, function(req, res) {
   });
 });
 
-router.post("/downloadCsv", withAuth, function(req, res) {
-  console.log("TEST BODY =>", req.body);
-
+router.post("/downloadXlsx", withAuth, function(req, res) {
   const payload = req.body.payload;
 
   if (payload && payload.searchTerm && payload.totalItems) {
@@ -98,7 +96,7 @@ router.post("/downloadCsv", withAuth, function(req, res) {
     const totalItems = payload.totalItems;
 
     client
-      .search(engineName, searchTerm, { page: { size: totalItems } })
+      .search(engineName, searchTerm, { page: { size: 1000 } })
       .then(response => {
         const data = response.results;
 

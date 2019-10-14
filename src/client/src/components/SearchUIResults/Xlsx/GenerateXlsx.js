@@ -11,7 +11,7 @@ class GenerateXlsx {
     const cleanData = await this.preparePayload({ ...this.props });
 
     Http.post(
-      "/downloadCsv",
+      "/downloadXlsx",
       {
         payload: cleanData
       },

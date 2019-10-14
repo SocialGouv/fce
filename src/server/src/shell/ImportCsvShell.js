@@ -86,11 +86,11 @@ class ImportCsvShell extends Shell {
     });
 
     choseHeaderName.then(() => {
-      let stringCsvHeaders = csvHeaders.join(delimiter);
+      let stringCsvHeaders = csvHeaders.join(",");
       writeStream.write(csvHeaders.join(delimiter) + "\n");
 
       fs.createReadStream(completeFilePath)
-        .pipe(csv())
+        .pipe(csv({ separator: delimiter }))
         .on("data", rawData => {
           const raw = Object.values(rawData).join(delimiter);
           writeStream.write(raw + "\n");

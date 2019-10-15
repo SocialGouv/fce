@@ -1,11 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import Button from "../../../../shared/Button";
 import Data from "../../SharedComponents/Data";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faUsers, faCircle } from "@fortawesome/fontawesome-pro-solid";
+import {
+  faUsers,
+  faCircle,
+  faSearch
+} from "@fortawesome/fontawesome-pro-solid";
 
 const Accords = ({
   enterprise: {
@@ -102,9 +107,18 @@ const Accords = ({
             <Data
               name="Rechercher l'accord sur legifrance"
               value={
-                <a href={Config.get("legifranceSearchUrl") + raisonSociale}>
-                  Lancer la recherche
-                </a>
+                <Link
+                  to={{
+                    pathname: Config.get("legifranceSearchUrl") + raisonSociale
+                  }}
+                  target="_blank"
+                >
+                  <Button
+                    value="Lancer la recherche"
+                    icon={faSearch}
+                    buttonClasses={["is-outlined", "is-link"]}
+                  />
+                </Link>
               }
               columnClasses={["is-9", "is-3"]}
             />

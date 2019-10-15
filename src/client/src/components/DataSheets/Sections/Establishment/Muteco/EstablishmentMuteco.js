@@ -125,7 +125,7 @@ const EstablishmentMuteco = ({ establishment }) => {
             </table>
           )}
         </Subcategory>
-        <Subcategory subtitle="PSE">
+        <Subcategory subtitle="Plan de sauvegarde de l'emploi">
           <Data name="Procédure en cours" value={!!pseList.inProcess} />
           {pseList.inProcess && (
             <Data
@@ -169,7 +169,7 @@ const EstablishmentMuteco = ({ establishment }) => {
             </table>
           )}
         </Subcategory>
-        <Subcategory subtitle="RCC">
+        <Subcategory subtitle="Rupture conventionnelle collective">
           <Data name="Procédure en cours" value={!!rccList.inProcess} />
           {rccList.inProcess && (
             <Data
@@ -177,7 +177,7 @@ const EstablishmentMuteco = ({ establishment }) => {
               value={rccList.inProcess.dossier.date_enregistrement}
             />
           )}
-          {rccList.validsOrProbates && rccList.validsOrProbates.length && (
+          {rccList.validsOrProbates && rccList.validsOrProbates.length ? (
             <table className="table mt-2">
               <thead>
                 <tr>
@@ -220,6 +220,8 @@ const EstablishmentMuteco = ({ establishment }) => {
                 ))}
               </tbody>
             </table>
+          ) : (
+            ""
           )}
         </Subcategory>
       </div>

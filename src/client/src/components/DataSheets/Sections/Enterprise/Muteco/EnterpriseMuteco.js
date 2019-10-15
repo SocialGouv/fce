@@ -54,7 +54,7 @@ const EnterpriseMuteco = ({ enterprise }) => {
         <h2 className="title">Mutations Economiques</h2>
       </div>
       <div className="section-datas">
-        <Subcategory subtitle="PSE">
+        <Subcategory subtitle="Plan de sauvegarde de l'emploi">
           <Data name="Procédure en cours" value={!!pseList.inProcess} />
           {pseList.inProcess && (
             <Data
@@ -62,7 +62,7 @@ const EnterpriseMuteco = ({ enterprise }) => {
               value={pseList.inProcess.dossier.date_enregistrement}
             />
           )}
-          {pseList.validsOrProbates && pseList.validsOrProbates.length && (
+          {pseList.validsOrProbates && pseList.validsOrProbates.length ? (
             <div className="is-overflow-x">
               <table className="table mt-2 is-max-content">
                 <thead>
@@ -128,9 +128,11 @@ const EnterpriseMuteco = ({ enterprise }) => {
                 </tbody>
               </table>
             </div>
+          ) : (
+            ""
           )}
         </Subcategory>
-        <Subcategory subtitle="RCC">
+        <Subcategory subtitle="Rupture conventionnelle collective">
           <Data name="Procédure en cours" value={!!rccList.inProcess} />
           {rccList.inProcess && (
             <Data
@@ -138,7 +140,7 @@ const EnterpriseMuteco = ({ enterprise }) => {
               value={rccList.inProcess.dossier.date_enregistrement}
             />
           )}
-          {rccList.validsOrProbates && rccList.validsOrProbates.length && (
+          {rccList.validsOrProbates && rccList.validsOrProbates.length ? (
             <table className="table mt-2">
               <thead>
                 <tr>
@@ -187,6 +189,8 @@ const EnterpriseMuteco = ({ enterprise }) => {
                 ))}
               </tbody>
             </table>
+          ) : (
+            ""
           )}
         </Subcategory>
       </div>

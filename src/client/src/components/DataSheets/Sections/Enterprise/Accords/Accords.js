@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import Button from "../../../../shared/Button";
+import LinkButton from "../../../../shared/LinkButton";
 import Data from "../../SharedComponents/Data";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";
@@ -107,20 +107,16 @@ const Accords = ({
             <Data
               name="Rechercher l'accord sur legifrance"
               value={
-                <Link
-                  to={{
+                <LinkButton
+                  value="Lancer la recherche"
+                  isTargetBlank
+                  icon={faSearch}
+                  link={{
                     pathname: Config.get("legifranceSearchUrl") + raisonSociale
                   }}
-                  target="_blank"
-                >
-                  <Button
-                    value="Lancer la recherche"
-                    icon={faSearch}
-                    buttonClasses={["is-outlined", "is-link"]}
-                  />
-                </Link>
+                />
               }
-              columnClasses={["is-9", "is-3"]}
+              columnClasses={["is-8", "is-4"]}
             />
           </>
         )}

@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
-import Button from "../../../../shared/Button";
+import LinkButton from "../../../../shared/LinkButton";
 import Value from "../../../../shared/Value";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";
@@ -88,19 +87,15 @@ const EstablishmentRelationship = ({ establishment }) => {
               <Data
                 name="Rechercher l'accord sur legifrance"
                 value={
-                  <Link
-                    to={{
+                  <LinkButton
+                    value="Lancer la recherche"
+                    isTargetBlank
+                    icon={faSearch}
+                    link={{
                       pathname:
                         Config.get("legifranceSearchUrl") + raisonSociale
                     }}
-                    target="_blank"
-                  >
-                    <Button
-                      value="Lancer la recherche"
-                      icon={faSearch}
-                      buttonClasses={["is-outlined", "is-link"]}
-                    />
-                  </Link>
+                  />
                 }
                 columnClasses={["is-8", "is-4"]}
               />

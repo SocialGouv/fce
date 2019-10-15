@@ -5,7 +5,14 @@ export default async (SIREN, rows) => {
     }
 
     const pseObject = pseRows
-      .map(pseRow => (typeof pseRow === "string" ? pseRow.trim() : pseRow))
+      .map(pseRow => {
+        Object.entries(pseRow).forEach(([key, value]) => {
+          if (typeof pseRow[key] === "string") {
+            pseRow[key] = pseRow[key].trim();
+          }
+        });
+        return pseRow;
+      })
       .reduce((acc, currentPse) => {
         const establishmentList =
           (acc[currentPse.numero_de_dossier] &&

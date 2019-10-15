@@ -1,12 +1,13 @@
 import React from "react";
 import Proptypes from "prop-types";
+import PSE from "./PSE";
+import RCC from "./RCC";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import _get from "lodash.get";
 import Data from "../../SharedComponents/Data";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faUmbrella } from "@fortawesome/fontawesome-pro-solid";
-import { hasInclude } from "../../../../../helpers/utils";
 
 const EstablishmentMuteco = ({ establishment }) => {
   const hasActivitePartielle = !!_get(establishment, `activite_partielle`);
@@ -22,42 +23,6 @@ const EstablishmentMuteco = ({ establishment }) => {
       },
       { nbHeuresAutorisees: 0, nbHeuresConsommees: 0 }
     );
-
-  const hasPse = establishment.pse && establishment.pse.length;
-
-  const pseList = {
-    inProcess:
-      hasPse &&
-      establishment.pse.find(
-        pse =>
-          hasInclude(pse.type_de_dossier, ["PSE", "pse"]) &&
-          pse.etat_du_dossier === "en_cours_procedure"
-      ),
-    validsOrProbates:
-      hasPse &&
-      establishment.pse.filter(
-        pse =>
-          hasInclude(pse.type_de_dossier, ["PSE", "pse"]) &&
-          pse.etat_du_dossier !== "en_cours_procedure"
-      )
-  };
-
-  const rccList = {
-    inProcess:
-      hasPse &&
-      establishment.pse.find(
-        pse =>
-          hasInclude(pse.type_de_dossier, ["RCC", "rcc"]) &&
-          pse.etat_du_dossier === "en_cours_procedure"
-      ),
-    validsOrProbates:
-      hasPse &&
-      establishment.pse.filter(
-        pse =>
-          hasInclude(pse.type_de_dossier, ["RCC", "rcc"]) &&
-          pse.etat_du_dossier !== "en_cours_procedure"
-      )
-  };
 
   return (
     <section id="muteco" className="data-sheet__section">
@@ -125,105 +90,8 @@ const EstablishmentMuteco = ({ establishment }) => {
             </table>
           )}
         </Subcategory>
-        <Subcategory subtitle="Plan de sauvegarde de l'emploi">
-          <Data name="Procédure en cours" value={!!pseList.inProcess} />
-          {pseList.inProcess && (
-            <Data
-              name="Date d'enregistrement"
-              value={pseList.inProcess.date_enregistrement}
-            />
-          )}
-          {pseList.validsOrProbates && (
-            <table className="table mt-2">
-              <thead>
-                <tr>
-                  <th>Numéro de dossier</th>
-                  <th className="has-text-centered">Date d'enregistrement</th>
-                  <th className="has-text-centered">
-                    Nombre maximum de ruptures de contrats de travail envisagées
-                    dans l'établissement
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {pseList.validsOrProbates.map((dossier, index) => (
-                  <tr key={dossier.numero_de_dossier.concat(index)}>
-                    <td className="w-25">
-                      <Value value={dossier.numero_de_dossier} />
-                    </td>
-                    <td className="has-text-centered w-25">
-                      <Value value={dossier.date_enregistrement} />
-                    </td>
-                    <td className="has-text-centered w-50">
-                      <Value
-                        value={
-                          dossier.contrats_ruptures_fin ||
-                          dossier.contrats_ruptures_debut
-                        }
-                        nonEmptyValues="0"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </Subcategory>
-        <Subcategory subtitle="Rupture conventionnelle collective">
-          <Data name="Procédure en cours" value={!!rccList.inProcess} />
-          {rccList.inProcess && (
-            <Data
-              name="Date d'enregistrement"
-              value={rccList.inProcess.dossier.date_enregistrement}
-            />
-          )}
-          {rccList.validsOrProbates && rccList.validsOrProbates.length ? (
-            <table className="table mt-2">
-              <thead>
-                <tr>
-                  <th>Numéro de dossier</th>
-                  <th className="has-text-centered">Date d'enregistrement</th>
-                  <th className="has-text-centered">Type de RCC</th>
-                  <th className="has-text-centered">
-                    Nombre maximum de ruptures de contrats de travail envisagées
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {rccList.validsOrProbates.map((dossier, index) => (
-                  <tr key={`pse-${dossier.numero_de_dossier}-${index}`}>
-                    <td className="w-25">
-                      <Value value={dossier.numero_de_dossier} />
-                    </td>
-                    <td className="has-text-centered w-20">
-                      <Value value={dossier.date_enregistrement} />
-                    </td>
-                    <td className="has-text-centered w-30">
-                      <Value
-                        value={
-                          dossier.type_de_dossier &&
-                          dossier.type_de_dossier.split(":")[1].trim()
-                        }
-                      />
-                    </td>
-                    <td className="has-text-centered">
-                      <Value
-                        value={
-                          dossier.contrats_ruptures_fin ||
-                          dossier.contrats_ruptures_debut
-                        }
-                        empty="-"
-                        nonEmptyValues="0"
-                      />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            ""
-          )}
-        </Subcategory>
+        <PSE establishment={establishment} />
+        <RCC establishment={establishment} />
       </div>
     </section>
   );

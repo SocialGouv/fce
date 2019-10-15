@@ -14,7 +14,7 @@ pipeline {
     stage('Init') {
       when {
         anyOf {
-          branch 'develop';
+          branch 'feature/implements_ansible_deployment';
           branch 'master'
         }
       }
@@ -32,7 +32,7 @@ pipeline {
       when {
         anyOf {
           branch 'develop';
-          branch 'master'
+          branch 'feature/implements_ansible_deployment'
         }
       }
       steps {
@@ -47,14 +47,15 @@ pipeline {
     stage('Deploy staging') {
       when {
         anyOf {
-          branch 'develop'
+          branch 'feature/implements_ansible_deployment'
         }
       }
       steps {
         echo "Deploying $BRANCH_NAME from $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
-            .c42/scripts/deploy.sh
+            cd .c42/deployment
+            docker-compose run --rm deployment ansible-playbook /root/fce-ppd.yml -i /root/hosts
           '''
         }
       }
@@ -87,7 +88,8 @@ pipeline {
         echo "Deploying $BRANCH_NAME from $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
           sh '''
-            .c42/scripts/deploy-prod.sh
+            cd .c42/deployment
+            docker-compose run --rm deployment ansible-playbook /root/fce-prod.yml -i /root/hosts
           '''
         }
       }

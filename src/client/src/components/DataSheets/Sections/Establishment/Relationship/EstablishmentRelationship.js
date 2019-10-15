@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Data from "../../SharedComponents/Data";
+import Subcategory from "../../SharedComponents/Subcategory";
 import Button from "../../../../shared/Button";
 import Value from "../../../../shared/Value";
 import Config from "../../../../../services/Config";
@@ -28,80 +29,84 @@ const EstablishmentRelationship = ({ establishment }) => {
         <h2 className="title">Relation travail</h2>
       </div>
       <div className="section-datas">
-        <Data
-          name="Convention collective (IDCC)"
-          value={`${code_idcc ? code_idcc : ""} - ${
-            libelle_idcc ? libelle_idcc : ""
-          }`}
-          columnClasses={["is-8", "is-4"]}
-        />
-        <Data
-          name="Nombre total d'accords d'entreprise déposés depuis 1980"
-          value={nbAccords}
-          emptyValue="aucun accord connu"
-          columnClasses={["is-8", "is-4"]}
-        />
-        {nbAccords > 0 && (
-          <>
-            <Data
-              name="Date de signature du dernier accord d'entreprise déposé"
-              value={_get(establishment, "accords.total.lastDate")}
-              emptyValue="aucun accord connu"
-              columnClasses={["is-8", "is-4"]}
-            />
-            <table className="table is-hoverable">
-              <thead>
-                <tr>
-                  <th>Thématique</th>
-                  <th className="has-text-centered">
-                    Nombre accords concernés
-                  </th>
-                  <th className="has-text-centered">
-                    Date de signature du dernier accord
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {Config.get("accords").map(({ key, value }) => (
-                  <tr key={`accord-${key}`}>
-                    <td className="w-40">{value}</td>
-                    <td className="has-text-centered">
-                      <Value
-                        value={_get(establishment, `accords.${key}.count`)}
-                        empty="-"
-                        nonEmptyValues={[0, "0"]}
-                      />
-                    </td>
-                    <td className="has-text-centered">
-                      <Value
-                        value={_get(establishment, `accords.${key}.lastDate`)}
-                        empty="-"
-                      />
-                    </td>
+        <Subcategory subtitle="Convention collective">
+          <div>
+            <Value value={code_idcc && code_idcc} />
+            <span>{code_idcc && " - "}</span>
+            <Value value={libelle_idcc && libelle_idcc} empty="" />
+          </div>
+        </Subcategory>
+        <Subcategory subtitle="Accords d'entreprise">
+          <Data
+            name="Nombre total d'accords d'entreprise déposés depuis 1980"
+            value={nbAccords}
+            emptyValue="aucun accord connu"
+            columnClasses={["is-8", "is-4"]}
+          />
+          {nbAccords > 0 && (
+            <>
+              <Data
+                name="Date de signature du dernier accord d'entreprise déposé"
+                value={_get(establishment, "accords.total.lastDate")}
+                emptyValue="aucun accord connu"
+                columnClasses={["is-8", "is-4"]}
+              />
+              <table className="table is-hoverable">
+                <thead>
+                  <tr>
+                    <th>Thématique</th>
+                    <th className="has-text-centered">
+                      Nombre accords concernés
+                    </th>
+                    <th className="has-text-centered">
+                      Date de signature du dernier accord
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {Config.get("accords").map(({ key, value }) => (
+                    <tr key={`accord-${key}`}>
+                      <td className="w-40">{value}</td>
+                      <td className="has-text-centered">
+                        <Value
+                          value={_get(establishment, `accords.${key}.count`)}
+                          empty="-"
+                          nonEmptyValues={[0, "0"]}
+                        />
+                      </td>
+                      <td className="has-text-centered">
+                        <Value
+                          value={_get(establishment, `accords.${key}.lastDate`)}
+                          empty="-"
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
 
-            <Data
-              name="Rechercher l'accord sur legifrance"
-              value={
-                <Link
-                  to={{
-                    pathname: Config.get("legifranceSearchUrl") + raisonSociale
-                  }}
-                >
-                  <Button
-                    value="Lancer la recherche"
-                    icon={faSearch}
-                    buttonClasses={["is-outlined", "is-link"]}
-                  />
-                </Link>
-              }
-              columnClasses={["is-8", "is-4"]}
-            />
-          </>
-        )}
+              <Data
+                name="Rechercher l'accord sur legifrance"
+                value={
+                  <Link
+                    to={{
+                      pathname:
+                        Config.get("legifranceSearchUrl") + raisonSociale
+                    }}
+                    target="_blank"
+                  >
+                    <Button
+                      value="Lancer la recherche"
+                      icon={faSearch}
+                      buttonClasses={["is-outlined", "is-link"]}
+                    />
+                  </Link>
+                }
+                columnClasses={["is-8", "is-4"]}
+              />
+            </>
+          )}
+        </Subcategory>
       </div>
     </section>
   );

@@ -7,14 +7,7 @@ const express = require("express");
 const xlsx = require("xlsx");
 const router = express.Router();
 const config = require("config");
-
 const AppSearchClient = require("@elastic/app-search-node");
-/** Create App-search client */
-const apiKey = config.elasticIndexer.appsearch_apiKey;
-const baseUrlFn = () => config.elasticIndexer.appsearch_address;
-const engineName = config.elasticIndexer.appsearch_engineName;
-const client = new AppSearchClient(undefined, apiKey, baseUrlFn);
-/** End creating App-search client */
 
 const frentreprise = require("frentreprise");
 
@@ -24,6 +17,12 @@ const logError = (data, err) => {
   try {
     this.data.message = err.toString();
   } catch (Exception) {}
+};
+
+const getAppSearchClient = () => {
+  const apiKey = config.elasticIndexer.appsearch_apiKey;
+  const baseUrlFn = () => config.elasticIndexer.appsearch_address;
+  return new AppSearchClient(undefined, apiKey, baseUrlFn);
 };
 
 router.get("/entity", withAuth, function(req, res) {
@@ -88,58 +87,73 @@ router.get("/search", withAuth, function(req, res) {
   });
 });
 
-router.post("/downloadXlsx", withAuth, function(req, res) {
+router.post("/downloadXlsx", withAuth, async function(req, res) {
   const payload = req.body.payload;
 
-  if (payload && payload.searchTerm && payload.totalItems) {
-    const searchTerm = payload.searchTerm;
-    const totalItems = payload.totalItems;
-
-    client
-      .search(engineName, searchTerm, { page: { size: 1000 } })
-      .then(response => {
-        const data = response.results;
-
-        const wb = { SheetNames: [], Sheets: {} };
-        let dataJson = Object.values(data).map(tmpData => {
-          const cleanTmpData = [];
-
-          delete tmpData._meta;
-
-          Object.entries(tmpData).forEach(([key, value]) => {
-            cleanTmpData[key] = value.raw;
-          });
-
-          return cleanTmpData;
-        });
-
-        const ws = xlsx.utils.json_to_sheet(dataJson);
-        const wsName = "FceExport";
-        xlsx.utils.book_append_sheet(wb, ws, wsName);
-
-        const wbout = Buffer.from(
-          xlsx.write(wb, { bookType: "xlsx", type: "buffer" })
-        );
-
-        res.set({
-          "Content-type": "application/octet-stream"
-        });
-
-        res.send(wbout);
-      })
-      .catch(error => {
-        console.log(error);
-        res.send({
-          code: 500,
-          message: error
-        });
-      });
-  } else {
-    res.send({
+  if (!payload || !payload.searchTerm || !payload.totalItems) {
+    return res.send({
       code: 500,
       error: "Un export ne peux pas être effectué sur une recherche vide"
     });
   }
+
+  const searchTerm = payload.searchTerm;
+  const totalItems = payload.totalItems;
+  const client = getAppSearchClient();
+  const engineName = config.get("elasticIndexer.appsearch_engineName");
+  const pageLimit = config.get("elasticIndexer.appsearch_pageLimit");
+  const pages = Math.ceil(totalItems / pageLimit);
+
+  let establishments = [];
+
+  for (let page = 1; page <= pages; page++) {
+    try {
+      const response = await client.search(engineName, searchTerm, {
+        page: { current: page, size: pageLimit }
+      });
+
+      establishments = [...establishments, ...response.results];
+    } catch (error) {
+      console.error(error);
+      res.send({
+        code: 500,
+        message: error.message
+      });
+    }
+  }
+
+  if (!establishments.length) {
+    return res.send({
+      code: 500,
+      error: "Un export ne peux pas être effectué sur une recherche vide"
+    });
+  }
+
+  const wb = { SheetNames: [], Sheets: {} };
+  const dataJson = Object.values(establishments).map(tmpData => {
+    const cleanTmpData = [];
+    delete tmpData._meta;
+
+    Object.entries(tmpData).forEach(([key, value]) => {
+      cleanTmpData[key] = value.raw;
+    });
+
+    return cleanTmpData;
+  });
+
+  const ws = xlsx.utils.json_to_sheet(dataJson);
+  const wsName = "FceExport";
+  xlsx.utils.book_append_sheet(wb, ws, wsName);
+
+  const wbout = Buffer.from(
+    xlsx.write(wb, { bookType: "xlsx", type: "buffer" })
+  );
+
+  res.set({
+    "Content-type": "application/octet-stream"
+  });
+
+  res.send(wbout);
 });
 
 const sendResult = (data, response) => {

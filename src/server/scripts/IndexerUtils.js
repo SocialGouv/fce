@@ -32,7 +32,7 @@ class IndexerUtils {
     tasks.push(
       limit(() =>
         this.processData(establishmentResultCursor, PgClient).catch(error =>
-          console.log(error)
+          console.error(error)
         )
       )
     );
@@ -44,14 +44,18 @@ class IndexerUtils {
       establishmentResultCursor.read(
         config.elasticIndexer.cursor_size,
         (error, result) => {
-          if (error) console.log(error);
+          if (error) {
+            console.error(error);
+            return false;
+          }
 
-          console.log(result.length);
+          console.log({ results: result.length });
+
           if (result.length !== 0) {
             tasks.push(
               limit(() =>
                 this.processData(establishmentResultCursor, PgClient).catch(
-                  error => console.log(error)
+                  error => console.error(error)
                 )
               )
             );
@@ -73,12 +77,12 @@ class IndexerUtils {
                     resolve();
                   })
                   .catch(error => {
-                    console.log(error);
+                    console.error(error);
                     reject();
                   });
               })
               .catch(error => {
-                console.log(error);
+                console.error(error);
               });
           } else {
             establishmentResultCursor.close(() => {
@@ -97,7 +101,7 @@ class IndexerUtils {
                     PgClient.release();
                     resolve();
                   })
-                  .catch(error => console.log(error));
+                  .catch(error => console.error(error));
               } else {
                 PgClient.release();
                 resolve();

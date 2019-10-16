@@ -55,15 +55,8 @@ const SearchUI = ({ divisionsNaf }) => {
           current,
           setCurrent,
           resultsPerPage,
-          totalPages,
-          filters,
-          addFilter,
-          removeFilter,
-          searchTerm,
-          resultSearchTerm
+          totalPages
         }) => {
-          console.log({ WithSearchFilters: filters });
-
           return (
             <div className="App">
               <div className="app-search pb-4">

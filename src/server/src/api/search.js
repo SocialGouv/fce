@@ -4,8 +4,10 @@ import Departements from "../models/Departements";
 import withAuth from "../middlewares/auth";
 
 const express = require("express");
-const XLSX = require("xlsx");
+const xlsx = require("xlsx");
 const router = express.Router();
+const config = require("config");
+const AppSearchClient = require("@elastic/app-search-node");
 
 const frentreprise = require("frentreprise");
 
@@ -15,6 +17,12 @@ const logError = (data, err) => {
   try {
     this.data.message = err.toString();
   } catch (Exception) {}
+};
+
+const getAppSearchClient = () => {
+  const apiKey = config.elasticIndexer.appsearch_apiKey;
+  const baseUrlFn = () => config.elasticIndexer.appsearch_address;
+  return new AppSearchClient(undefined, apiKey, baseUrlFn);
 };
 
 router.get("/entity", withAuth, function(req, res) {
@@ -44,7 +52,7 @@ router.get("/entity", withAuth, function(req, res) {
   });
 });
 
-router.get("/search(.:format)?", withAuth, function(req, res) {
+router.get("/search", withAuth, function(req, res) {
   const query = (req.query["q"] || "").trim();
   const format = req.params["format"] || "json";
   const page = format === "xlsx" ? null : +req.query["page"] || 1;
@@ -79,93 +87,77 @@ router.get("/search(.:format)?", withAuth, function(req, res) {
   });
 });
 
-const sendResult = (data, response) => {
-  if (data.query.format === "xlsx") {
-    sendResultXlsx(data, response);
-  } else {
-    response.send(data);
-  }
-};
+router.post("/downloadXlsx", withAuth, async function(req, res) {
+  const payload = req.body.payload;
 
-const sendResultXlsx = (data, response) => {
-  let flattenResults = [];
-
-  data.results.forEach(enterprise => {
-    if (Array.isArray(enterprise.etablissements)) {
-      enterprise.etablissements.forEach(establishment => {
-        flattenResults.push({ ...enterprise, etablissement: establishment });
-      });
-    }
-  });
-
-  let dataToExport = [];
-  let filename = "export";
-
-  if (data.query.isSIREN || data.query.isSIRET) {
-    // Common etablissement and entreprise fields
-
-    if (data.query.isSIREN) {
-      // Entreprise fields
-    } else if (data.query.isSIRET) {
-      // Etablissement fields
-    }
-  } else {
-    // Search
-    filename = "recherche";
-
-    dataToExport = flattenResults.map(entreprise => {
-      const {
-        siret,
-        etat_etablissement,
-        nom_commercial,
-        prenom,
-        nom,
-        categorie_etablissement,
-        naf,
-        libelle_naf,
-        adresse_components
-      } = entreprise.etablissement;
-
-      const codePostal = adresse_components && adresse_components.code_postal;
-      const localite = adresse_components && adresse_components.localite;
-      return {
-        SIRET: siret,
-        État: etat_etablissement === "A" ? "Actif" : "Fermé",
-        "Raison Sociale / Nom": nom_commercial || `${prenom} ${nom}`,
-        "Cat. Etablissement": categorie_etablissement,
-        "Code Postal": codePostal + (localite ? ` (${localite})` : ""),
-        Activité: `${naf === null ? "" : naf} ${
-          libelle_naf === null ? "" : " - " + libelle_naf
-        }`
-      };
+  if (!payload || !payload.searchTerm || !payload.totalItems) {
+    return res.send({
+      code: 500,
+      error: "Un export ne peux pas être effectué sur une recherche vide"
     });
   }
+
+  const searchTerm = payload.searchTerm;
+  const totalItems = payload.totalItems;
+  const client = getAppSearchClient();
+  const engineName = config.get("elasticIndexer.appsearch_engineName");
+  const pageLimit = config.get("elasticIndexer.appsearch_pageLimit");
+  const pages = Math.ceil(totalItems / pageLimit);
+
+  let establishments = [];
+
+  for (let page = 1; page <= pages; page++) {
+    try {
+      const response = await client.search(engineName, searchTerm, {
+        page: { current: page, size: pageLimit }
+      });
+
+      establishments = [...establishments, ...response.results];
+    } catch (error) {
+      console.error(error);
+      res.send({
+        code: 500,
+        message: error.message
+      });
+    }
+  }
+
+  if (!establishments.length) {
+    return res.send({
+      code: 500,
+      error: "Un export ne peux pas être effectué sur une recherche vide"
+    });
+  }
+
   const wb = { SheetNames: [], Sheets: {} };
-  wb.Props = {
-    Title: filename,
-    Author: "Direccte"
-  };
+  const dataJson = Object.values(establishments).map(tmpData => {
+    const cleanTmpData = [];
+    delete tmpData._meta;
 
-  const ws = XLSX.utils.json_to_sheet(dataToExport);
-  const wsName = "Export";
-  XLSX.utils.book_append_sheet(wb, ws, wsName);
+    Object.entries(tmpData).forEach(([key, value]) => {
+      cleanTmpData[key] = value.raw;
+    });
 
-  const wbout = new Buffer(
-    XLSX.write(wb, { bookType: "xlsx", type: "buffer" })
+    return cleanTmpData;
+  });
+
+  const ws = xlsx.utils.json_to_sheet(dataJson);
+  const wsName = "FceExport";
+  xlsx.utils.book_append_sheet(wb, ws, wsName);
+
+  const wbout = Buffer.from(
+    xlsx.write(wb, { bookType: "xlsx", type: "buffer" })
   );
 
-  const date = new Date()
-    .toISOString()
-    .replace(/T/, "_")
-    .replace(/\..+/, "")
-    .replace(/:/g, "-");
+  res.set({
+    "Content-type": "application/octet-stream"
+  });
 
-  response.setHeader(
-    "Content-Disposition",
-    `attachment; filename=${filename}_${date}.xlsx`
-  );
-  response.type("application/octet-stream");
-  response.send(wbout);
+  res.send(wbout);
+});
+
+const sendResult = (data, response) => {
+  response.send(data);
 };
 
 router.get("/communes", withAuth, function(req, res) {

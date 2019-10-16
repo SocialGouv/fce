@@ -41,11 +41,12 @@ const config = {
     expire: process.env.JWT_EXPIRE
   },
   elasticIndexer: {
-    appsearch_address: "http://appsearch:3002/api/as/v1/",
-    appsearch_apiKey: "private-tjw1wdv9yoqqzzzivb9netnx",
-    appsearch_engineName: "fce",
-    appsearch_concurencyLimit: 2,
-    client_address: "http://elasticsearch:9200/",
+    appsearch_address: process.env.JWT_APPSEARCH_ADDRRESS,
+    appsearch_apiKey: process.env.JWT_APPSEARCH_API_KEY,
+    appsearch_engineName: process.env.JWT_APPSEARCH_ENGINE_NAME,
+    appsearch_concurencyLimit: 3,
+    appsearch_pageLimit: 1000,
+    client_address: process.env.JWT_ELASTIC_CLIENT_ADDRESS,
     cursor_size: 50,
     enterpriseFields: [
       "denominationunitelegale",

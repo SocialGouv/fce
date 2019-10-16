@@ -16,7 +16,7 @@ import Search from "../../containers/Search";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import MagicLink from "../../containers/MagicLink";
-import SearchUI from "../../components/SearchUI";
+import SearchUI from "../../containers/SearchUI";
 import LegalNotices from "../../components/LegalNotices";
 import Cgu from "../../components/Cgu";
 import { Error403, Error404 } from "../../components/Errors";

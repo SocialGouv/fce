@@ -44,7 +44,7 @@ const config = {
     appsearch_address: "http://appsearch:3002/api/as/v1/",
     appsearch_apiKey: "private-tjw1wdv9yoqqzzzivb9netnx",
     appsearch_engineName: "fce",
-    appsearch_concurencyLimit: 3,
+    appsearch_concurencyLimit: 2,
     client_address: "http://elasticsearch:9200/",
     cursor_size: 50,
     enterpriseFields: [

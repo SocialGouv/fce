@@ -9,7 +9,7 @@ const baseUrlFn = () => config.elasticIndexer.appsearch_address;
 const engineName = config.elasticIndexer.appsearch_engineName;
 const client = new AppSearchClient(undefined, apiKey, baseUrlFn);
 /** Create PG Pool */
-const pool = new Pool(config.get("postgres"));
+const pool = new Pool(config.get("db"));
 /** Define concurrent request limit */
 const limit = pLimit(config.elasticIndexer.appsearch_concurencyLimit);
 let tasks = [];
@@ -139,11 +139,15 @@ class IndexerUtils {
         entreprise_nomusageunitelegale
       }) => {
         let enterprise_name = entreprise_denominationunitelegale;
-        let establishment_name =
+        const establishment_name =
           denominationusuelleetablissement ||
           enseigne1etablissement ||
           enseigne2etablissement ||
           enseigne3etablissement;
+        const naf_division =
+          (activiteprincipaleetablissement &&
+            activiteprincipaleetablissement.slice(0, 2)) ||
+          null;
 
         if (
           entreprise_categoriejuridiqueunitelegale ===
@@ -164,6 +168,7 @@ class IndexerUtils {
           etatadministratifetablissement,
           codepostaletablissement,
           libellecommuneetablissement,
+          naf_division,
           activiteprincipaleetablissement,
           activiteprincipaleetablissement_libelle,
           denominationusuelleetablissement,

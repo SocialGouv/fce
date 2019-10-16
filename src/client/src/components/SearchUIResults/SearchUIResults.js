@@ -8,7 +8,8 @@ import { joinNoFalsy } from "../../helpers/utils";
 import Value from "../shared/Value";
 import SearchUIAwesomeTable from "../SearchUIAwesomeTable";
 import TableCellState from "../SearchUIAwesomeTable/TableCellState";
-const SearchUIResults = ({ results, pagination, isLoading, hasParameters }) => {
+
+const SearchUIResults = ({ results, pagination, isLoading }) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
@@ -26,11 +27,9 @@ const SearchUIResults = ({ results, pagination, isLoading, hasParameters }) => {
 
       <div className="columns result-row">
         <div className="column is-12">
-          {hasParameters && results.length === 0 && (
-            <Alert color="info">Aucun résultat</Alert>
-          )}
+          {results.length === 0 && <Alert color="info">Aucun résultat</Alert>}
 
-          {results.length > 0 ? (
+          {!!results.length ? (
             <SearchUIAwesomeTable
               showPagination={pagination && pagination.pages > 1}
               pagination={{ ...pagination, min: 1 }}
@@ -130,8 +129,7 @@ const SearchUIResults = ({ results, pagination, isLoading, hasParameters }) => {
 SearchUIResults.propTypes = {
   results: PropTypes.array.isRequired,
   pagination: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  hasParameters: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired
 };
 
 export default withRouter(SearchUIResults);

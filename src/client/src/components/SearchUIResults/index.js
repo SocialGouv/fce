@@ -1,3 +1,1 @@
-import SearchUIResults from "./SearchUIResults";
-
-export default SearchUIResults;
+export { default } from "./SearchUIResults";

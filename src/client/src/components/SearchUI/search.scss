@@ -1,3 +1,5 @@
+@import "../App/variables";
+
 .app-search {
     &--container {
         background-color: $primary;
@@ -43,12 +45,16 @@
         .button {
             width: 8rem;
         }
+    }
 
-        #naf,
-        #commune {
-            .css-vj8t7z {
-                cursor: pointer;
-            }
+    .facet-state {
+        display: flex;
+        align-items: center;
+
+        &__label {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-right: 1rem;
         }
     }
 

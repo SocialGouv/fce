@@ -29,8 +29,11 @@ const Subcategory = ({ subtitle, datas, children }) => {
 
 Subcategory.propTypes = {
   subtitle: PropTypes.string.isRequired,
-  datas: PropTypes.arrayOf(PropTypes.object).isRequired,
-  children: PropTypes.element
+  datas: PropTypes.arrayOf(PropTypes.object),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
 };
 
 export default Subcategory;

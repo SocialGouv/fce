@@ -36,7 +36,7 @@ Item.propTypes = {
     PropTypes.array,
     PropTypes.number,
     PropTypes.element
-  ]).isRequired,
+  ]),
   smallText: PropTypes.bool
 };
 

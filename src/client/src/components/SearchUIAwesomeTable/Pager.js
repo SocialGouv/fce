@@ -2,13 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Pager = ({ currentPage, max, setCurrent }) => {
-  function pageNumberList() {
-    var el = [];
-    for (let i = 1; i <= max; i++) {
-      if (i !== currentPage) el.push(i);
+  const pageNumberList = () => {
+    const pages = [];
+    for (let pageNumber = 1; pageNumber <= max; pageNumber++) {
+      if (pageNumber !== currentPage) {
+        pages.push(pageNumber);
+      }
     }
-    return el;
-  }
+    return pages;
+  };
 
   return (
     <div className="pager">
@@ -26,9 +28,13 @@ const Pager = ({ currentPage, max, setCurrent }) => {
           >
             {currentPage}
           </option>
-          {pageNumberList().map(el => (
-            <option className="has-text-grey-dark" value={el} key={el}>
-              {el}
+          {pageNumberList().map(pageNumber => (
+            <option
+              className="has-text-grey-dark"
+              value={pageNumber}
+              key={`page-${pageNumber}`}
+            >
+              {pageNumber}
             </option>
           ))}
         </select>

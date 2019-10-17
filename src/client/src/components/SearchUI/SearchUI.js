@@ -8,10 +8,11 @@ import {
   WithSearch
 } from "@elastic/react-search-ui";
 import "@elastic/react-search-ui-views/lib/styles/styles.css";
-import Select from "react-select";
 import SearchUIResults from "../SearchUIResults";
 import SiegeFacet from "./Facets/SiegeFacet";
 import StateFacet from "./Facets/StateFacet";
+import NafFacet from "./Facets/NafFacet";
+import DepartmentFacet from "./Facets/DepartmentFacet";
 import SearchBar from "./SearchBar";
 
 import "./search.scss";
@@ -29,19 +30,13 @@ const configurationOptions = {
     facets: {
       etablissementsiege: { type: "value" },
       etatadministratifetablissement: { type: "value" },
-      naf_division: { type: "value", size: 100 }
+      naf_division: { type: "value", size: 100 },
+      departement: { type: "value", size: 150 }
     }
   }
 };
 
-const SearchUI = ({ divisionsNaf }) => {
-  const selectCustomStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      color: "#353535"
-    })
-  };
-
+const SearchUI = ({ divisionsNaf, departements }) => {
   return (
     <SearchProvider config={configurationOptions}>
       <WithSearch
@@ -55,7 +50,8 @@ const SearchUI = ({ divisionsNaf }) => {
           current,
           setCurrent,
           resultsPerPage,
-          totalPages
+          totalPages,
+          facets
         }) => {
           return (
             <div className="App">
@@ -80,81 +76,42 @@ const SearchUI = ({ divisionsNaf }) => {
 
                     <div className="columns facets__checkboxes">
                       <div className="column is-one-third">
-                        <Facet field="etablissementsiege" view={SiegeFacet} />
+                        <Facet
+                          field="etablissementsiege"
+                          view={SiegeFacet}
+                          label="siege"
+                        />
                       </div>
                       <div className="column is-one-third">
                         <Facet
                           field="etatadministratifetablissement"
                           view={StateFacet}
+                          label="state"
                         />
                       </div>
                     </div>
 
                     <div className="columns facets__selects">
                       <div className="column is-one-third">
-                        <div className="field">
-                          <div className="control">
-                            <Facet
-                              field="naf_division"
-                              view={({
-                                onChange,
-                                onRemove,
-                                values,
-                                options
-                              }) => {
-                                const selectOptions = options.map(option => {
-                                  const division = divisionsNaf.find(
-                                    division => division.code === option.value
-                                  );
-                                  return {
-                                    value: option.value,
-                                    label: `${option.value} - ${division &&
-                                      division.libelle}`
-                                  };
-                                });
-
-                                const selectedFilterValue = values[0];
-
-                                const selectedOption = selectOptions.find(
-                                  option => {
-                                    if (
-                                      selectedFilterValue &&
-                                      selectedFilterValue.name &&
-                                      option.value.name ===
-                                        selectedFilterValue.name
-                                    ) {
-                                      return true;
-                                    }
-
-                                    if (option.value === selectedFilterValue) {
-                                      return true;
-                                    }
-
-                                    return false;
-                                  }
-                                );
-
-                                return (
-                                  <Select
-                                    id="naf"
-                                    name="naf"
-                                    options={selectOptions}
-                                    onChange={option =>
-                                      selectedOption
-                                        ? onRemove(selectedOption.value)
-                                        : onChange(option && option.value)
-                                    }
-                                    placeholder="Code NAF ou libellé"
-                                    isClearable
-                                    value={selectedOption}
-                                    styles={selectCustomStyles}
-                                  />
-                                );
-                              }}
-                              label="naf"
-                            />
-                          </div>
-                        </div>
+                        <Facet
+                          field="naf_division"
+                          view={NafFacet}
+                          label="naf"
+                          options={
+                            facets &&
+                            facets.naf_division &&
+                            facets.naf_division[0].data
+                          }
+                          divisionsNaf={divisionsNaf}
+                        />
+                      </div>
+                      <div className="column is-one-third">
+                        <Facet
+                          field="departement"
+                          view={DepartmentFacet}
+                          label="departement"
+                          departements={departements}
+                        />
                       </div>
                     </div>
                   </div>
@@ -182,7 +139,8 @@ const SearchUI = ({ divisionsNaf }) => {
 };
 
 SearchUI.propTypes = {
-  divisionsNaf: PropTypes.array.isRequired
+  divisionsNaf: PropTypes.array.isRequired,
+  departements: PropTypes.object.isRequired
 };
 
 export default SearchUI;

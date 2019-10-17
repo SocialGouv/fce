@@ -143,14 +143,20 @@ class IndexerUtils {
         entreprise_nomusageunitelegale
       }) => {
         let enterprise_name = entreprise_denominationunitelegale;
+
         const establishment_name =
           denominationusuelleetablissement ||
           enseigne1etablissement ||
           enseigne2etablissement ||
           enseigne3etablissement;
+
         const naf_division =
           (activiteprincipaleetablissement &&
             activiteprincipaleetablissement.slice(0, 2)) ||
+          null;
+
+        const departement =
+          (codepostaletablissement && codepostaletablissement.slice(0, 2)) ||
           null;
 
         if (
@@ -171,6 +177,7 @@ class IndexerUtils {
           etablissementsiege,
           etatadministratifetablissement,
           codepostaletablissement,
+          departement,
           libellecommuneetablissement,
           naf_division,
           activiteprincipaleetablissement,

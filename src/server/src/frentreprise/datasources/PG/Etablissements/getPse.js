@@ -5,21 +5,11 @@ export default async (SIRET, rows) => {
     }
 
     const pse = pseRows.map(pseRow => {
-      [
-        "numero_de_dossier",
-        "type_de_dossier",
-        "etat_du_dossier",
-        "situation_juridique"
-      ].forEach(field => {
-        pseRow[field] =
-          typeof pseRow[field] === "string" && pseRow[field].trim();
+      Object.entries(pseRow).forEach(([key, value]) => {
+        if (typeof pseRow[key] === "string") {
+          pseRow[key] = pseRow[key].trim();
+        }
       });
-
-      pseRow.rupture_contrat_debut =
-        pseRow.nombre_de_ruptures_de_contrats_en_debut_de_procedure;
-      pseRow.rupture_contrat_fin =
-        pseRow.nombre_de_ruptures_de_contrats_en_fin_de_procedure;
-
       return pseRow;
     });
 

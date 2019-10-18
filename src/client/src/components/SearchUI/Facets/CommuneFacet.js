@@ -3,34 +3,34 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import { selectCustomStyles } from "./customStyles";
 
-const NafFacet = ({ onChange, onRemove, values, options, divisionsNaf }) => {
-  console.log(values);
-
+const CommuneFacet = ({ onChange, onRemove, values, options, communes }) => {
   const optionsWithLabels = options
     .map(({ value }) => {
-      const division = divisionsNaf.find(division => division.code === value);
+      const commune = communes.data.find(commune => commune.code === value);
       return {
         value: value,
-        label: `${value} - ${division && division.libelle}`
+        label: `${value} - ${commune && commune.nom}`
       };
     })
     .sort((a, b) => a.value - b.value);
 
-  const activeNafFilter = values[0];
+  const activeDepartmentFilter = values[0];
 
   const selectedOption = optionsWithLabels.find(
-    ({ value }) => value === activeNafFilter
+    ({ value }) => value === activeDepartmentFilter
   );
 
   return (
     <Select
-      id="naf"
-      name="naf"
+      id="commune"
+      name="commune"
       options={optionsWithLabels}
       onChange={option =>
-        selectedOption ? onRemove(selectedOption.value) : onChange(option.value)
+        selectedOption
+          ? onRemove(selectedOption.value)
+          : onChange(option && option.value)
       }
-      placeholder="Code NAF ou libellé"
+      placeholder="Département"
       isClearable
       value={selectedOption}
       styles={selectCustomStyles}
@@ -38,12 +38,12 @@ const NafFacet = ({ onChange, onRemove, values, options, divisionsNaf }) => {
   );
 };
 
-NafFacet.propTypes = {
+CommuneFacet.propTypes = {
   values: PropTypes.array,
   onRemove: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.array,
-  divisionsNaf: PropTypes.array.isRequired
+  communes: PropTypes.array.isRequired
 };
 
-export default NafFacet;
+export default CommuneFacet;

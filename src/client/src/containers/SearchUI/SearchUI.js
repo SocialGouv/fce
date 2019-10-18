@@ -4,7 +4,7 @@ import SearchUIView from "../../components/SearchUI";
 import divisionsNaf from "./divisions-naf.json";
 
 const SearchUI = () => {
-  const [departements, setDepartements] = useState([]);
+  const [departments, setDepartments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(null);
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const SearchUI = () => {
 
       try {
         const res = await Http.get("/departements");
-        setDepartements(res.data.results);
+        setDepartments(res.data.results);
         setIsSuccess(true);
       } catch (e) {
         setError(e);
@@ -30,12 +30,10 @@ const SearchUI = () => {
   }, []);
 
   return (
-    console.log(departements) || (
-      <SearchUIView
-        divisionsNaf={divisionsNaf}
-        departements={{ data: departements, isLoading, isSuccess, error }}
-      />
-    )
+    <SearchUIView
+      divisionsNaf={divisionsNaf}
+      departments={{ data: departments, isLoading, isSuccess, error }}
+    />
   );
 };
 

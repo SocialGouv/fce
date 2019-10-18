@@ -8,47 +8,37 @@ const DepartmentFacet = ({
   onRemove,
   values,
   options,
-  departements
+  departments
 }) => {
-  const selectOptions = options.map(option => {
-    const departement = departements.data.find(
-      departement => departement.code === option.value
-    );
-    return {
-      value: option.value,
-      label: `${option.value} - ${departement && departement.libelle}`
-    };
-  });
+  const optionsWithLabels = options
+    .map(({ value }) => {
+      const department = departments.data.find(
+        department => department.code === value
+      );
+      return {
+        value: value,
+        label: `${value} - ${department && department.nom}`
+      };
+    })
+    .sort((a, b) => a.value - b.value);
 
-  const selectedFilterValue = values[0];
+  const activeDepartmentFilter = values[0];
 
-  const selectedOption = selectOptions.find(option => {
-    if (
-      selectedFilterValue &&
-      selectedFilterValue.name &&
-      option.value.name === selectedFilterValue.name
-    ) {
-      return true;
-    }
-
-    if (option.value === selectedFilterValue) {
-      return true;
-    }
-
-    return false;
-  });
+  const selectedOption = optionsWithLabels.find(
+    ({ value }) => value === activeDepartmentFilter
+  );
 
   return (
     <Select
-      id="naf"
-      name="naf"
-      options={selectOptions}
+      id="department"
+      name="department"
+      options={optionsWithLabels}
       onChange={option =>
         selectedOption
           ? onRemove(selectedOption.value)
           : onChange(option && option.value)
       }
-      placeholder="Code NAF ou libellé"
+      placeholder="Département"
       isClearable
       value={selectedOption}
       styles={selectCustomStyles}
@@ -61,7 +51,7 @@ DepartmentFacet.propTypes = {
   onRemove: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.array,
-  departements: PropTypes.array.isRequired
+  departments: PropTypes.array.isRequired
 };
 
 export default DepartmentFacet;

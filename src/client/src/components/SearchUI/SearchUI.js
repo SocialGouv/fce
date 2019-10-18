@@ -36,7 +36,7 @@ const configurationOptions = {
   }
 };
 
-const SearchUI = ({ divisionsNaf, departements }) => {
+const SearchUI = ({ divisionsNaf, departments }) => {
   return (
     <SearchProvider config={configurationOptions}>
       <WithSearch
@@ -51,7 +51,9 @@ const SearchUI = ({ divisionsNaf, departements }) => {
           setCurrent,
           resultsPerPage,
           totalPages,
-          facets
+          facets,
+          filters,
+          searchTerm
         }) => {
           return (
             <div className="App">
@@ -110,7 +112,7 @@ const SearchUI = ({ divisionsNaf, departements }) => {
                           field="departement"
                           view={DepartmentFacet}
                           label="departement"
-                          departements={departements}
+                          departments={departments}
                         />
                       </div>
                     </div>
@@ -126,8 +128,10 @@ const SearchUI = ({ divisionsNaf, departements }) => {
                   itemsPerPage: resultsPerPage,
                   pages: totalPages,
                   items: totalResults,
-                  currentItems: results
+                  currentItems: results,
+                  searchTerm
                 }}
+                filters={filters}
                 isLoading={isLoading}
               />
             </div>
@@ -140,7 +144,7 @@ const SearchUI = ({ divisionsNaf, departements }) => {
 
 SearchUI.propTypes = {
   divisionsNaf: PropTypes.array.isRequired,
-  departements: PropTypes.object.isRequired
+  departments: PropTypes.object.isRequired
 };
 
 export default SearchUI;

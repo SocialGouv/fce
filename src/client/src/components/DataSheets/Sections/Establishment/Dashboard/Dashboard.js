@@ -62,7 +62,7 @@ const Dashboard = ({
       {activity && (activity.pseActivity || activity.partialActivity) && (
         <Item
           icon={faExclamationTriangle}
-          name="Activité"
+          name="Mut Eco"
           smallText={true}
           value={
             <>

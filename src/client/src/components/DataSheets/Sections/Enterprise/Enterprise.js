@@ -45,7 +45,7 @@ class Enterprise extends React.Component {
                   { label: "Accords d'entreprise", link: "accords" },
                   {
                     label: "Mutations économiques",
-                    link: "activite-partielle"
+                    link: "muteco"
                   },
                   { label: "Données financières", link: "finances" },
                   { label: "Mandataires sociaux", link: "mandataires" }

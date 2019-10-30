@@ -10,7 +10,7 @@ export const capitalize = str =>
     .join(" ");
 
 export const countValueInArray = (array, fields) => {
-  if (!Array.isArray(fields) && !fields.length) {
+  if (!Array.isArray(fields) || !fields.length) {
     return 0;
   }
 

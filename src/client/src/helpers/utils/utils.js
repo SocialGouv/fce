@@ -10,19 +10,19 @@ export const capitalize = str =>
     .join(" ");
 
 export const countValueInArray = (array, fields) => {
-  if (Array.isArray(fields) && fields.length) {
-    return array.reduce((acc, currentValue) => {
-      let currentTotalFieldsValues = fields
-        .map(field => currentValue[field])
-        .reduce(
-          (accFields, currentValueField) => accFields + currentValueField
-        );
-
-      return acc + currentTotalFieldsValues;
-    }, 0);
-  } else {
+  if (!Array.isArray(fields) && !fields.length) {
     return 0;
   }
+
+  return array.reduce((acc, currentValue) => {
+    let currentTotalFieldsValues = fields
+      .map(field => currentValue[field])
+      .reduce((accFields, currentValueField) => {
+        accFields + currentValueField;
+      }, 0);
+
+    return acc + currentTotalFieldsValues;
+  }, 0);
 };
 
 export const hasInclude = (str, arrayOfStrings) =>

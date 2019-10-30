@@ -18,7 +18,7 @@ export const countValueInArray = (array, fields) => {
     let currentTotalFieldsValues = fields
       .map(field => currentValue[field])
       .reduce((accFields, currentValueField) => {
-        accFields + currentValueField;
+        return accFields + currentValueField;
       }, 0);
 
     return acc + currentTotalFieldsValues;

@@ -8,6 +8,8 @@ if (options.env) {
 }
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
+const config = { env: process.env };
+
 const ShellClass = require(`./${className}`);
-const shellClass = new ShellClass(args, options);
+const shellClass = new ShellClass(args, options, config);
 shellClass.execute();

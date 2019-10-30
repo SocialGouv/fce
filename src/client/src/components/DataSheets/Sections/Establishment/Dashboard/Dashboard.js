@@ -10,6 +10,7 @@ import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import Item from "./Item";
+import { hasInclude } from "../../../../../helpers/utils";
 import "./dashboard.scss";
 
 const Dashboard = ({
@@ -26,10 +27,19 @@ const Dashboard = ({
   const hasInteractions = totalInteractions && totalInteractions.total > 0;
 
   const activity = {
-    partialActivity: activite_partielle && activite_partielle.length > 0,
+    rccActivity:
+      pse &&
+      establishment.pse.find(pse =>
+        hasInclude(pse.type_de_dossier, ["RCC", "rcc"])
+      ),
     pseActivity:
       pse &&
-      (pse.rupture_contrat_debut !== "0" || pse.rupture_contrat_fin !== "0")
+      establishment.pse.filter(
+        pse =>
+          hasInclude(pse.type_de_dossier, ["PSE", "pse"]) &&
+          pse.contrats_ruptures_debut + pse.contrats_ruptures_fin > 0
+      ),
+    partialActivity: activite_partielle && activite_partielle.length > 0
   };
 
   const lastControl = hasInteractions
@@ -59,7 +69,7 @@ const Dashboard = ({
         smallText={!hasInteractions}
         value={hasInteractions ? lastControl : "Pas d'intervention connue"}
       />
-      {activity && (activity.pseActivity || activity.partialActivity) && (
+      {activity && (activity.pseActivity || activity.rccActivity) && (
         <Item
           icon={faExclamationTriangle}
           name="Mut Eco"
@@ -67,7 +77,7 @@ const Dashboard = ({
           value={
             <>
               {activity.pseActivity && <div>PSE</div>}
-              {activity.partialActivity && <div>Activité partielle</div>}
+              {activity.rccActivity && <div>RCC</div>}
             </>
           }
         />

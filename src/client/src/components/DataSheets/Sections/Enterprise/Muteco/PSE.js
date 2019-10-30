@@ -20,9 +20,10 @@ function PSE({ enterprise }) {
         pse =>
           hasInclude(pse.dossier.type_de_dossier, ["PSE", "pse"]) &&
           pse.dossier.etat_du_dossier !== "en_cours_procedure" &&
-          pse.dossier.rupture_contrat_debut +
-            pse.dossier.rupture_contrat_fin !==
-            0
+          countValueInArray(pse.establishments, [
+            "contrats_ruptures_fin",
+            "contrats_ruptures_debut"
+          ]) > 0
       )
   };
 
@@ -78,15 +79,15 @@ function PSE({ enterprise }) {
                   <td className="has-text-centered w-15">
                     <Value
                       value={
-                        pse.establishments.contrats_ruptures_fin > 0
-                          ? countValueInArray(
-                              pse.establishments,
+                        countValueInArray(pse.establishments, [
+                          "contrats_ruptures_fin"
+                        ]) > 0
+                          ? countValueInArray(pse.establishments, [
                               "contrats_ruptures_fin"
-                            )
-                          : countValueInArray(
-                              pse.establishments,
+                            ])
+                          : countValueInArray(pse.establishments, [
                               "contrats_ruptures_debut"
-                            )
+                            ])
                       }
                       nonEmptyValues="0"
                     />
@@ -99,9 +100,7 @@ function PSE({ enterprise }) {
             </tbody>
           </table>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
     </Subcategory>
   );
 }

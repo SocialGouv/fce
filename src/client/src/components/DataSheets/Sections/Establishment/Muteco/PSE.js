@@ -21,7 +21,8 @@ function PSE({ establishment }) {
       establishment.pse.filter(
         pse =>
           hasInclude(pse.type_de_dossier, ["PSE", "pse"]) &&
-          pse.etat_du_dossier !== "en_cours_procedure"
+          pse.etat_du_dossier !== "en_cours_procedure" &&
+          pse.contrats_ruptures_debut + pse.contrats_ruptures_fin > 0
       )
   };
 
@@ -34,7 +35,7 @@ function PSE({ establishment }) {
           value={pseList.inProcess.date_enregistrement}
         />
       )}
-      {pseList.validsOrProbates && (
+      {pseList.validsOrProbates && pseList.validsOrProbates.length ? (
         <table className="table mt-2">
           <thead>
             <tr>
@@ -68,7 +69,7 @@ function PSE({ establishment }) {
             ))}
           </tbody>
         </table>
-      )}
+      ) : null}
     </Subcategory>
   );
 }

@@ -9,10 +9,21 @@ export const capitalize = str =>
     .map(str => `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`)
     .join(" ");
 
-export const countValueInArray = (array, key) =>
-  array.reduce((acc, currentValue) => {
-    return acc + currentValue[key];
-  }, 0);
+export const countValueInArray = (array, fields) => {
+  if (Array.isArray(fields) && fields.length) {
+    return array.reduce((acc, currentValue) => {
+      let currentTotalFieldsValues = fields
+        .map(field => currentValue[field])
+        .reduce(
+          (accFields, currentValueField) => accFields + currentValueField
+        );
+
+      return acc + currentTotalFieldsValues;
+    }, 0);
+  } else {
+    return 0;
+  }
+};
 
 export const hasInclude = (str, arrayOfStrings) =>
   arrayOfStrings.some(item => str.includes(item));

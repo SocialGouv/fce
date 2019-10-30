@@ -5,7 +5,7 @@ import Header from "./Header";
 import Infos from "./Infos";
 import Mandataires from "./Mandataires";
 import Accords from "./Accords";
-import ActivitePartielle from "./ActivitePartielle";
+import ActivitePartielle from "./Muteco/ActivitePartielle";
 import Muteco from "./Muteco";
 import Direccte from "../SharedComponents/Direccte";
 import Finances from "./Finances";

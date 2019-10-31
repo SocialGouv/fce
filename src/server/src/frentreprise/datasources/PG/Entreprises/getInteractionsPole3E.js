@@ -1,3 +1,5 @@
+import { getFormatedDate } from "../Helper";
+
 export default async (SIREN, interactionsPole3E) => {
   return interactionsPole3E.findAllBySIREN(SIREN).then(rows => {
     if (!rows || !rows.length) {
@@ -5,10 +7,9 @@ export default async (SIREN, interactionsPole3E) => {
     }
 
     const interactions = rows.map(interaction => {
-      const [day, month, year] = interaction.date_visite.split("/");
       return {
         siret: interaction.siret,
-        date: `${year}-${month}-${day}`,
+        date: getFormatedDate(interaction.date_visite),
         pole: "3E",
         unite: `Service Entreprise ${interaction.region &&
           interaction.region.trim()}`,

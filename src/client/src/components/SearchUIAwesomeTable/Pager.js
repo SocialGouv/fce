@@ -1,23 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import _range from "lodash.range";
 
-const Pager = ({ currentPage, max, setCurrent }) => {
-  const pageNumberList = () => {
-    const pages = [];
-    for (let pageNumber = 1; pageNumber <= max; pageNumber++) {
-      if (pageNumber !== currentPage) {
-        pages.push(pageNumber);
-      }
-    }
-    return pages;
-  };
-
+const Pager = ({ currentPage, max, handlePageChange }) => {
+  const pageNumberList = _range(1, max + 1).filter(
+    page => page !== currentPage
+  );
+  console.log(pageNumberList, currentPage);
   return (
     <div className="pager">
       <span className="pr-2 has-text-grey-dark">Page </span>
       <div className="select is-grey-dark mr-1">
         <select
-          onChange={e => setCurrent(+e.target.value)}
+          onChange={e => handlePageChange(+e.target.value)}
           className="pager__select is-hovered has-text-grey-dark"
         >
           <option
@@ -28,7 +23,7 @@ const Pager = ({ currentPage, max, setCurrent }) => {
           >
             {currentPage}
           </option>
-          {pageNumberList().map(pageNumber => (
+          {pageNumberList.map(pageNumber => (
             <option
               className="has-text-grey-dark"
               value={pageNumber}
@@ -47,7 +42,7 @@ const Pager = ({ currentPage, max, setCurrent }) => {
 Pager.propTypes = {
   currentPage: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
-  setCurrent: PropTypes.func.isRequired
+  handlePageChange: PropTypes.func.isRequired
 };
 
 export default Pager;

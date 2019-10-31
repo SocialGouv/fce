@@ -1,144 +1,227 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import AppSearchAPIConnector from "@elastic/search-ui-app-search-connector";
-import {
-  SearchProvider,
-  SearchBox,
-  Facet,
-  WithSearch
-} from "@elastic/react-search-ui";
-import "@elastic/react-search-ui-views/lib/styles/styles.css";
+import * as AppSearch from "@elastic/app-search-javascript";
+import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 import SearchUIResults from "../SearchUIResults";
-import SiegeFacet from "./Facets/SiegeFacet";
-import StateFacet from "./Facets/StateFacet";
-import NafFacet from "./Facets/NafFacet";
-import DepartmentFacet from "./Facets/DepartmentFacet";
-import SearchBar from "./SearchBar";
+import SiegeFilter from "./Filters/SiegeFilter";
+import StateFilter from "./Filters/StateFilter";
 
 import "./search.scss";
 
-const connector = new AppSearchAPIConnector({
+const client = AppSearch.createClient({
   searchKey: process.env.REACT_APP_SEARCH_KEY,
   engineName: process.env.REACT_APP_SEARCH_ENGINE_NAME,
-  endpointBase: process.env.REACT_APP_SEARCH_ENDPOINT_BASE,
-  hostIdentifier: process.env.REACT_APP_SEARCH_HOST_IDENTIFIER
+  endpointBase: process.env.REACT_APP_SEARCH_ENDPOINT_BASE
 });
 
-const configurationOptions = {
-  apiConnector: connector,
-  searchQuery: {
-    facets: {
-      etablissementsiege: { type: "value" },
-      etatadministratifetablissement: { type: "value" },
-      naf_division: { type: "value", size: 100 },
-      departement: { type: "value", size: 150 }
-    }
+var defaultOptions = {
+  search_fields: {
+    siren: {},
+    siret: {},
+    enterprise_name: {},
+    entreprise_denominationunitelegale: {},
+    establishment_name: {},
+    codepostaletablissement: {},
+    libellecommuneetablissement: {},
+    activiteprincipaleetablissement: {},
+    activiteprincipaleetablissement_libelle: {},
+    denominationusuelleetablissement: {},
+    enseigne1etablissement: {},
+    enseigne2etablissement: {},
+    enseigne3etablissement: {},
+    entreprise_denominationusuelle1unitelegale: {},
+    entreprise_denominationusuelle2unitelegale: {},
+    entreprise_denominationusuelle3unitelegale: {},
+    entreprise_prenomusuelunitelegale: {},
+    entreprise_nomunitelegale: {},
+    entreprise_prenom1unitelegale: {},
+    entreprise_nomusageunitelegale: {}
+  },
+  result_fields: {
+    siren: { raw: {} },
+    siret: { raw: {} },
+    enterprise_name: { raw: {} },
+    etatadministratifetablissement: { raw: {} },
+    etablissementsiege: { raw: {} },
+    codepostaletablissement: { raw: {} },
+    libellecommuneetablissement: { raw: {} },
+    trancheeffectifsetablissement: { raw: {} },
+    activiteprincipaleetablissement: { raw: {} },
+    activiteprincipaleetablissement_libelle: { raw: {} }
+  },
+  page: {
+    size: 20
   }
 };
 
 const SearchUI = ({ divisionsNaf, departments }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [resultList, setResultList] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filters, setFilters] = useState({
+    naf: null,
+    location: null,
+    siege: null,
+    state: ["A", "F"]
+  });
+
+  const filtersOptions = {
+    ...(filters.siege && { etablissementsiege: "true" }),
+    ...(filters.state.length === 1 && {
+      etatadministratifetablissement: filters.state[0]
+    })
+  };
+
+  const options = {
+    ...defaultOptions,
+    filters: {
+      all: [
+        ...Object.entries(filtersOptions).map(([field, value]) => ({
+          [field]: value
+        }))
+      ]
+    }
+  };
+
+  console.log(resultList, filtersOptions);
+
+  const sendRequest = (query, options) => {
+    setIsLoading(true);
+    setError(null);
+    client
+      .search(query, options)
+      .then(resultList => {
+        setResultList(resultList);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        setError(error);
+        setIsLoading(false);
+        console.error(`error: ${error}`);
+      });
+  };
+
+  const handlePageChange = nextCurrentPage =>
+    sendRequest(searchTerm, {
+      ...options,
+      page: {
+        ...options.page,
+        current: nextCurrentPage
+      }
+    });
+
+  const addFilters = (field, value) => {
+    if (field === "state") {
+      setFilters({
+        ...filters,
+        state: [...filters.state, value]
+      });
+    } else {
+      setFilters({ ...filters, [field]: value });
+    }
+  };
+
+  const removeFilters = (field, value) => {
+    if (field === "state") {
+      setFilters({
+        ...filters,
+        state: [...filters.state.filter(state => state !== value)]
+      });
+    } else {
+      setFilters({ ...filters, [field]: null });
+    }
+  };
+
   return (
-    <SearchProvider config={configurationOptions}>
-      <WithSearch
-        mapContextToProps={props => console.log({ WithSearch: props }) || props}
-      >
-        {({
-          isLoading,
-          error,
-          results,
-          totalResults,
-          current,
-          setCurrent,
-          resultsPerPage,
-          totalPages,
-          facets,
-          filters,
-          searchTerm
-        }) => {
-          return (
-            <div className="App">
-              <div className="app-search pb-4">
-                <div className="columns app-search--container">
-                  <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
-                    <h2 className="title pb-2">
-                      Retrouvez un établissement ou une entreprise
-                    </h2>
-
-                    {error && (
-                      <div className="notification is-danger">
-                        Une erreur est survenue lors de la communication avec l
-                        {"'"}API
-                      </div>
+    <div className="App">
+      <div className="app-search pb-4">
+        <div className="columns app-search--container">
+          <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
+            <h2 className="title pb-2">
+              Retrouvez un établissement ou une entreprise
+            </h2>
+            {error && (
+              <div className="notification is-danger">
+                Une erreur est survenue lors de la communication avec l{"'"}
+                API
+              </div>
+            )}
+            <form
+              className="form search-form"
+              onSubmit={e => {
+                e.preventDefault();
+                sendRequest(searchTerm, options);
+              }}
+            >
+              <div className="field is-grouped is-grouped-centered">
+                <div className="control is-expanded">
+                  <input
+                    type="text"
+                    name="q"
+                    id="term"
+                    className="input is-medium"
+                    placeholder="SIRET, SIREN, raison sociale, nom"
+                    onChange={e => setSearchTerm(e.target.value)}
+                    value={searchTerm}
+                  />
+                </div>
+                <div className="control">
+                  <button
+                    type="submit"
+                    className="action button is-outlined is-light is-medium"
+                  >
+                    {false ? (
+                      <span className="icon">
+                        <FontAwesomeIcon icon={faSpinner} spin />
+                      </span>
+                    ) : (
+                      "Rechercher"
                     )}
-                    <SearchBox
-                      view={SearchBar}
-                      isLoading={isLoading}
-                      error={error}
-                    />
-
-                    <div className="columns facets__checkboxes">
-                      <div className="column is-one-third">
-                        <Facet
-                          field="etablissementsiege"
-                          view={SiegeFacet}
-                          label="siege"
-                        />
-                      </div>
-                      <div className="column is-one-third">
-                        <Facet
-                          field="etatadministratifetablissement"
-                          view={StateFacet}
-                          label="state"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="columns facets__selects">
-                      <div className="column is-one-third">
-                        <Facet
-                          field="naf_division"
-                          view={NafFacet}
-                          label="naf"
-                          options={
-                            facets &&
-                            facets.naf_division &&
-                            facets.naf_division[0].data
-                          }
-                          divisionsNaf={divisionsNaf}
-                        />
-                      </div>
-                      <div className="column is-one-third">
-                        <Facet
-                          field="departement"
-                          view={DepartmentFacet}
-                          label="departement"
-                          departments={departments}
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  </button>
                 </div>
               </div>
-
-              <SearchUIResults
-                results={results}
-                pagination={{
-                  current,
-                  setCurrent,
-                  itemsPerPage: resultsPerPage,
-                  pages: totalPages,
-                  items: totalResults,
-                  currentItems: results,
-                  searchTerm
-                }}
-                filters={filters}
-                isLoading={isLoading}
-              />
+            </form>
+            <div className="columns facets__checkboxes">
+              <div className="column is-one-third">
+                <SiegeFilter
+                  filters={filters}
+                  addFilters={addFilters}
+                  removeFilters={removeFilters}
+                />
+              </div>
+              <div className="column is-one-third">
+                <StateFilter
+                  filters={filters}
+                  addFilters={addFilters}
+                  removeFilters={removeFilters}
+                />
+              </div>
+            </div>{" "}
+            <div className="columns facets__selects">
+              <div className="column is-one-third" />
+              <div className="column is-one-third" />
             </div>
-          );
-        }}
-      </WithSearch>
-    </SearchProvider>
+          </div>
+        </div>
+      </div>
+
+      {resultList && (
+        <SearchUIResults
+          results={resultList.rawResults}
+          pagination={{
+            current: resultList.info.meta.page.current,
+            handlePageChange,
+            itemsPerPage: resultList.info.meta.page.size,
+            pages: resultList.info.meta.page.total_pages,
+            items: resultList.info.meta.page.total_results,
+            searchTerm
+          }}
+          isLoading={isLoading}
+        />
+      )}
+    </div>
   );
 };
 

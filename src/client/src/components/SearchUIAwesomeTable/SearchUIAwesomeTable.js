@@ -68,11 +68,11 @@ const SearchUIAwesomeTable = ({
               buttonClasses={["is-prev-button", "is-pulled-left"]}
               isDisabled={pagination.current === pagination.min}
               callback={() => {
-                pagination.setCurrent(--pagination.current);
+                pagination.handlePageChange(--pagination.current);
               }}
             />
             <Pager
-              setCurrent={pagination.setCurrent}
+              handlePageChange={pagination.handlePageChange}
               currentPage={pagination.current}
               max={pagination.pages}
             />
@@ -84,7 +84,7 @@ const SearchUIAwesomeTable = ({
               buttonClasses={["is-next-button", "is-pulled-right"]}
               isDisabled={pagination.current === pagination.pages}
               callback={() => {
-                pagination.setCurrent(++pagination.current);
+                pagination.handlePageChange(++pagination.current);
               }}
             />
           </td>

@@ -9,6 +9,7 @@ const globalConfig = {
     expire: 86400 // 1j
   },
   sidebarEstablishmentsLimit: 20,
+  monthsProceduresLimit: 36,
   interactions: ["C", "3E", "T"],
   region: {
     occitanie: 76

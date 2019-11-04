@@ -22,8 +22,53 @@ const globalConfig = {
   },
   advancedSearch: {
     minTerms: 2,
-    debounce: 500,
-    terms: ["q", "naf", "commune", "siegeSocial"]
+    debounce: 500
+  },
+  appSearch: {
+    client: {
+      searchKey: process.env.REACT_APP_SEARCH_KEY,
+      engineName: process.env.REACT_APP_SEARCH_ENGINE_NAME,
+      endpointBase: process.env.REACT_APP_SEARCH_ENDPOINT_BASE
+    },
+    defaultOptions: {
+      search_fields: {
+        siren: {},
+        siret: {},
+        enterprise_name: {},
+        entreprise_denominationunitelegale: {},
+        establishment_name: {},
+        codepostaletablissement: {},
+        libellecommuneetablissement: {},
+        activiteprincipaleetablissement: {},
+        activiteprincipaleetablissement_libelle: {},
+        denominationusuelleetablissement: {},
+        enseigne1etablissement: {},
+        enseigne2etablissement: {},
+        enseigne3etablissement: {},
+        entreprise_denominationusuelle1unitelegale: {},
+        entreprise_denominationusuelle2unitelegale: {},
+        entreprise_denominationusuelle3unitelegale: {},
+        entreprise_prenomusuelunitelegale: {},
+        entreprise_nomunitelegale: {},
+        entreprise_prenom1unitelegale: {},
+        entreprise_nomusageunitelegale: {}
+      },
+      result_fields: {
+        siren: { raw: {} },
+        siret: { raw: {} },
+        enterprise_name: { raw: {} },
+        etatadministratifetablissement: { raw: {} },
+        etablissementsiege: { raw: {} },
+        codepostaletablissement: { raw: {} },
+        libellecommuneetablissement: { raw: {} },
+        trancheeffectifsetablissement: { raw: {} },
+        activiteprincipaleetablissement: { raw: {} },
+        activiteprincipaleetablissement_libelle: { raw: {} }
+      },
+      page: {
+        size: 20
+      }
+    }
   },
   accords: [
     { key: "epargne", value: "Epargne salariale" },

@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 import _range from "lodash.range";
 
 const Pager = ({ currentPage, max, handlePageChange }) => {
-  const pageNumberList = _range(1, max + 1).filter(
+  const limit = max > 100 ? 100 : max;
+  const pageNumberList = _range(1, limit + 1).filter(
     page => page !== currentPage
   );
-  console.log(pageNumberList, currentPage);
+
   return (
     <div className="pager">
       <span className="pr-2 has-text-grey-dark">Page </span>
@@ -34,7 +35,7 @@ const Pager = ({ currentPage, max, handlePageChange }) => {
           ))}
         </select>
       </div>
-      <span className="has-text-grey-dark">/ {max}</span>
+      <span className="has-text-grey-dark">/ {limit}</span>
     </div>
   );
 };

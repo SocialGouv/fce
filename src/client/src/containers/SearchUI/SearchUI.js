@@ -1,10 +1,102 @@
-import React from "react";
+import React, { useState } from "react";
+import * as AppSearch from "@elastic/app-search-javascript";
 import Http from "../../services/Http";
 import SearchUIView from "../../components/SearchUI";
 import divisionsNaf from "./divisions-naf.json";
 import Config from "../../services/Config";
 
 const SearchUI = () => {
+  const client = AppSearch.createClient(Config.get("appSearch").client);
+  const defaultOptions = Config.get("appSearch").defaultOptions;
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [resultList, setResultList] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filters, setFilters] = useState({
+    naf: null,
+    location: null,
+    siege: null,
+    state: ["A", "F"]
+  });
+
+  const allFiltersOptions = {
+    ...(filters.siege && { etablissementsiege: "true" }),
+    ...(filters.state.length === 1 && {
+      etatadministratifetablissement: filters.state[0]
+    }),
+    ...(filters.naf && { naf_division: filters.naf }),
+    ...(filters.location &&
+      (filters.location.value.length < 5
+        ? {
+            departement: filters.location.value
+          }
+        : {
+            codecommuneetablissement: filters.location.value
+          }))
+  };
+
+  const options = {
+    ...defaultOptions,
+    filters: {
+      all: Object.entries(allFiltersOptions).map(([field, value]) => ({
+        [field]: value
+      })),
+      none: {
+        ...(filters.state.length === 0 && {
+          etatadministratifetablissement: ["A", "F"]
+        })
+      }
+    }
+  };
+
+  const sendRequest = (query, options) => {
+    setIsLoading(true);
+    setError(null);
+    client
+      .search(query, options)
+      .then(resultList => {
+        setResultList(resultList);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        setError(error);
+        setIsLoading(false);
+        console.error(`error: ${error}`);
+      });
+  };
+
+  const handlePageChange = nextCurrentPage =>
+    sendRequest(searchTerm, {
+      ...options,
+      page: {
+        ...options.page,
+        current: nextCurrentPage
+      }
+    });
+
+  const addFilters = (field, value) => {
+    if (field === "state") {
+      setFilters({
+        ...filters,
+        state: [...filters.state, value]
+      });
+    } else {
+      setFilters({ ...filters, [field]: value });
+    }
+  };
+
+  const removeFilters = (field, value) => {
+    if (field === "state") {
+      setFilters({
+        ...filters,
+        state: [...filters.state.filter(state => state !== value)]
+      });
+    } else {
+      setFilters({ ...filters, [field]: null });
+    }
+  };
+
   const loadLocations = term => {
     const minTermLength = Config.get("advancedSearch").minTerms;
     const debounceTime = Config.get("advancedSearch").debounce;
@@ -76,7 +168,21 @@ const SearchUI = () => {
   };
 
   return (
-    <SearchUIView divisionsNaf={divisionsNaf} loadLocations={loadLocations} />
+    <SearchUIView
+      isLoading={isLoading}
+      error={error}
+      resultList={resultList}
+      sendRequest={sendRequest}
+      searchTerm={searchTerm}
+      setSearchTerm={setSearchTerm}
+      handlePageChange={handlePageChange}
+      addFilters={addFilters}
+      removeFilters={removeFilters}
+      filters={filters}
+      options={options}
+      divisionsNaf={divisionsNaf}
+      loadLocations={loadLocations}
+    />
   );
 };
 

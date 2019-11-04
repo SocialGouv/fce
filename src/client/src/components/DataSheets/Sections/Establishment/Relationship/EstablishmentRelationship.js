@@ -14,7 +14,8 @@ const EstablishmentRelationship = ({ establishment }) => {
     (establishment.nom_commercial &&
       establishment.nom_commercial.toLowerCase()) ||
     `${(establishment.nom && establishment.nom.toLowerCase()) ||
-      ""} ${establishment.prenom.toLowerCase() || ""}`.trim() ||
+      ""} ${(establishment.prenom && establishment.prenom.toLowerCase()) ||
+      ""}`.trim() ||
     null;
 
   return (

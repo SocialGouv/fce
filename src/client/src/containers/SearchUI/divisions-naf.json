@@ -1,5 +1,9 @@
 [
   {
+    "code": "00",
+    "libelle": "Ancienne révision NAF (NAP) non supportée"
+  },
+  {
     "code": "01",
     "libelle": "Culture et production animale, chasse et services annexes"
   },

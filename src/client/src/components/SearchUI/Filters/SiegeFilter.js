@@ -15,7 +15,7 @@ const SiegeFilter = ({ filters, addFilters, removeFilters }) => {
         checked={!!filters.siege}
       />
       <label htmlFor="siegeSocial" className="check-radio-label">
-        Siège social tu perds ton sang froid
+        Siège social
       </label>
     </div>
   );

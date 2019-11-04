@@ -1,39 +1,82 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Http from "../../services/Http";
 import SearchUIView from "../../components/SearchUI";
 import divisionsNaf from "./divisions-naf.json";
+import Config from "../../services/Config";
 
 const SearchUI = () => {
-  const [departments, setDepartments] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(null);
-  const [error, setError] = useState(null);
+  const loadLocations = term => {
+    const minTermLength = Config.get("advancedSearch").minTerms;
+    const debounceTime = Config.get("advancedSearch").debounce;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      setError(null);
+    let loadLocationsTimer;
+    clearTimeout(loadLocationsTimer);
 
-      try {
-        const res = await Http.get("/departements");
-        setDepartments(res.data.results);
-        setIsSuccess(true);
-      } catch (e) {
-        setError(e);
-        isSuccess(false);
+    if (term.length < minTermLength) {
+      return new Promise(resolve => {
+        resolve([]);
+      });
+    }
+
+    const communesPromise = Http.get("/communes", {
+      params: {
+        q: term
       }
+    })
+      .then(response => {
+        if (response.data && response.data.results) {
+          return response.data.results.map(commune => {
+            return {
+              label: `${commune.nom} (${commune.code_postal
+                .trim()
+                .padStart(5, "0")})`,
+              value: commune.code_insee.trim().padStart(5, "0")
+            };
+          });
+        }
+        return [];
+      })
+      .catch(function(error) {
+        console.error(error);
+        return [];
+      });
 
-      setIsLoading(false);
-    };
+    const departementsPromise = Http.get("/departements", {
+      params: {
+        q: term
+      }
+    })
+      .then(response => {
+        if (response.data && response.data.results) {
+          return response.data.results.map(departement => {
+            return {
+              label: `${departement.nom.toUpperCase()} (${departement.code})`,
+              value: departement.code
+            };
+          });
+        }
+        return [];
+      })
+      .catch(function(error) {
+        console.error(error);
+        return [];
+      });
 
-    fetchData();
-  }, []);
+    return new Promise(resolve => {
+      return (loadLocationsTimer = setTimeout(() => {
+        return Promise.all([communesPromise, departementsPromise]).then(
+          result =>
+            resolve([
+              { label: "Départements", options: result[1] },
+              { label: "Communes", options: result[0] }
+            ])
+        );
+      }, debounceTime));
+    });
+  };
 
   return (
-    <SearchUIView
-      divisionsNaf={divisionsNaf}
-      departments={{ data: departments, isLoading, isSuccess, error }}
-    />
+    <SearchUIView divisionsNaf={divisionsNaf} loadLocations={loadLocations} />
   );
 };
 

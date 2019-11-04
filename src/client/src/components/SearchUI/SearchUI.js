@@ -6,6 +6,8 @@ import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
 import SearchUIResults from "../SearchUIResults";
 import SiegeFilter from "./Filters/SiegeFilter";
 import StateFilter from "./Filters/StateFilter";
+import NafFilter from "./Filters/NafFilter";
+import LocationFilter from "./Filters/LocationFilter";
 import Config from "../../services/Config";
 
 import "./search.scss";
@@ -14,7 +16,7 @@ const client = AppSearch.createClient(Config.get("appSearch").client);
 
 const defaultOptions = Config.get("appSearch").defaultOptions;
 
-const SearchUI = ({ divisionsNaf, departments }) => {
+const SearchUI = ({ divisionsNaf, loadLocations }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [resultList, setResultList] = useState(null);
@@ -26,25 +28,38 @@ const SearchUI = ({ divisionsNaf, departments }) => {
     state: ["A", "F"]
   });
 
-  const filtersOptions = {
+  const allFiltersOptions = {
     ...(filters.siege && { etablissementsiege: "true" }),
     ...(filters.state.length === 1 && {
       etatadministratifetablissement: filters.state[0]
-    })
+    }),
+    ...(filters.naf && { naf_division: filters.naf }),
+    ...(filters.location &&
+      (filters.location.value.length < 5
+        ? {
+            departement: filters.location.value
+          }
+        : {
+            codecommuneetablissement: filters.location.value
+          }))
   };
 
   const options = {
     ...defaultOptions,
     filters: {
-      all: [
-        ...Object.entries(filtersOptions).map(([field, value]) => ({
-          [field]: value
-        }))
-      ]
+      all: Object.entries(allFiltersOptions).map(([field, value]) => ({
+        [field]: value
+      })),
+      none: {
+        ...(filters.state.length === 0 && {
+          etatadministratifetablissement: ["A", "F"]
+        })
+      }
     }
   };
 
-  console.log(resultList, filtersOptions);
+  console.log({ resultList });
+  console.log({ options });
 
   const sendRequest = (query, options) => {
     setIsLoading(true);
@@ -98,9 +113,6 @@ const SearchUI = ({ divisionsNaf, departments }) => {
       <div className="app-search pb-4">
         <div className="columns app-search--container">
           <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
-            <h2 className="title pb-2">
-              Retrouvez un établissement ou une entreprise
-            </h2>
             {error && (
               <div className="notification is-danger">
                 Une erreur est survenue lors de la communication avec l{"'"}
@@ -159,8 +171,22 @@ const SearchUI = ({ divisionsNaf, departments }) => {
               </div>
             </div>{" "}
             <div className="columns facets__selects">
-              <div className="column is-one-third" />
-              <div className="column is-one-third" />
+              <div className="column is-one-third">
+                <NafFilter
+                  filters={filters}
+                  addFilters={addFilters}
+                  removeFilters={removeFilters}
+                  divisionsNaf={divisionsNaf}
+                />
+              </div>
+              <div className="column is-one-third">
+                <LocationFilter
+                  filters={filters}
+                  addFilters={addFilters}
+                  removeFilters={removeFilters}
+                  loadLocations={loadLocations}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -186,7 +212,7 @@ const SearchUI = ({ divisionsNaf, departments }) => {
 
 SearchUI.propTypes = {
   divisionsNaf: PropTypes.array.isRequired,
-  departments: PropTypes.object.isRequired
+  loadLocations: PropTypes.func.isRequired
 };
 
 export default SearchUI;

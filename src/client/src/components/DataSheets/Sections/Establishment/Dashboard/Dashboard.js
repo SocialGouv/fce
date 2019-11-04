@@ -10,13 +10,19 @@ import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import Item from "./Item";
+
 import { hasInclude } from "../../../../../helpers/utils";
+import {
+  hasPse,
+  isInProcessState,
+  isValidProcedureDuration
+} from "../../../../../helpers/Pse";
+
 import "./dashboard.scss";
 
 const Dashboard = ({
   establishment,
   establishment: {
-    pse,
     activite_partielle,
     totalInteractions,
     interactions,
@@ -28,15 +34,20 @@ const Dashboard = ({
 
   const activity = {
     rccActivity:
-      pse &&
-      establishment.pse.find(pse =>
-        hasInclude(pse.type_de_dossier, ["RCC", "rcc"])
+      hasPse(establishment) &&
+      !!establishment.pse.find(
+        pse =>
+          hasInclude(pse.type_de_dossier, ["RCC", "rcc"]) &&
+          isValidProcedureDuration(pse.date_enregistrement) &&
+          !isInProcessState(pse.etat_du_dossier)
       ),
     pseActivity:
-      pse &&
-      establishment.pse.filter(
+      hasPse(establishment) &&
+      !!establishment.pse.find(
         pse =>
           hasInclude(pse.type_de_dossier, ["PSE", "pse"]) &&
+          !isInProcessState(pse.etat_du_dossier) &&
+          isValidProcedureDuration(pse.date_enregistrement) &&
           pse.contrats_ruptures_debut + pse.contrats_ruptures_fin > 0
       ),
     partialActivity: activite_partielle && activite_partielle.length > 0

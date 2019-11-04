@@ -9,7 +9,7 @@ export const capitalize = str =>
     .map(str => `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`)
     .join(" ");
 
-export const countValueInArray = (array, fields) => {
+export const countValuesInArray = (array, fields) => {
   if (!Array.isArray(fields) || !fields.length) {
     return 0;
   }

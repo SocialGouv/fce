@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 
 const StateFilter = ({ filters, addFilters, removeFilters }) => {
   return (
-    <div className="facet-state">
-      <div className="facet-state__label">État</div>
+    <div className="filter-state">
+      <div className="label">État</div>
       <div className="field">
         <input
           className="is-checkradio is-light"
@@ -18,8 +18,8 @@ const StateFilter = ({ filters, addFilters, removeFilters }) => {
           }}
           checked={filters.state.includes("A")}
         />
-        <label htmlFor="open" className="check-radio-label">
-          Ouvert
+        <label htmlFor="open" className="label label--state">
+          Ouverts
         </label>
 
         <input
@@ -34,8 +34,8 @@ const StateFilter = ({ filters, addFilters, removeFilters }) => {
           }}
           checked={filters.state.includes("F")}
         />
-        <label htmlFor="closed" className="check-radio-label">
-          Fermé
+        <label htmlFor="closed" className="label label--state">
+          Fermés
         </label>
       </div>
     </div>

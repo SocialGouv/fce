@@ -12,18 +12,23 @@ const NafFilter = ({ filters, addFilters, removeFilters, divisionsNaf }) => {
   const selectedValue = options.find(({ value }) => value === filters.naf);
 
   return (
-    <Select
-      id="naf"
-      name="naf"
-      options={options}
-      onChange={option => {
-        option ? addFilters("naf", option.value) : removeFilters("naf");
-      }}
-      placeholder="Code NAF ou libellé"
-      isClearable
-      value={selectedValue}
-      styles={selectCustomStyles}
-    />
+    <div>
+      <label htmlFor="naf" className="label">
+        Activité (NAF ou libellé)
+      </label>
+      <Select
+        id="naf"
+        name="naf"
+        options={options}
+        onChange={option => {
+          option ? addFilters("naf", option.value) : removeFilters("naf");
+        }}
+        isClearable
+        placeholder=""
+        value={selectedValue}
+        styles={selectCustomStyles}
+      />
+    </div>
   );
 };
 

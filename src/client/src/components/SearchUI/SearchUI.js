@@ -7,6 +7,13 @@ import SiegeFilter from "./Filters/SiegeFilter";
 import StateFilter from "./Filters/StateFilter";
 import NafFilter from "./Filters/NafFilter";
 import LocationFilter from "./Filters/LocationFilter";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel
+} from "react-accessible-accordion";
 
 import "./search.scss";
 
@@ -42,19 +49,74 @@ const SearchUI = ({
               sendRequest(searchTerm, options);
             }}
           >
-            <div className="field is-grouped is-grouped-centered">
-              <div className="control is-expanded">
-                <input
-                  type="text"
-                  name="q"
-                  id="term"
-                  className="input is-medium"
-                  placeholder="SIRET, SIREN, raison sociale, nom"
-                  onChange={e => setSearchTerm(e.target.value)}
-                  value={searchTerm}
-                />
+            <div className="columns">
+              <div className="column is-four-fifths">
+                <div className="field is-grouped is-grouped-centered">
+                  <div className="control is-expanded">
+                    <label htmlFor="term" className="label">
+                      Nom ou raison sociale, SIRET ou SIREN
+                    </label>
+                    <input
+                      type="text"
+                      name="q"
+                      id="term"
+                      className="input is-medium"
+                      onChange={e => setSearchTerm(e.target.value)}
+                      value={searchTerm}
+                    />
+                  </div>
+                </div>
+                <div className="columns filters__checkboxes">
+                  <div className="column is-one-third">
+                    <SiegeFilter
+                      filters={filters}
+                      addFilters={addFilters}
+                      removeFilters={removeFilters}
+                    />
+                  </div>
+                  <div className="column is-one-third">
+                    <StateFilter
+                      filters={filters}
+                      addFilters={addFilters}
+                      removeFilters={removeFilters}
+                    />
+                  </div>
+                </div>
+                <div className="columns">
+                  <div className="column">
+                    <Accordion allowZeroExpanded>
+                      <AccordionItem>
+                        <AccordionItemHeading>
+                          <AccordionItemButton>
+                            <span>Recherche avancée</span>
+                          </AccordionItemButton>
+                        </AccordionItemHeading>
+                        <AccordionItemPanel>
+                          <div className="columns filters__selects">
+                            <div className="column is-one-third">
+                              <NafFilter
+                                filters={filters}
+                                addFilters={addFilters}
+                                removeFilters={removeFilters}
+                                divisionsNaf={divisionsNaf}
+                              />
+                            </div>
+                            <div className="column is-one-third">
+                              <LocationFilter
+                                filters={filters}
+                                addFilters={addFilters}
+                                removeFilters={removeFilters}
+                                loadLocations={loadLocations}
+                              />
+                            </div>
+                          </div>
+                        </AccordionItemPanel>
+                      </AccordionItem>
+                    </Accordion>
+                  </div>
+                </div>
               </div>
-              <div className="control">
+              <div className="control column is-one-fifth button-wrapper">
                 <button
                   type="submit"
                   className="action button is-outlined is-light is-medium"
@@ -70,40 +132,6 @@ const SearchUI = ({
               </div>
             </div>
           </form>
-          <div className="columns facets__checkboxes">
-            <div className="column is-one-third">
-              <SiegeFilter
-                filters={filters}
-                addFilters={addFilters}
-                removeFilters={removeFilters}
-              />
-            </div>
-            <div className="column is-one-third">
-              <StateFilter
-                filters={filters}
-                addFilters={addFilters}
-                removeFilters={removeFilters}
-              />
-            </div>
-          </div>{" "}
-          <div className="columns facets__selects">
-            <div className="column is-one-third">
-              <NafFilter
-                filters={filters}
-                addFilters={addFilters}
-                removeFilters={removeFilters}
-                divisionsNaf={divisionsNaf}
-              />
-            </div>
-            <div className="column is-one-third">
-              <LocationFilter
-                filters={filters}
-                addFilters={addFilters}
-                removeFilters={removeFilters}
-                loadLocations={loadLocations}
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>

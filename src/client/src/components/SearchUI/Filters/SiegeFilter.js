@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const SiegeFilter = ({ filters, addFilters, removeFilters }) => {
   return (
-    <div className="field facet__siege">
+    <div className="field filter__siege">
       <input
         className="is-checkradio is-light"
         type="checkbox"
@@ -14,7 +14,7 @@ const SiegeFilter = ({ filters, addFilters, removeFilters }) => {
         }}
         checked={!!filters.siege}
       />
-      <label htmlFor="siegeSocial" className="check-radio-label">
+      <label className="label" htmlFor="siegeSocial">
         Siège social
       </label>
     </div>

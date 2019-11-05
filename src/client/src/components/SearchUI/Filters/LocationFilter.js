@@ -12,9 +12,12 @@ const LocationFilter = ({
 }) => (
   <div className="field">
     <div className="control">
+      <label htmlFor="location" className="label">
+        Département ou commune
+      </label>
       <AsyncSelect
-        id="commune"
-        name="commune"
+        id="location"
+        name="location"
         defaultOptions={[]}
         loadOptions={loadLocations}
         onChange={location => {
@@ -30,8 +33,8 @@ const LocationFilter = ({
                 Config.get("advancedSearch").minTerms
               } caractères`
         }
-        placeholder="Commune ou code postal"
         isClearable
+        placeholder=""
         value={filters.location}
         styles={selectCustomStyles}
       />

@@ -2,15 +2,17 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Alert } from "reactstrap";
 import { withRouter } from "react-router-dom";
-import Config from "./../../services/Config";
+import Config from "../../services/Config";
 import { isActiveEstablishment } from "../../helpers/Search";
 import { joinNoFalsy } from "../../helpers/utils";
 import Value from "../shared/Value";
 import GenerateXlxs from "./Xlsx/GenerateXlsx";
-import SearchUIAwesomeTable from "../SearchUIAwesomeTable";
-import TableCellState from "../SearchUIAwesomeTable/TableCellState";
+import SearchAwesomeTable from "../SearchAwesomeTable";
+import TableCellState from "../SearchAwesomeTable/TableCellState";
 
-const SearchUIResults = ({ results, pagination, isLoading }) => {
+import "./searchResults.scss";
+
+const SearchResults = ({ results, pagination, isLoading }) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
@@ -39,7 +41,7 @@ const SearchUIResults = ({ results, pagination, isLoading }) => {
           {!!results.length ? (
             <div>
               <button onClick={generateXlxs}>Download Xlsx</button>
-              <SearchUIAwesomeTable
+              <SearchAwesomeTable
                 showPagination={pagination && pagination.pages > 1}
                 pagination={{ ...pagination, min: 1 }}
                 prevText="Précédent"
@@ -137,10 +139,10 @@ const SearchUIResults = ({ results, pagination, isLoading }) => {
   );
 };
 
-SearchUIResults.propTypes = {
+SearchResults.propTypes = {
   results: PropTypes.array.isRequired,
   pagination: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired
 };
 
-export default withRouter(SearchUIResults);
+export default withRouter(SearchResults);

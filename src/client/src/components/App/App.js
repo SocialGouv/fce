@@ -12,11 +12,10 @@ import PrivateRoute from "../../services/PrivateRoute";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
 import Footer from "./Footer";
-import Search from "../../containers/Search";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import MagicLink from "../../containers/MagicLink";
-import SearchUI from "../../containers/SearchUI";
+import Search from "../../containers/Search";
 import LegalNotices from "../../components/LegalNotices";
 import Cgu from "../../components/Cgu";
 import { Error403, Error404 } from "../../components/Errors";
@@ -46,7 +45,6 @@ class App extends React.Component {
                 <Switch>
                   <PrivateRoute exact path="/" component={Search} />
                   <PrivateRoute exact path="/search" component={Search} />
-                  <PrivateRoute exact path="/searchui" component={SearchUI} />
                   <PrivateRoute
                     exact
                     path="/enterprise/:siren"

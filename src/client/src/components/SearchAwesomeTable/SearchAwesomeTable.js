@@ -9,12 +9,12 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/fontawesome-pro-light";
 
 import "./awesomeTable.scss";
 
-const SearchUIAwesomeTable = ({
-  showPagination,
+const SearchAwesomeTable = ({
+  showPagination = false,
   pagination,
-  prevText,
-  nextText,
-  isLoading,
+  prevText = "Previous",
+  nextText = "Next",
+  isLoading = false,
   data,
   fields,
   history
@@ -94,14 +94,7 @@ const SearchUIAwesomeTable = ({
   </table>
 );
 
-SearchUIAwesomeTable.defaultProps = {
-  showPagination: false,
-  isLoading: false,
-  prevText: "Previous",
-  nextText: "Next"
-};
-
-SearchUIAwesomeTable.propTypes = {
+SearchAwesomeTable.propTypes = {
   showPagination: PropTypes.bool,
   pagination: PropTypes.object.isRequired,
   isLoading: PropTypes.bool,
@@ -115,4 +108,4 @@ SearchUIAwesomeTable.propTypes = {
   history: PropTypes.object.isRequired
 };
 
-export default withRouter(SearchUIAwesomeTable);
+export default withRouter(SearchAwesomeTable);

@@ -1,0 +1,37 @@
+@import "../App/variables";
+
+.app-searchResults {
+    @media print {
+        zoom: 40%;
+    }
+
+    .title,
+    .subtitle {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .subtitle {
+        text-transform: uppercase;
+        color: $primary;
+    }
+
+    .result-row {
+        @media print {
+            justify-content: left;
+
+            > div {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        .result-list {
+            margin-top: 2rem;
+
+            .result-item {
+                cursor: pointer;
+            }
+        }
+    }
+}

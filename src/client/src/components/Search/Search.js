@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
-import SearchUIResults from "../SearchUIResults";
+import SearchResults from "../SearchResults";
 import SiegeFilter from "./Filters/SiegeFilter";
 import StateFilter from "./Filters/StateFilter";
 import NafFilter from "./Filters/NafFilter";
@@ -17,7 +17,7 @@ import {
 
 import "./search.scss";
 
-const SearchUI = ({
+const Search = ({
   isLoading,
   error,
   resultList,
@@ -137,7 +137,7 @@ const SearchUI = ({
     </div>
 
     {resultList && (
-      <SearchUIResults
+      <SearchResults
         results={resultList.rawResults}
         pagination={{
           current: resultList.info.meta.page.current,
@@ -153,7 +153,7 @@ const SearchUI = ({
   </div>
 );
 
-SearchUI.propTypes = {
+Search.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.object,
   resultList: PropTypes.object,
@@ -169,4 +169,4 @@ SearchUI.propTypes = {
   loadLocations: PropTypes.func.isRequired
 };
 
-export default SearchUI;
+export default Search;

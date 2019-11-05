@@ -20,7 +20,12 @@ $size: 5rem;
         }
 
         .spinner-inner-1 {
-            background: linear-gradient(to right, rgba($spinner, 0) 0%, rgba($spinner, 0) 50%, $spinner 51%);
+            background: linear-gradient(
+                to right,
+                rgba($spinner, 0) 0%,
+                rgba($spinner, 0) 50%,
+                $spinner 51%
+            );
         }
 
         .spinner-inner-2 {

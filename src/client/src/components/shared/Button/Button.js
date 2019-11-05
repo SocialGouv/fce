@@ -20,7 +20,7 @@ const Button = ({
     >
       {rowReverse && <span className="pr-2">{value}</span>}
       {icon && (
-        <span className="icon">
+        <span className="button__icon">
           <FontAwesomeIcon className={ClassNames(iconClasses)} icon={icon} />
         </span>
       )}
@@ -39,7 +39,7 @@ Button.defaultProps = {
 Button.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   icon: PropTypes.object,
-  buttonClasses: PropTypes.arrayOf(PropTypes.string),
+  buttonClasses: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   callback: PropTypes.func,
   rowReverse: PropTypes.bool,
   iconClasses: PropTypes.arrayOf(PropTypes.string),

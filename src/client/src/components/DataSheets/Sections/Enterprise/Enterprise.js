@@ -5,7 +5,6 @@ import Header from "./Header";
 import Infos from "./Infos";
 import Mandataires from "./Mandataires";
 import Accords from "./Accords";
-import ActivitePartielle from "./ActivitePartielle";
 import Muteco from "./Muteco";
 import Direccte from "../SharedComponents/Direccte";
 import Finances from "./Finances";
@@ -45,7 +44,7 @@ class Enterprise extends React.Component {
                   { label: "Accords d'entreprise", link: "accords" },
                   {
                     label: "Mutations économiques",
-                    link: "activite-partielle"
+                    link: "muteco"
                   },
                   { label: "Données financières", link: "finances" },
                   { label: "Mandataires sociaux", link: "mandataires" }

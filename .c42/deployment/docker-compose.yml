@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  deployment:
+    build: ansible
+    volumes:
+      - ./config/.ansible.cfg/:/root/.ansible.cfg
+      - ./config/hosts:/root/hosts
+      - ./config/fce-ppd.yml:/root/fce-ppd.yml
+      - ./config/fce-prod.yml:/root/fce-prod.yml
+      - $JENKINS_HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+      - $JENKINS_HOME/.ssh/id_rsa:/root/.ssh/id_rsa
+      - ../../dist:/app/dist
+    tty: true

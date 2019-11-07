@@ -16,7 +16,7 @@ const Dashboard = ({
   establishment,
   establishment: {
     pse,
-    activite_partielle_24_derniers_mois,
+    activite_partielle,
     totalInteractions,
     interactions,
     dernier_effectif_physique,
@@ -26,9 +26,7 @@ const Dashboard = ({
   const hasInteractions = totalInteractions && totalInteractions.total > 0;
 
   const activity = {
-    partialActivity:
-      activite_partielle_24_derniers_mois &&
-      activite_partielle_24_derniers_mois.length > 0,
+    partialActivity: activite_partielle && activite_partielle.length > 0,
     pseActivity:
       pse &&
       (pse.rupture_contrat_debut !== "0" || pse.rupture_contrat_fin !== "0")

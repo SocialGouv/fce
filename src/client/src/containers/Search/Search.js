@@ -1,38 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  setSearchTerm,
+  setSearchFilters,
+  setSearchResults,
+  setSearchIsLoading,
+  setSearchError
+} from "../../services/Store/actions";
 import * as AppSearch from "@elastic/app-search-javascript";
 import Http from "../../services/Http";
 import SearchView from "../../components/Search";
 import divisionsNaf from "./divisions-naf.json";
 import Config from "../../services/Config";
 
-const Search = () => {
-  const client = AppSearch.createClient(Config.get("appSearch").client);
-  const defaultOptions = Config.get("appSearch").defaultOptions;
+const client = AppSearch.createClient(Config.get("appSearch").client);
+const defaultOptions = Config.get("appSearch").defaultOptions;
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [resultList, setResultList] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filters, setFilters] = useState({
-    naf: null,
-    location: null,
-    siege: null,
-    state: ["A", "F"]
-  });
-
+const Search = ({
+  search,
+  setSearchTerm,
+  setSearchFilters,
+  setSearchResults,
+  setSearchIsLoading,
+  setSearchError
+}) => {
   const allFiltersOptions = {
-    ...(filters.siege && { etablissementsiege: "true" }),
-    ...(filters.state.length === 1 && {
-      etatadministratifetablissement: filters.state[0]
+    ...(search.filters.siren && { siren: search.filters.siren }),
+    ...(search.filters.siege && { etablissementsiege: "true" }),
+    ...(search.filters.state.length === 1 && {
+      etatadministratifetablissement: search.filters.state[0]
     }),
-    ...(filters.naf && { naf_division: filters.naf }),
-    ...(filters.location &&
-      (filters.location.value.length < 5
+    ...(search.filters.naf && { naf_division: search.filters.naf }),
+    ...(search.filters.location &&
+      (search.filters.location.value.length < 5
         ? {
-            departement: filters.location.value
+            departement: search.filters.location.value
           }
         : {
-            codecommuneetablissement: filters.location.value
+            codecommuneetablissement: search.filters.location.value
           }))
   };
 
@@ -43,7 +49,7 @@ const Search = () => {
         [field]: value
       })),
       none: {
-        ...(filters.state.length === 0 && {
+        ...(search.filters.state.length === 0 && {
           etatadministratifetablissement: ["A", "F"]
         })
       }
@@ -51,23 +57,23 @@ const Search = () => {
   };
 
   const sendRequest = (query, options) => {
-    setIsLoading(true);
-    setError(null);
+    setSearchIsLoading(true);
+    setSearchError(null);
     client
       .search(query, options)
       .then(resultList => {
-        setResultList(resultList);
-        setIsLoading(false);
+        setSearchResults(resultList);
+        setSearchIsLoading(false);
       })
       .catch(error => {
-        setError(error);
-        setIsLoading(false);
+        setSearchError(error);
+        setSearchIsLoading(false);
         console.error(`error: ${error}`);
       });
   };
 
   const handlePageChange = nextCurrentPage =>
-    sendRequest(searchTerm, {
+    sendRequest(search.term, {
       ...options,
       page: {
         ...options.page,
@@ -75,25 +81,25 @@ const Search = () => {
       }
     });
 
-  const addFilters = (field, value) => {
+  const addFilter = (field, value) => {
     if (field === "state") {
-      setFilters({
-        ...filters,
-        state: [...filters.state, value]
+      setSearchFilters({
+        ...search.filters,
+        state: [...search.filters.state, value]
       });
     } else {
-      setFilters({ ...filters, [field]: value });
+      setSearchFilters({ ...search.filters, [field]: value });
     }
   };
 
-  const removeFilters = (field, value) => {
+  const removeFilter = (field, value) => {
     if (field === "state") {
-      setFilters({
-        ...filters,
-        state: [...filters.state.filter(state => state !== value)]
+      setSearchFilters({
+        ...search.filters,
+        state: [...search.filters.state.filter(state => state !== value)]
       });
     } else {
-      setFilters({ ...filters, [field]: null });
+      setSearchFilters({ ...search.filters, [field]: null });
     }
   };
 
@@ -167,18 +173,25 @@ const Search = () => {
     });
   };
 
+  useEffect(() => {
+    if (search.filters.siren) {
+      sendRequest(search.term, options);
+      removeFilter("siren");
+    }
+  }, []);
+
   return (
     <SearchView
-      isLoading={isLoading}
-      error={error}
-      resultList={resultList}
+      isLoading={search.isLoading}
+      error={search.error}
+      resultList={search.results}
       sendRequest={sendRequest}
-      searchTerm={searchTerm}
+      searchTerm={search.term}
       setSearchTerm={setSearchTerm}
       handlePageChange={handlePageChange}
-      addFilters={addFilters}
-      removeFilters={removeFilters}
-      filters={filters}
+      addFilter={addFilter}
+      removeFilter={removeFilter}
+      filters={search.filters}
       options={options}
       divisionsNaf={divisionsNaf}
       loadLocations={loadLocations}
@@ -186,4 +199,42 @@ const Search = () => {
   );
 };
 
-export default Search;
+const mapStateToProps = state => {
+  return {
+    search: state.search
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setSearchTerm: term => {
+      dispatch(setSearchTerm(term));
+    },
+    setSearchFilters: filters => {
+      dispatch(setSearchFilters(filters));
+    },
+    setSearchResults: results => {
+      dispatch(setSearchResults(results));
+    },
+    setSearchIsLoading: isLoading => {
+      dispatch(setSearchIsLoading(isLoading));
+    },
+    setSearchError: error => {
+      dispatch(setSearchError(error));
+    }
+  };
+};
+
+Search.propTypes = {
+  search: PropTypes.object.isRequired,
+  setSearchTerm: PropTypes.func.isRequired,
+  setSearchFilters: PropTypes.func.isRequired,
+  setSearchResults: PropTypes.func.isRequired,
+  setSearchIsLoading: PropTypes.func.isRequired,
+  setSearchError: PropTypes.func.isRequired
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Search);

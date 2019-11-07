@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
+import classNames from "classnames";
 import SearchResults from "../SearchResults";
 import SiegeFilter from "./Filters/SiegeFilter";
 import StateFilter from "./Filters/StateFilter";
@@ -25,8 +24,8 @@ const Search = ({
   searchTerm,
   setSearchTerm,
   handlePageChange,
-  addFilters,
-  removeFilters,
+  addFilter,
+  removeFilter,
   filters,
   options,
   divisionsNaf,
@@ -61,7 +60,9 @@ const Search = ({
                       name="q"
                       id="term"
                       className="input is-medium"
-                      onChange={e => setSearchTerm(e.target.value)}
+                      onChange={e => {
+                        setSearchTerm(e.target.value);
+                      }}
                       value={searchTerm}
                     />
                   </div>
@@ -70,22 +71,29 @@ const Search = ({
                   <div className="column is-one-third">
                     <SiegeFilter
                       filters={filters}
-                      addFilters={addFilters}
-                      removeFilters={removeFilters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
                     />
                   </div>
                   <div className="column is-one-third">
                     <StateFilter
                       filters={filters}
-                      addFilters={addFilters}
-                      removeFilters={removeFilters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
                     />
                   </div>
                 </div>
                 <div className="columns">
                   <div className="column">
-                    <Accordion allowZeroExpanded>
-                      <AccordionItem>
+                    <Accordion
+                      allowZeroExpanded
+                      preExpanded={
+                        filters.naf || filters.location
+                          ? ["advancedSearch"]
+                          : []
+                      }
+                    >
+                      <AccordionItem uuid="advancedSearch">
                         <AccordionItemHeading>
                           <AccordionItemButton>
                             <span>Recherche avancée</span>
@@ -96,16 +104,16 @@ const Search = ({
                             <div className="column is-one-third">
                               <NafFilter
                                 filters={filters}
-                                addFilters={addFilters}
-                                removeFilters={removeFilters}
+                                addFilter={addFilter}
+                                removeFilter={removeFilter}
                                 divisionsNaf={divisionsNaf}
                               />
                             </div>
                             <div className="column is-one-third">
                               <LocationFilter
                                 filters={filters}
-                                addFilters={addFilters}
-                                removeFilters={removeFilters}
+                                addFilter={addFilter}
+                                removeFilter={removeFilter}
                                 loadLocations={loadLocations}
                               />
                             </div>
@@ -118,16 +126,15 @@ const Search = ({
               </div>
               <div className="control column is-one-fifth button-wrapper">
                 <button
-                  type="submit"
-                  className="action button is-outlined is-light is-medium"
-                >
-                  {false ? (
-                    <span className="icon">
-                      <FontAwesomeIcon icon={faSpinner} spin />
-                    </span>
-                  ) : (
-                    "Rechercher"
+                  className={classNames(
+                    "action",
+                    "button",
+                    "is-secondary",
+                    "is-medium",
+                    { "is-loading": isLoading }
                   )}
+                >
+                  Rechercher
                 </button>
               </div>
             </div>
@@ -161,8 +168,8 @@ Search.propTypes = {
   searchTerm: PropTypes.string.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
-  addFilters: PropTypes.func.isRequired,
-  removeFilters: PropTypes.func.isRequired,
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
   options: PropTypes.object.isRequired,
   divisionsNaf: PropTypes.array.isRequired,

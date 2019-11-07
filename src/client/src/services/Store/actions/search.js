@@ -1,46 +1,42 @@
 import * as types from "../constants/ActionTypes";
-import Http from "../../Http";
 
-export const setTerm = (termKey, termValue) => (dispatch, getState) => {
+export const setSearchTerm = term => dispatch => {
   dispatch({
-    type: types.SEARCH_SET_TERM,
-    termKey,
-    termValue
+    type: types.SET_SEARCH_TERM,
+    term
   });
 };
 
-export const search = (terms, page = 1) => (dispatch, getState) => {
-  // Just in case, to prevent infinite recursion
-  if (terms.csvURL) {
-    delete terms.csvURL;
-  }
-
-  return Http.get("/search", {
-    params: {
-      ...terms,
-      page
-    }
-  })
-    .then(function(response) {
-      dispatch(
-        _setSearchResponses(response.data.results, response.data.pagination)
-      );
-
-      return Promise.resolve(response);
-    })
-    .catch(function(error) {
-      return Promise.reject(error);
-    });
-};
-
-export const resetSearch = () => (dispatch, getState) => {
+export const setSearchFilters = filters => dispatch => {
   dispatch({
-    type: types.SEARCH_RESET
+    type: types.SET_SEARCH_FILTERS,
+    filters
   });
 };
 
-const _setSearchResponses = (results, pagination) => ({
-  type: types.SEARCH_RESULTS,
-  results,
-  pagination
-});
+export const setSearchResults = results => dispatch => {
+  dispatch({
+    type: types.SET_SEARCH_RESULTS,
+    results
+  });
+};
+
+export const setSearchIsLoading = isLoading => dispatch => {
+  dispatch({
+    type: types.SET_SEARCH_IS_LOADING,
+    isLoading
+  });
+};
+
+export const setSearchError = error => dispatch => {
+  dispatch({
+    type: types.SET_SEARCH_ERROR,
+    error
+  });
+};
+
+export const resetSearch = () => dispatch => {
+  dispatch({
+    type: types.RESET_SEARCH
+  });
+};

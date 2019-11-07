@@ -6,8 +6,8 @@ import { selectCustomStyles } from "./customStyles";
 
 const LocationFilter = ({
   filters,
-  addFilters,
-  removeFilters,
+  addFilter,
+  removeFilter,
   loadLocations
 }) => (
   <div className="field">
@@ -22,8 +22,8 @@ const LocationFilter = ({
         loadOptions={loadLocations}
         onChange={location => {
           location
-            ? addFilters("location", location)
-            : removeFilters("location");
+            ? addFilter("location", location)
+            : removeFilter("location");
         }}
         loadingMessage={() => "Chargement..."}
         noOptionsMessage={term =>
@@ -44,8 +44,8 @@ const LocationFilter = ({
 
 LocationFilter.propTypes = {
   filters: PropTypes.object,
-  addFilters: PropTypes.func.isRequired,
-  removeFilters: PropTypes.func.isRequired,
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired,
   loadLocations: PropTypes.func.isRequired
 };
 

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const StateFilter = ({ filters, addFilters, removeFilters }) => {
+const StateFilter = ({ filters, addFilter, removeFilter }) => {
   return (
     <div className="filter-state">
       <div className="label">État</div>
@@ -13,8 +13,8 @@ const StateFilter = ({ filters, addFilters, removeFilters }) => {
           id="open"
           onChange={() => {
             filters.state.includes("A")
-              ? removeFilters("state", "A")
-              : addFilters("state", "A");
+              ? removeFilter("state", "A")
+              : addFilter("state", "A");
           }}
           checked={filters.state.includes("A")}
         />
@@ -29,8 +29,8 @@ const StateFilter = ({ filters, addFilters, removeFilters }) => {
           id="closed"
           onChange={() => {
             filters.state.includes("F")
-              ? removeFilters("state", "F")
-              : addFilters("state", "F");
+              ? removeFilter("state", "F")
+              : addFilter("state", "F");
           }}
           checked={filters.state.includes("F")}
         />
@@ -44,8 +44,8 @@ const StateFilter = ({ filters, addFilters, removeFilters }) => {
 
 StateFilter.propTypes = {
   filters: PropTypes.object.isRequired,
-  addFilters: PropTypes.func.isRequired,
-  removeFilters: PropTypes.func.isRequired
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired
 };
 
 export default StateFilter;

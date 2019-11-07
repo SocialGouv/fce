@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SiegeFilter = ({ filters, addFilters, removeFilters }) => {
+const SiegeFilter = ({ filters, addFilter, removeFilter }) => {
   return (
     <div className="field filter__siege">
       <input
@@ -10,7 +10,7 @@ const SiegeFilter = ({ filters, addFilters, removeFilters }) => {
         name="siegeSocial"
         id="siegeSocial"
         onChange={() => {
-          filters.siege ? removeFilters("siege") : addFilters("siege", "true");
+          filters.siege ? removeFilter("siege") : addFilter("siege", "true");
         }}
         checked={!!filters.siege}
       />
@@ -23,8 +23,8 @@ const SiegeFilter = ({ filters, addFilters, removeFilters }) => {
 
 SiegeFilter.propTypes = {
   filters: PropTypes.object.isRequired,
-  addFilters: PropTypes.func.isRequired,
-  removeFilters: PropTypes.func.isRequired
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired
 };
 
 export default SiegeFilter;

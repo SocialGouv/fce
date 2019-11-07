@@ -1,11 +1,16 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import EstablishmentsItems from "./EstablishmentsItems/EstablishmentsItems";
 import Value from "../../shared/Value";
 import { faArrowRight } from "@fortawesome/fontawesome-pro-solid";
 import Config from "../../../services/Config";
-import { setTerm, resetSearch } from "../../../services/Store/actions";
+import {
+  setSearchTerm,
+  setSearchFilters,
+  resetSearch
+} from "../../../services/Store/actions";
 import Button from "../../shared/Button";
 
 import "./sidebar.scss";
@@ -16,7 +21,8 @@ const Sidebar = ({
   headOffice,
   isEstablishmentDisplayed,
   history,
-  setTerm,
+  setSearchTerm,
+  setSearchFilters,
   resetSearch
 }) => {
   const limitItems = Config.get("sidebarEstablishmentsLimit");
@@ -101,23 +107,30 @@ const Sidebar = ({
                 limit={limitItems}
               />
               {establishments.length > limitItems && (
-                <Button
-                  value="Voir tous les établissements"
-                  icon={faArrowRight}
-                  buttonClasses={[
-                    "is-secondary",
-                    "is-outlined",
-                    "sidebar__view-all-button"
-                  ]}
-                  callback={() => {
-                    Promise.all([
-                      resetSearch(),
-                      setTerm("q", enterprise.siren)
-                    ]).then(() => {
-                      history.push("/");
+                <Link
+                  to="/"
+                  onClick={() => {
+                    resetSearch();
+                    setSearchTerm(enterprise.siren);
+                    setSearchFilters({
+                      naf: null,
+                      location: null,
+                      siege: null,
+                      state: ["A", "F"],
+                      siren: enterprise.siren
                     });
                   }}
-                />
+                >
+                  <Button
+                    value="Voir tous les établissements"
+                    icon={faArrowRight}
+                    buttonClasses={[
+                      "is-secondary",
+                      "is-outlined",
+                      "sidebar__view-all-button"
+                    ]}
+                  />
+                </Link>
               )}
             </>
           )}
@@ -129,11 +142,27 @@ const Sidebar = ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    setTerm: (termKey, termValue) => {
-      return dispatch(setTerm(termKey, termValue));
+    setSearchTerm: term => {
+      return dispatch(setSearchTerm(term));
     },
-    resetSearch: () => dispatch(resetSearch())
+    setSearchFilters: filters => {
+      dispatch(setSearchFilters(filters));
+    },
+    resetSearch: () => {
+      dispatch(resetSearch());
+    }
   };
+};
+
+Sidebar.propTypes = {
+  establishments: PropTypes.array.isRequired,
+  enterprise: PropTypes.object.isRequired,
+  headOffice: PropTypes.object.isRequired,
+  isEstablishmentDisplayed: PropTypes.bool,
+  history: PropTypes.object.isRequired,
+  setSearchTerm: PropTypes.func.isRequired,
+  setSearchFilters: PropTypes.func.isRequired,
+  resetSearch: PropTypes.func.isRequired
 };
 
 export default withRouter(

@@ -25,5 +25,9 @@ export const countValuesInArray = (array, fields) => {
   }, 0);
 };
 
-export const hasInclude = (str, arrayOfStrings) =>
-  arrayOfStrings.some(item => str.includes(item));
+export const isIncluded = (str, arrayOfStrings) =>
+  arrayOfStrings.length > 0
+    ? arrayOfStrings.some(item =>
+        str.toLowerCase().includes(item.toLowerCase())
+      )
+    : false;

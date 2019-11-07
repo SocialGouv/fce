@@ -1,11 +1,11 @@
 import React from "react";
 import Proptypes from "prop-types";
-import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
+import AccordionTable from "./AccordionTable";
 import Config from "../../../../../services/Config";
 
-import { countValuesInArray, hasInclude } from "../../../../../helpers/utils";
+import { countValuesInArray, isIncluded } from "../../../../../helpers/utils";
 import {
   isInProcessState,
   hasPseValidsOrProbates,
@@ -18,14 +18,14 @@ function PSE({ enterprise }) {
       enterprise.liste_pse &&
       enterprise.liste_pse.find(
         pse =>
-          hasInclude(pse.dossier.type_de_dossier, ["PSE", "pse"]) &&
+          isIncluded(pse.dossier.type_de_dossier, ["pse"]) &&
           isInProcessState(pse.dossier.etat_du_dossier)
       ),
     validsOrProbates:
       enterprise.liste_pse &&
       enterprise.liste_pse.filter(
         pse =>
-          hasInclude(pse.dossier.type_de_dossier, ["PSE", "pse"]) &&
+          isIncluded(pse.dossier.type_de_dossier, ["pse"]) &&
           !isInProcessState(pse.dossier.etat_du_dossier) &&
           isValidProcedureDuration(pse.dossier.date_enregistrement) &&
           countValuesInArray(pse.establishments, [
@@ -52,7 +52,7 @@ function PSE({ enterprise }) {
       {hasPseValidsOrProbates(pseList) ? (
         <>
           <Data
-            name={`Procédure(s) homologuée(s) ou validée(s) au cours des ${Config.get(
+            name={`Procédure(s) homologuée(s) ou validée(s) au c des ${Config.get(
               "monthsProceduresLimit"
             )} derniers mois"`}
             value={hasPseValidsOrProbates(pseList)}
@@ -76,49 +76,12 @@ function PSE({ enterprise }) {
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {pseList.validsOrProbates.map((pse, index) => (
-                  <tr key={`pse-${pse.dossier.numero_de_dossier}-${index}`}>
-                    <td>
-                      <Value value={pse.dossier.numero_de_dossier} />
-                    </td>
-                    <td className="has-text-centered ">
-                      <Value value={pse.dossier.date_enregistrement} />
-                    </td>
-                    <td className="has-text-centered">
-                      <Value value={pse.dossier.situation_juridique} />
-                    </td>
-                    <td className="has-text-centered ">
-                      <Value
-                        value={
-                          pse.dossier.date_de_jugement
-                            ? pse.dossier.date_de_jugement
-                            : "-"
-                        }
-                      />
-                    </td>
-                    <td className="has-text-centered w-20">
-                      <Value
-                        value={
-                          countValuesInArray(pse.establishments, [
-                            "contrats_ruptures_fin"
-                          ]) > 0
-                            ? countValuesInArray(pse.establishments, [
-                                "contrats_ruptures_fin"
-                              ])
-                            : countValuesInArray(pse.establishments, [
-                                "contrats_ruptures_debut"
-                              ])
-                        }
-                        nonEmptyValues="0"
-                      />
-                    </td>
-                    <td className="has-text-centered has-text-link ">
-                      <Value value={pse.establishments.length} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              {pseList.validsOrProbates.map((pse, index) => (
+                <AccordionTable
+                  pse={pse}
+                  key={`pse-${pse.dossier.numero_de_dossier}-${index}`}
+                />
+              ))}
             </table>
           </div>
         </>

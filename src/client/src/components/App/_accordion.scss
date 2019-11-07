@@ -1,0 +1,22 @@
+.accordion {
+
+    tr {
+        background-color: #ececec;
+    }
+
+    &-header {
+        cursor: pointer;
+        transition: color 200ms;
+
+        &:hover {
+            color: $dark-blue;
+        }
+    }
+
+    &-container {
+        border-bottom: solid 3px #ccc;
+        border-top: solid 3px #ccc;
+        max-height: 13rem;
+        overflow: auto;
+    }
+}

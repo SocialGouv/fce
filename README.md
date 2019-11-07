@@ -149,28 +149,16 @@ Vous pourrez ensuite lancer l'interface GUI via la commande (vous pouvez utilise
 
 ## Import csv dans postgres
 
+### shell
+
+```shell
+NODE_ENV=production node ./shell/run.js ImportCsv monfichier.csv
+```
+
+### psql
+
 ```shell
 psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_uc_eff(siret, cod_section, nme_ddtefp3, nme_region, dereffphy, date_effphy_et, source_effphy_et) FROM '/tmp/import/etablissements_uc_eff.csv' with (format csv, header true, delimiter ',');"
-```
-
-```shell
-psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_idcc(siret, idcc) FROM '/tmp/import/etablissements_idcc.csv' with (format csv, header true, delimiter ',');"
-```
-
-```shell
-psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3e(siret, date_visite, region, inspecteurs, filieres, type_suivi, suivi_eti) FROM '/tmp/interactions_pole_3e_20190418.csv' with (format csv, header true, delimiter ',');"
-```
-
-```shell
-psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3t(siret, date, realise_pour) FROM '/tmp/interactions_pole_t_20190417.csv' with (format csv, header true, delimiter ',');"
-```
-
-```shell
-psql -d commit42_fce -U commit42_fce  -c "\copy interactions_pole_3t(siret, date, realise_pour) FROM '/tmp/interactions_pole_t_20190417.csv' with (format csv, header true, delimiter ',');"
-```
-
-```shell
-psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_accords(num_dos,siret,dt_sign,epargne,remuneration,temps_travail,conditions_travail,emploi,egalite_pro,classifications,formation,protection_sociale,droit_syndical,autres,nouvelles_technologies) FROM '/tmp/accords.csv' with (format csv, header true, delimiter ';');"
 ```
 
 ## Postgres

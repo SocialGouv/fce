@@ -79,9 +79,7 @@ class EstablishmentView extends React.Component {
                         <tr key={pole}>
                           <td>{pole}</td>
                           <td colSpan="7">
-                            {pole === "C"
-                              ? "Donnée bientôt disponible"
-                              : "Donnée non disponible"}
+                            <Value value="-" />
                           </td>
                         </tr>
                       );
@@ -89,34 +87,36 @@ class EstablishmentView extends React.Component {
                       return lastInteraction ? (
                         <tr key={lastInteraction}>
                           <td>
-                            <Value value={pole} empty="ND" />
+                            <Value value={pole} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.date} empty="ND" />
+                            <Value value={lastInteraction.date} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.objet} empty="ND" />
+                            <Value value={lastInteraction.objet} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.unite} empty="ND" />
+                            <Value value={lastInteraction.unite} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.agent} empty="ND" />
+                            <Value value={lastInteraction.agent} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.type} empty="ND" />
+                            <Value value={lastInteraction.type} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.note} empty="ND" />
+                            <Value value={lastInteraction.note} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.suite} empty="ND" />
+                            <Value value={lastInteraction.suite} />
                           </td>
                         </tr>
                       ) : (
                         <tr key={pole}>
                           <td>{pole}</td>
-                          <td colSpan="7">Pas de date connue</td>
+                          <td colSpan="7">
+                            <Value value="-" />
+                          </td>
                         </tr>
                       );
                     }

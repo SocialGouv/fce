@@ -39,7 +39,6 @@ class Enterprise extends React.Component {
   }
 
   mountComponent() {
-    console.log("mountComponent");
     this.setState(
       {
         isEnterprise: this.props.match.params.hasOwnProperty("siren"),

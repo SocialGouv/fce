@@ -1,0 +1,148 @@
+## ===================== Elastic App Search Configuration =====================
+#
+# NOTE: Elastic App Search comes with reasonable defaults.
+#       Before adjusting the configuration, make sure you understand what you
+#       are trying to accomplish and the consequences.
+#
+# NOTE: For passwords, the use of environment variables is encouraged
+#       to keep values from being written to disk, e.g.
+#       elasticsearch.password: ${ELASTICSEARCH_PASSWORD:changeme}
+#
+# ---------------------------------- Elasticsearch ----------------------------
+#
+# App Search needs one-time permission to alter Elasticsearch settings.
+# Ensure the Elasticsearch settings are correct, then set the following to true.
+# Or, adjust Elasticsearch's config/elasticsearch.yml instead.
+# See README.md for more details.
+#
+allow_es_settings_modification: true
+#
+# Elasticsearch full cluster URL:
+#
+elasticsearch.host: http://127.0.0.1:9200
+#
+# Elasticsearch credentials:
+#
+elasticsearch.username: commit42
+elasticsearch.password: 8zoC6ktzMbologQ
+#
+# Elasticsearch SSL settings:
+#
+#elasticsearch.ssl.enabled: false
+#elasticsearch.ssl.certificate:
+#elasticsearch.ssl.certificate_authority:
+#elasticsearch.ssl.key:
+#elasticsearch.ssl.key_passphrase:
+#elasticsearch.ssl.verify: true
+#
+# ------------------------------- Hosting & Network ---------------------------
+#
+# Define the exposed URL at which users will reach App Search.
+# Defaults to localhost:3002 for testing purposes.
+# Most cases will use one of:
+#
+# * An IP: http://255.255.255.255
+# * A FQDN: http://example.com
+# * Shortname defined via /etc/hosts: http://app-search.search
+#
+app_search.external_url: https://appsearch.fce.prep.fabrique.social.gouv.fr
+
+# Web application listen_host and listen_port.
+# Your application will run on this host and port.
+#
+# * app_search.listen_host: Must be a valid IPv4 or IPv6 address.
+# * app_search.listen_port: Must be a valid port number (1-65535).
+#
+app_search.listen_host: 0.0.0.0
+app_search.listen_port: 3002
+#
+# Background worker monitoring.
+# Diagnostic information will be served on `app_search.monitoring_port`.
+#
+# * app_search.monitoring_enabled: Set to false to disable monitoring.
+# * app_search.monitoring_port: Must be a valid port number (1-65535).
+#
+app_search.monitoring_enabled: false
+app_search.monitoring_port: 3003
+#
+# ------------------------------ Authentication -------------------------------
+#
+# The origin of authenticated App Search users.
+# Options are standard, elasticsearch-native, and elasticsearch-saml.
+#
+# Docs: https://swiftype.com/documentation/app-search/self-managed/security
+#
+# * standard: Users are created within the App Search dashboard.
+# * elasticsearch-native: Users are managed via the Elasticsearch native realm.
+# * elasticsearch-saml: Users are managed via the Elasticsearch SAML realm.
+#
+app_search.auth.source: standard
+#
+# (SAML only) Name of the realm within the Elasticsearch realm chain.
+#
+#app_search.auth.name:
+#
+# ---------------------------------- Email -----------------------------------
+#
+# Connect App Search to a mailer.
+# Docs: https://swiftype.com/documentation/app-search/self-managed/configuration
+#
+#email.account.enabled: true
+#email.account.smtp.auth: plain
+email.account.smtp.starttls.enable: true
+email.account.smtp.host: smtp-in.dpmail.fr
+email.account.smtp.port: 587
+email.account.smtp.user: 366e824f-cfd1-403f-bd8c-2c33552c41a2
+email.account.smtp.password: LesTug@GrUodFJ5fL1J9
+email.account.email_defaults.from: no-reply@commit42.fr
+#
+# ----------------------------------- APIs ------------------------------------
+#
+# Set to true hide product version information from API responses.
+#
+#hide_version_info: false
+#
+# ----------------------------- Diagnostics report ----------------------------
+#
+# Path where diagnostic reports will be generated.
+#
+#diagnostic_report_directory: diagnostics
+#
+# ---------------------------------- Logging ----------------------------------
+#
+# Choose your log export path.
+#
+#log_directory: log
+#
+# Log level can be: debug, info, warn, error, fatal, or unknown.
+#
+#log_level: info
+#
+# Choose your Filebeat logs export path.
+#
+#filebeat_log_directory: log
+#
+# ------------------------------- TLS/SSL -------------------------------
+#
+# Configure TLS/SSL encryption.
+#
+#app_search.ssl.enabled: false
+#app_search.ssl.keystore.path:
+#app_search.ssl.keystore.password:
+#app_search.ssl.keystore.key_password:
+#app_search.ssl.redirect_http_from_port:
+#
+# Worker monitoring server ssl options
+#
+#app_search.monitoring_ssl.enabled: false
+#app_search.monitoring_ssl.certificate:
+#app_search.monitoring_ssl.certificate_authority:
+#app_search.monitoring_ssl.key:
+#app_search.monitoring_ssl.key_passphrase:
+#app_search.monitoring_ssl.verify: true
+#
+# ---------------------------------- Session ----------------------------------
+#
+# Set key to persist user sessions through process restarts.
+#
+secret_session_key: qe3yx4kI0nUzmUiMbuHLDTaXd2cbW1ASRE

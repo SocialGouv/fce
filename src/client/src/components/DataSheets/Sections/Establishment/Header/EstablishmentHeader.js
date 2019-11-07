@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import Dashboard from "../Dashboard";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
@@ -8,13 +9,18 @@ import {
   faCircle
 } from "@fortawesome/fontawesome-pro-solid";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
+import { formatAddress } from "../../../../../helpers/Address";
 import InfoBox from "../../../../shared/InfoBox";
 import "./establishmentHeader.scss";
 
 class EstablishmentHeader extends React.Component {
   render() {
-    const { establishment } = this.props;
-    const adrComponents = establishment.adresse_components;
+    const {
+      establishment,
+      establishment: { adresse_components }
+    } = this.props;
+    const address = formatAddress(adresse_components);
+
     const isActive = isActiveEstablishment(establishment);
     const stateClass = isActive ? "icon--success" : "icon--danger";
 
@@ -64,35 +70,8 @@ class EstablishmentHeader extends React.Component {
             </span>
           </div>
           <div className="column is-8">
-            <span className="is-size-6 has-text-segoe is-capitalized has-text-grey-dark">
-              <Value value={adrComponents.numero_voie} empty="" />
-              {adrComponents.numero_voie && " "}
-              <Value value={adrComponents.indice_repetition} empty="" />
-              {adrComponents.indice_repetition && " "}
-              <Value
-                value={
-                  adrComponents.type_voie &&
-                  adrComponents.type_voie.toLowerCase()
-                }
-                empty="-"
-              />
-              {adrComponents.type_voie && " "}
-              <Value
-                value={
-                  adrComponents.nom_voie && adrComponents.nom_voie.toLowerCase()
-                }
-                empty="-"
-              />
-              {" - "}
-            </span>
-            <span className="is-size-6 is-capitalized has-text-segoe has-text-grey-dark">
-              <Value value={adrComponents.code_postal} empty="-" />{" "}
-              <Value
-                value={
-                  adrComponents.localite && adrComponents.localite.toLowerCase()
-                }
-                empty="-"
-              />
+            <span className="is-size-6 has-text-segoe has-text-grey-dark">
+              <Value value={address} empty="" />
             </span>
           </div>
         </div>
@@ -115,7 +94,7 @@ class EstablishmentHeader extends React.Component {
                     : establishment.date_fin ||
                       establishment.date_dernier_traitement_etablissement
                 }
-                empty="-"
+                empty=""
               />
             </span>
           </div>
@@ -127,7 +106,7 @@ class EstablishmentHeader extends React.Component {
                   establishment.libelle_naf &&
                   establishment.libelle_naf.toLowerCase()
                 }
-                empty="-"
+                empty=""
               />
             </span>
           </div>
@@ -137,5 +116,10 @@ class EstablishmentHeader extends React.Component {
     );
   }
 }
+
+EstablishmentHeader.propTypes = {
+  establishment: PropTypes.object.isRequired,
+  adresse_components: PropTypes.object
+};
 
 export default EstablishmentHeader;

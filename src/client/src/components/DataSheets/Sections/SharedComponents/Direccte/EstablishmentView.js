@@ -35,16 +35,26 @@ class EstablishmentView extends React.Component {
           <Data
             name="Unité de contrôle compétente (inspection du travail)"
             value={establishment.unite_controle_competente}
+            columnClasses={["is-8", "is-4"]}
           />
 
           <Data
-            name="Dernier contrôle / dernière visite au cours des 24 derniers mois (Pôle T, Pôle C et Pôle E - SEER)"
+            name={
+              <div>
+                <div>
+                  Dernier contrôle / dernière visite au cours des 24 derniers
+                  mois
+                </div>
+                <div>(Pôle T, Pôle C et Pôle E - SEER)</div>
+              </div>
+            }
             value={
               establishment.totalInteractions &&
               establishment.totalInteractions.total === 0
                 ? "pas de contrôle connu"
                 : ""
             }
+            columnClasses={["is-8", "is-4"]}
           />
 
           {establishment.interactions && establishment.interactions.length ? (
@@ -69,9 +79,7 @@ class EstablishmentView extends React.Component {
                         <tr key={pole}>
                           <td>{pole}</td>
                           <td colSpan="7">
-                            {pole === "C"
-                              ? "Donnée bientôt disponible"
-                              : "Donnée non disponible"}
+                            <Value value="-" />
                           </td>
                         </tr>
                       );
@@ -79,34 +87,36 @@ class EstablishmentView extends React.Component {
                       return lastInteraction ? (
                         <tr key={lastInteraction}>
                           <td>
-                            <Value value={pole} empty="ND" />
+                            <Value value={pole} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.date} empty="ND" />
+                            <Value value={lastInteraction.date} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.objet} empty="ND" />
+                            <Value value={lastInteraction.objet} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.unite} empty="ND" />
+                            <Value value={lastInteraction.unite} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.agent} empty="ND" />
+                            <Value value={lastInteraction.agent} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.type} empty="ND" />
+                            <Value value={lastInteraction.type} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.note} empty="ND" />
+                            <Value value={lastInteraction.note} />
                           </td>
                           <td>
-                            <Value value={lastInteraction.suite} empty="ND" />
+                            <Value value={lastInteraction.suite} />
                           </td>
                         </tr>
                       ) : (
                         <tr key={pole}>
                           <td>{pole}</td>
-                          <td colSpan="7">Pas de date connue</td>
+                          <td colSpan="7">
+                            <Value value="-" />
+                          </td>
                         </tr>
                       );
                     }

@@ -396,7 +396,35 @@
     width: 25%;
 }
 
-/*** Bulma ***/
+.w-20 {
+    width: 20%;
+}
+
+.w-15 {
+    width: 15%;
+}
+
+.w-10 {
+    width: 10%;
+}
+
+/*** Helpers utils ***/
+.is-overflow-x {
+    overflow-x: scroll;
+}
+
+.is-max-content {
+    width: max-content;
+}
+
+/*** Text ***/
+.is-first-letter-uppercase {
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}
+
+/*** Bulma override ***/
 .is-secondary {
     @extend .is-info;
 }
@@ -405,4 +433,8 @@
     @extend .is-white;
     color: #808080 !important;
     border-color: #808080 !important;
+}
+
+.table {
+    @extend .is-striped;
 }

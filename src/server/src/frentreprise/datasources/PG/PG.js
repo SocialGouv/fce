@@ -7,6 +7,8 @@ import UcEff from "../../../models/UcEff";
 import DsnEff from "../../../models/DsnEff";
 import Idcc from "../../../models/Idcc";
 import Accords from "../../../models/Accords";
+import ActivitePartielle from "../../../models/ActivitePartielle";
+import Pse from "../../../models/Pse";
 import PolesCompetitivite from "../../../models/PolesCompetitivite";
 import Iae from "../../../models/Iae";
 import ContratsAides from "../../../models/ContratsAides";
@@ -28,7 +30,9 @@ export default class PG extends DataSource {
       [Etablissements.getAccords, new Accords()],
       [Etablissements.getPolesCompetitivite, new PolesCompetitivite()],
       [Etablissements.getIae, new Iae()],
-      [Etablissements.getContratsAides, new ContratsAides()]
+      [Etablissements.getContratsAides, new ContratsAides()],
+      [Etablissements.getActivitePartielle, new ActivitePartielle()],
+      [Etablissements.getPse, new Pse()]
     );
   }
 
@@ -36,7 +40,10 @@ export default class PG extends DataSource {
     return await this[_.requestDB](
       SIREN,
       [Entreprises.getInteractionsPole3E, new InteractionsPole3E()],
-      [Entreprises.getInteractionsPole3T, new InteractionsPole3T()]
+      [Entreprises.getInteractionsPole3T, new InteractionsPole3T()],
+      [Entreprises.getAccords, new Accords()],
+      [Entreprises.getActivitePartielle, new ActivitePartielle()],
+      [Entreprises.getPseList, new Pse()]
     );
   }
 

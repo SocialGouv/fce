@@ -48,7 +48,7 @@ class Finances extends React.Component {
         </div>
         <div className="section-datas">
           {establishment.donnees_ecofi ? (
-            <table className="table is-hoverable is-striped">
+            <table className="table is-hoverable">
               <thead>
                 <tr>
                   <th>Date fin exercice</th>

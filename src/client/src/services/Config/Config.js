@@ -71,7 +71,9 @@ const globalConfig = {
     ai: "Association intermédiaire",
     aci: "Atelier et chantier d'insertion",
     etti: "Entreprise de travail temporaire d'insertion"
-  }
+  },
+  legifranceSearchUrl:
+    "https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale="
 };
 
 function initConfig() {

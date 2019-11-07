@@ -2,23 +2,60 @@ version: '3'
 
 services:
   server:
-    build: ./docker/node
-    restart: always
-    ports:
-      - "80:80"
-    depends_on:
-      - db
+    build: .docker/node
+    network_mode: host
+    container_name: server
     volumes:
-      - .:/app
+      - .:/usr/src/app
+      - /home/factory/deployment/shared/node_modules:/usr/src/app/node_modules
+      - /home/factory/deployment/shared/.env:/usr/src/app/.env
+    tty: true
 
   db:
-    image: postgres:9.6
-    restart: always
+    build: .docker/postgres
+    network_mode: host
+    container_name: db
     volumes:
       - pgdata:/var/lib/postgresql/data
+    tty: true
+
+  appsearch:
+    image: docker.elastic.co/app-search/app-search:7.4.0
+    network_mode: host
+    container_name: appsearch
     environment:
-      POSTGRES_PASSWORD: w5@5lclO2F&4O8YQX#dI
-      POSTGRES_DB: fce
+      - "JAVA_OPTS=-Xmx4096m"
+    volumes:
+      - ./.docker/appsearch/app-search.yml:/usr/share/app-search/config/app-search.yml
+
+  elasticsearch:
+    build: .docker/elasticsearch
+    network_mode: host
+    container_name: elasticsearch
+    volumes:
+      - ./.docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - elasticdata:/usr/share/elasticsearch/data
+    environment:
+      - cluster.name=direccte
+      - node.name=fce_main
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx2048m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
 
 volumes:
   pgdata:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/factory/deployment/shared/pgdata
+  elasticdata:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/factory/deployment/shared/elasticdata

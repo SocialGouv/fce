@@ -4,6 +4,8 @@ import Sidebar from "../../Sidebar";
 import Header from "./Header";
 import Infos from "./Infos";
 import Mandataires from "./Mandataires";
+import Accords from "./Accords";
+import Muteco from "./Muteco";
 import Direccte from "../SharedComponents/Direccte";
 import Finances from "./Finances";
 import QuickAccess from "../SharedComponents/QuickAccess";
@@ -39,12 +41,19 @@ class Enterprise extends React.Component {
                 anchors={[
                   { label: "Informations légales", link: "infos" },
                   { label: "Visites et contrôles", link: "direccte" },
+                  { label: "Accords d'entreprise", link: "accords" },
+                  {
+                    label: "Mutations économiques",
+                    link: "muteco"
+                  },
                   { label: "Données financières", link: "finances" },
                   { label: "Mandataires sociaux", link: "mandataires" }
                 ]}
               />
               <Infos enterprise={enterprise} headOffice={headOffice} />
               <Direccte enterprise={enterprise} />
+              <Accords enterprise={enterprise} />
+              <Muteco enterprise={enterprise} />
               <Finances establishment={headOffice} />
               <Mandataires enterprise={enterprise} />
             </div>

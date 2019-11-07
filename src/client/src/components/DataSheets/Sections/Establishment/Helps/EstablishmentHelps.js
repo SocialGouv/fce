@@ -1,5 +1,5 @@
 import React from "react";
-import Prototype from "prop-types";
+import PropTypes from "prop-types";
 import _get from "lodash.get";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
@@ -32,13 +32,12 @@ const EstablishmentHelps = ({ establishment }) => {
             {
               name: "Agrément Entreprise adaptée",
               value: establishment.ea,
-              emptyValue: "Information en cours de négociation",
-              nonEmptyValue: ""
+              columnClasses: ["is-8", "is-4"]
             },
             {
               name: "Agrément(s) Insertion par l’activité économique (IAE)",
               value: hasAgrements,
-              nonEmptyValue: ""
+              columnClasses: ["is-8", "is-4"]
             }
           ]}
         />
@@ -90,60 +89,60 @@ const EstablishmentHelps = ({ establishment }) => {
           </table>
         )}
 
-        <Subcategory
-          subtitle="Contrats aidés et alternance"
-          datas={[
-            {
-              name:
-                "Parcours emploi – compétences (PEC) ou Emploi d’avenir en " +
-                getCustomPastYear(1),
-              value: !!establishment.contrat_aide
-            }
-          ]}
-        />
-        {establishment.contrat_aide && (
-          <table className="table is-bordered mt-3">
-            <thead>
-              <tr>
-                <th>
-                  Nombre de salariés présents au 31/12/{getCustomPastYear(1)}
-                </th>
-                <th>Nombre de salariés embauchés en {getCustomPastYear(1)}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <Value
-                    value={establishment.contrat_aide_salaries_n1}
-                    empty="-"
-                    nonEmptyValue={[0]}
-                  />
-                </td>
-                <td>
-                  <Value
-                    value={establishment.contrat_aide_embauches_n1}
-                    empty="-"
-                    nonEmptyValue={[0]}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        )}
-        <Data
-          name={`Embauche en contrat en alternance en année ${getCustomPastYear(
-            1
-          )} ou ${getCustomPastYear(2)}`}
-          value="pas encore disponible"
-        />
+        <Subcategory subtitle="Contrats aidés et alternance">
+          <Data
+            name={`Parcours emploi – compétences (PEC) ou Emploi d’avenir en ${getCustomPastYear(
+              1
+            )}`}
+            value={!!establishment.contrat_aide}
+            columnClasses={["is-8", "is-4"]}
+          />
+          {establishment.contrat_aide && (
+            <table className="table is-bordered mt-3">
+              <thead>
+                <tr>
+                  <th>
+                    Nombre de salariés présents au 31/12/
+                    {getCustomPastYear(1)}
+                  </th>
+                  <th>
+                    Nombre de salariés embauchés en {getCustomPastYear(1)}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <Value
+                      value={establishment.contrat_aide_salaries_n1}
+                      nonEmptyValue={[0]}
+                    />
+                  </td>
+                  <td>
+                    <Value
+                      value={establishment.contrat_aide_embauches_n1}
+                      nonEmptyValue={[0]}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          )}
+          <Data
+            name={`Embauche en contrat en alternance en année ${getCustomPastYear(
+              1
+            )} ou ${getCustomPastYear(2)}`}
+            value={establishment.alternance && establishment.alternance.length}
+            columnClasses={["is-8", "is-4"]}
+          />
+        </Subcategory>
       </div>
     </section>
   );
 };
 
-EstablishmentHelps.Prototype = {
-  establishment: Prototype.object.isRequired
+EstablishmentHelps.propTypes = {
+  establishment: PropTypes.object.isRequired
 };
 
 export default EstablishmentHelps;

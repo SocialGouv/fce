@@ -33,12 +33,19 @@ const EnterpriseActivity = ({ enterprise, headOffice }) => {
           name="Date immatriculation RCS"
           value={enterprise.rcs_date_immatriculation}
         />
-        {enterprise.rcs_information_libelle && (
+        {enterprise.rcs_observations && (
           <Data
-            name="Observation RCS"
-            value={`${toI18nDate(enterprise.rcs_information_date, "L")} - ${
-              enterprise.rcs_information_libelle
-            }`}
+            name="Observations RCS"
+            value={
+              <ul className="rcs-observations">
+                {enterprise.rcs_observations.map(({ date, libelle }) => (
+                  <li
+                    key={`rcs-obs-${date}-${libelle}`}
+                    className="rcs-observations-item"
+                  >{`${toI18nDate(date, "L")} - ${libelle}`}</li>
+                ))}
+              </ul>
+            }
           />
         )}
         <Data name="Catégorie" value={enterprise.categorie_entreprise} />

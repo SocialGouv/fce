@@ -1,0 +1,24 @@
+- name: Deploy preproduction
+  hosts: fceppd
+  remote_user: factory
+  vars:
+    ansistrano_deploy_from: /app/dist
+    ansistrano_deploy_to: /home/factory/deployment
+    ansistrano_version_dir: "releases"
+    ansistrano_current_dir: "current"
+    ansistrano_current_via: "symlink"
+    ansistrano_deploy_via: "rsync"
+  roles:
+    - { role: ansistrano.deploy }
+  tasks:
+    - name: Run `docker-compose build`
+      shell: docker-compose build
+      args:
+        chdir: /home/factory/deployment/current/dist
+    - name: Run `docker-compose up` in deamon mode
+      shell: docker-compose up -d
+      args:
+        chdir: /home/factory/deployment/current/dist
+
+
+

@@ -4,7 +4,7 @@ import { toI18nDate } from "../../../helpers/Date";
 
 export default ({
   value,
-  empty,
+  empty = "-",
   no = "Non",
   yes = "Oui",
   dateFormat = "L",
@@ -12,12 +12,20 @@ export default ({
   link = false,
   nonEmptyValues = []
 }) => {
+  if (value && React.isValidElement(value)) {
+    return value;
+  }
+
   if (value && typeof value === "object") {
     return "error";
   }
 
   if (value === true && yes) {
     return yes;
+  }
+
+  if (value === false && empty === "0") {
+    return "0";
   }
 
   if (value === false && no) {

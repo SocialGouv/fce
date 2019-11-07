@@ -12,4 +12,16 @@ export default class Accords extends Model {
         return null;
       });
   }
+
+  getBySiren(siren) {
+    return this.db
+      .query("SELECT * FROM etablissements_accords WHERE siret ILIKE $1", [`${siren}%`])
+      .then(res => {
+        return res.rows;
+      })
+      .catch(e => {
+        console.error("Accords::getBySiren", e);
+        return null;
+      });
+  }
 }

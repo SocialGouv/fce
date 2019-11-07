@@ -1,4 +1,4 @@
-@import '../../App/variables';
+@import "../../App/variables";
 @import "~bulma/bulma";
 
 .at {
@@ -72,12 +72,12 @@
             border-width: 1px 0 0 !important;
         }
     }
-}
 
-.table th:not([align]) {
-    color: $grey-tundora;
-    text-align: center;
-    border-right: solid 1px $light-sky-blue;
+    &.table th:not([align]) {
+        color: $grey-tundora;
+        text-align: center;
+        border-right: solid 1px $light-sky-blue;
+    }
 }
 
 .pager {

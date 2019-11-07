@@ -53,6 +53,10 @@
                 color: $faced-blue;
             }
 
+            &:nth-of-type(4) {
+                min-width: 12rem;
+            }
+
             &:nth-of-type(6) {
                 text-align: center;
             }

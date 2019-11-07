@@ -1,6 +1,5 @@
 import Http from "./../../../services/Http";
 import downloadjs from "downloadjs";
-const xlsx = require("xlsx");
 
 class GenerateXlsx {
   constructor(props) {

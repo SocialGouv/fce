@@ -40,7 +40,7 @@ const Header = ({ resetSearch, location }) => {
                   </Link>
                   <Link
                     to="/"
-                    onClick={event => {
+                    onClick={() => {
                       resetSearch();
                     }}
                   >
@@ -75,7 +75,7 @@ Header.propTypes = {
 
 export default withRouter(
   connect(
-    () => ({}),
+    null,
     mapDispatchToProps
   )(Header)
 );

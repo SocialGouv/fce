@@ -9,6 +9,8 @@ import Value from "../shared/Value";
 import GenerateXlxs from "./Xlsx/GenerateXlsx";
 import SearchAwesomeTable from "../SearchAwesomeTable";
 import TableCellState from "../SearchAwesomeTable/TableCellState";
+import Button from "../shared/Button";
+import { faFileExcel } from "@fortawesome/fontawesome-pro-solid";
 
 import "./searchResults.scss";
 
@@ -26,12 +28,24 @@ const SearchResults = ({ results, pagination, isLoading }) => {
 
   return (
     <div className="app-searchResults mx-6">
-      {pagination.items !== 0 && (
-        <h2 className="title my-2">
-          {pagination.items} établissement
-          {pagination.items > 1 && "s"} trouvé
-          {pagination.items > 1 && "s"}
-        </h2>
+      {pagination.items > 0 && (
+        <div className="columns">
+          <div className="column is-8 is-offset-2">
+            <h2 className="title my-2">
+              {pagination.items} établissement
+              {pagination.items > 1 && "s"} trouvé
+              {pagination.items > 1 && "s"}
+            </h2>
+          </div>
+          <div className="column is-2 export-button">
+            <Button
+              value="Export Excel"
+              buttonClasses={["is-grey"]}
+              icon={faFileExcel}
+              callback={generateXlxs}
+            />
+          </div>
+        </div>
       )}
 
       <div className="columns result-row">
@@ -40,7 +54,6 @@ const SearchResults = ({ results, pagination, isLoading }) => {
 
           {!!results.length ? (
             <div>
-              <button onClick={generateXlxs}>Download Xlsx</button>
               <SearchAwesomeTable
                 showPagination={pagination && pagination.pages > 1}
                 pagination={{ ...pagination, min: 1 }}
@@ -103,10 +116,6 @@ const SearchResults = ({ results, pagination, isLoading }) => {
                       ...etablissement
                     }) =>
                       Value({
-                        /*
-                          AJOUTER TEST dernier_effectif_physique || staffSizeRanges[trancheEffectifInsee]
-                          après ajout du champ dans appsearch
-                        */
                         value: isActiveEstablishment(etat)
                           ? staffSizeRanges[trancheEffectifInsee]
                           : "0 salarié"

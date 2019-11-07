@@ -44,7 +44,8 @@
             justify-content: flex-end;
 
             .button {
-                width: 8rem;
+                width: 12rem;
+                border: 1px solid #fff;
             }
         }
 
@@ -78,6 +79,10 @@
     }
 
     /* react-accessible-accordion */
+
+    .accordion__heading {
+        width: 12rem;
+    }
 
     .accordion__button {
         cursor: pointer;

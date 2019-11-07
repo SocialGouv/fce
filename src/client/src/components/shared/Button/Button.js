@@ -31,7 +31,7 @@ const Button = ({
 
 Button.defaultProps = {
   value: "Valider",
-  icon: {},
+  icon: null,
   rowReverse: false,
   isDisabled: false
 };

@@ -1,6 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 import Value from "../../../../shared/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import {
@@ -11,7 +11,6 @@ import {
 } from "@fortawesome/fontawesome-pro-solid";
 import InfoBox from "../../../../shared/InfoBox";
 import Button from "../../../../shared/Button";
-import { setTerm, resetSearch } from "../../../../../services/Store/actions";
 
 import "./enterpriseHeader.scss";
 class EnterpriseHeader extends React.Component {
@@ -23,13 +22,8 @@ class EnterpriseHeader extends React.Component {
     };
   }
 
-  redirectToResearch = siren => {
-    Promise.all([
-      this.props.resetSearch(),
-      this.props.setTerm("q", siren)
-    ]).then(() => {
-      this.setState({ isRedirectedToResearch: true });
-    });
+  static propTypes = {
+    enterprise: PropTypes.object.isRequired
   };
 
   render() {
@@ -112,7 +106,9 @@ class EnterpriseHeader extends React.Component {
                 />
               </span>
               <span className="is-size-6 has-text-segoe has-text-grey-dark">
-                {isActiveEnterprise ? "Ouverte depuis le " : "Fermée depuis le "}
+                {isActiveEnterprise
+                  ? "Ouverte depuis le "
+                  : "Fermée depuis le "}
               </span>
               <span className="is-size-6 has-text-segoe has-text-grey-dark">
                 <Value
@@ -153,16 +149,4 @@ class EnterpriseHeader extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    setTerm: (termKey, termValue) => {
-      return dispatch(setTerm(termKey, termValue));
-    },
-    resetSearch: () => dispatch(resetSearch())
-  };
-};
-
-export default connect(
-  null,
-  mapDispatchToProps
-)(EnterpriseHeader);
+export default EnterpriseHeader;

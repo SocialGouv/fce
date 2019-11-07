@@ -36,7 +36,7 @@
             margin: auto 0;
 
             &:hover {
-                background-color: $light-sky-blue;
+                background-color: $light-sky-blue !important;
             }
         }
 
@@ -46,10 +46,15 @@
             border-top: 1px solid $grey-geyser;
             border-right: 1px solid #ffffff99 !important;
             color: #555;
+            vertical-align: middle !important;
 
             a {
                 font-weight: 700;
                 color: $faced-blue;
+            }
+
+            &:nth-of-type(6) {
+                text-align: center;
             }
         }
 

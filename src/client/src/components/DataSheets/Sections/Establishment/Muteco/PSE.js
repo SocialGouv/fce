@@ -5,7 +5,7 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
 import Config from "../../../../../services/Config";
 
-import { hasInclude } from "../../../../../helpers/utils";
+import { isIncluded } from "../../../../../helpers/utils";
 import {
   hasPse,
   isInProcessState,
@@ -19,14 +19,14 @@ function PSE({ establishment }) {
       hasPse(establishment) &&
       establishment.pse.find(
         pse =>
-          hasInclude(pse.type_de_dossier, ["PSE", "pse"]) &&
+          isIncluded(pse.type_de_dossier, ["pse"]) &&
           isInProcessState(pse.etat_du_dossier)
       ),
     validsOrProbates:
       hasPse(establishment) &&
       establishment.pse.filter(
         pse =>
-          hasInclude(pse.type_de_dossier, ["PSE", "pse"]) &&
+          isIncluded(pse.type_de_dossier, ["pse"]) &&
           !isInProcessState(pse.etat_du_dossier) &&
           isValidProcedureDuration(pse.date_enregistrement) &&
           pse.contrats_ruptures_debut + pse.contrats_ruptures_fin > 0

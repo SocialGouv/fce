@@ -11,7 +11,7 @@ import { getLastDateInteraction } from "../../../../../helpers/Date";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import Item from "./Item";
 
-import { hasInclude } from "../../../../../helpers/utils";
+import { isIncluded } from "../../../../../helpers/utils";
 import {
   hasPse,
   isInProcessState,
@@ -37,7 +37,7 @@ const Dashboard = ({
       hasPse(establishment) &&
       !!establishment.pse.find(
         pse =>
-          hasInclude(pse.type_de_dossier, ["RCC", "rcc"]) &&
+          isIncluded(pse.type_de_dossier, ["rcc"]) &&
           isValidProcedureDuration(pse.date_enregistrement) &&
           !isInProcessState(pse.etat_du_dossier)
       ),
@@ -45,7 +45,7 @@ const Dashboard = ({
       hasPse(establishment) &&
       !!establishment.pse.find(
         pse =>
-          hasInclude(pse.type_de_dossier, ["PSE", "pse"]) &&
+          isIncluded(pse.type_de_dossier, ["pse"]) &&
           !isInProcessState(pse.etat_du_dossier) &&
           isValidProcedureDuration(pse.date_enregistrement) &&
           pse.contrats_ruptures_debut + pse.contrats_ruptures_fin > 0

@@ -3,7 +3,7 @@ import Proptypes from "prop-types";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
-import { countValuesInArray, hasInclude } from "../../../../../helpers/utils";
+import { countValuesInArray, isIncluded } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 
 import {
@@ -18,7 +18,7 @@ function RCC({ enterprise }) {
       enterprise.liste_pse &&
       enterprise.liste_pse.find(
         pse =>
-          hasInclude(pse.dossier.type_de_dossier, ["RCC", "rcc"]) &&
+          isIncluded(pse.dossier.type_de_dossier, ["rcc"]) &&
           isValidProcedureDuration(pse.dossier.date_enregistrement) &&
           isInProcessState(pse.dossier.etat_du_dossier)
       ),
@@ -26,7 +26,7 @@ function RCC({ enterprise }) {
       enterprise.liste_pse &&
       enterprise.liste_pse.filter(
         pse =>
-          hasInclude(pse.dossier.type_de_dossier, ["RCC", "rcc"]) &&
+          isIncluded(pse.dossier.type_de_dossier, ["rcc"]) &&
           isValidProcedureDuration(pse.dossier.date_enregistrement) &&
           !isInProcessState(pse.dossier.etat_du_dossier)
       )

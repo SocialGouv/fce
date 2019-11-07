@@ -1,5 +1,5 @@
 {
   "fce.test": "development",
-  "fce.commit42.fr": "staging",
+  "fce.prep.fabrique.social.gouv.fr": "staging",
   "fce.num.social.gouv.fr": "production"
 }

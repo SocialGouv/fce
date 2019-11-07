@@ -14,7 +14,7 @@ pipeline {
     stage('Init') {
       when {
         anyOf {
-          branch 'feature/implements_ansible_deployment';
+          branch 'develop';
           branch 'master'
         }
       }
@@ -32,7 +32,7 @@ pipeline {
       when {
         anyOf {
           branch 'develop';
-          branch 'feature/implements_ansible_deployment'
+          branch 'master'
         }
       }
       steps {
@@ -47,7 +47,7 @@ pipeline {
     stage('Deploy staging') {
       when {
         anyOf {
-          branch 'feature/implements_ansible_deployment'
+          branch 'develop'
         }
       }
       steps {

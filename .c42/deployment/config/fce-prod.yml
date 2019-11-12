@@ -16,7 +16,7 @@
       args:
         chdir: /home/factory/deployment/current/dist
     - name: Run `docker-compose up` in deamon mode
-      shell: docker-compose up -d
+      shell: docker-compose restart
       args:
         chdir: /home/factory/deployment/current/dist
 

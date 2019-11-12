@@ -12,18 +12,23 @@ const LinkButtonChildren = ({ value, icon }) => (
   </>
 );
 
-const LinkButton = ({ link, isTargetBlank, isInfo, value, icon }) => {
-  const target = isTargetBlank ? "_blank" : "";
-  const classnames = `link-button ${isInfo ? "info-color" : "link-color"}`;
+const NativeLink = ({ to, children, ...props }) => (
+  <a href={to} {...props}>
+    {children}
+  </a>
+);
 
-  return link.slice(0, 4) === "http" ? (
-    <a href={link} target={target} className={classnames}>
+const LinkButton = ({ link, isTargetBlank, isInfo, value, icon }) => {
+  const LinkComponent = link.slice(0, 4) === "http" ? NativeLink : Link;
+
+  return (
+    <LinkComponent
+      to={link}
+      target={isTargetBlank ? "_blank" : ""}
+      className={`link-button ${isInfo ? "info-color" : "link-color"}`}
+    >
       <LinkButtonChildren value={value} icon={icon} />
-    </a>
-  ) : (
-    <Link to={link} target={target} className={classnames}>
-      <LinkButtonChildren value={value} icon={icon} />
-    </Link>
+    </LinkComponent>
   );
 };
 
@@ -38,6 +43,11 @@ LinkButton.propTypes = {
 LinkButtonChildren.propTypes = {
   icon: PropTypes.object,
   value: PropTypes.string.isRequired
+};
+
+NativeLink.propTypes = {
+  to: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default LinkButton;

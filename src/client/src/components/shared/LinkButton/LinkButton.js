@@ -5,15 +5,24 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 
 import "./linkButton.scss";
 
+const LinkButtonChildren = ({ value, icon }) => (
+  <>
+    {icon && <FontAwesomeIcon icon={icon} className="mr-2" />}
+    <span>{value}</span>
+  </>
+);
+
 const LinkButton = ({ link, isTargetBlank, isInfo, value, icon }) => {
-  return (
-    <Link
-      to={link}
-      target={isTargetBlank ? "_blank" : ""}
-      className={`link-button ${isInfo ? "info-color" : "link-color"}`}
-    >
-      {icon && <FontAwesomeIcon icon={icon} className="mr-2" />}
-      <span>{value}</span>
+  const target = isTargetBlank ? "_blank" : "";
+  const classnames = `link-button ${isInfo ? "info-color" : "link-color"}`;
+
+  return link.slice(0, 4) === "http" ? (
+    <a href={link} target={target} className={classnames}>
+      <LinkButtonChildren value={value} icon={icon} />
+    </a>
+  ) : (
+    <Link to={link} target={target} className={classnames}>
+      <LinkButtonChildren value={value} icon={icon} />
     </Link>
   );
 };
@@ -23,6 +32,11 @@ LinkButton.propTypes = {
   isTargetBlank: PropTypes.bool,
   isInfo: PropTypes.bool,
   link: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired
+};
+
+LinkButtonChildren.propTypes = {
+  icon: PropTypes.object,
   value: PropTypes.string.isRequired
 };
 

@@ -100,6 +100,7 @@ task 'build' do
     directory "../src/server/scripts", "dist/scripts"
     directory "../src/server/src/shell/monthImport.sh", "dist"
     directory "../src/server/src/Exceptions", "dist/Exceptions"
+    directory "../src/server/src/db", "dist/db"
     directory "../src/server/migrations", "dist/migrations" # copy .c42/../server/build to dist/
     directory "../src/client/build", "dist/htdocs" # copy .c42/../client/build to dist/htdocs
     directory "../src/frentreprise", "frentreprise"

@@ -92,10 +92,7 @@ const EstablishmentRelationship = ({ establishment }) => {
                     value="Lancer la recherche"
                     isTargetBlank
                     icon={faSearch}
-                    link={{
-                      pathname:
-                        Config.get("legifranceSearchUrl") + raisonSociale
-                    }}
+                    link={Config.get("legifranceSearchUrl") + raisonSociale}
                   />
                 }
                 columnClasses={["is-8", "is-4"]}

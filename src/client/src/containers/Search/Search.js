@@ -50,7 +50,9 @@ const Search = ({
       })),
       none: {
         ...(search.filters.state.length === 0 && {
-          etatadministratifetablissement: ["A", "F"]
+          etatadministratifetablissement: Object.values(
+            Config.get("establishmentState")
+          )
         })
       }
     }

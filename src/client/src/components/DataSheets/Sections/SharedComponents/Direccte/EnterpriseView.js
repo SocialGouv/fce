@@ -5,6 +5,7 @@ import { faCircle, faCalendarCheck } from "@fortawesome/fontawesome-pro-solid";
 import _get from "lodash.get";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import Data from "../Data";
+import Config from "../../../../../services/Config";
 
 class EstablishmentView extends React.Component {
   constructor(props) {
@@ -103,7 +104,9 @@ class EstablishmentView extends React.Component {
                     {etab.etat && (
                       <FontAwesomeIcon
                         className={
-                          etab.etat === "A" ? "icon--success" : "icon--danger"
+                          etab.etat === Config.get("establishmentState").actif
+                            ? "icon--success"
+                            : "icon--danger"
                         }
                         icon={faCircle}
                       />

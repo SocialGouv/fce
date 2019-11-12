@@ -1,5 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Config from "../../../services/Config";
+
+const actif = Config.get("establishmentState").actif;
+const ferme = Config.get("establishmentState").ferme;
 
 const StateFilter = ({ filters, addFilter, removeFilter }) => {
   return (
@@ -12,11 +16,11 @@ const StateFilter = ({ filters, addFilter, removeFilter }) => {
           name="open"
           id="open"
           onChange={() => {
-            filters.state.includes("A")
-              ? removeFilter("state", "A")
-              : addFilter("state", "A");
+            filters.state.includes(actif)
+              ? removeFilter("state", actif)
+              : addFilter("state", actif);
           }}
-          checked={filters.state.includes("A")}
+          checked={filters.state.includes(actif)}
         />
         <label htmlFor="open" className="label label--state">
           Ouverts
@@ -28,11 +32,11 @@ const StateFilter = ({ filters, addFilter, removeFilter }) => {
           name="closed"
           id="closed"
           onChange={() => {
-            filters.state.includes("F")
-              ? removeFilter("state", "F")
-              : addFilter("state", "F");
+            filters.state.includes(ferme)
+              ? removeFilter("state", ferme)
+              : addFilter("state", ferme);
           }}
-          checked={filters.state.includes("F")}
+          checked={filters.state.includes(ferme)}
         />
         <label htmlFor="closed" className="label label--state">
           Fermés

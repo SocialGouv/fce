@@ -89,7 +89,9 @@ const Accords = ({
                           {etat && (
                             <FontAwesomeIcon
                               className={
-                                etat === "A" ? "icon--success" : "icon--danger"
+                                etat === Config.get("establishmentState").actif
+                                  ? "icon--success"
+                                  : "icon--danger"
                               }
                               icon={faCircle}
                             />

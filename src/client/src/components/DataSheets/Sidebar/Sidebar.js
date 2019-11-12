@@ -28,7 +28,9 @@ const Sidebar = ({
   const limitItems = Config.get("sidebarEstablishmentsLimit");
 
   const closedEstablishmentsCount = establishments.filter(
-    establishment => establishment.etat_etablissement === "F"
+    establishment =>
+      establishment.etat_etablissement ===
+      Config.get("establishmentState").ferme
   ).length;
 
   return (
@@ -116,7 +118,7 @@ const Sidebar = ({
                       naf: null,
                       location: null,
                       siege: null,
-                      state: ["A", "F"],
+                      state: Object.values(Config.get("establishmentState")),
                       siren: enterprise.siren
                     });
                   }}

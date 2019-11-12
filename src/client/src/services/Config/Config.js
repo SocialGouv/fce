@@ -24,6 +24,10 @@ const globalConfig = {
     minTerms: 2,
     debounce: 500
   },
+  establishmentState: {
+    actif: "A",
+    ferme: "F"
+  },
   appSearch: {
     client: {
       searchKey: process.env.REACT_APP_SEARCH_KEY,

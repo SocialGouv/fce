@@ -6,6 +6,7 @@ import {
   SET_SEARCH_ERROR,
   RESET_SEARCH
 } from "../constants/ActionTypes";
+import Config from "../../Config";
 
 const initialState = {
   term: "",
@@ -14,7 +15,7 @@ const initialState = {
     naf: null,
     location: null,
     siege: null,
-    state: ["A", "F"]
+    state: Object.values(Config.get("establishmentState"))
   },
   results: null,
   isLoading: false,
@@ -54,18 +55,7 @@ const search = (state = initialState, action) => {
       };
 
     case RESET_SEARCH:
-      return {
-        ...state,
-        term: "",
-        filters: {
-          siren: null,
-          naf: null,
-          location: null,
-          siege: null,
-          state: ["A", "F"]
-        },
-        results: null
-      };
+      return initialState;
 
     default:
       return state;

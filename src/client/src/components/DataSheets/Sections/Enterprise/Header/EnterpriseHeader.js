@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/fontawesome-pro-solid";
 import InfoBox from "../../../../shared/InfoBox";
 import Button from "../../../../shared/Button";
+import Config from "../../../../../services/Config";
 
 import "./enterpriseHeader.scss";
 class EnterpriseHeader extends React.Component {
@@ -31,7 +32,8 @@ class EnterpriseHeader extends React.Component {
     const slugSocieteCom = enterprise.raison_sociale
       ? enterprise.raison_sociale.toLowerCase().replace(" ", "-")
       : "#";
-    const isActiveEnterprise = enterprise.etat_entreprise === "A";
+    const isActiveEnterprise =
+      enterprise.etat_entreprise === Config.get("establishmentState").actif;
     const stateClass = isActiveEnterprise ? "icon--success" : "icon--danger";
 
     const { isRedirectedToHeadOffice, isRedirectedToResearch } = this.state;

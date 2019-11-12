@@ -8,6 +8,7 @@ import { faCircle } from "@fortawesome/fontawesome-pro-solid";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
+import Config from "../../../../../services/Config";
 
 const ActivitePartielle = ({
   enterprise: { activite_partielle, etablissements }
@@ -71,7 +72,9 @@ const ActivitePartielle = ({
                         {etat && (
                           <FontAwesomeIcon
                             className={
-                              etat === "A" ? "icon--success" : "icon--danger"
+                              etat === Config.get("establishmentState").actif
+                                ? "icon--success"
+                                : "icon--danger"
                             }
                             icon={faCircle}
                           />

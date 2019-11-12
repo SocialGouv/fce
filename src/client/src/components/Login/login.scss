@@ -62,11 +62,11 @@
         font-family: $roboto;
         border-radius: $b-radius;
 
-        &--as-link {
+        &--as-link.button {
             width: unset;
             height: unset;
 
-            >span {
+            > span {
                 font-weight: normal;
             }
 
@@ -106,6 +106,7 @@
             border: none;
         }
 
+        &:hover,
         &:focus {
             outline: none;
             text-decoration: underline;
@@ -132,7 +133,7 @@
             @include error;
         }
 
-        >.svg-inline--fa {
+        > .svg-inline--fa {
             padding-top: 2px;
             width: 16px;
             margin-right: 0.5rem;

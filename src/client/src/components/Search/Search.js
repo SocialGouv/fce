@@ -1,143 +1,179 @@
 import React from "react";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
-import AsyncSelect from "react-select/lib/Async";
-import Select from "react-select";
-import Config from "../../services/Config";
+import PropTypes from "prop-types";
+import classNames from "classnames";
+import SearchResults from "../SearchResults";
+import SiegeFilter from "./Filters/SiegeFilter";
+import StateFilter from "./Filters/StateFilter";
+import NafFilter from "./Filters/NafFilter";
+import LocationFilter from "./Filters/LocationFilter";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionItemHeading,
+  AccordionItemButton,
+  AccordionItemPanel
+} from "react-accessible-accordion";
 
-class Search extends React.Component {
-  render() {
-    const selectCustomStyles = {
-      option: (provided, state) => ({
-        ...provided,
-        color: "#353535"
-      })
-    };
+import "./search.scss";
 
-    const { terms, hasError, search, nafList } = this.props;
-
-    return (
-      <div className="app-search pb-4">
-        <div className="columns app-search--container">
-          <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
-            <h2 className="title pb-2">
-              Retrouvez les informations légales et administratives des
-              entreprises
-            </h2>
-
-            <p className="lead pb-4">
-              L'état civil, l'activité et les données de l'administration dans
-              une seule fiche entreprise accessible pour les agents publics
-            </p>
-
-            {hasError ? (
-              <div className="notification is-danger">
-                Une erreur est survenue lors de la communication avec l'API
-              </div>
-            ) : (
-              ""
-            )}
-
-            <form className="form search-form" onSubmit={search}>
-              <div className="field is-grouped is-grouped-centered">
-                <div className="control is-expanded">
-                  <input
-                    type="text"
-                    name="q"
-                    id="term"
-                    className="input is-medium"
-                    placeholder="SIRET, SIREN, raison sociale, nom"
-                    onChange={evt => this.props.updateForm(evt)}
-                    value={terms.q || ""}
-                  />
-                </div>
-                <div className="control">
-                  <button
-                    type="submit"
-                    className="action button is-outlined is-light is-medium"
-                  >
-                    {this.props.loading ? (
-                      <span className="icon">
-                        <FontAwesomeIcon icon={faSpinner} spin />
-                      </span>
-                    ) : (
-                      "Rechercher"
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              <div className="columns">
-                <div className="column is-one-fifth">
-                  <div className="field">
-                    <input
-                      className="is-checkradio is-light"
-                      type="checkbox"
-                      name="siegeSocial"
-                      id="siegeSocial"
-                      onChange={evt => this.props.updateForm(evt)}
-                      checked={!!terms.siegeSocial}
-                    />
-                    <label htmlFor="siegeSocial" className="check-radio-label">
-                      Siège social
+const Search = ({
+  isLoading,
+  error,
+  resultList,
+  sendRequest,
+  searchTerm,
+  setSearchTerm,
+  handlePageChange,
+  addFilter,
+  removeFilter,
+  filters,
+  options,
+  divisionsNaf,
+  loadLocations
+}) => (
+  <div className="App">
+    <div className="app-search pb-4">
+      <div className="columns app-search--container">
+        <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
+          {error && (
+            <div className="notification is-danger">
+              Une erreur est survenue lors de la communication avec l{"'"}
+              API
+            </div>
+          )}
+          <form
+            className="form search-form"
+            onSubmit={e => {
+              e.preventDefault();
+              sendRequest(searchTerm, options);
+            }}
+          >
+            <div className="columns">
+              <div className="column is-four-fifths">
+                <div className="field is-grouped is-grouped-centered">
+                  <div className="control is-expanded">
+                    <label htmlFor="term" className="label">
+                      Nom ou raison sociale, SIRET ou SIREN
                     </label>
+                    <input
+                      type="text"
+                      name="q"
+                      id="term"
+                      className="input is-medium"
+                      onChange={e => {
+                        setSearchTerm(e.target.value);
+                      }}
+                      value={searchTerm}
+                    />
                   </div>
                 </div>
-                <div className="column is-one-third">
-                  <div className="field">
-                    <div className="control">
-                      <Select
-                        id="naf"
-                        name="naf"
-                        options={nafList}
-                        onChange={value =>
-                          this.props.updateFormSelect("naf", value)
-                        }
-                        noOptionsMessage={term => "Aucun résultat"}
-                        placeholder="Code NAF ou libellé"
-                        isClearable
-                        isMulti
-                        value={terms._nafSelect}
-                        styles={selectCustomStyles}
-                      />
-                    </div>
+                <div className="columns filters__checkboxes">
+                  <div className="column is-one-third">
+                    <SiegeFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                    />
+                  </div>
+                  <div className="column is-one-third">
+                    <StateFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                    />
                   </div>
                 </div>
-                <div className="column is-one-third">
-                  <div className="field">
-                    <div className="control">
-                      <AsyncSelect
-                        id="commune"
-                        name="commune"
-                        defaultOptions={[]}
-                        loadOptions={this.props.loadCommunes}
-                        onChange={value =>
-                          this.props.updateFormSelect("commune", value)
-                        }
-                        loadingMessage={() => "Chargement..."}
-                        noOptionsMessage={term =>
-                          term.inputValue.length >=
-                          Config.get("advancedSearch").minTerms
-                            ? "Aucun résultat"
-                            : `Veuillez saisir au moins ${
-                                Config.get("advancedSearch").minTerms
-                              } caractères`
-                        }
-                        placeholder="Commune ou code postal"
-                        isClearable
-                        value={terms._communeSelect}
-                        styles={selectCustomStyles}
-                      />
-                    </div>
+                <div className="columns">
+                  <div className="column">
+                    <Accordion
+                      allowZeroExpanded
+                      preExpanded={
+                        filters.naf || filters.location
+                          ? ["advancedSearch"]
+                          : []
+                      }
+                    >
+                      <AccordionItem uuid="advancedSearch">
+                        <AccordionItemHeading>
+                          <AccordionItemButton>
+                            <span>Recherche avancée</span>
+                          </AccordionItemButton>
+                        </AccordionItemHeading>
+                        <AccordionItemPanel>
+                          <div className="columns filters__selects">
+                            <div className="column is-one-third">
+                              <NafFilter
+                                filters={filters}
+                                addFilter={addFilter}
+                                removeFilter={removeFilter}
+                                divisionsNaf={divisionsNaf}
+                              />
+                            </div>
+                            <div className="column is-one-third">
+                              <LocationFilter
+                                filters={filters}
+                                addFilter={addFilter}
+                                removeFilter={removeFilter}
+                                loadLocations={loadLocations}
+                              />
+                            </div>
+                          </div>
+                        </AccordionItemPanel>
+                      </AccordionItem>
+                    </Accordion>
                   </div>
                 </div>
               </div>
-            </form>
-          </div>
+              <div className="control column is-one-fifth button-wrapper">
+                <button
+                  className={classNames(
+                    "action",
+                    "button",
+                    "is-secondary",
+                    "is-medium",
+                    { "is-loading": isLoading }
+                  )}
+                >
+                  Rechercher
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+
+    {resultList && (
+      <SearchResults
+        results={resultList.rawResults}
+        pagination={{
+          current: resultList.info.meta.page.current,
+          handlePageChange,
+          itemsPerPage: resultList.info.meta.page.size,
+          pages: resultList.info.meta.page.total_pages,
+          items: resultList.info.meta.page.total_results,
+          searchTerm
+        }}
+        isLoading={isLoading}
+      />
+    )}
+  </div>
+);
+
+Search.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  error: PropTypes.object,
+  resultList: PropTypes.object,
+  sendRequest: PropTypes.func.isRequired,
+  searchTerm: PropTypes.string.isRequired,
+  setSearchTerm: PropTypes.func.isRequired,
+  handlePageChange: PropTypes.func.isRequired,
+  addFilter: PropTypes.func.isRequired,
+  removeFilter: PropTypes.func.isRequired,
+  filters: PropTypes.object.isRequired,
+  options: PropTypes.object.isRequired,
+  divisionsNaf: PropTypes.array.isRequired,
+  loadLocations: PropTypes.func.isRequired
+};
 
 export default Search;

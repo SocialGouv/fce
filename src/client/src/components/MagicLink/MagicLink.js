@@ -13,7 +13,7 @@ const MagicLink = ({ hasError, errorMessage, loading }) => (
         <Link to={`/login`}>Faire une nouvelle demande de connexion</Link>
       </div>
     )}
-    {loading && <FontAwesomeIcon icon={faSpinner} size="4x" spin />}
+    {loading && <FontAwesomeIcon icon={faSpinner} spin />}
   </div>
 );
 

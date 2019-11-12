@@ -1,3 +1,5 @@
+import Config from "../../services/Config";
+
 export const getSuccession = (successeur, predecesseur) => {
   if (successeur !== null) {
     return { label: "SIRET successeur", datas: successeur };
@@ -6,5 +8,7 @@ export const getSuccession = (successeur, predecesseur) => {
 };
 
 export const isActiveEstablishment = establishment => {
-  return establishment.etat_etablissement === "A";
+  return (
+    establishment.etat_etablissement === Config.get("establishmentState").actif
+  );
 };

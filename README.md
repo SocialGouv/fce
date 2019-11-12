@@ -25,7 +25,8 @@ ou, si vous utilisez zsh :
 - Installer le bundle : `bundle` ou `bundle install` à la racine du projet
 - `bundle exec c42 install`
 - Configurer pettier sur son IDE : https://prettier.io/docs/en/vim.html
-- Configurer les tokens des APIs dans le fichier server/.env (LastPass: FCE tokens APIs)
+- Configurer les tokens des APIs dans le fichier `server/.env` (LastPass: FCE tokens APIs)
+- Ajouter la clé la clé "search-key" pour appsearch dans `server/.env` (https://appsearch.fce.test/as/engines/fce puis cliquez sur "Credentials")
 
 ## Contribution
 

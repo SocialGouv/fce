@@ -1,212 +1,157 @@
 import React from "react";
 import PropTypes from "prop-types";
-import _get from "lodash.get";
 import { Alert } from "reactstrap";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faSquare, faCircle } from "@fortawesome/fontawesome-pro-solid";
-import Value from "../shared/Value";
-import AwesomeTable from "../shared/AwesomeTable";
 import { withRouter } from "react-router-dom";
-import ReactTooltip from "react-tooltip";
-import Config from "./../../services/Config";
-import { isActiveEstablishment } from "../../helpers/Establishment";
+import Config from "../../services/Config";
+import { isActiveEstablishment } from "../../helpers/Search";
 import { joinNoFalsy } from "../../helpers/utils";
+import Value from "../shared/Value";
+import GenerateXlxs from "./Xlsx/GenerateXlsx";
+import SearchAwesomeTable from "../SearchAwesomeTable";
+import TableCellState from "../SearchAwesomeTable/TableCellState";
+import Button from "../shared/Button";
+import { faFileExcel } from "@fortawesome/fontawesome-pro-solid";
 
-class SearchResults extends React.Component {
-  render() {
-    const { results, pagination, fetchData, loading } = this.props;
+import "./searchResults.scss";
 
-    const staffSizeRanges = {
-      ...Config.get("inseeSizeRanges"),
-      "0 salarié": "0 salarié"
-    };
+const SearchResults = ({ results, pagination, isLoading }) => {
+  const staffSizeRanges = {
+    ...Config.get("inseeSizeRanges"),
+    "0 salarié": "0 salarié"
+  };
 
-    function nextPage() {
-      const nextPage = pagination.page + 1;
-
-      if (nextPage <= pagination.pages) {
-        fetchData(nextPage);
-      }
+  function generateXlxs() {
+    if (results && results.length) {
+      return new GenerateXlxs(pagination).download();
     }
+  }
 
-    function prevPage() {
-      const prevPage = pagination.page - 1;
+  return (
+    <div className="app-searchResults mx-6">
+      {pagination.items > 0 && (
+        <div className="columns">
+          <div className="column is-8 is-offset-2">
+            <h2 className="title my-2">
+              {pagination.items} établissement
+              {pagination.items > 1 && "s"} trouvé
+              {pagination.items > 1 && "s"}
+            </h2>
+          </div>
+          <div className="column is-2 export-button">
+            <Button
+              value="Export Excel"
+              buttonClasses={["is-grey"]}
+              icon={faFileExcel}
+              callback={generateXlxs}
+            />
+          </div>
+        </div>
+      )}
 
-      if (prevPage > 0) {
-        fetchData(prevPage);
-      }
-    }
+      <div className="columns result-row">
+        <div className="column is-12">
+          {results.length === 0 && <Alert color="info">Aucun résultat</Alert>}
 
-    function selectedPage(page) {
-      fetchData(page);
-    }
-
-    return (
-      <div className="app-searchResults mx-6">
-        {results && results.length >= 1 && (
-          <h2 className="title my-2">
-            {pagination.items} établissement{pagination.items > 1 && "s"} trouvé
-            {pagination.items > 1 && "s"}
-          </h2>
-        )}
-
-        <div className="columns result-row">
-          <div className="column is-12">
-            {!Array.isArray(results) ? (
-              <Alert color="danger">Une erreur est survenue.</Alert>
-            ) : !results.length ? (
-              <Alert color="info">Aucun résultat</Alert>
-            ) : (
-              ""
-            )}
-
-            {Array.isArray(results) && results.length ? (
-              <AwesomeTable
+          {!!results.length ? (
+            <div>
+              <SearchAwesomeTable
                 showPagination={pagination && pagination.pages > 1}
-                page={{
-                  min: 1,
-                  max: pagination.pages,
-                  currentPage: pagination.page
-                }}
+                pagination={{ ...pagination, min: 1 }}
                 prevText="Précédent"
                 nextText="Suivant"
-                nextPage={nextPage}
-                prevPage={prevPage}
-                selectedPage={page => selectedPage(page)}
-                loading={loading}
+                isLoading={isLoading}
                 data={results}
                 fields={[
                   {
                     headName: "SIRET",
                     importantHead: true,
-                    accessor: enterprise =>
+                    accessor: ({ siret: { raw: siret } }) =>
                       Value({
-                        value: enterprise.etablissement.siret,
-                        empty: "-",
-                        link: `/establishment/${enterprise.etablissement.siret}`
+                        value: siret,
+                        link: `/establishment/${siret}`
                       }),
-                    link: enterprise =>
-                      `/establishment/${enterprise.etablissement.siret}`
+                    link: ({ siret: { raw: siret } }) =>
+                      `/establishment/${siret}`
                   },
                   {
                     headName: "État",
-                    accessor: enterprise => (
-                      <>
-                        {enterprise.etablissement.etat_etablissement &&
-                        enterprise.etablissement.etat_etablissement === "A" ? (
-                          <div style={{ textAlign: "center" }}>
-                            <FontAwesomeIcon
-                              data-tip
-                              data-for="active"
-                              className="icon--success mr-1"
-                              icon={faCircle}
-                              id="active"
-                            />
-                            <span>Ouvert</span>
-                            <ReactTooltip id="active" effect="solid">
-                              <span>Ouvert</span>
-                            </ReactTooltip>
-                          </div>
-                        ) : (
-                          <div style={{ textAlign: "center" }}>
-                            <FontAwesomeIcon
-                              data-tip
-                              data-for="closed"
-                              className="icon--danger mr-1"
-                              icon={faSquare}
-                              id="closed"
-                            />
-                            <span>Fermé</span>
-                            <ReactTooltip id="closed" effect="solid">
-                              <span>Fermé</span>
-                            </ReactTooltip>
-                          </div>
-                        )}
-                      </>
-                    )
+                    accessor: ({
+                      siret: { raw: siret },
+                      etatadministratifetablissement: { raw: etat }
+                    }) => TableCellState({ siret, etat })
                   },
                   {
                     headName: "Raison sociale / Nom",
-                    accessor: enterprise =>
+                    accessor: ({ enterprise_name: { raw: enterpriseName } }) =>
                       Value({
-                        value:
-                          enterprise.etablissement.nom_commercial ||
-                          `${enterprise.etablissement.prenom} ${
-                            enterprise.etablissement.nom
-                          }`,
-                        empty: "-"
+                        value: enterpriseName
                       })
                   },
                   {
                     headName: "Catégorie établissement",
-                    accessor: enterprise =>
-                      Value({
-                        value: enterprise.etablissement.categorie_etablissement,
-                        empty: "-"
-                      })
-                  },
-                  {
-                    headName: "Code postal",
-                    accessor: enterprise => {
-                      const postalCode = _get(
-                        enterprise,
-                        "etablissement.adresse_components.code_postal"
-                      );
-                      const town = _get(
-                        enterprise,
-                        "etablissement.adresse_components.localite"
-                      );
-
-                      return `${Value({
-                        value: joinNoFalsy([postalCode, town], " - "),
-                        empty: "-"
-                      })}`;
+                    accessor: ({ etablissementsiege }) => {
+                      const isSiege = etablissementsiege.raw === "true";
+                      return Value({
+                        value: isSiege ? "Siège social" : "Établissement"
+                      });
                     }
                   },
                   {
-                    headName: "Effectif",
-                    accessor: e =>
+                    headName: "Code postal",
+                    accessor: ({
+                      codepostaletablissement: { raw: postalCode },
+                      libellecommuneetablissement: { raw: town }
+                    }) =>
                       Value({
-                        value: isActiveEstablishment(e.etablissement)
-                          ? e.etablissement.dernier_effectif_physique ||
-                            staffSizeRanges[
-                              e.etablissement.tranche_effectif_insee
-                            ]
-                          : "0 salarié",
-                        empty: "-"
+                        value: joinNoFalsy([postalCode, town], " - ")
+                      })
+                  },
+                  {
+                    headName: "Effectif",
+                    accessor: ({
+                      trancheeffectifsetablissement: {
+                        raw: trancheEffectifInsee
+                      },
+                      etatadministratifetablissement: { raw: etat },
+                      ...etablissement
+                    }) =>
+                      Value({
+                        value: isActiveEstablishment(etat)
+                          ? staffSizeRanges[trancheEffectifInsee]
+                          : "0 salarié"
                       })
                   },
                   {
                     headName: "Activité",
-                    accessor: enterprise => {
-                      const { naf, libelle_naf } = enterprise.etablissement;
-                      return (
-                        naf &&
-                        Value({
-                          value: `${naf === null ? "" : naf} ${
-                            libelle_naf === null ? "" : " - " + libelle_naf
-                          }`
-                        })
-                      );
-                    }
+                    accessor: ({
+                      activiteprincipaleetablissement: { raw: naf },
+                      activiteprincipaleetablissement_libelle: {
+                        raw: libelle_naf
+                      }
+                    }) =>
+                      naf &&
+                      Value({
+                        value: `${naf === null ? "" : naf} ${
+                          libelle_naf === null ? "" : " - " + libelle_naf
+                        }`
+                      })
                   }
                 ]}
               />
-            ) : (
-              ""
-            )}
-          </div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 SearchResults.propTypes = {
   results: PropTypes.array.isRequired,
   pagination: PropTypes.object.isRequired,
-  fetchData: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired
 };
 
 export default withRouter(SearchResults);

@@ -80,7 +80,11 @@ const LoginForm = ({
             <Button
               value="Renvoyer le lien d'activation"
               icon="chevron-right"
-              buttonClasses="login__button login__button--as-link has-text-link"
+              buttonClasses={[
+                "login__button",
+                "login__button--as-link",
+                "has-text-link"
+              ]}
               callback={() => {
                 setShowSuccessNotif(false);
                 login();
@@ -89,7 +93,11 @@ const LoginForm = ({
             <Button
               value="Modifier l'adresse électronique"
               icon="chevron-right"
-              buttonClasses="login__button login__button--as-link has-text-link"
+              buttonClasses={[
+                "login__button",
+                "login__button--as-link",
+                "has-text-link"
+              ]}
               callback={() => {
                 setStep("login-form");
               }}
@@ -101,7 +109,7 @@ const LoginForm = ({
               <span className="button__icon">
                 <FontAwesomeIcon icon="chevron-right" />
               </span>
-              <span>Nous contacter</span>
+              <span className="pl-2">Nous contacter</span>
             </a>
           </div>
         </div>

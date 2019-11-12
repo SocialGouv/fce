@@ -12,6 +12,7 @@
         display: flex;
         flex-direction: column-reverse;
         justify-content: space-between;
+        padding: 1rem 0;
         @include from($tablet) {
             flex-direction: row;
         }
@@ -20,7 +21,6 @@
     &__gouv {
         display: flex;
         flex-direction: column;
-        align-items: center;
         @include from($tablet) {
             align-items: flex-start;
         }

@@ -23,6 +23,8 @@
     }
 
     .result-row {
+        overflow: auto;
+
         @media print {
             justify-content: left;
 

@@ -10,6 +10,13 @@ cd $DIR/../..
 
 echo
 echo "==============="
+echo "COPY ENV FILE"
+echo "==============="
+
+cp -rv src/client/.env.$1 src/client/.env
+
+echo
+echo "==============="
 echo "BUILD A RELEASE"
 echo "==============="
 
@@ -51,6 +58,7 @@ cp -rv src/server/src/shell/monthImport.sh ./dist
 cp -rv src/server/scripts ./dist/scripts
 cp -rv src/server/src/Exceptions ./dist/Exceptions
 cp -rv src/server/src/db ./dist/db
+
 sed -i 's/\.\.\/frentreprise/.\/frentreprise/g' ./dist/package.json
 chmod 755 ./dist/*.sh
 

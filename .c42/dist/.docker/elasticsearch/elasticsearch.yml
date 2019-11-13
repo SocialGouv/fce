@@ -93,8 +93,8 @@
 #
 # action.destructive_requires_name: true
 
-cluster.name: fce-es
-node.name: fce-es
+#cluster.name: fce-es
+#node.name: fce-es
 network.host: 127.0.0.1
 http.port: 9200
 #path.data: /home/commit42/elasticsearch/data/commit42-es-dev

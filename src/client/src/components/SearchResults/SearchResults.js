@@ -27,7 +27,7 @@ const SearchResults = ({ results, pagination, isLoading }) => {
   }
 
   return (
-    <div className="app-searchResults">
+    <div className="app-searchResults mx-6">
       {pagination.items > 0 && (
         <div className="columns">
           <div className="column is-8 is-offset-2">

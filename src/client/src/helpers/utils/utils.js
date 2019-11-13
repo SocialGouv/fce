@@ -9,10 +9,25 @@ export const capitalize = str =>
     .map(str => `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`)
     .join(" ");
 
-export const countValueInArray = (array, key) =>
-  array.reduce((acc, currentValue) => {
-    return acc + currentValue[key];
-  }, 0);
+export const countValuesInArray = (array, fields) => {
+  if (!Array.isArray(fields) || !fields.length) {
+    return 0;
+  }
 
-export const hasInclude = (str, arrayOfStrings) =>
-  arrayOfStrings.some(item => str.includes(item));
+  return array.reduce((acc, currentValue) => {
+    let currentTotalFieldsValues = fields
+      .map(field => currentValue[field])
+      .reduce((accFields, currentValueField) => {
+        return accFields + currentValueField;
+      }, 0);
+
+    return acc + currentTotalFieldsValues;
+  }, 0);
+};
+
+export const isIncluded = (str, arrayOfStrings) =>
+  arrayOfStrings.length > 0
+    ? arrayOfStrings.some(item =>
+        str.toLowerCase().includes(item.toLowerCase())
+      )
+    : false;

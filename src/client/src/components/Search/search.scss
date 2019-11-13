@@ -41,7 +41,10 @@
 
         .button-wrapper {
             display: flex;
-            justify-content: flex-end;
+
+            @media (min-width: 1216px) {
+                justify-content: flex-end;
+            }
 
             .button {
                 width: 12rem;

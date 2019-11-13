@@ -71,7 +71,7 @@ const AccordionTable = ({ pse }) => {
               <td className="has-text-centered has-text-link">
                 <Value
                   value={establishment.siret}
-                  link={`establishment/${establishment.siret}`}
+                  link={`/establishment/${establishment.siret}`}
                 />
               </td>
             </tr>

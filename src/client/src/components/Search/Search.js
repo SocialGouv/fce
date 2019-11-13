@@ -33,112 +33,114 @@ const Search = ({
 }) => (
   <div className="App">
     <div className="app-search pb-4">
-      <div className="columns app-search--container">
-        <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
-          {error && (
-            <div className="notification is-danger">
-              Une erreur est survenue lors de la communication avec l{"'"}
-              API
-            </div>
-          )}
-          <form
-            className="form search-form"
-            onSubmit={e => {
-              e.preventDefault();
-              sendRequest(searchTerm, options);
-            }}
-          >
-            <div className="columns">
-              <div className="column is-four-fifths">
-                <div className="field is-grouped is-grouped-centered">
-                  <div className="control is-expanded">
-                    <label htmlFor="term" className="label">
-                      Nom ou raison sociale, SIRET ou SIREN
-                    </label>
-                    <input
-                      type="text"
-                      name="q"
-                      id="term"
-                      className="input is-medium"
-                      onChange={e => {
-                        setSearchTerm(e.target.value);
-                      }}
-                      value={searchTerm}
-                    />
+      <div className="app-search--container">
+        <div className="columns">
+          <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
+            {error && (
+              <div className="notification is-danger">
+                Une erreur est survenue lors de la communication avec l{"'"}
+                API
+              </div>
+            )}
+            <form
+              className="form search-form"
+              onSubmit={e => {
+                e.preventDefault();
+                sendRequest(searchTerm, options);
+              }}
+            >
+              <div className="columns">
+                <div className="column is-four-fifths-widescreen">
+                  <div className="field is-grouped is-grouped-centered">
+                    <div className="control is-expanded">
+                      <label htmlFor="term" className="label">
+                        Nom ou raison sociale, SIRET ou SIREN
+                      </label>
+                      <input
+                        type="text"
+                        name="q"
+                        id="term"
+                        className="input is-medium"
+                        onChange={e => {
+                          setSearchTerm(e.target.value);
+                        }}
+                        value={searchTerm}
+                      />
+                    </div>
+                  </div>
+                  <div className="columns filters__checkboxes">
+                    <div className="column is-4">
+                      <SiegeFilter
+                        filters={filters}
+                        addFilter={addFilter}
+                        removeFilter={removeFilter}
+                      />
+                    </div>
+                    <div className="column is-8">
+                      <StateFilter
+                        filters={filters}
+                        addFilter={addFilter}
+                        removeFilter={removeFilter}
+                      />
+                    </div>
+                  </div>
+                  <div className="columns">
+                    <div className="column">
+                      <Accordion
+                        allowZeroExpanded
+                        preExpanded={
+                          filters.naf || filters.location
+                            ? ["advancedSearch"]
+                            : []
+                        }
+                      >
+                        <AccordionItem uuid="advancedSearch">
+                          <AccordionItemHeading>
+                            <AccordionItemButton>
+                              <span>Recherche avancée</span>
+                            </AccordionItemButton>
+                          </AccordionItemHeading>
+                          <AccordionItemPanel>
+                            <div className="columns filters__selects">
+                              <div className="column is-half">
+                                <NafFilter
+                                  filters={filters}
+                                  addFilter={addFilter}
+                                  removeFilter={removeFilter}
+                                  divisionsNaf={divisionsNaf}
+                                />
+                              </div>
+                              <div className="column is-half">
+                                <LocationFilter
+                                  filters={filters}
+                                  addFilter={addFilter}
+                                  removeFilter={removeFilter}
+                                  loadLocations={loadLocations}
+                                />
+                              </div>
+                            </div>
+                          </AccordionItemPanel>
+                        </AccordionItem>
+                      </Accordion>
+                    </div>
                   </div>
                 </div>
-                <div className="columns filters__checkboxes">
-                  <div className="column is-one-third">
-                    <SiegeFilter
-                      filters={filters}
-                      addFilter={addFilter}
-                      removeFilter={removeFilter}
-                    />
-                  </div>
-                  <div className="column is-one-third">
-                    <StateFilter
-                      filters={filters}
-                      addFilter={addFilter}
-                      removeFilter={removeFilter}
-                    />
-                  </div>
-                </div>
-                <div className="columns">
-                  <div className="column">
-                    <Accordion
-                      allowZeroExpanded
-                      preExpanded={
-                        filters.naf || filters.location
-                          ? ["advancedSearch"]
-                          : []
-                      }
-                    >
-                      <AccordionItem uuid="advancedSearch">
-                        <AccordionItemHeading>
-                          <AccordionItemButton>
-                            <span>Recherche avancée</span>
-                          </AccordionItemButton>
-                        </AccordionItemHeading>
-                        <AccordionItemPanel>
-                          <div className="columns filters__selects">
-                            <div className="column is-one-third">
-                              <NafFilter
-                                filters={filters}
-                                addFilter={addFilter}
-                                removeFilter={removeFilter}
-                                divisionsNaf={divisionsNaf}
-                              />
-                            </div>
-                            <div className="column is-one-third">
-                              <LocationFilter
-                                filters={filters}
-                                addFilter={addFilter}
-                                removeFilter={removeFilter}
-                                loadLocations={loadLocations}
-                              />
-                            </div>
-                          </div>
-                        </AccordionItemPanel>
-                      </AccordionItem>
-                    </Accordion>
-                  </div>
+                <div className="control column is-one-fifth button-wrapper">
+                  <button
+                    className={classNames(
+                      "action",
+                      "button",
+                      "is-secondary",
+                      "is-medium",
+                      { "is-loading": isLoading }
+                    )}
+                  >
+                    Rechercher
+                  </button>
                 </div>
               </div>
-              <div className="control column is-one-fifth button-wrapper">
-                <button
-                  className={classNames(
-                    "action",
-                    "button",
-                    "is-secondary",
-                    "is-medium",
-                    { "is-loading": isLoading }
-                  )}
-                >
-                  Rechercher
-                </button>
-              </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>

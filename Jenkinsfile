@@ -39,7 +39,7 @@ pipeline {
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
-                .c42/scripts/build.sh
+                .c42/scripts/build.sh $BRANCH_NAME
             '''
         }
       }

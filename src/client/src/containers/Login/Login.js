@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Auth from "../../services/Auth";
 import LoginView from "../../components/Login";
 import _get from "lodash.get";
-
+import UAParser from "ua-parser-js";
 class Login extends Component {
   state = {
     email: "",
@@ -18,7 +18,9 @@ class Login extends Component {
     evt && evt.preventDefault();
     this.setState({ hasError: false, hasSuccess: false, loading: true });
 
-    Auth.sendMagicLink(this.state.email)
+    const ua = new UAParser();
+
+    Auth.sendMagicLink(this.state.email, ua.getBrowser().name)
       .then(response => {
         if (response.data && response.data.success) {
           this._loginSuccess();

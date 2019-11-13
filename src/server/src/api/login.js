@@ -10,7 +10,8 @@ const router = express.Router();
 const magicKey = new MagicKey(config.get("magicKey"));
 
 router.post("/sendMagicLink", async (req, res) => {
-  const { email, clientVerificationKey } = req.body;
+  const { email, clientVerificationKey, browser } = req.body;
+  console.log(browser);
   try {
     const key = magicKey.generateKey(email, clientVerificationKey);
 
@@ -28,7 +29,8 @@ router.post("/sendMagicLink", async (req, res) => {
           link: `${config.client.baseUrl}${config.client.magicLink.replace(
             "{key}",
             key
-          )}`
+          )}${config.client.browser.replace("{browser}", browser)}`,
+          browser
         }),
         { bcc: config.magicLink.bcc }
       );

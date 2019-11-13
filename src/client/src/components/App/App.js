@@ -58,7 +58,7 @@ class App extends React.Component {
                   <Route exact path="/login" render={() => <Login />} />
                   <Route
                     exact
-                    path="/magic-link/:key"
+                    path="/magic-link/:key/browser/:browser"
                     render={() => <MagicLink />}
                   />
                   <Route

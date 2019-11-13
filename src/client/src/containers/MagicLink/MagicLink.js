@@ -15,10 +15,11 @@ class MagicLink extends Component {
 
   componentDidMount() {
     const key = _get(this.props, "match.params.key");
-    this.login(key);
+    const isIE = _get(this.props, "match.params.browser");
+    this.login(key, isIE);
   }
 
-  login = key => {
+  login = (key, isIE) => {
     this.setState({ hasError: false, hasSuccess: false, loading: true });
 
     Auth.loginWithMagicLink(key)
@@ -55,6 +56,17 @@ class MagicLink extends Component {
 
   render() {
     const { hasSuccess, hasError, loading, errorMessage } = this.state;
+
+    /* if (true) {
+      return (
+        <MagicLinkView
+          loading={loading}
+          hasError={true}
+          errorMessage={"IE!!! Go to hell"}
+          isIE={true}
+        />
+      );
+    } */
 
     if (hasSuccess) {
       return <Redirect push to={"/"} />;

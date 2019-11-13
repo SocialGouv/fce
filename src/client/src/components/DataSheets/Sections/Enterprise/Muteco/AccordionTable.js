@@ -48,11 +48,12 @@ const AccordionTable = ({ pse }) => {
               className="accordion-header"
             >
               <Value value={pse.establishments.length} />
-              {isActiveAccordion ? (
-                <FontAwesomeIcon icon={faChevronCircleDown} className="ml-2" />
-              ) : (
-                <FontAwesomeIcon icon={faChevronCircleLeft} className="ml-2" />
-              )}
+              <FontAwesomeIcon
+                icon={
+                  isActiveAccordion ? faChevronCircleDown : faChevronCircleLeft
+                }
+                className="ml-2"
+              />
             </div>
           </td>
         </tr>

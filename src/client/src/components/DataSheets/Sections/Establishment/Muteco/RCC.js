@@ -47,7 +47,7 @@ function RCC({ establishment }) {
           columnClasses={["is-8", "is-4"]}
         />
       )}
-      {hasPseValidsOrProbates(rccList) ? (
+      {hasPseValidsOrProbates(rccList) && (
         <>
           <Data
             name={`Procédure(s) homologuée(s) ou validée(s) au cours des ${Config.get(
@@ -99,8 +99,6 @@ function RCC({ establishment }) {
             </tbody>
           </table>
         </>
-      ) : (
-        ""
       )}
     </Subcategory>
   );

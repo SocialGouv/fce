@@ -47,7 +47,7 @@ function PSE({ establishment }) {
           columnClasses={["is-8", "is-4"]}
         />
       )}
-      {hasPseValidsOrProbates(pseList) ? (
+      {hasPseValidsOrProbates(pseList) && (
         <>
           <Data
             name={`Procédure(s) homologuée(s) ou validée(s) au cours des ${Config.get(
@@ -90,7 +90,7 @@ function PSE({ establishment }) {
             </tbody>
           </table>
         </>
-      ) : null}
+      )}
     </Subcategory>
   );
 }

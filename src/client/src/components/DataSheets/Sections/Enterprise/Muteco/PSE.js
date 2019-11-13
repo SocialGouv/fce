@@ -49,7 +49,7 @@ function PSE({ enterprise }) {
           columnClasses={["is-8", "is-4"]}
         />
       )}
-      {hasPseValidsOrProbates(pseList) ? (
+      {hasPseValidsOrProbates(pseList) && (
         <>
           <Data
             name={`Procédure(s) homologuée(s) ou validée(s) au c des ${Config.get(
@@ -85,7 +85,7 @@ function PSE({ enterprise }) {
             </table>
           </div>
         </>
-      ) : null}
+      )}
     </Subcategory>
   );
 }

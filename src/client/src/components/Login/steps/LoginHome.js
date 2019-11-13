@@ -18,7 +18,7 @@ const LoginHome = ({ setStep }) => (
     </p>
     <Button
       value="Me connecter"
-      buttonClasses="login__button is-secondary"
+      buttonClasses={["login__button", "is-secondary"]}
       callback={() => {
         setStep("login-form");
       }}

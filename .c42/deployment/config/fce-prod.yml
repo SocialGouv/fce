@@ -15,10 +15,9 @@
       shell: docker-compose build
       args:
         chdir: /home/factory/deployment/current/dist
-    - name: Run `docker-compose up` in deamon mode
-      shell: docker-compose up -d
+    - name: Run `docker-compose up -d server`
+      shell: docker-compose up -d server
       args:
         chdir: /home/factory/deployment/current/dist
-
 
 

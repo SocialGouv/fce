@@ -1,4 +1,4 @@
-@import "../../App/variables";
+@import "../App/variables";
 @import "~bulma/bulma";
 
 .at {
@@ -36,7 +36,7 @@
             margin: auto 0;
 
             &:hover {
-                background-color: $light-sky-blue;
+                background-color: $light-sky-blue !important;
             }
         }
 
@@ -46,10 +46,19 @@
             border-top: 1px solid $grey-geyser;
             border-right: 1px solid #ffffff99 !important;
             color: #555;
+            vertical-align: middle !important;
 
             a {
                 font-weight: 700;
                 color: $faced-blue;
+            }
+
+            &:nth-of-type(4) {
+                min-width: 12rem;
+            }
+
+            &:nth-of-type(6) {
+                text-align: center;
             }
         }
 
@@ -72,12 +81,12 @@
             border-width: 1px 0 0 !important;
         }
     }
+}
 
-    &.table th:not([align]) {
-        color: $grey-tundora;
-        text-align: center;
-        border-right: solid 1px $light-sky-blue;
-    }
+.table th:not([align]) {
+    color: $grey-tundora;
+    text-align: center;
+    border-right: solid 1px $light-sky-blue;
 }
 
 .pager {

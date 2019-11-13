@@ -12,11 +12,14 @@ services:
     tty: true
 
   db:
-    build: .docker/postgres
+    image: postgres:9.6
     network_mode: host
     container_name: db
     volumes:
       - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: w5@5lclO2F&4O8YQX#dI
+      POSTGRES_DB: fce
     tty: true
 
   appsearch:
@@ -28,7 +31,7 @@ services:
     volumes:
       - ./.docker/appsearch/app-search.yml:/usr/share/app-search/config/app-search.yml
 
-  elasticsearch:
+  elasticsearch-1:
     build: .docker/elasticsearch
     network_mode: host
     container_name: elasticsearch
@@ -37,25 +40,49 @@ services:
       - elasticdata:/usr/share/elasticsearch/data
     environment:
       - cluster.name=direccte
-      - node.name=fce_main
-      - bootstrap.memory_lock=true
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms1024m -Xmx2048m"
+      - node.name=elasticsearch
+      - discovery.seed_hosts=fce_elasticsearch_2
+      - cluster.initial_master_nodes=elasticsearch,fce_elasticsearch_2
+      - "ES_JAVA_OPTS=-Xms1G -Xmx1G"
     ulimits:
       memlock:
         soft: -1
         hard: -1
 
+  elasticsearch-2:
+    build: .docker/elasticsearch
+    network_mode: host
+    container_name: fce_elasticsearch_2
+    volumes:
+      - ./.docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - elasticdata-2:/usr/share/elasticsearch/data
+    environment:
+      - cluster.name=direccte
+      - node.name=fce_elasticsearch_2
+      - discovery.seed_hosts=elasticsearch
+      - cluster.initial_master_nodes=elasticsearch,fce_elasticsearch_2
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1G -Xmx1G"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
 volumes:
   pgdata:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /home/factory/deployment/shared/pgdata
+      device:  /mnt/data/shared/pgdata
   elasticdata:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: /home/factory/deployment/shared/elasticdata
+      device:  /mnt/data/shared/elasticdata
+  elasticdata-2:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /mnt/data/shared/elasticdata-2

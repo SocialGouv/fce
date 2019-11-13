@@ -1,3 +1,5 @@
+@import "../App/variables";
+
 .app-searchResults {
     @media print {
         zoom: 40%;
@@ -14,26 +16,19 @@
         color: $primary;
     }
 
-    .terms-list.box {
-        padding: 2rem;
-        box-shadow: none;
-    }
-
-    .export-buttons {
+    .export-button {
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
         align-items: center;
-
-        .button {
-            margin: 2rem;
-        }
     }
 
     .result-row {
+        overflow: auto;
+
         @media print {
             justify-content: left;
 
-            >div {
+            > div {
                 flex: 0 0 100%;
                 max-width: 100%;
             }

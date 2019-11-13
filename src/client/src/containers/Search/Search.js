@@ -1,209 +1,239 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import SearchView from "../../components/Search";
 import {
-  search,
-  setTerm,
-  setCurrentEnterprise
+  setSearchTerm,
+  setSearchFilters,
+  setSearchResults,
+  setSearchIsLoading,
+  setSearchError
 } from "../../services/Store/actions";
+import * as AppSearch from "@elastic/app-search-javascript";
 import Http from "../../services/Http";
+import SearchView from "../../components/Search";
+import divisionsNaf from "./divisions-naf.json";
 import Config from "../../services/Config";
-import SearchResults from "../../containers/SearchResults";
-import downloadjs from "downloadjs";
 
-class Search extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      nafList: [],
-      hasError: false,
-      loading: false,
-      showResults: false
-    };
-  }
+const client = AppSearch.createClient(Config.get("appSearch").client);
+const defaultOptions = Config.get("appSearch").defaultOptions;
 
-  componentDidMount() {
-    if (this.hasPreviousTerms(this.props.terms)) {
-      this.search();
+const Search = ({
+  search,
+  setSearchTerm,
+  setSearchFilters,
+  setSearchResults,
+  setSearchIsLoading,
+  setSearchError
+}) => {
+  const allFiltersOptions = {
+    ...(search.filters.siren && { siren: search.filters.siren }),
+    ...(search.filters.siege && { etablissementsiege: "true" }),
+    ...(search.filters.state.length === 1 && {
+      etatadministratifetablissement: search.filters.state[0]
+    }),
+    ...(search.filters.naf && { naf_division: search.filters.naf }),
+    ...(search.filters.location &&
+      (search.filters.location.value.length < 5
+        ? {
+            departement: search.filters.location.value
+          }
+        : {
+            codecommuneetablissement: search.filters.location.value
+          }))
+  };
+
+  const options = {
+    ...defaultOptions,
+    filters: {
+      all: Object.entries(allFiltersOptions).map(([field, value]) => ({
+        [field]: value
+      })),
+      none: {
+        ...(search.filters.state.length === 0 && {
+          etatadministratifetablissement: Object.values(
+            Config.get("establishmentState")
+          )
+        })
+      }
     }
-    this.loadNaf();
-  }
-
-  hasPreviousTerms = terms => {
-    if (!terms) {
-      return false;
-    }
-    return (
-      Config.get("advancedSearch").terms.find(key => terms[key] !== null) !==
-      undefined
-    );
   };
 
-  updateForm = evt => {
-    const { name, value, type, checked } = evt.target;
-    this.props.setTerm(name, type === "checkbox" ? checked : value);
-  };
-
-  updateFormSelect = (name, element) => {
-    const value = Array.isArray(element)
-      ? element.map(el => el.value)
-      : element && element.value;
-
-    this.props.setTerm(`_${name}Select`, element);
-    this.props.setTerm(name, value);
-  };
-
-  loadNaf = () => {
-    return Http.get("/naf")
-      .then(response => {
-        if (response.data && response.data.results) {
-          const nafList = response.data.results.map(naf => {
-            return {
-              label: `${naf.code} - ${naf.libelle}`,
-              value: naf.code
-            };
-          });
-
-          this.setState({
-            nafList
-          });
-        }
+  const sendRequest = (query, options) => {
+    setSearchIsLoading(true);
+    setSearchError(null);
+    client
+      .search(query, options)
+      .then(resultList => {
+        setSearchResults(resultList);
+        setSearchIsLoading(false);
       })
-      .catch(function(error) {
-        console.error(error);
+      .catch(error => {
+        setSearchError(error);
+        setSearchIsLoading(false);
+        console.error(`error: ${error}`);
       });
   };
 
-  loadCommunes = term => {
-    clearTimeout(this.loadCommunesTimer);
+  const handlePageChange = nextCurrentPage =>
+    sendRequest(search.term, {
+      ...options,
+      page: {
+        ...options.page,
+        current: nextCurrentPage
+      }
+    });
 
-    if (term.length < Config.get("advancedSearch").minTerms) {
+  const addFilter = (field, value) => {
+    if (field === "state") {
+      setSearchFilters({
+        ...search.filters,
+        state: [...search.filters.state, value]
+      });
+    } else {
+      setSearchFilters({ ...search.filters, [field]: value });
+    }
+  };
+
+  const removeFilter = (field, value) => {
+    if (field === "state") {
+      setSearchFilters({
+        ...search.filters,
+        state: [...search.filters.state.filter(state => state !== value)]
+      });
+    } else {
+      setSearchFilters({ ...search.filters, [field]: null });
+    }
+  };
+
+  const loadLocations = term => {
+    const minTermLength = Config.get("advancedSearch").minTerms;
+    const debounceTime = Config.get("advancedSearch").debounce;
+
+    let loadLocationsTimer;
+    clearTimeout(loadLocationsTimer);
+
+    if (term.length < minTermLength) {
       return new Promise(resolve => {
         resolve([]);
       });
     }
 
-    return new Promise((resolve, reject) => {
-      return (this.loadCommunesTimer = setTimeout(() => {
-        return Http.get("/communes", {
-          params: {
-            q: term
-          }
-        })
-          .then(response => {
-            if (response.data && response.data.results) {
-              return resolve(
-                response.data.results.map(commune => {
-                  return {
-                    label: `${
-                      commune.nom
-                    } (${commune.code_postal.trim().padStart(5, "0")})`,
-                    value: commune.code_insee.trim().padStart(5, "0")
-                  };
-                })
-              );
-            }
-            return reject([]);
-          })
-          .catch(function(error) {
-            console.error(error);
-            return reject([]);
+    const communesPromise = Http.get("/communes", {
+      params: {
+        q: term
+      }
+    })
+      .then(response => {
+        if (response.data && response.data.results) {
+          return response.data.results.map(commune => {
+            return {
+              label: `${commune.nom} (${commune.code_postal
+                .trim()
+                .padStart(5, "0")})`,
+              value: commune.code_insee.trim().padStart(5, "0")
+            };
           });
-      }, Config.get("advancedSearch").debounce));
+        }
+        return [];
+      })
+      .catch(function(error) {
+        console.error(error);
+        return [];
+      });
+
+    const departementsPromise = Http.get("/departements", {
+      params: {
+        q: term
+      }
+    })
+      .then(response => {
+        if (response.data && response.data.results) {
+          return response.data.results.map(departement => {
+            return {
+              label: `${departement.nom.toUpperCase()} (${departement.code})`,
+              value: departement.code
+            };
+          });
+        }
+        return [];
+      })
+      .catch(function(error) {
+        console.error(error);
+        return [];
+      });
+
+    return new Promise(resolve => {
+      return (loadLocationsTimer = setTimeout(() => {
+        return Promise.all([communesPromise, departementsPromise]).then(
+          result =>
+            resolve([
+              { label: "Départements", options: result[1] },
+              { label: "Communes", options: result[0] }
+            ])
+        );
+      }, debounceTime));
     });
   };
 
-  search = evt => {
-    evt && evt.preventDefault();
-    this.setState({ hasError: false, loading: true });
+  useEffect(() => {
+    if (search.filters.siren) {
+      sendRequest(search.term, options);
+      removeFilter("siren");
+    }
+  }, []);
 
-    this.props
-      .search(this.props.terms)
-      .then(response => {
-        this.setState({
-          hasError: false,
-          loading: false,
-          showResults: true
-        });
-      })
-      .catch(error => {
-        this.setState({
-          hasError: true,
-          loading: false,
-          showResults: false
-        });
-      });
-  };
-
-  downloadXlsxExport = page => {
-    return Http.get("/search.xlsx", {
-      params: { ...this.props.terms, page },
-      responseType: "blob"
-    })
-      .then(response => {
-        if (response.data && response.data) {
-          downloadjs(
-            new Blob([response.data], {
-              type: response.headers["content-type"]
-            }),
-            "recherche.xlsx",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          );
-        } else {
-          this.setState({
-            hasError: true
-          });
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        this.setState({
-          hasError: true
-        });
-      });
-  };
-
-  render() {
-    return (
-      <>
-        <SearchView
-          terms={this.props.terms || {}}
-          search={this.search}
-          updateForm={this.updateForm}
-          updateFormSelect={this.updateFormSelect}
-          loading={this.state.loading}
-          hasError={this.state.hasError}
-          nafList={this.state.nafList}
-          loadCommunes={this.loadCommunes}
-        />
-        {this.state.showResults && (
-          <SearchResults downloadXlsxExport={this.downloadXlsxExport} />
-        )}
-      </>
-    );
-  }
-}
+  return (
+    <SearchView
+      isLoading={search.isLoading}
+      error={search.error}
+      resultList={search.results}
+      sendRequest={sendRequest}
+      searchTerm={search.term}
+      setSearchTerm={setSearchTerm}
+      handlePageChange={handlePageChange}
+      addFilter={addFilter}
+      removeFilter={removeFilter}
+      filters={search.filters}
+      options={options}
+      divisionsNaf={divisionsNaf}
+      loadLocations={loadLocations}
+    />
+  );
+};
 
 const mapStateToProps = state => {
   return {
-    terms: state.search.terms
+    search: state.search
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    search: term => {
-      return dispatch(search(term));
+    setSearchTerm: term => {
+      dispatch(setSearchTerm(term));
     },
-
-    setTerm: (termKey, termValue) => {
-      return dispatch(setTerm(termKey, termValue));
+    setSearchFilters: filters => {
+      dispatch(setSearchFilters(filters));
     },
-
-    setCurrentEnterprise: enterprise => {
-      return dispatch(setCurrentEnterprise(enterprise));
+    setSearchResults: results => {
+      dispatch(setSearchResults(results));
+    },
+    setSearchIsLoading: isLoading => {
+      dispatch(setSearchIsLoading(isLoading));
+    },
+    setSearchError: error => {
+      dispatch(setSearchError(error));
     }
   };
+};
+
+Search.propTypes = {
+  search: PropTypes.object.isRequired,
+  setSearchTerm: PropTypes.func.isRequired,
+  setSearchFilters: PropTypes.func.isRequired,
+  setSearchResults: PropTypes.func.isRequired,
+  setSearchIsLoading: PropTypes.func.isRequired,
+  setSearchError: PropTypes.func.isRequired
 };
 
 export default connect(

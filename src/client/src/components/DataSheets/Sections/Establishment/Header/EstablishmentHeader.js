@@ -19,7 +19,8 @@ class EstablishmentHeader extends React.Component {
       establishment,
       establishment: { adresse_components }
     } = this.props;
-    const address = formatAddress(adresse_components);
+
+    const address = adresse_components && formatAddress(adresse_components);
 
     const isActive = isActiveEstablishment(establishment);
     const stateClass = isActive ? "icon--success" : "icon--danger";
@@ -44,7 +45,9 @@ class EstablishmentHeader extends React.Component {
               (establishment.nom_commercial &&
                 establishment.nom_commercial.toLowerCase()) ||
               `${(establishment.nom && establishment.nom.toLowerCase()) ||
-                ""} ${establishment.prenom.toLowerCase() || ""}`.trim() ||
+                ""} ${(establishment.prenom &&
+                establishment.prenom.toLowerCase()) ||
+                ""}`.trim() ||
               null
             }
             empty=" "

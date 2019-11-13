@@ -16,7 +16,8 @@ const EstablishmentRelationship = ({ establishment }) => {
     (establishment.nom_commercial &&
       establishment.nom_commercial.toLowerCase()) ||
     `${(establishment.nom && establishment.nom.toLowerCase()) ||
-      ""} ${establishment.prenom.toLowerCase() || ""}`.trim() ||
+      ""} ${(establishment.prenom && establishment.prenom.toLowerCase()) ||
+      ""}`.trim() ||
     null;
 
   return (
@@ -91,10 +92,7 @@ const EstablishmentRelationship = ({ establishment }) => {
                     value="Lancer la recherche"
                     isTargetBlank
                     icon={faSearch}
-                    link={{
-                      pathname:
-                        Config.get("legifranceSearchUrl") + raisonSociale
-                    }}
+                    link={Config.get("legifranceSearchUrl") + raisonSociale}
                   />
                 }
                 columnClasses={["is-8", "is-4"]}

@@ -97,6 +97,10 @@ task 'build' do
     info("Packaging...")
     directory "dist" # copy .c42/dist/ to dist/
     directory "../src/server/build", "dist" # copy .c42/../server/build to dist/
+    directory "../src/server/scripts", "dist/scripts"
+    directory "../src/server/src/shell/monthImport.sh", "dist"
+    directory "../src/server/src/Exceptions", "dist/Exceptions"
+    directory "../src/server/src/db", "dist/db"
     directory "../src/server/migrations", "dist/migrations" # copy .c42/../server/build to dist/
     directory "../src/client/build", "dist/htdocs" # copy .c42/../client/build to dist/htdocs
     directory "../src/frentreprise", "frentreprise"
@@ -145,7 +149,7 @@ task :install do
 
   info('Starting docker')
   invoke 'docker:run', []
-
+Install
   info('Waiting for full loading of the db container')
   sleep 12
 

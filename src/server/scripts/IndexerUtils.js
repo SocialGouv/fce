@@ -2,12 +2,8 @@ const { Pool } = require("pg");
 const Cursor = require("pg-cursor");
 const config = require("config");
 const pLimit = require("p-limit");
-const AppSearchClient = require("@elastic/app-search-node");
-/** Create App-search client */
-const apiKey = config.elasticIndexer.appsearch_apiKey;
-const baseUrlFn = () => config.elasticIndexer.appsearch_address;
-const engineName = config.elasticIndexer.appsearch_engineName;
-const client = new AppSearchClient(undefined, apiKey, baseUrlFn);
+const fs = require("fs");
+
 /** Create PG Pool */
 const pool = new Pool(config.get("db"));
 /** Define concurrent request limit */
@@ -25,8 +21,6 @@ class IndexerUtils {
     //Init PG Client and cursor
     const PgClient = await pool.connect();
     const establishmentResultCursor = PgClient.query(new Cursor(query));
-
-    console.log("Create Elastic client");
     //www todo
     console.log("Start process Data");
     tasks.push(
@@ -68,18 +62,19 @@ class IndexerUtils {
                   "pending process:",
                   limit.pendingCount
                 );
-                client
-                  .indexDocuments(engineName, result)
-                  .then(response => {
-                    //Get execution time for getting row set
-                    const end = new Date() - start;
-                    console.info("Row set execution time: %dms", end);
+
+                fs.appendFile(
+                  "/mnt/data/data.json",
+                  JSON.stringify(result),
+                  function(err) {
+                    if (err) {
+                      reject();
+                      throw err;
+                    }
+                    console.log("chunk saved");
                     resolve();
-                  })
-                  .catch(error => {
-                    console.error(error);
-                    reject();
-                  });
+                  }
+                );
               })
               .catch(error => {
                 console.error(error);

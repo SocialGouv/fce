@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Auth from "../../services/Auth";
 import LoginView from "../../components/Login";
 import _get from "lodash.get";
-import UAParser from "ua-parser-js";
+import { getBrowserName } from "../../helpers/BrowserDetection";
+
 class Login extends Component {
   state = {
     email: "",
@@ -16,11 +17,13 @@ class Login extends Component {
 
   login = evt => {
     evt && evt.preventDefault();
-    this.setState({ hasError: false, hasSuccess: false, loading: true });
+    this.setState({
+      hasError: false,
+      hasSuccess: false,
+      loading: true
+    });
 
-    const ua = new UAParser();
-
-    Auth.sendMagicLink(this.state.email, ua.getBrowser().name)
+    Auth.sendMagicLink(this.state.email, getBrowserName())
       .then(response => {
         if (response.data && response.data.success) {
           this._loginSuccess();

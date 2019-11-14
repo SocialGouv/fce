@@ -64,7 +64,7 @@ class IndexerUtils {
                 );
 
                 fs.appendFile(
-                  "/mnt/data/data.json",
+                  "/usr/src/app/node/data.json",
                   JSON.stringify(result),
                   function(err) {
                     if (err) {

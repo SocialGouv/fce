@@ -56,10 +56,7 @@ export default ({
 
   if (link) {
     return (
-      <Link
-        to={{ pathname: `/${link}` }}
-        onClick={e => e && e.stopPropagation()}
-      >
+      <Link to={link} onClick={e => e && e.stopPropagation()}>
         {value}
       </Link>
     );

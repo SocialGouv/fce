@@ -11,7 +11,7 @@ const magicKey = new MagicKey(config.get("magicKey"));
 
 router.post("/sendMagicLink", async (req, res) => {
   const { email, clientVerificationKey, browser } = req.body;
-  console.log(browser);
+
   try {
     const key = magicKey.generateKey(email, clientVerificationKey);
 

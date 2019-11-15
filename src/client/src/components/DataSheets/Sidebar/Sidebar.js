@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import EstablishmentsItems from "./EstablishmentsItems/EstablishmentsItems";
 import Value from "../../shared/Value";
 import { faArrowRight } from "@fortawesome/fontawesome-pro-solid";
@@ -12,6 +12,7 @@ import {
   resetSearch
 } from "../../../services/Store/actions";
 import Button from "../../shared/Button";
+import LinkButton from "../../shared/LinkButton";
 
 import "./sidebar.scss";
 
@@ -109,8 +110,11 @@ const Sidebar = ({
                 limit={limitItems}
               />
               {establishments.length > limitItems && (
-                <Link
-                  to="/"
+                <LinkButton
+                  link="/"
+                  value="Voir tous les établissements"
+                  icon={faArrowRight}
+                  className="button is-secondary is-outlined has-text-weight-bold sidebar__view-all-button"
                   onClick={() => {
                     resetSearch();
                     setSearchTerm(enterprise.siren);
@@ -122,17 +126,7 @@ const Sidebar = ({
                       siren: enterprise.siren
                     });
                   }}
-                >
-                  <Button
-                    value="Voir tous les établissements"
-                    icon={faArrowRight}
-                    buttonClasses={[
-                      "is-secondary",
-                      "is-outlined",
-                      "sidebar__view-all-button"
-                    ]}
-                  />
-                </Link>
+                />
               )}
             </>
           )}

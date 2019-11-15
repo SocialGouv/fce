@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Value from "../../../../shared/Value";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
@@ -10,6 +11,7 @@ import {
   faCircle
 } from "@fortawesome/fontawesome-pro-solid";
 import InfoBox from "../../../../shared/InfoBox";
+import LinkButton from "../../../../shared/LinkButton";
 import Button from "../../../../shared/Button";
 import Config from "../../../../../services/Config";
 
@@ -24,7 +26,10 @@ class EnterpriseHeader extends React.Component {
   }
 
   static propTypes = {
-    enterprise: PropTypes.object.isRequired
+    enterprise: PropTypes.object.isRequired,
+    setSearchTerm: PropTypes.func.isRequired,
+    setSearchFilters: PropTypes.func.isRequired,
+    resetSearch: PropTypes.func.isRequired
   };
 
   render() {
@@ -124,11 +129,22 @@ class EnterpriseHeader extends React.Component {
               </span>
             </div>
             <div className="column is-8">
-              <Button
+              <LinkButton
+                link="/"
                 value="Voir tous les établissements"
                 icon={faArrowRight}
-                buttonClasses={["is-secondary", "is-outlined"]}
-                callback={() => this.redirectToResearch(enterprise.siren)}
+                className="button is-secondary is-outlined has-text-weight-bold"
+                onClick={() => {
+                  this.props.resetSearch();
+                  this.props.setSearchTerm(enterprise.siren);
+                  this.props.setSearchFilters({
+                    naf: null,
+                    location: null,
+                    siege: null,
+                    state: Object.values(Config.get("establishmentState")),
+                    siren: enterprise.siren
+                  });
+                }}
               />
             </div>
           </div>
@@ -151,4 +167,21 @@ class EnterpriseHeader extends React.Component {
   }
 }
 
-export default EnterpriseHeader;
+const mapDispatchToProps = dispatch => {
+  return {
+    setSearchTerm: term => {
+      return dispatch(this.props.setSearchTerm(term));
+    },
+    setSearchFilters: filters => {
+      dispatch(this.props.setSearchFilters(filters));
+    },
+    resetSearch: () => {
+      dispatch(this.props.resetSearch());
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(EnterpriseHeader);

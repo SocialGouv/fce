@@ -26,11 +26,9 @@ router.post("/sendMagicLink", async (req, res) => {
         email,
         "Lien de connexion à FCE",
         sendMagicLinkTpl({
-          link: `${config.client.baseUrl}${config.client.magicLink.replace(
-            "{key}",
-            key
-          )}${config.client.browser.replace("{browser}", browser)}`,
-          browser
+          link: `${config.client.baseUrl}${config.client.magicLink
+            .replace("{key}", key)
+            .replace("{browser}", browser)}`
         }),
         { bcc: config.magicLink.bcc }
       );

@@ -4,8 +4,7 @@ const process = require("process");
 const config = {
   client: {
     baseUrl: process.env.CLIENT_BASE_URL,
-    magicLink: "/magic-link/{key}",
-    browser: "/browser/{browser}"
+    magicLink: "/magic-link/{key}/browser/{browser}"
   },
   APIGouv: {
     token: process.env.API_GOUV_TOKEN

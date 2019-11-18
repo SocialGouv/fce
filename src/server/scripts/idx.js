@@ -1,16 +1,18 @@
-const AppSearchClient = require("@elastic/app-search-node");
-const config = require("config");
-/** Create App-search client */
-const apiKey = config.elasticIndexer.appsearch_apiKey;
-const baseUrlFn = () => config.elasticIndexer.appsearch_address;
-const engineName = config.elasticIndexer.appsearch_engineName;
-const client = new AppSearchClient(undefined, apiKey, baseUrlFn);
+require("array.prototype.flatmap").shim();
+const { Client } = require("@elastic/elasticsearch");
+/** Create ElasticSearch client */
+const elasticClient = new Client({
+  node: "http://elasticsearch:9200/"
+});
 const fs = require("fs");
 const JSONStream = require("JSONStream");
 const es = require("event-stream");
 
+const ENGINE_ID = "5dd16b3f8534ccbe447ae6c9";
+const INDEX_NAME = `.app-search-engine-${ENGINE_ID}`;
+
 var getStream = function() {
-  var jsonData = "/usr/src/app/node/data.json",
+  var jsonData = "data.json",
     stream = fs.createReadStream(jsonData, { encoding: "utf8" }),
     parser = JSONStream.parse("*");
   return stream.pipe(parser);
@@ -20,31 +22,62 @@ let index = 0;
 let chunk = [];
 
 let st = getStream().pipe(
-  es.mapSync(function(data) {
+  es.mapSync(async function(data) {
     index++;
 
-    chunk.push(data);
-    if (chunk.length % 50 === 0) {
+    chunk.push({
+      ...data
+    });
+    if (chunk.length % 10000 === 0) {
       st.pause();
 
       console.log("pause -> send chunk...");
 
       const start = new Date();
 
-      client
-        .indexDocuments(engineName, chunk)
+      let body = chunk.flatMap(doc => [
+        {
+          index: { _index: INDEX_NAME, _id: doc.id }
+        },
+        { ...doc, engine_id: ENGINE_ID, __st_expires_after: null }
+      ]);
+
+      const response = await elasticClient
+        .bulk({
+          body
+        })
         .then(response => {
-          //Get execution time for getting row set
           st.resume();
 
           console.log(
             "resume -> insert rows execution time: %dms",
             new Date() - start
           );
-        })
-        .catch(error => {
-          console.error(error);
+
+          return response;
         });
+
+      const { body: bulkResponse } = response;
+
+      //Error Handling
+      if (bulkResponse.errors) {
+        const erroredDocuments = [];
+        bulkResponse.items.forEach((action, i) => {
+          const operation = Object.keys(action)[0];
+          if (action[operation].error) {
+            erroredDocuments.push({
+              // If the status is 429 it means that you can retry the document,
+              // otherwise it's very likely a mapping error, and you should
+              // fix the document before to try it again.
+              status: action[operation].status,
+              error: action[operation].error,
+              operation: body[i * 2],
+              document: body[i * 2 + 1]
+            });
+          }
+        });
+        console.log(erroredDocuments);
+      }
 
       chunk = [];
     }

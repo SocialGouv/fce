@@ -13,11 +13,13 @@
     "test": "jest",
     "appsearch-indexer": "node scripts/appsearchIndexer.js",
     "appsearch-updater": "node scripts/appsearchUpdater.js",
+    "ii": "node scripts/idx.js",
     "migrate": "node-pg-migrate",
     "shell": "node ./src/shell/run.js"
   },
   "dependencies": {
     "@elastic/app-search-node": "^7.3.0",
+    "@elastic/elasticsearch": "^7.4.0",
     "JSONStream": "^1.3.5",
     "array.prototype.flatmap": "^1.2.1",
     "body-parser": "^1.18.2",

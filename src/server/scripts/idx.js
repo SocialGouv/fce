@@ -2,17 +2,21 @@ require("array.prototype.flatmap").shim();
 const { Client } = require("@elastic/elasticsearch");
 /** Create ElasticSearch client */
 const elasticClient = new Client({
-  node: "http://elasticsearch:9200/"
+  node: "http://127.0.0.1:9200/",
+  auth: {
+    username: "commit42",
+    password: "8zoC6ktzMbologQ"
+  }
 });
 const fs = require("fs");
 const JSONStream = require("JSONStream");
 const es = require("event-stream");
 
-const ENGINE_ID = "5dd16b3f8534ccbe447ae6c9";
+const ENGINE_ID = "5dd2686ffe901aaf8ac845ca";
 const INDEX_NAME = `.app-search-engine-${ENGINE_ID}`;
 
 var getStream = function() {
-  var jsonData = "data.json",
+  var jsonData = "/tmp/export/data.json",
     stream = fs.createReadStream(jsonData, { encoding: "utf8" }),
     parser = JSONStream.parse("*");
   return stream.pipe(parser);

@@ -70,16 +70,18 @@ class IndexerUtils {
                   limit.pendingCount
                 );
 
-                fs.appendFile("data.json", JSON.stringify(result), function(
-                  err
-                ) {
-                  if (err) {
-                    reject();
-                    throw err;
+                fs.appendFile(
+                  "/tmp/export/data.json",
+                  JSON.stringify(result),
+                  function(err) {
+                    if (err) {
+                      reject();
+                      throw err;
+                    }
+                    console.log("chunk saved");
+                    resolve();
                   }
-                  console.log("chunk saved");
-                  resolve();
-                });
+                );
               })
               .catch(error => {
                 console.error(error);

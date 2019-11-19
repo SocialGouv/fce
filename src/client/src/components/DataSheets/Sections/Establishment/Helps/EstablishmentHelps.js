@@ -10,6 +10,7 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faMedkit } from "@fortawesome/fontawesome-pro-solid";
 
 const EstablishmentHelps = ({ establishment }) => {
+  console.log(establishment);
   const hasAgrements = !!(
     establishment.agrements_iae &&
     Object.values(establishment.agrements_iae)
@@ -79,7 +80,9 @@ const EstablishmentHelps = ({ establishment }) => {
                     </td>
                     <td>
                       <Value
-                        value={_get(establishment, `agrements_iae[${key}].etp`)}
+                        value={Math.round(
+                          _get(establishment, `agrements_iae[${key}].etp`)
+                        )}
                       />
                     </td>
                   </tr>
@@ -132,7 +135,7 @@ const EstablishmentHelps = ({ establishment }) => {
             name={`Embauche en contrat en alternance en année ${getCustomPastYear(
               1
             )} ou ${getCustomPastYear(2)}`}
-            value={establishment.alternance && establishment.alternance.length}
+            value={establishment.contrat_aide_alternance_n1}
             columnClasses={["is-8", "is-4"]}
           />
         </Subcategory>

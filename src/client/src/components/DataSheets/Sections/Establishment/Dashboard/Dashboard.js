@@ -61,7 +61,7 @@ const Dashboard = ({
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
   };
-
+  console.log(establishment);
   return (
     <div className="dashboard columns">
       <Item
@@ -94,7 +94,9 @@ const Dashboard = ({
           }
         />
       )}
-      {activity && activity.partialActivity && (
+      {(establishment.agrements_iae ||
+        establishment.ea ||
+        establishment.contrat_aide) && (
         <Item icon={faMedkit} name="Aides" value="Oui" />
       )}
     </div>

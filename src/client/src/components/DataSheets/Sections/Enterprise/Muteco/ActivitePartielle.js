@@ -22,7 +22,10 @@ const ActivitePartielle = ({
       (totals, { nbHeuresAutorisees, nbHeuresConsommees }) => {
         totals.nbHeuresAutorisees += parseFloat(nbHeuresAutorisees);
         totals.nbHeuresConsommees += parseFloat(nbHeuresConsommees);
-        return totals;
+        return {
+          nbHeuresAutorisees: Math.round(totals.nbHeuresAutorisees),
+          nbHeuresConsommees: Math.round(totals.nbHeuresConsommees)
+        };
       },
       { nbHeuresAutorisees: 0, nbHeuresConsommees: 0 }
     );
@@ -80,8 +83,8 @@ const ActivitePartielle = ({
                           />
                         )}
                       </td>
-                      <td>{nbHeuresAutorisees}</td>
-                      <td>{nbHeuresConsommees}</td>
+                      <td>{Math.round(nbHeuresAutorisees)}</td>
+                      <td>{Math.round(nbHeuresConsommees)}</td>
                       <td>{<Value value={date} />}</td>
                     </tr>
                   );

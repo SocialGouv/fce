@@ -54,7 +54,7 @@ function PSE({ enterprise }) {
           <Data
             name={`Procédure(s) homologuée(s) ou validée(s) au c des ${Config.get(
               "monthsProceduresLimit"
-            )} derniers mois"`}
+            )} derniers mois`}
             value={hasPseValidsOrProbates(pseList)}
             columnClasses={["is-8", "is-4"]}
           />

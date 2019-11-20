@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import {
   faCheck,
+  faChevronRight,
   faExclamationTriangle
 } from "@fortawesome/fontawesome-pro-solid";
 import ClassNames from "classnames";
@@ -79,7 +80,7 @@ const LoginForm = ({
           <div className="login__links">
             <Button
               value="Renvoyer le lien d'activation"
-              icon="chevron-right"
+              icon={faChevronRight}
               buttonClasses={[
                 "login__button",
                 "login__button--as-link",
@@ -92,7 +93,7 @@ const LoginForm = ({
             />
             <Button
               value="Modifier l'adresse électronique"
-              icon="chevron-right"
+              icon={faChevronRight}
               buttonClasses={[
                 "login__button",
                 "login__button--as-link",
@@ -107,7 +108,7 @@ const LoginForm = ({
               href={`mailto:${Config.get("contact.mailto")}`}
             >
               <span className="button__icon">
-                <FontAwesomeIcon icon="chevron-right" />
+                <FontAwesomeIcon icon={faChevronRight} />
               </span>
               <span className="pl-2">Nous contacter</span>
             </a>

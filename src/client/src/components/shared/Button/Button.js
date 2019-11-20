@@ -4,19 +4,21 @@ import ClassNames from "classnames";
 import PropTypes from "prop-types";
 
 const Button = ({
-  value,
-  icon,
+  value = "Valider",
+  icon = null,
+  rowReverse = false,
+  isDisabled = false,
   iconClasses,
-  rowReverse,
   buttonClasses,
   callback,
-  isDisabled
+  ...props
 }) => {
   return (
     <button
       className={ClassNames("button", buttonClasses)}
       onClick={callback}
       disabled={isDisabled}
+      {...props}
     >
       {rowReverse && <span className="pr-2">{value}</span>}
       {icon && (
@@ -27,13 +29,6 @@ const Button = ({
       {!rowReverse && <span className="pl-2">{value}</span>}
     </button>
   );
-};
-
-Button.defaultProps = {
-  value: "Valider",
-  icon: null,
-  rowReverse: false,
-  isDisabled: false
 };
 
 Button.propTypes = {

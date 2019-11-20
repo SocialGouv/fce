@@ -1,0 +1,45 @@
+@import "../App/variables";
+
+.error-ie {
+    text-align: center;
+    font-family: $segoe;
+    font-size: 1.2rem;
+
+    &__title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: red;
+    }
+
+    &__browsers {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__magiclink-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__browser {
+        padding: 1rem;
+        font-weight: bold;
+    }
+
+    &__link-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__link {
+        max-width: 600px;
+        margin-bottom: 1rem;
+        padding: 0.5rem 1rem;
+        text-align: left;
+        word-break: break-all;
+        font-size: 1rem;
+        background-color: #fff;
+    }
+}

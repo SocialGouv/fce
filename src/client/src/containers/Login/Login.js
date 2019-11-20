@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Auth from "../../services/Auth";
 import LoginView from "../../components/Login";
 import _get from "lodash.get";
+import { getBrowserName } from "../../helpers/BrowserDetection";
 
 class Login extends Component {
   state = {
@@ -16,9 +17,13 @@ class Login extends Component {
 
   login = evt => {
     evt && evt.preventDefault();
-    this.setState({ hasError: false, hasSuccess: false, loading: true });
+    this.setState({
+      hasError: false,
+      hasSuccess: false,
+      loading: true
+    });
 
-    Auth.sendMagicLink(this.state.email)
+    Auth.sendMagicLink(this.state.email, getBrowserName())
       .then(response => {
         if (response.data && response.data.success) {
           this._loginSuccess();

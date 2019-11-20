@@ -47,7 +47,7 @@ const config = {
     appsearch_concurencyLimit: 2,
     appsearch_pageLimit: 1000,
     client_address: process.env.JWT_ELASTIC_CLIENT_ADDRESS,
-    cursor_size: 25000,
+    cursor_size: 100000,
     enterpriseFields: [
       "denominationunitelegale",
       "nomunitelegale",

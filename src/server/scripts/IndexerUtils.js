@@ -71,7 +71,7 @@ class IndexerUtils {
                 );
 
                 fs.appendFile(
-                  "/tmp/export/data.json",
+                  "/tmp/data/data.json",
                   JSON.stringify(result),
                   function(err) {
                     if (err) {

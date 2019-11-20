@@ -12,11 +12,11 @@ const fs = require("fs");
 const JSONStream = require("JSONStream");
 const es = require("event-stream");
 
-const ENGINE_ID = "5dd2686ffe901aaf8ac845ca";
+const ENGINE_ID = "5dd2c6f98534cc5d0029018c";
 const INDEX_NAME = `.app-search-engine-${ENGINE_ID}`;
 
 var getStream = function() {
-  var jsonData = "/tmp/export/data.json",
+  var jsonData = "/tmp/data/data.json",
     stream = fs.createReadStream(jsonData, { encoding: "utf8" }),
     parser = JSONStream.parse("*");
   return stream.pipe(parser);

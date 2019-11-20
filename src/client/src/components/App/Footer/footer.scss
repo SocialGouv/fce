@@ -1,0 +1,83 @@
+@import "../../App/variables";
+
+.app {
+    .footer {
+        display: flex;
+        align-items: center;
+        height: 150px;
+        padding: 0;
+        background-color: $footer-bg;
+        @include from($tablet) {
+            height: 200px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: space-between;
+            padding: 1rem 0;
+            @include from($tablet) {
+                flex-direction: row;
+            }
+        }
+
+        &__gouv {
+            display: flex;
+            flex-direction: column;
+            @include from($tablet) {
+                align-items: flex-start;
+            }
+        }
+
+        &__gouv-text {
+            font-family: $segoe;
+            font-size: 0.9rem;
+            max-width: 13rem;
+            font-style: italic;
+            text-align: center;
+            padding-bottom: 0.5rem;
+            @include from($tablet) {
+                font-size: 1rem;
+                max-width: 16rem;
+                text-align: left;
+            }
+        }
+
+        &__gouv-logo {
+            width: 80px;
+            background: #fff;
+            @include from($tablet) {
+                width: 150px;
+                padding: 5px;
+            }
+        }
+
+        &__links {
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            font-family: $segoe;
+            text-align: center;
+            @include from($tablet) {
+                margin-top: 0;
+                margin-bottom: 1rem;
+                display: flex;
+            }
+        }
+
+        &__linkItem {
+            @include from($tablet) {
+                padding: 0 0.5rem;
+                border-right: solid 1px;
+
+                &:last-child {
+                    border-right: none;
+                }
+            }
+        }
+
+        &__link {
+            color: $footer-link;
+        }
+    }
+}

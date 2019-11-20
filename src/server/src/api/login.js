@@ -10,7 +10,8 @@ const router = express.Router();
 const magicKey = new MagicKey(config.get("magicKey"));
 
 router.post("/sendMagicLink", async (req, res) => {
-  const { email, clientVerificationKey } = req.body;
+  const { email, clientVerificationKey, browser } = req.body;
+
   try {
     const key = magicKey.generateKey(email, clientVerificationKey);
 
@@ -25,10 +26,9 @@ router.post("/sendMagicLink", async (req, res) => {
         email,
         "Lien de connexion à FCE",
         sendMagicLinkTpl({
-          link: `${config.client.baseUrl}${config.client.magicLink.replace(
-            "{key}",
-            key
-          )}`
+          link: `${config.client.baseUrl}${config.client.magicLink
+            .replace("{key}", key)
+            .replace("{browser}", browser)}`
         }),
         { bcc: config.magicLink.bcc }
       );

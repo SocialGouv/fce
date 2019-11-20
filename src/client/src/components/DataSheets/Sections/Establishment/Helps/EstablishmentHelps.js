@@ -10,7 +10,6 @@ import FontAwesomeIcon from "@fortawesome/react-fontawesome";
 import { faMedkit } from "@fortawesome/fontawesome-pro-solid";
 
 const EstablishmentHelps = ({ establishment }) => {
-  console.log(establishment);
   const hasAgrements = !!(
     establishment.agrements_iae &&
     Object.values(establishment.agrements_iae)
@@ -59,34 +58,34 @@ const EstablishmentHelps = ({ establishment }) => {
 
             <tbody>
               {Object.entries(Config.get("agrementsIae")).map(
-                ([key, label]) => (
-                  <tr key={key}>
-                    <th>{label}</th>
-                    <td>
-                      <Value
-                        value={_get(
-                          establishment,
-                          `agrements_iae[${key}].agrement`
-                        )}
-                      />
-                    </td>
-                    <td>
-                      <Value
-                        value={_get(
-                          establishment,
-                          `agrements_iae[${key}].salariesInsertion`
-                        )}
-                      />
-                    </td>
-                    <td>
-                      <Value
-                        value={Math.round(
-                          _get(establishment, `agrements_iae[${key}].etp`)
-                        )}
-                      />
-                    </td>
-                  </tr>
-                )
+                ([key, label]) => {
+                  const etp = _get(establishment, `agrements_iae[${key}].etp`);
+
+                  return (
+                    <tr key={key}>
+                      <th>{label}</th>
+                      <td>
+                        <Value
+                          value={_get(
+                            establishment,
+                            `agrements_iae[${key}].agrement`
+                          )}
+                        />
+                      </td>
+                      <td>
+                        <Value
+                          value={_get(
+                            establishment,
+                            `agrements_iae[${key}].salariesInsertion`
+                          )}
+                        />
+                      </td>
+                      <td>
+                        <Value value={etp && Math.round(etp)} />
+                      </td>
+                    </tr>
+                  );
+                }
               )}
             </tbody>
           </table>

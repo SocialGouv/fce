@@ -204,7 +204,6 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
   });
 
   const ws = xlsx.utils.json_to_sheet(dataJson);
-
   const wsName = "FceExport";
   xlsx.utils.book_append_sheet(wb, ws, wsName);
 

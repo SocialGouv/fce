@@ -61,7 +61,7 @@ const Dashboard = ({
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
   };
-  console.log(establishment);
+
   return (
     <div className="dashboard columns">
       <Item

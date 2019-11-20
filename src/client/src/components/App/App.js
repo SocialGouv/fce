@@ -35,46 +35,48 @@ class App extends React.Component {
         <PersistGate loading={null} persistor={persistor}>
           <Router history={history}>
             <ScrollToTop>
-              <Header />
-              <div className="beta-message flex-center">
-                <div>
-                  Ce site est un travail en cours, actuellement en beta.
+              <div className="app">
+                <Header />
+                <div className="beta-message flex-center">
+                  <div>
+                    Ce site est un travail en cours, actuellement en beta.
+                  </div>
                 </div>
+                <div className="app-container">
+                  <IEChecker>
+                    <Switch>
+                      <PrivateRoute exact path="/" component={Search} />
+                      <PrivateRoute exact path="/search" component={Search} />
+                      <PrivateRoute
+                        exact
+                        path="/enterprise/:siren"
+                        component={Enterprise}
+                      />
+                      <PrivateRoute
+                        exact
+                        path="/establishment/:siret"
+                        component={Enterprise}
+                      />
+                      <Route exact path="/login" render={() => <Login />} />
+                      <Route
+                        exact
+                        path="/magic-link/:key/browser/:browser"
+                        render={() => <MagicLink />}
+                      />
+                      <Route
+                        exact
+                        path="/mentions-legales"
+                        render={() => <LegalNotices />}
+                      />
+                      <Route exact path="/cgu" render={() => <Cgu />} />
+                      <Route exact path="/403" render={() => <Error403 />} />
+                      <Route exact path="/404" render={() => <Error404 />} />
+                      <Redirect to="/404" />
+                    </Switch>
+                  </IEChecker>
+                </div>
+                <Footer />
               </div>
-              <div className="app-container">
-                <IEChecker>
-                  <Switch>
-                    <PrivateRoute exact path="/" component={Search} />
-                    <PrivateRoute exact path="/search" component={Search} />
-                    <PrivateRoute
-                      exact
-                      path="/enterprise/:siren"
-                      component={Enterprise}
-                    />
-                    <PrivateRoute
-                      exact
-                      path="/establishment/:siret"
-                      component={Enterprise}
-                    />
-                    <Route exact path="/login" render={() => <Login />} />
-                    <Route
-                      exact
-                      path="/magic-link/:key/browser/:browser"
-                      render={() => <MagicLink />}
-                    />
-                    <Route
-                      exact
-                      path="/mentions-legales"
-                      render={() => <LegalNotices />}
-                    />
-                    <Route exact path="/cgu" render={() => <Cgu />} />
-                    <Route exact path="/403" render={() => <Error403 />} />
-                    <Route exact path="/404" render={() => <Error404 />} />
-                    <Redirect to="/404" />
-                  </Switch>
-                </IEChecker>
-              </div>
-              <Footer />
             </ScrollToTop>
           </Router>
         </PersistGate>

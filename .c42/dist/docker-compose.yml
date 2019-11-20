@@ -6,6 +6,7 @@ services:
     network_mode: host
     container_name: server
     volumes:
+      - /mnt/data/export:/tmp/data
       - .:/usr/src/app
       - /home/factory/deployment/shared/node_modules:/usr/src/app/node_modules
       - /home/factory/deployment/shared/.env:/usr/src/app/.env
@@ -31,7 +32,7 @@ services:
     volumes:
       - ./.docker/appsearch/app-search.yml:/usr/share/app-search/config/app-search.yml
 
-  elasticsearch-1:
+  elasticsearch:
     build: .docker/elasticsearch
     network_mode: host
     container_name: elasticsearch
@@ -40,33 +41,14 @@ services:
       - elasticdata:/usr/share/elasticsearch/data
     environment:
       - cluster.name=direccte
-      - node.name=elasticsearch
-      - discovery.seed_hosts=fce_elasticsearch_2
-      - cluster.initial_master_nodes=elasticsearch,fce_elasticsearch_2
-      - "ES_JAVA_OPTS=-Xms1G -Xmx1G"
+      - node.name=fce_main
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx2048m"
     ulimits:
       memlock:
         soft: -1
         hard: -1
 
-  elasticsearch-2:
-    build: .docker/elasticsearch
-    network_mode: host
-    container_name: fce_elasticsearch_2
-    volumes:
-      - ./.docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - elasticdata-2:/usr/share/elasticsearch/data
-    environment:
-      - cluster.name=direccte
-      - node.name=fce_elasticsearch_2
-      - discovery.seed_hosts=elasticsearch
-      - cluster.initial_master_nodes=elasticsearch,fce_elasticsearch_2
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms1G -Xmx1G"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
 volumes:
   pgdata:
     driver: local
@@ -80,9 +62,3 @@ volumes:
       o: bind
       type: none
       device:  /mnt/data/shared/elasticdata
-  elasticdata-2:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: /mnt/data/shared/elasticdata-2

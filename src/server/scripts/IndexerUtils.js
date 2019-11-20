@@ -2,17 +2,14 @@ const { Pool } = require("pg");
 const Cursor = require("pg-cursor");
 const config = require("config");
 const pLimit = require("p-limit");
-const AppSearchClient = require("@elastic/app-search-node");
-/** Create App-search client */
-const apiKey = config.elasticIndexer.appsearch_apiKey;
-const baseUrlFn = () => config.elasticIndexer.appsearch_address;
-const engineName = config.elasticIndexer.appsearch_engineName;
-const client = new AppSearchClient(undefined, apiKey, baseUrlFn);
+const fs = require("fs");
+
 /** Create PG Pool */
 const pool = new Pool(config.get("db"));
 /** Define concurrent request limit */
 const limit = pLimit(config.elasticIndexer.appsearch_concurencyLimit);
 let tasks = [];
+let totalDocuments = 0;
 
 const startScriptTime = new Date();
 
@@ -21,12 +18,11 @@ class IndexerUtils {
     this.mainProcess(query).catch(error => console.log(error));
     this.type = type;
   }
+
   async mainProcess(query) {
     //Init PG Client and cursor
     const PgClient = await pool.connect();
     const establishmentResultCursor = PgClient.query(new Cursor(query));
-
-    console.log("Create Elastic client");
     //www todo
     console.log("Start process Data");
     tasks.push(
@@ -49,7 +45,12 @@ class IndexerUtils {
             return false;
           }
 
-          console.log({ results: result.length });
+          totalDocuments += result.length;
+
+          console.log(
+            { results: result.length },
+            { totalDocuments: totalDocuments }
+          );
 
           if (result.length !== 0) {
             tasks.push(
@@ -68,18 +69,19 @@ class IndexerUtils {
                   "pending process:",
                   limit.pendingCount
                 );
-                client
-                  .indexDocuments(engineName, result)
-                  .then(response => {
-                    //Get execution time for getting row set
-                    const end = new Date() - start;
-                    console.info("Row set execution time: %dms", end);
+
+                fs.appendFile(
+                  "/tmp/export/data.json",
+                  JSON.stringify(result),
+                  function(err) {
+                    if (err) {
+                      reject();
+                      throw err;
+                    }
+                    console.log("chunk saved");
                     resolve();
-                  })
-                  .catch(error => {
-                    console.error(error);
-                    reject();
-                  });
+                  }
+                );
               })
               .catch(error => {
                 console.error(error);
@@ -167,35 +169,67 @@ class IndexerUtils {
           enterprise_name = `${entreprise_prenomusuelunitelegale} ${entreprise_nomunitelegale}`;
         }
 
-        bulkChunk.push({
-          id: siret,
+        const joinedValues = [
           siren,
           siret,
-          enterprise_name,
-          entreprise_denominationunitelegale,
-          establishment_name,
           trancheeffectifsetablissement,
           etablissementsiege,
           etatadministratifetablissement,
           codepostaletablissement,
-          codecommuneetablissement,
-          departement,
           libellecommuneetablissement,
-          naf_division,
           activiteprincipaleetablissement,
           activiteprincipaleetablissement_libelle,
           denominationusuelleetablissement,
           enseigne1etablissement,
           enseigne2etablissement,
           enseigne3etablissement,
+          entreprise_nomunitelegale,
+          entreprise_categoriejuridiqueunitelegale,
+          entreprise_prenomusuelunitelegale,
+          entreprise_denominationunitelegale,
           entreprise_denominationusuelle1unitelegale,
           entreprise_denominationusuelle2unitelegale,
           entreprise_denominationusuelle3unitelegale,
-          entreprise_prenomusuelunitelegale,
-          entreprise_nomunitelegale,
           entreprise_prenom1unitelegale,
           entreprise_nomusageunitelegale,
-          entreprise_categoriejuridiqueunitelegale
+          enterprise_name,
+          establishment_name,
+          naf_division,
+          departement
+        ]
+          .filter(field => !!field)
+          .join(" ");
+
+        bulkChunk.push({
+          id: siret,
+          external_id: siret,
+          siren$string: siren,
+          siret$string: siret,
+          enterprise_name$string: enterprise_name,
+          entreprise_denominationunitelegale$string: entreprise_denominationunitelegale,
+          establishment_name$string: establishment_name,
+          trancheeffectifsetablissement$string: trancheeffectifsetablissement,
+          etablissementsiege$string: etablissementsiege,
+          etatadministratifetablissement$string: etatadministratifetablissement,
+          codepostaletablissement$string: codepostaletablissement,
+          departement$string: departement,
+          libellecommuneetablissement$string: libellecommuneetablissement,
+          naf_division$string: naf_division,
+          activiteprincipaleetablissement$string: activiteprincipaleetablissement,
+          activiteprincipaleetablissement_libelle$string: activiteprincipaleetablissement_libelle,
+          denominationusuelleetablissement$string: denominationusuelleetablissement,
+          enseigne1etablissement$string: enseigne1etablissement,
+          enseigne2etablissement$string: enseigne2etablissement,
+          enseigne3etablissement$string: enseigne3etablissement,
+          entreprise_denominationusuelle1unitelegale$string: entreprise_denominationusuelle1unitelegale,
+          entreprise_denominationusuelle2unitelegale$string: entreprise_denominationusuelle2unitelegale,
+          entreprise_denominationusuelle3unitelegale$string: entreprise_denominationusuelle3unitelegale,
+          entreprise_prenomusuelunitelegale$string: entreprise_prenomusuelunitelegale,
+          entreprise_nomunitelegale$string: entreprise_nomunitelegale,
+          entreprise_prenom1unitelegale$string: entreprise_prenom1unitelegale,
+          entreprise_nomusageunitelegale$string: entreprise_nomusageunitelegale,
+          entreprise_categoriejuridiqueunitelegale$string: entreprise_categoriejuridiqueunitelegale,
+          __st_text_summary: joinedValues
         });
       }
     );

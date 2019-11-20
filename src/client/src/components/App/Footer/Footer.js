@@ -1,7 +1,7 @@
 import React from "react";
-
 import Config from "../../../services/Config";
 import mariane from "../../../assets/img/logo_gouv.png";
+import "./footer.scss";
 
 const Footer = () => (
   <footer className="footer">

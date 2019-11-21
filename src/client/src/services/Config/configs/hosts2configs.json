@@ -1,6 +1,5 @@
 {
   "fce.test": "development",
   "fce.prep.fabrique.social.gouv.fr": "staging",
-  "fce.num.social.gouv.fr": "production",
   "fce.fabrique.social.gouv.fr": "production"
 }

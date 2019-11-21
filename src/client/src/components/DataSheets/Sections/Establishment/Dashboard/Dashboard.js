@@ -94,7 +94,9 @@ const Dashboard = ({
           }
         />
       )}
-      {activity && activity.partialActivity && (
+      {(establishment.agrements_iae ||
+        establishment.ea ||
+        establishment.contrat_aide) && (
         <Item icon={faMedkit} name="Aides" value="Oui" />
       )}
     </div>

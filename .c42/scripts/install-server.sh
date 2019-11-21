@@ -1,7 +1,6 @@
 #Install utils
 ##Required packages for htop
-wget dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
-rpm -ihv epel-release-7-11.noarch.rpm
+sudo yum -y install epel-release
 #######
 sudo yum install htop
 sudo yum install git
@@ -26,3 +25,5 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 #Create required dirrectories
 sudo mkdir -p /home/factory/deployment
 sudo mkdir -p /mnt/data/shared
+sudo chown -R factory:factory /home/factory/deployment
+sudo chown -R factory:factory /mnt/data/shared

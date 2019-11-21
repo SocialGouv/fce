@@ -58,32 +58,27 @@ const EstablishmentHelps = ({ establishment }) => {
 
             <tbody>
               {Object.entries(Config.get("agrementsIae")).map(
-                ([key, label]) => (
-                  <tr key={key}>
-                    <th>{label}</th>
-                    <td>
-                      <Value
-                        value={_get(
-                          establishment,
-                          `agrements_iae[${key}].agrement`
-                        )}
-                      />
-                    </td>
-                    <td>
-                      <Value
-                        value={_get(
-                          establishment,
-                          `agrements_iae[${key}].salariesInsertion`
-                        )}
-                      />
-                    </td>
-                    <td>
-                      <Value
-                        value={_get(establishment, `agrements_iae[${key}].etp`)}
-                      />
-                    </td>
-                  </tr>
-                )
+                ([key, label]) => {
+                  const { etp, agrement, salariesInsertion } = _get(
+                    establishment,
+                    `agrements_iae[${key}]`
+                  );
+
+                  return (
+                    <tr key={key}>
+                      <th>{label}</th>
+                      <td>
+                        <Value value={agrement} />
+                      </td>
+                      <td>
+                        <Value value={salariesInsertion} />
+                      </td>
+                      <td>
+                        <Value value={etp && Math.round(etp)} />
+                      </td>
+                    </tr>
+                  );
+                }
               )}
             </tbody>
           </table>
@@ -132,7 +127,7 @@ const EstablishmentHelps = ({ establishment }) => {
             name={`Embauche en contrat en alternance en année ${getCustomPastYear(
               1
             )} ou ${getCustomPastYear(2)}`}
-            value={establishment.alternance && establishment.alternance.length}
+            value={establishment.contrat_aide_alternance_n1}
             columnClasses={["is-8", "is-4"]}
           />
         </Subcategory>

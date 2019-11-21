@@ -59,26 +59,19 @@ const EstablishmentHelps = ({ establishment }) => {
             <tbody>
               {Object.entries(Config.get("agrementsIae")).map(
                 ([key, label]) => {
-                  const etp = _get(establishment, `agrements_iae[${key}].etp`);
+                  const { etp, agrement, salariesInsertion } = _get(
+                    establishment,
+                    `agrements_iae[${key}]`
+                  );
 
                   return (
                     <tr key={key}>
                       <th>{label}</th>
                       <td>
-                        <Value
-                          value={_get(
-                            establishment,
-                            `agrements_iae[${key}].agrement`
-                          )}
-                        />
+                        <Value value={agrement} />
                       </td>
                       <td>
-                        <Value
-                          value={_get(
-                            establishment,
-                            `agrements_iae[${key}].salariesInsertion`
-                          )}
-                        />
+                        <Value value={salariesInsertion} />
                       </td>
                       <td>
                         <Value value={etp && Math.round(etp)} />

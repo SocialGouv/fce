@@ -1,7 +1,7 @@
 {
-  "api_endpoint": "https://fce.num.social.gouv.fr/api",
+  "api_endpoint": "https://fce.fabrique.social.gouv.fr/api",
   "piwik": {
-    "url": "https://stats.num.social.gouv.fr",
+    "url": "https://fce.fabrique.social.gouv.fr",
     "siteId": 8
   }
 }

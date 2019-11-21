@@ -49,8 +49,10 @@ echo "============"
 echo "Packaging..."
 echo "============"
 mkdir -p ./dist/.docker
-cp -rv .c42/dist/.docker.$1 ./dist/.docker
+cp -rv .c42/dist/.docker.$1 ./dist
+mv ./dist/.docker.$1 .docker
 cp -rv .c42/dist/docker-compose.yml.$1 ./dist/docker-compose.yml
+mv ./dist/docker-compose.yml.$1 docker-compose.yml
 cp -rv src/frentreprise ./dist
 cp -rv src/server/build/. ./dist
 cp -rv src/server/migrations/. ./dist/migrations

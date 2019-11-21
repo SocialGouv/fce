@@ -52,7 +52,7 @@ function PSE({ enterprise }) {
       {hasPseValidsOrProbates(pseList) && (
         <>
           <Data
-            name={`Procédure(s) homologuée(s) ou validée(s) au c des ${Config.get(
+            name={`Procédure(s) homologuée(s) ou validée(s) au cours des ${Config.get(
               "monthsProceduresLimit"
             )} derniers mois`}
             value={hasPseValidsOrProbates(pseList)}

@@ -10,7 +10,7 @@ import GenerateXlxs from "./Xlsx/GenerateXlsx";
 import SearchAwesomeTable from "../SearchAwesomeTable";
 import TableCellState from "../SearchAwesomeTable/TableCellState";
 import Button from "../shared/Button";
-import { faFileExcel } from "@fortawesome/fontawesome-pro-solid";
+import { faFileExcel } from "@fortawesome/pro-solid-svg-icons";
 
 import "./searchResults.scss";
 

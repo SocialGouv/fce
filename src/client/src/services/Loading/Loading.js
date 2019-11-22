@@ -1,6 +1,6 @@
 import React from "react";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/fontawesome-pro-solid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/pro-solid-svg-icons";
 
 export default function withLoading(BaseComponent) {
   return function({ isLoaded, ...props }) {

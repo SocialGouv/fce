@@ -1,5 +1,5 @@
 import React from "react";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Value from "../../../../shared/Value";
 import PropTypes from "prop-types";
 import "./dashboard.scss";

@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
   faChevronRight,
   faExclamationTriangle
-} from "@fortawesome/fontawesome-pro-solid";
+} from "@fortawesome/pro-solid-svg-icons";
 import ClassNames from "classnames";
 import Button from "../../shared/Button";
 import Config from "../../../services/Config";

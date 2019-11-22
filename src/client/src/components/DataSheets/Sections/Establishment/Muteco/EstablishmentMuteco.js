@@ -6,8 +6,8 @@ import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import _get from "lodash.get";
 import Data from "../../SharedComponents/Data";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faUmbrella } from "@fortawesome/fontawesome-pro-solid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUmbrella } from "@fortawesome/pro-solid-svg-icons";
 
 const EstablishmentMuteco = ({ establishment }) => {
   const hasActivitePartielle = !!_get(establishment, `activite_partielle`);

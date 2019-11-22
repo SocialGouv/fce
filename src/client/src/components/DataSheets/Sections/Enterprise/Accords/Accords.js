@@ -5,12 +5,8 @@ import LinkButton from "../../../../shared/LinkButton";
 import Data from "../../SharedComponents/Data";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import {
-  faUsers,
-  faCircle,
-  faSearch
-} from "@fortawesome/fontawesome-pro-solid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers, faCircle, faSearch } from "@fortawesome/pro-solid-svg-icons";
 
 const Accords = ({
   enterprise: {

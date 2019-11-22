@@ -10,7 +10,7 @@ import Direccte from "../SharedComponents/Direccte";
 import Finances from "./Finances";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
-import { faPrint } from "@fortawesome/fontawesome-pro-solid";
+import { faPrint } from "@fortawesome/pro-solid-svg-icons";
 
 class Enterprise extends React.Component {
   render() {

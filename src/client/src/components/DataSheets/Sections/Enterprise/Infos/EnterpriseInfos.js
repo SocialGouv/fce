@@ -3,8 +3,8 @@ import Value from "../../../../shared/Value";
 import { toI18nDate } from "../../../../../helpers/Date";
 import Config from "../../../../../services/Config";
 import Data from "../../SharedComponents/Data";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faHistory } from "@fortawesome/fontawesome-pro-solid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHistory } from "@fortawesome/pro-solid-svg-icons";
 
 const EnterpriseActivity = ({ enterprise, headOffice }) => {
   const dashboardSizeRanges = {

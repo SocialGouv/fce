@@ -1,7 +1,7 @@
 import React from "react";
 import Value from "../../../../shared/Value";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
-import { faEuroSign } from "@fortawesome/fontawesome-pro-solid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEuroSign } from "@fortawesome/pro-solid-svg-icons";
 
 class Finances extends React.Component {
   render() {

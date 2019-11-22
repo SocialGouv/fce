@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import EstablishmentsItems from "./EstablishmentsItems/EstablishmentsItems";
 import Value from "../../shared/Value";
-import { faArrowRight } from "@fortawesome/fontawesome-pro-solid";
+import { faArrowRight } from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../services/Config";
 import {
   setSearchTerm,

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronCircleLeft,
   faChevronCircleDown
-} from "@fortawesome/fontawesome-pro-solid";
+} from "@fortawesome/pro-solid-svg-icons";
 
 import { countValuesInArray } from "../../../../../helpers/utils";
 

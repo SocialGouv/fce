@@ -59,6 +59,7 @@ const Search = ({
   };
 
   const sendRequest = (query, options) => {
+    console.log("request => ", query, options);
     setSearchIsLoading(true);
     setSearchError(null);
     client

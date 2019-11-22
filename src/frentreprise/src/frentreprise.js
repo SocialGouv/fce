@@ -26,18 +26,10 @@ class frentreprise {
       priority: 80, // higher prevail
       source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/")
     });
-    // this.addDataSource({
-    //   name: "SirenePG",
-    //   priority: 100, // higher prevail
-    //   source: new SirenePG(),
-    //   pagination: {
-    //     itemsByPage: 25
-    //   }
-    // });
     this.addDataSource({
-      name: "SireneAPI",
+      name: "SirenePG",
       priority: 100, // higher prevail
-      source: new SireneAPI("https://api.insee.fr/entreprises/sirene/V3/"),
+      source: new SirenePG(),
       pagination: {
         itemsByPage: 25
       }

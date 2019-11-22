@@ -10,7 +10,7 @@ const config = {
     token: process.env.API_GOUV_TOKEN
   },
   SireneAPI: {
-    enable: true,
+    enable: false,
     basicAuth: process.env.API_SIRENE_BASIC_AUTH,
     pagination: {
       itemsByPage: 15

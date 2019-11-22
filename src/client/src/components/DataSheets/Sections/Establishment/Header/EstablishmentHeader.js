@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import Dashboard from "../Dashboard";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowAltRight,
   faSquare,

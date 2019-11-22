@@ -6,7 +6,7 @@ import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import _get from "lodash.get";
 import Data from "../../SharedComponents/Data";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUmbrella } from "@fortawesome/fontawesome-pro-solid";
 
 const EstablishmentMuteco = ({ establishment }) => {

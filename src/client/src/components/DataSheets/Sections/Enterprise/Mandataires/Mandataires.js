@@ -1,6 +1,6 @@
 import React from "react";
 import Mandataire from "./Mandataire";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/fontawesome-pro-solid";
 
 class Mandataires extends React.Component {

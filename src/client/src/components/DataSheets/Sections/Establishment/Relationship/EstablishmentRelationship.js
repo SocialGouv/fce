@@ -6,7 +6,7 @@ import LinkButton from "../../../../shared/LinkButton";
 import Value from "../../../../shared/Value";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faSearch } from "@fortawesome/fontawesome-pro-solid";
 
 const EstablishmentRelationship = ({ establishment }) => {

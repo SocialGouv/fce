@@ -3,7 +3,7 @@ import Value from "../../../../shared/Value";
 import { toI18nDate } from "../../../../../helpers/Date";
 import Config from "../../../../../services/Config";
 import Data from "../../SharedComponents/Data";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory } from "@fortawesome/fontawesome-pro-solid";
 
 const EnterpriseActivity = ({ enterprise, headOffice }) => {

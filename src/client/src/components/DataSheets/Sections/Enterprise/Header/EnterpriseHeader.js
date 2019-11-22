@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import Value from "../../../../shared/Value";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowAltRight,
   faArrowRight,
@@ -153,9 +153,7 @@ class EnterpriseHeader extends React.Component {
               Voir sur{" "}
               <a
                 className="is-link"
-                href={`https://www.societe.com/societe/${slugSocieteCom}-${
-                  enterprise.siren
-                }.html`}
+                href={`https://www.societe.com/societe/${slugSocieteCom}-${enterprise.siren}.html`}
               >
                 Societe.com
               </a>

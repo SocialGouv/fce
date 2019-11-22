@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import Value from "../../../shared/Value";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faSquare } from "@fortawesome/fontawesome-pro-solid";
 import { isActiveEstablishment } from "../../../../helpers/Establishment";
 import _get from "lodash.get";

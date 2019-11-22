@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faCalendarCheck } from "@fortawesome/fontawesome-pro-solid";
 import _get from "lodash.get";
 import { getLastDateInteraction } from "../../../../../helpers/Date";

@@ -1,6 +1,6 @@
 import React from "react";
 import Config from "../../../services/Config";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/fontawesome-pro-light";
 
 class MailTo extends React.Component {
@@ -31,23 +31,23 @@ Suite à la consultation de la fiche  « ${
     } » sur la FCE, je souhaiterais obtenir de la documentation sur :
 
 ${
-      this.props.type === "enterprise"
-        ? `l'entreprise « ${this.props.enterprise.raison_sociale ||
-            this.props.enterprise.nom +
-              " " +
-              this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${
-            this.props.enterprise.siren
-          } ») et ses établissements.`
-        : `l'entreprise  « ${this.props.enterprise.raison_sociale ||
-            this.props.enterprise.nom +
-              " " +
-              this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${
-            this.props.enterprise.siren
-          } ») et plus spécifiquement sur son  établissement  ( « Numéro SIRET= ${
-            this.props.establishment.siret
-          } » ) situé à « ${this.props.establishment.adresse_components &&
-            this.props.establishment.adresse_components.localite} ».`
-    }
+  this.props.type === "enterprise"
+    ? `l'entreprise « ${this.props.enterprise.raison_sociale ||
+        this.props.enterprise.nom +
+          " " +
+          this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${
+        this.props.enterprise.siren
+      } ») et ses établissements.`
+    : `l'entreprise  « ${this.props.enterprise.raison_sociale ||
+        this.props.enterprise.nom +
+          " " +
+          this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${
+        this.props.enterprise.siren
+      } ») et plus spécifiquement sur son  établissement  ( « Numéro SIRET= ${
+        this.props.establishment.siret
+      } » ) situé à « ${this.props.establishment.adresse_components &&
+        this.props.establishment.adresse_components.localite} ».`
+}
 
 En vous remerciant pour les éléments que vous  pourrez m’apporter.
 

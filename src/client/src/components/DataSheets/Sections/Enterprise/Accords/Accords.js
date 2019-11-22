@@ -5,7 +5,7 @@ import LinkButton from "../../../../shared/LinkButton";
 import Data from "../../SharedComponents/Data";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUsers,
   faCircle,

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import Data from "../Data";
 import { getLastInteraction } from "../../../../../helpers/Interactions";
-import FontAwesomeIcon from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck } from "@fortawesome/fontawesome-pro-solid";
 
 class EstablishmentView extends React.Component {

@@ -4,7 +4,7 @@ import { getSuccession } from "../../../../../helpers/Establishment";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory } from "@fortawesome/fontawesome-pro-solid";
+import { faHistory } from "@fortawesome/pro-solid-svg-icons";
 
 class EstablishmentActivity extends React.Component {
   render() {

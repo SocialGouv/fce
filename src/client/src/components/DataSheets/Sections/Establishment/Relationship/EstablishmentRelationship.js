@@ -7,7 +7,7 @@ import Value from "../../../../shared/Value";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers, faSearch } from "@fortawesome/fontawesome-pro-solid";
+import { faUsers, faSearch } from "@fortawesome/pro-solid-svg-icons";
 
 const EstablishmentRelationship = ({ establishment }) => {
   const { code_idcc, libelle_idcc } = establishment;

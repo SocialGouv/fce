@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faCalendarCheck } from "@fortawesome/fontawesome-pro-solid";
+import { faCircle, faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
 import _get from "lodash.get";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import Data from "../Data";

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquare, faCircle } from "@fortawesome/fontawesome-pro-solid";
+import { faSquare, faCircle } from "@fortawesome/pro-solid-svg-icons";
 import ReactTooltip from "react-tooltip";
 import { isActiveEstablishment } from "../../helpers/Search";
 

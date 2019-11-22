@@ -1,7 +1,7 @@
 import React from "react";
 import Config from "../../../services/Config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/fontawesome-pro-light";
+import { faEnvelope } from "@fortawesome/pro-light-svg-icons";
 
 class MailTo extends React.Component {
   constructor(props) {

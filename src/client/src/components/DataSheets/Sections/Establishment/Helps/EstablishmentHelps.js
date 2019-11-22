@@ -7,7 +7,7 @@ import Data from "../../SharedComponents/Data";
 import Config from "../../../../../services/Config";
 import { getCustomPastYear } from "../../../../../helpers/Date/Date";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedkit } from "@fortawesome/fontawesome-pro-solid";
+import { faMedkit } from "@fortawesome/pro-solid-svg-icons";
 
 const EstablishmentHelps = ({ establishment }) => {
   const hasAgrements = !!(

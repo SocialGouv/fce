@@ -5,7 +5,7 @@ import {
   faCheck,
   faChevronRight,
   faExclamationTriangle
-} from "@fortawesome/fontawesome-pro-solid";
+} from "@fortawesome/pro-solid-svg-icons";
 import ClassNames from "classnames";
 import Button from "../../shared/Button";
 import Config from "../../../services/Config";

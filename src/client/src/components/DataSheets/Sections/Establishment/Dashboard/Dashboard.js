@@ -5,7 +5,7 @@ import {
   faCalendarCheck,
   faExclamationTriangle,
   faMedkit
-} from "@fortawesome/fontawesome-pro-solid";
+} from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";

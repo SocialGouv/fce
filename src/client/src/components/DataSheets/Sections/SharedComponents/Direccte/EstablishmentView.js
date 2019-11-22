@@ -4,7 +4,7 @@ import Value from "../../../../shared/Value";
 import Data from "../Data";
 import { getLastInteraction } from "../../../../../helpers/Interactions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarCheck } from "@fortawesome/fontawesome-pro-solid";
+import { faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
 
 class EstablishmentView extends React.Component {
   toggleElement = id => {

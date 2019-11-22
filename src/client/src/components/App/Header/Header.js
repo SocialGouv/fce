@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { resetSearch } from "../../../services/Store/actions";
-import { faChevronLeft, faPlus } from "@fortawesome/fontawesome-pro-light";
+import { faChevronLeft, faPlus } from "@fortawesome/pro-light-svg-icons";
 import Button from "../../shared/Button";
 
 import logo from "../../../assets/img/logo_gouv-65w38h.png";

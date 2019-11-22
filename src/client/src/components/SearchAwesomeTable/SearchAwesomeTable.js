@@ -5,7 +5,7 @@ import Button from "../shared/Button";
 import LoadSpinner from "../shared/LoadSpinner";
 import Pager from "./Pager";
 
-import { faAngleLeft, faAngleRight } from "@fortawesome/fontawesome-pro-light";
+import { faAngleLeft, faAngleRight } from "@fortawesome/pro-light-svg-icons";
 
 import "./awesomeTable.scss";
 

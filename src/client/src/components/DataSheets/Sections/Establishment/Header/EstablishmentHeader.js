@@ -7,7 +7,7 @@ import {
   faArrowAltRight,
   faSquare,
   faCircle
-} from "@fortawesome/fontawesome-pro-solid";
+} from "@fortawesome/pro-solid-svg-icons";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import { formatAddress } from "../../../../../helpers/Address";
 import InfoBox from "../../../../shared/InfoBox";

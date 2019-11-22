@@ -9,7 +9,7 @@ import {
   faArrowRight,
   faSquare,
   faCircle
-} from "@fortawesome/fontawesome-pro-solid";
+} from "@fortawesome/pro-solid-svg-icons";
 import InfoBox from "../../../../shared/InfoBox";
 import LinkButton from "../../../../shared/LinkButton";
 import Button from "../../../../shared/Button";

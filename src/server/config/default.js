@@ -63,7 +63,13 @@ const config = {
     appSearchConst: {
       physicPersonJuridicCode: "1000"
     }
-  }
+  },
+  sanitizeTables: [
+    {
+      fields: "siret, numero_de_dossier",
+      table: "etablissements_pse"
+    }
+  ]
 };
 
 if (process.env.HOST) {

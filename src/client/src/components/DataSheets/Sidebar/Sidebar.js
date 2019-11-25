@@ -23,7 +23,6 @@ const Sidebar = ({
   isEstablishmentDisplayed,
   history,
   setSearchTerm,
-  setSearchFilters,
   resetSearch
 }) => {
   const limitItems = Config.get("sidebarEstablishmentsLimit");
@@ -110,21 +109,14 @@ const Sidebar = ({
                 limit={limitItems}
               />
               {establishments.length > limitItems && (
-                <LinkButton
-                  link="/"
+                <Button
                   value="Voir tous les établissements"
                   icon={faArrowRight}
                   className="button is-secondary is-outlined has-text-weight-bold sidebar__view-all-button"
                   onClick={() => {
                     resetSearch();
                     setSearchTerm(enterprise.siren);
-                    setSearchFilters({
-                      naf: null,
-                      location: null,
-                      siege: null,
-                      state: Object.values(Config.get("establishmentState")),
-                      siren: enterprise.siren
-                    });
+                    history.push("/");
                   }}
                 />
               )}

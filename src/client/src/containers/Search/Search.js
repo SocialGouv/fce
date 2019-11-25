@@ -13,6 +13,7 @@ import Http from "../../services/Http";
 import SearchView from "../../components/Search";
 import divisionsNaf from "./divisions-naf.json";
 import Config from "../../services/Config";
+import { isSirenOrSiret } from "../../helpers/Search";
 
 const client = AppSearch.createClient(Config.get("appSearch").client);
 const defaultOptions = Config.get("appSearch").defaultOptions;
@@ -26,7 +27,6 @@ const Search = ({
   setSearchError
 }) => {
   const allFiltersOptions = {
-    ...(search.filters.siren && { siren: search.filters.siren }),
     ...(search.filters.siege && { etablissementsiege: "true" }),
     ...(search.filters.state.length === 1 && {
       etatadministratifetablissement: search.filters.state[0]
@@ -59,11 +59,11 @@ const Search = ({
   };
 
   const sendRequest = (query, options) => {
-    console.log("request => ", query, options);
     setSearchIsLoading(true);
     setSearchError(null);
+
     client
-      .search(query, options)
+      .search(isSirenOrSiret(query) ? `"${query}"` : query, options)
       .then(resultList => {
         setSearchResults(resultList);
         setSearchIsLoading(false);
@@ -177,9 +177,8 @@ const Search = ({
   };
 
   useEffect(() => {
-    if (search.filters.siren) {
+    if (search.term) {
       sendRequest(search.term, options);
-      removeFilter("siren");
     }
   }, []);
 

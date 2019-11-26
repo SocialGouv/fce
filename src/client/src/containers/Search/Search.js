@@ -13,7 +13,6 @@ import Http from "../../services/Http";
 import SearchView from "../../components/Search";
 import divisionsNaf from "./divisions-naf.json";
 import Config from "../../services/Config";
-import { isSirenOrSiret } from "../../helpers/Search";
 
 const client = AppSearch.createClient(Config.get("appSearch").client);
 const defaultOptions = Config.get("appSearch").defaultOptions;

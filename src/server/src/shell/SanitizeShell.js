@@ -5,16 +5,12 @@ const Shell = require("./Shell");
 const pool = new Pool(config.get("db"));
 
 class SanitizeShell extends Shell {
-  constructor(args, options) {
-    super(args, options);
-  }
-
   async getDistinctQuery(fields, table) {
     return `SELECT ${fields}, count(*) FROM ${table} GROUP BY ${fields} HAVING count(*) > 1`.toString();
   }
 
   async getDeleteQuery(fields, table, ...args) {
-    let baseRequest = `DELETE FROM ${table} WHERE `;
+    const baseRequest = `DELETE FROM ${table} WHERE `;
 
     let i = 0;
     const requestFragment = [];
@@ -30,7 +26,7 @@ class SanitizeShell extends Shell {
   async execute() {
     console.log("Start Sanitize");
     const PgClient = await pool.connect().catch(error => {
-      console.log(error);
+      console.error(error);
     });
     console.log("Start PgClient connexion");
 
@@ -38,7 +34,7 @@ class SanitizeShell extends Shell {
       const duplicatedEstablishmentPse = await PgClient.query(
         await this.getDistinctQuery(tableInfo.fields, tableInfo.table)
       ).catch(error => {
-        console.log(error);
+        console.error(error);
       });
 
       console.log("Start Sanitize Etablissements PSE");
@@ -62,7 +58,7 @@ class SanitizeShell extends Shell {
             numero_de_dossier
           )
         ).catch(error => {
-          console.log(error);
+          console.error(error);
         });
 
         console.log("deleted !");

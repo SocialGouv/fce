@@ -6,7 +6,8 @@ import {
   setSearchFilters,
   setSearchResults,
   setSearchIsLoading,
-  setSearchError
+  setSearchError,
+  resetSearch
 } from "../../services/Store/actions";
 import * as AppSearch from "@elastic/app-search-javascript";
 import Http from "../../services/Http";
@@ -24,7 +25,8 @@ const Search = ({
   setSearchFilters,
   setSearchResults,
   setSearchIsLoading,
-  setSearchError
+  setSearchError,
+  resetSearch
 }) => {
   const allFiltersOptions = {
     ...(search.filters.siege && { etablissementsiege: "true" }),
@@ -190,6 +192,7 @@ const Search = ({
       sendRequest={sendRequest}
       searchTerm={search.term}
       setSearchTerm={setSearchTerm}
+      resetSearch={resetSearch}
       handlePageChange={handlePageChange}
       addFilter={addFilter}
       removeFilter={removeFilter}
@@ -223,6 +226,9 @@ const mapDispatchToProps = dispatch => {
     },
     setSearchError: error => {
       dispatch(setSearchError(error));
+    },
+    resetSearch: () => {
+      dispatch(resetSearch());
     }
   };
 };
@@ -233,7 +239,8 @@ Search.propTypes = {
   setSearchFilters: PropTypes.func.isRequired,
   setSearchResults: PropTypes.func.isRequired,
   setSearchIsLoading: PropTypes.func.isRequired,
-  setSearchError: PropTypes.func.isRequired
+  setSearchError: PropTypes.func.isRequired,
+  resetSearch: PropTypes.func.isRequired
 };
 
 export default connect(

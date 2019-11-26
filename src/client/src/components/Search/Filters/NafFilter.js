@@ -9,7 +9,8 @@ const NafFilter = ({ filters, addFilter, removeFilter, divisionsNaf }) => {
     label: `${code} - ${libelle}`
   }));
 
-  const selectedValue = options.find(({ value }) => value === filters.naf);
+  const selectedValue =
+    options.find(({ value }) => value === filters.naf) || null;
 
   return (
     <div>

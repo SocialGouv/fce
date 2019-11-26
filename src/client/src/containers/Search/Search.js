@@ -63,7 +63,7 @@ const Search = ({
     setSearchError(null);
 
     client
-      .search(isSirenOrSiret(query) ? `"${query}"` : query, options)
+      .search(`"${query}"`, options)
       .then(resultList => {
         setSearchResults(resultList);
         setSearchIsLoading(false);

@@ -127,7 +127,7 @@ const EstablishmentHelps = ({ establishment }) => {
             name={`Embauche en contrat en alternance en année ${getCustomPastYear(
               1
             )} ou ${getCustomPastYear(2)}`}
-            value={null}
+            value={establishment.contrat_aide_alternance_n1}
             columnClasses={["is-8", "is-4"]}
           />
         </Subcategory>

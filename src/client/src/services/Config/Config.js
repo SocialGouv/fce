@@ -36,28 +36,6 @@ const globalConfig = {
       endpointBase: process.env.REACT_APP_SEARCH_ENDPOINT_BASE
     },
     defaultOptions: {
-      search_fields: {
-        siren: {},
-        siret: {},
-        enterprise_name: {},
-        entreprise_denominationunitelegale: {},
-        establishment_name: {},
-        codepostaletablissement: {},
-        libellecommuneetablissement: {},
-        activiteprincipaleetablissement: {},
-        activiteprincipaleetablissement_libelle: {},
-        denominationusuelleetablissement: {},
-        enseigne1etablissement: {},
-        enseigne2etablissement: {},
-        enseigne3etablissement: {},
-        entreprise_denominationusuelle1unitelegale: {},
-        entreprise_denominationusuelle2unitelegale: {},
-        entreprise_denominationusuelle3unitelegale: {},
-        entreprise_prenomusuelunitelegale: {},
-        entreprise_nomunitelegale: {},
-        entreprise_prenom1unitelegale: {},
-        entreprise_nomusageunitelegale: {}
-      },
       result_fields: {
         siren: { raw: {} },
         siret: { raw: {} },

@@ -165,12 +165,13 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
   const engineName = config.get("elasticIndexer.appsearch_engineName");
   const pageLimit = config.get("elasticIndexer.appsearch_pageLimit");
   const pages = Math.ceil(totalItems / pageLimit);
+  const xlsxConfig = config.xlsxExport;
 
   let establishments = [];
 
   for (let page = 1; page <= pages; page++) {
     try {
-      const response = await client.search(engineName, searchTerm, {
+      const response = await client.search(engineName, `"${searchTerm}"`, {
         page: { current: page, size: pageLimit }
       });
 
@@ -200,7 +201,26 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
       cleanTmpData[key] = value.raw;
     });
 
-    return cleanTmpData;
+    const formatedData = {
+      siret: cleanTmpData.siret,
+      etat:
+        xlsxConfig.establishmentState[
+          cleanTmpData.etatadministratifetablissement
+        ],
+      raison_sociale: cleanTmpData.establishment_name,
+      categorie_etablissement: cleanTmpData.etablissementsiege
+        ? "Siège social"
+        : "Établissement",
+      code_postal: cleanTmpData.codepostaletablissement,
+      effectif:
+        xlsxConfig.inseeSizeRanges[cleanTmpData.trancheeffectifsetablissement],
+      activite:
+        cleanTmpData.activiteprincipaleetablissement +
+        " - " +
+        cleanTmpData.activiteprincipaleetablissement_libelle
+    };
+
+    return formatedData;
   });
 
   const ws = xlsx.utils.json_to_sheet(dataJson);

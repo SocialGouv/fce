@@ -13,6 +13,7 @@ import {
   AccordionItemButton,
   AccordionItemPanel
 } from "react-accessible-accordion";
+import SearchBar from "./SearchBar";
 
 import "./search.scss";
 
@@ -23,6 +24,7 @@ const Search = ({
   sendRequest,
   searchTerm,
   setSearchTerm,
+  resetSearch,
   handlePageChange,
   addFilter,
   removeFilter,
@@ -52,21 +54,11 @@ const Search = ({
               <div className="columns">
                 <div className="column is-four-fifths-widescreen">
                   <div className="field is-grouped is-grouped-centered">
-                    <div className="control is-expanded">
-                      <label htmlFor="term" className="label">
-                        Nom ou raison sociale, SIRET ou SIREN
-                      </label>
-                      <input
-                        type="text"
-                        name="q"
-                        id="term"
-                        className="input is-medium"
-                        onChange={e => {
-                          setSearchTerm(e.target.value);
-                        }}
-                        value={searchTerm}
-                      />
-                    </div>
+                    <SearchBar
+                      label="Nom ou raison sociale, SIRET ou SIREN"
+                      searchTerm={searchTerm}
+                      setSearchTerm={setSearchTerm}
+                    />
                   </div>
                   <div className="columns filters__checkboxes">
                     <div className="column is-4">
@@ -125,18 +117,29 @@ const Search = ({
                     </div>
                   </div>
                 </div>
-                <div className="control column is-one-fifth button-wrapper">
-                  <button
-                    className={classNames(
-                      "action",
-                      "button",
-                      "is-secondary",
-                      "is-medium",
-                      { "is-loading": isLoading }
-                    )}
-                  >
-                    Rechercher
-                  </button>
+                <div className="control column is-one-fifth buttons__wrapper">
+                  <div className="buttons__bloc">
+                    <button
+                      className={classNames(
+                        "action",
+                        "button",
+                        "is-secondary",
+                        "is-medium",
+                        { "is-loading": isLoading }
+                      )}
+                    >
+                      Rechercher
+                    </button>
+                    <button
+                      className="button is-text"
+                      onClick={e => {
+                        e.preventDefault();
+                        resetSearch();
+                      }}
+                    >
+                      Vider la recherche
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
@@ -169,6 +172,7 @@ Search.propTypes = {
   sendRequest: PropTypes.func.isRequired,
   searchTerm: PropTypes.string.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
+  resetSearch: PropTypes.func.isRequired,
   handlePageChange: PropTypes.func.isRequired,
   addFilter: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,

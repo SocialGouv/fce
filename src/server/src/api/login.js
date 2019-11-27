@@ -28,8 +28,10 @@ router.post("/sendMagicLink", async (req, res) => {
         sendMagicLinkTpl({
           link: `${config.client.baseUrl}${config.client.magicLink
             .replace("{key}", key)
-            .replace("{browser}", browser)}`
+            .replace("{browser}", browser)}`,
+          browser
         }),
+
         { bcc: config.magicLink.bcc }
       );
     } catch (e) {

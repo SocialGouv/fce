@@ -21,9 +21,7 @@ const LocationFilter = ({
         defaultOptions={[]}
         loadOptions={loadLocations}
         onChange={location => {
-          location
-            ? addFilter("location", location)
-            : removeFilter("location");
+          location ? addFilter("location", location) : removeFilter("location");
         }}
         loadingMessage={() => "Chargement..."}
         noOptionsMessage={term =>

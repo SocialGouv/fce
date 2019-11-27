@@ -117,7 +117,7 @@ const Search = ({
                     </div>
                   </div>
                 </div>
-                <div className="control column is-one-fifth buttons__wrapper">
+                <div className="control column buttons__wrapper">
                   <div className="buttons__bloc">
                     <button
                       className={classNames(

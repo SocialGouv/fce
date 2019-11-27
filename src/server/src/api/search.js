@@ -171,7 +171,7 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
 
   for (let page = 1; page <= pages; page++) {
     try {
-      const response = await client.search(engineName, searchTerm, {
+      const response = await client.search(engineName, `"${searchTerm}"`, {
         page: { current: page, size: pageLimit }
       });
 

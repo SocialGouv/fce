@@ -1,9 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import Value from "../../../../shared/Value";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  setSearchTerm,
+  setSearchFilters,
+  resetSearch
+} from "../../../../../services/Store/actions";
 import {
   faArrowAltRight,
   faArrowRight,
@@ -11,7 +16,6 @@ import {
   faCircle
 } from "@fortawesome/pro-solid-svg-icons";
 import InfoBox from "../../../../shared/InfoBox";
-import LinkButton from "../../../../shared/LinkButton";
 import Button from "../../../../shared/Button";
 import Config from "../../../../../services/Config";
 
@@ -129,21 +133,14 @@ class EnterpriseHeader extends React.Component {
               </span>
             </div>
             <div className="column is-8">
-              <LinkButton
-                link="/"
+              <Button
                 value="Voir tous les établissements"
                 icon={faArrowRight}
                 className="button is-secondary is-outlined has-text-weight-bold"
                 onClick={() => {
                   this.props.resetSearch();
                   this.props.setSearchTerm(enterprise.siren);
-                  this.props.setSearchFilters({
-                    naf: null,
-                    location: null,
-                    siege: null,
-                    state: Object.values(Config.get("establishmentState")),
-                    siren: enterprise.siren
-                  });
+                  this.props.history.push("/");
                 }}
               />
             </div>
@@ -153,7 +150,9 @@ class EnterpriseHeader extends React.Component {
               Voir sur{" "}
               <a
                 className="is-link"
-                href={`https://www.societe.com/societe/${slugSocieteCom}-${enterprise.siren}.html`}
+                href={`https://www.societe.com/societe/${slugSocieteCom}-${
+                  enterprise.siren
+                }.html`}
               >
                 Societe.com
               </a>
@@ -168,18 +167,20 @@ class EnterpriseHeader extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     setSearchTerm: term => {
-      return dispatch(this.props.setSearchTerm(term));
+      return dispatch(setSearchTerm(term));
     },
     setSearchFilters: filters => {
-      dispatch(this.props.setSearchFilters(filters));
+      dispatch(setSearchFilters(filters));
     },
     resetSearch: () => {
-      dispatch(this.props.resetSearch());
+      dispatch(resetSearch());
     }
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(EnterpriseHeader);
+export default withRouter(
+  connect(
+    null,
+    mapDispatchToProps
+  )(EnterpriseHeader)
+);

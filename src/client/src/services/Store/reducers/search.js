@@ -11,7 +11,6 @@ import Config from "../../Config";
 const initialState = {
   term: "",
   filters: {
-    siren: null,
     naf: null,
     location: null,
     siege: null,

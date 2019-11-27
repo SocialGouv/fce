@@ -87,7 +87,13 @@ const config = {
       "52": "5 000 à 9 999 salariés",
       "53": "10 000 salariés et plus"
     }
-  }
+  },
+  sanitizeTables: [
+    {
+      fields: "siret, numero_de_dossier",
+      table: "etablissements_pse"
+    }
+  ]
 };
 
 if (process.env.HOST) {

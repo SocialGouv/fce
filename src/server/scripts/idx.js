@@ -12,7 +12,7 @@ const fs = require("fs");
 const JSONStream = require("JSONStream");
 const es = require("event-stream");
 
-const ENGINE_ID = "5dd2c6f98534cc5d0029018c";
+const ENGINE_ID = "5dd2aca23fbff078d3299fd5";
 const INDEX_NAME = `.app-search-engine-${ENGINE_ID}`;
 
 var getStream = function() {

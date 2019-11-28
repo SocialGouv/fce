@@ -201,8 +201,6 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
       cleanTmpData[key] = value.raw;
     });
 
-    console.log(cleanTmpData);
-
     const formatedData = {
       siret: cleanTmpData.siret,
       etat:

@@ -207,7 +207,9 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
         xlsxConfig.establishmentState[
           cleanTmpData.etatadministratifetablissement
         ],
-      raison_sociale: cleanTmpData.establishment_name,
+      raison_sociale: cleanTmpData.establishment_name
+        ? cleanTmpData.establishment_name
+        : cleanTmpData.entreprise_denominationunitelegale,
       categorie_etablissement: cleanTmpData.etablissementsiege
         ? "Siège social"
         : "Établissement",

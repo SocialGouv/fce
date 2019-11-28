@@ -92,6 +92,14 @@ const config = {
     {
       fields: "siret, numero_de_dossier",
       table: "etablissements_pse"
+    },
+    {
+      fields: "code",
+      table: "departements"
+    },
+    {
+      fields: "code_insee",
+      table: "communes"
     }
   ]
 };

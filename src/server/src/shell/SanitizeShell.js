@@ -71,9 +71,13 @@ class SanitizeShell extends Shell {
                 tableInfo.fields,
                 tableInfo.table
               )
-            ).catch(error => {
-              console.error(error);
-            });
+            )
+              .then(data => {
+                PgClient.release();
+              })
+              .catch(error => {
+                console.error(error);
+              });
 
             console.log("deleted !");
           } else {
@@ -84,8 +88,6 @@ class SanitizeShell extends Shell {
           console.error(error);
         });
     });
-
-    PgClient.release();
   }
 }
 

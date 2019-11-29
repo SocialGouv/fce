@@ -113,6 +113,7 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
         engineName,
         searchTerm === "" ? searchTerm : `"${searchTerm}"`,
         {
+          filters: payload.filters,
           page: { current: page, size: pageLimit }
         }
       );

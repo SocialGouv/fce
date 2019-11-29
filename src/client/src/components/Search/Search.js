@@ -157,7 +157,8 @@ const Search = ({
           itemsPerPage: resultList.info.meta.page.size,
           pages: resultList.info.meta.page.total_pages,
           items: resultList.info.meta.page.total_results,
-          searchTerm
+          searchTerm,
+          options
         }}
         isLoading={isLoading}
       />

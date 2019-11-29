@@ -22,6 +22,9 @@ class SanitizeShell extends Shell {
 
       return `${baseRequest}${requestFragment.join(" AND ")};`.toString();
     } else {
+      console.log(
+        `DELETE FROM ${table} a using ${table} b WHERE a=b and a.ctid < b.ctid;`
+      );
       return `DELETE FROM ${table} a using ${table} b WHERE a=b and a.ctid < b.ctid;`.toString();
     }
   }
@@ -71,13 +74,9 @@ class SanitizeShell extends Shell {
                 tableInfo.fields,
                 tableInfo.table
               )
-            )
-              .then(data => {
-                PgClient.release();
-              })
-              .catch(error => {
-                console.error(error);
-              });
+            ).catch(error => {
+              console.error(error);
+            });
 
             console.log("deleted !");
           } else {
@@ -88,6 +87,8 @@ class SanitizeShell extends Shell {
           console.error(error);
         });
     });
+
+    PgClient.release();
   }
 }
 

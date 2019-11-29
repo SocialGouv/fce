@@ -9,18 +9,35 @@ class SanitizeShell extends Shell {
     return `SELECT ${fields}, count(*) FROM ${table} GROUP BY ${fields} HAVING count(*) > 1`.toString();
   }
 
-  async getDeleteQuery(fields, table, ...args) {
-    const baseRequest = `DELETE FROM ${table} WHERE `;
+  async getDeleteQuery(hasId, fields, table) {
+    const baseRequest = `DELETE FROM ${table} a USING ${table} b WHERE a.id < b.id AND `;
 
-    let i = 0;
-    const requestFragment = [];
-    fields.forEach(field => {
-      const fragment = args[i].join(",");
-      requestFragment.push(`${field} IN (${fragment})`);
-      i++;
+    if (hasId) {
+      const requestFragment = [];
+      fields.forEach(field => {
+        requestFragment.push(`a.${field} = b.${field}`);
+      });
+
+      console.log(`${baseRequest}${requestFragment.join(" AND ")};`);
+
+      return `${baseRequest}${requestFragment.join(" AND ")};`.toString();
+    } else {
+      return `DELETE FROM ${table} a using ${table} b WHERE a=b and a.ctid < b.ctid;`.toString();
+    }
+  }
+
+  async getDuplicatedRows(duplicatedTable, tableInfo) {
+    const fields = {};
+    duplicatedTable.rows.forEach(rowData => {
+      tableInfo.fields.forEach(field => {
+        if (!Array.isArray(fields[field])) {
+          fields[field] = [];
+        }
+        fields[field].push(`'${rowData[field]}'`);
+      });
     });
 
-    return `${baseRequest}${requestFragment.join(" AND ")};`.toString();
+    return fields;
   }
 
   async execute() {
@@ -31,40 +48,41 @@ class SanitizeShell extends Shell {
     console.log("Start PgClient connexion");
 
     config.sanitizeTables.map(async tableInfo => {
-      const duplicatedEstablishmentPse = await PgClient.query(
-        await this.getDistinctQuery(tableInfo.fields, tableInfo.table)
-      ).catch(error => {
-        console.error(error);
-      });
+      await PgClient.query(
+        await this.getDistinctQuery(tableInfo.fields.join(","), tableInfo.table)
+      )
+        .then(async rowData => {
+          console.log(`Start Sanitize ${tableInfo.table}`);
 
-      console.log("Start Sanitize Etablissements PSE");
+          const fields = await this.getDuplicatedRows(rowData, tableInfo);
 
-      const siret = [];
-      const numero_de_dossier = [];
+          const firstTableConfigField = fields[tableInfo.fields[0]];
 
-      duplicatedEstablishmentPse.rows.forEach(data => {
-        siret.push(`'${data.siret}'`);
-        numero_de_dossier.push(`'${data.numero_de_dossier}'`);
-      });
+          console.log(
+            `Found ${
+              firstTableConfigField ? firstTableConfigField.length : 0
+            } duplications...`
+          );
 
-      console.log(`Found ${siret.length} duplications...`);
+          if (firstTableConfigField && firstTableConfigField.length !== 0) {
+            await PgClient.query(
+              await this.getDeleteQuery(
+                tableInfo.hasId,
+                tableInfo.fields,
+                tableInfo.table
+              )
+            ).catch(error => {
+              console.error(error);
+            });
 
-      if (siret.length !== 0) {
-        await PgClient.query(
-          await this.getDeleteQuery(
-            tableInfo.fields.split(","),
-            tableInfo.table,
-            siret,
-            numero_de_dossier
-          )
-        ).catch(error => {
+            console.log("deleted !");
+          } else {
+            console.log("Skiped...");
+          }
+        })
+        .catch(error => {
           console.error(error);
         });
-
-        console.log("deleted !");
-      } else {
-        console.log("Skiped...");
-      }
     });
 
     PgClient.release();

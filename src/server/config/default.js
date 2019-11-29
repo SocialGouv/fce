@@ -97,12 +97,12 @@ const config = {
     {
       fields: ["code"],
       table: "departements",
-      hasId: true
+      hasId: false
     },
     {
       fields: ["nom", "code_postal"],
       table: "communes",
-      hasId: true
+      hasId: false
     }
   ]
 };

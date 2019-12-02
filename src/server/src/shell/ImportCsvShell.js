@@ -25,7 +25,10 @@ class ImportCsvShell extends Shell {
       !fileName.includes(".csv") ||
       !fs.existsSync(completeFilePath)
     ) {
-      console.error("Error on file name or file doesn't exist");
+      console.error(
+        "Error on file name or file doesn't exist",
+        completeFilePath
+      );
       return false;
     }
 
@@ -73,7 +76,8 @@ class ImportCsvShell extends Shell {
                   console.log(
                     `Le nouveau nom de la collone ${header} est: ${answer}`
                   );
-                  csvHeaders.push(answer);
+                  answer ? csvHeaders.push(answer) : csvHeaders.push(header);
+
                   res();
                 }
               );

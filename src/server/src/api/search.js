@@ -152,7 +152,7 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
         ],
       raison_sociale: cleanTmpData.establishment_name
         ? cleanTmpData.establishment_name
-        : cleanTmpData.entreprise_denominationunitelegale,
+        : cleanTmpData.enterprise_name,
       categorie_etablissement: cleanTmpData.etablissementsiege
         ? "Siège social"
         : "Établissement",

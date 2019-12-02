@@ -1,6 +1,7 @@
 FROM node:10.14
 
-RUN apk --update add postgresql-client
+RUN apt-get update
+RUN apt-get install postgresql-client
 RUN mkdir -p /root/.ssh
 
 ENV SSH_AUTH_SOCK=/ssh-agent

@@ -1,6 +1,6 @@
 FROM node:10-alpine
 
-RUN ssh-keyscan -H github.com >> /root/.ssh/known_hosts
+RUN apk --update add postgresql-client
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}

@@ -1,5 +1,6 @@
 FROM node:10.14
 
+RUN apk --update add postgresql-client
 RUN mkdir -p /root/.ssh
 RUN ssh-keyscan -H github.com >> /root/.ssh/known_hosts
 

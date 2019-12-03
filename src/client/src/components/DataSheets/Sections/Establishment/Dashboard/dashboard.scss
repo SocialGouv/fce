@@ -1,4 +1,4 @@
-@import './../../../../App/variables';
+@import "./../../../../App/variables";
 
 .dashboard {
     display: flex;
@@ -9,7 +9,7 @@
         margin-right: 2rem;
         border: solid 1px $primary;
         border-radius: 0.35rem;
-        padding: .75rem;
+        padding: 0.75rem;
         width: 8rem;
         height: 8rem;
         display: flex;
@@ -17,15 +17,19 @@
         justify-content: center;
 
         &--header {
-            padding: .25rem;
+            padding: 0.25rem;
             border-bottom: solid 2px $secondary;
             display: flex;
 
             &-icon {
                 color: $primary;
                 width: 1rem;
-                margin-right: .5rem;
+                margin-right: 0.5rem;
             }
+        }
+
+        &--small-text {
+            font-size: 0.9rem;
         }
 
         &-data {

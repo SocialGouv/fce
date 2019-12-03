@@ -81,19 +81,23 @@ const Dashboard = ({
         smallText={!hasInteractions}
         value={hasInteractions ? lastControl : "Pas d'intervention connue"}
       />
-      {activity && (activity.pseActivity || activity.rccActivity) && (
-        <Item
-          icon={faExclamationTriangle}
-          name="Mut Eco"
-          smallText={true}
-          value={
-            <>
-              {activity.pseActivity && <div>PSE</div>}
-              {activity.rccActivity && <div>RCC</div>}
-            </>
-          }
-        />
-      )}
+      {activity &&
+        (activity.pseActivity ||
+          activity.rccActivity ||
+          activity.partialActivity) && (
+          <Item
+            icon={faExclamationTriangle}
+            name="Mut Eco"
+            smallText={true}
+            value={
+              <>
+                {activity.pseActivity && <div>PSE</div>}
+                {activity.rccActivity && <div>RCC</div>}
+                {activity.partialActivity && <div>Activité partielle</div>}
+              </>
+            }
+          />
+        )}
       {(establishment.agrements_iae ||
         establishment.ea ||
         establishment.contrat_aide) && (

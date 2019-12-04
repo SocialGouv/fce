@@ -64,7 +64,7 @@ const Search = ({
     setSearchError(null);
 
     client
-      .search(`"${query}"`, options)
+      .search(query === "" ? query : `"${query}"`, options)
       .then(resultList => {
         setSearchResults(resultList);
         setSearchIsLoading(false);

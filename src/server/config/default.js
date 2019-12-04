@@ -90,8 +90,19 @@ const config = {
   },
   sanitizeTables: [
     {
-      fields: "siret, numero_de_dossier",
-      table: "etablissements_pse"
+      fields: ["siret", "numero_de_dossier"],
+      table: "etablissements_pse",
+      hasId: false
+    },
+    {
+      fields: ["code"],
+      table: "departements",
+      hasId: false
+    },
+    {
+      fields: ["nom", "code_postal"],
+      table: "communes",
+      hasId: false
     }
   ]
 };

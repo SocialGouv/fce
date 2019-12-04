@@ -87,75 +87,13 @@ router.get("/search", withAuth, function(req, res) {
   });
 });
 
-router.post("/getAppsearchWithFilters", withAuth, async function(req, res) {
-  const payload = req.body.payload;
-
-  if (!payload || !payload.searchTerm || !payload.totalItems) {
-    return res.send({
-      code: 500,
-      error: "Un export ne peux pas être effectué sur une recherche vide"
-    });
-  }
-
-  const searchTerm = payload.searchTerm;
-  const totalItems = payload.totalItems;
-  const filters = payload.filters;
-  const client = getAppSearchClient();
-  const engineName = config.get("elasticIndexer.appsearch_engineName");
-  const pageLimit = config.get("elasticIndexer.appsearch_pageLimit");
-  const pages = Math.ceil(totalItems / pageLimit);
-
-  let postalCodesRaw = [];
-
-  const resultFields = { codepostaletablissement: { raw: {} } };
-
-  for (let page = 1; page <= pages; page++) {
-    try {
-      const response = await client.search(engineName, searchTerm, {
-        page: { current: page, size: pageLimit, filters: filters },
-        result_fields: resultFields
-      });
-
-      postalCodesRaw = [...postalCodesRaw, ...response.results];
-    } catch (error) {
-      console.error(error);
-      res.send({
-        code: 500,
-        message: error.message
-      });
-    }
-  }
-
-  const postalCodes = [
-    ...new Set(
-      postalCodesRaw.map(
-        ({ codepostaletablissement: { raw: codepostaletablissement } }) =>
-          codepostaletablissement
-      )
-    )
-  ].sort((a, b) => a - b);
-
-  if (!postalCodes.length) {
-    return res.send({
-      code: 500,
-      error: "Un export ne peux pas être effectué sur une recherche vide"
-    });
-  }
-
-  res.set({
-    "Content-Type": "application/json"
-  });
-
-  res.send({ results: postalCodes });
-});
-
 router.post("/downloadXlsx", withAuth, async function(req, res) {
   const payload = req.body.payload;
 
-  if (!payload || !payload.searchTerm || !payload.totalItems) {
+  if (!payload || !payload.totalItems) {
     return res.send({
       code: 500,
-      error: "Un export ne peux pas être effectué sur une recherche vide"
+      error: "Export impossible, cette recherche n'a donné aucun résultat."
     });
   }
 
@@ -171,9 +109,14 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
 
   for (let page = 1; page <= pages; page++) {
     try {
-      const response = await client.search(engineName, `"${searchTerm}"`, {
-        page: { current: page, size: pageLimit }
-      });
+      const response = await client.search(
+        engineName,
+        searchTerm === "" ? searchTerm : `"${searchTerm}"`,
+        {
+          filters: payload.filters,
+          page: { current: page, size: pageLimit }
+        }
+      );
 
       establishments = [...establishments, ...response.results];
     } catch (error) {
@@ -188,7 +131,7 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
   if (!establishments.length) {
     return res.send({
       code: 500,
-      error: "Un export ne peux pas être effectué sur une recherche vide"
+      error: "Export impossible, cette recherche n'a donné aucun résultat."
     });
   }
 
@@ -207,7 +150,9 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
         xlsxConfig.establishmentState[
           cleanTmpData.etatadministratifetablissement
         ],
-      raison_sociale: cleanTmpData.establishment_name,
+      raison_sociale: cleanTmpData.establishment_name
+        ? cleanTmpData.establishment_name
+        : cleanTmpData.enterprise_name,
       categorie_etablissement: cleanTmpData.etablissementsiege
         ? "Siège social"
         : "Établissement",

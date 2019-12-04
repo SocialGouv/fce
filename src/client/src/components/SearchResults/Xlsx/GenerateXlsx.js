@@ -45,7 +45,8 @@ class GenerateXlsx {
   preparePayload(data) {
     return {
       totalItems: data.items,
-      searchTerm: data.searchTerm
+      searchTerm: data.searchTerm,
+      filters: data.options.filters
     };
   }
 }

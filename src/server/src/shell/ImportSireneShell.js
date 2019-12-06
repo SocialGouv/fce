@@ -108,7 +108,7 @@ class ImportSireneShell extends Shell {
   }
 
   async truncateTable(table) {
-    console.log(`start truncate talbe ${table}`);
+    console.log(`start truncate table ${table}`);
     return PG.query(`TRUNCATE TABLE ${table}`);
   }
 

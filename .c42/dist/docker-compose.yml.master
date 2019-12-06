@@ -10,6 +10,7 @@ services:
       - .:/usr/src/app
       - /home/factory/deployment/shared/node_modules:/usr/src/app/node_modules
       - /home/factory/deployment/shared/.env:/usr/src/app/.env
+      - /home/factory/deployment/shared/importSirene.sh:/usr/src/app/importSirene.sh
     tty: true
 
   db:

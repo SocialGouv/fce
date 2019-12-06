@@ -42,14 +42,13 @@ class ImportSireneShell extends Shell {
 
         const { stdout, stderr } = await this.importFile(filename, table);
 
+        console.log(`import file ${filename} finished`);
         console.log(stdout);
 
         if (stderr) {
           console.error(stderr);
         }
       }
-
-      this.reindex();
     } catch (err) {
       console.error("FAILED !");
       console.error(err);
@@ -85,6 +84,8 @@ class ImportSireneShell extends Shell {
   }
 
   async unzip(filename) {
+    console.log(`unzip ${filename}`);
+
     const directory = await unzipper.Open.file(filename);
 
     if (!directory.files || !directory.files.length) {
@@ -99,18 +100,24 @@ class ImportSireneShell extends Shell {
         .stream()
         .pipe(fs.createWriteStream(unzipedFilename))
         .on("error", reject)
-        .on("finish", () => resolve(unzipedFilename));
+        .on("finish", () => {
+          console.log(`file ${filename} unziped to ${unzipedFilename}`);
+          resolve(unzipedFilename);
+        });
     });
   }
 
   async truncateTable(table) {
+    console.log(`start truncate talbe ${table}`);
     return PG.query(`TRUNCATE TABLE ${table}`);
   }
 
   async ingestCsv(filename) {
+    console.log(`start ingestCsv ${filename}`);
+
     const { PG_HOST, PG_USER, PG_DB } = this._config.env;
 
-    const { stdout: header } = await exec(`head -c -1 -n 1 ${filename}`);
+    const { stdout: header } = await exec(`head -n 1 ${filename}`);
     const columns = header.replace("\n", "").split(delimiter);
 
     const importCsvCmd = `psql -h ${PG_HOST} -d ${PG_DB} -U ${PG_USER} -c "\\copy ${
@@ -119,11 +126,9 @@ class ImportSireneShell extends Shell {
       ","
     )}) FROM '${filename}' with (format csv, header true, delimiter '${delimiter}');"`;
 
-    return exec(importCsvCmd);
-  }
+    console.log(`start command ${importCsvCmd}`);
 
-  async reindex() {
-    console.log("TODO : run reindex");
+    return exec(importCsvCmd);
   }
 }
 

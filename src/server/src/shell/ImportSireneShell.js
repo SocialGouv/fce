@@ -80,7 +80,7 @@ class ImportSireneShell extends Shell {
       throw new Error(`Truncate table "${tableName}" failed`);
     }
 
-    return this.ingestCsv(filename);
+    return this.ingestCsv(filename, tableName);
   }
 
   async unzip(filename) {
@@ -112,17 +112,15 @@ class ImportSireneShell extends Shell {
     return PG.query(`TRUNCATE TABLE ${table}`);
   }
 
-  async ingestCsv(filename) {
-    console.log(`start ingestCsv ${filename}`);
+  async ingestCsv(filename, tableName) {
+    console.log(`start ingestCsv ${filename} to ${tableName}`);
 
     const { PG_HOST, PG_USER, PG_DB } = this._config.env;
 
     const { stdout: header } = await exec(`head -n 1 ${filename}`);
     const columns = header.replace("\n", "").split(delimiter);
 
-    const importCsvCmd = `psql -h ${PG_HOST} -d ${PG_DB} -U ${PG_USER} -c "\\copy ${
-      tables.enterprises
-    }(${columns.join(
+    const importCsvCmd = `psql -h ${PG_HOST} -d ${PG_DB} -U ${PG_USER} -c "\\copy ${tableName}(${columns.join(
       ","
     )}) FROM '${filename}' with (format csv, header true, delimiter '${delimiter}');"`;
 

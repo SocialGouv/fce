@@ -87,7 +87,7 @@ const SearchResults = ({ results, pagination, isLoading }) => {
                       enterprise_name: { raw: enterpriseName },
                       enseigne1etablissement: { raw: enseigne }
                     }) => {
-                      let name = enterpriseName;
+                      let name = `<div>${enterpriseName}</div>`;
 
                       if (enseigne) {
                         name += `<div>(Enseigne : ${enseigne})</div>`;

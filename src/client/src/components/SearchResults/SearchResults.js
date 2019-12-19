@@ -82,10 +82,21 @@ const SearchResults = ({ results, pagination, isLoading }) => {
                   },
                   {
                     headName: "Raison sociale / Nom",
-                    accessor: ({ enterprise_name: { raw: enterpriseName } }) =>
-                      Value({
-                        value: enterpriseName
-                      })
+                    html: true,
+                    accessor: ({
+                      enterprise_name: { raw: enterpriseName },
+                      enseigne1etablissement: { raw: enseigne }
+                    }) => {
+                      let name = enterpriseName;
+
+                      if (enseigne) {
+                        name += `<div>(Enseigne : ${enseigne})</div>`;
+                      }
+
+                      return Value({
+                        value: name
+                      });
+                    }
                   },
                   {
                     headName: "Catégorie établissement",

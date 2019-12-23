@@ -103,6 +103,11 @@ const config = {
       fields: ["nom", "code_postal"],
       table: "communes",
       hasId: false
+    },
+    {
+      fields: ["siret", "date_visite"],
+      table: "interactions_pole_3e",
+      hasId: false
     }
   ]
 };

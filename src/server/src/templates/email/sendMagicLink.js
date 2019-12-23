@@ -4,7 +4,7 @@ export default ({ link, browser }) =>
   layout(`
 Bonjour,<br/><br/>
 
-Vous avez fait une demande de connexion à l’application FCE, pour vous connecter veuillez cliquer sur le lien suivant : <br/><br/>
+Vous avez fait une demande de connexion à l’application FCE, pour vous connecter veuillez copier/coller le lien suivant dans votre navigateur ${browser} : <br/><br/>
 
 <a href="${link}">${link}</a><br/><br/>
 

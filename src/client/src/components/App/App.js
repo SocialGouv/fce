@@ -39,7 +39,10 @@ class App extends React.Component {
                 <Header />
                 <div className="beta-message flex-center">
                   <div>
-                    Ce site est un travail en cours, actuellement en beta.
+                    Ce site est en beta-test. Aidez nous à l'améliorer en{" "}
+                    <a href={`mailto:${Config.get("contact.mailto")}`}>
+                      donnant votre avis
+                    </a>
                   </div>
                 </div>
                 <div className="app-container">

@@ -50,7 +50,15 @@ const SearchAwesomeTable = ({
           >
             {fields.map((field, index) => (
               <td key={index} className="at__body__td">
-                {field.accessor(element)}
+                {field.html ? (
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: field.accessor(element)
+                    }}
+                  />
+                ) : (
+                  field.accessor(element)
+                )}
               </td>
             ))}
           </tr>

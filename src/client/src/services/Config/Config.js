@@ -46,7 +46,8 @@ const globalConfig = {
         libellecommuneetablissement: { raw: {} },
         trancheeffectifsetablissement: { raw: {} },
         activiteprincipaleetablissement: { raw: {} },
-        activiteprincipaleetablissement_libelle: { raw: {} }
+        activiteprincipaleetablissement_libelle: { raw: {} },
+        enseigne1etablissement: { raw: {} }
       },
       page: {
         size: 20

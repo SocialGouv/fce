@@ -24,7 +24,7 @@ const config = {
   },
   mail: JSON.parse(process.env.MAIL),
   proxy: false,
-  apiTimeout: 30000,
+  apiTimeout: 10000,
   magicKey: {
     allowedEmails: JSON.parse(process.env.MAGIC_KEY_ALLOWED_EMAILS).map(
       mask => new RegExp(mask)

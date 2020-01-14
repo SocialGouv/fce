@@ -6,6 +6,8 @@ const csv = require("csv-parser");
 const fs = require("fs");
 const Shell = require("./Shell");
 
+const psqlBaseCmd = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
+
 class ImportCsvShell extends Shell {
   constructor(args, options) {
     super(args, options);
@@ -99,10 +101,14 @@ class ImportCsvShell extends Shell {
         })
         .on("end", () => {
           console.log("-----------> Csv clean ! :)");
-          console.log("Run import.");
-          const psqlQuery = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c "\\copy ${tableName}(${stringCsvHeaders}) FROM '${tmpFile}' with (format csv, header true, delimiter '${delimiter}');"`;
+          console.log(`Truncate table ${tableName}`);
+          const psqlTruncateQuery = `${psqlBaseCmd} "TRUNCATE ${tableName};"`;
+          execSync(psqlTruncateQuery);
 
-          execSync(psqlQuery);
+          console.log("Run import.");
+          const psqlImportQuery = `${psqlBaseCmd} "\\copy ${tableName}(${stringCsvHeaders}) FROM '${tmpFile}' with (format csv, header true, delimiter '${delimiter}');"`;
+
+          execSync(psqlImportQuery);
           execSync(`rm ${tmpFile}`);
         });
     });

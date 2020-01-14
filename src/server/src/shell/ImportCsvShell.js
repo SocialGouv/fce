@@ -8,6 +8,13 @@ const Shell = require("./Shell");
 
 const psqlBaseCmd = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
 
+const psqlQueriesAfterImport = {
+  interactions_pole_3e: [
+    "DELETE FROM interactions_pole_3e as t1 using interactions_pole_3e as t2 WHERE t1.siret = t2.siret AND t1.date_visite < t2.date_visite;",
+    "UPDATE interactions_pole_3e SET inspecteurs = replace(replace(inspecteurs,CHR(10),' '),CHR(13),' ');"
+  ]
+};
+
 class ImportCsvShell extends Shell {
   constructor(args, options) {
     super(args, options);
@@ -107,8 +114,16 @@ class ImportCsvShell extends Shell {
 
           console.log("Run import.");
           const psqlImportQuery = `${psqlBaseCmd} "\\copy ${tableName}(${stringCsvHeaders}) FROM '${tmpFile}' with (format csv, header true, delimiter '${delimiter}');"`;
-
           execSync(psqlImportQuery);
+
+          if (psqlQueriesAfterImport[tableName]) {
+            console.log("Execute postqueries.");
+            psqlQueriesAfterImport[tableName].forEach(query => {
+              execSync(`${psqlBaseCmd} "${query}"`);
+            });
+          }
+
+          console.log("Remove tmp file");
           execSync(`rm ${tmpFile}`);
         });
     });

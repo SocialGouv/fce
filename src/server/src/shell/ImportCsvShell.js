@@ -94,10 +94,8 @@ class ImportCsvShell extends Shell {
       writeStream.write(csvHeaders.join(delimiter) + "\n");
 
       fs.createReadStream(completeFilePath)
-        .pipe(csv({ separator: delimiter }))
         .on("data", rawData => {
-          const raw = Object.values(rawData).join(delimiter);
-          writeStream.write(raw + "\n");
+          writeStream.write(rawData.toString());
         })
         .on("end", () => {
           console.log("-----------> Csv clean ! :)");

@@ -54,6 +54,7 @@ mv ./dist/.docker.$1 ./dist/.docker
 cp -rv .c42/dist/docker-compose.yml.$1 ./dist/docker-compose.yml
 mv ./dist/docker-compose.yml.$1 ./dist/docker-compose.yml
 cp -rv .c42/dist/importSirene.sh ./dist/importSirene.sh
+cp -rv .c42/dist/importCsv.sh ./dist/importCsv.sh
 cp -rv src/frentreprise ./dist
 cp -rv src/server/build/. ./dist
 cp -rv src/server/migrations/. ./dist/migrations

@@ -1,3 +1,5 @@
+import { getFormatedDate } from "../Helper";
+
 export default async (SIRET, Accords) => {
   return Accords.getBySIRET(SIRET).then(accords => {
     if (!accords || !accords.length) {
@@ -6,6 +8,8 @@ export default async (SIRET, Accords) => {
 
     const totalAccords = accords.reduce(
       (acc, accord) => {
+        accord.dt_sign = getFormatedDate(accord.dt_sign);
+
         Object.entries(accord).forEach(([key, value]) => {
           if (
             acc.hasOwnProperty(key) &&

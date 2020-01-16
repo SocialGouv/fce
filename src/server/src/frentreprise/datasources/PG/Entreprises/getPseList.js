@@ -1,3 +1,5 @@
+import { getFormatedDate } from "../Helper";
+
 export default async (SIREN, rows) => {
   return rows.getBySIREN(SIREN).then(pseRows => {
     if (!pseRows || !pseRows.length) {
@@ -11,6 +13,9 @@ export default async (SIREN, rows) => {
             pseRow[key] = pseRow[key].trim();
           }
         });
+        pseRow.date_d_enregistrement = getFormatedDate(
+          pseRow.date_d_enregistrement
+        );
         return pseRow;
       })
       .reduce((acc, currentPse) => {

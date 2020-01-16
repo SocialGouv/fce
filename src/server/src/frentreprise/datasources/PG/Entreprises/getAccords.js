@@ -1,3 +1,5 @@
+import { getFormatedDate } from "../Helper";
+
 export default async (siren, Accords) => {
   return Accords.getBySiren(siren).then(accords => {
     if (!accords || !accords.length) {
@@ -6,6 +8,7 @@ export default async (siren, Accords) => {
 
     const accordsBySiret = accords.reduce(
       (accordsBySiret, { siret, dt_sign }) => {
+        dt_sign = getFormatedDate(dt_sign);
         if (!accordsBySiret.hasOwnProperty(siret)) {
           accordsBySiret[siret] = { count: 0, lastDate: null };
         }

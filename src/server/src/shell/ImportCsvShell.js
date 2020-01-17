@@ -104,7 +104,12 @@ class ImportCsvShell extends Shell {
 
       fs.createReadStream(completeFilePath)
         .on("data", rawData => {
-          writeStream.write(rawData.toString());
+          const stringData = rawData.toString();
+          const stringDataWithoutHeader = stringData.substring(
+            stringData.indexOf("\n") + 1
+          );
+
+          writeStream.write(stringDataWithoutHeader);
         })
         .on("end", () => {
           console.log("-----------> Csv clean ! :)");

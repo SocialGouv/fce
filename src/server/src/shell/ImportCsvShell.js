@@ -6,6 +6,15 @@ const csv = require("csv-parser");
 const fs = require("fs");
 const Shell = require("./Shell");
 
+const psqlBaseCmd = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
+
+const psqlQueriesAfterImport = {
+  interactions_pole_3e: [
+    "DELETE FROM interactions_pole_3e as t1 using interactions_pole_3e as t2 WHERE t1.siret = t2.siret AND t1.date_visite < t2.date_visite;",
+    "UPDATE interactions_pole_3e SET inspecteurs = replace(replace(inspecteurs,CHR(10),' '),CHR(13),' ');"
+  ]
+};
+
 class ImportCsvShell extends Shell {
   constructor(args, options) {
     super(args, options);
@@ -94,17 +103,27 @@ class ImportCsvShell extends Shell {
       writeStream.write(csvHeaders.join(delimiter) + "\n");
 
       fs.createReadStream(completeFilePath)
-        .pipe(csv({ separator: delimiter }))
         .on("data", rawData => {
-          const raw = Object.values(rawData).join(delimiter);
-          writeStream.write(raw + "\n");
+          writeStream.write(rawData.toString());
         })
         .on("end", () => {
           console.log("-----------> Csv clean ! :)");
-          console.log("Run import.");
-          const psqlQuery = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c "\\copy ${tableName}(${stringCsvHeaders}) FROM '${tmpFile}' with (format csv, header true, delimiter '${delimiter}');"`;
+          console.log(`Truncate table ${tableName}`);
+          const psqlTruncateQuery = `${psqlBaseCmd} "TRUNCATE ${tableName};"`;
+          execSync(psqlTruncateQuery);
 
-          execSync(psqlQuery);
+          console.log("Run import.");
+          const psqlImportQuery = `${psqlBaseCmd} "\\copy ${tableName}(${stringCsvHeaders}) FROM '${tmpFile}' with (format csv, header true, delimiter '${delimiter}');"`;
+          execSync(psqlImportQuery);
+
+          if (psqlQueriesAfterImport[tableName]) {
+            console.log("Execute postqueries.");
+            psqlQueriesAfterImport[tableName].forEach(query => {
+              execSync(`${psqlBaseCmd} "${query}"`);
+            });
+          }
+
+          console.log("Remove tmp file");
           execSync(`rm ${tmpFile}`);
         });
     });

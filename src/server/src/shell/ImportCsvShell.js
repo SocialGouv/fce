@@ -5,6 +5,7 @@ const process = require("process");
 const csv = require("csv-parser");
 const fs = require("fs");
 const Shell = require("./Shell");
+const lineReplace = require("line-replace");
 
 const psqlBaseCmd = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
 
@@ -41,7 +42,6 @@ class ImportCsvShell extends Shell {
       return false;
     }
 
-    let writeStream = fs.createWriteStream(tmpFile);
     let rlp = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -83,7 +83,8 @@ class ImportCsvShell extends Shell {
                 `Pour la colonne ${header} choisisez un nouveau nom de colonne : `,
                 answer => {
                   console.log(
-                    `Le nouveau nom de la collone ${header} est: ${answer}`
+                    `Le nouveau nom de la collone ${header} est: ${answer ||
+                      header}`
                   );
                   answer ? csvHeaders.push(answer) : csvHeaders.push(header);
 
@@ -99,26 +100,23 @@ class ImportCsvShell extends Shell {
     });
 
     choseHeaderName.then(() => {
-      let stringCsvHeaders = csvHeaders.join(",");
-      writeStream.write(csvHeaders.join(delimiter) + "\n");
+      fs.copyFileSync(completeFilePath, tmpFile);
 
-      fs.createReadStream(completeFilePath)
-        .on("data", rawData => {
-          const stringData = rawData.toString();
-          const stringDataWithoutHeader = stringData.substring(
-            stringData.indexOf("\n") + 1
-          );
-
-          writeStream.write(stringDataWithoutHeader);
-        })
-        .on("end", () => {
+      lineReplace({
+        file: tmpFile,
+        line: 1,
+        text: csvHeaders.join(delimiter),
+        addNewLine: true,
+        callback: () => {
           console.log("-----------> Csv clean ! :)");
           console.log(`Truncate table ${tableName}`);
           const psqlTruncateQuery = `${psqlBaseCmd} "TRUNCATE ${tableName};"`;
           execSync(psqlTruncateQuery);
 
           console.log("Run import.");
-          const psqlImportQuery = `${psqlBaseCmd} "\\copy ${tableName}(${stringCsvHeaders}) FROM '${tmpFile}' with (format csv, header true, delimiter '${delimiter}');"`;
+          const psqlImportQuery = `${psqlBaseCmd} "\\copy ${tableName}(${csvHeaders.join(
+            ","
+          )}) FROM '${tmpFile}' with (format csv, header true, delimiter '${delimiter}');"`;
           execSync(psqlImportQuery);
 
           if (psqlQueriesAfterImport[tableName]) {
@@ -130,7 +128,8 @@ class ImportCsvShell extends Shell {
 
           console.log("Remove tmp file");
           execSync(`rm ${tmpFile}`);
-        });
+        }
+      });
     });
   }
 }

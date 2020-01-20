@@ -15,4 +15,6 @@ rm -f StockUniteLegale_utf8.zip
 rm -f StockEtablissement_utf8.zip
 
 # re-index
+docker exec server ash -c "rm -rf /tmp/data/data.json"
 docker exec server ash -c "NODE_ENV=production node ./scripts/appsearchIndexer.js"
+docker exec server ash -c "NODE_ENV=production node ./scripts/idx.js"

@@ -90,11 +90,11 @@ app_search.auth.source: standard
 #email.account.enabled: true
 #email.account.smtp.auth: plain
 email.account.smtp.starttls.enable: true
-email.account.smtp.host: smtp-in.dpmail.fr
+email.account.smtp.host: smtp.sendgrid.net
 email.account.smtp.port: 587
-email.account.smtp.user: 366e824f-cfd1-403f-bd8c-2c33552c41a2
-email.account.smtp.password: LesTug@GrUodFJ5fL1J9
-email.account.email_defaults.from: no-reply@commit42.fr
+email.account.smtp.user: azure_b6a59fcd2e234492d24b6a1431734855@azure.com
+email.account.smtp.password: YH4rYBhBFW6R5tSD
+email.account.email_defaults.from: no-reply@fce.fabrique.social.gouv.fr
 #
 # ----------------------------------- APIs ------------------------------------
 #

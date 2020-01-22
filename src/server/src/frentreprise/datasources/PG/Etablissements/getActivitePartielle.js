@@ -1,3 +1,5 @@
+import { getFormatedDate } from "../Helper";
+
 export default async (SIRET, ActivitePartielle) => {
   return ActivitePartielle.getBySIRET(SIRET).then(activitesPartielles => {
     if (!activitesPartielles || !activitesPartielles.length) {
@@ -13,7 +15,7 @@ export default async (SIRET, ActivitePartielle) => {
           activitesPartielles[num_convention] = {
             numConvention: num_convention,
             nbAvenants: 0,
-            date: date_decision,
+            date: getFormatedDate(date_decision),
             nbHeuresAutorisees: nb_h_auto_cum,
             nbHeuresConsommees: nb_h_conso_cum,
             motif: cause

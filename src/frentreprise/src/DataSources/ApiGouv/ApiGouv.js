@@ -29,8 +29,6 @@ export default class ApiGouv extends DataSource {
       EtablissementsAPI.agefiph,
       EtablissementsAPI.exercices,
       EtablissementsAPI.association,
-      EtablissementsAPI.predecesseur,
-      EtablissementsAPI.successeur,
       EtablissementsAPI.document_association
     );
   }

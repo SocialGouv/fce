@@ -107,7 +107,7 @@ const config = {
     {
       fields: ["siret", "date_visite"],
       table: "interactions_pole_3e",
-      hasId: false
+      hasId: true
     }
   ]
 };

@@ -12,11 +12,14 @@ const AppSearchClient = require("@elastic/app-search-node");
 const frentreprise = require("frentreprise");
 
 const logError = (data, err) => {
-  console.error(err);
+  console.error({ logError: err });
   data.error = true;
   try {
-    this.data.message = err.toString();
-  } catch (Exception) {}
+    data.message = err.toString();
+  } catch (Exception) {
+    console.error({ logErrorCatch: Exception });
+    data.message = "Unknown";
+  }
 };
 
 const getAppSearchClient = () => {

@@ -65,6 +65,7 @@ let st = getStream().pipe(
 
       //Error Handling
       if (bulkResponse.errors) {
+        console.error("Has many errors !", { errors: bulkResponse.errors });
         const erroredDocuments = [];
         bulkResponse.items.forEach((action, i) => {
           const operation = Object.keys(action)[0];
@@ -80,7 +81,7 @@ let st = getStream().pipe(
             });
           }
         });
-        console.log(erroredDocuments);
+        console.error({ erroredDocuments });
       }
 
       chunk = [];

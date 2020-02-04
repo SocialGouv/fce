@@ -5,6 +5,8 @@ const hosts2config = require("./configs/hosts2configs.json");
 let config = null;
 const log = console.warning || console.error || console.log;
 const globalConfig = {
+  sentryUrlKey:
+    "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",
   auth: {
     expire: 86400 // 1j
   },

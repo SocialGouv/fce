@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./assets/stylesheets/styles.css";
 import App from "./components/App";
 import smoothscroll from "smoothscroll-polyfill";
+import * as Sentry from "@sentry/browser";
+import Config from "./services/Config";
 
 smoothscroll.polyfill();
 
@@ -28,6 +30,12 @@ if ("serviceWorker" in navigator) {
           )
       );
   }, console.error);
+}
+
+if (process.env.NODE_ENV === "production") {
+  Sentry.init({
+    dsn: Config.get("sentryUrlKey")
+  });
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));

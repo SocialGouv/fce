@@ -31,8 +31,7 @@ const Search = ({
     ...(search.filters.siege && { etablissementsiege: "true" }),
     ...(search.filters.state.length === 1 && {
       etatadministratifetablissement: search.filters.state[0]
-    }),
-    ...(search.filters.naf && { naf_division: search.filters.naf })
+    })
   };
 
   search.filters.location.forEach(location => {
@@ -47,6 +46,14 @@ const Search = ({
 
     const values = location.value.split(",");
     allFiltersOptions[filterKey] = [...allFiltersOptions[filterKey], ...values];
+  });
+
+  search.filters.naf.forEach(({ value }) => {
+    if (!allFiltersOptions.hasOwnProperty("naf_division")) {
+      allFiltersOptions.naf_division = [];
+    }
+
+    allFiltersOptions.naf_division.push(value);
   });
 
   const options = {

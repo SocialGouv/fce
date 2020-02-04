@@ -9,9 +9,6 @@ const NafFilter = ({ filters, addFilter, removeFilter, divisionsNaf }) => {
     label: `${code} - ${libelle}`
   }));
 
-  const selectedValue =
-    options.find(({ value }) => value === filters.naf) || null;
-
   return (
     <div>
       <label htmlFor="naf" className="label">
@@ -20,13 +17,13 @@ const NafFilter = ({ filters, addFilter, removeFilter, divisionsNaf }) => {
       <Select
         id="naf"
         name="naf"
+        isMulti
         options={options}
-        onChange={option => {
-          option ? addFilter("naf", option.value) : removeFilter("naf");
+        onChange={naf => {
+          naf ? addFilter("naf", naf) : removeFilter("naf");
         }}
         isClearable
         placeholder=""
-        value={selectedValue}
         styles={selectCustomStyles}
       />
     </div>

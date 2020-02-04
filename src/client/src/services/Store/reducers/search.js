@@ -11,7 +11,7 @@ import Config from "../../Config";
 const initialState = {
   term: "",
   filters: {
-    naf: null,
+    naf: [],
     location: [],
     siege: null,
     state: Object.values(Config.get("establishmentState"))

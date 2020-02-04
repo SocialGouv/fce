@@ -18,6 +18,7 @@ const LocationFilter = ({
       <AsyncSelect
         id="location"
         name="location"
+        isMulti
         defaultOptions={[]}
         loadOptions={loadLocations}
         onChange={location => {

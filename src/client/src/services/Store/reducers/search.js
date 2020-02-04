@@ -12,7 +12,7 @@ const initialState = {
   term: "",
   filters: {
     naf: null,
-    location: null,
+    location: [],
     siege: null,
     state: Object.values(Config.get("establishmentState"))
   },

@@ -32,16 +32,22 @@ const Search = ({
     ...(search.filters.state.length === 1 && {
       etatadministratifetablissement: search.filters.state[0]
     }),
-    ...(search.filters.naf && { naf_division: search.filters.naf }),
-    ...(search.filters.location &&
-      (search.filters.location.value.length < 5
-        ? {
-            departement: search.filters.location.value
-          }
-        : {
-            codecommuneetablissement: search.filters.location.value
-          }))
+    ...(search.filters.naf && { naf_division: search.filters.naf })
   };
+
+  search.filters.location.forEach(location => {
+    const isDepartement = location.value.length < 5;
+    const filterKey = isDepartement
+      ? "departement"
+      : "codecommuneetablissement";
+
+    if (!allFiltersOptions.hasOwnProperty(filterKey)) {
+      allFiltersOptions[filterKey] = [];
+    }
+
+    const values = location.value.split(",");
+    allFiltersOptions[filterKey] = [...allFiltersOptions[filterKey], ...values];
+  });
 
   const options = {
     ...defaultOptions,

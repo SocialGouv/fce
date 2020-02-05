@@ -40,10 +40,7 @@ const SearchAwesomeTable = ({
       <tr className="at__head__tr">
         {fields.map(field => {
           const isSortableField = isSortable && field.sortKey;
-          console.log({
-            currentSort,
-            field
-          });
+
           return (
             <th
               key={field.headName}

@@ -29,6 +29,7 @@ const Search = ({
   addFilter,
   removeFilter,
   filters,
+  currentSort,
   sort,
   options,
   divisionsNaf,
@@ -163,6 +164,7 @@ const Search = ({
         }}
         isLoading={isLoading}
         sort={sort}
+        currentSort={currentSort}
       />
     )}
   </div>
@@ -180,6 +182,7 @@ Search.propTypes = {
   addFilter: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
+  currentSort: PropTypes.object.isRequired,
   sort: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   divisionsNaf: PropTypes.array.isRequired,

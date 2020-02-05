@@ -14,7 +14,13 @@ import { faFileExcel } from "@fortawesome/pro-solid-svg-icons";
 
 import "./searchResults.scss";
 
-const SearchResults = ({ results, pagination, isLoading, sort }) => {
+const SearchResults = ({
+  results,
+  pagination,
+  isLoading,
+  sort,
+  currentSort
+}) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
@@ -62,6 +68,7 @@ const SearchResults = ({ results, pagination, isLoading, sort }) => {
                 isLoading={isLoading}
                 isSortable={true}
                 sortColumn={sort}
+                currentSort={currentSort}
                 data={results}
                 fields={[
                   {
@@ -172,7 +179,8 @@ SearchResults.propTypes = {
   results: PropTypes.array.isRequired,
   pagination: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  sort: PropTypes.func.isRequired
+  sort: PropTypes.func.isRequired,
+  currentSort: PropTypes.object.isRequired
 };
 
 export default withRouter(SearchResults);

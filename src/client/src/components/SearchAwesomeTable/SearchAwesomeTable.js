@@ -1,13 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/pro-light-svg-icons";
+import {
+  faSort,
+  faSortUp,
+  faSortDown
+} from "@fortawesome/pro-duotone-svg-icons";
+import classname from "classnames";
 import Button from "../shared/Button";
 import LoadSpinner from "../shared/LoadSpinner";
 import Pager from "./Pager";
 
-import { faAngleLeft, faAngleRight } from "@fortawesome/pro-light-svg-icons";
-
 import "./awesomeTable.scss";
+
+const getSortIcon = (field, currentSort) => {
+  if (currentSort && currentSort.field === field) {
+    return currentSort.ascDirection ? faSortDown : faSortUp;
+  }
+  return faSort;
+};
 
 const SearchAwesomeTable = ({
   showPagination = false,
@@ -19,24 +32,38 @@ const SearchAwesomeTable = ({
   fields,
   history,
   isSortable = false,
-  sortColumn
+  sortColumn,
+  currentSort
 }) => (
   <table className="table at">
     <thead className="at__head">
       <tr className="at__head__tr">
-        {fields.map(field => (
-          <th
-            key={field.headName}
-            className={`${
-              field.importantHead ? "at__head__important" : "at__head__th"
-            }`}
-            onClick={() =>
-              isSortable && field.sortKey && sortColumn(field.sortKey)
-            }
-          >
-            {field.headName}
-          </th>
-        ))}
+        {fields.map(field => {
+          const isSortableField = isSortable && field.sortKey;
+          console.log({
+            currentSort,
+            field
+          });
+          return (
+            <th
+              key={field.headName}
+              className={classname({
+                at__head__th: true,
+                "at__head__th--important": field.importantHead,
+                "at__head__th--is-sortable": isSortableField
+              })}
+              onClick={() => isSortableField && sortColumn(field.sortKey)}
+            >
+              {isSortableField && (
+                <FontAwesomeIcon
+                  className="at__head__sortable-icon"
+                  icon={getSortIcon(field.sortKey, currentSort)}
+                />
+              )}
+              {field.headName}
+            </th>
+          );
+        })}
       </tr>
     </thead>
     <tbody className="at__body">
@@ -120,7 +147,8 @@ SearchAwesomeTable.propTypes = {
   selectedPage: PropTypes.func,
   history: PropTypes.object.isRequired,
   isSortable: PropTypes.bool,
-  sortColumn: PropTypes.func
+  sortColumn: PropTypes.func,
+  currentSort: PropTypes.object
 };
 
 export default withRouter(SearchAwesomeTable);

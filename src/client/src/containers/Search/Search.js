@@ -219,6 +219,7 @@ const Search = ({
       addFilter={addFilter}
       removeFilter={removeFilter}
       filters={search.filters}
+      currentSort={search.sort}
       sort={sort}
       options={options}
       divisionsNaf={divisionsNaf}

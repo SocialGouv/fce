@@ -47,7 +47,6 @@ const Search = ({
 
   const options = {
     ...defaultOptions,
-    // sort: { enterprise_name: "asc" },
     filters: {
       all: Object.entries(allFiltersOptions).map(([field, value]) => ({
         [field]: value
@@ -61,6 +60,12 @@ const Search = ({
       }
     }
   };
+
+  if (search.sort && search.sort.field) {
+    options.sort = {
+      [search.sort.field]: search.sort.ascDirection ? "asc" : "desc"
+    };
+  }
 
   const sendRequest = (query, options) => {
     setSearchIsLoading(true);
@@ -111,12 +116,17 @@ const Search = ({
   };
 
   const sort = field => {
-    setSearchSort({
+    const { sort } = setSearchSort({
       field,
       ascDirection:
         search.sort && search.sort.field === field
           ? !search.sort.ascDirection
           : true
+    });
+
+    sendRequest(search.term, {
+      ...options,
+      sort: { [sort.field]: sort.ascDirection ? "asc" : "desc" }
     });
   };
 
@@ -232,7 +242,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(setSearchFilters(filters));
     },
     setSearchSort: sort => {
-      dispatch(setSearchSort(sort));
+      return dispatch(setSearchSort(sort));
     },
     setSearchResults: results => {
       dispatch(setSearchResults(results));

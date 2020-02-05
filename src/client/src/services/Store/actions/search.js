@@ -15,7 +15,7 @@ export const setSearchFilters = filters => dispatch => {
 };
 
 export const setSearchSort = sort => dispatch => {
-  dispatch({
+  return dispatch({
     type: types.SET_SEARCH_SORT,
     sort
   });

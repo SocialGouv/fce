@@ -17,7 +17,9 @@ const SearchAwesomeTable = ({
   isLoading = false,
   data,
   fields,
-  history
+  history,
+  isSortable = false,
+  sortColumn
 }) => (
   <table className="table at">
     <thead className="at__head">
@@ -28,6 +30,9 @@ const SearchAwesomeTable = ({
             className={`${
               field.importantHead ? "at__head__important" : "at__head__th"
             }`}
+            onClick={() =>
+              isSortable && field.sortKey && sortColumn(field.sortKey)
+            }
           >
             {field.headName}
           </th>
@@ -113,7 +118,9 @@ SearchAwesomeTable.propTypes = {
   prevPage: PropTypes.func,
   nextPage: PropTypes.func,
   selectedPage: PropTypes.func,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  isSortable: PropTypes.bool,
+  sortColumn: PropTypes.func
 };
 
 export default withRouter(SearchAwesomeTable);

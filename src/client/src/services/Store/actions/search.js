@@ -14,6 +14,13 @@ export const setSearchFilters = filters => dispatch => {
   });
 };
 
+export const setSearchSort = sort => dispatch => {
+  dispatch({
+    type: types.SET_SEARCH_SORT,
+    sort
+  });
+};
+
 export const setSearchResults = results => dispatch => {
   dispatch({
     type: types.SET_SEARCH_RESULTS,

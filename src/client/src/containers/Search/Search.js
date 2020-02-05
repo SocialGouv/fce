@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   setSearchTerm,
   setSearchFilters,
+  setSearchSort,
   setSearchResults,
   setSearchIsLoading,
   setSearchError,
@@ -22,6 +23,7 @@ const Search = ({
   search,
   setSearchTerm,
   setSearchFilters,
+  setSearchSort,
   setSearchResults,
   setSearchIsLoading,
   setSearchError,
@@ -45,6 +47,7 @@ const Search = ({
 
   const options = {
     ...defaultOptions,
+    // sort: { enterprise_name: "asc" },
     filters: {
       all: Object.entries(allFiltersOptions).map(([field, value]) => ({
         [field]: value
@@ -105,6 +108,16 @@ const Search = ({
     } else {
       setSearchFilters({ ...search.filters, [field]: null });
     }
+  };
+
+  const sort = field => {
+    setSearchSort({
+      field,
+      ascDirection:
+        search.sort && search.sort.field === field
+          ? !search.sort.ascDirection
+          : true
+    });
   };
 
   const loadLocations = term => {
@@ -196,6 +209,7 @@ const Search = ({
       addFilter={addFilter}
       removeFilter={removeFilter}
       filters={search.filters}
+      sort={sort}
       options={options}
       divisionsNaf={divisionsNaf}
       loadLocations={loadLocations}
@@ -217,6 +231,9 @@ const mapDispatchToProps = dispatch => {
     setSearchFilters: filters => {
       dispatch(setSearchFilters(filters));
     },
+    setSearchSort: sort => {
+      dispatch(setSearchSort(sort));
+    },
     setSearchResults: results => {
       dispatch(setSearchResults(results));
     },
@@ -236,6 +253,7 @@ Search.propTypes = {
   search: PropTypes.object.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
   setSearchFilters: PropTypes.func.isRequired,
+  setSearchSort: PropTypes.func.isRequired,
   setSearchResults: PropTypes.func.isRequired,
   setSearchIsLoading: PropTypes.func.isRequired,
   setSearchError: PropTypes.func.isRequired,

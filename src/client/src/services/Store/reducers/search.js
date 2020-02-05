@@ -1,6 +1,7 @@
 import {
   SET_SEARCH_TERM,
   SET_SEARCH_FILTERS,
+  SET_SEARCH_SORT,
   SET_SEARCH_RESULTS,
   SET_SEARCH_IS_LOADING,
   SET_SEARCH_ERROR,
@@ -15,6 +16,10 @@ const initialState = {
     location: null,
     siege: null,
     state: Object.values(Config.get("establishmentState"))
+  },
+  sort: {
+    field: null,
+    ascDirection: false
   },
   results: null,
   isLoading: false,
@@ -33,6 +38,12 @@ const search = (state = initialState, action) => {
       return {
         ...state,
         filters: action.filters
+      };
+
+    case SET_SEARCH_SORT:
+      return {
+        ...state,
+        sort: action.sort
       };
 
     case SET_SEARCH_RESULTS:

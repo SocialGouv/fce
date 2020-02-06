@@ -34,27 +34,34 @@ const Search = ({
     })
   };
 
-  search.filters.location.forEach(location => {
-    const isDepartement = location.value.length < 5;
-    const filterKey = isDepartement
-      ? "departement"
-      : "codecommuneetablissement";
+  if (Array.isArray(search.filters.location)) {
+    search.filters.location.forEach(location => {
+      const isDepartement = location.value.length < 5;
+      const filterKey = isDepartement
+        ? "departement"
+        : "codecommuneetablissement";
 
-    if (!allFiltersOptions.hasOwnProperty(filterKey)) {
-      allFiltersOptions[filterKey] = [];
-    }
+      if (!allFiltersOptions.hasOwnProperty(filterKey)) {
+        allFiltersOptions[filterKey] = [];
+      }
 
-    const values = location.value.split(",");
-    allFiltersOptions[filterKey] = [...allFiltersOptions[filterKey], ...values];
-  });
+      const values = location.value.split(",");
+      allFiltersOptions[filterKey] = [
+        ...allFiltersOptions[filterKey],
+        ...values
+      ];
+    });
+  }
 
-  search.filters.naf.forEach(({ value }) => {
-    if (!allFiltersOptions.hasOwnProperty("naf_division")) {
-      allFiltersOptions.naf_division = [];
-    }
+  if (Array.isArray(search.filters.naf)) {
+    search.filters.naf.forEach(({ value }) => {
+      if (!allFiltersOptions.hasOwnProperty("naf_division")) {
+        allFiltersOptions.naf_division = [];
+      }
 
-    allFiltersOptions.naf_division.push(value);
-  });
+      allFiltersOptions.naf_division.push(value);
+    });
+  }
 
   const options = {
     ...defaultOptions,

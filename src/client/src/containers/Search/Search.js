@@ -36,10 +36,12 @@ const Search = ({
 
   if (Array.isArray(search.filters.location)) {
     search.filters.location.forEach(location => {
-      const isDepartement = location.value.length < 5;
-      const filterKey = isDepartement
-        ? "departement"
-        : "codecommuneetablissement";
+      const isCodeInsee =
+        location.value.length === Config.get("codeInseeLength");
+
+      const filterKey = isCodeInsee
+        ? "codecommuneetablissement"
+        : "departement";
 
       if (!allFiltersOptions.hasOwnProperty(filterKey)) {
         allFiltersOptions[filterKey] = [];

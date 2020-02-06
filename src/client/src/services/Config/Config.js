@@ -104,7 +104,8 @@ const globalConfig = {
     etti: "Entreprise de travail temporaire d'insertion"
   },
   legifranceSearchUrl:
-    "https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale="
+    "https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale=",
+  codeInseeLength: 5
 };
 
 function initConfig() {

@@ -81,7 +81,12 @@ let st = getStream().pipe(
             });
           }
         });
-        console.error({ erroredDocuments });
+        console.error({
+          erroredDocuments: {
+            status: erroredDocuments.status,
+            error: JSON.stringify(erroredDocuments.error)
+          }
+        });
       }
 
       chunk = [];

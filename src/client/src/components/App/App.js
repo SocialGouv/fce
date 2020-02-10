@@ -11,6 +11,7 @@ import PrivateRoute from "../../services/PrivateRoute";
 import ScrollToTop from "./ScrollToTop";
 import Header from "./Header";
 import Footer from "./Footer";
+import UserReview from "./UserReview";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import MagicLink from "../../containers/MagicLink";
@@ -78,6 +79,7 @@ class App extends React.Component {
                     </Switch>
                   </IEChecker>
                 </div>
+                <UserReview />
                 <Footer />
               </div>
             </ScrollToTop>

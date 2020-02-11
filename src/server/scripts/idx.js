@@ -79,12 +79,11 @@ let st = getStream().pipe(
               operation: body[i * 2],
               document: body[i * 2 + 1]
             });
-          }
-        });
-        console.error({
-          erroredDocuments: {
-            status: erroredDocuments.status,
-            error: JSON.stringify(erroredDocuments.error)
+
+            console.log("erroredDocument", {
+              status: action[operation].status,
+              error: JSON.stringify(action[operation].error)
+            });
           }
         });
       }

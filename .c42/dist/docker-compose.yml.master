@@ -18,8 +18,10 @@ services:
     container_name: db
     volumes:
       - pgdata:/var/lib/postgresql/data
+    env_file:
+      - ./db.env
     environment:
-      POSTGRES_PASSWORD: w5@5lclO2F&4O8YQX#dI
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
       POSTGRES_DB: fce
     tty: true
 

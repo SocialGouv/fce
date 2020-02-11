@@ -11,6 +11,13 @@
   roles:
     - { role: ansistrano.deploy }
   tasks:
+    - name: Share .env file
+      file:
+        src: /home/factory/deployment/shared/dist/db.env
+        dest: /home/factory/deployment/current/dist/db.env
+        owner: factory
+        group: factory
+        state: link
     - name: Run `docker-compose build`
       shell: docker-compose build
       args:

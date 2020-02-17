@@ -49,7 +49,7 @@ const SearchResults = ({ results, pagination, isLoading }) => {
       )}
 
       <div className="columns result-row">
-        <div className="column is-12">
+        <div className="column is-12 pb-0">
           {results.length === 0 && <Alert color="info">Aucun résultat</Alert>}
 
           {!!results.length ? (

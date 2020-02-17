@@ -14,6 +14,7 @@ import {
   AccordionItemPanel
 } from "react-accessible-accordion";
 import SearchBar from "./SearchBar";
+import UsersFeedback from "../../containers/UsersFeedback";
 
 import "./search.scss";
 
@@ -33,9 +34,9 @@ const Search = ({
   divisionsNaf,
   loadLocations
 }) => (
-  <div className="App">
-    <div className="app-search pb-4">
-      <div className="app-search--container">
+  <div className="app-search">
+    <div className="pb-4">
+      <div className="app-search__container">
         <div className="columns">
           <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
             {error && (
@@ -163,6 +164,8 @@ const Search = ({
         isLoading={isLoading}
       />
     )}
+
+    <UsersFeedback />
   </div>
 );
 

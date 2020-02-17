@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { faPrint } from "@fortawesome/pro-solid-svg-icons";
 import withLoading from "../../../../services/Loading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
@@ -10,7 +11,7 @@ import Relationship from "./Relationship";
 import Direccte from "../SharedComponents/Direccte";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
-import { faPrint } from "@fortawesome/pro-solid-svg-icons";
+import UsersFeedback from "../../../../containers/UsersFeedback";
 
 import "./establishment.scss";
 
@@ -58,6 +59,7 @@ const Establishment = ({
             <Muteco establishment={establishment} />
             <Helps establishment={establishment} />
           </div>
+          <UsersFeedback />
         </div>
         <div id="establishments" className="quickview responsive-item">
           <div className="quickview-body">

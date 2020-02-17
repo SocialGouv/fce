@@ -1,18 +1,19 @@
-@import "../variables";
+@import "../App/variables";
 
 .user-review {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
+    max-width: 38em;
+    margin: 1.5rem auto;
 
     &__panel {
         background: $white;
         border: solid 1px $grey-geyser;
     }
 
-    &__like {
+    &__useful {
         display: flex;
         justify-content: space-between;
-        padding: 1rem;
+        align-items: center;
+        padding: 0.5rem 1rem;
         font-size: 1.2rem;
         font-weight: bold;
         color: $white;
@@ -20,6 +21,18 @@
 
         legend {
             font-size: 1rem;
+        }
+    }
+
+    &__thumbs {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+
+        input {
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
         & .radio {
@@ -34,27 +47,21 @@
         }
     }
 
-    &__thumbs {
-        display: flex;
-        align-items: center;
-        font-size: 1.5rem;
-
-        input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-    }
-
-    &__thumb-label {
-        margin-right: 1rem;
-    }
-
     &__comment {
         padding: 1rem;
     }
 
     & .textarea {
         margin-bottom: 1rem;
+        border: 1px solid $grey-geyser;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+
+        .button {
+            border: 1px solid $grey-geyser;
+        }
     }
 }

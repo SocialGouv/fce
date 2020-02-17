@@ -37,24 +37,24 @@ a {
     @extend %print-block;
 }
 
-.app-container {
-    // full-height if not enough content
-    // 320px = header 120px + foooter 200px
-    min-height: calc(100vh - 270px);
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 
-    @include from($tablet) {
-        // full-height if not enough content
-        // 270px = header 120px + foooter 150px
-        min-height: calc(100vh - 320px);
-    }
+    .app-container {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
 
-    @media print {
-        padding-top: 1rem;
-    }
+        @media print {
+            padding-top: 1rem;
+        }
 
-    .bg-info a {
-        color: white;
-        text-decoration: underline;
+        .bg-info a {
+            color: white;
+            text-decoration: underline;
+        }
     }
 }
 
@@ -86,15 +86,33 @@ a {
 }
 
 .beta-message {
-    text-align: center;
-    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
     height: 40px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 0.04rem;
     opacity: 0.85;
-    background-color: #a5e1fa;
+    color: $black;
+    background-color: #ffcc32;
     z-index: 1;
     @extend %print-hidden;
 
     @include from(425px) {
-        font-size: 1rem;
+        font-size: 0.9rem;
+    }
+
+    &__feedback-link {
+        padding: 0.1rem 0.6rem;
+        color: $black;
+        background-color: $white;
+        border-radius: 0.25rem;
+        transition: color 0.3s, background-color 0.3s;
+
+        &:hover {
+            color: $white;
+            background-color: $black;
+        }
     }
 }

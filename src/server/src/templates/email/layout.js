@@ -29,45 +29,43 @@ export default content => `
   </style>
 <![endif]-->
 </head>
-<body style="width:100%; margin:0; padding:0; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">
+<body style="width:100%; margin:0; padding:0; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background: #f7f7f7">
 
 <!-- body wrapper -->
-<table cellpadding="0" cellspacing="0" border="0" style="margin:0; padding:0; width:100%; line-height: 100% !important;">
+<table cellpadding="0" cellspacing="0" border="0" style="font-family: sans-serif; margin:0; padding:0; width:100%; line-height: 100% !important;">
   <tr>
-    <td valign="top">
+    <td valign="top" >
       <!-- edge wrapper -->
-      <table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="background: #efefef;">
+      <table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="background: #fff">
         <tr>
           <td valign="top">
             <!-- content wrapper -->
-            <table cellpadding="0" cellspacing="0" border="0" align="center" width="560" style="background: #cfcfcf;">
+            <table cellpadding="0" cellspacing="0" border="0" align="center" width="560">
               <tr>
                 <td valign="top" style="vertical-align: top;">
-<!-- ///////////////////////////////////////////////////// -->
+                  <!-- ///////////////////////////////////////////////////// -->
 
-<table cellpadding="0" cellspacing="0" border="0" align="center">
-  <tr>
-    <td valign="top" style="vertical-align: top;">
-      <span style="">FCE</span>
-    </td>
-  </tr>
-</table>
-<table cellpadding="0" cellspacing="0" border="0" align="center">
-  <tr>
-    <td valign="top" style="vertical-align: top;">
+                  <table cellpadding="0" cellspacing="0" border="0" align="center" style="width: 100%; text-align: center; border-bottom: 1px solid #2980b9;">
+                    <tr>
+                      <td valign="top" style="font-size: 20px; padding: 16px">
+                        FCE
+                      </td>
+                    </tr>
+                  </table>
 
-    </td>
-  </tr>
-</table>
-<table cellpadding="0" cellspacing="0" border="0" align="center">
-  <tr height="30">
-    <td valign="top" style="vertical-align: top; background: #efefef;" width="600" >
-      ${content}
-    </td>
-  </tr>
-</table>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 16px">
+                  <table cellpadding="0" cellspacing="0" border="0" align="center">
+                    <tr height="30">
+                      <td valign="top" style="vertical-align: top;" width="600">
+                        ${content}
+                      </td>
+                    </tr>
+                  </table>
 
-<!-- //////////// -->
+                  <!-- //////////// -->
                 </td>
               </tr>
             </table>

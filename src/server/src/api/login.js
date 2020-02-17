@@ -31,7 +31,6 @@ router.post("/sendMagicLink", async (req, res) => {
             .replace("{browser}", browser)}`,
           browser
         }),
-
         { bcc: config.magicLink.bcc }
       );
     } catch (e) {
@@ -48,7 +47,7 @@ router.post("/sendMagicLink", async (req, res) => {
       success: true
     });
   } catch (e) {
-    console.error(`Connot send magic link to ${email}`, e, e.message);
+    console.error(`Cannot send magic link to ${email}`, e, e.message);
     return res.send({
       success: false,
       message: e.message

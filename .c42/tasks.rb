@@ -70,6 +70,9 @@ end
     end
 end
 
+desc 'server:migrate', "Migrate db table"
+shell_task 'server:migrate', 'c42 server:yarn migrate'
+
 desc 'frentreprise:upgrade', "Upgrade frentreprise"
 task 'frentreprise:upgrade' do
     run 'c42 frentreprise:yarn build'

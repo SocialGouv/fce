@@ -39,7 +39,7 @@ const Search = ({
   if (Array.isArray(search.filters.location)) {
     search.filters.location.forEach(location => {
       const isCodeInsee =
-        location.value.length === Config.get("codeInseeLength");
+        location.value.length >= Config.get("codeInseeLength");
 
       const filterKey = isCodeInsee
         ? "codecommuneetablissement"

@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import PiwikReactRouter from "piwik-react-router";
 
+import "./app.scss";
 import configureStore from "../../services/Store";
 import Config from "../../services/Config";
 import PrivateRoute from "../../services/PrivateRoute";
@@ -19,8 +20,6 @@ import LegalNotices from "../../components/LegalNotices";
 import Cgu from "../../components/Cgu";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
-
-import "./app.scss";
 
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();

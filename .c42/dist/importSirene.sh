@@ -40,7 +40,7 @@ echo_exec_time "$start_download_time" "$end_download_time"
 echo "----- START import sirene into database -----"
 start_import_time=$(date +%s%N)
 
-docker exec server ash -c "NODE_ENV=production node ./shell/run.js ImportSirene --enterprises_filename StockUniteLegale_utf8.zip --establishments_filename StockEtablissement_utf8.zip"
+docker exec server ash -c "NODE_ENV=production node ./shell/run.js ImportSirene --enterprises_filename StockUniteLegale_utf8.zip --establishments_filename StockEtablissement_utf8.zip --establishments_successions_filename StockEtablissementLiensSuccession_utf8.zip"
 
 end_import_time=$(date +%s%N)
 echo_exec_time "$start_import_time" "$end_import_time"

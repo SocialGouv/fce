@@ -9,7 +9,8 @@ const PG = require("../db/postgres");
 const allowedExtension = ".csv";
 const tables = {
   enterprises: "entreprises",
-  establishments: "etablissements"
+  establishments: "etablissements",
+  establishmentsSuccessions: "etablissements_successions"
 };
 const delimiter = ",";
 
@@ -17,10 +18,12 @@ class ImportSireneShell extends Shell {
   async execute() {
     this.checkRequiredOption("enterprises_filename");
     this.checkRequiredOption("establishments_filename");
+    this.checkRequiredOption("establishments_successions_filename");
 
     const {
       enterprises_filename: enterprisesFilename,
-      establishments_filename: establishmentsFilename
+      establishments_filename: establishmentsFilename,
+      establishments_successions_filename: establishmentsSuccessionsFilename
     } = this._options;
 
     const processes = [
@@ -33,6 +36,11 @@ class ImportSireneShell extends Shell {
         name: "Establishments",
         filename: establishmentsFilename,
         table: tables.establishments
+      },
+      {
+        name: "EstablishmentsSuccessions",
+        filename: establishmentsSuccessionsFilename,
+        table: tables.establishmentsSuccessions
       }
     ];
 

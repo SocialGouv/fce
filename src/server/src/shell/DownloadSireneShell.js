@@ -8,7 +8,8 @@ class DownloadSireneShell extends Shell {
     const baseSireneUrl = "https://files.data.gouv.fr/insee-sirene/";
     const sireneFiles = [
       "StockUniteLegale_utf8.zip",
-      "StockEtablissement_utf8.zip"
+      "StockEtablissement_utf8.zip",
+      "StockEtablissementLiensSuccession_utf8.zip"
     ];
 
     console.log("Start task");

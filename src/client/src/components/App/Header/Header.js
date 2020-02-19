@@ -44,11 +44,7 @@ const Header = ({ resetSearch, location }) => {
                       resetSearch();
                     }}
                   >
-                    <Button
-                      value="Nouvelle recherche"
-                      icon={faPlus}
-                      buttonClasses={["is-secondary"]}
-                    />
+                    <Button value="Nouvelle recherche" icon={faPlus} />
                   </Link>
                 </div>
               </div>

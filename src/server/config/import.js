@@ -6,13 +6,12 @@ const config = {
       className: "MinioDownload"
     },
     ingest: {
+      className: null,
       table: "interactions_pole_t",
       filename: `${FILES_FOLDER}/interactions_pole_t.csv`,
-      colsMapping: {
-        Siret: "siret",
-        "Date de dernier controle": "date",
-        Propriétaire: "realise_pour"
-      }
+      cols: ["siret", "date", "realise_pour"],
+      delimiter: ";",
+      truncate: true
     }
   }
 };

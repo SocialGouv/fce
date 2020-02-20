@@ -22,7 +22,7 @@ router.post("/sendMagicLink", async (req, res) => {
     const mail = new Mail();
 
     try {
-      await mail.send(
+      const mailReponse = await mail.send(
         email,
         "Lien de connexion à FCE",
         sendMagicLinkTpl({
@@ -34,6 +34,7 @@ router.post("/sendMagicLink", async (req, res) => {
 
         { bcc: config.magicLink.bcc }
       );
+      console.log({ mailReponse });
     } catch (e) {
       console.error("Send magic link email failed", e);
       throw new Error("L'envoi de l'email a échoué");

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import {
   setSearchTerm,
   setSearchFilters,
+  setSearchSort,
   setSearchResults,
   setSearchIsLoading,
   setSearchError,
@@ -22,6 +23,7 @@ const Search = ({
   search,
   setSearchTerm,
   setSearchFilters,
+  setSearchSort,
   setSearchResults,
   setSearchIsLoading,
   setSearchError,
@@ -31,17 +33,39 @@ const Search = ({
     ...(search.filters.siege && { etablissementsiege: "true" }),
     ...(search.filters.state.length === 1 && {
       etatadministratifetablissement: search.filters.state[0]
-    }),
-    ...(search.filters.naf && { naf_division: search.filters.naf }),
-    ...(search.filters.location &&
-      (search.filters.location.value.length < 5
-        ? {
-            departement: search.filters.location.value
-          }
-        : {
-            codecommuneetablissement: search.filters.location.value
-          }))
+    })
   };
+
+  if (Array.isArray(search.filters.location)) {
+    search.filters.location.forEach(location => {
+      const isCodeInsee =
+        location.value.length >= Config.get("codeInseeLength");
+
+      const filterKey = isCodeInsee
+        ? "codecommuneetablissement"
+        : "departement";
+
+      if (!allFiltersOptions.hasOwnProperty(filterKey)) {
+        allFiltersOptions[filterKey] = [];
+      }
+
+      const values = location.value.split(",");
+      allFiltersOptions[filterKey] = [
+        ...allFiltersOptions[filterKey],
+        ...values
+      ];
+    });
+  }
+
+  if (Array.isArray(search.filters.naf)) {
+    search.filters.naf.forEach(({ value }) => {
+      if (!allFiltersOptions.hasOwnProperty("naf_division")) {
+        allFiltersOptions.naf_division = [];
+      }
+
+      allFiltersOptions.naf_division.push(value);
+    });
+  }
 
   const options = {
     ...defaultOptions,
@@ -58,6 +82,12 @@ const Search = ({
       }
     }
   };
+
+  if (search.sort && search.sort.field) {
+    options.sort = {
+      [search.sort.field]: search.sort.ascDirection ? "asc" : "desc"
+    };
+  }
 
   const sendRequest = (query, options) => {
     setSearchIsLoading(true);
@@ -105,6 +135,21 @@ const Search = ({
     } else {
       setSearchFilters({ ...search.filters, [field]: null });
     }
+  };
+
+  const sort = field => {
+    const { sort } = setSearchSort({
+      field,
+      ascDirection:
+        search.sort && search.sort.field === field
+          ? !search.sort.ascDirection
+          : true
+    });
+
+    sendRequest(search.term, {
+      ...options,
+      sort: { [sort.field]: sort.ascDirection ? "asc" : "desc" }
+    });
   };
 
   const loadLocations = term => {
@@ -196,6 +241,8 @@ const Search = ({
       addFilter={addFilter}
       removeFilter={removeFilter}
       filters={search.filters}
+      currentSort={search.sort}
+      sort={sort}
       options={options}
       divisionsNaf={divisionsNaf}
       loadLocations={loadLocations}
@@ -217,6 +264,9 @@ const mapDispatchToProps = dispatch => {
     setSearchFilters: filters => {
       dispatch(setSearchFilters(filters));
     },
+    setSearchSort: sort => {
+      return dispatch(setSearchSort(sort));
+    },
     setSearchResults: results => {
       dispatch(setSearchResults(results));
     },
@@ -236,6 +286,7 @@ Search.propTypes = {
   search: PropTypes.object.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
   setSearchFilters: PropTypes.func.isRequired,
+  setSearchSort: PropTypes.func.isRequired,
   setSearchResults: PropTypes.func.isRequired,
   setSearchIsLoading: PropTypes.func.isRequired,
   setSearchError: PropTypes.func.isRequired,

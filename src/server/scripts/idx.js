@@ -79,9 +79,13 @@ let st = getStream().pipe(
               operation: body[i * 2],
               document: body[i * 2 + 1]
             });
+
+            console.log("erroredDocument", {
+              status: action[operation].status,
+              error: JSON.stringify(action[operation].error)
+            });
           }
         });
-        console.error({ erroredDocuments });
       }
 
       chunk = [];

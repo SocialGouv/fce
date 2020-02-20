@@ -14,7 +14,13 @@ import { faFileExcel } from "@fortawesome/pro-solid-svg-icons";
 
 import "./searchResults.scss";
 
-const SearchResults = ({ results, pagination, isLoading }) => {
+const SearchResults = ({
+  results,
+  pagination,
+  isLoading,
+  sort,
+  currentSort
+}) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
@@ -60,10 +66,14 @@ const SearchResults = ({ results, pagination, isLoading }) => {
                 prevText="Précédent"
                 nextText="Suivant"
                 isLoading={isLoading}
+                isSortable={true}
+                sortColumn={sort}
+                currentSort={currentSort}
                 data={results}
                 fields={[
                   {
                     headName: "SIRET",
+                    sortKey: "siret",
                     importantHead: true,
                     accessor: ({ siret: { raw: siret } }) =>
                       Value({
@@ -75,6 +85,7 @@ const SearchResults = ({ results, pagination, isLoading }) => {
                   },
                   {
                     headName: "État",
+                    sortKey: "etatadministratifetablissement",
                     accessor: ({
                       siret: { raw: siret },
                       etatadministratifetablissement: { raw: etat }
@@ -82,6 +93,7 @@ const SearchResults = ({ results, pagination, isLoading }) => {
                   },
                   {
                     headName: "Raison sociale / Nom",
+                    sortKey: "enterprise_name",
                     html: true,
                     accessor: ({
                       enterprise_name: { raw: enterpriseName },
@@ -100,6 +112,7 @@ const SearchResults = ({ results, pagination, isLoading }) => {
                   },
                   {
                     headName: "Catégorie établissement",
+                    sortKey: "etablissementsiege",
                     accessor: ({ etablissementsiege }) => {
                       const isSiege = etablissementsiege.raw === "true";
                       return Value({
@@ -109,6 +122,7 @@ const SearchResults = ({ results, pagination, isLoading }) => {
                   },
                   {
                     headName: "Code postal",
+                    sortKey: "codepostaletablissement",
                     accessor: ({
                       codepostaletablissement: { raw: postalCode },
                       libellecommuneetablissement: { raw: town }
@@ -119,6 +133,7 @@ const SearchResults = ({ results, pagination, isLoading }) => {
                   },
                   {
                     headName: "Effectif",
+                    sortKey: "trancheeffectifsetablissement",
                     accessor: ({
                       trancheeffectifsetablissement: {
                         raw: trancheEffectifInsee
@@ -134,6 +149,7 @@ const SearchResults = ({ results, pagination, isLoading }) => {
                   },
                   {
                     headName: "Activité",
+                    sortKey: "activiteprincipaleetablissement",
                     accessor: ({
                       activiteprincipaleetablissement: { raw: naf },
                       activiteprincipaleetablissement_libelle: {
@@ -162,7 +178,9 @@ const SearchResults = ({ results, pagination, isLoading }) => {
 SearchResults.propTypes = {
   results: PropTypes.array.isRequired,
   pagination: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  sort: PropTypes.func.isRequired,
+  currentSort: PropTypes.object.isRequired
 };
 
 export default withRouter(SearchResults);

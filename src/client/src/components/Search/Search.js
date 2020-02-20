@@ -84,7 +84,7 @@ const Search = ({
                       <Accordion
                         allowZeroExpanded
                         preExpanded={
-                          filters.naf || filters.location
+                          filters.naf.length > 0 || filters.location > 0
                             ? ["advancedSearch"]
                             : []
                         }
@@ -185,7 +185,7 @@ Search.propTypes = {
   addFilter: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
-  currentSort: PropTypes.object.isRequired,
+  currentSort: PropTypes.object,
   sort: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   divisionsNaf: PropTypes.array.isRequired,

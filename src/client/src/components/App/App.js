@@ -29,8 +29,6 @@ if (Config.get("piwik")) {
   history = piwik.connectToHistory(history);
 }
 
-const isLoginPage = history.location.pathname === "/login";
-
 const App = () => {
   console.debug("render app");
 
@@ -41,23 +39,7 @@ const App = () => {
           <ScrollToTop>
             <div className="app">
               <Header />
-              <div className="beta-message flex-center">
-                <div>
-                  <span>Ce site est en beta-test.</span>
-                  {!isLoginPage && (
-                    <span>
-                      {" "}
-                      Aidez nous à l{"'"}améliorer en{" "}
-                      <a
-                        className="beta-message__feedback-link"
-                        href="#user-review"
-                      >
-                        donnant votre avis
-                      </a>
-                    </span>
-                  )}
-                </div>
-              </div>
+
               <div className="app-container">
                 <IEChecker>
                   <Switch>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { captureException as sentryCaptureException } from "@sentry/browser";
 import Http from "../../services/Http";
 import UsersFeedbackView from "../../components/UsersFeedback";
 
@@ -27,7 +28,11 @@ const UsersFeedback = () => {
       }
     })
       .catch(e => {
-        console.error(e);
+        if (process.env.NODE_ENV === "production") {
+          sentryCaptureException(e);
+        } else {
+          console.error(e);
+        }
       })
       .finally(() => {
         setUseful("");
@@ -38,7 +43,6 @@ const UsersFeedback = () => {
   return (
     <UsersFeedbackView
       useful={useful}
-      setUseful={setUseful}
       comment={comment}
       handleInput={handleInput}
       sendFeedback={sendFeedback}

@@ -1,5 +1,4 @@
 import React from "react";
-import classnames from "classnames";
 import PropTypes from "prop-types";
 
 import {
@@ -14,13 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./usersFeedback.scss";
 
-const UsersFeedback = ({
-  useful,
-  setUseful,
-  comment,
-  handleInput,
-  sendFeedback
-}) => {
+const UsersFeedback = ({ useful, comment, handleInput, sendFeedback }) => {
   return (
     <section className="user-review">
       <div className="container">
@@ -65,7 +58,7 @@ const UsersFeedback = ({
             </div>
           </fieldset>
 
-          {useful !== "" && (
+          {useful && (
             <div className="control user-review__comment">
               <label>
                 <strong>
@@ -95,7 +88,6 @@ const UsersFeedback = ({
 UsersFeedback.propTypes = {
   useful: PropTypes.string.isRequired,
   comment: PropTypes.string.isRequired,
-  setUseful: PropTypes.func.isRequired,
   handleInput: PropTypes.func.isRequired,
   sendFeedback: PropTypes.func.isRequired
 };

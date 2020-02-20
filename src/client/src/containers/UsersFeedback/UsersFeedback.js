@@ -26,11 +26,12 @@ const UsersFeedback = () => {
         comment
       }
     })
-      .then(res => {
-        console.log(res);
-      })
       .catch(e => {
         console.error(e);
+      })
+      .finally(() => {
+        setUseful("");
+        setComment("");
       });
   };
 

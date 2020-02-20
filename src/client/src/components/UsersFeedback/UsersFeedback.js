@@ -27,7 +27,9 @@ const UsersFeedback = ({
         <form className="user-review__panel" onSubmit={sendFeedback}>
           <fieldset>
             <div className="control user-review__useful">
-              <legend>Cette application vous a-t-elle été utile?</legend>
+              <legend>
+                L{"'"}information trouvée vous a-t-elle été utile?
+              </legend>
               <div id="user-review" className="user-review__thumbs">
                 <input
                   id="thumb-up"
@@ -78,17 +80,9 @@ const UsersFeedback = ({
               />
 
               <div className="user-review__buttons">
-                <button
-                  type="button"
-                  className="button"
-                  onClick={() => {
-                    setUseful("");
-                  }}
-                >
-                  Annuler
+                <button type="submit" className="button is-primary">
+                  Envoyer
                 </button>
-
-                <button className="button is-primary">Envoyer</button>
               </div>
             </div>
           )}

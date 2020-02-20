@@ -1,7 +1,8 @@
 @import "../App/variables";
 
 .user-review {
-    max-width: 38em;
+    width: 40em;
+    max-width: 100%;
     margin: 1.5rem auto;
 
     &__panel {
@@ -58,7 +59,7 @@
 
     &__buttons {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
 
         .button {
             border: 1px solid $grey-geyser;

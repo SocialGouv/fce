@@ -26,5 +26,9 @@
       shell: docker-compose up -d server
       args:
         chdir: /home/factory/deployment/current/dist
+    - name: Run migrations
+      shell: docker-compose exec server ash -c "./node_modules/.bin/node-pg-migrate up"
+      args:
+        chdir: /home/factory/deployment/current/dist
 
 

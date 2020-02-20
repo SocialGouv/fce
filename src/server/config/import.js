@@ -6,7 +6,7 @@ const config = {
       className: "MinioDownload"
     },
     ingest: {
-      className: null,
+      className: "InteractionsPoleTIngestor",
       table: "interactions_pole_t",
       filename: `${FILES_FOLDER}/interactions_pole_t.csv`,
       cols: ["siret", "date", "realise_pour"],

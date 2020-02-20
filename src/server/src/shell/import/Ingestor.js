@@ -8,7 +8,7 @@ const lineReplace = require("line-replace");
 const TMP_DIR = "/tmp";
 const PSQL_BASE_CMD = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
 
-class Injestor {
+class Ingestor {
   constructor(config) {
     this._config = config;
     this.psql = PSQL_BASE_CMD;
@@ -26,14 +26,23 @@ class Injestor {
 
     await this._createTmpFileWithNewHeader();
 
+    this.beforeTruncate();
     if (truncate) {
       this._truncateTable();
     }
+    this.afterTruncate();
 
+    this.beforePsqlCopy();
     this._runPsqlCopy();
+    this.afterPsqlCopy();
 
     console.log("Injestor finished");
   }
+
+  beforeTruncate() {}
+  afterTruncate() {}
+  beforePsqlCopy() {}
+  afterPsqlCopy() {}
 
   async _createTmpFileWithNewHeader() {
     console.log("Create tmp file with new header");
@@ -72,4 +81,4 @@ class Injestor {
   }
 }
 
-module.exports = Injestor;
+module.exports = Ingestor;

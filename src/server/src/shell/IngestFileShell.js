@@ -1,7 +1,7 @@
 const Shell = require("./Shell");
 const config = require("../../config/import");
 const MissingConfigException = require("../Exceptions/MissingConfigException");
-const Ingestor = require(`./import/Ingestor`);
+const IngestorBase = require("./import/Ingestor");
 
 class IngestFileShell extends Shell {
   async execute() {
@@ -13,6 +13,12 @@ class IngestFileShell extends Shell {
     }
 
     const ingestorConfig = config[id].ingest;
+    const className = ingestorConfig.className;
+
+    const Ingestor = className
+      ? require(`./import/${className}`)
+      : IngestorBase;
+
     const ingestor = new Ingestor(ingestorConfig);
 
     ingestor.execute();

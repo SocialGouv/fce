@@ -6,8 +6,8 @@ YARN = ENV['YARN'] || 'docker-compose run --rm %container% yarn'
 NODE = ENV['NODE'] || 'docker-compose run --rm %container% node'
 CYPRESS = 'docker-compose run --rm cypress'
 DB_NAME = 'fce'
-REMOTE_HOST = 'commit42@commit42.fr'.freeze
-REMOTE_DUMP = 'commit42_fce.sql.xz'.freeze
+REMOTE_HOST = 'factory@52.143.162.139'.freeze
+REMOTE_DUMP = 'dump.sql.xz'.freeze
 
 desc 'docker:run', 'Lance docker-compose up'
 task 'docker:run' do
@@ -27,9 +27,9 @@ shell_task 'pg:console', "docker exec -i $(docker-compose ps -q db | sed -n 1p) 
 desc 'pg:dump', 'Lance la console pg_dump pour créer un dump de la bdd locale'
 shell_task 'pg:dump', "docker exec -i $(docker-compose ps -q db | sed -n 1p) /bin/bash -c 'pg_dump -U postgres #{DB_NAME}'"
 
-desc 'dump:get DATE', 'Recupère le dump de la bdd en fonction de la date'
-task 'dump:get' do |date|
-  run("rsync -avz #{REMOTE_HOST}:admin/backup/#{date}/postgresql/#{REMOTE_DUMP} .c42/tmp/dump.sql.xz")
+desc 'dump:get', 'Recupère le dump de la bdd en fonction de la date'
+task 'dump:get' do
+  run("rsync -avz #{REMOTE_HOST}:/mnt/data/shared/#{REMOTE_DUMP} .c42/tmp/dump.sql.xz")
 end
 
 # Front
@@ -69,6 +69,9 @@ end
         shell_task 'cypress:run', "cd src/client && ./node_modules/.bin/cypress open --port 8080 --env host=https://fce.test"
     end
 end
+
+desc 'server:migrate', "Migrate db table"
+shell_task 'server:migrate', 'c42 server:yarn migrate'
 
 desc 'frentreprise:upgrade', "Upgrade frentreprise"
 task 'frentreprise:upgrade' do

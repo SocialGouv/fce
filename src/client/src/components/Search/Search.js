@@ -14,6 +14,7 @@ import {
   AccordionItemPanel
 } from "react-accessible-accordion";
 import SearchBar from "./SearchBar";
+import UsersFeedback from "../../containers/UsersFeedback";
 
 import "./search.scss";
 
@@ -35,9 +36,9 @@ const Search = ({
   divisionsNaf,
   loadLocations
 }) => (
-  <div className="App">
-    <div className="app-search pb-4">
-      <div className="app-search--container">
+  <div className="app-search">
+    <div className="pb-4">
+      <div className="app-search__container">
         <div className="columns">
           <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
             {error && (
@@ -83,7 +84,7 @@ const Search = ({
                       <Accordion
                         allowZeroExpanded
                         preExpanded={
-                          filters.naf || filters.location
+                          filters.naf.length > 0 || filters.location > 0
                             ? ["advancedSearch"]
                             : []
                         }
@@ -167,6 +168,8 @@ const Search = ({
         currentSort={currentSort}
       />
     )}
+
+    <UsersFeedback />
   </div>
 );
 
@@ -182,7 +185,7 @@ Search.propTypes = {
   addFilter: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
-  currentSort: PropTypes.object.isRequired,
+  currentSort: PropTypes.object,
   sort: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   divisionsNaf: PropTypes.array.isRequired,

@@ -1,0 +1,68 @@
+@import "../App/variables";
+
+.user-review {
+    width: 40em;
+    max-width: 100%;
+    margin: 1.5rem auto;
+
+    &__panel {
+        background: $white;
+        border: solid 1px $grey-geyser;
+    }
+
+    &__useful {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: $white;
+        background: $primary;
+
+        legend {
+            font-size: 1rem;
+        }
+    }
+
+    &__thumbs {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+
+        input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        & .radio {
+            margin-left: 1rem;
+            margin-bottom: 0;
+            transition: transform 0.2s;
+
+            &:hover {
+                transform: scale(1.1);
+                color: $white;
+            }
+        }
+    }
+
+    &__comment {
+        padding: 1rem;
+    }
+
+    & .textarea {
+        margin-bottom: 1rem;
+        border: 1px solid $grey-geyser;
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: flex-end;
+
+        .button {
+            border: 1px solid $grey-geyser;
+        }
+    }
+}

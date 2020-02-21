@@ -58,11 +58,7 @@ const Sidebar = ({
             <Button
               value="Voir la fiche entreprise"
               icon={faArrowRight}
-              buttonClasses={[
-                "sidebar__enterprise-button",
-                "is-secondary",
-                "is-outlined"
-              ]}
+              buttonClasses={["sidebar__enterprise-button", "is-secondary"]}
               callback={() => {
                 history.push(`/enterprise/${enterprise.siren}`);
               }}

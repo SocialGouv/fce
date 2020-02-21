@@ -4,6 +4,7 @@ const fs = require("fs");
 const { execSync } = require("child_process");
 const _get = require("lodash.get");
 const lineReplace = require("line-replace");
+const { parse, isValid, format } = require("date-fns");
 
 const TMP_DIR = "/tmp";
 const PSQL_BASE_CMD = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
@@ -78,6 +79,26 @@ class Ingestor {
     }' with (format csv, header true, delimiter '${delimiter}');"`;
 
     return execSync(psqlImportQuery);
+  }
+
+  _formatDate(date) {
+    if (!date) {
+      return null;
+    }
+
+    date = date.trim();
+
+    const datesFormats = ["yyyy-MM-dd", "dd/MM/yyyy", "ddMMMyyyy", "dd/MM/yy"];
+
+    for (const dateFormat of datesFormats) {
+      const parsedDate = parse(date, dateFormat, new Date());
+
+      if (isValid(parsedDate)) {
+        return format(parsedDate, "yyyy-MM-dd");
+      }
+    }
+
+    return null;
   }
 }
 

@@ -3,7 +3,7 @@ const FILES_FOLDER = "/mnt/data/export";
 const config = {
   interactions_pole_t: {
     download: {
-      className: "MinioDownload"
+      className: "MinioDownloader"
     },
     ingest: {
       className: "InteractionsPoleTIngestor",

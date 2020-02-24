@@ -37,6 +37,8 @@ class Ingestor {
     this._runPsqlCopy();
     this.afterPsqlCopy();
 
+    this._saveProcessDate();
+
     console.log("Injestor finished");
   }
 
@@ -79,6 +81,10 @@ class Ingestor {
     }' with (format csv, header true, delimiter '${delimiter}');"`;
 
     return execSync(psqlImportQuery);
+  }
+
+  _saveProcessDate() {
+    console.log("save process date");
   }
 
   _formatDate(date) {

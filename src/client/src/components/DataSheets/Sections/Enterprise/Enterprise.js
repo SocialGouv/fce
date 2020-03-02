@@ -61,21 +61,6 @@ class Enterprise extends React.Component {
             <UsersFeedback fullWidth />
           </div>
         </div>
-        <div id="establishments" className="quickview responsive-item">
-          <div className="quickview-body">
-            <header className="quickview-header">
-              <p className="title">Liste des établissements</p>
-              <span className="delete" data-dismiss="quickview" />
-            </header>
-            <div className="quickview-block">
-              <Sidebar
-                enterprise={enterprise}
-                headOffice={headOffice}
-                establishments={establishments}
-              />
-            </div>
-          </div>
-        </div>
       </section>
     );
   }

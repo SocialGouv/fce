@@ -27,18 +27,6 @@ class EstablishmentHeader extends React.Component {
 
     return (
       <section id="header" className="establishment-header w-100 mb-4">
-        <div className="has-text-link show-all-enterprise">
-          <div
-            className="responsive-item"
-            data-show="quickview"
-            data-target="enterprise"
-          >
-            <span>Voir les établissements</span>
-            <span className="icon">
-              <FontAwesomeIcon icon={faArrowAltRight} />
-            </span>
-          </div>
-        </div>
         <h1 className="columns mb-4 is-capitalized has-text-weight-bold is-size-3">
           <Value
             value={

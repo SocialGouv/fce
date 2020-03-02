@@ -5,6 +5,14 @@
     max-width: 100%;
     margin: 1.5rem auto;
 
+    &--fullwidth {
+        width: 100%;
+
+        .container {
+            padding: 0;
+        }
+    }
+
     &__panel {
         background: $white;
         border: solid 1px $grey-geyser;

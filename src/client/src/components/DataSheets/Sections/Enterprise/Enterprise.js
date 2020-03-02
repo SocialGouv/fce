@@ -58,7 +58,7 @@ class Enterprise extends React.Component {
               <Finances establishment={headOffice} />
               <Mandataires enterprise={enterprise} />
             </div>
-            <UsersFeedback />
+            <UsersFeedback fullWidth />
           </div>
         </div>
         <div id="establishments" className="quickview responsive-item">

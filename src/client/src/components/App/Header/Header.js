@@ -55,10 +55,10 @@ const Header = ({ resetSearch, location }) => {
 
       <div className="beta-message flex-center">
         <div>
-          <span>Ce site est en beta-test.</span>
+          <span>Ce site est en beta-test. </span>
           {location.pathname !== "/login" && (
             <span>
-              Aidez nous à l{"'"}améliorer en{" "}
+              Aidez-nous à l{"'"}améliorer en{" "}
               <a className="beta-message__feedback-link" href="#user-review">
                 donnant votre avis
               </a>

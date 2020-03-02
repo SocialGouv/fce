@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { captureException as sentryCaptureException } from "@sentry/browser";
 import Http from "../../services/Http";
 import UsersFeedbackView from "../../components/UsersFeedback";
 
-const UsersFeedback = () => {
+const UsersFeedback = ({ fullWidth }) => {
   const [useful, setUseful] = useState("");
   const [comment, setComment] = useState("");
 
@@ -46,8 +47,13 @@ const UsersFeedback = () => {
       comment={comment}
       handleInput={handleInput}
       sendFeedback={sendFeedback}
+      fullWidth={fullWidth}
     />
   );
+};
+
+UsersFeedback.propTypes = {
+  fullWidth: PropTypes.bool
 };
 
 export default UsersFeedback;

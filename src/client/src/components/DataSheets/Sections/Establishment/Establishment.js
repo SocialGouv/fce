@@ -59,7 +59,7 @@ const Establishment = ({
             <Muteco establishment={establishment} />
             <Helps establishment={establishment} />
           </div>
-          <UsersFeedback />
+          <UsersFeedback fullWidth />
         </div>
         <div id="establishments" className="quickview responsive-item">
           <div className="quickview-body">

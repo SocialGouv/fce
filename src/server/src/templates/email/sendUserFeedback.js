@@ -1,8 +1,7 @@
 import layout from "./layout";
 
 export default ({ useful, comment }) => {
-  const questionCss =
-    "font-weight: bold; color: white; background-color: #2980b9; padding: 8px";
+  const questionCss = "font-weight: bold; color: #2980b9; padding: 8px";
   const answerCss = "padding: 8px 8px 16px";
 
   return layout(`
@@ -15,7 +14,7 @@ export default ({ useful, comment }) => {
 
     <tr>
       <td style="${questionCss}">
-        L’information sur cette page vous a-t-elle été utile?
+        L'information trouvée vous a-t-elle été utile ?
       </td>
     </tr>
     <tr>

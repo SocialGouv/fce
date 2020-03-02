@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import classNames from "classnames";
 import {
   faThumbsUp as faSolidThumbsUp,
   faThumbsDown as faSolidThumbsDown
@@ -13,9 +13,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./usersFeedback.scss";
 
-const UsersFeedback = ({ useful, comment, handleInput, sendFeedback }) => {
+const UsersFeedback = ({
+  useful,
+  comment,
+  handleInput,
+  sendFeedback,
+  fullWidth
+}) => {
   return (
-    <section className="user-review">
+    <section
+      className={classNames({
+        "user-review": true,
+        "user-review--fullwidth": fullWidth
+      })}
+    >
       <div className="container">
         <form className="user-review__panel" onSubmit={sendFeedback}>
           <fieldset>
@@ -89,7 +100,8 @@ UsersFeedback.propTypes = {
   useful: PropTypes.string.isRequired,
   comment: PropTypes.string.isRequired,
   handleInput: PropTypes.func.isRequired,
-  sendFeedback: PropTypes.func.isRequired
+  sendFeedback: PropTypes.func.isRequired,
+  fullWidth: PropTypes.bool
 };
 
 export default UsersFeedback;

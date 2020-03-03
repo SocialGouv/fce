@@ -14,6 +14,7 @@ class Ingestor {
     this._config = config;
     this.psql = PSQL_BASE_CMD;
     this.tmpFile = `${TMP_DIR}/${this.getConfig("table")}.csv`;
+    this.PG = require("../../db/postgres");
   }
 
   getConfig(key) {
@@ -27,25 +28,25 @@ class Ingestor {
 
     await this._createTmpFileWithNewHeader();
 
-    this.beforeTruncate();
+    await this.beforeTruncate();
     if (truncate) {
-      this._truncateTable();
+      await this._truncateTable();
     }
-    this.afterTruncate();
+    await this.afterTruncate();
 
-    this.beforePsqlCopy();
-    this._runPsqlCopy();
-    this.afterPsqlCopy();
+    await this.beforePsqlCopy();
+    await this._runPsqlCopy();
+    await this.afterPsqlCopy();
 
-    this._saveProcessDate();
+    await this._saveProcessDate();
 
     console.log("Injestor finished");
   }
 
-  beforeTruncate() {}
-  afterTruncate() {}
-  beforePsqlCopy() {}
-  afterPsqlCopy() {}
+  async beforeTruncate() {}
+  async afterTruncate() {}
+  async beforePsqlCopy() {}
+  async afterPsqlCopy() {}
 
   async _createTmpFileWithNewHeader() {
     console.log("Create tmp file with new header");

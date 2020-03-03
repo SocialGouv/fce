@@ -9,6 +9,8 @@ import getIae from "./getIae";
 import getContratsAides from "./getContratsAides";
 import getActivitePartielle from "./getActivitePartielle";
 import getPse from "./getPse";
+import getPredecesseur from "./getPredecesseur";
+import getSuccesseur from "./getSuccesseur";
 
 export default {
   getInteractionsPole3E,
@@ -21,5 +23,7 @@ export default {
   getIae,
   getContratsAides,
   getActivitePartielle,
-  getPse
+  getPse,
+  getPredecesseur,
+  getSuccesseur
 };

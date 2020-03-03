@@ -1,4 +1,5 @@
 import React from "react";
+import { faPrint } from "@fortawesome/pro-solid-svg-icons";
 import withLoading from "../../../../services/Loading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
@@ -10,7 +11,7 @@ import Direccte from "../SharedComponents/Direccte";
 import Finances from "./Finances";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
-import { faPrint } from "@fortawesome/pro-solid-svg-icons";
+import UsersFeedback from "../../../../containers/UsersFeedback";
 
 class Enterprise extends React.Component {
   render() {
@@ -57,6 +58,7 @@ class Enterprise extends React.Component {
               <Finances establishment={headOffice} />
               <Mandataires enterprise={enterprise} />
             </div>
+            <UsersFeedback fullWidth />
           </div>
         </div>
         <div id="establishments" className="quickview responsive-item">

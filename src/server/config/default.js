@@ -36,6 +36,9 @@ const config = {
   magicLink: {
     bcc: process.env.MAGIC_LINK_BCC
   },
+  userFeedback: {
+    mailTo: process.env.MAIL_TO
+  },
   jwt: {
     secret: process.env.JWT_SECRET,
     expire: process.env.JWT_EXPIRE

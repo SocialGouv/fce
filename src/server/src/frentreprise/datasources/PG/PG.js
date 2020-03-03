@@ -12,6 +12,7 @@ import Pse from "../../../models/Pse";
 import PolesCompetitivite from "../../../models/PolesCompetitivite";
 import Iae from "../../../models/Iae";
 import ContratsAides from "../../../models/ContratsAides";
+import Successions from "../../../models/Successions";
 
 export const _ = {
   requestDB: Symbol("_requestDB")
@@ -32,7 +33,9 @@ export default class PG extends DataSource {
       [Etablissements.getIae, new Iae()],
       [Etablissements.getContratsAides, new ContratsAides()],
       [Etablissements.getActivitePartielle, new ActivitePartielle()],
-      [Etablissements.getPse, new Pse()]
+      [Etablissements.getPse, new Pse()],
+      [Etablissements.getPredecesseur, new Successions()],
+      [Etablissements.getSuccesseur, new Successions()]
     );
   }
 

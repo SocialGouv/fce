@@ -85,6 +85,15 @@ class Ingestor {
 
   _saveProcessDate() {
     console.log("save process date");
+    const {
+      date: { field, format },
+      table
+    } = this._config;
+
+    const query = `UPDATE import_updates SET date = (SELECT max(TO_DATE(${field}, '${format}')) FROM ${table}), date_import = CURRENT_TIMESTAMP
+    WHERE \\"table\\" = '${table}';`;
+
+    return execSync(`${this.psql} "${query}"`);
   }
 
   _formatDate(date) {

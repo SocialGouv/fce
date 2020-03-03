@@ -3,7 +3,8 @@ const FILES_FOLDER = "/mnt/data/export";
 const config = {
   interactions_pole_t: {
     download: {
-      className: "MinioDownloader"
+      className: "MinioDownloader",
+      bucket: "dgt"
     },
     ingest: {
       className: "InteractionsPoleTIngestor",
@@ -12,7 +13,11 @@ const config = {
       filename: `${FILES_FOLDER}/interactions_pole_t.csv`,
       cols: ["siret", "date", "realise_pour"],
       delimiter: ";",
-      truncate: true
+      truncate: true,
+      date: {
+        field: "date",
+        format: "DD/MM/YYYY"
+      }
     }
   }
 };

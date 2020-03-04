@@ -25,7 +25,9 @@ const config = {
   interactions_pole_3e: {
     download: {
       className: "MinioDownloader",
-      bucket: "dge"
+      bucket: "dge",
+      fileMatch: /^(.)*_Tableau_donnees_API_EOS_(.)*.csv$/,
+      outputFileName: "interactions_pole_3e.csv"
     },
     ingest: {
       table: "interactions_pole_3e",

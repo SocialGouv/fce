@@ -31,7 +31,7 @@ class MinioDownloader {
     console.log("Execute Downloader");
     const { bucket, fileMatch } = this._config;
 
-    const file = await this._getLatestFile(bucket, fileMatch);
+    const file = await this._getOldestFile(bucket, fileMatch);
 
     if (!file) {
       console.log("No file to download");
@@ -44,19 +44,19 @@ class MinioDownloader {
     console.log("File downloaded");
   }
 
-  async _getLatestFile(bucket, fileMatch) {
+  async _getOldestFile(bucket, fileMatch) {
     const files = await this._getFiles(bucket, fileMatch);
 
-    return files.reduce((latestFile, file) => {
-      if (!latestFile) {
+    return files.reduce((oldestFile, file) => {
+      if (!oldestFile) {
         return file;
       }
 
-      if (file.lastModified > latestFile.lastModified) {
+      if (file.lastModified < oldestFile.lastModified) {
         return file;
       }
 
-      return latestFile;
+      return oldestFile;
     }, null);
   }
 

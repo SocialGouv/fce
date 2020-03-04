@@ -7,13 +7,13 @@ const config = {
       bucket: "dgt"
     },
     ingest: {
-      className: "InteractionsPoleTIngestor",
       table: "interactions_pole_t",
       historyTable: "interactions_pole_t_historique",
       filename: `${FILES_FOLDER}/interactions_pole_t.csv`,
       cols: ["siret", "date", "realise_pour"],
       delimiter: ";",
       truncate: true,
+      history: true,
       date: {
         field: "date",
         format: "DD/MM/YYYY"
@@ -26,7 +26,6 @@ const config = {
       bucket: "dge"
     },
     ingest: {
-      className: "InteractionsPole3EIngestor",
       table: "interactions_pole_3e",
       historyTable: "interactions_pole_3e_historique",
       filename: `${FILES_FOLDER}/interactions_pole_3e.csv`,
@@ -41,6 +40,7 @@ const config = {
       ],
       delimiter: ";",
       truncate: true,
+      history: true,
       date: {
         field: "date_visite",
         format: "DD/MM/YYYY"

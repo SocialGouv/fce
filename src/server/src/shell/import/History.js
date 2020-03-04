@@ -1,12 +1,17 @@
 const { execSync } = require("child_process");
 const _get = require("lodash.get");
-const Ingestor = require("./Ingestor");
+const formatDate = require("./formatDate");
 
-class InteractionsPole3EIngestor extends Ingestor {
-  async afterPsqlCopy() {
+class History {
+  constructor({ psql, config, PG, tmpFile }) {
+    this._config = config;
+    this.psql = psql;
+    this.PG = PG;
+    this.tmpFile = tmpFile;
+  }
+
+  async execute() {
     const start = await this._getStartDate();
-
-    console.log({ start });
 
     if (!start) {
       throw new Error("Start date is undefined");
@@ -26,15 +31,18 @@ class InteractionsPole3EIngestor extends Ingestor {
       `SELECT min(TO_DATE(${field}, '${format}')) as start FROM ${table}`
     );
 
-    return _get(response, "rows[0].start");
+    const date = _get(response, "rows[0].start");
+    return date && formatDate(date);
   }
 
   _removeHistory(start) {
-    console.log("Remove history");
+    console.log(`Remove history, start date = ${start}`);
+    const {
+      date: { field, format },
+      historyTable
+    } = this._config;
 
-    const query = `DELETE FROM ${this.getConfig(
-      "historyTable"
-    )} WHERE TO_DATE(date_visite, 'DD/MM/YYYY') >= '${start}'::date;`;
+    const query = `DELETE FROM ${historyTable} WHERE TO_DATE(${field}, '${format}') >= '${start}'::date;`;
 
     return execSync(`${this.psql} "${query}"`);
   }
@@ -53,4 +61,4 @@ class InteractionsPole3EIngestor extends Ingestor {
   }
 }
 
-module.exports = InteractionsPole3EIngestor;
+module.exports = History;

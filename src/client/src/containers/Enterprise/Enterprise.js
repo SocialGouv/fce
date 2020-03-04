@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { withRouter } from "react-router";
 import {
+  loadSources,
   loadEstablishment,
   loadEntreprise
 } from "../../services/Store/actions";
@@ -39,6 +40,7 @@ class Enterprise extends React.Component {
   }
 
   mountComponent() {
+    this.props.loadSources();
     this.setState(
       {
         isEnterprise: this.props.match.params.hasOwnProperty("siren"),
@@ -220,6 +222,9 @@ const mapDispatchToProps = dispatch => {
     },
     loadEntreprise: siren => {
       return dispatch(loadEntreprise(siren));
+    },
+    loadSources: () => {
+      return dispatch(loadSources());
     }
   };
 };

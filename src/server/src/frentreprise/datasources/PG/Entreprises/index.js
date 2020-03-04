@@ -1,12 +1,12 @@
 import getInteractionsPole3E from "./getInteractionsPole3E";
-import getInteractionsPole3T from "./getInteractionsPole3T";
+import getInteractionsPoleT from "./getInteractionsPoleT";
 import getAccords from "./getAccords";
 import getActivitePartielle from "./getActivitePartielle";
 import getPseList from "./getPseList";
 
 export default {
   getInteractionsPole3E,
-  getInteractionsPole3T,
+  getInteractionsPoleT,
   getAccords,
   getActivitePartielle,
   getPseList

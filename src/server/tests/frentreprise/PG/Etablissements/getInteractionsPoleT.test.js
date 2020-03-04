@@ -1,4 +1,4 @@
-import getInteractionsPole3T from "../../../../src/frentreprise/datasources/PG/Etablissements/getInteractionsPole3T";
+import getInteractionsPoleT from "../../../../src/frentreprise/datasources/PG/Etablissements/getInteractionsPoleT";
 
 describe("frentreprise/datasources/PG/Etablissements/getInteractionsPole3E", () => {
   test("get interractions", async () => {
@@ -47,7 +47,7 @@ describe("frentreprise/datasources/PG/Etablissements/getInteractionsPole3E", () 
         }
       ]
     };
-    const result = await getInteractionsPole3T("01565003900041", model);
+    const result = await getInteractionsPoleT("01565003900041", model);
     expect(result).toEqual(expected);
   });
 
@@ -56,7 +56,7 @@ describe("frentreprise/datasources/PG/Etablissements/getInteractionsPole3E", () 
       findAllBySIRET: () => Promise.resolve([])
     };
 
-    const result = await getInteractionsPole3T("ERRORSIRET", model);
+    const result = await getInteractionsPoleT("ERRORSIRET", model);
     expect(result).toEqual({});
   });
 });

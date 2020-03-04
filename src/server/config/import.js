@@ -4,7 +4,9 @@ const config = {
   interactions_pole_t: {
     download: {
       className: "MinioDownloader",
-      bucket: "dgt"
+      bucket: "dgt",
+      fileMatch: /^EtablissementActifsControlés_(.)*.csv$/,
+      outputFileName: "interactions_pole_t.csv"
     },
     ingest: {
       table: "interactions_pole_t",

@@ -19,6 +19,7 @@ const NafFilter = ({ filters, addFilter, removeFilter, divisionsNaf }) => {
         name="naf"
         isMulti
         options={options}
+        value={filters.naf}
         onChange={naf => {
           naf ? addFilter("naf", naf) : removeFilter("naf");
         }}

@@ -1,5 +1,5 @@
 import getInteractionsPole3E from "./getInteractionsPole3E";
-import getInteractionsPole3T from "./getInteractionsPole3T";
+import getInteractionsPoleT from "./getInteractionsPoleT";
 import getUcEff from "./getUcEff";
 import getDsnEff from "./getDsnEff";
 import getIdcc from "./getIdcc";
@@ -9,10 +9,12 @@ import getIae from "./getIae";
 import getContratsAides from "./getContratsAides";
 import getActivitePartielle from "./getActivitePartielle";
 import getPse from "./getPse";
+import getPredecesseur from "./getPredecesseur";
+import getSuccesseur from "./getSuccesseur";
 
 export default {
   getInteractionsPole3E,
-  getInteractionsPole3T,
+  getInteractionsPoleT,
   getUcEff,
   getDsnEff,
   getIdcc,
@@ -21,5 +23,7 @@ export default {
   getIae,
   getContratsAides,
   getActivitePartielle,
-  getPse
+  getPse,
+  getPredecesseur,
+  getSuccesseur
 };

@@ -66,51 +66,6 @@ Quelques rêgles propre au projet
 
 - quand on vous demande si il y a une issue associée, mettre l'url de la carte Trello. (ex : https://trello.com/c/lhyJhStb/78-changer-les-logos-dans-le-footer)
 
-
-## Déploiement
-
-### Requirements
-
-```bash
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-sudo apt-key fingerprint 0EBFCD88
-
-sudo add-apt-repository \
-  "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) \
-  stable"
-
-sudo apt-get update
-sudo apt-get install docker-ce
-```
-
-### Procédure
-
-( A automatiser via Jenkins )
-
-#### Local
-
-- cloner le repo sur sa machine en récupérant la branche master
-
-- `.c42/scripts/install.sh`
-
-- `.c42/scripts/build.sh`
-
-- Dans le répertoire dist executer `yarn`
-
-- `rsync -avz dist/ fce:production/releases/AAAAMMDDHHMM`
-
-#### Serveur
-
-- `cp production/shared/.env production/releases/AAAAMMDDHHMM/.env`
-
-- `rm -rf production/current`
-
-- `cp -R production/releases/AAAAMMDDHHMM production/current`
-
-- dans `production/current` executer `docker-compose restart`
-
 ## Troubleshooting
 
 - **Mes modifications dans frentreprise ne sont pas prise en compte**
@@ -149,46 +104,13 @@ Vous pourrez ensuite lancer l'interface GUI via la commande (vous pouvez utilise
 
 ## Import csv dans postgres
 
-### shell
+### Developpement
 
-```shell
-NODE_ENV=production node ./shell/run.js ImportCsv monfichier.csv
-```
+- placer le fichier à importer dans `.c42/tmp` (voir le fichier `src/server/config/import.js` pour choisir le bon nom)
 
-### psql
-
-```shell
-psql -d commit42_fce -U commit42_fce  -c "\copy etablissements_uc_eff(siret, cod_section, nme_ddtefp3, nme_region, dereffphy, date_effphy_et, source_effphy_et) FROM '/tmp/import/etablissements_uc_eff.csv' with (format csv, header true, delimiter ',');"
-```
-
-## Postgres
-
-### Générer un dump de la preprod pour mettre à jour la production
+- executer la commande suivante :
 
 ```bash
-pg_dump commit42_fce -U commit42_fce --exclude-table=categorie_juridique --exclude-table=communes --exclude-table=departements --exclude-table=entreprises --exclude-table=etablissements --exclude-table=magic_links --exclude-table=naf --clean | gzip > dump.sql.gz
+docker-compose exec server bash -c "yarn shell IngestFile --id interactions_pole_t"
 ```
 
-### Full text
-
-- https://bersace.cae.li/fts-recherche-plein-texte-postgres.html
-- https://bersace.cae.li/fts-postgres-insert.html
-
-Créer le champ de recherche fulltext unique pour les établissements :
-
-```sql
-ALTER TABLE etablissements ADD COLUMN search_vector tsvector;
-
-UPDATE etablissements AS etab
-SET search_vector =
-	setweight(to_tsvector(coalesce(ent.denominationunitelegale,'')), 'A')    ||
-	setweight(to_tsvector(coalesce(ent.nomunitelegale,'')), 'A')  ||
-    setweight(to_tsvector(coalesce(ent.nomusageunitelegale,'')), 'A') ||
-    setweight(to_tsvector(coalesce(etab.enseigne1etablissement,'')), 'A') ||
-    setweight(to_tsvector(coalesce(etab.siren,'')), 'A') ||
-    setweight(to_tsvector(coalesce(etab.siret,'')), 'A')
-FROM entreprises as ent
-WHERE ent.siren = etab.siren;
-
-CREATE INDEX search_vector_idx ON etablissements USING GIST (search_vector);
-```

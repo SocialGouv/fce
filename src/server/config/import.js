@@ -50,6 +50,26 @@ const config = {
         format: "DD/MM/YYYY"
       }
     }
+  },
+  interactions_pole_3e_src: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgefp",
+      fileMatch: /^SRC_Extraction(.)*.csv$/,
+      outputFileName: "interactions_pole_3e_src.csv"
+    },
+    ingest: {
+      table: "interactions_pole_3e_src",
+      filename: `${FILES_FOLDER}/interactions_pole_3e_src.csv`,
+      cols: ["region", "siret", "numero_dossier", "type_controle", "date"],
+      delimiter: ";",
+      truncate: true,
+      history: false,
+      date: {
+        field: "date",
+        format: "DD/MM/YYYY"
+      }
+    }
   }
 };
 

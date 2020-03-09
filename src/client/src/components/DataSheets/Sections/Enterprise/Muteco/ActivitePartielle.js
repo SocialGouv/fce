@@ -31,7 +31,7 @@ const ActivitePartielle = ({
     );
 
   return (
-    <Subcategory subtitle="Activité partielle">
+    <Subcategory subtitle="Activité partielle" sectionSource="APART">
       <Data
         name="Nb d'établissements ayant eu recours à l'activité partielle au cours des 24 derniers mois"
         value={hasActivitePartielle && activite_partielle.length}

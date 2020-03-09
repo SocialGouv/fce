@@ -33,11 +33,11 @@ const SearchResults = ({
   }
 
   return (
-    <div className="app-searchResults mx-6">
+    <div className="app-search-results mx-6">
       {pagination.items > 0 && (
         <div className="columns">
           <div className="column is-8 is-offset-2">
-            <h2 className="title my-2">
+            <h2 className="app-search-results__title">
               {pagination.items} établissement
               {pagination.items > 1 && "s"} trouvé
               {pagination.items > 1 && "s"}

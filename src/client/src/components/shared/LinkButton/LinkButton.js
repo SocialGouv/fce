@@ -32,6 +32,7 @@ const LinkButton = ({
     <LinkComponent
       to={link}
       target={isTargetBlank ? "_blank" : ""}
+      rel="noreferrer noopener"
       className={
         className
           ? className

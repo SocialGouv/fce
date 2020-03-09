@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Value from "../../../../shared/Value";
-import Data from "../Data";
-import { getLastInteraction } from "../../../../../helpers/Interactions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
+import Value from "../../../../shared/Value";
+import Data from "../Data";
+import Source from "../../../../../containers/Source";
+import { getLastInteraction } from "../../../../../helpers/Interactions";
 
 class EstablishmentView extends React.Component {
   toggleElement = id => {
@@ -17,8 +18,10 @@ class EstablishmentView extends React.Component {
     const { establishment } = this.props;
 
     const lastInteractions = {
-      T: getLastInteraction(establishment.interactions_T, "T"),
-      C: getLastInteraction(establishment.interactions_C, "C"),
+      T: {
+        ...getLastInteraction(establishment.interactions_T, "T"),
+        source: "Wiki'T"
+      },
       "3E_SEER": getLastInteraction(establishment.interactions_3E, "3E-SEER"),
       "3E_SRC": getLastInteraction(establishment.interactions_3E, "3E-SRC")
     };
@@ -35,15 +38,15 @@ class EstablishmentView extends React.Component {
           <Data
             name="Unité de contrôle compétente (inspection du travail)"
             value={establishment.unite_controle_competente}
-            columnClasses={["is-8", "is-4"]}
+            columnClasses={["is-6", "is-6"]}
+            source="Siene"
           />
 
           <Data
             name={
               <div>
                 <div>
-                  Dernier contrôle / dernière visite au cours des 24 derniers
-                  mois
+                  Dernier contrôle ou visite au cours des 24 derniers mois
                 </div>
                 <div>(Pôle T, Pôle C et Pôle E - SEER)</div>
               </div>
@@ -54,72 +57,53 @@ class EstablishmentView extends React.Component {
                 ? "pas de contrôle connu"
                 : ""
             }
-            columnClasses={["is-8", "is-4"]}
+            columnClasses={["is-6", "is-6"]}
           />
 
           {establishment.interactions && establishment.interactions.length ? (
             <table className="table is-bordered is-hoverable direccte-interactions">
               <thead>
                 <tr>
-                  <th>Pôle</th>
-                  <th>Date</th>
-                  <th>Objet</th>
-                  <th>Unité</th>
-                  <th>Agent</th>
-                  <th>Type</th>
-                  <th>Note</th>
-                  <th>Suite</th>
+                  <th className="has-text-right">Pôle</th>
+                  <th className="has-text-left">Date</th>
+                  <th className="has-text-left">Objet</th>
+                  <th className="has-text-left">Unité</th>
+                  <th className="has-text-left">Agent</th>
+                  <th className="has-text-left">Source</th>
                 </tr>
               </thead>
               <tbody>
                 {Object.entries(lastInteractions).map(
                   ([pole, lastInteraction]) => {
-                    if (pole === "C" || pole === "3E_SRC") {
-                      return (
-                        <tr key={pole}>
-                          <td>{pole}</td>
-                          <td colSpan="7">
-                            <Value value="-" />
-                          </td>
-                        </tr>
-                      );
-                    } else {
-                      return lastInteraction ? (
-                        <tr key={lastInteraction}>
-                          <td>
-                            <Value value={pole} />
-                          </td>
-                          <td>
-                            <Value value={lastInteraction.date} />
-                          </td>
-                          <td>
-                            <Value value={lastInteraction.objet} />
-                          </td>
-                          <td>
-                            <Value value={lastInteraction.unite} />
-                          </td>
-                          <td>
-                            <Value value={lastInteraction.agent} />
-                          </td>
-                          <td>
-                            <Value value={lastInteraction.type} />
-                          </td>
-                          <td>
-                            <Value value={lastInteraction.note} />
-                          </td>
-                          <td>
-                            <Value value={lastInteraction.suite} />
-                          </td>
-                        </tr>
-                      ) : (
-                        <tr key={pole}>
-                          <td>{pole}</td>
-                          <td colSpan="7">
-                            <Value value="-" />
-                          </td>
-                        </tr>
-                      );
-                    }
+                    return lastInteraction ? (
+                      <tr key={lastInteraction}>
+                        <td className="has-text-right">
+                          <Value value={pole} />
+                        </td>
+                        <td className="has-text-left">
+                          <Value value={lastInteraction.date} />
+                        </td>
+                        <td className="has-text-left">
+                          <Value value={lastInteraction.objet} />
+                        </td>
+                        <td className="has-text-left">
+                          <Value value={lastInteraction.unite} />
+                        </td>
+                        <td className="has-text-left">
+                          <Value value={lastInteraction.agent} />
+                        </td>
+                        <td className="has-text-left">
+                          <Source si={lastInteraction.source} isTableCell />
+                        </td>
+                      </tr>
+                    ) : (
+                      <tr key={pole}>
+                        <td className="has-text-right">{pole}</td>
+                        <td className="has-text-left" colSpan="7">
+                          <Value value="-" />
+                        </td>
+                      </tr>
+                    );
                   }
                 )}
               </tbody>

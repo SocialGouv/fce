@@ -1,5 +1,4 @@
 .accordion {
-
     tr {
         background-color: #ececec;
     }
@@ -14,8 +13,8 @@
     }
 
     &-container {
-        border-bottom: solid 3px #ccc;
-        border-top: solid 3px #ccc;
+        border-bottom: solid 3px $border-grey-light;
+        border-top: solid 3px $border-grey-light;
         max-height: 13rem;
         overflow: auto;
     }

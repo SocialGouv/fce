@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { withRouter } from "react-router";
@@ -26,6 +27,17 @@ class Enterprise extends React.Component {
       redirectTo: false
     };
   }
+
+  static propTypes = {
+    hasSearchResults: PropTypes.bool,
+    isLoaded: PropTypes.bool,
+    history: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
+    currentEnterprise: PropTypes.object.isRequired,
+    loadSources: PropTypes.func.isRequired,
+    loadEstablishment: PropTypes.func.isRequired,
+    loadEntreprise: PropTypes.func.isRequired
+  };
 
   componentDidMount() {
     this.mountComponent();

@@ -4,6 +4,7 @@ const hosts2config = require("./configs/hosts2configs.json");
 
 let config = null;
 const log = console.warning || console.error || console.log;
+
 const globalConfig = {
   sentryUrlKey:
     "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",
@@ -98,9 +99,15 @@ const globalConfig = {
     "53": "10 000 salariés et plus"
   },
   sources: {
-    dateFormats: {
-      default: "DD/MM/YYYY",
-      DSN: "MMM YY"
+    customDateFormats: {
+      EOS: { default: "DD/MM/YYYY", monthYear: "MMM YY" },
+      Sirène: { default: "DD/MM/YYYY", year: "YYYY" },
+      DSN: "MMM YY",
+      Siene: "MMM YY",
+      "ASP Extranet IAE2.0": "MMM YY",
+      "ASP Extranet CUI": "MMM YY",
+      "Ari@ne": "MMM YY",
+      Extrapro: "MMM YY"
     }
   },
   agrementsIae: {

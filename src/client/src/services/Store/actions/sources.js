@@ -7,15 +7,37 @@ const getSources = () => dispatch => {
   return Http.get("/sources")
     .then(response => {
       const sources = response.data.results.reduce((acc, current) => {
-        const dateFormat =
-          Config.get("sources.dateFormats")[current.si] ||
-          Config.get("sources.dateFormats")["default"];
+        const customDateFormats = Config.get("sources.customDateFormats");
+
+        if (
+          customDateFormats.hasOwnProperty(current.si) &&
+          typeof customDateFormats[current.si] === "object"
+        ) {
+          return {
+            ...acc,
+            ...Object.entries(customDateFormats[current.si]).reduce(
+              (customSources, [label, dateFormat]) => ({
+                ...customSources,
+                [`${current.si}-${label}`]: {
+                  name: `${current.fournisseur} / ${current.si}`,
+                  date: toI18nDate(current.date, dateFormat)
+                }
+              }),
+              {}
+            )
+          };
+        }
 
         return {
           ...acc,
           [current.si]: {
             name: `${current.fournisseur} / ${current.si}`,
-            date: toI18nDate(current.date, dateFormat)
+            date: toI18nDate(
+              current.date,
+              typeof customDateFormats[current.si] === "string"
+                ? customDateFormats[current.si]
+                : "DD/MM/YYYY"
+            )
           }
         };
       }, {});

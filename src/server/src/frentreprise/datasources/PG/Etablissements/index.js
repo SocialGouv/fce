@@ -1,4 +1,5 @@
-import getInteractionsPole3E from "./getInteractionsPole3E";
+import getInteractionsPole3ESEER from "./getInteractionsPole3ESEER";
+import getInteractionsPole3ESRC from "./getInteractionsPole3ESRC";
 import getInteractionsPoleT from "./getInteractionsPoleT";
 import getUcEff from "./getUcEff";
 import getDsnEff from "./getDsnEff";
@@ -13,7 +14,8 @@ import getPredecesseur from "./getPredecesseur";
 import getSuccesseur from "./getSuccesseur";
 
 export default {
-  getInteractionsPole3E,
+  getInteractionsPole3ESEER,
+  getInteractionsPole3ESRC,
   getInteractionsPoleT,
   getUcEff,
   getDsnEff,

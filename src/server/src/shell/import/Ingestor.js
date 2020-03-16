@@ -4,7 +4,6 @@ const fs = require("fs");
 const { execSync } = require("child_process");
 const _get = require("lodash.get");
 const lineReplace = require("line-replace");
-const { parse, isValid, format } = require("date-fns");
 
 const TMP_DIR = "/tmp";
 const PSQL_BASE_CMD = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
@@ -14,6 +13,7 @@ class Ingestor {
     this._config = config;
     this.psql = PSQL_BASE_CMD;
     this.tmpFile = `${TMP_DIR}/${this.getConfig("table")}.csv`;
+    this.PG = require("../../db/postgres");
   }
 
   getConfig(key) {
@@ -23,29 +23,41 @@ class Ingestor {
   async execute() {
     console.log("Execute Injestor");
 
-    const { truncate } = this._config;
+    const { truncate, history } = this._config;
 
     await this._createTmpFileWithNewHeader();
 
-    this.beforeTruncate();
+    await this.beforeTruncate();
     if (truncate) {
-      this._truncateTable();
+      await this._truncateTable();
     }
-    this.afterTruncate();
+    await this.afterTruncate();
 
-    this.beforePsqlCopy();
-    this._runPsqlCopy();
-    this.afterPsqlCopy();
+    await this.beforePsqlCopy();
+    await this._runPsqlCopy();
+    await this.afterPsqlCopy();
 
-    this._saveProcessDate();
+    await this.beforeBuildHistory();
+    if (history) {
+      await this._buildHistory();
+    }
+    await this.afterBuildHistory();
+
+    await this.beforeSaveProcessDate();
+    await this._saveProcessDate();
+    await this.afterSaveProcessDate();
 
     console.log("Injestor finished");
   }
 
-  beforeTruncate() {}
-  afterTruncate() {}
-  beforePsqlCopy() {}
-  afterPsqlCopy() {}
+  async beforeTruncate() {}
+  async afterTruncate() {}
+  async beforePsqlCopy() {}
+  async afterPsqlCopy() {}
+  async beforeBuildHistory() {}
+  async afterBuildHistory() {}
+  async beforeSaveProcessDate() {}
+  async afterSaveProcessDate() {}
 
   async _createTmpFileWithNewHeader() {
     console.log("Create tmp file with new header");
@@ -85,26 +97,26 @@ class Ingestor {
 
   _saveProcessDate() {
     console.log("save process date");
+    const {
+      date: { field, format },
+      table
+    } = this._config;
+
+    const query = `UPDATE import_updates SET date = (SELECT max(TO_DATE(${field}, '${format}')) FROM ${table}), date_import = CURRENT_TIMESTAMP
+    WHERE \\"table\\" = '${table}';`;
+
+    return execSync(`${this.psql} "${query}"`);
   }
 
-  _formatDate(date) {
-    if (!date) {
-      return null;
-    }
-
-    date = date.trim();
-
-    const datesFormats = ["yyyy-MM-dd", "dd/MM/yyyy", "ddMMMyyyy", "dd/MM/yy"];
-
-    for (const dateFormat of datesFormats) {
-      const parsedDate = parse(date, dateFormat, new Date());
-
-      if (isValid(parsedDate)) {
-        return format(parsedDate, "yyyy-MM-dd");
-      }
-    }
-
-    return null;
+  async _buildHistory() {
+    const History = require("./History");
+    const history = new History({
+      psql: this.psql,
+      config: this._config,
+      PG: this.PG,
+      tmpFile: this.tmpFile
+    });
+    return await history.execute();
   }
 }
 

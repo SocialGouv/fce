@@ -1,5 +1,5 @@
 const Shell = require("./Shell");
-const config = require("../../config/import");
+const config = require("./import/config");
 const MissingConfigException = require("../Exceptions/MissingConfigException");
 const MinioDownloader = require("./import/MinioDownloader");
 

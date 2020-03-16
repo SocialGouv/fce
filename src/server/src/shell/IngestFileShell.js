@@ -1,5 +1,5 @@
 const Shell = require("./Shell");
-const config = require("./import/config");
+const config = require("../../config/import");
 const MissingConfigException = require("../Exceptions/MissingConfigException");
 const IngestorBase = require("./import/Ingestor");
 

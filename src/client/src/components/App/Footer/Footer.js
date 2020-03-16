@@ -37,6 +37,11 @@ const Footer = () => (
               Contact
             </a>
           </li>
+          <li className="footer__linkItem">
+            <a className="footer__link" href="about">
+              A propos
+            </a>
+          </li>
         </ul>
       </div>
     </div>

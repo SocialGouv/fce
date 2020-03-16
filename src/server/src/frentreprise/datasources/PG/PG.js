@@ -2,7 +2,7 @@ import { DataSource } from "frentreprise";
 import Etablissements from "./Etablissements";
 import Entreprises from "./Entreprises";
 import InteractionsPole3E from "../../../models/InteractionsPole3E";
-import InteractionsPole3T from "../../../models/InteractionsPole3T";
+import InteractionsPoleT from "../../../models/InteractionsPoleT";
 import UcEff from "../../../models/UcEff";
 import DsnEff from "../../../models/DsnEff";
 import Idcc from "../../../models/Idcc";
@@ -24,7 +24,7 @@ export default class PG extends DataSource {
     return await this[_.requestDB](
       SIRET,
       [Etablissements.getInteractionsPole3E, new InteractionsPole3E()],
-      [Etablissements.getInteractionsPole3T, new InteractionsPole3T()],
+      [Etablissements.getInteractionsPoleT, new InteractionsPoleT()],
       [Etablissements.getUcEff, new UcEff()],
       [Etablissements.getDsnEff, new DsnEff()],
       [Etablissements.getIdcc, new Idcc()],
@@ -43,7 +43,7 @@ export default class PG extends DataSource {
     return await this[_.requestDB](
       SIREN,
       [Entreprises.getInteractionsPole3E, new InteractionsPole3E()],
-      [Entreprises.getInteractionsPole3T, new InteractionsPole3T()],
+      [Entreprises.getInteractionsPoleT, new InteractionsPoleT()],
       [Entreprises.getAccords, new Accords()],
       [Entreprises.getActivitePartielle, new ActivitePartielle()],
       [Entreprises.getPseList, new Pse()]

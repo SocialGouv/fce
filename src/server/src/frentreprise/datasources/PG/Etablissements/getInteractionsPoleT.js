@@ -1,7 +1,7 @@
 import { getFormatedDate } from "../Helper";
 
-export default async (SIRET, interactionsPole3T) => {
-  return interactionsPole3T.findAllBySIRET(SIRET).then(rows => {
+export default async (SIRET, interactionsPoleT) => {
+  return interactionsPoleT.findAllBySIRET(SIRET).then(rows => {
     if (!rows || !rows.length) {
       return {};
     }

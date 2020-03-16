@@ -97,6 +97,12 @@ const globalConfig = {
     "52": "5 000 à 9 999 salariés",
     "53": "10 000 salariés et plus"
   },
+  sources: {
+    dateFormats: {
+      default: "DD/MM/YYYY",
+      DSN: "MMM YY"
+    }
+  },
   agrementsIae: {
     ei: "Entreprise d'insertion",
     ai: "Association intermédiaire",

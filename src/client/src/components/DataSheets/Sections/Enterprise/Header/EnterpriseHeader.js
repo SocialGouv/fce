@@ -10,7 +10,6 @@ import {
   resetSearch
 } from "../../../../../services/Store/actions";
 import {
-  faArrowAltRight,
   faArrowRight,
   faSquare,
   faCircle
@@ -54,18 +53,6 @@ class EnterpriseHeader extends React.Component {
         )}
         {isRedirectedToResearch && <Redirect to="/" />}
         <section id="header" className="enterprise-header w-100 mb-4">
-          <div className="has-text-link show-all-establishments">
-            <div
-              className="responsive-item"
-              data-show="quickview"
-              data-target="establishments"
-            >
-              <span>Voir les établissements</span>
-              <span className="icon">
-                <FontAwesomeIcon icon={faArrowAltRight} />
-              </span>
-            </div>
-          </div>
           <h1 className="columns mb-4 is-capitalized has-text-weight-bold is-size-3">
             <Value
               value={

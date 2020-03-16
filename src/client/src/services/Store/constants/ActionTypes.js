@@ -1,5 +1,7 @@
 export const SET_CURRENT_ENTERPRISE = "SET_CURRENT_ENTERPRISE";
 
+export const SET_SOURCES = "SET_SOURCES";
+
 export const RESET_STORE = "RESET_STORE";
 
 export const SET_SEARCH_TERM = "SET_SEARCH_TERM";

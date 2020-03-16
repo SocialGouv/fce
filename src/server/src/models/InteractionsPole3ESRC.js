@@ -5,10 +5,10 @@ export default class InteractionsPole3ESRC extends Model {
     return this.db
       .query(
         `
-        SELECT 3e_src.*, regions.nom as region__name
-        FROM interactions_pole_3e_src 3e_src
-        LEFT JOIN regions ON regions.code = 3e_src.region
-        WHERE 3e_src.siret = $1`,
+        SELECT i.*, r.nom as region__name
+        FROM interactions_pole_3e_src i
+        LEFT JOIN regions r ON r.code = i.region
+        WHERE i.siret = $1`,
         [siret]
       )
       .then(res => {
@@ -24,10 +24,10 @@ export default class InteractionsPole3ESRC extends Model {
     return this.db
       .query(
         `
-        SELECT 3e_src.*, regions.nom as region__name
-        FROM interactions_pole_3e_src 3e_src
-        LEFT JOIN regions ON regions.code = 3e_src.region
-        WHERE 3e_src.siret ILIKE $1`,
+        SELECT i.*, r.nom as region__name
+        FROM interactions_pole_3e_src i
+        LEFT JOIN regions r ON r.code = i.region
+        WHERE i.siret ILIKE $1`,
         [`${siren}%`]
       )
       .then(res => {

@@ -17,13 +17,25 @@ class EstablishmentView extends React.Component {
   render() {
     const { establishment } = this.props;
 
+    console.log(establishment);
+
     const lastInteractions = {
       T: {
         ...getLastInteraction(establishment.interactions_T, "T"),
         source: "Wiki'T"
       },
-      "3E_SEER": getLastInteraction(establishment.interactions_3E, "3E-SEER"),
-      "3E_SRC": getLastInteraction(establishment.interactions_3E, "3E-SRC")
+      C: {
+        ...getLastInteraction(establishment.interactions_C, "C"),
+        source: "SORA"
+      },
+      "3E_SEER": {
+        ...getLastInteraction(establishment.interactions_3E, "3E-SEER"),
+        source: "EOS"
+      },
+      "3E_SRC": {
+        ...getLastInteraction(establishment.interactions_3E, "3E-SRC"),
+        source: "MDF"
+      }
     };
 
     return (

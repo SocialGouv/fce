@@ -1,4 +1,3 @@
-// UPDATE interactions_pole_3e_src SET siret = concat(siret, (SELECT nicsiegeunitelegale FROM entreprises WHERE siren = siret LIMIT 1)) WHERE length(siret) = 9;
 const Ingestor = require("./Ingestor");
 const { execSync } = require("child_process");
 

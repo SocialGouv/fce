@@ -6,8 +6,8 @@ YARN = ENV['YARN'] || 'docker-compose run --rm %container% yarn'
 NODE = ENV['NODE'] || 'docker-compose run --rm %container% node'
 CYPRESS = 'docker-compose run --rm cypress'
 DB_NAME = 'fce'
-REMOTE_HOST = 'factory@52.143.162.139'.freeze
-REMOTE_DUMP = 'dump.sql.xz'.freeze
+REMOTE_HOST = 'factory@40.89.184.127'.freeze
+REMOTE_DUMP = 'dump.sql.gz'.freeze
 
 desc 'docker:run', 'Lance docker-compose up'
 task 'docker:run' do
@@ -29,7 +29,7 @@ shell_task 'pg:dump', "docker exec -i $(docker-compose ps -q db | sed -n 1p) /bi
 
 desc 'dump:get', 'Recupère le dump de la bdd en fonction de la date'
 task 'dump:get' do
-  run("rsync -avz #{REMOTE_HOST}:/mnt/data/shared/#{REMOTE_DUMP} .c42/tmp/dump.sql.xz")
+  run("rsync -avz #{REMOTE_HOST}:/mnt/data/shared/#{REMOTE_DUMP} .c42/tmp/dump.sql.gz")
 end
 
 # Front

@@ -144,6 +144,7 @@ task :install do
   fatal('Could not find .c42/tmp/[dump|fce-base].sql[.xz]') unless defined?(sql_cat_cmd) && !sql_cat_cmd.nil?
 
   copy_file('../src/server/.env.dist', './src/server/.env')
+  copy_file('../src/client/.env.develop', './src/client/.env')
 
   info('Yarn install')
   invoke 'frentreprise:yarn', ['install']
@@ -160,7 +161,7 @@ Install
   run("#{sql_cat_cmd} | c42 pg:console")
 
   info('Execute migrations')
-  invoke 'server:yarn', ['migrate up']
+  invoke 'server:yarn', ['migrate up --no-check-order']
 
   info('Restart front')
   invoke 'docker:restart', ['front']

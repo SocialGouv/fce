@@ -55,7 +55,7 @@ const sources = [
   },
   {
     fournisseur: "DGEFP",
-    si: "RUPCO",
+    si: "SI PSE/RUPCO",
     table: "etablissements_pse",
     date: "2020-02-04"
   },

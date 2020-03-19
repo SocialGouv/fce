@@ -36,7 +36,7 @@ function RCC({ establishment }) {
   return (
     <Subcategory
       subtitle="Rupture conventionnelle collective"
-      sectionSource="RUPCO"
+      sectionSource="SI PSE/RUPCO"
     >
       <Data
         name="Procédure en cours"

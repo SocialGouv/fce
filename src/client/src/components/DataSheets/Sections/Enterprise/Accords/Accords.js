@@ -70,10 +70,12 @@ const Accords = ({
                       establishment,
                       "categorie_etablissement"
                     );
-                    const date = lastDate
-                      .split("-")
-                      .reverse()
-                      .join("/");
+                    const date =
+                      lastDate &&
+                      lastDate
+                        .split("-")
+                        .reverse()
+                        .join("/");
 
                     return (
                       <tr key={siret}>

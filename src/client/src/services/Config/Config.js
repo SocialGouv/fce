@@ -13,7 +13,7 @@ const globalConfig = {
   },
   sidebarEstablishmentsLimit: 20,
   monthsProceduresLimit: 36,
-  interactions: ["C", "3E", "T"],
+  interactions: ["C", "3E_SEER", "3E_SRC", "T"],
   region: {
     occitanie: 76
   },

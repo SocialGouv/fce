@@ -1,6 +1,6 @@
 require("dotenv").config();
 const process = require("process");
-const { promisify } = require("util");
+const { format } = require("date-fns");
 const Minio = require("minio");
 
 const LOCAL_STORAGE_PATH = "/mnt/data/export";
@@ -101,7 +101,9 @@ class MinioDownloader {
     return new Promise((resolve, reject) => {
       this.minioClient.copyObject(
         bucket,
-        `${ARCHIVE_FOLDER}/${file.name}`,
+        `${ARCHIVE_FOLDER}/${format(new Date(), "yyyyMMdd_HHmmss")}_${
+          file.name
+        }`,
         `${bucket}/${file.name}`,
         null,
         (err, data) => {

@@ -67,6 +67,9 @@ end
 
         desc 'cypress:run', 'Lance cypress en local'
         shell_task 'cypress:run', "cd src/client && ./node_modules/.bin/cypress open --port 8080 --env host=https://fce.test"
+
+        desc 'lint', 'Run linter'
+        shell_task 'lint', "#{ctr_yarn} lint"
     end
 end
 

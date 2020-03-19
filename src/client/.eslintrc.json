@@ -1,16 +1,33 @@
 {
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
   "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["prettier", "react"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
   "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "env": {
-      "es6": true,
-      "node": true
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "16.13.0"
     }
   },
-  "extends": ["prettier", "plugin:react/recommended"],
-  "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": "error"
+    "no-unused-vars": ["error", { "ignoreRestSiblings": true, "argsIgnorePattern": "^_" }]
   }
 }

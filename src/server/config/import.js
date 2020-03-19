@@ -30,6 +30,7 @@ const config = {
       outputFileName: "interactions_pole_3e.csv"
     },
     ingest: {
+      className: "InteractionsPole3EIngestor",
       table: "interactions_pole_3e",
       historyTable: "interactions_pole_3e_historique",
       filename: `${FILES_FOLDER}/interactions_pole_3e.csv`,
@@ -47,6 +48,27 @@ const config = {
       history: true,
       date: {
         field: "date_visite",
+        format: "DD/MM/YYYY"
+      }
+    }
+  },
+  interactions_pole_3e_src: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgefp",
+      fileMatch: /^SRC_Extraction(.)*.csv$/,
+      outputFileName: "interactions_pole_3e_src.csv"
+    },
+    ingest: {
+      className: "InteractionsPole3ESrcIngestor",
+      table: "interactions_pole_3e_src",
+      filename: `${FILES_FOLDER}/interactions_pole_3e_src.csv`,
+      cols: ["region", "siret", "numero_dossier", "type_controle", "date"],
+      delimiter: ";",
+      truncate: true,
+      history: false,
+      date: {
+        field: "date",
         format: "DD/MM/YYYY"
       }
     }

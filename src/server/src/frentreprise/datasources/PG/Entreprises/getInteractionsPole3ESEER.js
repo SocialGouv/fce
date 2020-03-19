@@ -1,15 +1,16 @@
 import { getFormatedDate } from "../Helper";
 
-export default async (SIRET, interactionsPole3E) => {
-  return interactionsPole3E.findAllBySIRET(SIRET).then(rows => {
+export default async (SIREN, interactionsPole3ESEER) => {
+  return interactionsPole3ESEER.findAllBySIREN(SIREN).then(rows => {
     if (!rows || !rows.length) {
       return {};
     }
 
     const interactions = rows.map(interaction => {
       return {
+        siret: interaction.siret,
         date: getFormatedDate(interaction.date_visite),
-        pole: "3E",
+        pole: "3E_SEER",
         unite: `Service Entreprise ${interaction.region &&
           interaction.region.trim()}`,
         type: interaction.type_suivi && interaction.type_suivi.trim(),
@@ -19,6 +20,6 @@ export default async (SIRET, interactionsPole3E) => {
       };
     });
 
-    return { interactions_3E: interactions };
+    return { interactions_3E_SEER: interactions };
   });
 };

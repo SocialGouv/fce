@@ -121,16 +121,6 @@ const EstablishmentHelps = ({ establishment }) => {
             </table>
           )}
         </Subcategory>
-
-        <Subcategory subtitle="Alternance">
-          <Data
-            name={`Embauche en contrat en alternance en année ${getCustomPastYear(
-              1
-            )} ou ${getCustomPastYear(2)}`}
-            value={establishment.contrat_aide_alternance_n1}
-            columnClasses={["is-7", "is-5"]}
-          />
-        </Subcategory>
       </div>
     </section>
   );

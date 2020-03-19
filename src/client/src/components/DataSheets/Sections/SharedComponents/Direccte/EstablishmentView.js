@@ -17,20 +17,22 @@ class EstablishmentView extends React.Component {
   render() {
     const { establishment } = this.props;
 
-    console.log(establishment);
-
     const lastInteractions = {
+      // TO TEST SOURCES DISPLAY:
+      // - interactions_T -> POLE T & POLE C
+      // - interactions_3E -> 3E-SEER & 3E-SRC
+      // UPDATE TABLES WHEN DATA IS READY
       T: {
         ...getLastInteraction(establishment.interactions_T, "T"),
         source: "Wiki'T"
       },
       C: {
-        ...getLastInteraction(establishment.interactions_C, "C"),
+        ...getLastInteraction(establishment.interactions_T, "C"),
         source: "SORA"
       },
       "3E_SEER": {
         ...getLastInteraction(establishment.interactions_3E, "3E-SEER"),
-        source: "EOS"
+        source: "EOS-default"
       },
       "3E_SRC": {
         ...getLastInteraction(establishment.interactions_3E, "3E-SRC"),

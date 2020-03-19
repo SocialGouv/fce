@@ -34,7 +34,10 @@ function RCC({ establishment }) {
   };
 
   return (
-    <Subcategory subtitle="Rupture conventionnelle collective">
+    <Subcategory
+      subtitle="Rupture conventionnelle collective"
+      sectionSource="RUPCO"
+    >
       <Data
         name="Procédure en cours"
         value={!!rccList.inProcess}

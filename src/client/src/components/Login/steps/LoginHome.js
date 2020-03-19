@@ -8,8 +8,8 @@ const LoginHome = ({ setStep }) => (
       Retrouvez les informations légales et administratives des entreprises
     </h1>
     <p className="login__subtitle">
-      L'état civil, l'activité et les données de l'administration dans une seule
-      fiche destinée aux agents publics
+      L{"'"}état civil, l{"'"}activité et les données de l{"'"}administration
+      dans une seule fiche destinée aux agents publics
     </p>
     <p className="login__info has-mb-2">
       Ce service est destiné aux agents de service public.

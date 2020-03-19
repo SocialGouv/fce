@@ -24,7 +24,9 @@ class Mandataires extends React.Component {
           {items.length ? (
             items
           ) : (
-            <p className="has-text-center">Aucun mandataire n'a été trouvé</p>
+            <p className="has-text-center">
+              Aucun mandataire n{"'"}a été trouvé
+            </p>
           )}
         </div>
       </section>

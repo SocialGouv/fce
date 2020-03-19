@@ -26,27 +26,27 @@ class MailTo extends React.Component {
   getBody = () => {
     return encodeURIComponent(`Bonjour,
 
-Suite à la consultation de la fiche  « ${
+Suite à la consultation de la fiche  « ${
       this.props.type === "enterprise" ? "Entreprise" : "Etablissement"
-    } » sur la FCE, je souhaiterais obtenir de la documentation sur :
+    } » sur la FCE, je souhaiterais obtenir de la documentation sur :
 
 ${
   this.props.type === "enterprise"
     ? `l'entreprise « ${this.props.enterprise.raison_sociale ||
         this.props.enterprise.nom +
           " " +
-          this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${
+          this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${
         this.props.enterprise.siren
-      } ») et ses établissements.`
-    : `l'entreprise  « ${this.props.enterprise.raison_sociale ||
+      } ») et ses établissements.`
+    : `l'entreprise  « ${this.props.enterprise.raison_sociale ||
         this.props.enterprise.nom +
           " " +
-          this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${
+          this.props.enterprise.prenom} »  (ayant le numéro SIREN « ${
         this.props.enterprise.siren
-      } ») et plus spécifiquement sur son  établissement  ( « Numéro SIRET= ${
+      } ») et plus spécifiquement sur son  établissement  ( « Numéro SIRET= ${
         this.props.establishment.siret
-      } » ) situé à « ${this.props.establishment.adresse_components &&
-        this.props.establishment.adresse_components.localite} ».`
+      } » ) situé à « ${this.props.establishment.adresse_components &&
+        this.props.establishment.adresse_components.localite} ».`
 }
 
 En vous remerciant pour les éléments que vous  pourrez m’apporter.
@@ -63,7 +63,7 @@ Cordialement`);
         <span className="icon">
           <FontAwesomeIcon icon={faEnvelope} />
         </span>
-        <span>Demande d'informations</span>
+        <span>Demande d{"'"}informations</span>
       </a>
     );
   }

@@ -57,7 +57,7 @@ class Finances extends React.Component {
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Chiffre d'affaires</th>
+                  <th scope="row">Chiffre d{"'"}affaires</th>
                   {caList}
                 </tr>
                 <tr>

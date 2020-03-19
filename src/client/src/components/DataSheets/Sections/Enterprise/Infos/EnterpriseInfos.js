@@ -125,7 +125,7 @@ const EnterpriseActivity = ({ enterprise, headOffice }) => {
         headOffice.document_association &&
         headOffice.document_association.url ? (
           <span>
-            <span>Télécharger le document de l'association </span>
+            <span>Télécharger le document de l{"'"}association </span>
             <a
               href={headOffice.document_association.url}
               target="_blank"

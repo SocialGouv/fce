@@ -46,8 +46,8 @@ const ActivitePartielle = ({
                 <th className="th">SIRET</th>
                 <th className="th">Catégorie établissement</th>
                 <th className="th table__center-cell">État</th>
-                <th className="th">Nombre total d'heures autorisées</th>
-                <th className="th">Nombre total d'heures consommées</th>
+                <th className="th">Nombre total d{"'"}heures autorisées</th>
+                <th className="th">Nombre total d{"'"}heures consommées</th>
                 <th className="th">
                   Date de décision de la dernière convention
                 </th>

@@ -10,8 +10,10 @@ const MagicLink = ({ hasError, errorMessage, loading, isIE }) => (
     {hasError &&
       (isIE ? (
         <div>
-          <h1>Ce site n'est pas compatible avec Internet Explorer</h1>
-          <p>Copiez-collez le lien ci-dessous dans l'un de ces navigateurs:</p>
+          <h1>Ce site n{"'"}est pas compatible avec Internet Explorer</h1>
+          <p>
+            Copiez-collez le lien ci-dessous dans l{"'"}un de ces navigateurs:
+          </p>
           <ul>
             <li>Chrome</li>
             <li>Firefox</li>

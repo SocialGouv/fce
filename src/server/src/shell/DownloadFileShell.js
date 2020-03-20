@@ -25,4 +25,4 @@ class DownloadFileShell extends Shell {
   }
 }
 
-module.exports = DownloadFileShell;
+export default DownloadFileShell;

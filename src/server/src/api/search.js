@@ -2,14 +2,13 @@ import Communes from "../models/Communes";
 import Naf from "../models/Naf";
 import Departements from "../models/Departements";
 import withAuth from "../middlewares/auth";
+import frentreprise, { isSIRET, isSIREN } from "frentreprise";
 
 const express = require("express");
 const xlsx = require("xlsx");
 const router = express.Router();
 const config = require("config");
 const AppSearchClient = require("@elastic/app-search-node");
-
-const frentreprise = require("frentreprise");
 
 const logError = (data, err) => {
   console.error({ logError: err });
@@ -37,8 +36,8 @@ router.get("/entity", withAuth, function(req, res) {
       terms: {
         q: query
       },
-      isSIRET: frentreprise.isSIRET(query),
-      isSIREN: frentreprise.isSIREN(query)
+      isSIRET: isSIRET(query),
+      isSIREN: isSIREN(query)
     }
   };
 
@@ -74,8 +73,8 @@ router.get("/search", withAuth, function(req, res) {
           req.query["siegeSocial"] === "true" ||
           req.query["siegeSocial"] === true
       },
-      isSIRET: frentreprise.isSIRET(query),
-      isSIREN: frentreprise.isSIREN(query)
+      isSIRET: isSIRET(query),
+      isSIREN: isSIREN(query)
     }
   };
 
@@ -232,4 +231,4 @@ router.get("/departements", withAuth, function(req, res) {
   });
 });
 
-module.exports = router;
+export default router;

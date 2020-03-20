@@ -20,4 +20,4 @@ class Shell {
   }
 }
 
-module.exports = Shell;
+export default Shell;

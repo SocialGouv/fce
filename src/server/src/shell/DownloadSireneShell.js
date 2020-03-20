@@ -29,4 +29,4 @@ class DownloadSireneShell extends Shell {
   }
 }
 
-module.exports = DownloadSireneShell;
+export default DownloadSireneShell;

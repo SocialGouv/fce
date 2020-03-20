@@ -22,4 +22,4 @@ class MigrationsShell extends Shell {
   }
 }
 
-module.exports = MigrationsShell;
+export default MigrationsShell;

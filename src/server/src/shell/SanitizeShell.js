@@ -92,4 +92,4 @@ class SanitizeShell extends Shell {
   }
 }
 
-module.exports = SanitizeShell;
+export default SanitizeShell;

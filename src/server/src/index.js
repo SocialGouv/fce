@@ -4,6 +4,9 @@ import bodyParser from "body-parser";
 import apiRouter from "./api";
 import frentreprise from "frentreprise";
 import PG from "./frentreprise/datasources/PG/PG";
+import postgres from "./db/postgres";
+import EntrepriseModel from "./frentreprise/models/Entreprise";
+import EtablissementModel from "./frentreprise/models/Etablissement";
 
 require("dotenv").config();
 const config = require("config");
@@ -12,9 +15,9 @@ const port = (config.has("port") && +config.get("port")) || 80;
 const host = (config.has("port") && config.get("host")) || undefined;
 
 function init() {
-  frentreprise.EntrepriseModel = require("./frentreprise/models/Entreprise");
-  frentreprise.EtablissementModel = require("./frentreprise/models/Etablissement");
-  frentreprise.setDb(require("./db/postgres"));
+  frentreprise.EntrepriseModel = EntrepriseModel;
+  frentreprise.EtablissementModel = EtablissementModel;
+  frentreprise.setDb(postgres);
 
   const apiGouv = frentreprise.getDataSource("ApiGouv").source;
   apiGouv.token = config.get("APIGouv.token");
@@ -90,4 +93,4 @@ function run() {
 }
 
 init();
-module.exports = run();
+export default run();

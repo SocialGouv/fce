@@ -126,4 +126,4 @@ class MinioDownloader {
   }
 }
 
-module.exports = MinioDownloader;
+export default MinioDownloader;

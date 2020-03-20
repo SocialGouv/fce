@@ -120,4 +120,4 @@ class Ingestor {
   }
 }
 
-module.exports = Ingestor;
+export default Ingestor;

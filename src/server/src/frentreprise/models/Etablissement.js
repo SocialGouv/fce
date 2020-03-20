@@ -74,4 +74,4 @@ class DireccteEtablissement extends Etablissement {
   }
 }
 
-module.exports = DireccteEtablissement;
+export default DireccteEtablissement;

@@ -51,4 +51,4 @@ class ConvertPseCsvShell extends Shell {
   }
 }
 
-module.exports = ConvertPseCsvShell;
+export default ConvertPseCsvShell;

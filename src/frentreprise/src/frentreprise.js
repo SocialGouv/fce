@@ -277,7 +277,7 @@ class frentreprise {
     return datasources && !!Object.values(datasources).includes(true);
   }
 }
-
+/*
 module.exports = new frentreprise();
 module.exports.Entreprise = Entreprise;
 module.exports.Etablissement = Etablissement;
@@ -285,3 +285,9 @@ module.exports.DataSource = DataSource;
 module.exports.isSIRET = Validator.validateSIRET;
 module.exports.isSIREN = Validator.validateSIREN;
 module.exports._ = _;
+*/
+
+export default new frentreprise();
+export { Entreprise, Etablissement, DataSource, _ };
+export const isSIRET = Validator.validateSIRET;
+export const isSIREN = Validator.validateSIREN;

@@ -43,7 +43,7 @@ class Admin extends React.Component {
         }
         return response;
       })
-      .catch(error => {
+      .catch(() => {
         this.setState({ hasError: true, loading: false });
       });
   };
@@ -61,15 +61,12 @@ class Admin extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = () => {
   return {};
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = () => {
   return {};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Admin);
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

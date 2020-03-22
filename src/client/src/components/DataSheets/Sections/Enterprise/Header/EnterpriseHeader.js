@@ -32,7 +32,8 @@ class EnterpriseHeader extends React.Component {
     enterprise: PropTypes.object.isRequired,
     setSearchTerm: PropTypes.func.isRequired,
     setSearchFilters: PropTypes.func.isRequired,
-    resetSearch: PropTypes.func.isRequired
+    resetSearch: PropTypes.func.isRequired,
+    history: PropTypes.object.isRequired
   };
 
   render() {
@@ -137,9 +138,7 @@ class EnterpriseHeader extends React.Component {
               Voir sur{" "}
               <a
                 className="is-link"
-                href={`https://www.societe.com/societe/${slugSocieteCom}-${
-                  enterprise.siren
-                }.html`}
+                href={`https://www.societe.com/societe/${slugSocieteCom}-${enterprise.siren}.html`}
               >
                 Societe.com
               </a>
@@ -165,9 +164,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(EnterpriseHeader)
-);
+export default withRouter(connect(null, mapDispatchToProps)(EnterpriseHeader));

@@ -83,9 +83,4 @@ Header.propTypes = {
   location: PropTypes.object
 };
 
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(Header)
-);
+export default withRouter(connect(null, mapDispatchToProps)(Header));

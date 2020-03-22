@@ -34,7 +34,8 @@ const MagicLink = ({ hasError, errorMessage, loading, isIE }) => (
 MagicLink.propTypes = {
   hasError: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  isIE: PropTypes.bool.isRequired
 };
 
 export default MagicLink;

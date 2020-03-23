@@ -12,15 +12,10 @@ class DownloadFileShell extends Shell {
       throw new MissingConfigException(id);
     }
 
-    console.log({
-      _args: this._args,
-      _options: this._options,
-      _config: this._config
-    });
-
-    return;
+    const archiveFile = Boolean(+this.getEnvConfig("MINIO_ARCHIVE_FILES"));
 
     const downloadConfig = config[id].download;
+    downloadConfig.archiveFile = archiveFile;
     const className = downloadConfig.className;
 
     const Downloader = className

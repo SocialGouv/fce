@@ -14,7 +14,7 @@ class Ingestor {
     this._config = config;
     this.psql = PSQL_BASE_CMD;
     this.tmpFile = `${TMP_DIR}/${this.getConfig("table")}.csv`;
-    this.PG = require("../../db/postgres");
+    this.PG = require("../lib/postgres");
   }
 
   getConfig(key) {

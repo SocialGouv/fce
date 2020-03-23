@@ -38,7 +38,10 @@ class MinioDownloader {
     }
 
     await this._downloadFile(bucket, file);
-    await this._moveToArchive(bucket, file);
+
+    if (this._config.archiveFile) {
+      await this._moveToArchive(bucket, file);
+    }
 
     console.log("File downloaded");
   }

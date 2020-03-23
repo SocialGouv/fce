@@ -67,6 +67,7 @@ const Dashboard = ({
       <Item
         icon={faChild}
         name="Effectif"
+        smallText={tranche_effectif_insee === "00"}
         value={
           isActiveEstablishment(establishment)
             ? dernier_effectif_physique ||

@@ -28,14 +28,14 @@ const EstablishmentRelationship = ({ establishment }) => {
         <h2 className="title">Relation travail</h2>
       </div>
       <div className="section-datas">
-        <Subcategory subtitle="Convention collective" sectionSource="DSN">
+        <Subcategory subtitle="Convention collective" source="DSN">
           <div className="single-value">
             <Value value={code_idcc && code_idcc} />
             <span>{code_idcc && " - "}</span>
             <Value value={libelle_idcc && libelle_idcc} empty="" />
           </div>
         </Subcategory>
-        <Subcategory subtitle="Accords d'entreprise" sectionSource="D@cccord">
+        <Subcategory subtitle="Accords d'entreprise" source="D@cccord">
           <Data
             name="Nombre total d'accords d'entreprise déposés depuis 1980"
             value={nbAccords}

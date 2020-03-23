@@ -5,12 +5,12 @@ import Source from "../../../../../containers/Source";
 
 import "./subcategory.scss";
 
-const Subcategory = ({ subtitle, datas, children, sectionSource }) => {
+const Subcategory = ({ subtitle, datas, children, source }) => {
   return (
     <div className="subcategory">
       <div className="subcategory__header">
         <h3 className="subcategory__title">{subtitle}</h3>
-        {sectionSource && <Source si={sectionSource} />}
+        {source && <Source si={source} />}
       </div>
       {children
         ? children

@@ -33,7 +33,7 @@ const EstablishmentMuteco = ({ establishment }) => {
         <h2 className="title">Mutations Économiques</h2>
       </div>
       <div className="section-datas">
-        <Subcategory subtitle="Activité partielle" sectionSource="APART">
+        <Subcategory subtitle="Activité partielle" source="APART">
           <Data
             name="Recours sur les 24 derniers mois"
             value={hasActivitePartielle}

@@ -40,7 +40,7 @@ const EstablishmentActivity = ({ establishment }) => {
               nonEmptyValue: ""
             }
           ]}
-          sectionSource="Sirène-default"
+          source="Sirène-default"
         />
         <Subcategory
           subtitle="Effectifs"
@@ -89,7 +89,7 @@ const EstablishmentActivity = ({ establishment }) => {
               nonEmptyValue: ""
             }
           ]}
-          sectionSource="EOS-monthYear"
+          source="EOS-monthYear"
         />
         {Array.isArray(establishment.pole_competitivite) &&
           !!establishment.pole_competitivite.length && (

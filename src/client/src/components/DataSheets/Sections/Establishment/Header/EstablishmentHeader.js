@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import Dashboard from "../Dashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowAltRight,
-  faSquare,
-  faCircle
-} from "@fortawesome/pro-solid-svg-icons";
+import { faSquare, faCircle } from "@fortawesome/pro-solid-svg-icons";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import { formatAddress } from "../../../../../helpers/Address";
 import InfoBox from "../../../../shared/InfoBox";
@@ -27,7 +23,7 @@ class EstablishmentHeader extends React.Component {
 
     return (
       <section id="header" className="establishment-header w-100 mb-4">
-        <h1 className="columns mb-4 is-capitalized has-text-weight-bold is-size-3">
+        <h1 className="mb-4 is-capitalized has-text-weight-bold is-size-3">
           <Value
             value={
               (establishment.nom_commercial &&

@@ -53,7 +53,7 @@ class EnterpriseHeader extends React.Component {
         )}
         {isRedirectedToResearch && <Redirect to="/" />}
         <section id="header" className="enterprise-header w-100 mb-4">
-          <h1 className="columns mb-4 is-capitalized has-text-weight-bold is-size-3">
+          <h1 className="mb-4 is-capitalized has-text-weight-bold is-size-3">
             <Value
               value={
                 enterprise.raison_sociale ||

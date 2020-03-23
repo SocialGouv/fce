@@ -12,4 +12,4 @@ class MissingConfigException extends Error {
   }
 }
 
-export default MissingConfigException;
+module.exports = MissingConfigException;

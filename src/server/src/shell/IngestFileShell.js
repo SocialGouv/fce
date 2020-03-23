@@ -26,4 +26,4 @@ class IngestFileShell extends Shell {
   }
 }
 
-export default IngestFileShell;
+module.exports = IngestFileShell;

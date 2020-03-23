@@ -121,4 +121,4 @@ class Ingestor {
   }
 }
 
-export default Ingestor;
+module.exports = Ingestor;

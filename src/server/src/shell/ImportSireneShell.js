@@ -221,4 +221,4 @@ class ImportSireneShell extends Shell {
   }
 }
 
-export default ImportSireneShell;
+module.exports = ImportSireneShell;

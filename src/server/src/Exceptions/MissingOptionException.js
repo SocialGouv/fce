@@ -12,4 +12,4 @@ class MissingOptionException extends Error {
   }
 }
 
-export default MissingOptionException;
+module.exports = MissingOptionException;

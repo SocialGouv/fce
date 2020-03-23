@@ -12,6 +12,14 @@ class DownloadFileShell extends Shell {
       throw new MissingConfigException(id);
     }
 
+    console.log({
+      _args: this._args,
+      _options: this._options,
+      _config: this._config
+    });
+
+    return;
+
     const downloadConfig = config[id].download;
     const className = downloadConfig.className;
 
@@ -26,4 +34,4 @@ class DownloadFileShell extends Shell {
   }
 }
 
-export default DownloadFileShell;
+module.exports = DownloadFileShell;

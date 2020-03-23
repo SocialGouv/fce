@@ -25,4 +25,4 @@ const formatDate = date => {
   return null;
 };
 
-export default formatDate;
+module.exports = formatDate;

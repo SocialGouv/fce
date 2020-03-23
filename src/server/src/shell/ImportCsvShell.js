@@ -138,4 +138,4 @@ class ImportCsvShell extends Shell {
   }
 }
 
-export default ImportCsvShell;
+module.exports = ImportCsvShell;

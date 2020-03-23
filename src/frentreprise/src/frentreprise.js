@@ -2,7 +2,6 @@ import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
 import SirenePG from "./DataSources/SirenePG";
-import SireneAPI from "./DataSources/SireneAPI";
 
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
@@ -133,7 +132,7 @@ class frentreprise {
       } else if (!Array.isArray(source_results)) {
         if (
           typeof source_results === "object" &&
-          source_results.hasOwnProperty("error") &&
+          Object.prototype.hasOwnProperty.call(source_results, "error") &&
           source_results.error === true
         ) {
           hasError = true;

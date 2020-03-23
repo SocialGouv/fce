@@ -56,7 +56,7 @@ export default {
           (typeof request._currentRequest === "object" ||
           typeof request.path === "string"
             ? `${("" + (config.baseURL || "(unknown host)")).replace(
-                /^(https?:\/\/[^\/]*).*$/i,
+                /^(https?:\/\/[^/]*).*$/i,
                 "$1"
               )}${(request._currentRequest && request._currentRequest.path) ||
                 request.path}`

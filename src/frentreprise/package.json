@@ -11,6 +11,7 @@
     "follow-redirects": "^1.10.0",
     "is-buffer": "^2.0.4",
     "lodash.get": "^4.4.2",
+    "qs": "^6.9.2",
     "tunnel": "^0.0.6"
   },
   "scripts": {

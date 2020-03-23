@@ -44,10 +44,10 @@ const EstablishmentMuteco = ({ establishment }) => {
               <thead>
                 <tr>
                   <th className="th">Numéro de convention</th>
-                  <th className="th">Nombre d'avenants</th>
+                  <th className="th">Nombre d{"'"}avenants</th>
                   <th className="th">Date de décision (convention initiale)</th>
-                  <th className="th">Nombre total d'heures autorisées</th>
-                  <th className="th">Nombre total d'heures consommées</th>
+                  <th className="th">Nombre total d{"'"}heures autorisées</th>
+                  <th className="th">Nombre total d{"'"}heures consommées</th>
                   <th className="th">Motif</th>
                 </tr>
               </thead>

@@ -1,5 +1,5 @@
 export const selectCustomStyles = {
-  option: (provided, state) => ({
+  option: provided => ({
     ...provided,
     color: "#353535"
   })

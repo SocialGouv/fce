@@ -28,6 +28,10 @@
     }
   },
   "rules": {
-    "no-unused-vars": ["error", { "ignoreRestSiblings": true, "argsIgnorePattern": "^_" }]
+    "no-unused-vars": [
+      "error",
+      { "ignoreRestSiblings": true, "argsIgnorePattern": "^_" }
+    ],
+    "no-extra-boolean-cast": 0
   }
 }

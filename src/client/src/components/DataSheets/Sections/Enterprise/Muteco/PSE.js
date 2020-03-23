@@ -63,16 +63,18 @@ function PSE({ enterprise }) {
               <thead>
                 <tr>
                   <th>Numéro de dossier</th>
-                  <th className="has-text-centered">Date d'enregistrement</th>
                   <th className="has-text-centered">
-                    Situation juridique de l'entreprise durant la procédure
+                    Date d{"'"}enregistrement
+                  </th>
+                  <th className="has-text-centered">
+                    Situation juridique de l{"'"}entreprise durant la procédure
                   </th>
                   <th className="has-text-centered">Date du jugement</th>
                   <th className="has-text-centered">
                     Nombre maximum de ruptures de contrats de travail envisagées
                   </th>
                   <th className="has-text-centered">
-                    Nombre d'établissements impactés
+                    Nombre d{"'"}établissements impactés
                   </th>
                 </tr>
               </thead>

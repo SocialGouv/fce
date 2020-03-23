@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { withRouter } from "react-router";
@@ -27,6 +28,15 @@ class Enterprise extends React.Component {
     };
   }
 
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    currentEnterprise: PropTypes.object.isRequired,
+    loadSources: PropTypes.func.isRequired,
+    loadEstablishment: PropTypes.func.isRequired,
+    loadEntreprise: PropTypes.func.isRequired
+  };
+
   componentDidMount() {
     this.mountComponent();
   }
@@ -43,7 +53,10 @@ class Enterprise extends React.Component {
     this.props.loadSources();
     this.setState(
       {
-        isEnterprise: this.props.match.params.hasOwnProperty("siren"),
+        isEnterprise: Object.prototype.hasOwnProperty.call(
+          this.props.match.params,
+          "siren"
+        ),
         isLoaded: false
       },
       () => {
@@ -127,7 +140,7 @@ class Enterprise extends React.Component {
         }
       })
       .catch(
-        function(error) {
+        function() {
           this.setState({
             redirectTo: "/404"
           });
@@ -150,7 +163,7 @@ class Enterprise extends React.Component {
         }
       })
       .catch(
-        function(error) {
+        function() {
           this.setState({
             redirectTo: "/404"
           });
@@ -190,7 +203,6 @@ class Enterprise extends React.Component {
         enterprise={this.state.enterprise}
         headOffice={this.state.headOffice}
         establishments={this.state.establishments}
-        hasSearchResults={this.props.hasSearchResults}
         isLoaded={this.state.isLoaded}
         history={this.props.history}
       />
@@ -200,7 +212,6 @@ class Enterprise extends React.Component {
         headOffice={this.state.headOffice}
         establishment={this.state.establishment}
         establishments={this.state.establishments}
-        hasSearchResults={this.props.hasSearchResults}
         isLoaded={this.state.isLoaded}
         history={this.props.history}
       />
@@ -210,8 +221,7 @@ class Enterprise extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentEnterprise: state.enterprise.current,
-    hasSearchResults: state.search.results && state.search.results.length
+    currentEnterprise: state.enterprise.current
   };
 };
 
@@ -230,8 +240,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Enterprise)
+  connect(mapStateToProps, mapDispatchToProps)(Enterprise)
 );

@@ -32,7 +32,7 @@ const ErrorIE = () => {
       {targetedBrowserName ? (
         <div className="container">
           <h1 className="error-ie__title">
-            Ce lien de connexion n'est pas destiné à ce navigateur
+            Ce lien de connexion n{"'"}est pas destiné à ce navigateur
           </h1>
           <p>
             Merci de copier-coller le lien ci-dessous dans le navigateur
@@ -65,9 +65,11 @@ const ErrorIE = () => {
       ) : (
         <div className="container">
           <h1 className="error-ie__title">
-            Ce site n'est pas compatible avec Internet Explorer
+            Ce site n{"'"}est pas compatible avec Internet Explorer
           </h1>
-          <p>Copiez-collez le lien ci-dessous dans l'un de ces navigateurs:</p>
+          <p>
+            Copiez-collez le lien ci-dessous dans l{"'"}un de ces navigateurs:
+          </p>
           <ul className="error-ie__browsers">
             {browsers.map(({ name, logo, alt }) => (
               <li key={name} className="error-ie__browser">

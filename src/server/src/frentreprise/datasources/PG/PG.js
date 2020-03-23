@@ -2,7 +2,8 @@
 import { DataSource } from "frentreprise";
 import Etablissements from "./Etablissements";
 import Entreprises from "./Entreprises";
-import InteractionsPole3E from "../../../models/InteractionsPole3E";
+import InteractionsPole3ESEER from "../../../models/InteractionsPole3ESEER";
+import InteractionsPole3ESRC from "../../../models/InteractionsPole3ESRC";
 import InteractionsPoleT from "../../../models/InteractionsPoleT";
 import UcEff from "../../../models/UcEff";
 import DsnEff from "../../../models/DsnEff";
@@ -24,7 +25,8 @@ export default class PG extends DataSource {
   async getSIRET(SIRET) {
     return await this[_.requestDB](
       SIRET,
-      [Etablissements.getInteractionsPole3E, new InteractionsPole3E()],
+      [Etablissements.getInteractionsPole3ESEER, new InteractionsPole3ESEER()],
+      [Etablissements.getInteractionsPole3ESRC, new InteractionsPole3ESRC()],
       [Etablissements.getInteractionsPoleT, new InteractionsPoleT()],
       [Etablissements.getUcEff, new UcEff()],
       [Etablissements.getDsnEff, new DsnEff()],
@@ -43,7 +45,8 @@ export default class PG extends DataSource {
   async getSIREN(SIREN) {
     return await this[_.requestDB](
       SIREN,
-      [Entreprises.getInteractionsPole3E, new InteractionsPole3E()],
+      [Entreprises.getInteractionsPole3ESEER, new InteractionsPole3ESEER()],
+      [Entreprises.getInteractionsPole3ESRC, new InteractionsPole3ESRC()],
       [Entreprises.getInteractionsPoleT, new InteractionsPoleT()],
       [Entreprises.getAccords, new Accords()],
       [Entreprises.getActivitePartielle, new ActivitePartielle()],

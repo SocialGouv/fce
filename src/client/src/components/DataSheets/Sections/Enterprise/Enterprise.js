@@ -1,6 +1,6 @@
 import React from "react";
 import { faPrint } from "@fortawesome/pro-solid-svg-icons";
-import withLoading from "../../../../services/Loading";
+import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
 import Infos from "./Infos";

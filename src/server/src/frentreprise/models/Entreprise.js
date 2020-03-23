@@ -1,7 +1,7 @@
 import { copyKeys } from "../../utils";
 import DireccteEtablissement from "./Etablissement";
-
-const { Entreprise } = require("frentreprise");
+// eslint-disable-next-line node/no-missing-import
+import { Entreprise } from "frentreprise";
 
 export default class DireccteEntreprise extends Entreprise {
   constructor(data, etsModel = DireccteEtablissement) {

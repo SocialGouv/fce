@@ -2,6 +2,7 @@ import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
 import apiRouter from "./api";
+// eslint-disable-next-line node/no-missing-import
 import frentreprise from "frentreprise";
 import PG from "./frentreprise/datasources/PG/PG";
 import postgres from "./db/postgres";

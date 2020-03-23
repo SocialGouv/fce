@@ -21,6 +21,7 @@ class DownloadSireneShell extends Shell {
   }
 
   async downloadAndWriteFile(url, filename) {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     const file = fs.createWriteStream(filename);
 
     await https.get(url, function(response) {

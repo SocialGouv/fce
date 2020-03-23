@@ -1,3 +1,4 @@
+// eslint-disable-next-line node/no-missing-import
 import { DataSource } from "frentreprise";
 import Etablissements from "./Etablissements";
 import Entreprises from "./Entreprises";

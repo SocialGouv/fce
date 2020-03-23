@@ -18,11 +18,16 @@ export default async (siren, ActivitePartielle) => {
           cause
         }
       ) => {
-        if (!activitesPartielles.hasOwnProperty(siret)) {
+        if (!Object.prototype.hasOwnProperty.call(activitesPartielles, siret)) {
           activitesPartielles[siret] = {};
         }
 
-        if (!activitesPartielles[siret].hasOwnProperty(num_convention)) {
+        if (
+          !Object.prototype.hasOwnProperty.call(
+            activitesPartielles,
+            num_convention
+          )
+        ) {
           activitesPartielles[siret][num_convention] = {
             numConvention: num_convention,
             nbAvenants: 0,

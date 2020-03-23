@@ -2,6 +2,7 @@ import Communes from "../models/Communes";
 import Naf from "../models/Naf";
 import Departements from "../models/Departements";
 import withAuth from "../middlewares/auth";
+// eslint-disable-next-line node/no-missing-import
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
 
 const express = require("express");

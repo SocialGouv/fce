@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const util = require("util");
+// eslint-disable-next-line security/detect-child-process
 const exec = util.promisify(require("child_process").exec);
 const unzipper = require("unzipper");
 const Shell = require("./Shell");
@@ -76,6 +77,7 @@ class ImportSireneShell extends Shell {
   }
 
   async importFile(filename, tableName) {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     if (!fs.existsSync(filename)) {
       throw new Error(`File "${filename}" not found`);
     }
@@ -92,6 +94,7 @@ class ImportSireneShell extends Shell {
       );
     }
 
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     if (!fs.existsSync(filename)) {
       throw new Error(`File "${filename}" not found`);
     }
@@ -128,6 +131,7 @@ class ImportSireneShell extends Shell {
     return new Promise((resolve, reject) => {
       fileToUnzip
         .stream()
+        // eslint-disable-next-line security/detect-non-literal-fs-filename
         .pipe(fs.createWriteStream(unzipedFilename))
         .on("error", reject)
         .on("finish", () => {

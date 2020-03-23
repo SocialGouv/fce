@@ -4,6 +4,9 @@
   "main": "build/server.js",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "scripts": {
     "start": "node build/server.js",
     "watch": "webpack --color --watch --inspect-brk=0.0.0.0 & nodemon",
@@ -34,6 +37,7 @@
     "frentreprise": "../frentreprise",
     "jsonwebtoken": "^8.5.1",
     "line-replace": "^1.0.3",
+    "lodash.get": "^4.4.2",
     "magic-key": "^1.0.0",
     "minimist": "^1.2.5",
     "minio": "^7.0.15",

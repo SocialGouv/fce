@@ -12,7 +12,7 @@ export default async (SIRET, Accords) => {
 
         Object.entries(accord).forEach(([key, value]) => {
           if (
-            acc.hasOwnProperty(key) &&
+            Object.prototype.hasOwnProperty.call(acc, key) &&
             typeof value === "number" &&
             value > 0
           ) {

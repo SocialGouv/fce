@@ -1,6 +1,7 @@
 require("dotenv").config();
 const process = require("process");
 const fs = require("fs");
+// eslint-disable-next-line security/detect-child-process
 const { execSync } = require("child_process");
 const _get = require("lodash.get");
 const lineReplace = require("line-replace");

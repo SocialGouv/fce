@@ -1,6 +1,5 @@
 require("dotenv").config();
 const process = require("process");
-const { promisify } = require("util");
 const Minio = require("minio");
 
 const LOCAL_STORAGE_PATH = "/mnt/data/export";

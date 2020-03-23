@@ -1,3 +1,5 @@
+/* eslint-disable */
+// deprecated script
 require("dotenv").config();
 const { execSync } = require("child_process");
 const readline = require("readline");
@@ -18,6 +20,8 @@ const psqlQueriesAfterImport = {
 
 class ImportCsvShell extends Shell {
   constructor(args, options) {
+    console.error("Deprecated script, use IngestFile instead !");
+
     super(args, options);
   }
 

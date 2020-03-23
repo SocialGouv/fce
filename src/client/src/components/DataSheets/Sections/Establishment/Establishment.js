@@ -13,8 +13,6 @@ import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 
-import "./establishment.scss";
-
 const Establishment = ({
   establishment,
   establishments,

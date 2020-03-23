@@ -82,7 +82,7 @@ class EstablishmentView extends React.Component {
             value={interactions.length}
             columnClasses={["is-9", "is-3"]}
           />
-          <table className="table is-hoverable direccte-interactions">
+          <table className="table is-hoverable direccte-interactions w-100">
             <thead>
               <tr>
                 <th className="th">SIRET</th>

@@ -90,7 +90,7 @@ class EstablishmentView extends React.Component {
                 {Object.entries(lastInteractions).map(
                   ([pole, lastInteraction]) => {
                     return lastInteraction ? (
-                      <tr key={lastInteraction}>
+                      <tr key={pole}>
                         <td className="has-text-right">
                           <Value value={pole} />
                         </td>

@@ -12,7 +12,6 @@ import {
   resetSearch
 } from "../../../services/Store/actions";
 import Button from "../../shared/Button";
-import LinkButton from "../../shared/LinkButton";
 
 import "./sidebar.scss";
 

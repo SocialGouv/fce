@@ -3,11 +3,7 @@ import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import Dashboard from "../Dashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowAltRight,
-  faSquare,
-  faCircle
-} from "@fortawesome/pro-solid-svg-icons";
+import { faSquare, faCircle } from "@fortawesome/pro-solid-svg-icons";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import { formatAddress } from "../../../../../helpers/Address";
 import InfoBox from "../../../../shared/InfoBox";

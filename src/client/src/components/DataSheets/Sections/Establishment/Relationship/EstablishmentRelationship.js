@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
-import LinkButton from "../../../../shared/LinkButton";
 import Value from "../../../../shared/Value";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";

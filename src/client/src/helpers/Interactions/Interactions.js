@@ -1,20 +1,9 @@
 import _find from "lodash.find";
 import { getLastDateInteraction } from "../Date";
 
-export const getLastInteraction = (interactions, pole) => {
-  const EEEInteractions = {};
-
-  for (var interaction in interactions) {
-    if (interaction.pole === "3E-SEER" && pole === "3E-SEER") {
-      EEEInteractions.push(interaction);
-    }
-    if (interaction.pole === "3E-SRC" && pole === "3E-SRC") {
-      EEEInteractions.push(interaction);
-    }
-  }
-
+export const getLastInteraction = interactions => {
   const lastDateInteraction = getLastDateInteraction(
-    EEEInteractions === undefined ? EEEInteractions : interactions,
+    interactions,
     "YYYY-MM-DD"
   );
 

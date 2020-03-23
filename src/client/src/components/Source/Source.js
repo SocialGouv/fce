@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import "./source.scss";
 
-const Source = ({ name, updated, isTableCell }) => {
+const Source = ({ name, updated, isTableCell = false }) => {
   return isTableCell ? (
     <div className="source">
       <div className="source__name">{name}</div>

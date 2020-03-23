@@ -63,19 +63,20 @@ const sources = [
     fournisseur: "DGEFP",
     si: "Ari@ne",
     // TODO - table doesn't exists
-    table: "tablename"
+    table: ""
   },
   {
     fournisseur: "DGEFP",
     si: "Extrapro",
-    // TODO - table ?
-    table: "tablename"
+    // TODO - table doesn't exists
+    table: ""
   },
   {
     fournisseur: "DGEFP",
-    si: "MDF", // MDF = Mes démarches formation
-    // TODO
-    table: "tablename",
+    // MDF = Mes démarches formation
+    si: "MDF",
+    // TODO - table doesn't exists
+    table: "",
     date: "2019-10-29"
   },
   {

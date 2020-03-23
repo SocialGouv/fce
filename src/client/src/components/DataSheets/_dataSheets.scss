@@ -143,8 +143,15 @@
                 }
             }
 
-            .direccte-interactions td {
-                vertical-align: middle;
+            & .direccte-interactions {
+                td {
+                    vertical-align: middle;
+                }
+
+                th:first-child,
+                td:first-child {
+                    text-align: right;
+                }
             }
         }
 

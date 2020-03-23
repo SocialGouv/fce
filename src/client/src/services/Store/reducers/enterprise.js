@@ -10,8 +10,8 @@ const enterprise = (state = initialState, action) => {
     case SET_CURRENT_ENTERPRISE: {
       const enterprise = addInteractions(action.enterprise);
       if (Array.isArray(enterprise.etablissements)) {
-        enterprise.etablissements.forEach(establishment => {
-          establishment = addInteractions(establishment);
+        enterprise.etablissements.forEach((establishment, index) => {
+          enterprise.etablissements[index] = addInteractions(establishment);
         });
       }
       return {

@@ -5,7 +5,7 @@ const util = require("util");
 const exec = util.promisify(require("child_process").exec);
 const unzipper = require("unzipper");
 const Shell = require("./Shell");
-const PG = require("../db/postgres");
+const PG = require("./lib/postgres");
 
 const PRIMARY_INDEX = "primary";
 const INDEX = "index";

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Sticky from "react-sticky-el";
 import Scrollspy from "react-scrollspy";
 
 import "./quickAccess.scss";

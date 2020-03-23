@@ -44,7 +44,6 @@
     "react-scripts": "2.0.3",
     "react-scrollspy": "^3.4.0",
     "react-select": "^2.4.1",
-    "react-sticky-el": "^1.0.20",
     "react-widgets": "^4.2.0",
     "redux": "^3.7.2",
     "redux-persist": "^5.5.0",

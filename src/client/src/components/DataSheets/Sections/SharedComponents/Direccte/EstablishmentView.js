@@ -19,7 +19,7 @@ const EstablishmentView = ({ establishment }) => {
       }, */
     "3E_SEER": {
       ...getLastInteraction(establishment.interactions_3E_SEER),
-      source: "EOS-default"
+      source: "EOS"
     },
     "3E_SRC": {
       ...getLastInteraction(establishment.interactions_3E_SRC),

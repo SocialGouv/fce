@@ -40,7 +40,7 @@ const EstablishmentActivity = ({ establishment }) => {
               nonEmptyValue: ""
             }
           ]}
-          source="Sirène-default"
+          source="Sirène"
         />
         <Subcategory
           subtitle="Effectifs"

@@ -16,13 +16,18 @@ const getSources = () => dispatch => {
           return {
             ...acc,
             ...Object.entries(customDateFormats[current.si]).reduce(
-              (customSources, [label, dateFormat]) => ({
-                ...customSources,
-                [`${current.si}-${label}`]: {
-                  name: `${current.fournisseur} / ${current.si}`,
-                  date: toI18nDate(current.date, dateFormat)
-                }
-              }),
+              (customSources, [label, dateFormat]) => {
+                const sourceLabel =
+                  label === "default" ? current.si : `${current.si}-${label}`;
+
+                return {
+                  ...customSources,
+                  [sourceLabel]: {
+                    name: `${current.fournisseur} / ${current.si}`,
+                    date: toI18nDate(current.date, dateFormat)
+                  }
+                };
+              },
               {}
             )
           };

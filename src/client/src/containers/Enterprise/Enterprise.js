@@ -29,8 +29,10 @@ class Enterprise extends React.Component {
   }
 
   static propTypes = {
-    match: PropTypes.object.isRequired,
+    hasSearchResults: PropTypes.bool,
+    isLoaded: PropTypes.bool,
     history: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     currentEnterprise: PropTypes.object.isRequired,
     loadSources: PropTypes.func.isRequired,
     loadEstablishment: PropTypes.func.isRequired,

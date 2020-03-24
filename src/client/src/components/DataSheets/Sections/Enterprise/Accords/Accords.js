@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import LinkButton from "../../../../shared/LinkButton";
 import Data from "../../SharedComponents/Data";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers, faCircle, faSearch } from "@fortawesome/pro-solid-svg-icons";
+import {
+  faUsers,
+  faCircle,
+  faExternalLink
+} from "@fortawesome/pro-solid-svg-icons";
 
 const Accords = ({
   enterprise: {
@@ -104,18 +107,14 @@ const Accords = ({
               </tbody>
             </table>
 
-            <Data
-              name="Rechercher l'accord sur legifrance"
-              value={
-                <LinkButton
-                  value="Lancer la recherche"
-                  isTargetBlank
-                  icon={faSearch}
-                  link={Config.get("legifranceSearchUrl") + raisonSociale}
-                />
-              }
-              columnClasses={["is-8", "is-4"]}
-            />
+            <a
+              href={Config.get("legifranceSearchUrl") + raisonSociale}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Rechercher ces accord sur Legifrance{" "}
+              <FontAwesomeIcon icon={faExternalLink} />
+            </a>
           </>
         )}
       </div>

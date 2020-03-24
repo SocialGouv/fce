@@ -2,12 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
-import LinkButton from "../../../../shared/LinkButton";
 import Value from "../../../../shared/Value";
 import Config from "../../../../../services/Config";
 import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers, faSearch } from "@fortawesome/pro-solid-svg-icons";
+import { faUsers, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 
 const EstablishmentRelationship = ({ establishment }) => {
   const { code_idcc, libelle_idcc } = establishment;
@@ -29,19 +28,19 @@ const EstablishmentRelationship = ({ establishment }) => {
         <h2 className="title">Relation travail</h2>
       </div>
       <div className="section-datas">
-        <Subcategory subtitle="Convention collective">
-          <div>
+        <Subcategory subtitle="Convention collective" source="DSN">
+          <div className="single-value">
             <Value value={code_idcc && code_idcc} />
             <span>{code_idcc && " - "}</span>
             <Value value={libelle_idcc && libelle_idcc} empty="" />
           </div>
         </Subcategory>
-        <Subcategory subtitle="Accords d'entreprise">
+        <Subcategory subtitle="Accords d'entreprise" source="D@cccord">
           <Data
             name="Nombre total d'accords d'entreprise déposés depuis 1980"
             value={nbAccords}
             emptyValue="aucun accord connu"
-            columnClasses={["is-8", "is-4"]}
+            columnClasses={["is-7", "is-5"]}
           />
           {nbAccords > 0 && (
             <>
@@ -49,15 +48,13 @@ const EstablishmentRelationship = ({ establishment }) => {
                 name="Date de signature du dernier accord d'entreprise déposé"
                 value={_get(establishment, "accords.total.lastDate")}
                 emptyValue="aucun accord connu"
-                columnClasses={["is-8", "is-4"]}
+                columnClasses={["is-7", "is-5"]}
               />
               <table className="table is-hoverable">
                 <thead>
                   <tr>
                     <th>Thématique</th>
-                    <th className="has-text-centered">
-                      Nombre accords concernés
-                    </th>
+                    <th className="has-text-centered">Nombre d{"'"}accords</th>
                     <th className="has-text-centered">
                       Date de signature du dernier accord
                     </th>
@@ -85,18 +82,14 @@ const EstablishmentRelationship = ({ establishment }) => {
                 </tbody>
               </table>
 
-              <Data
-                name="Rechercher l'accord sur legifrance"
-                value={
-                  <LinkButton
-                    value="Lancer la recherche"
-                    isTargetBlank
-                    icon={faSearch}
-                    link={Config.get("legifranceSearchUrl") + raisonSociale}
-                  />
-                }
-                columnClasses={["is-8", "is-4"]}
-              />
+              <a
+                href={Config.get("legifranceSearchUrl") + raisonSociale}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Rechercher ces accord sur Legifrance{" "}
+                <FontAwesomeIcon icon={faExternalLink} />
+              </a>
             </>
           )}
         </Subcategory>

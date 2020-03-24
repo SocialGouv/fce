@@ -4,6 +4,30 @@
     display: flex;
     align-items: center;
     border-bottom: solid 1px $grey-geyser;
+
+    &.columns {
+        margin: 0;
+
+        &:last-child {
+            margin-bottom: 2rem;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 0;
+        }
+    }
+
+    & .dt {
+        padding-left: 0;
+    }
+
+    & .dd {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-right: 0;
+    }
+
     & + .table,
     .table + & {
         margin-top: 2rem;

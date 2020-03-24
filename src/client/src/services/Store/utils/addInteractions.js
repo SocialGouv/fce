@@ -26,6 +26,7 @@ export default (entity, interactionsTerms = null) => {
     (interaction1, interaction2) =>
       new Date(interaction2.date) - new Date(interaction1.date)
   );
+
   entity.totalInteractions = totalInteractions;
 
   return entity;

@@ -30,14 +30,10 @@ const EstablishmentHelps = ({ establishment }) => {
           subtitle="Agréments"
           datas={[
             {
-              name: "Agrément Entreprise adaptée",
-              value: establishment.ea,
-              columnClasses: ["is-8", "is-4"]
-            },
-            {
               name: "Agrément(s) Insertion par l’activité économique (IAE)",
               value: hasAgrements,
-              columnClasses: ["is-8", "is-4"]
+              columnClasses: ["is-7", "is-5"],
+              source: "ASP Extranet IAE2.0"
             }
           ]}
         />
@@ -84,13 +80,14 @@ const EstablishmentHelps = ({ establishment }) => {
           </table>
         )}
 
-        <Subcategory subtitle="Contrats aidés et alternance">
+        <Subcategory subtitle="Contrats aidés">
           <Data
             name={`Parcours emploi – compétences (PEC) ou Emploi d’avenir en ${getCustomPastYear(
               1
             )}`}
             value={!!establishment.contrat_aide}
-            columnClasses={["is-8", "is-4"]}
+            columnClasses={["is-7", "is-5"]}
+            source="ASP Extranet CUI"
           />
           {establishment.contrat_aide && (
             <table className="table is-bordered mt-3">
@@ -123,13 +120,6 @@ const EstablishmentHelps = ({ establishment }) => {
               </tbody>
             </table>
           )}
-          <Data
-            name={`Embauche en contrat en alternance en année ${getCustomPastYear(
-              1
-            )} ou ${getCustomPastYear(2)}`}
-            value={establishment.contrat_aide_alternance_n1}
-            columnClasses={["is-8", "is-4"]}
-          />
         </Subcategory>
       </div>
     </section>

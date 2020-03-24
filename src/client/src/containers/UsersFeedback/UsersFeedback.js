@@ -16,6 +16,7 @@ const UsersFeedback = ({ fullWidth }) => {
       case "comment":
         setComment(e.target.value);
         break;
+      default:
     }
   };
 

@@ -10,7 +10,7 @@ const getSources = () => dispatch => {
         const customDateFormats = Config.get("sources.customDateFormats");
 
         if (
-          customDateFormats.hasOwnProperty(current.si) &&
+          Object.prototype.hasOwnProperty.call(customDateFormats, current.si) &&
           typeof customDateFormats[current.si] === "object"
         ) {
           return {

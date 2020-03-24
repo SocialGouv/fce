@@ -29,7 +29,6 @@ const EnterpriseHeader = ({
   const [isRedirectedToHeadOffice, setIsRedirectedToHeadOffice] = useState(
     null
   );
-  const [isRedirectedToResearch, setIsRedirectedToResearch] = useState(null);
 
   const slugSocieteCom = enterprise.raison_sociale
     ? enterprise.raison_sociale.toLowerCase().replace(" ", "-")
@@ -43,7 +42,6 @@ const EnterpriseHeader = ({
       {isRedirectedToHeadOffice && (
         <Redirect to={`/establishment/${enterprise.siret_siege_social}`} />
       )}
-      {isRedirectedToResearch && <Redirect to="/" />}
       <section id="header" className="enterprise-header w-100 mb-4">
         <h1 className="mb-4 is-capitalized has-text-weight-bold is-size-3">
           <Value
@@ -127,9 +125,7 @@ const EnterpriseHeader = ({
             Voir sur{" "}
             <a
               className="is-link"
-              href={`https://www.societe.com/societe/${slugSocieteCom}-${
-                enterprise.siren
-              }.html`}
+              href={`https://www.societe.com/societe/${slugSocieteCom}-${enterprise.siren}.html`}
             >
               Societe.com
             </a>
@@ -162,9 +158,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(EnterpriseHeader)
-);
+export default withRouter(connect(null, mapDispatchToProps)(EnterpriseHeader));

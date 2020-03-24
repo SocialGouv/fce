@@ -8,7 +8,7 @@ pool.on("error", (err, client) => {
   console.error("Unexpected error on idle client", err);
 });
 
-export default {
+module.exports = {
   query: (text, params = []) => {
     const start = Date.now();
     return pool

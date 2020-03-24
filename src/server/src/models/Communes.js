@@ -22,6 +22,7 @@ export default class Communes extends Model {
 
   search(q) {
     const terms = [q];
+    // eslint-disable-next-line security/detect-non-literal-regexp
     const regexSaint = new RegExp(`^(${this.saintTerms.join("|")})`, "i");
     const matchSt = q.match(regexSaint);
 
@@ -41,6 +42,7 @@ export default class Communes extends Model {
       .then(res => {
         citiesWithDistricts.forEach(({ nom, code_postal, code_insee }) => {
           const hasCityInResults = !!res.rows.find(city => {
+            // eslint-disable-next-line security/detect-non-literal-regexp
             const regex = new RegExp(`^${nom} \\d{2}$`);
             return regex.test(city.nom);
           });

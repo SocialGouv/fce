@@ -148,9 +148,4 @@ Sidebar.propTypes = {
   resetSearch: PropTypes.func.isRequired
 };
 
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(Sidebar)
-);
+export default withRouter(connect(null, mapDispatchToProps)(Sidebar));

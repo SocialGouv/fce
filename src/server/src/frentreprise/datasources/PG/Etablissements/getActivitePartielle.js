@@ -11,7 +11,12 @@ export default async (SIRET, ActivitePartielle) => {
         activitesPartielles,
         { num_convention, date_decision, nb_h_auto_cum, nb_h_conso_cum, cause }
       ) => {
-        if (!activitesPartielles.hasOwnProperty(num_convention)) {
+        if (
+          !Object.prototype.hasOwnProperty.call(
+            activitesPartielles,
+            num_convention
+          )
+        ) {
           activitesPartielles[num_convention] = {
             numConvention: num_convention,
             nbAvenants: 0,

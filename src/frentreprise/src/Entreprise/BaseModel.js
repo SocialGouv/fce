@@ -26,7 +26,10 @@ export default class BaseModel {
         this[_data] = { ...{}, ...data };
       } else {
         for (const [key, value] of Object.entries(data)) {
-          if (!this[_data].hasOwnProperty(key) || isDefinedValue(value)) {
+          if (
+            !Object.prototype.hasOwnProperty.call(this[_data], key) ||
+            isDefinedValue(value)
+          ) {
             this[_data] = { ...this[_data], ...{ [key]: value } };
           }
         }
@@ -35,7 +38,7 @@ export default class BaseModel {
 
     // Add missing accessors
     Object.keys(this[_data]).forEach(key => {
-      if (!this.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(this, key)) {
         Object.defineProperty(this, key, {
           get: () => {
             return this[_data][key];

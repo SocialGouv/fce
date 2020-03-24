@@ -1,8 +1,9 @@
 import { copyKeys } from "../../utils";
-const { Etablissement } = require("frentreprise");
+// eslint-disable-next-line node/no-missing-import
+import { Etablissement } from "frentreprise";
 
 class DireccteEtablissement extends Etablissement {
-  export(keys) {
+  export() {
     return {
       ...copyKeys(
         this,
@@ -75,4 +76,4 @@ class DireccteEtablissement extends Etablissement {
   }
 }
 
-module.exports = DireccteEtablissement;
+export default DireccteEtablissement;

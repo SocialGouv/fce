@@ -138,8 +138,7 @@ const SearchResults = ({
                       trancheeffectifsetablissement: {
                         raw: trancheEffectifInsee
                       },
-                      etatadministratifetablissement: { raw: etat },
-                      ...etablissement
+                      etatadministratifetablissement: { raw: etat }
                     }) =>
                       Value({
                         value: isActiveEstablishment(etat)

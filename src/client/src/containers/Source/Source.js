@@ -25,4 +25,4 @@ Source.propTypes = {
   isTableCell: PropTypes.bool
 };
 
-export default connect(mapStateToProps, null)(Source);
+export default connect(mapStateToProps)(Source);

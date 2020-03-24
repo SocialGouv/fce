@@ -12,12 +12,6 @@ pipeline {
   }
   stages {
     stage('Init') {
-      when {
-        anyOf {
-          branch 'develop';
-          branch 'master'
-        }
-      }
       steps {
         notifyBuild()
         echo "Init $BRANCH_NAME on $JENKINS_URL ..."
@@ -29,12 +23,6 @@ pipeline {
       }
     }
     stage('Build') {
-      when {
-        anyOf {
-          branch 'develop';
-          branch 'master'
-        }
-      }
       steps {
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {

@@ -12,8 +12,6 @@ export default (entity, interactionsTerms = null) => {
       interactions = [...interactions, ...interactionsPole];
       totalInteractions[pole] = interactionsPole.length;
 
-      console.log({ interactions });
-
       if (!interactionsTerms || interactionsTerms.includes(pole)) {
         totalInteractions.total += interactionsPole.length;
       }
@@ -28,8 +26,6 @@ export default (entity, interactionsTerms = null) => {
     (interaction1, interaction2) =>
       new Date(interaction2.date) - new Date(interaction1.date)
   );
-
-  console.log({ totalInteractions });
 
   entity.totalInteractions = totalInteractions;
 

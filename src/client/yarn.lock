@@ -8475,7 +8475,7 @@ mdurl@^1.0.1:
   resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
-mdx.macro@^0.2.8:
+mdx.macro@^0.2.9:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/mdx.macro/-/mdx.macro-0.2.9.tgz#b88d53a16941ce980fe73bd6c5e088522f79e6d3"
   integrity sha512-dvbN6j0/TdnAlcP6baS5DOFizSxpJ5ycxsuFv1B4doSZcf4u8Go5oQTgpFGy1eZ595fD0nwoVKdBlmSQxJJbEg==

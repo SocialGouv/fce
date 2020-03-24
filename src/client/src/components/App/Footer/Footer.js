@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Config from "../../../services/Config";
 import mariane from "../../../assets/img/logo_gouv.png";
 import "./footer.scss";
@@ -20,22 +21,27 @@ const Footer = () => (
       <div>
         <ul className="footer__links">
           <li className="footer__linkItem">
-            <a className="footer__link" href="mentions-legales">
+            <Link className="footer__link" to="mentions-legales">
               Mentions légales
-            </a>
+            </Link>
           </li>
           <li className="footer__linkItem">
-            <a className="footer__link" href="cgu">
+            <Link className="footer__link" to="cgu">
               CGU
-            </a>
+            </Link>
           </li>
           <li className="footer__linkItem">
-            <a
+            <Link
               className="footer__link"
-              href={`mailto:${Config.get("contact.mailto")}`}
+              to={`mailto:${Config.get("contact.mailto")}`}
             >
               Contact
-            </a>
+            </Link>
+          </li>
+          <li className="footer__linkItem">
+            <Link className="footer__link" to="about">
+              A propos
+            </Link>
           </li>
         </ul>
       </div>

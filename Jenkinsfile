@@ -44,6 +44,18 @@ pipeline {
         }
       }
     }
+    stage('Eslint') {
+      steps {
+        echo "Check eslint $BRANCH_NAME on $JENKINS_URL ..."
+        sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
+          sh '''
+              docker-compose run --rm server yarn lint
+              docker-compose run --rm frentreprise yarn lint
+              docker-compose run --rm front yarn lint
+          '''
+        }
+      }
+    }
     stage('Deploy staging') {
       when {
         anyOf {

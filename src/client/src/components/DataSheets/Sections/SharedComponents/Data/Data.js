@@ -64,7 +64,8 @@ Data.propTypes = {
     PropTypes.object,
     PropTypes.array
   ]),
-  link: PropTypes.string
+  link: PropTypes.string,
+  source: PropTypes.string
 };
 
 export default Data;

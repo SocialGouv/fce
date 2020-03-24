@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Route, Redirect } from "react-router-dom";
 import Auth from "../Auth";
 
@@ -16,11 +17,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     };
   };
 
+  const authorization = checkAuthorization();
+
   return (
     <Route
       {...rest}
       render={props => {
-        const authorization = checkAuthorization();
         return authorization.auth ? (
           <Component {...props} />
         ) : (
@@ -34,6 +36,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       }}
     />
   );
+};
+
+PrivateRoute.propTypes = {
+  component: PropTypes.elementType,
+  location: PropTypes.object
 };
 
 export default PrivateRoute;

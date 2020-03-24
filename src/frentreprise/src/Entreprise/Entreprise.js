@@ -16,7 +16,7 @@ export default class Entreprise extends BaseModel {
 
   [_protected._importData](data, replace) {
     const entData = { ...data };
-    const ets = entData["_ets"];
+    let ets = entData["_ets"];
 
     if (ets) {
       if (!Array.isArray(ets)) {

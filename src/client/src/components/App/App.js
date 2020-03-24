@@ -31,8 +31,6 @@ if (Config.get("piwik")) {
 }
 
 const App = () => {
-  console.debug("render app");
-
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

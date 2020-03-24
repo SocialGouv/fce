@@ -26,7 +26,7 @@ const LoginForm = ({
     <div>
       <h1 className="login__title has-mb-2">Me connecter</h1>
       <p className="has-mb-1">
-        Pour accéder à l'application FCE, merci de renseigner votre adresse
+        Pour accéder à l{"'"}application FCE, merci de renseigner votre adresse
         électronique (e-mail).
       </p>
       <p className="has-mb-1">
@@ -72,8 +72,8 @@ const LoginForm = ({
             <div className="login__notif login__notif--success has-mt-2 has-mb-2 swing-in-top-fwd">
               <FontAwesomeIcon icon={faCheck} />
               <p>
-                Un message d'activation a été envoyé à {email}. Veuillez suivre
-                les instructions qu'il contient.
+                Un message d{"'"}activation a été envoyé à {email}. Veuillez
+                suivre les instructions qu{"'"}il contient.
               </p>
             </div>
           )}

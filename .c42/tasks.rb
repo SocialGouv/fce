@@ -156,7 +156,7 @@ task :install do
 
   info('Starting docker')
   invoke 'docker:run', []
-Install
+
   info('Waiting for full loading of the db container')
   sleep 12
 

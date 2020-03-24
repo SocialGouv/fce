@@ -34,18 +34,23 @@ $b-radius: 0.25rem;
 
 /* Box-shadow */
 $fce-shadow: 0 0 6px rgba(100, 100, 100, 0.06),
-0 0 15px rgba(100, 100, 100, 0.15);
+    0 0 15px rgba(100, 100, 100, 0.15);
 
 /* Font-size */
 $section-title-size: 1.25rem;
 $section-subtitle-size: 1.15rem;
 
 /* TYPOGRAPHY */
-$segoe: "Segoe Pro",
-sans-serif;
-$evolventa: "Evolventa",
-sans-serif;
-$roboto: "Roboto",
-sans-serif;
+$segoe: "Segoe Pro", sans-serif;
+$evolventa: "Evolventa", sans-serif;
+$roboto: "Roboto", sans-serif;
+
+/* SPACES */
+$spacer: 1rem;
+$spacer-half-xs: $spacer * 0.12;
+$spacer-xs: $spacer * 0.25;
+$spacer-sm: $spacer * 0.5;
+$spacer-lg: $spacer * 1.5;
+$spacer-xl: $spacer * 3;
 
 @import "~bulma/sass/utilities/all";

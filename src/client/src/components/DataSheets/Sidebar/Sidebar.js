@@ -12,7 +12,6 @@ import {
   resetSearch
 } from "../../../services/Store/actions";
 import Button from "../../shared/Button";
-import LinkButton from "../../shared/LinkButton";
 
 import "./sidebar.scss";
 
@@ -149,9 +148,4 @@ Sidebar.propTypes = {
   resetSearch: PropTypes.func.isRequired
 };
 
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(Sidebar)
-);
+export default withRouter(connect(null, mapDispatchToProps)(Sidebar));

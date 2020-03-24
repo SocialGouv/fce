@@ -8,15 +8,19 @@ class DownloadFileShell extends Shell {
     this.checkRequiredOption("id");
     const id = this._options.id;
 
-    if (!config.hasOwnProperty(id)) {
+    if (!Object.prototype.hasOwnProperty.call(config, id)) {
       throw new MissingConfigException(id);
     }
 
+    const archiveFile = Boolean(+this.getEnvConfig("MINIO_ARCHIVE_FILES"));
+
     const downloadConfig = config[id].download;
+    downloadConfig.archiveFile = archiveFile;
     const className = downloadConfig.className;
 
     const Downloader = className
-      ? require(`./import/${className}`)
+      ? // eslint-disable-next-line security/detect-non-literal-require
+        require(`./import/${className}`)
       : MinioDownloader;
 
     const downloader = new Downloader(downloadConfig);

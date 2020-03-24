@@ -1,3 +1,4 @@
+// eslint-disable-next-line security/detect-child-process
 const { execSync } = require("child_process");
 const _get = require("lodash.get");
 const formatDate = require("./formatDate");

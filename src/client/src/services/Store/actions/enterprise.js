@@ -1,22 +1,22 @@
 import * as types from "../constants/ActionTypes";
 import Http from "../../Http";
 
-export const setCurrentEnterprise = enterprise => (dispatch, getState) => {
+export const setCurrentEnterprise = enterprise => dispatch => {
   dispatch({
     type: types.SET_CURRENT_ENTERPRISE,
     enterprise
   });
 };
 
-export const loadEstablishment = siret => (dispatch, getState) => {
+export const loadEstablishment = siret => dispatch => {
   return dispatch(getEnterprise(siret));
 };
 
-export const loadEntreprise = siren => (dispatch, getState) => {
+export const loadEntreprise = siren => dispatch => {
   return dispatch(getEnterprise(siren));
 };
 
-const getEnterprise = term => (dispatch, getState) => {
+const getEnterprise = term => dispatch => {
   return Http.get("/entity", {
     params: {
       q: term

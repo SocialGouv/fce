@@ -1,28 +1,23 @@
+
 {
     "presets": [
-        [
-            "env",
-            {
-                "targets": {
-                    "node": "10"
-                }
-            }
-        ]
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "12"
+          }
+        }
+      ]
     ],
     "plugins": [
-        "syntax-async-functions",
-        [
-            "babel-plugin-root-import",
-            {
-                "rootPathSuffix": "src"
-            }
-        ],
-        "transform-object-rest-spread",
-        [
-            "babel-plugin-transform-builtin-extend",
-            {
-                "globals": ["Error", "Array"]
-            }
-        ]
+      "syntax-async-functions",
+      [
+        "babel-plugin-root-import",
+        {
+          "rootPathSuffix": "src"
+        }
+      ],
+      "@babel/plugin-proposal-object-rest-spread"
     ]
-}
+  }

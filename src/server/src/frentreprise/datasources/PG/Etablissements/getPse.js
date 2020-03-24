@@ -7,7 +7,7 @@ export default async (SIRET, rows) => {
     }
 
     const pse = pseRows.map(pseRow => {
-      Object.entries(pseRow).forEach(([key, value]) => {
+      Object.keys(pseRow).forEach(key => {
         if (typeof pseRow[key] === "string") {
           pseRow[key] = pseRow[key].trim();
         }

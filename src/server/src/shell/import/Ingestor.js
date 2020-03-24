@@ -1,6 +1,7 @@
 require("dotenv").config();
 const process = require("process");
 const fs = require("fs");
+// eslint-disable-next-line security/detect-child-process
 const { execSync } = require("child_process");
 const _get = require("lodash.get");
 const lineReplace = require("line-replace");
@@ -13,7 +14,7 @@ class Ingestor {
     this._config = config;
     this.psql = PSQL_BASE_CMD;
     this.tmpFile = `${TMP_DIR}/${this.getConfig("table")}.csv`;
-    this.PG = require("../../db/postgres");
+    this.PG = require("../lib/postgres");
   }
 
   getConfig(key) {

@@ -9,7 +9,7 @@ export default async (siren, Accords) => {
     const accordsBySiret = accords.reduce(
       (accordsBySiret, { siret, dt_sign }) => {
         dt_sign = getFormatedDate(dt_sign);
-        if (!accordsBySiret.hasOwnProperty(siret)) {
+        if (!Object.prototype.hasOwnProperty.call(accordsBySiret, siret)) {
           accordsBySiret[siret] = { count: 0, lastDate: null };
         }
 

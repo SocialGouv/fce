@@ -30,4 +30,4 @@ NotImplementedError.prototype = Object.create(Error.prototype, {
   }
 });
 
-module.exports = NotImplementedError;
+export default NotImplementedError;

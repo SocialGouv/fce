@@ -38,7 +38,7 @@ const Accords = ({
         <span className="icon">
           <FontAwesomeIcon icon={faUsers} />
         </span>
-        <h2 className="title">Accords d'entreprise</h2>
+        <h2 className="title">Accords d{"'"}entreprise</h2>
       </div>
       <div className="section-datas">
         <Data
@@ -70,10 +70,12 @@ const Accords = ({
                       establishment,
                       "categorie_etablissement"
                     );
-                    const date = lastDate
-                      .split("-")
-                      .reverse()
-                      .join("/");
+                    const date =
+                      lastDate &&
+                      lastDate
+                        .split("-")
+                        .reverse()
+                        .join("/");
 
                     return (
                       <tr key={siret}>

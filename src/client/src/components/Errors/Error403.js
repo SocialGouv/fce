@@ -11,8 +11,8 @@ class Error403 extends React.Component {
             <h1 className="title">Accès refusé</h1>
 
             <p className="description">
-              Vous n'avez pas les autorisations nécessaires pour accéder à cette
-              page
+              Vous n{"'"}avez pas les autorisations nécessaires pour accéder à
+              cette page
             </p>
           </Col>
         </Row>

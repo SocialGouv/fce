@@ -45,7 +45,7 @@ const Search = ({
         ? "codecommuneetablissement"
         : "departement";
 
-      if (!allFiltersOptions.hasOwnProperty(filterKey)) {
+      if (!Object.prototype.hasOwnProperty.call(allFiltersOptions, filterKey)) {
         allFiltersOptions[filterKey] = [];
       }
 
@@ -59,7 +59,9 @@ const Search = ({
 
   if (Array.isArray(search.filters.naf)) {
     search.filters.naf.forEach(({ value }) => {
-      if (!allFiltersOptions.hasOwnProperty("naf_division")) {
+      if (
+        !Object.prototype.hasOwnProperty.call(allFiltersOptions, "naf_division")
+      ) {
         allFiltersOptions.naf_division = [];
       }
 
@@ -293,7 +295,4 @@ Search.propTypes = {
   resetSearch: PropTypes.func.isRequired
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

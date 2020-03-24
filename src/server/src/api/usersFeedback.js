@@ -67,4 +67,4 @@ router.post("/feedback", withAuth, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import PropTypes from "prop-types";
 import { faPrint } from "@fortawesome/pro-solid-svg-icons";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";

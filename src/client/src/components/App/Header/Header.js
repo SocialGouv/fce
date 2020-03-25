@@ -9,7 +9,7 @@ import Button from "../../shared/Button";
 
 import logo from "../../../assets/img/logo_gouv-65w38h.png";
 
-const Header = ({ resetSearch, location }) => {
+const Header = ({ resetSearch, location, showBetaMessage }) => {
   return (
     <header className="app-header">
       <div className="container">
@@ -53,19 +53,21 @@ const Header = ({ resetSearch, location }) => {
         </nav>
       </div>
 
-      <div className="beta-message flex-center">
-        <div>
-          <span>Ce site est en beta-test. </span>
-          {location.pathname !== "/login" && (
-            <span>
-              Aidez-nous à l{"'"}améliorer en{" "}
-              <a className="beta-message__feedback-link" href="#user-review">
-                donnant votre avis
-              </a>
-            </span>
-          )}
+      {showBetaMessage && (
+        <div className="beta-message flex-center">
+          <div>
+            <span>Ce site est en beta-test. </span>
+            {location.pathname !== "/login" && (
+              <span>
+                Aidez-nous à l{"'"}améliorer en{" "}
+                <a className="beta-message__feedback-link" href="#user-review">
+                  donnant votre avis
+                </a>
+              </span>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 };
@@ -80,7 +82,8 @@ const mapDispatchToProps = dispatch => {
 
 Header.propTypes = {
   resetSearch: PropTypes.func,
-  location: PropTypes.object
+  location: PropTypes.object,
+  showBetaMessage: PropTypes.bool.isRequired
 };
 
 export default withRouter(

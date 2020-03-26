@@ -86,13 +86,4 @@ pipeline {
       }
     }
   }
-  post {
-      always {
-          sh '''
-            docker-compose down
-            sudo chown -R $(id -u):$(id -g) ./
-            '''
-          deleteDir()
-      }
-  }
 }

@@ -5,7 +5,7 @@ const hosts2config = require("./configs/hosts2configs.json");
 let config = null;
 const log = console.warning || console.error || console.log;
 const globalConfig = {
-  maintenanceMode: process.env.REACT_APP_MAINTENANCE,
+  maintenanceMode: process.env.REACT_APP_MAINTENANCE === "true",
   sentryUrlKey:
     "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",
   auth: {

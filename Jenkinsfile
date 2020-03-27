@@ -12,7 +12,6 @@ pipeline {
         }
       }
       steps {
-        notifyBuild()
         echo "Init $BRANCH_NAME on $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
@@ -86,14 +85,5 @@ pipeline {
         }
       }
     }
-  }
-  post {
-      always {
-          sh '''
-            docker-compose down
-            sudo chown -R $(id -u):$(id -g) ./
-            '''
-          deleteDir()
-      }
   }
 }

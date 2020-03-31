@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
 import Value from "../../../../shared/Value";
@@ -43,26 +44,30 @@ const EstablishmentView = ({ establishment }) => {
           source="Siene"
         />
 
-        <Data
-          name={
-            <div>
+        {_get(establishment, "totalInteractions.total") === 0 ? (
+          <Data
+            name={
               <div>
-                Dernier contrôle ou visite au cours des 24 derniers mois
+                <div>
+                  Dernier contrôle ou visite au cours des 24 derniers mois
+                </div>
+                <div>(Pôle T, Pôle C et Pôle E - SEER)</div>
               </div>
-              <div>(Pôle T, Pôle C et Pôle E - SEER)</div>
-            </div>
-          }
-          value={
-            establishment.totalInteractions &&
-            establishment.totalInteractions.total === 0
-              ? "pas de contrôle connu"
-              : ""
-          }
-          columnClasses={["is-6", "is-6"]}
-        />
+            }
+            value="pas de contrôle connu"
+            columnClasses={["is-6", "is-6"]}
+          />
+        ) : (
+          <dl className="data dl columns interactions__title">
+            <dt className={`dt column is-first-letter-uppercase`}>
+              Dernier contrôle ou visite au cours des 24 derniers mois (Pôle T,
+              Pôle C, Pôle E)
+            </dt>
+          </dl>
+        )}
 
         {establishment.interactions && establishment.interactions.length ? (
-          <table className="table is-bordered is-hoverable direccte-interactions">
+          <table className="table is-bordered is-hoverable interactions__table mt-0">
             <thead>
               <tr>
                 <th className="has-text-right">Pôle</th>

@@ -25,7 +25,7 @@ services:
     tty: true
 
   appsearch:
-    image: docker.elastic.co/app-search/app-search:7.4.0
+    image: docker.elastic.co/app-search/app-search:7.6.1
     network_mode: host
     container_name: appsearch
     environment:

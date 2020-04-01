@@ -142,7 +142,11 @@
                 }
             }
 
-            & .direccte-interactions {
+            & .interactions__title {
+                border-bottom: none;
+            }
+
+            & .interactions__table {
                 td {
                     vertical-align: middle;
                 }

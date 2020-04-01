@@ -10955,22 +10955,7 @@ react-select@^3.1.0:
     react-input-autosize "^2.2.2"
     react-transition-group "^4.3.0"
 
-react-sticky-el@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/react-sticky-el/-/react-sticky-el-1.1.1.tgz#bbbb37c353dd65522eac1ccf6795aa206a30bba1"
-  integrity sha512-2WSEiOxsybUJaJHacLSSspGQjFUryBGIbqCkcq9I8Up78YPDGLEHeUF+RnHIhfKJYILHVqODFrL0mnu9ehWhrg==
-  dependencies:
-    prop-types ">=15.7.2"
-
-react-tooltip@^3.10.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.10.0.tgz#268b5ef519fd8a1369288d1f086f42c90d5da7ef"
-  integrity sha512-GGdxJvM1zSFztkTP7gCQbLTstWr1OOoMpJ5WZUGhimj0nhRY+MPz+92MpEnKmj0cftJ9Pd/M6FfSl0sfzmZWkg==
-  dependencies:
-    classnames "^2.2.5"
-    prop-types "^15.6.0"
-
-react-transition-group@^2.3.1, react-transition-group@^2.4.0:
+react-transition-group@^2.4.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.9.0.tgz#df9cdb025796211151a436c69a8f3b97b5b07c8d"
   integrity sha512-+HzNTCHpeQyl4MJ/bdE0u6XRMe9+XG/+aL4mCxVN4DnPBQ0/5bfHWPDuOZUzYdMj94daZaZdCCc1Dzt9R/xSSg==

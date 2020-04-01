@@ -96,19 +96,4 @@ pipeline {
       }
     }
   }
-  post {
-      always {
-          sh '''
-            docker-compose down
-            sudo chown -R $(id -u):$(id -g) ./
-            '''
-          deleteDir()
-      }
-      success {
-          slackSend channel: "#direccte", color: "good", message: "FCE successfully deployed (<${env.RUN_DISPLAY_URL}|logs>)"
-      }
-      failure {
-          slackSend channel: "#direccte", color: "danger", message: "FCE fail to deploy (<${env.RUN_DISPLAY_URL}|logs>)"
-      }
-  }
 }

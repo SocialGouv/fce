@@ -46,7 +46,6 @@ elasticsearch.password: 8zoC6ktzMbologQ
 # * Shortname defined via /etc/hosts: http://app-search.search
 #
 app_search.external_url: https://appsearch.fce.fabrique.social.gouv.fr
-
 # Web application listen_host and listen_port.
 # Your application will run on this host and port.
 #
@@ -62,8 +61,8 @@ app_search.listen_port: 3002
 # * app_search.monitoring_enabled: Set to false to disable monitoring.
 # * app_search.monitoring_port: Must be a valid port number (1-65535).
 #
-app_search.monitoring_enabled: false
-app_search.monitoring_port: 3003
+#app_search.monitoring_enabled: false
+#app_search.monitoring_port: 3003
 #
 # ------------------------------ Authentication -------------------------------
 #
@@ -76,7 +75,7 @@ app_search.monitoring_port: 3003
 # * elasticsearch-native: Users are managed via the Elasticsearch native realm.
 # * elasticsearch-saml: Users are managed via the Elasticsearch SAML realm.
 #
-app_search.auth.source: standard
+app_search.auth.source: elasticsearch-native
 #
 # (SAML only) Name of the realm within the Elasticsearch realm chain.
 #
@@ -95,6 +94,12 @@ email.account.smtp.port: 587
 email.account.smtp.user: azure_b6a59fcd2e234492d24b6a1431734855@azure.com
 email.account.smtp.password: YH4rYBhBFW6R5tSD
 email.account.email_defaults.from: no-reply@fce.fabrique.social.gouv.fr
+#
+# ---------------------------------- Workers ----------------------------------
+#
+# Configure the number of worker threads.
+#
+worker.threads: 8
 #
 # ----------------------------------- APIs ------------------------------------
 #
@@ -145,4 +150,4 @@ email.account.email_defaults.from: no-reply@fce.fabrique.social.gouv.fr
 #
 # Set key to persist user sessions through process restarts.
 #
-secret_session_key: qe3yx4kI0nUzmUiMbuHLDTaXd2cbW1ASRE
+#secret_session_key: qe3yx4kI0nUzmUiMbuHLDTaXd2cbW1ASRE

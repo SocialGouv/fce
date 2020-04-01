@@ -1,7 +1,7 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 import { faPrint } from "@fortawesome/pro-solid-svg-icons";
-import withLoading from "../../../../services/Loading";
+import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
 import Infos from "./Infos";
@@ -64,8 +64,8 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
 };
 
 Enterprise.propTypes = {
-  establishments: PropTypes.array.isRequired,
   enterprise: PropTypes.object.isRequired,
+  establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
   headOffice: PropTypes.object.isRequired
 };
 

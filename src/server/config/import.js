@@ -1,4 +1,5 @@
 const FILES_FOLDER = "/mnt/data/export";
+const CONVERTER_XLSX_TO_CSV = "xlsxToCsv";
 
 const config = {
   interactions_pole_t: {
@@ -70,6 +71,37 @@ const config = {
       date: {
         field: "date",
         format: "DD/MM/YYYY"
+      }
+    }
+  },
+  etablissements_activite_partielle: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgefp",
+      fileMatch: /^APART_(.)*.xlsx$/,
+      converter: CONVERTER_XLSX_TO_CSV,
+      outputFileName: "etablissements_activite_partielle.csv"
+    },
+    ingest: {
+      table: "etablissements_activite_partielle",
+      filename: `${FILES_FOLDER}/etablissements_activite_partielle.csv`,
+      cols: [
+        "siret",
+        "num_convention",
+        "date_decision",
+        "num_avenant",
+        "da_init",
+        "nb_h_auto_avn",
+        "nb_h_auto_cum",
+        "nb_h_conso_cum",
+        "cause"
+      ],
+      delimiter: ",",
+      truncate: true,
+      history: false,
+      date: {
+        field: "date_decision",
+        format: "YYYY-MM-DD"
       }
     }
   }

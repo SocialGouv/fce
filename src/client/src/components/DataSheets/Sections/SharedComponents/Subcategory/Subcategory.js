@@ -5,7 +5,13 @@ import Source from "../../../../../containers/Source";
 
 import "./subcategory.scss";
 
-const Subcategory = ({ subtitle, datas, children, source, sourceDate }) => {
+const Subcategory = ({
+  subtitle,
+  datas,
+  children,
+  source,
+  sourceDate = null
+}) => {
   return (
     <div className="subcategory">
       <div className="subcategory__header">

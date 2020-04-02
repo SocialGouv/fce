@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import SourceView from "../../components/Source";
 
-const Source = ({ si, sources, isTableCell = false, sourceDate }) => {
+const Source = ({ si, sources, isTableCell = false, sourceDate = null }) => {
   return (
     <SourceView
       name={sources[si] && sources[si].name}

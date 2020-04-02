@@ -112,7 +112,7 @@ const Accords = ({
               target="_blank"
               rel="noreferrer noopener"
             >
-              Rechercher ces accord sur Legifrance{" "}
+              Rechercher ces accords sur Legifrance{" "}
               <FontAwesomeIcon icon={faExternalLink} />
             </a>
           </>

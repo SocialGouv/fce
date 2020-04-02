@@ -51,7 +51,8 @@ const EstablishmentActivity = ({ establishment }) => {
                 establishment.tranche_effectif_insee
               ],
               nonEmptyValue: "",
-              source: "Sirène-year"
+              source: "Sirène-year",
+              sourceDate: establishment.annee_tranche_effectif_insee
             },
 
             {

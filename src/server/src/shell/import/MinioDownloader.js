@@ -29,7 +29,7 @@ class MinioDownloader {
 
   async execute() {
     console.log("Execute Downloader");
-    const { bucket, fileMatch } = this._config;
+    const { bucket, fileMatch, converter } = this._config;
 
     const file = await this._getOldestFile(bucket, fileMatch);
 
@@ -39,6 +39,10 @@ class MinioDownloader {
     }
 
     await this._downloadFile(bucket, file);
+
+    if (converter) {
+      await this._convertFile(converter);
+    }
 
     if (this._config.archiveFile) {
       await this._moveToArchive(bucket, file);
@@ -92,6 +96,15 @@ class MinioDownloader {
         return resolve({ success: true, filePath });
       });
     });
+  }
+
+  async _convertFile(converterFile) {
+    const { outputFileName } = this._config;
+    const filePath = `${LOCAL_STORAGE_PATH}/${outputFileName}`;
+
+    // eslint-disable-next-line security/detect-non-literal-require
+    const converter = require(`./converter/${converterFile}`);
+    return await converter(filePath);
   }
 
   async _moveToArchive(bucket, file) {

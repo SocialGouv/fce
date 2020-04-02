@@ -20,7 +20,7 @@
         @extend %print-block;
         @extend %print-margin-padding;
 
-        >.title {
+        > .title {
             text-align: center;
             margin-bottom: 1.5rem;
         }
@@ -29,7 +29,7 @@
             font-weight: bold;
         }
 
-        >.task-bar {
+        > .task-bar {
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -103,7 +103,7 @@
                 left: 0;
             }
 
-            >.icon {
+            > .icon {
                 color: $primary;
                 width: 1.15rem;
                 height: 1.25rem;
@@ -113,7 +113,7 @@
                 background-color: $pale-grey;
             }
 
-            >.title {
+            > .title {
                 font-family: $roboto;
                 font-weight: bold;
                 font-size: $font-size-section-title;
@@ -147,6 +147,9 @@
             }
 
             & .interactions__table {
+                width: 100%;
+                margin: 0;
+
                 td {
                     vertical-align: middle;
                 }
@@ -162,12 +165,12 @@
             }
         }
 
-        >.dl {
+        > .dl {
             margin-bottom: 0;
         }
 
-        >.dd,
-        >.dt {
+        > .dd,
+        > .dt {
             padding: 1rem 0;
             word-wrap: break-word;
             color: $grey-tundora;

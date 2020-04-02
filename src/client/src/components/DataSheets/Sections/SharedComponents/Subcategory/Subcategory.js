@@ -5,12 +5,12 @@ import Source from "../../../../../containers/Source";
 
 import "./subcategory.scss";
 
-const Subcategory = ({ subtitle, datas, children, source }) => {
+const Subcategory = ({ subtitle, datas, children, source, sourceDate }) => {
   return (
     <div className="subcategory">
       <div className="subcategory__header">
         <h3 className="subcategory__title">{subtitle}</h3>
-        {source && <Source si={source} />}
+        {source && <Source si={source} sourceDate={sourceDate} />}
       </div>
       {children
         ? children
@@ -25,6 +25,7 @@ const Subcategory = ({ subtitle, datas, children, source }) => {
                 link={data.link}
                 columnClasses={data.columnClasses}
                 source={data.source}
+                sourceDate={data.sourceDate}
               />
             );
           })}
@@ -35,6 +36,7 @@ const Subcategory = ({ subtitle, datas, children, source }) => {
 Subcategory.propTypes = {
   subtitle: PropTypes.string.isRequired,
   source: PropTypes.string,
+  sourceDate: PropTypes.string,
   datas: PropTypes.arrayOf(PropTypes.object),
   children: PropTypes.node
 };

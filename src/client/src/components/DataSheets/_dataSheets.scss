@@ -1,6 +1,10 @@
 @import "../App/variables";
 
 .data-sheet {
+    &.container {
+        width: 100%;
+    }
+
     &__print-section {
         margin: 1.5rem 0;
         display: flex;
@@ -43,19 +47,6 @@
                 &.back-button {
                     background-color: lighten($dark, 10%);
                 }
-            }
-        }
-
-        .enterprise-header {
-            scroll-margin: 7rem;
-            padding: 2rem;
-            background-color: $white;
-            border-radius: 0.325rem;
-
-            .top-header {
-                display: flex;
-                width: 100%;
-                justify-content: space-between;
             }
         }
 

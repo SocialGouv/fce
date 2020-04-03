@@ -9,7 +9,7 @@ const baseUrlFn = () => config.elasticIndexer.appsearch_address;
 const engineName = config.elasticIndexer.appsearch_engineName;
 const client = new AppSearchClient(undefined, apiKey, baseUrlFn);
 /** Create PG Pool */
-const pool = new Pool(config.get("postgres"));
+const pool = new Pool(config.get("db"));
 /** Define concurrent request limit */
 const limit = pLimit(config.elasticIndexer.appsearch_concurencyLimit);
 let tasks = [];

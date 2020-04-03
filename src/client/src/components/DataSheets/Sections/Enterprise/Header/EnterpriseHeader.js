@@ -85,28 +85,38 @@ const EnterpriseHeader = ({
             />
           </div>
         </div>
+
         <div className="columns is-vcentered w-100">
           <div className="column is-4">
-            <span className="active-item-value">
-              <FontAwesomeIcon
-                icon={isActiveEnterprise ? faCircle : faSquare}
-                className={`mr-2 ${stateClass}`}
-              />
-            </span>
-            <span className="is-size-6 has-text-segoe has-text-grey-dark">
-              {isActiveEnterprise ? "Ouverte depuis le " : "Fermée depuis le "}
-            </span>
-            <span className="is-size-6 has-text-segoe has-text-grey-dark">
-              <Value
-                value={
-                  isActiveEnterprise
-                    ? enterprise.date_de_creation
-                    : enterprise.date_mise_a_jour
-                }
-                empty="-"
-              />
-            </span>
+            <div className="enterprise-header__status">
+              <div className="active-item-value">
+                <FontAwesomeIcon
+                  icon={isActiveEnterprise ? faCircle : faSquare}
+                  className={`mr-2 ${stateClass}`}
+                />
+              </div>
+              <div className="is-size-6 has-text-segoe has-text-grey-dark">
+                {isActiveEnterprise ? (
+                  <span>
+                    Ouvert depuis le{" "}
+                    <Value value={enterprise.date_de_creation} empty="" />
+                  </span>
+                ) : (
+                  <div>
+                    <div>
+                      Fermé depuis le{" "}
+                      <Value value={enterprise.date_mise_a_jour} empty="" />
+                    </div>
+                    <div>
+                      Date de création:{" "}
+                      <Value value={enterprise.date_de_creation} empty="" />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
+
           <div className="column is-8">
             <Button
               value="Voir tous les établissements"

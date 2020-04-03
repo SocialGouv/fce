@@ -1,22 +1,21 @@
 import React from "react";
 import "./errors.scss";
-import { Container, Row, Col } from "reactstrap";
 
 class Error403 extends React.Component {
   render() {
     return (
-      <Container className="app-error">
-        <Row className="justify-content-md-center">
-          <Col md="8">
+      <div className="container app-error">
+        <div className="columns justify-content-md-center">
+          <div className="column is-8">
             <h1 className="title">Accès refusé</h1>
 
             <p className="description">
               Vous n{"'"}avez pas les autorisations nécessaires pour accéder à
               cette page
             </p>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
     );
   }
 }

@@ -34,7 +34,7 @@ $b-radius: 0.25rem;
 
 /* SHADOWS */
 $fce-shadow: 0 0 6px rgba(100, 100, 100, 0.06),
-    0 0 15px rgba(100, 100, 100, 0.15);
+0 0 15px rgba(100, 100, 100, 0.15);
 
 /* FONT-SIZE */
 $font-size-section-title: 1.25rem;
@@ -42,8 +42,19 @@ $font-size-section-subtitle: 1.15rem;
 $font-size-small: 0.8rem;
 
 /* TYPOGRAPHY */
-$segoe: "Segoe Pro", sans-serif;
-$evolventa: "Evolventa", sans-serif;
-$roboto: "Roboto", sans-serif;
+$segoe: "Segoe Pro",
+sans-serif;
+$evolventa: "Evolventa",
+sans-serif;
+$roboto: "Roboto",
+sans-serif;
+
+/* SPACES */
+$spacer: 1rem;
+$spacer-xxs: $spacer * 0.12;
+$spacer-xs: $spacer * 0.25;
+$spacer-sm: $spacer * 0.5;
+$spacer-lg: $spacer * 1.5;
+$spacer-xl: $spacer * 3;
 
 @import "~bulma/sass/utilities/all";

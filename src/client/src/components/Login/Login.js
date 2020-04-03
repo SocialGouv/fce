@@ -10,7 +10,7 @@ const Login = ({
   errorMessage,
   updateForm,
   loading,
-  email,
+  email = "",
   step,
   setStep,
   showSuccessNotif,

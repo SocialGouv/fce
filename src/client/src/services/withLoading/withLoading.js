@@ -8,7 +8,7 @@ const withLoading = BaseComponent => {
     isLoaded ? (
       <BaseComponent {...props} />
     ) : (
-      <div className="text-center">
+      <div className="container">
         <FontAwesomeIcon icon={faSpinner} spin /> Chargement en cours...
       </div>
     );

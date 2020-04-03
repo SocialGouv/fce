@@ -1,2 +1,3 @@
 bin/elasticsearch-users useradd commit42 -p 8zoC6ktzMbologQ -r superuser
-ES_JAVA_OPTS="-Xms2g -Xmx2g" bin/elasticsearch
+bin/elasticsearch-users useradd fce -p zfd1Kdfcmg9dfM -r superuser
+ES_JAVA_OPTS="-Xms4g -Xmx4g" bin/elasticsearch

@@ -2,8 +2,7 @@
 
 .data-sheet {
     &__print-section {
-        margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
+        margin: 1.5rem 0;
         display: flex;
         justify-content: flex-end;
         @extend %print-hidden;
@@ -143,7 +142,14 @@
                 }
             }
 
-            & .direccte-interactions {
+            & .interactions__title {
+                border-bottom: none;
+            }
+
+            & .interactions__table {
+                width: 100%;
+                margin: 0;
+
                 td {
                     vertical-align: middle;
                 }
@@ -152,6 +158,10 @@
                 td:first-child {
                     text-align: right;
                 }
+            }
+
+            .dt {
+                font-weight: 700;
             }
         }
 

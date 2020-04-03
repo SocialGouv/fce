@@ -1,21 +1,20 @@
 import React from "react";
 import "./errors.scss";
-import { Container, Row, Col } from "reactstrap";
 
 class Error404 extends React.Component {
   render() {
     return (
-      <Container className="app-error">
-        <Row className="justify-content-md-center">
-          <Col md="8">
+      <div className="container app-error">
+        <div className="columns justify-content-md-center">
+          <div className="column is-8">
             <h1 className="title">Page introuvable</h1>
 
             <p className="description">
               La page que vous avez demandée est introuvable
             </p>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
     );
   }
 }

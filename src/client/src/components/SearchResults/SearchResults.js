@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Alert } from "reactstrap";
 import { withRouter } from "react-router-dom";
 import Config from "../../services/Config";
 import { isActiveEstablishment } from "../../helpers/Search";
@@ -56,7 +55,11 @@ const SearchResults = ({
 
       <div className="columns result-row">
         <div className="column is-12 pb-0">
-          {results.length === 0 && <Alert color="info">Aucun résultat</Alert>}
+          {results.length === 0 && (
+            <div className="notification is-primary is-light">
+              Aucun résultat
+            </div>
+          )}
 
           {!!results.length ? (
             <div>

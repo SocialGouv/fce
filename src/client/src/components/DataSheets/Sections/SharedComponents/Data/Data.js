@@ -13,7 +13,8 @@ const Data = ({
   nonEmptyValue,
   link = null,
   columnClasses = ["is-4", "is-8"],
-  source
+  source,
+  sourceDate
 }) => {
   return (
     <>
@@ -41,7 +42,7 @@ const Data = ({
               />
             )}
           </div>
-          {source && <Source si={source} />}
+          {source && <Source si={source} sourceDate={sourceDate} />}
         </dd>
       </dl>
     </>
@@ -65,7 +66,8 @@ Data.propTypes = {
     PropTypes.array
   ]),
   link: PropTypes.string,
-  source: PropTypes.string
+  source: PropTypes.string,
+  sourceDate: PropTypes.string
 };
 
 export default Data;

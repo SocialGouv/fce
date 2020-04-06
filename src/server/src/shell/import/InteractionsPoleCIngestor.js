@@ -4,14 +4,18 @@ const { execSync } = require("child_process");
 
 class InteractionsPoleCIngestor extends Ingestor {
   async afterPsqlCopy() {
-    this._convertDates();
+    this._convertDates(this.getConfig("table"));
   }
 
-  _convertDates() {
-    console.log("Convert date 3 columns to 1 column");
+  async afterBuildHistory() {
+    this._convertDates(this.getConfig("historyTable"));
+  }
+
+  _convertDates(table) {
+    console.log(`Convert date 3 columns to 1 column for table ${table}`);
 
     return execSync(
-      `${this.psql} "UPDATE ${this.getConfig("table")} SET date = concat(
+      `${this.psql} "UPDATE ${table} SET date = concat(
         "annee",
          '-',
         CASE WHEN "mois"='janvier' THEN '01'

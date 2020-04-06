@@ -85,11 +85,12 @@ const config = {
     ingest: {
       className: "InteractionsPoleCIngestor",
       table: "interactions_pole_c",
+      historyTable: "interactions_pole_c_historique",
       filename: `${FILES_FOLDER}/interactions_pole_c.csv`,
       cols: ["siret", "annee", "mois", "jour", "suite", "unite", "messagerie"],
       delimiter: ",",
       truncate: true,
-      history: false,
+      history: true,
       date: {
         field: "date",
         format: "YYYY-MM-DD",

@@ -15,10 +15,10 @@ const EstablishmentView = ({ establishment }) => {
       ...getLastInteraction(establishment.interactions_T),
       source: "Wiki'T"
     },
-    /* C: {
-        ...getLastInteraction(establishment.interactions_C),
-        source: "SORA"
-      }, */
+    C: {
+      ...getLastInteraction(establishment.interactions_C),
+      source: "SORA"
+    },
     "3E_SEER": {
       ...getLastInteraction(establishment.interactions_3E_SEER),
       source: "EOS"

@@ -82,6 +82,19 @@ const config = {
       converter: CONVERTER_XLSX_TO_CSV,
       outputFileName: "interactions_pole_c.csv",
     },
+    ingest: {
+      className: "InteractionsPoleCIngestor",
+      table: "interactions_pole_c",
+      filename: `${FILES_FOLDER}/interactions_pole_c.csv`,
+      cols: ["siret", "annee", "mois", "jour", "suite", "unite", "messagerie"],
+      delimiter: ",",
+      truncate: true,
+      history: false,
+      date: {
+        field: "date",
+        format: "YYYY-MM-DD",
+      },
+    },
   },
   etablissements_activite_partielle: {
     download: {

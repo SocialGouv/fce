@@ -7,7 +7,7 @@ const config = {
       className: "MinioDownloader",
       bucket: "dgt",
       fileMatch: /^EtablissementActifsControlés_(.)*.csv$/,
-      outputFileName: "interactions_pole_t.csv"
+      outputFileName: "interactions_pole_t.csv",
     },
     ingest: {
       table: "interactions_pole_t",
@@ -19,16 +19,16 @@ const config = {
       history: true,
       date: {
         field: "date",
-        format: "DD/MM/YYYY"
-      }
-    }
+        format: "DD/MM/YYYY",
+      },
+    },
   },
   interactions_pole_3e: {
     download: {
       className: "MinioDownloader",
       bucket: "dge",
       fileMatch: /^(.)*_Tableau_donnees_API_EOS_(.)*.csv$/,
-      outputFileName: "interactions_pole_3e.csv"
+      outputFileName: "interactions_pole_3e.csv",
     },
     ingest: {
       className: "InteractionsPole3EIngestor",
@@ -42,23 +42,23 @@ const config = {
         "inspecteurs",
         "filieres",
         "type_suivi",
-        "suivi_eti"
+        "suivi_eti",
       ],
       delimiter: ";",
       truncate: true,
       history: true,
       date: {
         field: "date_visite",
-        format: "DD/MM/YYYY"
-      }
-    }
+        format: "DD/MM/YYYY",
+      },
+    },
   },
   interactions_pole_3e_src: {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
       fileMatch: /^SRC_Extraction(.)*.csv$/,
-      outputFileName: "interactions_pole_3e_src.csv"
+      outputFileName: "interactions_pole_3e_src.csv",
     },
     ingest: {
       className: "InteractionsPole3ESrcIngestor",
@@ -70,9 +70,18 @@ const config = {
       history: false,
       date: {
         field: "date",
-        format: "DD/MM/YYYY"
-      }
-    }
+        format: "DD/MM/YYYY",
+      },
+    },
+  },
+  interactions_pole_c: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgccrf",
+      fileMatch: /^donnee_FCE_extract(.)*.xlsx$/,
+      converter: CONVERTER_XLSX_TO_CSV,
+      outputFileName: "interactions_pole_c.csv",
+    },
   },
   etablissements_activite_partielle: {
     download: {
@@ -80,7 +89,7 @@ const config = {
       bucket: "dgefp",
       fileMatch: /^APART_(.)*.xlsx$/,
       converter: CONVERTER_XLSX_TO_CSV,
-      outputFileName: "etablissements_activite_partielle.csv"
+      outputFileName: "etablissements_activite_partielle.csv",
     },
     ingest: {
       table: "etablissements_activite_partielle",
@@ -94,17 +103,17 @@ const config = {
         "nb_h_auto_avn",
         "nb_h_auto_cum",
         "nb_h_conso_cum",
-        "cause"
+        "cause",
       ],
       delimiter: ",",
       truncate: true,
       history: false,
       date: {
         field: "date_decision",
-        format: "YYYY-MM-DD"
-      }
-    }
-  }
+        format: "YYYY-MM-DD",
+      },
+    },
+  },
 };
 
 module.exports = config;

@@ -32,6 +32,7 @@ services:
       - "JAVA_OPTS=-Xmx4g"
     volumes:
       - ./.docker/appsearch/app-search.yml:/usr/share/app-search/config/app-search.yml
+      - appsearchdata:/usr/share/app-search/log
 
   elasticsearch:
     build: .docker/elasticsearch
@@ -63,3 +64,9 @@ volumes:
       o: bind
       type: none
       device:  /mnt/data/shared/elasticdata
+  appsearchdata:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device:  /mnt/data/shared/appsearchdata/log

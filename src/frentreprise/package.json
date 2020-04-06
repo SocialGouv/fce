@@ -45,6 +45,7 @@
     "jest": "^23.6.0",
     "jest-babel": "^1.0.1",
     "jest-html-reporter": "^2.8.1",
+    "prettier": "^2.0.3",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11",
     "webpack-node-externals": "^1.7.2"

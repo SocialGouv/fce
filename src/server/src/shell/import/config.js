@@ -170,6 +170,71 @@ const config = {
       },
     },
   },
+  rupco_procedures: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgefp",
+      fileMatch: /^RUPCO_procedure(.)*.csv$/,
+      outputFileName: "rupco_procedures.csv",
+    },
+    ingest: {
+      className: "RupcoProceduresIngestor",
+      table: "rupco_procedures",
+      filename: `${FILES_FOLDER}/rupco_procedures.csv`,
+      cols: [
+        "numero",
+        "type",
+        "date_enregistrement",
+        "etat",
+        "siren",
+        "effectif_entreprise",
+        "effectif_groupe",
+        "nom_groupe",
+        "date_jugement",
+        "situation_juridique",
+      ],
+      delimiter: ";",
+      truncate: true,
+      history: false,
+      date: {
+        field: "date_enregistrement",
+        format: "YYYY-MM-DD",
+      },
+    },
+  },
+  rupco_etablissements: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgefp",
+      fileMatch: /^RUPCO_etablissement(.)*.csv$/,
+      outputFileName: "rupco_etablissements.csv",
+    },
+    ingest: {
+      className: "RupcoEtablissementsIngestor",
+      table: "rupco_etablissements",
+      filename: `${FILES_FOLDER}/rupco_etablissements.csv`,
+      cols: [
+        "numero",
+        "type",
+        "date_enregistrement",
+        "siren",
+        "date_jugement",
+        "situation_juridique",
+        "siren_etablissement",
+        "effectif_etablissement",
+        "siret",
+        "nombre_de_ruptures_de_contrats_en_debut_de_procedure",
+        "nombre_de_ruptures_de_contrats_en_fin_de_procedure",
+      ],
+      delimiter: ";",
+      truncate: true,
+      history: false,
+      date: {
+        field: "date_enregistrement",
+        format: "YYYY-MM-DD",
+      },
+    },
+  },
 };
 
 module.exports = config;

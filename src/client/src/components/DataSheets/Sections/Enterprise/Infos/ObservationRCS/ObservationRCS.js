@@ -26,10 +26,13 @@ const ObservationRCS = ({ enterprise }) => {
             }
           })}
           {!isShowMore && (
-            <div className="is-action-text" onClick={() => setIsShowMore(true)}>
-              <FontAwesomeIcon size="xs" icon={faChevronRight} />
+            <button
+              className="is-text-button"
+              onClick={() => setIsShowMore(true)}
+            >
+              <FontAwesomeIcon icon={faChevronRight} size="xs" />
               <span className="pl-2">Lire la suite</span>
-            </div>
+            </button>
           )}
         </ul>
       }

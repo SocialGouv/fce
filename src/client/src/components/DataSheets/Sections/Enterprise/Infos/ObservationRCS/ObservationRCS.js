@@ -4,12 +4,11 @@ import { faChevronRight } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Data from "../../../SharedComponents/Data";
-import { toI18nDate } from "../../../../../../helpers/Date";
+import { toI18nDate, sortByDate } from "../../../../../../helpers/Date";
 
 const ObservationRCS = ({ enterprise }) => {
   const [isShowMore, setIsShowMore] = useState(null);
-  const obs = enterprise.rcs_observations || [];
-  obs.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const obs = sortByDate(enterprise.rcs_observations || []);
 
   return (
     <Data

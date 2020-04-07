@@ -5,7 +5,6 @@ import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
 import Infos from "./Infos";
-import Mandataires from "./Mandataires";
 import Accords from "./Accords";
 import Muteco from "./Muteco";
 import Direccte from "../SharedComponents/Direccte";
@@ -54,7 +53,6 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
             <Accords enterprise={enterprise} />
             <Muteco enterprise={enterprise} />
             <Finances establishment={headOffice} />
-            <Mandataires enterprise={enterprise} />
           </div>
           <UsersFeedback fullWidth />
         </div>

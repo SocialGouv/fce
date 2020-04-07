@@ -470,6 +470,16 @@
     }
 }
 
+.is-action-text {
+    color: $blue;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+        color: $dark-blue;
+    }
+}
+
 /*** Bulma override ***/
 .is-secondary {
     @extend .is-info;

@@ -76,6 +76,7 @@
     "node-debug": "^0.1.0",
     "nodemon": "^1.17.1",
     "post-compile-webpack-plugin": "^0.1.1",
+    "prettier": "^2.0.3",
     "supertest": "^3.3.0",
     "tape": "^4.13.2",
     "webpack": "^4.42.0",

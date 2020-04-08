@@ -17,7 +17,7 @@ import ContratsAides from "../../../models/ContratsAides";
 import Successions from "../../../models/Successions";
 
 export const _ = {
-  requestDB: Symbol("_requestDB")
+  requestDB: Symbol("_requestDB"),
 };
 
 export default class PG extends DataSource {
@@ -48,6 +48,7 @@ export default class PG extends DataSource {
       [Entreprises.getInteractionsPole3ESEER, new InteractionsPole3ESEER()],
       [Entreprises.getInteractionsPole3ESRC, new InteractionsPole3ESRC()],
       [Entreprises.getInteractionsPoleT, new InteractionsPoleT()],
+      [Entreprises.getIdcc, new Idcc()],
       [Entreprises.getAccords, new Accords()],
       [Entreprises.getActivitePartielle, new ActivitePartielle()],
       [Entreprises.getPseList, new Pse()]
@@ -62,13 +63,13 @@ export default class PG extends DataSource {
     let out = {};
 
     const requests = dbCalls
-      .filter(dbCall => typeof dbCall[0] === "function")
-      .map(dbCall => {
+      .filter((dbCall) => typeof dbCall[0] === "function")
+      .map((dbCall) => {
         const [fn, Model] = dbCall;
         return fn(identifier, Model);
       });
 
-    await Promise.all(requests).then(results => {
+    await Promise.all(requests).then((results) => {
       Object.assign(out, ...results);
     });
 

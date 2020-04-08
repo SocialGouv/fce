@@ -40,7 +40,7 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
               anchors={[
                 { label: "Informations légales", link: "infos" },
                 { label: "Visites et contrôles", link: "direccte" },
-                { label: "Accords d'entreprise", link: "accords" },
+                { label: "Relation travail", link: "relationship" },
                 {
                   label: "Mutations économiques",
                   link: "muteco"

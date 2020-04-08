@@ -24,6 +24,7 @@ export default class DireccteEntreprise extends Entreprise {
         "date_de_radiation",
         "entreprise_employeur",
         "etat_entreprise",
+        "idcc_list",
         "interactions_3E_SEER",
         "interactions_3E_SRC",
         "interactions_T",
@@ -46,18 +47,18 @@ export default class DireccteEntreprise extends Entreprise {
         "accords",
         "activite_partielle",
         "_dataSources",
-        "_success"
+        "_success",
       ],
       null
     );
 
-    data["etablissements"] = this.etablissements.map(ets => {
+    data["etablissements"] = this.etablissements.map((ets) => {
       return ets.export();
     });
 
     return {
       ...data,
-      _raw: this.getData()
+      _raw: this.getData(),
     };
   }
 }

@@ -11,6 +11,7 @@ import {
 
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
+import Value from "../../../../shared/Value";
 import Config from "../../../../../services/Config";
 
 const EnterpriseRelationship = ({
@@ -21,7 +22,8 @@ const EnterpriseRelationship = ({
     sigle,
     nom_commercial,
     nom,
-    prenom
+    prenom,
+    idcc_list
   }
 }) => {
   const nbAccords =
@@ -38,12 +40,8 @@ const EnterpriseRelationship = ({
     `${nom || ""} ${prenom || ""}`.trim() ||
     null;
 
-  const conventionsCollectives = etablissements
-    .filter(({ code_idcc }) => !!code_idcc)
-    .map(({ code_idcc, libelle_idcc }) => `${code_idcc} - ${libelle_idcc}`);
-
   return (
-    <section id="accords" className="data-sheet__section">
+    <section id="relationship" className="data-sheet__section">
       <div className="section-header">
         <span className="icon">
           <FontAwesomeIcon icon={faUsers} />
@@ -51,15 +49,23 @@ const EnterpriseRelationship = ({
         <h2 className="title">Relation travail</h2>
       </div>
       <div className="section-datas">
-        <Subcategory subtitle="Convention(s) collective(s) appliquée(s)">
-          <ul>
-            {conventionsCollectives.map(convention => (
-              <li key={convention}>{convention}</li>
-            ))}
-          </ul>
+        <Subcategory
+          subtitle="Convention(s) collective(s) appliquée(s)"
+          source="DSN"
+        >
+          <div className="single-value">
+            <ul>
+              {idcc_list &&
+                idcc_list.map(({ code, libelle }) => (
+                  <li className="m-2" key={code}>
+                    <Value value={`${code} - ${libelle}`} />
+                  </li>
+                ))}
+            </ul>
+          </div>
         </Subcategory>
 
-        <Subcategory subtitle="Accords d'entreprise">
+        <Subcategory subtitle="Accords d'entreprise" source="D@cccord">
           <Data
             name="Nb total d'accords déposés par les différents établissements de l'entreprise"
             value={nbAccords}

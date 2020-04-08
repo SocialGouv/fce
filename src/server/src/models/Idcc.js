@@ -5,17 +5,16 @@ export default class Idcc extends Model {
     return this.db
       .query(
         `
-        SELECT i.*
+        SELECT DISTINCT i.code, i.libelle
         FROM etablissements_idcc ei
-        LEFT JOIN idcc i ON ei.idcc = i.code
+        INNER JOIN idcc i ON ei.idcc = i.code
         WHERE siret = $1
+        AND NOT code = '9999'
         `,
         [siret]
       )
-      .then(res => {
-        return res.rows && res.rows.length ? res.rows[0] : null;
-      })
-      .catch(e => {
+      .then((res) => (res.rows && res.rows.length ? res.rows : null))
+      .catch((e) => {
         console.error("Idcc::getBySIRET", e);
         return null;
       });

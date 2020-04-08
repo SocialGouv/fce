@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 
 const EstablishmentRelationship = ({ establishment }) => {
-  const { code_idcc, libelle_idcc } = establishment;
+  const { idcc_list } = establishment;
   const nbAccords = _get(establishment, "accords.total.count");
   const raisonSociale =
     (establishment.nom_commercial &&
@@ -28,11 +28,19 @@ const EstablishmentRelationship = ({ establishment }) => {
         <h2 className="title">Relation travail</h2>
       </div>
       <div className="section-datas">
-        <Subcategory subtitle="Convention collective" source="DSN">
+        <Subcategory
+          subtitle="Convention(s) collective(s) appliquée(s)"
+          source="DSN"
+        >
           <div className="single-value">
-            <Value value={code_idcc && code_idcc} />
-            <span>{code_idcc && " - "}</span>
-            <Value value={libelle_idcc && libelle_idcc} empty="" />
+            <ul>
+              {idcc_list &&
+                idcc_list.map(({ code, libelle }) => (
+                  <li className="m-2" key={code}>
+                    <Value value={`${code} - ${libelle}`} />
+                  </li>
+                ))}
+            </ul>
           </div>
         </Subcategory>
         <Subcategory subtitle="Accords d'entreprise" source="D@cccord">

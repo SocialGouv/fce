@@ -7,7 +7,7 @@ import Data from "../../../SharedComponents/Data";
 import { toI18nDate, sortByDate } from "../../../../../../helpers/Date";
 
 const ObservationRCS = ({ enterprise }) => {
-  const [isShowMore, setIsShowMore] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(null);
   const obs = sortByDate(enterprise.rcs_observations || []);
 
   return (
@@ -16,7 +16,7 @@ const ObservationRCS = ({ enterprise }) => {
       value={
         <ul className="rcs-observations">
           {obs.map(({ date, libelle }, index) => {
-            if (index === 0 || isShowMore) {
+            if (index === 0 || isExpanded) {
               return (
                 <li
                   key={`rcs-obs-${date}-${libelle}`}
@@ -25,10 +25,10 @@ const ObservationRCS = ({ enterprise }) => {
               );
             }
           })}
-          {!isShowMore && (
+          {!isExpanded && (
             <button
               className="is-text-button"
-              onClick={() => setIsShowMore(true)}
+              onClick={() => setIsExpanded(true)}
             >
               <FontAwesomeIcon icon={faChevronRight} size="xs" />
               <span className="pl-2">Lire la suite</span>

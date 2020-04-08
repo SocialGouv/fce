@@ -11,7 +11,7 @@ class RupcoProceduresIngestor extends Ingestor {
     return execSync(
       `${this.psql} "DELETE FROM ${this.getConfig(
         "table"
-      )} WHERE date_enregistrement NOT LIKE '%/%' OR date_enregistrement IS NULL;"`
+      )} WHERE date_enregistrement >= '2019-12-01' OR date_enregistrement IS NULL;"`
     );
   }
 

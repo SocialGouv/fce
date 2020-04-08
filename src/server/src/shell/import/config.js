@@ -114,6 +114,7 @@ const config = {
       outputFileName: "rupco_procedures_historique.csv",
     },
     ingest: {
+      className: "RupcoHistoriqueIngestor",
       table: "rupco_procedures",
       filename: `${FILES_FOLDER}/rupco_procedures_historique.csv`,
       cols: [
@@ -133,7 +134,7 @@ const config = {
       history: false,
       date: {
         field: "date_enregistrement",
-        format: "DD/MM/YYYY",
+        format: "YYYY-MM-DD",
       },
     },
   },
@@ -146,6 +147,7 @@ const config = {
       outputFileName: "rupco_etablissements_historique.csv",
     },
     ingest: {
+      className: "RupcoHistoriqueIngestor",
       table: "rupco_etablissements",
       filename: `${FILES_FOLDER}/rupco_etablissements_historique.csv`,
       cols: [
@@ -166,7 +168,7 @@ const config = {
       history: false,
       date: {
         field: "date_enregistrement",
-        format: "DD/MM/YYYY",
+        format: "YYYY-MM-DD",
       },
     },
   },

@@ -19,14 +19,14 @@ export default async (SIRET, rupco) => {
           date_enregistrement: getFormatedDate(date_enregistrement),
           numero,
           etat,
-          nb_ruptures:
+          nombre_de_ruptures:
             +nombre_de_ruptures_de_contrats_en_fin_de_procedure ||
             +nombre_de_ruptures_de_contrats_en_debut_de_procedure ||
             0,
           autres_etablissements: etablissements && etablissements.split(","),
         })
       )
-      .filter(({ nb_ruptures }) => nb_ruptures > 0);
+      .filter(({ nombre_de_ruptures }) => nombre_de_ruptures > 0);
 
     return {
       pse,

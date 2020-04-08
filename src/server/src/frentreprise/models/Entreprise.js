@@ -35,7 +35,7 @@ export default class DireccteEntreprise extends Entreprise {
         "nom",
         "nombre_etablissements_actifs",
         "prenom",
-        "liste_pse",
+        "pse",
         "raison_sociale",
         "sigle",
         "siren",
@@ -46,18 +46,18 @@ export default class DireccteEntreprise extends Entreprise {
         "accords",
         "activite_partielle",
         "_dataSources",
-        "_success"
+        "_success",
       ],
       null
     );
 
-    data["etablissements"] = this.etablissements.map(ets => {
+    data["etablissements"] = this.etablissements.map((ets) => {
       return ets.export();
     });
 
     return {
       ...data,
-      _raw: this.getData()
+      _raw: this.getData(),
     };
   }
 }

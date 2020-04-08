@@ -29,7 +29,7 @@ export default class Rupco extends Model {
     return this.db
       .query(
         `
-        SELECT e.*, p.etat
+        SELECT DISTINCT ON (e.numero, e.siret) p.*, e.siret, e.nombre_de_ruptures_de_contrats_en_debut_de_procedure, e.nombre_de_ruptures_de_contrats_en_fin_de_procedure
         FROM rupco_etablissements e
         INNER JOIN rupco_procedures p ON e.numero = p.numero
         WHERE e.siren = $1

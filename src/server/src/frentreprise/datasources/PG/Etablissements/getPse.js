@@ -1,27 +1,35 @@
 import { getFormatedDate } from "../Helper";
 
-export default async (SIRET, rows) => {
-  return rows.getBySIRET(SIRET).then(pseRows => {
-    if (!pseRows || !pseRows.length) {
+export default async (SIRET, rupco) => {
+  return rupco.getPSEBySIRET(SIRET).then((rows) => {
+    if (!rows || !rows.length) {
       return {};
     }
 
-    const pse = pseRows.map(pseRow => {
-      Object.keys(pseRow).forEach(key => {
-        if (typeof pseRow[key] === "string") {
-          pseRow[key] = pseRow[key].trim();
-        }
-      });
-
-      pseRow.date_d_enregistrement = getFormatedDate(
-        pseRow.date_d_enregistrement
-      );
-
-      return pseRow;
-    });
+    const pse = rows
+      .map(
+        ({
+          date_enregistrement,
+          numero,
+          etat,
+          nombre_de_ruptures_de_contrats_en_debut_de_procedure,
+          nombre_de_ruptures_de_contrats_en_fin_de_procedure,
+          etablissements,
+        }) => ({
+          date_enregistrement: getFormatedDate(date_enregistrement),
+          numero,
+          etat,
+          nb_ruptures:
+            +nombre_de_ruptures_de_contrats_en_fin_de_procedure ||
+            +nombre_de_ruptures_de_contrats_en_debut_de_procedure ||
+            0,
+          autres_etablissements: etablissements && etablissements.split(","),
+        })
+      )
+      .filter(({ nb_ruptures }) => nb_ruptures > 0);
 
     return {
-      pse
+      pse,
     };
   });
 };

@@ -11,13 +11,14 @@ import Idcc from "../../../models/Idcc";
 import Accords from "../../../models/Accords";
 import ActivitePartielle from "../../../models/ActivitePartielle";
 import Pse from "../../../models/Pse";
+import Rupco from "../../../models/Rupco";
 import PolesCompetitivite from "../../../models/PolesCompetitivite";
 import Iae from "../../../models/Iae";
 import ContratsAides from "../../../models/ContratsAides";
 import Successions from "../../../models/Successions";
 
 export const _ = {
-  requestDB: Symbol("_requestDB")
+  requestDB: Symbol("_requestDB"),
 };
 
 export default class PG extends DataSource {
@@ -36,7 +37,7 @@ export default class PG extends DataSource {
       [Etablissements.getIae, new Iae()],
       [Etablissements.getContratsAides, new ContratsAides()],
       [Etablissements.getActivitePartielle, new ActivitePartielle()],
-      [Etablissements.getPse, new Pse()],
+      [Etablissements.getPse, new Rupco()],
       [Etablissements.getPredecesseur, new Successions()],
       [Etablissements.getSuccesseur, new Successions()]
     );
@@ -62,13 +63,13 @@ export default class PG extends DataSource {
     let out = {};
 
     const requests = dbCalls
-      .filter(dbCall => typeof dbCall[0] === "function")
-      .map(dbCall => {
+      .filter((dbCall) => typeof dbCall[0] === "function")
+      .map((dbCall) => {
         const [fn, Model] = dbCall;
         return fn(identifier, Model);
       });
 
-    await Promise.all(requests).then(results => {
+    await Promise.all(requests).then((results) => {
       Object.assign(out, ...results);
     });
 

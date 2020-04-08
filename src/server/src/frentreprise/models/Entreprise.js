@@ -36,6 +36,8 @@ export default class DireccteEntreprise extends Entreprise {
         "nombre_etablissements_actifs",
         "prenom",
         "pse",
+        "lice",
+        "rcc",
         "raison_sociale",
         "sigle",
         "siren",

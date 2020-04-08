@@ -92,5 +92,7 @@ export const getRupcoDataForEnterprise = (rows) => {
     {}
   );
 
-  return Object.values(rupco);
+  return Object.values(rupco).filter(
+    ({ nombre_de_ruptures }) => nombre_de_ruptures > 0
+  );
 };

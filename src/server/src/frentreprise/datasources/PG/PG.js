@@ -37,6 +37,8 @@ export default class PG extends DataSource {
       [Etablissements.getContratsAides, new ContratsAides()],
       [Etablissements.getActivitePartielle, new ActivitePartielle()],
       [Etablissements.getPse, new Rupco()],
+      [Etablissements.getLice, new Rupco()],
+      [Etablissements.getRcc, new Rupco()],
       [Etablissements.getPredecesseur, new Successions()],
       [Etablissements.getSuccesseur, new Successions()]
     );
@@ -50,7 +52,9 @@ export default class PG extends DataSource {
       [Entreprises.getInteractionsPoleT, new InteractionsPoleT()],
       [Entreprises.getAccords, new Accords()],
       [Entreprises.getActivitePartielle, new ActivitePartielle()],
-      [Entreprises.getPse, new Rupco()]
+      [Entreprises.getPse, new Rupco()],
+      [Entreprises.getLice, new Rupco()],
+      [Entreprises.getRcc, new Rupco()]
     );
   }
 

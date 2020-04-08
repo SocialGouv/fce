@@ -42,6 +42,8 @@ class DireccteEtablissement extends Etablissement {
           "structure_insertion_activite_economique_types",
           "activite_partielle",
           "pse",
+          "lice",
+          "rcc",
           "interactions_3E_SEER",
           "interactions_3E_SRC",
           "interactions_T",
@@ -67,11 +69,11 @@ class DireccteEtablissement extends Etablissement {
           "contrat_aide_salaries_n1",
           "contrat_aide_embauches_n1",
           "_dataSources",
-          "_success"
+          "_success",
         ],
         null
       ),
-      _raw: this.getData()
+      _raw: this.getData(),
     };
   }
 }

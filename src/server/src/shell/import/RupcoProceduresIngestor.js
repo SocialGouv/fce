@@ -14,6 +14,17 @@ class RupcoProceduresIngestor extends Ingestor {
       )} WHERE date_enregistrement NOT LIKE '%/%' OR date_enregistrement IS NULL;"`
     );
   }
+
+  async afterPsqlCopy() {
+    this._fixSirenLength(this.getConfig("table"));
+  }
+
+  _fixSirenLength(table) {
+    console.log("fixSirenLength");
+    return execSync(
+      `${this.psql} "UPDATE ${table} SET "siren" = LPAD("siren", 9, '0');"`
+    );
+  }
 }
 
 module.exports = RupcoProceduresIngestor;

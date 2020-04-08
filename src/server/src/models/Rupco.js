@@ -10,7 +10,9 @@ export default class Rupco extends Model {
         FROM rupco_etablissements e
         INNER JOIN rupco_procedures p ON e.numero = p.numero
         LEFT JOIN (SELECT ent.numero, string_agg(ent.siret, ',') as etablissements FROM rupco_etablissements ent WHERE ent.siren=$2 GROUP BY ent.siren, ent.numero ) etabs ON etabs.numero = e.numero
-        WHERE e.siret = WHERE siret = $1`,
+        WHERE e.siret = $1
+        AND e.type LIKE 'PSE%'
+        AND TO_DATE(e.date_enregistrement, 'YYYY-MM-DD') >= now() - '3 years'::interval`,
         [siret, siretToSiren(siret)]
       )
       .then((res) => {

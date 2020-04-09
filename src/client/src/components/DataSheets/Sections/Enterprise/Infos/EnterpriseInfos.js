@@ -59,7 +59,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             <Data name="Numéro RNA" value={headOffice.association.id} />
           )}
         </Subcategory>
-        <Subcategory subtitle="Informations juridiques" source="Sirène">
+        <Subcategory subtitle="Informations juridiques">
           <Data
             name="Date immatriculation RCS"
             value={enterprise.rcs_date_immatriculation}
@@ -79,7 +79,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             value={enterprise.numero_tva_intracommunautaire}
           />
         </Subcategory>
-        <Subcategory subtitle="Mandataires sociaux" source="Sirène">
+        <Subcategory subtitle="Mandataires sociaux">
           {mandataires.length ? (
             <Mandataires enterprise={enterprise} mandataires={mandataires} />
           ) : (

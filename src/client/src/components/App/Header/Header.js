@@ -35,7 +35,7 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
                     <Button
                       value="Liste des résultats"
                       icon={faChevronLeft}
-                      buttonClasses={["is-outlined"]}
+                      buttonClasses={["is-outlined", "mr-4"]}
                     />
                   </Link>
                   <Link

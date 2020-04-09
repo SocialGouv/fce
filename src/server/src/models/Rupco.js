@@ -1,14 +1,37 @@
 import Model from "./Model";
 import siretToSiren from "../utils/siretToSiren";
 
+const TYPE_PSE = "PSE";
+const TYPE_LICE = "Lice";
+const TYPE_RCC = "RCC";
+const CONDITION_DATE_36_MONTHS = `AND TO_DATE(e.date_enregistrement, 'YYYY-MM-DD') >= now() - '3 years'::interval`;
+
 export default class Rupco extends Model {
-  constructor() {
-    super();
-    this.TYPE_PSE = "PSE";
-    this.TYPE_LICE = "Lice";
-    this.TYPE_RCC = "RCC";
+  getPSEBySIRET(siret) {
+    return this.getBySIRET(siret, TYPE_PSE, CONDITION_DATE_36_MONTHS);
   }
-  getBySIRET(siret, type) {
+
+  getPSEBySIREN(siren) {
+    return this.getBySIREN(siren, TYPE_PSE, CONDITION_DATE_36_MONTHS);
+  }
+
+  getLiceBySIRET(siret) {
+    return this.getBySIRET(siret, TYPE_LICE);
+  }
+
+  getLiceBySIREN(siren) {
+    return this.getBySIREN(siren, TYPE_LICE);
+  }
+
+  getRCCBySIRET(siret) {
+    return this.getBySIRET(siret, TYPE_RCC, CONDITION_DATE_36_MONTHS);
+  }
+
+  getRCCBySIREN(siren) {
+    return this.getBySIREN(siren, TYPE_RCC, CONDITION_DATE_36_MONTHS);
+  }
+
+  getBySIRET(siret, type, dateCondition = "") {
     return this.db
       .query(
         `
@@ -18,7 +41,7 @@ export default class Rupco extends Model {
         LEFT JOIN (SELECT ent.numero, string_agg(ent.siret, ',') as etablissements FROM rupco_etablissements ent WHERE ent.siren=$2 GROUP BY ent.siren, ent.numero ) etabs ON etabs.numero = e.numero
         WHERE e.siret = $1
         AND e.type ILIKE $3
-        AND TO_DATE(e.date_enregistrement, 'YYYY-MM-DD') >= now() - '3 years'::interval
+        ${dateCondition}
         ORDER BY e.numero DESC`,
         [siret, siretToSiren(siret), `${type}%`]
       )
@@ -31,7 +54,7 @@ export default class Rupco extends Model {
       });
   }
 
-  getBySIREN(siren, type) {
+  getBySIREN(siren, type, dateCondition = "") {
     return this.db
       .query(
         `
@@ -40,7 +63,7 @@ export default class Rupco extends Model {
         INNER JOIN rupco_procedures p ON e.numero = p.numero
         WHERE e.siren = $1
         AND e.type ILIKE $2
-        AND TO_DATE(e.date_enregistrement, 'YYYY-MM-DD') >= now() - '3 years'::interval
+        ${dateCondition}
         ORDER BY e.numero DESC`,
         [siren, `${type}%`]
       )

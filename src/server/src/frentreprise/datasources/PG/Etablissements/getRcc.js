@@ -1,7 +1,7 @@
 import { getRupcoDataForEstablishment } from "../Helper";
 
 export default async (SIRET, rupco) => {
-  return rupco.getBySIRET(SIRET, rupco.TYPE_RCC).then((rows) => {
+  return rupco.getRCCBySIRET(SIRET).then((rows) => {
     if (!rows || !rows.length) {
       return {};
     }

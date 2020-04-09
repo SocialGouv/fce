@@ -74,6 +74,29 @@ const config = {
       },
     },
   },
+  interactions_pole_c: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgccrf",
+      fileMatch: /^donnee_FCE_extract(.)*.xlsx$/,
+      converter: CONVERTER_XLSX_TO_CSV,
+      outputFileName: "interactions_pole_c.csv",
+    },
+    ingest: {
+      className: "InteractionsPoleCIngestor",
+      table: "interactions_pole_c",
+      historyTable: "interactions_pole_c_historique",
+      filename: `${FILES_FOLDER}/interactions_pole_c.csv`,
+      cols: ["siret", "annee", "mois", "jour", "suite", "unite", "messagerie"],
+      delimiter: ",",
+      truncate: true,
+      history: true,
+      date: {
+        field: "date",
+        format: "YYYY-MM-DD",
+      },
+    },
+  },
   etablissements_activite_partielle: {
     download: {
       className: "MinioDownloader",

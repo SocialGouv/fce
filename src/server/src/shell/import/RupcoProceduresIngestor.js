@@ -17,12 +17,20 @@ class RupcoProceduresIngestor extends Ingestor {
 
   async afterPsqlCopy() {
     this._fixSirenLength(this.getConfig("table"));
+    this._fixDateFormat(this.getConfig("table"));
   }
 
   _fixSirenLength(table) {
     console.log("fixSirenLength");
     return execSync(
       `${this.psql} "UPDATE ${table} SET "siren" = LPAD("siren", 9, '0');"`
+    );
+  }
+
+  _fixDateFormat(table) {
+    console.log("fixDateFormat");
+    return execSync(
+      `${this.psql} "UPDATE ${table} SET "date_enregistrement" = LEFT("date_enregistrement", 10);"`
     );
   }
 }

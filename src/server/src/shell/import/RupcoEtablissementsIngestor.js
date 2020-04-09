@@ -17,12 +17,20 @@ class RupcoEtablissementsIngestor extends Ingestor {
 
   async afterPsqlCopy() {
     this._fixSirenAndSiretLength(this.getConfig("table"));
+    this._fixDateFormat(this.getConfig("table"));
   }
 
   _fixSirenAndSiretLength(table) {
     console.log("fixSirenAndSiretLength");
     return execSync(
       `${this.psql} "UPDATE ${table} SET "siren" = LPAD("siren", 9, '0'), "siren_etablissement" = LPAD("siren_etablissement", 9, '0'), "siret" = LPAD("siret", 14, '0');"`
+    );
+  }
+
+  _fixDateFormat(table) {
+    console.log("fixDateFormat");
+    return execSync(
+      `${this.psql} "UPDATE ${table} SET "date_enregistrement" = LEFT("date_enregistrement", 10);"`
     );
   }
 }

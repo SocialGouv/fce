@@ -104,35 +104,34 @@ router.post("/requestAuthCode", async (req, res) => {
   }
 });
 
-router.post("/login", function (req, res) {
-  const { key, clientVerificationKey } = req.body;
+router.post("/login", async function (req, res) {
+  const { code, email } = req.body;
 
   try {
-    const decryptedKey = magicKey.decryptKey(key, clientVerificationKey);
-    const isValidKey = magicKey.validateKey(key, clientVerificationKey);
+    const { isValidCode, failureMessage } = await Auth.validateCode(
+      email,
+      code
+    );
 
-    if (!isValidKey) {
-      console.error("MagicKey Error", magicKey.getLastValidationErrorMessage());
-      throw new Error("Le lien de connexion a expiré ou est invalide");
+    if (!isValidCode) {
+      console.error("Login denied", failureMessage);
+      throw new Error(failureMessage);
     }
 
-    const user = { email: decryptedKey.email };
+    const user = { email };
     const token = Auth.generateToken(user);
 
-    const magicLink = new MagicLinkModel();
-    magicLink.validate(key);
-
-    console.log(`${user.email} logged with MagicLink`);
+    console.log(`${user.email} logged with code`);
 
     return res.send({
       success: true,
       token,
     });
   } catch (e) {
-    console.error(`Magic link is invalid`, e, e.message);
-    return res.send({
+    console.error(`Authentification code is invalid`, e.message);
+    return res.status(401).json({
       success: false,
-      message: e.message,
+      error: e.message,
     });
   }
 });

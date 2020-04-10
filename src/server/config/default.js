@@ -30,6 +30,7 @@ const config = {
       (mask) => new RegExp(mask)
     ),
     codeLength: 5,
+    maxFailures: 3,
     expire: process.env.MAGIC_KEY_EXPIRE,
     bcc: process.env.MAGIC_LINK_BCC,
   },

@@ -50,9 +50,41 @@ export default class Auth {
     return !!allowedEmails.find((regex) => !!email.match(regex));
   }
 
+  static async validateCode(email, code) {
+    const authRequestsModel = new AuthRequestsModel();
+    const authRequest = await authRequestsModel.getByEmail(email);
+
+    if (
+      !authRequest ||
+      isExpired(authRequest.createdAt, config.get("authCode.expire")) ||
+      tooMuchFailures(authRequest.failures, config.get("authCode.maxFailures"))
+    ) {
+      authRequestsModel.delete(email);
+      return {
+        isValidCode: false,
+        failureMessage:
+          "Votre demande de connexion a expirée, veuillez demander un nouveau code.",
+      };
+    }
+
+    if (code !== authRequest.code) {
+      authRequestsModel.incrementFailure(email);
+      return {
+        isValidCode: false,
+        failureMessage: "Le code est invalide.",
+      };
+    }
+
+    authRequestsModel.delete(email);
+
+    return {
+      isValidCode: true,
+    };
+  }
+
   static generateCode(email) {
     const authRequests = new AuthRequestsModel();
-    const code = this._generateRandomCode();
+    const code = generateRandomCode();
 
     authRequests.delete(email);
 
@@ -62,11 +94,27 @@ export default class Auth {
 
     return code;
   }
-
-  static _generateRandomCode() {
-    const { codeLength } = config.get("authCode");
-    const maxNumber = Math.pow(10, codeLength) - 1;
-    const codeInt = Math.floor(Math.random() * Math.floor(maxNumber));
-    return codeInt.toString().padStart(codeLength, "0");
-  }
 }
+
+const generateRandomCode = () => {
+  const { codeLength } = config.get("authCode");
+  const maxNumber = Math.pow(10, codeLength) - 1;
+  const codeInt = Math.floor(Math.random() * Math.floor(maxNumber));
+  return codeInt.toString().padStart(codeLength, "0");
+};
+
+const isExpired = (date, expire) => {
+  if (expire === false) {
+    return false;
+  }
+
+  const created = timestampInSecond(Date.parse(date));
+  const now = timestampInSecond(Date.now());
+
+  return created + +expire < now;
+};
+
+const timestampInSecond = (timestampInMillisecond) =>
+  timestampInMillisecond / 1000;
+
+const tooMuchFailures = (failures, maxFailures) => failures >= maxFailures;

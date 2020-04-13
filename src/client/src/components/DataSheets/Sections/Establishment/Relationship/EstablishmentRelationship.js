@@ -34,12 +34,13 @@ const EstablishmentRelationship = ({ establishment }) => {
         >
           <div className="single-value">
             <ul>
-              {idcc_list &&
-                idcc_list.map(({ code, libelle }) => (
-                  <li className="m-2" key={code}>
-                    <Value value={`${code} - ${libelle}`} />
-                  </li>
-                ))}
+              {idcc_list
+                ? idcc_list.map(({ code, libelle }) => (
+                    <li className="m-2" key={code}>
+                      <Value value={`${code} - ${libelle}`} />
+                    </li>
+                  ))
+                : "-"}
             </ul>
           </div>
         </Subcategory>

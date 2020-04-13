@@ -2,10 +2,7 @@
 @import "./../../../../App/placeholders";
 
 .establishment-header {
-    padding: 2rem;
-    background-color: $white;
-    border-radius: 0.325rem;
-    box-shadow: $fce-shadow;
+    @extend %data-sheet-header;
     @extend %print-margin-padding;
 
     &__status {

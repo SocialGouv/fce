@@ -5,6 +5,7 @@ import Entreprises from "./Entreprises";
 import InteractionsPole3ESEER from "../../../models/InteractionsPole3ESEER";
 import InteractionsPole3ESRC from "../../../models/InteractionsPole3ESRC";
 import InteractionsPoleT from "../../../models/InteractionsPoleT";
+import InteractionsPoleC from "../../../models/InteractionsPoleC";
 import UcEff from "../../../models/UcEff";
 import DsnEff from "../../../models/DsnEff";
 import Idcc from "../../../models/Idcc";
@@ -28,6 +29,7 @@ export default class PG extends DataSource {
       [Etablissements.getInteractionsPole3ESEER, new InteractionsPole3ESEER()],
       [Etablissements.getInteractionsPole3ESRC, new InteractionsPole3ESRC()],
       [Etablissements.getInteractionsPoleT, new InteractionsPoleT()],
+      [Etablissements.getInteractionsPoleC, new InteractionsPoleC()],
       [Etablissements.getUcEff, new UcEff()],
       [Etablissements.getDsnEff, new DsnEff()],
       [Etablissements.getIdcc, new Idcc()],
@@ -48,6 +50,7 @@ export default class PG extends DataSource {
       [Entreprises.getInteractionsPole3ESEER, new InteractionsPole3ESEER()],
       [Entreprises.getInteractionsPole3ESRC, new InteractionsPole3ESRC()],
       [Entreprises.getInteractionsPoleT, new InteractionsPoleT()],
+      [Entreprises.getInteractionsPoleC, new InteractionsPoleC()],
       [Entreprises.getIdcc, new Idcc()],
       [Entreprises.getAccords, new Accords()],
       [Entreprises.getActivitePartielle, new ActivitePartielle()],

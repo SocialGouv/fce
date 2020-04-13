@@ -64,6 +64,12 @@ const globalConfig = {
       }
     }
   },
+  poleSrcControlType: {
+    FPC: "Formation professionnelle continue",
+    CSA: "Taxe apprentissage",
+    "Apprentissage (hors CSA)": "Apprentissage (hors taxe)",
+    FSE: "FSE"
+  },
   accords: [
     { key: "epargne", value: "Epargne salariale" },
     { key: "remuneration", value: "Salaires / Rémunérations" },

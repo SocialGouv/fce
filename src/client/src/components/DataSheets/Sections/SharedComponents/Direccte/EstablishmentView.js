@@ -7,6 +7,7 @@ import Value from "../../../../shared/Value";
 import Data from "../Data";
 import Source from "../../../../../containers/Source";
 import { getLastInteraction } from "../../../../../helpers/Interactions";
+import Config from "../../../../../services/Config";
 
 const EstablishmentView = ({ establishment }) => {
   const lastInteractions = {
@@ -14,10 +15,10 @@ const EstablishmentView = ({ establishment }) => {
       ...getLastInteraction(establishment.interactions_T),
       source: "Wiki'T"
     },
-    /* C: {
-        ...getLastInteraction(establishment.interactions_C),
-        source: "SORA"
-      }, */
+    C: {
+      ...getLastInteraction(establishment.interactions_C),
+      source: "SORA"
+    },
     "3E_SEER": {
       ...getLastInteraction(establishment.interactions_3E_SEER),
       source: "EOS"
@@ -72,8 +73,8 @@ const EstablishmentView = ({ establishment }) => {
               <tr>
                 <th className="has-text-right">Pôle</th>
                 <th>Date</th>
-                <th>Objet</th>
                 <th>Unité</th>
+                <th>Type</th>
                 <th>Agent</th>
                 <th>Source</th>
               </tr>
@@ -89,10 +90,14 @@ const EstablishmentView = ({ establishment }) => {
                       <Value value={lastInteraction.date} />
                     </td>
                     <td>
-                      <Value value={lastInteraction.objet} />
+                      <Value value={lastInteraction.unite} />
                     </td>
                     <td>
-                      <Value value={lastInteraction.unite} />
+                      <Value
+                        value={
+                          Config.get("poleSrcControlType")[lastInteraction.type]
+                        }
+                      />
                     </td>
                     <td>
                       <Value value={lastInteraction.agent} />

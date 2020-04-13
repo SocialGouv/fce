@@ -45,19 +45,20 @@ export default class DireccteEntreprise extends Entreprise {
         "rcs_observations",
         "accords",
         "activite_partielle",
+        "numero_tva_intracommunautaire",
         "_dataSources",
-        "_success"
+        "_success",
       ],
       null
     );
 
-    data["etablissements"] = this.etablissements.map(ets => {
+    data["etablissements"] = this.etablissements.map((ets) => {
       return ets.export();
     });
 
     return {
       ...data,
-      _raw: this.getData()
+      _raw: this.getData(),
     };
   }
 }

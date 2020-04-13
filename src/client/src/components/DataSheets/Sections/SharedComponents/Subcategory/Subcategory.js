@@ -7,7 +7,7 @@ import "./subcategory.scss";
 
 const Subcategory = ({
   subtitle,
-  datas,
+  datas = [],
   children,
   source,
   sourceDate = null

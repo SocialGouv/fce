@@ -14,7 +14,13 @@ const globalConfig = {
   },
   sidebarEstablishmentsLimit: 20,
   monthsProceduresLimit: 36,
-  interactions: ["C", "3E_SEER", "3E_SRC", "T"],
+  interactions: {
+    poles: ["C", "3E_SEER", "3E_SRC", "T"],
+    types: {
+      control: ["interactions_T", "interactions_T", "interactions_3E_SRC"],
+      visit: ["interactions_3E_SEER"]
+    }
+  },
   region: {
     occitanie: 76
   },

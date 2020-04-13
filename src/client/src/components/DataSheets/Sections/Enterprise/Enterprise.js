@@ -8,7 +8,7 @@ import Infos from "./Infos";
 import Mandataires from "./Mandataires";
 import Accords from "./Accords";
 import Muteco from "./Muteco";
-import Direccte from "../SharedComponents/Direccte";
+import Direccte from "./Direccte";
 import Finances from "./Finances";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";

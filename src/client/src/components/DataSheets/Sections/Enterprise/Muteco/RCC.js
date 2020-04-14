@@ -59,7 +59,7 @@ function RCC({ enterprise }) {
             <thead>
               <tr>
                 <th>Numéro de dossier</th>
-                <th className="has-text-centered">Date d'enregistrement</th>
+                <th className="has-text-centered">Date d{"'"}enregistrement</th>
                 <th className="has-text-centered">Type de RCC</th>
                 <th className="has-text-centered">
                   Nombre maximum de ruptures de contrats de travail envisagées

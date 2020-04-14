@@ -1,10 +1,11 @@
-@import './../../../../App/variables';
-@import './../../../../App/placeholders';
+@import "./../../../../App/variables";
+@import "./../../../../App/placeholders";
 
 .establishment-header {
-    padding: 2rem;
-    background-color: $white;
-    border-radius: 0.325rem;
-    box-shadow: $fce-shadow;
-    @extend %print-margin-padding
+    @extend %data-sheet-header;
+    @extend %print-margin-padding;
+
+    &__status {
+        display: flex;
+    }
 }

@@ -8,7 +8,7 @@ export default async (SIREN, rows) => {
 
     const pseObject = pseRows
       .map(pseRow => {
-        Object.entries(pseRow).forEach(([key, value]) => {
+        Object.keys(pseRow).forEach(key => {
           if (typeof pseRow[key] === "string") {
             pseRow[key] = pseRow[key].trim();
           }

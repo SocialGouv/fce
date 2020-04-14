@@ -1,6 +1,6 @@
 import Model from "./Model";
 
-export default class InteractionsPole3E extends Model {
+export default class InteractionsPole3ESEER extends Model {
   findAllBySIRET(siret) {
     return this.db
       .query("SELECT * FROM interactions_pole_3e WHERE siret = $1", [siret])
@@ -8,7 +8,7 @@ export default class InteractionsPole3E extends Model {
         return res.rows;
       })
       .catch(e => {
-        console.error("InteractionsPole3E::findAllBySIRET", e);
+        console.error("InteractionsPole3ESEER::findAllBySIRET", e);
         return [];
       });
   }
@@ -22,7 +22,7 @@ export default class InteractionsPole3E extends Model {
         return res.rows;
       })
       .catch(e => {
-        console.error("InteractionsPole3E::findAllBySIREN", e);
+        console.error("InteractionsPole3ESEER::findAllBySIREN", e);
         return [];
       });
   }

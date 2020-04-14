@@ -37,7 +37,7 @@ class Login extends Component {
           );
         }
       })
-      .catch(error => {
+      .catch(() => {
         this._loginFail("La tentative de connexion a échoué");
       });
   };

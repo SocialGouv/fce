@@ -1,8 +1,9 @@
 import { copyKeys } from "../../utils";
-const { Etablissement } = require("frentreprise");
+// eslint-disable-next-line node/no-missing-import
+import { Etablissement } from "frentreprise";
 
 class DireccteEtablissement extends Etablissement {
-  export(keys) {
+  export() {
     return {
       ...copyKeys(
         this,
@@ -41,7 +42,8 @@ class DireccteEtablissement extends Etablissement {
           "structure_insertion_activite_economique_types",
           "activite_partielle",
           "pse",
-          "interactions_3E",
+          "interactions_3E_SEER",
+          "interactions_3E_SRC",
           "interactions_T",
           "interactions_C",
           "association",
@@ -74,4 +76,4 @@ class DireccteEtablissement extends Etablissement {
   }
 }
 
-module.exports = DireccteEtablissement;
+export default DireccteEtablissement;

@@ -1,7 +1,7 @@
 import { copyKeys } from "../../utils";
 import DireccteEtablissement from "./Etablissement";
-
-const { Entreprise } = require("frentreprise");
+// eslint-disable-next-line node/no-missing-import
+import { Entreprise } from "frentreprise";
 
 export default class DireccteEntreprise extends Entreprise {
   constructor(data, etsModel = DireccteEtablissement) {
@@ -24,7 +24,8 @@ export default class DireccteEntreprise extends Entreprise {
         "date_de_radiation",
         "entreprise_employeur",
         "etat_entreprise",
-        "interactions_3E",
+        "interactions_3E_SEER",
+        "interactions_3E_SRC",
         "interactions_T",
         "interactions_C",
         "libelle_naf",
@@ -44,21 +45,20 @@ export default class DireccteEntreprise extends Entreprise {
         "rcs_observations",
         "accords",
         "activite_partielle",
+        "numero_tva_intracommunautaire",
         "_dataSources",
-        "_success"
+        "_success",
       ],
       null
     );
 
-    data["etablissements"] = this.etablissements.map(ets => {
+    data["etablissements"] = this.etablissements.map((ets) => {
       return ets.export();
     });
 
     return {
       ...data,
-      _raw: this.getData()
+      _raw: this.getData(),
     };
   }
 }
-
-module.exports = DireccteEntreprise;

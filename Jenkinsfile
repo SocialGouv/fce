@@ -5,12 +5,6 @@ pipeline {
   }
   stages {
     stage('Init') {
-      when {
-        anyOf {
-          branch 'develop';
-          branch 'master'
-        }
-      }
       steps {
         echo "Init $BRANCH_NAME on $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
@@ -21,18 +15,24 @@ pipeline {
       }
     }
     stage('Build') {
-      when {
-        anyOf {
-          branch 'develop';
-          branch 'master'
-        }
-      }
       steps {
         echo "Building $BRANCH_NAME on $JENKINS_URL ..."
         sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
             sh '''
                 .c42/scripts/build.sh $BRANCH_NAME
             '''
+        }
+      }
+    }
+    stage('Eslint') {
+      steps {
+        echo "Check eslint $BRANCH_NAME on $JENKINS_URL ..."
+        sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
+          sh '''
+              docker-compose run --rm server yarn lint
+              docker-compose run --rm frentreprise yarn lint
+              docker-compose run --rm front yarn lint
+          '''
         }
       }
     }
@@ -50,6 +50,16 @@ pipeline {
             docker-compose run --rm deployment ansible-playbook /root/fce-ppd.yml -i /root/hosts
           '''
         }
+      }
+    }
+    stage('Notify') {
+      when {
+        anyOf {
+          branch 'master'
+        }
+      }
+      steps {
+          slackSend channel: "#direccte", message: "FCE deployement waiting for confirmation on (<${env.RUN_DISPLAY_URL}|Jenkins>)"
       }
     }
     stage('Confirm') {
@@ -85,5 +95,14 @@ pipeline {
         }
       }
     }
+  }
+  post {
+      always {
+          sh '''
+            docker-compose down
+            sudo chown -R $(id -u):$(id -g) ./
+            '''
+          deleteDir()
+      }
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { faPrint } from "@fortawesome/pro-solid-svg-icons";
-import withLoading from "../../../../services/Loading";
+import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
 import Activity from "./Activity";
@@ -12,8 +12,6 @@ import Direccte from "../SharedComponents/Direccte";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
-
-import "./establishment.scss";
 
 const Establishment = ({
   establishment,
@@ -60,21 +58,6 @@ const Establishment = ({
             <Helps establishment={establishment} />
           </div>
           <UsersFeedback fullWidth />
-        </div>
-        <div id="establishments" className="quickview responsive-item">
-          <div className="quickview-body">
-            <header className="quickview-header">
-              <p className="title">Liste des établissements</p>
-              <span className="delete" data-dismiss="quickview" />
-            </header>
-            <div className="quickview-block">
-              <Sidebar
-                enterprise={enterprise}
-                headOffice={headOffice}
-                establishments={establishments}
-              />
-            </div>
-          </div>
         </div>
       </div>
     </section>

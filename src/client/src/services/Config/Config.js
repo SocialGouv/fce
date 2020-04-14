@@ -4,6 +4,7 @@ const hosts2config = require("./configs/hosts2configs.json");
 
 let config = null;
 const log = console.warning || console.error || console.log;
+
 const globalConfig = {
   maintenanceMode: process.env.REACT_APP_MAINTENANCE === "true",
   sentryUrlKey:
@@ -13,7 +14,7 @@ const globalConfig = {
   },
   sidebarEstablishmentsLimit: 20,
   monthsProceduresLimit: 36,
-  interactions: ["C", "3E", "T"],
+  interactions: ["C", "3E_SEER", "3E_SRC", "T"],
   region: {
     occitanie: 76
   },
@@ -57,6 +58,12 @@ const globalConfig = {
       }
     }
   },
+  poleSrcControlType: {
+    FPC: "Formation professionnelle continue",
+    CSA: "Taxe apprentissage",
+    "Apprentissage (hors CSA)": "Apprentissage (hors taxe)",
+    FSE: "FSE"
+  },
   accords: [
     { key: "epargne", value: "Epargne salariale" },
     { key: "remuneration", value: "Salaires / Rémunérations" },
@@ -97,6 +104,18 @@ const globalConfig = {
     "51": "2 000 à 4 999 salariés",
     "52": "5 000 à 9 999 salariés",
     "53": "10 000 salariés et plus"
+  },
+  sources: {
+    customDateFormats: {
+      EOS: { default: "DD/MM/YYYY", monthYear: "MMM YY" },
+      Sirène: { default: "DD/MM/YYYY", year: "YYYY" },
+      DSN: "MMM YY",
+      Siene: "MMM YY",
+      "ASP Extranet IAE2.0": "MMM YY",
+      "ASP Extranet CUI": "MMM YY",
+      "Ari@ne": "MMM YY",
+      Extrapro: "MMM YY"
+    }
   },
   agrementsIae: {
     ei: "Entreprise d'insertion",

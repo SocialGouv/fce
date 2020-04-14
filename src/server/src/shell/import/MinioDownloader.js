@@ -1,6 +1,6 @@
 require("dotenv").config();
 const process = require("process");
-const { promisify } = require("util");
+const { format } = require("date-fns");
 const Minio = require("minio");
 
 const LOCAL_STORAGE_PATH = "/mnt/data/export";
@@ -29,7 +29,7 @@ class MinioDownloader {
 
   async execute() {
     console.log("Execute Downloader");
-    const { bucket, fileMatch } = this._config;
+    const { bucket, fileMatch, converter } = this._config;
 
     const file = await this._getOldestFile(bucket, fileMatch);
 
@@ -39,7 +39,14 @@ class MinioDownloader {
     }
 
     await this._downloadFile(bucket, file);
-    await this._moveToArchive(bucket, file);
+
+    if (converter) {
+      await this._convertFile(converter);
+    }
+
+    if (this._config.archiveFile) {
+      await this._moveToArchive(bucket, file);
+    }
 
     console.log("File downloaded");
   }
@@ -91,6 +98,15 @@ class MinioDownloader {
     });
   }
 
+  async _convertFile(converterFile) {
+    const { outputFileName } = this._config;
+    const filePath = `${LOCAL_STORAGE_PATH}/${outputFileName}`;
+
+    // eslint-disable-next-line security/detect-non-literal-require
+    const converter = require(`./converter/${converterFile}`);
+    return await converter(filePath);
+  }
+
   async _moveToArchive(bucket, file) {
     await this._copyToArchive(bucket, file);
     await this._removeToRoot(bucket, file);
@@ -101,7 +117,9 @@ class MinioDownloader {
     return new Promise((resolve, reject) => {
       this.minioClient.copyObject(
         bucket,
-        `${ARCHIVE_FOLDER}/${file.name}`,
+        `${ARCHIVE_FOLDER}/${format(new Date(), "yyyyMMdd_HHmmss")}_${
+          file.name
+        }`,
         `${bucket}/${file.name}`,
         null,
         (err, data) => {

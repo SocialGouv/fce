@@ -1,8 +1,11 @@
+// eslint-disable-next-line node/no-missing-import
 import { DataSource } from "frentreprise";
 import Etablissements from "./Etablissements";
 import Entreprises from "./Entreprises";
-import InteractionsPole3E from "../../../models/InteractionsPole3E";
+import InteractionsPole3ESEER from "../../../models/InteractionsPole3ESEER";
+import InteractionsPole3ESRC from "../../../models/InteractionsPole3ESRC";
 import InteractionsPoleT from "../../../models/InteractionsPoleT";
+import InteractionsPoleC from "../../../models/InteractionsPoleC";
 import UcEff from "../../../models/UcEff";
 import DsnEff from "../../../models/DsnEff";
 import Idcc from "../../../models/Idcc";
@@ -15,7 +18,7 @@ import ContratsAides from "../../../models/ContratsAides";
 import Successions from "../../../models/Successions";
 
 export const _ = {
-  requestDB: Symbol("_requestDB")
+  requestDB: Symbol("_requestDB"),
 };
 
 export default class PG extends DataSource {
@@ -23,8 +26,10 @@ export default class PG extends DataSource {
   async getSIRET(SIRET) {
     return await this[_.requestDB](
       SIRET,
-      [Etablissements.getInteractionsPole3E, new InteractionsPole3E()],
+      [Etablissements.getInteractionsPole3ESEER, new InteractionsPole3ESEER()],
+      [Etablissements.getInteractionsPole3ESRC, new InteractionsPole3ESRC()],
       [Etablissements.getInteractionsPoleT, new InteractionsPoleT()],
+      [Etablissements.getInteractionsPoleC, new InteractionsPoleC()],
       [Etablissements.getUcEff, new UcEff()],
       [Etablissements.getDsnEff, new DsnEff()],
       [Etablissements.getIdcc, new Idcc()],
@@ -42,8 +47,10 @@ export default class PG extends DataSource {
   async getSIREN(SIREN) {
     return await this[_.requestDB](
       SIREN,
-      [Entreprises.getInteractionsPole3E, new InteractionsPole3E()],
+      [Entreprises.getInteractionsPole3ESEER, new InteractionsPole3ESEER()],
+      [Entreprises.getInteractionsPole3ESRC, new InteractionsPole3ESRC()],
       [Entreprises.getInteractionsPoleT, new InteractionsPoleT()],
+      [Entreprises.getInteractionsPoleC, new InteractionsPoleC()],
       [Entreprises.getAccords, new Accords()],
       [Entreprises.getActivitePartielle, new ActivitePartielle()],
       [Entreprises.getPseList, new Pse()]
@@ -58,13 +65,13 @@ export default class PG extends DataSource {
     let out = {};
 
     const requests = dbCalls
-      .filter(dbCall => typeof dbCall[0] === "function")
-      .map(dbCall => {
+      .filter((dbCall) => typeof dbCall[0] === "function")
+      .map((dbCall) => {
         const [fn, Model] = dbCall;
         return fn(identifier, Model);
       });
 
-    await Promise.all(requests).then(results => {
+    await Promise.all(requests).then((results) => {
       Object.assign(out, ...results);
     });
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { Pool } = require("pg");
 const config = require("config");
 
@@ -7,7 +8,7 @@ pool.on("error", (err, client) => {
   console.error("Unexpected error on idle client", err);
 });
 
-module.exports = {
+export default {
   query: (text, params = []) => {
     const start = Date.now();
     return pool

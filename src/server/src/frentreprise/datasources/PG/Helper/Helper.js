@@ -7,7 +7,13 @@ export const getFormatedDate = date => {
 
   date = date.trim();
 
-  const datesFormats = ["yyyy-MM-dd", "dd/MM/yyyy", "ddMMMyyyy", "dd/MM/yy"];
+  const datesFormats = [
+    "yyyy-MM-dd",
+    "dd/MM/yyyy",
+    "ddMMMyyyy",
+    "dd/MM/yy",
+    "M/d/yy"
+  ];
 
   for (const dateFormat of datesFormats) {
     const parsedDate = parse(date, dateFormat, new Date());

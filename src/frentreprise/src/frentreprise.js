@@ -2,7 +2,6 @@ import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
 import SirenePG from "./DataSources/SirenePG";
-import SireneAPI from "./DataSources/SireneAPI";
 
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
@@ -133,7 +132,7 @@ class frentreprise {
       } else if (!Array.isArray(source_results)) {
         if (
           typeof source_results === "object" &&
-          source_results.hasOwnProperty("error") &&
+          Object.prototype.hasOwnProperty.call(source_results, "error") &&
           source_results.error === true
         ) {
           hasError = true;
@@ -278,10 +277,7 @@ class frentreprise {
   }
 }
 
-module.exports = new frentreprise();
-module.exports.Entreprise = Entreprise;
-module.exports.Etablissement = Etablissement;
-module.exports.DataSource = DataSource;
-module.exports.isSIRET = Validator.validateSIRET;
-module.exports.isSIREN = Validator.validateSIREN;
-module.exports._ = _;
+export default new frentreprise();
+export { Entreprise, Etablissement, DataSource, _ };
+export const isSIRET = Validator.validateSIRET;
+export const isSIREN = Validator.validateSIREN;

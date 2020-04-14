@@ -35,143 +35,149 @@ const Search = ({
   options,
   divisionsNaf,
   loadLocations
-}) => (
-  <div className="app-search">
-    <div className="pb-4">
-      <div className="app-search__container">
-        <div className="columns">
-          <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
-            {error && (
-              <div className="notification is-danger">
-                Une erreur est survenue lors de la communication avec l{"'"}
-                API
-              </div>
-            )}
-            <form
-              className="form search-form"
-              onSubmit={e => {
-                e.preventDefault();
-                sendRequest(searchTerm, options);
-              }}
-            >
-              <div className="columns">
-                <div className="column is-four-fifths-widescreen">
-                  <div className="field is-grouped is-grouped-centered">
-                    <SearchBar
-                      label="Nom ou raison sociale, SIRET ou SIREN"
-                      searchTerm={searchTerm}
-                      setSearchTerm={setSearchTerm}
-                    />
-                  </div>
-                  <div className="columns filters__checkboxes">
-                    <div className="column is-4">
-                      <SiegeFilter
-                        filters={filters}
-                        addFilter={addFilter}
-                        removeFilter={removeFilter}
+}) => {
+  const isOpenAdvancedSearch = filters => {
+    const hasNaf = filters.naf && filters.naf.length;
+    const hasLocation = filters.location && filters.location.length;
+    return hasNaf || hasLocation;
+  };
+
+  return (
+    <div className="app-search">
+      <div className="pb-4">
+        <div className="app-search__container">
+          <div className="columns">
+            <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
+              {error && (
+                <div className="notification is-danger">
+                  Une erreur est survenue lors de la communication avec l{"'"}
+                  API
+                </div>
+              )}
+              <form
+                className="form search-form"
+                onSubmit={e => {
+                  e.preventDefault();
+                  sendRequest(searchTerm, options);
+                }}
+              >
+                <div className="columns">
+                  <div className="column is-four-fifths-widescreen">
+                    <div className="field is-grouped is-grouped-centered">
+                      <SearchBar
+                        label="Nom ou raison sociale, SIRET ou SIREN"
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
                       />
                     </div>
-                    <div className="column is-8">
-                      <StateFilter
-                        filters={filters}
-                        addFilter={addFilter}
-                        removeFilter={removeFilter}
-                      />
+                    <div className="columns filters__checkboxes">
+                      <div className="column is-4">
+                        <SiegeFilter
+                          filters={filters}
+                          addFilter={addFilter}
+                          removeFilter={removeFilter}
+                        />
+                      </div>
+                      <div className="column is-8">
+                        <StateFilter
+                          filters={filters}
+                          addFilter={addFilter}
+                          removeFilter={removeFilter}
+                        />
+                      </div>
+                    </div>
+                    <div className="columns">
+                      <div className="column">
+                        <Accordion
+                          allowZeroExpanded
+                          preExpanded={
+                            isOpenAdvancedSearch ? ["advancedSearch"] : []
+                          }
+                        >
+                          <AccordionItem uuid="advancedSearch">
+                            <AccordionItemHeading>
+                              <AccordionItemButton>
+                                <span>Recherche avancée</span>
+                              </AccordionItemButton>
+                            </AccordionItemHeading>
+                            <AccordionItemPanel>
+                              <div className="columns filters__selects">
+                                <div className="column is-half">
+                                  <NafFilter
+                                    filters={filters}
+                                    addFilter={addFilter}
+                                    removeFilter={removeFilter}
+                                    divisionsNaf={divisionsNaf}
+                                  />
+                                </div>
+                                <div className="column is-half">
+                                  <LocationFilter
+                                    filters={filters}
+                                    addFilter={addFilter}
+                                    removeFilter={removeFilter}
+                                    loadLocations={loadLocations}
+                                  />
+                                </div>
+                              </div>
+                            </AccordionItemPanel>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
                     </div>
                   </div>
-                  <div className="columns">
-                    <div className="column">
-                      <Accordion
-                        allowZeroExpanded
-                        preExpanded={
-                          filters.naf.length > 0 || filters.location > 0
-                            ? ["advancedSearch"]
-                            : []
-                        }
+                  <div className="control column buttons__wrapper">
+                    <div className="buttons__bloc">
+                      <button
+                        className={classNames(
+                          "action",
+                          "button",
+                          "is-secondary",
+                          "is-medium",
+                          { "is-loading": isLoading }
+                        )}
                       >
-                        <AccordionItem uuid="advancedSearch">
-                          <AccordionItemHeading>
-                            <AccordionItemButton>
-                              <span>Recherche avancée</span>
-                            </AccordionItemButton>
-                          </AccordionItemHeading>
-                          <AccordionItemPanel>
-                            <div className="columns filters__selects">
-                              <div className="column is-half">
-                                <NafFilter
-                                  filters={filters}
-                                  addFilter={addFilter}
-                                  removeFilter={removeFilter}
-                                  divisionsNaf={divisionsNaf}
-                                />
-                              </div>
-                              <div className="column is-half">
-                                <LocationFilter
-                                  filters={filters}
-                                  addFilter={addFilter}
-                                  removeFilter={removeFilter}
-                                  loadLocations={loadLocations}
-                                />
-                              </div>
-                            </div>
-                          </AccordionItemPanel>
-                        </AccordionItem>
-                      </Accordion>
+                        Rechercher
+                      </button>
+                      <button
+                        className="button is-text"
+                        onClick={e => {
+                          e.preventDefault();
+                          resetSearch();
+                        }}
+                      >
+                        Vider la recherche
+                      </button>
                     </div>
                   </div>
                 </div>
-                <div className="control column buttons__wrapper">
-                  <div className="buttons__bloc">
-                    <button
-                      className={classNames(
-                        "action",
-                        "button",
-                        "is-secondary",
-                        "is-medium",
-                        { "is-loading": isLoading }
-                      )}
-                    >
-                      Rechercher
-                    </button>
-                    <button
-                      className="button is-text"
-                      onClick={e => {
-                        e.preventDefault();
-                        resetSearch();
-                      }}
-                    >
-                      Vider la recherche
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
+
+      {resultList && (
+        <SearchResults
+          results={resultList.rawResults}
+          pagination={{
+            current: resultList.info.meta.page.current,
+            handlePageChange,
+            itemsPerPage: resultList.info.meta.page.size,
+            pages: resultList.info.meta.page.total_pages,
+            items: resultList.info.meta.page.total_results,
+            searchTerm,
+            options
+          }}
+          isLoading={isLoading}
+          sort={sort}
+          currentSort={currentSort}
+        />
+      )}
+
+      <UsersFeedback />
     </div>
-
-    {resultList && (
-      <SearchResults
-        results={resultList.rawResults}
-        pagination={{
-          current: resultList.info.meta.page.current,
-          handlePageChange,
-          itemsPerPage: resultList.info.meta.page.size,
-          pages: resultList.info.meta.page.total_pages,
-          items: resultList.info.meta.page.total_results,
-          searchTerm,
-          options
-        }}
-        isLoading={isLoading}
-        sort={sort}
-        currentSort={currentSort}
-      />
-    )}
-
-    <UsersFeedback />
-  </div>
-);
+  );
+};
 
 Search.propTypes = {
   isLoading: PropTypes.bool.isRequired,

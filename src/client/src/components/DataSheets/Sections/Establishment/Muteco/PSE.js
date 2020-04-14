@@ -34,7 +34,10 @@ function PSE({ establishment }) {
   };
 
   return (
-    <Subcategory subtitle="Plan de sauvegarde de l'emploi">
+    <Subcategory
+      subtitle="Plan de sauvegarde de l'emploi"
+      source="SI PSE/RUPCO"
+    >
       <Data
         name="Procédure en cours"
         value={!!pseList.inProcess}
@@ -60,10 +63,10 @@ function PSE({ establishment }) {
             <thead>
               <tr>
                 <th>Numéro de dossier</th>
-                <th className="has-text-centered">Date d'enregistrement</th>
+                <th className="has-text-centered">Date d{"'"}enregistrement</th>
                 <th className="has-text-centered">
                   Nombre maximum de ruptures de contrats de travail envisagées
-                  dans l'établissement
+                  dans l{"'"}établissement
                 </th>
               </tr>
             </thead>

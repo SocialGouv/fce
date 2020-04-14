@@ -86,9 +86,4 @@ Header.propTypes = {
   showBetaMessage: PropTypes.bool.isRequired
 };
 
-export default withRouter(
-  connect(
-    null,
-    mapDispatchToProps
-  )(Header)
-);
+export default withRouter(connect(null, mapDispatchToProps)(Header));

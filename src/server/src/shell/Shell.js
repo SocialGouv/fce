@@ -1,4 +1,5 @@
 const MissingOptionException = require("../Exceptions/MissingOptionException");
+const _get = require("lodash.get");
 
 class Shell {
   constructor(args, options, config) {
@@ -17,6 +18,14 @@ class Shell {
     }
 
     return true;
+  }
+
+  getConfig(key, defaultValue = undefined) {
+    return _get(this._config, key, defaultValue);
+  }
+
+  getEnvConfig(key, defaultValue = undefined) {
+    return this.getConfig(`env.${key}`, defaultValue);
   }
 }
 

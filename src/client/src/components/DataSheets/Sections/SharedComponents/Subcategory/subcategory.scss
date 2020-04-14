@@ -3,7 +3,20 @@
 .subcategory {
     margin: 1rem 0 2rem 0;
 
-    &-title {
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 0;
+        padding-bottom: 0.75rem;
         border-bottom: solid 2px $faced-blue;
+    }
+
+    &__title {
+        margin-top: 0;
+        font-size: $font-size-section-subtitle;
+        font-weight: bold;
+        text-align: left;
+        color: $dark-grey;
     }
 }

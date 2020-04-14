@@ -6,8 +6,8 @@ YARN = ENV['YARN'] || 'docker-compose run --rm %container% yarn'
 NODE = ENV['NODE'] || 'docker-compose run --rm %container% node'
 CYPRESS = 'docker-compose run --rm cypress'
 DB_NAME = 'fce'
-REMOTE_HOST = 'factory@52.143.162.139'.freeze
-REMOTE_DUMP = 'dump.sql.xz'.freeze
+REMOTE_HOST = 'factory@40.89.184.127'.freeze
+REMOTE_DUMP = 'dump.sql.gz'.freeze
 
 desc 'docker:run', 'Lance docker-compose up'
 task 'docker:run' do
@@ -29,7 +29,7 @@ shell_task 'pg:dump', "docker exec -i $(docker-compose ps -q db | sed -n 1p) /bi
 
 desc 'dump:get', 'Recupère le dump de la bdd en fonction de la date'
 task 'dump:get' do
-  run("rsync -avz #{REMOTE_HOST}:/mnt/data/shared/#{REMOTE_DUMP} .c42/tmp/dump.sql.xz")
+  run("rsync -avz #{REMOTE_HOST}:/mnt/data/shared/#{REMOTE_DUMP} .c42/tmp/dump.sql.gz")
 end
 
 # Front
@@ -67,6 +67,9 @@ end
 
         desc 'cypress:run', 'Lance cypress en local'
         shell_task 'cypress:run', "cd src/client && ./node_modules/.bin/cypress open --port 8080 --env host=https://fce.test"
+
+        desc 'lint', 'Run linter'
+        shell_task 'lint', "#{ctr_yarn} lint"
     end
 end
 
@@ -144,6 +147,7 @@ task :install do
   fatal('Could not find .c42/tmp/[dump|fce-base].sql[.xz]') unless defined?(sql_cat_cmd) && !sql_cat_cmd.nil?
 
   copy_file('../src/server/.env.dist', './src/server/.env')
+  copy_file('../src/client/.env.develop', './src/client/.env')
 
   info('Yarn install')
   invoke 'frentreprise:yarn', ['install']
@@ -152,7 +156,7 @@ task :install do
 
   info('Starting docker')
   invoke 'docker:run', []
-Install
+
   info('Waiting for full loading of the db container')
   sleep 12
 
@@ -160,7 +164,7 @@ Install
   run("#{sql_cat_cmd} | c42 pg:console")
 
   info('Execute migrations')
-  invoke 'server:yarn', ['migrate up']
+  invoke 'server:yarn', ['migrate up --no-check-order']
 
   info('Restart front')
   invoke 'docker:restart', ['front']

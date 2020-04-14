@@ -1,7 +1,6 @@
 @import "../../App/variables";
 @import "../../App/placeholders";
 
-
 .aside-box {
     @extend %print-hidden;
 
@@ -55,7 +54,7 @@
             padding-left: 1rem;
             font-weight: bold;
             border-radius: 0.375rem 0.375rem 0 0;
-            border: solid 1px $sidebar-borders;
+            border: solid 1px $border-grey-light;
             border-bottom: 2px solid $primary;
             background-image: linear-gradient(to bottom, #ffffff, #e4e7eb);
         }
@@ -67,7 +66,7 @@
 
     &__establishment {
         padding: 0.3rem 1rem;
-        border: 1px solid $sidebar-borders;
+        border: 1px solid $border-grey-light;
         background-color: $sidebar-establishment-bg;
 
         &:last-child {
@@ -79,7 +78,7 @@
             border-left: 4px solid $secondary;
             background-color: $white;
             &.head-office {
-                border-bottom: 1px solid $sidebar-borders;
+                border-bottom: 1px solid $border-grey-light;
             }
         }
     }

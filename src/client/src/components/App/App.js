@@ -19,6 +19,7 @@ import MagicLink from "../../containers/MagicLink";
 import Search from "../../containers/Search";
 import LegalNotices from "../../components/LegalNotices";
 import Cgu from "../../components/Cgu";
+import About from "../../components/About";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
 
@@ -33,8 +34,6 @@ if (Config.get("piwik")) {
 const isActiveMaintenanceMode = Config.get("maintenanceMode");
 
 const App = () => {
-  console.debug("render app");
-
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -71,6 +70,7 @@ const App = () => {
                         path="/mentions-legales"
                         render={() => <LegalNotices />}
                       />
+                      <Route exact path="/about" render={() => <About />} />
                       <Route exact path="/cgu" render={() => <Cgu />} />
                       <Route exact path="/403" render={() => <Error403 />} />
                       <Route exact path="/404" render={() => <Error404 />} />

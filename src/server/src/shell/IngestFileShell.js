@@ -8,7 +8,7 @@ class IngestFileShell extends Shell {
     this.checkRequiredOption("id");
     const id = this._options.id;
 
-    if (!config.hasOwnProperty(id)) {
+    if (!Object.prototype.hasOwnProperty.call(config, id)) {
       throw new MissingConfigException(id);
     }
 
@@ -16,7 +16,8 @@ class IngestFileShell extends Shell {
     const className = ingestorConfig.className;
 
     const Ingestor = className
-      ? require(`./import/${className}`)
+      ? // eslint-disable-next-line security/detect-non-literal-require
+        require(`./import/${className}`)
       : IngestorBase;
 
     const ingestor = new Ingestor(ingestorConfig);

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Alert } from "reactstrap";
 import { withRouter } from "react-router-dom";
 import Config from "../../services/Config";
 import { isActiveEstablishment } from "../../helpers/Search";
@@ -33,11 +32,11 @@ const SearchResults = ({
   }
 
   return (
-    <div className="app-searchResults mx-6">
+    <div className="app-search-results mx-6">
       {pagination.items > 0 && (
         <div className="columns">
           <div className="column is-8 is-offset-2">
-            <h2 className="title my-2">
+            <h2 className="app-search-results__title">
               {pagination.items} établissement
               {pagination.items > 1 && "s"} trouvé
               {pagination.items > 1 && "s"}
@@ -56,7 +55,11 @@ const SearchResults = ({
 
       <div className="columns result-row">
         <div className="column is-12 pb-0">
-          {results.length === 0 && <Alert color="info">Aucun résultat</Alert>}
+          {results.length === 0 && (
+            <div className="notification is-primary is-light">
+              Aucun résultat
+            </div>
+          )}
 
           {!!results.length ? (
             <div>
@@ -138,8 +141,7 @@ const SearchResults = ({
                       trancheeffectifsetablissement: {
                         raw: trancheEffectifInsee
                       },
-                      etatadministratifetablissement: { raw: etat },
-                      ...etablissement
+                      etatadministratifetablissement: { raw: etat }
                     }) =>
                       Value({
                         value: isActiveEstablishment(etat)

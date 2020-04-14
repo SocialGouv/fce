@@ -1,28 +1,17 @@
 @import "../App/variables";
 
-.app-searchResults {
+.app-search-results {
     @media print {
         zoom: 40%;
     }
 
-    .title,
-    .subtitle {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .title {
-        color: $black;
+    &__title {
+        width: 80%;
+        margin: 0.5rem auto;
         font-size: 2.35rem;
         font-weight: 700;
-        width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .subtitle {
-        color: $primary;
-        text-transform: uppercase;
+        text-align: center;
+        color: $black;
     }
 
     .export-button {
@@ -50,5 +39,10 @@
                 cursor: pointer;
             }
         }
+    }
+
+    .notification.is-light {
+        background-color: #d4ecff;
+        color: #1d72aa;
     }
 }

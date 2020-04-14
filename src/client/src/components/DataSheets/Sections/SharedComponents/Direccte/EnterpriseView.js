@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
@@ -13,6 +14,10 @@ class EstablishmentView extends React.Component {
     this.state = {};
   }
 
+  static propTypes = {
+    enterprise: PropTypes.object.isRequired
+  };
+
   toggleElement = id => {
     this.setState({
       [id]: !this.state[id]
@@ -23,7 +28,7 @@ class EstablishmentView extends React.Component {
     try {
       return Object.values(enterprise.interactions).reduce(
         (acc, interaction) => {
-          if (!acc.hasOwnProperty(interaction.siret)) {
+          if (!Object.prototype.hasOwnProperty.call(acc, interaction.siret)) {
             acc[interaction.siret] = 0;
           }
           acc[interaction.siret]++;
@@ -43,8 +48,8 @@ class EstablishmentView extends React.Component {
       enterprise
     );
 
-    const interactions = Object.entries(establishmentsWithInteractions).map(
-      ([siret, nbInteractions]) => {
+    const interactions = Object.keys(establishmentsWithInteractions).map(
+      siret => {
         const establishment = enterprise.etablissements.find(
           etab => etab.siret.trim() === siret.trim()
         );
@@ -82,7 +87,7 @@ class EstablishmentView extends React.Component {
             value={interactions.length}
             columnClasses={["is-9", "is-3"]}
           />
-          <table className="table is-hoverable direccte-interactions">
+          <table className="table is-hoverable direccte-interactions w-100">
             <thead>
               <tr>
                 <th className="th">SIRET</th>

@@ -1,13 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Data from "../Data";
+import Source from "../../../../../containers/Source";
 
 import "./subcategory.scss";
 
-const Subcategory = ({ subtitle, datas, children }) => {
+const Subcategory = ({
+  subtitle,
+  datas,
+  children,
+  source,
+  sourceDate = null
+}) => {
   return (
     <div className="subcategory">
-      <h3 className="subtitle subcategory-title pb-2">{subtitle}</h3>
+      <div className="subcategory__header">
+        <h3 className="subcategory__title">{subtitle}</h3>
+        {source && <Source si={source} sourceDate={sourceDate} />}
+      </div>
       {children
         ? children
         : datas.map(data => {
@@ -20,6 +30,8 @@ const Subcategory = ({ subtitle, datas, children }) => {
                 nonEmptyValue={data.nonEmptyValue}
                 link={data.link}
                 columnClasses={data.columnClasses}
+                source={data.source}
+                sourceDate={data.sourceDate}
               />
             );
           })}
@@ -29,6 +41,8 @@ const Subcategory = ({ subtitle, datas, children }) => {
 
 Subcategory.propTypes = {
   subtitle: PropTypes.string.isRequired,
+  source: PropTypes.string,
+  sourceDate: PropTypes.string,
   datas: PropTypes.arrayOf(PropTypes.object),
   children: PropTypes.node
 };

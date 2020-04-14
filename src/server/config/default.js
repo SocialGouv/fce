@@ -4,7 +4,6 @@ const process = require("process");
 const config = {
   client: {
     baseUrl: process.env.CLIENT_BASE_URL,
-    magicLink: "/magic-link/{key}/browser/{browser}",
   },
   APIGouv: {
     token: process.env.API_GOUV_TOKEN,
@@ -32,17 +31,6 @@ const config = {
     codeLength: 5,
     maxFailures: 3,
     expire: process.env.MAGIC_KEY_EXPIRE,
-    bcc: process.env.MAGIC_LINK_BCC,
-  },
-  magicKey: {
-    allowedEmails: JSON.parse(process.env.MAGIC_KEY_ALLOWED_EMAILS).map(
-      (mask) => new RegExp(mask)
-    ),
-    privateKey: process.env.MAGIC_KEY_PRIVATE_KEY,
-    clientVerification: true,
-    expire: process.env.MAGIC_KEY_EXPIRE,
-  },
-  magicLink: {
     bcc: process.env.MAGIC_LINK_BCC,
   },
   userFeedback: {

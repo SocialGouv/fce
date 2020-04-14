@@ -25,13 +25,20 @@ services:
     tty: true
 
   appsearch:
-    image: docker.elastic.co/app-search/app-search:7.4.0
+    image: docker.elastic.co/app-search/app-search:7.6.1
     network_mode: host
     container_name: appsearch
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50M"
+        max-file: "3"
     environment:
       - "JAVA_OPTS=-Xmx6g"
     volumes:
       - ./.docker/appsearch/app-search.yml:/usr/share/app-search/config/app-search.yml
+      - appsearchdata_logs:/usr/share/app-search/log
+      - appsearchdata_tmp:/tmp
 
   elasticsearch:
     build: .docker/elasticsearch
@@ -63,3 +70,15 @@ volumes:
       o: bind
       type: none
       device:  /mnt/data/shared/elasticdata
+  appsearchdata_logs:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device:  /mnt/data/shared/appsearchdata/log
+  appsearchdata_tmp:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device:  /mnt/data/shared/appsearchdata/log

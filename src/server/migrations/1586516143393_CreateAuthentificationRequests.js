@@ -7,7 +7,7 @@ exports.up = (pgm) => {
   pgm.createTable(tablename, {
     id: "id",
     email: { type: "varchar(255)", notNull: true },
-    createdAt: {
+    created_at: {
       type: "timestamp",
       notNull: true,
       default: pgm.func("current_timestamp"),

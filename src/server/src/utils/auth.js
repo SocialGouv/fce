@@ -56,7 +56,7 @@ export default class Auth {
 
     if (
       !authRequest ||
-      isExpired(authRequest.createdAt, config.get("authCode.expire")) ||
+      isExpired(authRequest.created_at, config.get("authCode.expire")) ||
       tooMuchFailures(authRequest.failures, config.get("authCode.maxFailures"))
     ) {
       authRequestsModel.delete(email);

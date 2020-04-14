@@ -1,5 +1,7 @@
 import Model from "./Model";
 
+const CODE_SANS_CONVENTION_COLLECTIVE = "9999";
+
 export default class Idcc extends Model {
   getBySIRET(siret) {
     return this.db
@@ -9,11 +11,11 @@ export default class Idcc extends Model {
         FROM etablissements_idcc ei
         INNER JOIN idcc i ON ei.idcc = i.code
         WHERE siret = $1
-        AND NOT code = '9999'
+        AND NOT code = '${CODE_SANS_CONVENTION_COLLECTIVE}'
         `,
         [siret]
       )
-      .then((res) => (res.rows && res.rows.length ? res.rows : null))
+      .then((res) => res.rows)
       .catch((e) => {
         console.error("Idcc::getBySIRET", e);
         return null;
@@ -29,11 +31,11 @@ export default class Idcc extends Model {
         INNER JOIN etablissements e ON e.siret = ei.siret
         INNER JOIN idcc i ON i.code = ei.idcc
         WHERE e.siren = $1
-        AND NOT code = '9999'
+        AND NOT code = '${CODE_SANS_CONVENTION_COLLECTIVE}'
         `,
         [siren]
       )
-      .then((res) => (res.rows && res.rows.length ? res.rows : null))
+      .then((res) => res.rows)
       .catch((e) => {
         console.error("Idcc::getBySIREN", e);
         return null;

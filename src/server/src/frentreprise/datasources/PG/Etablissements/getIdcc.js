@@ -1,9 +1,9 @@
 export default async (SIRET, Idcc) => {
-  return Idcc.getBySIRET(SIRET).then((idcc_list) => {
-    if (!idcc_list) {
-      return null;
+  return Idcc.getBySIRET(SIRET).then((idcc) => {
+    if (!idcc || !idcc.length) {
+      return [];
     }
 
-    return { idcc_list };
+    return { idcc };
   });
 };

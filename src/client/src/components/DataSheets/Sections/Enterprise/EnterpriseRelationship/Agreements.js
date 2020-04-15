@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import _get from "lodash.get";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
-import { getCompanyName } from "../../../../../helpers/Relationships";
+import {
+  getCompanyName,
+  sortAgreements
+} from "../../../../../helpers/Relationships";
 import { toI18nDate } from "../../../../../helpers/Date";
 import Config from "../../../../../services/Config";
 
@@ -36,6 +38,8 @@ export const Agreements = ({
     prenom
   });
 
+  const sortedAgreements = sortAgreements(accords, etablissements);
+
   return (
     <Subcategory subtitle="Accords d'entreprise" source="D@cccord">
       <Data
@@ -57,18 +61,8 @@ export const Agreements = ({
               </tr>
             </thead>
             <tbody>
-              {Object.entries(accords).map(
-                ([siret, { count: totalEtab, lastDate }]) => {
-                  const establishment = etablissements.find(
-                    etab => etab.siret.trim() === siret.trim()
-                  );
-                  const etat = _get(establishment, "etat_etablissement");
-                  const categorie = _get(
-                    establishment,
-                    "categorie_etablissement"
-                  );
-                  const date = toI18nDate(lastDate);
-
+              {sortedAgreements.map(
+                ({ siret, categorie, etat, date, totalEtab }) => {
                   return (
                     <tr key={siret}>
                       <td>
@@ -88,7 +82,7 @@ export const Agreements = ({
                         )}
                       </td>
                       <td>{totalEtab}</td>
-                      <td>{date}</td>
+                      <td>{toI18nDate(date)}</td>
                     </tr>
                   );
                 }

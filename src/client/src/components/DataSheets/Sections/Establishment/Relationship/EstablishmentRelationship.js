@@ -1,23 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Data from "../../SharedComponents/Data";
-import Subcategory from "../../SharedComponents/Subcategory";
-import Value from "../../../../shared/Value";
-import Config from "../../../../../services/Config";
 import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
+import Data from "../../SharedComponents/Data";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Value from "../../../../shared/Value";
+import { getCompanyName } from "../../../../../helpers/Relationships";
+import Config from "../../../../../services/Config";
 
 const EstablishmentRelationship = ({ establishment }) => {
-  const { code_idcc, libelle_idcc } = establishment;
+  const { idcc } = establishment;
   const nbAccords = _get(establishment, "accords.total.count");
-  const raisonSociale =
-    (establishment.nom_commercial &&
-      establishment.nom_commercial.toLowerCase()) ||
-    `${(establishment.nom && establishment.nom.toLowerCase()) ||
-      ""} ${(establishment.prenom && establishment.prenom.toLowerCase()) ||
-      ""}`.trim() ||
-    null;
+  const raisonSociale = getCompanyName(establishment);
 
   return (
     <section id="relation" className="data-sheet__section">
@@ -28,11 +23,20 @@ const EstablishmentRelationship = ({ establishment }) => {
         <h2 className="title">Relation travail</h2>
       </div>
       <div className="section-datas">
-        <Subcategory subtitle="Convention collective" source="DSN">
+        <Subcategory
+          subtitle="Convention(s) collective(s) appliquée(s)"
+          source="DSN"
+        >
           <div className="single-value">
-            <Value value={code_idcc && code_idcc} />
-            <span>{code_idcc && " - "}</span>
-            <Value value={libelle_idcc && libelle_idcc} empty="" />
+            <ul>
+              {idcc
+                ? idcc.map(({ code, libelle }) => (
+                    <li className="m-2" key={code}>
+                      <Value value={`${code} - ${libelle}`} />
+                    </li>
+                  ))
+                : "-"}
+            </ul>
           </div>
         </Subcategory>
         <Subcategory subtitle="Accords d'entreprise" source="D@cccord">

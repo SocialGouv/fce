@@ -32,8 +32,7 @@ class DireccteEtablissement extends Etablissement {
           "date_dernier_effectif_physique",
           "source_dernier_effectif_physique",
           "unite_controle_competente",
-          "code_idcc",
-          "libelle_idcc",
+          "idcc",
           "agefiph_derniere_annee_conformite_connue",
           "donnees_ecofi",
           "eti_pepite",
@@ -67,11 +66,11 @@ class DireccteEtablissement extends Etablissement {
           "contrat_aide_salaries_n1",
           "contrat_aide_embauches_n1",
           "_dataSources",
-          "_success"
+          "_success",
         ],
         null
       ),
-      _raw: this.getData()
+      _raw: this.getData(),
     };
   }
 }

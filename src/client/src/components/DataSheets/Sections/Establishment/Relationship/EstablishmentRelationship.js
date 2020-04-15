@@ -6,13 +6,15 @@ import { faUsers, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Value from "../../../../shared/Value";
-import { getCompanyName } from "../../../../../helpers/Relationships";
+import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import Config from "../../../../../services/Config";
 
-const EstablishmentRelationship = ({ establishment }) => {
-  const { idcc } = establishment;
-  const nbAccords = _get(establishment, "accords.total.count");
-  const raisonSociale = getCompanyName(establishment);
+const EstablishmentRelationship = ({
+  enterprise,
+  establishment: { idcc, accords }
+}) => {
+  const nbAccords = _get(accords, "total.count");
+  const raisonSociale = getEnterpriseName(enterprise);
 
   return (
     <section id="relation" className="data-sheet__section">
@@ -50,7 +52,7 @@ const EstablishmentRelationship = ({ establishment }) => {
             <>
               <Data
                 name="Date de signature du dernier accord d'entreprise déposé"
-                value={_get(establishment, "accords.total.lastDate")}
+                value={_get(accords, "total.lastDate")}
                 emptyValue="aucun accord connu"
                 columnClasses={["is-7", "is-5"]}
               />
@@ -70,14 +72,14 @@ const EstablishmentRelationship = ({ establishment }) => {
                       <td className="w-40">{value}</td>
                       <td className="has-text-centered">
                         <Value
-                          value={_get(establishment, `accords.${key}.count`)}
+                          value={_get(accords, `${key}.count`)}
                           empty="-"
                           nonEmptyValues={[0, "0"]}
                         />
                       </td>
                       <td className="has-text-centered">
                         <Value
-                          value={_get(establishment, `accords.${key}.lastDate`)}
+                          value={_get(accords, `${key}.lastDate`)}
                           empty="-"
                         />
                       </td>
@@ -87,7 +89,10 @@ const EstablishmentRelationship = ({ establishment }) => {
               </table>
 
               <a
-                href={Config.get("legifranceSearchUrl") + raisonSociale}
+                href={
+                  Config.get("legifranceSearchUrl") +
+                  raisonSociale.toLowerCase()
+                }
                 target="_blank"
                 rel="noreferrer noopener"
               >
@@ -103,7 +108,8 @@ const EstablishmentRelationship = ({ establishment }) => {
 };
 
 EstablishmentRelationship.propTypes = {
-  establishment: PropTypes.object.isRequired
+  establishment: PropTypes.object.isRequired,
+  enterprise: PropTypes.object.isRequired
 };
 
 export default EstablishmentRelationship;

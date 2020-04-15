@@ -3,24 +3,14 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
 import InteractionType from "./InteractionType";
-import { getEnterpriseInteractions } from "../../../../../helpers/Interactions";
-import Config from "../../../../../services/Config";
+import {
+  getEnterpriseControls,
+  getEnterpriseVisits
+} from "../../../../../helpers/Interactions";
 
 const Direccte = ({ enterprise }) => {
-  const controlInteractions = getEnterpriseInteractions({
-    enterprise,
-    type: Config.get("interactions.types.control")
-  });
-
-  const visitInteractions = getEnterpriseInteractions({
-    enterprise,
-    type: Config.get("interactions.types.visit")
-  });
-
-  console.log({
-    controlInteractions,
-    visitInteractions
-  });
+  const controlInteractions = getEnterpriseControls(enterprise);
+  const visitInteractions = getEnterpriseVisits(enterprise);
 
   return (
     <section id="direccte" className="data-sheet__section">

@@ -2,6 +2,7 @@ import Moment from "../../services/Moment";
 import _find from "lodash.find";
 import _get from "lodash.get";
 import { getLastDateInteraction } from "../Date";
+import Config from "../../services/Config/";
 
 export const getLastInteraction = interactions => {
   const lastDateInteraction = getLastDateInteraction(
@@ -19,13 +20,24 @@ export const getLastInteraction = interactions => {
  * @param {array} establishments - List of current enterprise establishments
  * @returns {array}
  */
-const getLastInteractionsBySiret = ({ poleInteractions, establishments }) =>
-  poleInteractions.reverse().reduce((acc, currentInteraction) => {
-    if (
-      acc.find(interaction => interaction.siret === currentInteraction.siret)
-    ) {
-      return acc;
-    } else {
+const getLastInteractionsBySiret = ({ poleInteractions, establishments }) => {
+  const sortedPoleInteractions = poleInteractions
+    .map(interaction => ({
+      ...interaction,
+      date: new Moment(interaction.date)
+    }))
+    .sort((a, b) => b.date - a.date);
+
+  return sortedPoleInteractions.reduce(
+    (lastInsteractions, currentInteraction) => {
+      const isSiretAlreadyFind = lastInsteractions.find(
+        interaction => interaction.siret === currentInteraction.siret
+      );
+
+      if (isSiretAlreadyFind) {
+        return lastInsteractions;
+      }
+
       const establishment = establishments.find(
         ({ siret }) => siret === currentInteraction.siret
       );
@@ -35,17 +47,19 @@ const getLastInteractionsBySiret = ({ poleInteractions, establishments }) =>
       const localite = _get(establishment, "adresse_components.localite");
 
       return [
-        ...acc,
+        ...lastInsteractions,
         {
           siret: currentInteraction.siret,
           etat: etatEtablissement,
           commune: `${codePostal} ${localite}`,
-          date: new Moment(currentInteraction.date),
+          date: currentInteraction.date,
           pole: currentInteraction.pole
         }
       ];
-    }
-  }, []);
+    },
+    []
+  );
+};
 
 /**
  * Get last interaction for each pole for each establishment of the current enterprise
@@ -53,12 +67,12 @@ const getLastInteractionsBySiret = ({ poleInteractions, establishments }) =>
  * @param {string} type - "visit" or "control", list of poles defined in Config.js: "interactions.types"
  * @returns {array} - List of interactions, sorted in reverse chronological order
  */
-export const getEnterpriseInteractions = ({ enterprise, type }) =>
+const getEnterpriseInteractions = ({ enterprise, type }) =>
   Object.keys(enterprise)
     .filter(key => type.includes(key))
     .reduce(
-      (acc, currentKey) => [
-        ...acc,
+      (enterpriseInteractions, currentKey) => [
+        ...enterpriseInteractions,
         ...(enterprise[currentKey]
           ? getLastInteractionsBySiret({
               poleInteractions: enterprise[currentKey],
@@ -73,6 +87,18 @@ export const getEnterpriseInteractions = ({ enterprise, type }) =>
       ...interaction,
       date: interaction.date.format("DD/MM/YYYY")
     }));
+
+export const getEnterpriseControls = enterprise =>
+  getEnterpriseInteractions({
+    enterprise,
+    type: Config.get("interactions.types.control")
+  });
+
+export const getEnterpriseVisits = enterprise =>
+  getEnterpriseInteractions({
+    enterprise,
+    type: Config.get("interactions.types.visit")
+  });
 
 /**
  * Get number of establishments by removing duplicates SIRET (one establishment could have multiple interactions)

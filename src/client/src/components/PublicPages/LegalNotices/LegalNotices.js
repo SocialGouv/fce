@@ -1,19 +1,16 @@
 import React, { lazy, Suspense } from "react";
 import { importMDX } from "mdx.macro";
-import UsersFeedback from "../../containers/UsersFeedback";
+import PublicPage from "../PublicPages";
 
 const Content = lazy(() => importMDX("./LegalNotices.mdx"));
 
 const LegalNotices = () => {
   return (
-    <>
-      <div className="page">
-        <Suspense fallback="">
-          <Content />
-        </Suspense>
-      </div>
-      <UsersFeedback fullWidth />
-    </>
+    <PublicPage>
+      <Suspense fallback="...">
+        <Content />
+      </Suspense>
+    </PublicPage>
   );
 };
 

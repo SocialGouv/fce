@@ -8,11 +8,13 @@ import { getNumberOfEstablishments } from "../../../../../helpers/Interactions";
 import Config from "../../../../../services/Config";
 
 const InteractionType = ({ type, interactions }) => {
+  const isControl = type === "control";
   const numberOfEstablishments = getNumberOfEstablishments(interactions);
   const s = numberOfEstablishments > 1 ? "s" : "";
+
   const subtitle = `${numberOfEstablishments} établissement${s} ${
-    type === "control" ? "contrôlé" : "visité"
-  }${s}`;
+    isControl ? "contrôlé" : "visité"
+  }${s}${isControl ? "" : " par les Services économiques de l'État en région"}`;
 
   return (
     <Subcategory subtitle={subtitle}>

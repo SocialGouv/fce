@@ -5,23 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
-import {
-  getCompanyName,
-  sortAgreements
-} from "../../../../../helpers/Relationships";
+import { sortAgreements } from "../../../../../helpers/Relationships";
+import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { toI18nDate } from "../../../../../helpers/Date";
 import Config from "../../../../../services/Config";
 
 export const Agreements = ({
-  enterprise: {
-    accords,
-    etablissements,
-    raison_sociale,
-    sigle,
-    nom_commercial,
-    nom,
-    prenom
-  }
+  enterprise,
+  enterprise: { accords, etablissements }
 }) => {
   const nbAccords =
     accords &&
@@ -30,15 +21,9 @@ export const Agreements = ({
       0
     );
 
-  const raisonSociale = getCompanyName({
-    raison_sociale,
-    sigle,
-    nom_commercial,
-    nom,
-    prenom
-  });
+  const raisonSociale = getEnterpriseName(enterprise);
 
-  const sortedAgreements = sortAgreements(accords, etablissements);
+  const sortedAgreements = accords && sortAgreements(accords, etablissements);
 
   return (
     <Subcategory subtitle="Accords d'entreprise" source="D@cccord">
@@ -91,7 +76,9 @@ export const Agreements = ({
           </table>
 
           <a
-            href={Config.get("legifranceSearchUrl") + raisonSociale}
+            href={
+              Config.get("legifranceSearchUrl") + raisonSociale.toLowerCase()
+            }
             target="_blank"
             rel="noreferrer noopener"
           >

@@ -1,7 +1,7 @@
 import Moment from "../../services/Moment";
 import _find from "lodash.find";
 import _get from "lodash.get";
-import { getLastDateInteraction } from "../Date";
+import { getLastDateInteraction, toI18nDate } from "../Date";
 import Config from "../../services/Config/";
 
 export const getLastInteraction = interactions => {
@@ -85,7 +85,7 @@ const getEnterpriseInteractions = ({ enterprise, type }) =>
     .sort((a, b) => b.date - a.date)
     .map(interaction => ({
       ...interaction,
-      date: interaction.date.format("DD/MM/YYYY")
+      date: toI18nDate(interaction.date)
     }));
 
 export const getEnterpriseControls = enterprise =>

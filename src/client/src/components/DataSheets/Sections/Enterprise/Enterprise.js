@@ -5,10 +5,9 @@ import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
 import Infos from "./Infos";
-import Mandataires from "./Mandataires";
-import Accords from "./Accords";
+import EnterpriseRelationship from "./EnterpriseRelationship";
 import Muteco from "./Muteco";
-import Direccte from "../SharedComponents/Direccte";
+import Direccte from "./Direccte";
 import Finances from "./Finances";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
@@ -40,7 +39,7 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
               anchors={[
                 { label: "Informations légales", link: "infos" },
                 { label: "Visites et contrôles", link: "direccte" },
-                { label: "Accords d'entreprise", link: "accords" },
+                { label: "Relation travail", link: "relationship" },
                 {
                   label: "Mutations économiques",
                   link: "muteco"
@@ -51,10 +50,9 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
             />
             <Infos enterprise={enterprise} headOffice={headOffice} />
             <Direccte enterprise={enterprise} />
-            <Accords enterprise={enterprise} />
+            <EnterpriseRelationship enterprise={enterprise} />
             <Muteco enterprise={enterprise} />
             <Finances establishment={headOffice} />
-            <Mandataires enterprise={enterprise} />
           </div>
           <UsersFeedback fullWidth />
         </div>

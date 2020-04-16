@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
+import Source from "../../../../../containers/Source";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEuroSign } from "@fortawesome/pro-solid-svg-icons";
+
+import "./finances.scss";
 
 const Finances = ({ establishment }) => {
   let dates = [];
@@ -36,7 +39,7 @@ const Finances = ({ establishment }) => {
   }
 
   return (
-    <section id="finances" className="data-sheet__section">
+    <section id="finances" className="data-sheet__section financial-resources">
       <div className="section-header">
         <span className="icon">
           <FontAwesomeIcon icon={faEuroSign} />
@@ -44,6 +47,9 @@ const Finances = ({ establishment }) => {
         <h2 className="title">Données financières</h2>
       </div>
       <div className="section-datas">
+        <div className="financial-resources__source-wrapper">
+          <Source sourceCustom="DGFIP" />
+        </div>
         {establishment.donnees_ecofi ? (
           <table className="table is-hoverable w-100">
             <thead>

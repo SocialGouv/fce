@@ -17,9 +17,9 @@ import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import MagicLink from "../../containers/MagicLink";
 import Search from "../../containers/Search";
-import LegalNotices from "../../components/LegalNotices";
-import Cgu from "../../components/Cgu";
-import About from "../../components/About";
+import LegalNotices from "../PublicPages/LegalNotices";
+import Cgu from "../PublicPages/Cgu";
+import About from "../PublicPages/About";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
 

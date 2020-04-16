@@ -5,6 +5,7 @@ import getInteractionsPoleC from "./getInteractionsPoleC";
 import getAccords from "./getAccords";
 import getActivitePartielle from "./getActivitePartielle";
 import getPseList from "./getPseList";
+import getIdcc from "./getIdcc";
 
 export default {
   getInteractionsPole3ESEER,
@@ -14,4 +15,5 @@ export default {
   getAccords,
   getActivitePartielle,
   getPseList,
+  getIdcc,
 };

@@ -24,6 +24,7 @@ export default class DireccteEntreprise extends Entreprise {
         "date_de_radiation",
         "entreprise_employeur",
         "etat_entreprise",
+        "idcc",
         "interactions_3E_SEER",
         "interactions_3E_SRC",
         "interactions_T",

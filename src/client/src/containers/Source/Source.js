@@ -3,12 +3,22 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import SourceView from "../../components/Source";
 
-const Source = ({ si, sources, isTableCell = false, sourceDate = null }) => {
+const Source = ({
+  sources,
+  si = null,
+  isTableCell = false,
+  sourceDate = null,
+  sourceCustom = null
+}) => {
+  const name = sourceCustom ? sourceCustom : sources[si] && sources[si].name;
+  const updated = sourceDate || (sources[si] && sources[si].date);
+
   return (
     <SourceView
-      name={sources[si] && sources[si].name}
-      updated={sourceDate || (sources[si] && sources[si].date)}
+      name={name}
+      updated={updated}
       isTableCell={isTableCell}
+      isCustomSource={!!sourceCustom}
     />
   );
 };
@@ -20,8 +30,9 @@ const mapStateToProps = ({ sources }) => {
 };
 
 Source.propTypes = {
-  si: PropTypes.string,
   sources: PropTypes.object.isRequired,
+  si: PropTypes.string,
+  sourceCustom: PropTypes.string,
   isTableCell: PropTypes.bool,
   sourceDate: PropTypes.string
 };

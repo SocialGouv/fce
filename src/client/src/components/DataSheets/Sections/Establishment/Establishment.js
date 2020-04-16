@@ -53,7 +53,10 @@ const Establishment = ({
             />
             <Activity establishment={establishment} enterprise={enterprise} />
             <Direccte establishment={establishment} enterprise={enterprise} />
-            <Relationship establishment={establishment} />
+            <Relationship
+              establishment={establishment}
+              enterprise={enterprise}
+            />
             <Muteco establishment={establishment} />
             <Helps establishment={establishment} />
           </div>

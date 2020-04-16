@@ -49,9 +49,13 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
           <Data
             name="Tranche d'effectif"
-            value={`${
-              dashboardSizeRanges[enterprise.tranche_effectif]
-            } (${enterprise.annee_tranche_effectif || "Année non renseignée"})`}
+            value={
+              enterprise.tranche_effectif &&
+              `${
+                dashboardSizeRanges[enterprise.tranche_effectif]
+              } (${enterprise.annee_tranche_effectif ||
+                "Année non renseignée"})`
+            }
           />
 
           <Data name="Association" value={!!headOffice.association} />

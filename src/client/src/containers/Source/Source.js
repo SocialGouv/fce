@@ -10,7 +10,6 @@ const Source = ({
   sourceDate = null,
   sourceCustom = null
 }) => {
-  console.log({ sourceCustom });
   const name = sourceCustom ? sourceCustom : sources[si] && sources[si].name;
   const updated = sourceDate || (sources[si] && sources[si].date);
 

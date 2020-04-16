@@ -26,7 +26,7 @@ export const Agreements = ({
   const sortedAgreements = accords && sortAgreements(accords, etablissements);
 
   return (
-    <Subcategory subtitle="Accords d'entreprise" source="D@cccord">
+    <Subcategory subtitle="Accords d'entreprise" sourceSi="D@cccord">
       <Data
         name="Nb total d'accords déposés par les différents établissements de l'entreprise"
         value={nbAccords}

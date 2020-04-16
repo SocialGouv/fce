@@ -7,7 +7,7 @@ export const CollectiveAgreements = ({ idccList = null }) => {
   return (
     <Subcategory
       subtitle="Convention(s) collective(s) appliquée(s)"
-      source="DSN"
+      sourceSi="DSN"
     >
       <div className="single-value">
         <ul>

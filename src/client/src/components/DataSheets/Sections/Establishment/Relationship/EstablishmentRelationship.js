@@ -27,7 +27,7 @@ const EstablishmentRelationship = ({
       <div className="section-datas">
         <Subcategory
           subtitle="Convention(s) collective(s) appliquée(s)"
-          source="DSN"
+          sourceSi="DSN"
         >
           <div className="single-value">
             <ul>
@@ -41,7 +41,7 @@ const EstablishmentRelationship = ({
             </ul>
           </div>
         </Subcategory>
-        <Subcategory subtitle="Accords d'entreprise" source="D@cccord">
+        <Subcategory subtitle="Accords d'entreprise" sourceSi="D@cccord">
           <Data
             name="Nombre total d'accords d'entreprise déposés depuis 1980"
             value={nbAccords}

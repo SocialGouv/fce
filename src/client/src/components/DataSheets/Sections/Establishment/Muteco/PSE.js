@@ -36,7 +36,7 @@ function PSE({ establishment }) {
   return (
     <Subcategory
       subtitle="Plan de sauvegarde de l'emploi"
-      source="SI PSE/RUPCO"
+      sourceSi="SI PSE/RUPCO"
     >
       <Data
         name="Procédure en cours"

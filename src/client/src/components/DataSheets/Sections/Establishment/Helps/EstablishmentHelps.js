@@ -87,7 +87,7 @@ const EstablishmentHelps = ({ establishment }) => {
             )}`}
             value={!!establishment.contrat_aide}
             columnClasses={["is-7", "is-5"]}
-            source="ASP Extranet CUI"
+            sourceSi="ASP Extranet CUI"
           />
           {establishment.contrat_aide && (
             <table className="table is-bordered mt-3">

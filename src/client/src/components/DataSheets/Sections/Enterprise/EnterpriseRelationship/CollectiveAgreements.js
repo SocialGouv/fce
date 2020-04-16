@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Value from "../../../../shared/Value";
 
-export const CollectiveAgreements = ({ idccList }) => {
+export const CollectiveAgreements = ({ idccList = null }) => {
   return (
     <Subcategory
       subtitle="Convention(s) collective(s) appliquée(s)"
-      source="DSN"
+      sourceSi="DSN"
     >
       <div className="single-value">
         <ul>
@@ -25,5 +25,5 @@ export const CollectiveAgreements = ({ idccList }) => {
 };
 
 CollectiveAgreements.propTypes = {
-  idccList: PropTypes.array.isRequired
+  idccList: PropTypes.array
 };

@@ -31,7 +31,7 @@ const InteractionType = ({ type, interactions }) => {
           </thead>
           <tbody>
             {interactions.map(etab => (
-              <tr key={etab.siret}>
+              <tr key={etab.siret + etab.pole}>
                 <td>
                   <Link to={`/establishment/${etab.siret}`}>{etab.siret}</Link>
                 </td>

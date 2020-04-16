@@ -9,14 +9,21 @@ const Subcategory = ({
   subtitle,
   datas = [],
   children,
-  source,
+  sourceSi = null,
+  sourceCustom = null,
   sourceDate = null
 }) => {
   return (
     <div className="subcategory">
       <div className="subcategory__header">
         <h3 className="subcategory__title">{subtitle}</h3>
-        {source && <Source si={source} sourceDate={sourceDate} />}
+        {(sourceCustom || sourceSi) && (
+          <Source
+            si={sourceSi}
+            sourceDate={sourceDate}
+            sourceCustom={sourceCustom}
+          />
+        )}
       </div>
       {children
         ? children
@@ -30,7 +37,8 @@ const Subcategory = ({
                 nonEmptyValue={data.nonEmptyValue}
                 link={data.link}
                 columnClasses={data.columnClasses}
-                source={data.source}
+                sourceSi={data.sourceSi}
+                sourceCustom={data.sourceCustom}
                 sourceDate={data.sourceDate}
               />
             );
@@ -41,7 +49,8 @@ const Subcategory = ({
 
 Subcategory.propTypes = {
   subtitle: PropTypes.string.isRequired,
-  source: PropTypes.string,
+  sourceSi: PropTypes.string,
+  sourceCustom: PropTypes.string,
   sourceDate: PropTypes.string,
   datas: PropTypes.arrayOf(PropTypes.object),
   children: PropTypes.node

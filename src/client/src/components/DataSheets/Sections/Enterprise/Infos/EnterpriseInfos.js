@@ -26,7 +26,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
         <h2 className="title">Informations légales sur l’entreprise</h2>
       </div>
       <div className="section-datas">
-        <Subcategory subtitle="Informations générales" source="Sirène">
+        <Subcategory subtitle="Informations générales" sourceSi="Sirène">
           <Data
             name="Activité principale"
             value={`${enterprise.naf ? enterprise.naf : "-"} ${
@@ -49,9 +49,13 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
           <Data
             name="Tranche d'effectif"
-            value={`${
-              dashboardSizeRanges[enterprise.tranche_effectif]
-            } (${enterprise.annee_tranche_effectif || "Année non renseignée"})`}
+            value={
+              enterprise.tranche_effectif &&
+              `${
+                dashboardSizeRanges[enterprise.tranche_effectif]
+              } (${enterprise.annee_tranche_effectif ||
+                "Année non renseignée"})`
+            }
           />
 
           <Data name="Association" value={!!headOffice.association} />
@@ -59,7 +63,10 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             <Data name="Numéro RNA" value={headOffice.association.id} />
           )}
         </Subcategory>
-        <Subcategory subtitle="Informations juridiques">
+        <Subcategory
+          subtitle="Informations juridiques"
+          sourceCustom="Infogreffe - RCS et DGFIP"
+        >
           <Data
             name="Date immatriculation RCS"
             value={enterprise.rcs_date_immatriculation}
@@ -79,7 +86,10 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             value={enterprise.numero_tva_intracommunautaire}
           />
         </Subcategory>
-        <Subcategory subtitle="Mandataires sociaux">
+        <Subcategory
+          subtitle="Mandataires sociaux"
+          sourceCustom="Infogreffe - RCS"
+        >
           {mandataires.length ? (
             <Mandataires enterprise={enterprise} mandataires={mandataires} />
           ) : (

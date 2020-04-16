@@ -41,10 +41,13 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
           />
           <Data
             name="Etablissements"
-            value={`${
-              enterprise.nombre_etablissements_actifs
-            } actif(s) et ${enterprise.etablissements.length -
-              enterprise.nombre_etablissements_actifs} fermé(s)`}
+            value={
+              enterprise.nombre_etablissements_actifs &&
+              `${
+                enterprise.nombre_etablissements_actifs
+              } actif(s) et ${enterprise.etablissements.length -
+                enterprise.nombre_etablissements_actifs} fermé(s)`
+            }
           />
 
           <Data
@@ -78,8 +81,9 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
           <Data
             name="Capital Social"
-            value={`${enterprise.capital_social} €`}
-            emptyValue="non"
+            value={
+              enterprise.capital_social && `${enterprise.capital_social} €`
+            }
           />
           <Data
             name="Numéro de TVA intra communautaire"

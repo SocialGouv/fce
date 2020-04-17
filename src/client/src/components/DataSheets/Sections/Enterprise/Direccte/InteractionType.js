@@ -25,7 +25,7 @@ const InteractionType = ({ type, interactions }) => {
               <th className="th">SIRET</th>
               <th className="th table__center-cell">État</th>
               <th className="th">Commune</th>
-              <th className="th">Date</th>
+              <th className="th">Date dernier contrôle connu</th>
               <th className="th">Pôle</th>
             </tr>
           </thead>

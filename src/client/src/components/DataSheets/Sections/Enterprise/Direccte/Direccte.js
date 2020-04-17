@@ -18,7 +18,7 @@ const Direccte = ({ enterprise }) => {
         <span className="icon">
           <FontAwesomeIcon icon={faCalendarCheck} />
         </span>
-        <h2 className="title">Visites et controles</h2>
+        <h2 className="title">Visites et contrôles</h2>
       </div>
       <div className="section-datas">
         <InteractionType type="control" interactions={controlInteractions} />

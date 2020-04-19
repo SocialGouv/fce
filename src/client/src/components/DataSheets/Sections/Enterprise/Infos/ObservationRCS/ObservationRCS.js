@@ -30,18 +30,20 @@ const ObservationRCS = ({ enterprise }) => {
             >{`${toI18nDate(firstObs.date, "L")} - ${firstObs.libelle}`}</li>
           )}
 
-          <button
-            className="is-text-button"
-            onClick={() => setIsExpanded(!isExpanded)}
-          >
-            <FontAwesomeIcon
-              icon={isExpanded ? faChevronUp : faChevronRight}
-              size="xs"
-            />
-            <span className="pl-2">
-              {isExpanded ? "Replier" : "Lire la suite"}
-            </span>
-          </button>
+          {obs.length > 1 && (
+            <button
+              className="is-text-button"
+              onClick={() => setIsExpanded(!isExpanded)}
+            >
+              <FontAwesomeIcon
+                icon={isExpanded ? faChevronUp : faChevronRight}
+                size="xs"
+              />
+              <span className="pl-2">
+                {isExpanded ? "Replier" : "Lire la suite"}
+              </span>
+            </button>
+          )}
         </ul>
       }
     />

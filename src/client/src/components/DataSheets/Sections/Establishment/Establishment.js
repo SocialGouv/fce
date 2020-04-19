@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { faPrint } from "@fortawesome/pro-solid-svg-icons";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
@@ -17,8 +18,17 @@ const Establishment = ({
   establishment,
   establishments,
   enterprise,
-  headOffice
+  headOffice,
+  location
 }) => {
+  useEffect(() => {
+    const scrollTarget = document.getElementById(location.hash.slice(1));
+    window.scrollTo({
+      behavior: scrollTarget ? "smooth" : "auto",
+      top: scrollTarget ? scrollTarget.offsetTop + 70 : 0
+    });
+  });
+
   return (
     <section className="data-sheet container">
       <div className="data-sheet__print-section w-100">
@@ -71,7 +81,8 @@ Establishment.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired
+  headOffice: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
-export default withLoading(Establishment);
+export default withRouter(withLoading(Establishment));

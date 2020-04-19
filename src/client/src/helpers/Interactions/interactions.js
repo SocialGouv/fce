@@ -16,44 +16,17 @@ export const getDistinctEstablishments = interactions => [
   ...new Set(interactions.map(interaction => interaction.siret))
 ];
 
-export const getNumberOfEstablishments = interactions =>
-  getDistinctEstablishments(interactions).length;
-
-export const getInteractionsBySiret = (interactions, establishments) =>
+export const sortInteractionsBySiret = interactions =>
   getDistinctEstablishments(interactions).reduce(
-    (interactionsBySiret, currentSiret) => {
-      const establishment = establishments.find(
-        ({ siret }) => siret === currentSiret
-      );
-
-      const etat = _get(establishment, "etat_etablissement");
-      const codePostal = _get(establishment, "adresse_components.code_postal");
-      const localite = _get(establishment, "adresse_components.localite");
-
-      return [
-        ...interactionsBySiret,
-        interactions
-          .filter(({ siret }) => siret === currentSiret)
-          .map(interaction => ({
-            siret: interaction.siret,
-            etat,
-            commune: `${codePostal} ${localite}`,
-            date: interaction.date,
-            pole: interaction.pole
-          }))
-      ];
-    },
+    (interactionsBySiret, currentSiret) => [
+      ...interactionsBySiret,
+      interactions.filter(({ siret }) => siret === currentSiret)
+    ],
     []
   );
 
-export const getEstablishmentsLastInteractions = (
-  interactions = [],
-  establishments
-) =>
-  getInteractionsBySiret(
-    interactions,
-    establishments
-  ).map(establishmentInteractions =>
+export const getEstablishmentsLastInteractions = interactions =>
+  sortInteractionsBySiret(interactions).map(establishmentInteractions =>
     getLastInteraction(establishmentInteractions)
   );
 
@@ -63,27 +36,42 @@ export const getEstablishmentsLastInteractions = (
  * @param {string} type - "visit" or "control", list of poles defined in Config.js: "interactions.types"
  * @returns {array} - List of interactions, sorted in reverse chronological order
  */
-const getEnterpriseInteractions = ({ enterprise, type }) => {
+export const getEnterpriseInteractions = ({ enterprise, type }) => {
   const interactionsByType = Object.keys(enterprise)
     .filter(pole => type.includes(pole) && !!enterprise[pole])
     .reduce(
       (enterpriseInteractions, currentPole) => [
         ...enterpriseInteractions,
-        ...getEstablishmentsLastInteractions(
-          _get(enterprise, currentPole),
-          enterprise.etablissements
-        )
+        ..._get(enterprise, currentPole)
       ],
       []
     );
 
   return interactionsByType
-    ? interactionsByType
+    ? getEstablishmentsLastInteractions(interactionsByType)
         .sort((a, b) => b.date.localeCompare(a.date))
-        .map(interaction => ({
-          ...interaction,
-          date: toI18nDate(interaction.date)
-        }))
+        .map(interaction => {
+          const establishment = enterprise.etablissements.find(
+            ({ siret }) => siret === interaction.siret
+          );
+
+          const etat = _get(establishment, "etat_etablissement");
+          const codePostal = _get(
+            establishment,
+            "adresse_components.code_postal"
+          );
+          const localite = _get(establishment, "adresse_components.localite");
+
+          return {
+            siret: interaction.siret,
+            etat,
+            commune: `${codePostal ? codePostal : ""} ${
+              localite ? localite : ""
+            }`,
+            date: toI18nDate(interaction.date),
+            pole: interaction.pole
+          };
+        })
     : null;
 };
 

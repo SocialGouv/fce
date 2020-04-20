@@ -32,3 +32,6 @@ export const getRangeDateToNow = (date, format = "months") => {
 
   return range.diff(format);
 };
+
+export const sortByDate = sortableList =>
+  sortableList.sort((a, b) => new Date(b.date) - new Date(a.date));

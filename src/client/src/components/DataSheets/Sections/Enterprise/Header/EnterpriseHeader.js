@@ -16,6 +16,7 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import InfoBox from "../../../../shared/InfoBox";
 import Button from "../../../../shared/Button";
+import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import Config from "../../../../../services/Config";
 
 import "./enterpriseHeader.scss";
@@ -44,16 +45,7 @@ const EnterpriseHeader = ({
       )}
       <section id="header" className="enterprise-header w-100 mb-4">
         <h1 className="mb-4 is-capitalized has-text-weight-bold is-size-3">
-          <Value
-            value={
-              enterprise.raison_sociale ||
-              enterprise.sigle ||
-              enterprise.nom_commercial ||
-              `${enterprise.nom || ""} ${enterprise.prenom || ""}`.trim() ||
-              null
-            }
-            empty=" "
-          />
+          <Value value={getEnterpriseName(enterprise) || null} empty=" " />
         </h1>
         <div className="columns">
           <InfoBox

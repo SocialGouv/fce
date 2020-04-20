@@ -126,6 +126,11 @@
             }
 
             & .table {
+                th {
+                    color: $grey-tundora;
+                    border-right: solid 1px $light-sky-blue;
+                }
+
                 padding: 2rem 0;
 
                 &__center-cell {

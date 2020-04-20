@@ -21,11 +21,11 @@ const AccordionTable = ({ pse }) => {
     <>
       <tbody>
         <tr>
-          <td>
-            <Value value={pse.dossier.numero_de_dossier} />
-          </td>
           <td className="has-text-centered">
             <Value value={pse.dossier.date_enregistrement} />
+          </td>
+          <td>
+            <Value value={pse.dossier.numero_de_dossier} />
           </td>
           <td className="has-text-centered">
             <Value value={pse.dossier.situation_juridique} />

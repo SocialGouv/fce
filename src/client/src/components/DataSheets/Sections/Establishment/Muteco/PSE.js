@@ -13,7 +13,7 @@ import {
   isValidProcedureDuration
 } from "../../../../../helpers/Pse";
 
-function PSE({ establishment }) {
+const PSE = ({ establishment }) => {
   const pseList = {
     inProcess:
       hasPse(establishment) &&
@@ -54,7 +54,7 @@ function PSE({ establishment }) {
         <>
           <Data
             name={`Procédure(s) homologuée(s) ou validée(s) au cours des ${Config.get(
-              "monthsProceduresLimit"
+              "pse.monthsProceduresLimit"
             )} derniers mois`}
             value={hasPseValidsOrProbates(pseList)}
             columnClasses={["is-8", "is-4"]}
@@ -62,8 +62,9 @@ function PSE({ establishment }) {
           <table className="table mt-2">
             <thead>
               <tr>
-                <th>Numéro de dossier</th>
                 <th className="has-text-centered">Date d{"'"}enregistrement</th>
+                <th>Numéro de dossier</th>
+                <th>État du dossier</th>
                 <th className="has-text-centered">
                   Nombre maximum de ruptures de contrats de travail envisagées
                   dans l{"'"}établissement
@@ -73,11 +74,11 @@ function PSE({ establishment }) {
             <tbody>
               {pseList.validsOrProbates.map((dossier, index) => (
                 <tr key={dossier.numero_de_dossier.concat(index)}>
-                  <td className="w-25">
-                    <Value value={dossier.numero_de_dossier} />
-                  </td>
                   <td className="has-text-centered w-25">
                     <Value value={dossier.date_enregistrement} />
+                  </td>
+                  <td className="w-25">
+                    <Value value={dossier.numero_de_dossier} />
                   </td>
                   <td className="has-text-centered w-50">
                     <Value
@@ -96,7 +97,7 @@ function PSE({ establishment }) {
       )}
     </Subcategory>
   );
-}
+};
 
 PSE.propTypes = {
   establishment: Proptypes.object.isRequired

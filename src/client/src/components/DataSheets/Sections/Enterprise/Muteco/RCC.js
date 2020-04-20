@@ -50,7 +50,7 @@ function RCC({ enterprise }) {
         <>
           <Data
             name={`Procédure(s) homologuée(s) ou validée(s) au cours des ${Config.get(
-              "monthsProceduresLimit"
+              "pse.monthsProceduresLimit"
             )} derniers mois`}
             value={hasPseValidsOrProbates(rccList)}
             columnClasses={["is-8", "is-4"]}

@@ -53,7 +53,7 @@ function PSE({ enterprise }) {
         <>
           <Data
             name={`Procédure(s) homologuée(s) ou validée(s) au cours des ${Config.get(
-              "monthsProceduresLimit"
+              "pse.monthsProceduresLimit"
             )} derniers mois`}
             value={hasPseValidsOrProbates(pseList)}
             columnClasses={["is-8", "is-4"]}
@@ -62,10 +62,10 @@ function PSE({ enterprise }) {
             <table className="table mt-2 is-max-content">
               <thead>
                 <tr>
-                  <th>Numéro de dossier</th>
                   <th className="has-text-centered">
                     Date d{"'"}enregistrement
                   </th>
+                  <th>Numéro de dossier</th>
                   <th className="has-text-centered">
                     Situation juridique de l{"'"}entreprise durant la procédure
                   </th>

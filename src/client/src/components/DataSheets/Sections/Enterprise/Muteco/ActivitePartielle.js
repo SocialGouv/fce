@@ -1,14 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Proptypes from "prop-types";
 import _get from "lodash.get";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faEye } from "@fortawesome/pro-solid-svg-icons";
-
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
-import Config from "../../../../../services/Config";
+import SeeDetailsLink from "../../../../shared/SeeDetailsLink";
+import State from "../../../../shared/State";
 
 const ActivitePartielle = ({
   enterprise: { activite_partielle, etablissements }
@@ -70,16 +67,7 @@ const ActivitePartielle = ({
                     <tr key={siret}>
                       <td>{siret}</td>
                       <td className="table__center-cell">
-                        {etat && (
-                          <FontAwesomeIcon
-                            className={
-                              etat === Config.get("establishmentState").actif
-                                ? "icon--success"
-                                : "icon--danger"
-                            }
-                            icon={faCircle}
-                          />
-                        )}
+                        {etat && <State state={etat} />}
                       </td>
                       <td>{categorie}</td>
                       <td className="has-text-right">
@@ -90,10 +78,9 @@ const ActivitePartielle = ({
                       </td>
                       <td>{<Value value={date} />}</td>
                       <td className="has-text-centered">
-                        <Link to={`/establishment/${siret}/#muteco`}>
-                          <FontAwesomeIcon icon={faEye} className="mr-2" />
-                          <span>Voir le détail</span>
-                        </Link>
+                        <SeeDetailsLink
+                          link={`/establishment/${siret}/#muteco`}
+                        />
                       </td>
                     </tr>
                   );

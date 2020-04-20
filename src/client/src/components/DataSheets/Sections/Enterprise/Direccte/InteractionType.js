@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faEye } from "@fortawesome/pro-solid-svg-icons";
 import Subcategory from "../../SharedComponents/Subcategory";
-import Config from "../../../../../services/Config";
+import SeeDetailsLink from "../../../../shared/SeeDetailsLink";
+import State from "../../../../shared/State";
 
 import "./interactionType.scss";
 
@@ -36,25 +34,15 @@ const InteractionType = ({ type, interactions }) => {
               <tr key={etab.siret + etab.pole}>
                 <td>{etab.siret}</td>
                 <td className="table__center-cell">
-                  {etab.etat && (
-                    <FontAwesomeIcon
-                      className={
-                        etab.etat === Config.get("establishmentState").actif
-                          ? "icon--success"
-                          : "icon--danger"
-                      }
-                      icon={faCircle}
-                    />
-                  )}
+                  {etab.etat && <State state={etab.etat} />}
                 </td>
                 <td>{etab.commune}</td>
                 <td>{etab.date}</td>
                 <td>{etab.pole}</td>
                 <td className="has-text-centered">
-                  <Link to={`/establishment/${etab.siret}/#direccte`}>
-                    <FontAwesomeIcon icon={faEye} className="mr-2" />
-                    <span>Voir le détail</span>
-                  </Link>
+                  <SeeDetailsLink
+                    link={`/establishment/${etab.siret}/#direccte`}
+                  />
                 </td>
               </tr>
             ))}

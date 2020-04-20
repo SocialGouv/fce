@@ -1,14 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircle,
-  faExternalLink,
-  faEye
-} from "@fortawesome/pro-solid-svg-icons";
+import { faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
+import SeeDetailsLink from "../../../../shared/SeeDetailsLink";
+import State from "../../../../shared/State";
 import { sortAgreements } from "../../../../../helpers/Relationships";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { toI18nDate } from "../../../../../helpers/Date";
@@ -63,25 +60,15 @@ export const Agreements = ({
                     <tr key={siret}>
                       <td>{siret}</td>
                       <td className="table__center-cell">
-                        {etat && (
-                          <FontAwesomeIcon
-                            className={
-                              etat === Config.get("establishmentState").actif
-                                ? "icon--success"
-                                : "icon--danger"
-                            }
-                            icon={faCircle}
-                          />
-                        )}
+                        {etat && <State state={etat} />}
                       </td>
                       <td>{categorie}</td>
                       <td className="has-text-right">{totalEtab}</td>
                       <td>{toI18nDate(date)}</td>
                       <td className="has-text-centered">
-                        <Link to={`/establishment/${siret}/#relation`}>
-                          <FontAwesomeIcon icon={faEye} className="mr-2" />
-                          <span>Voir le détail</span>
-                        </Link>
+                        <SeeDetailsLink
+                          link={`/establishment/${siret}/#relation`}
+                        />
                       </td>
                     </tr>
                   );

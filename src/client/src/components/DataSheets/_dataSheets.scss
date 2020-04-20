@@ -13,11 +13,14 @@
     }
 
     &__main-container {
+        @extend %print-margin-padding;
+
         background-color: $white;
         border-radius: 0.325rem 0.325rem 0 0;
         padding: 1rem 2rem;
-        box-shadow: $fce-shadow;
-        @extend %print-margin-padding;
+        @media not print {
+            box-shadow: $fce-shadow;
+        }
     }
 
     &__main-content {
@@ -51,7 +54,9 @@
         }
 
         .sticky {
-            box-shadow: $fce-shadow;
+            @media not print {
+                box-shadow: $fce-shadow;
+            }
             z-index: 2;
             transition: opacity 0.2s;
             opacity: 0.9;
@@ -71,6 +76,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        page-break-inside: avoid;
 
         .section-header {
             display: flex;

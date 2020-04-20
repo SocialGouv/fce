@@ -12,12 +12,12 @@ export const getLastInteraction = interactions => {
   return _find(interactions, { date: lastDateInteraction });
 };
 
-export const getDistinctEstablishments = interactions => [
+export const getDistinctEstablishmentsSiret = interactions => [
   ...new Set(interactions.map(interaction => interaction.siret))
 ];
 
-export const sortInteractionsBySiret = interactions =>
-  getDistinctEstablishments(interactions).reduce(
+export const groupInteractionsBySiret = interactions =>
+  getDistinctEstablishmentsSiret(interactions).reduce(
     (interactionsBySiret, currentSiret) => [
       ...interactionsBySiret,
       interactions.filter(({ siret }) => siret === currentSiret)
@@ -26,7 +26,7 @@ export const sortInteractionsBySiret = interactions =>
   );
 
 export const getEstablishmentsLastInteractions = interactions =>
-  sortInteractionsBySiret(interactions).map(establishmentInteractions =>
+  groupInteractionsBySiret(interactions).map(establishmentInteractions =>
     getLastInteraction(establishmentInteractions)
   );
 

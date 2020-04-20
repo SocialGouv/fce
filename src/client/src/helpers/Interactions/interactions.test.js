@@ -1,7 +1,7 @@
 import {
   getLastInteraction,
-  getDistinctEstablishments,
-  sortInteractionsBySiret,
+  getDistinctEstablishmentsSiret,
+  groupInteractionsBySiret,
   getEstablishmentsLastInteractions,
   getEnterpriseInteractions
 } from "./interactions";
@@ -134,7 +134,7 @@ test("get last interaction by date for one establishment", () => {
 });
 
 test("get distinct siret numbers from a list of interactions", () => {
-  expect(getDistinctEstablishments(sampleInteractions)).toEqual([
+  expect(getDistinctEstablishmentsSiret(sampleInteractions)).toEqual([
     "34326262205742",
     "34326262206666",
     "34326262207777",
@@ -143,7 +143,7 @@ test("get distinct siret numbers from a list of interactions", () => {
 });
 
 test("get interactions sorted by siret", () => {
-  expect(sortInteractionsBySiret(sampleInteractions)).toEqual([
+  expect(groupInteractionsBySiret(sampleInteractions)).toEqual([
     [
       {
         siret: "34326262205742",

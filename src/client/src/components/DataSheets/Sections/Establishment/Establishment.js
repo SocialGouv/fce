@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { faPrint } from "@fortawesome/pro-solid-svg-icons";
@@ -13,6 +13,7 @@ import Direccte from "../SharedComponents/Direccte";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
+import { useScrollToLocationHash } from "../../../../helpers/hooks";
 
 const Establishment = ({
   establishment,
@@ -21,13 +22,7 @@ const Establishment = ({
   headOffice,
   location
 }) => {
-  useEffect(() => {
-    const scrollTarget = document.getElementById(location.hash.slice(1));
-    window.scrollTo({
-      behavior: scrollTarget ? "smooth" : "auto",
-      top: scrollTarget ? scrollTarget.offsetTop + 70 : 0
-    });
-  });
+  useScrollToLocationHash({ location, offset: 70 });
 
   return (
     <section className="data-sheet container">

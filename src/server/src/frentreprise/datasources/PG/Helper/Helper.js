@@ -1,6 +1,6 @@
 import { parse, isValid, format } from "date-fns";
 
-export const getFormatedDate = date => {
+export const getFormatedDate = (date) => {
   if (!date) {
     return null;
   }
@@ -9,10 +9,11 @@ export const getFormatedDate = date => {
 
   const datesFormats = [
     "yyyy-MM-dd",
+    "yyyy/MM/dd",
     "dd/MM/yyyy",
     "ddMMMyyyy",
     "dd/MM/yy",
-    "M/d/yy"
+    "M/d/yy",
   ];
 
   for (const dateFormat of datesFormats) {

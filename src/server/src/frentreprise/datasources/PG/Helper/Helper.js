@@ -55,6 +55,7 @@ export const getRupcoDataForEnterprise = (rows) => {
       rupcoList,
       {
         date_enregistrement,
+        type,
         numero,
         etat,
         situation_juridique,
@@ -67,6 +68,7 @@ export const getRupcoDataForEnterprise = (rows) => {
       if (!rupcoList[numero]) {
         rupcoList[numero] = {
           date_enregistrement: getFormatedDate(date_enregistrement),
+          type,
           numero,
           etat,
           situation_juridique,

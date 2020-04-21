@@ -36,7 +36,10 @@ function PSE({ enterprise }) {
   };
 
   return (
-    <Subcategory subtitle="Plan de sauvegarde de l'emploi">
+    <Subcategory
+      subtitle="Plan de sauvegarde de l'emploi"
+      sourceSi="SI PSE/RUPCO"
+    >
       <Data
         name="Procédure en cours"
         value={!!pseList.inProcess}

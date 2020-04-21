@@ -6,7 +6,7 @@ export default (entity, interactionsTerms = null) => {
     total: 0
   };
 
-  Config.get("interactions").forEach(pole => {
+  Config.get("interactions.poles").forEach(pole => {
     try {
       const interactionsPole = entity[`interactions_${pole}`] || [];
       interactions = [...interactions, ...interactionsPole];

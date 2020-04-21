@@ -33,7 +33,10 @@ function RCC({ enterprise }) {
   };
 
   return (
-    <Subcategory subtitle="Rupture conventionnelle collective">
+    <Subcategory
+      subtitle="Rupture conventionnelle collective"
+      sourceSi="SI PSE/RUPCO"
+    >
       <Data
         name="Procédure en cours"
         value={!!rccList.inProcess}

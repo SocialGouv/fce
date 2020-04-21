@@ -106,7 +106,9 @@ const config = {
       outputFileName: "etablissements_activite_partielle.csv",
     },
     ingest: {
+      className: "ActivitePartielleIngestor",
       table: "etablissements_activite_partielle",
+      historyTable: "etablissements_activite_partielle_historique",
       filename: `${FILES_FOLDER}/etablissements_activite_partielle.csv`,
       cols: [
         "siret",
@@ -121,7 +123,7 @@ const config = {
       ],
       delimiter: ",",
       truncate: true,
-      history: false,
+      history: true,
       date: {
         field: "date_decision",
         format: "YYYY-MM-DD",

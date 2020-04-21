@@ -3,22 +3,23 @@ import PropTypes from "prop-types";
 
 import "./source.scss";
 
-const Source = ({ name, updated, isTableCell = false }) => {
+const Source = ({ name, updated, isTableCell = false, isCustomSource }) => {
   return isTableCell ? (
     <div className="source">
       <div className="source__name">{name}</div>
-      <div className="source__updated">{updated}</div>
+      {!isCustomSource && <div className="source__updated">{updated}</div>}
     </div>
   ) : (
     <div className="source">
       <span className="source__label">Source: </span>
       <span className="source__name">{name} </span>
-      <span className="source__updated">{updated}</span>
+      {!isCustomSource && <span className="source__updated">{updated}</span>}
     </div>
   );
 };
 
 Source.propTypes = {
+  isCustomSource: PropTypes.bool.isRequired,
   name: PropTypes.string,
   updated: PropTypes.string,
   isTableCell: PropTypes.bool

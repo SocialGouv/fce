@@ -40,7 +40,7 @@ const EstablishmentActivity = ({ establishment }) => {
               nonEmptyValue: ""
             }
           ]}
-          source="Sirène"
+          sourceSi="Sirène"
         />
         <Subcategory
           subtitle="Effectifs"
@@ -51,7 +51,7 @@ const EstablishmentActivity = ({ establishment }) => {
                 establishment.tranche_effectif_insee
               ],
               nonEmptyValue: "",
-              source: "Sirène-year",
+              sourceSi: "Sirène-year",
               sourceDate: establishment.annee_tranche_effectif_insee
             },
 
@@ -59,7 +59,7 @@ const EstablishmentActivity = ({ establishment }) => {
               name: "Dernier effectif connu",
               value: establishment.dernier_effectif_physique,
               nonEmptyValue: "",
-              source: "DSN"
+              sourceSi: "DSN"
             }
           ]}
         />
@@ -90,7 +90,7 @@ const EstablishmentActivity = ({ establishment }) => {
               nonEmptyValue: ""
             }
           ]}
-          source="EOS-monthYear"
+          sourceSi="EOS-monthYear"
         />
         {Array.isArray(establishment.pole_competitivite) &&
           !!establishment.pole_competitivite.length && (

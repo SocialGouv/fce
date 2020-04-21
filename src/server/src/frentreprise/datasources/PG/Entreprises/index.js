@@ -7,6 +7,7 @@ import getActivitePartielle from "./getActivitePartielle";
 import getPse from "./getPse";
 import getLice from "./getLice";
 import getRcc from "./getRcc";
+import getIdcc from "./getIdcc";
 
 export default {
   getInteractionsPole3ESEER,
@@ -18,4 +19,5 @@ export default {
   getPse,
   getLice,
   getRcc,
+  getIdcc,
 };

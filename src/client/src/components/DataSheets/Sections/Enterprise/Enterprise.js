@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { faPrint } from "@fortawesome/pro-solid-svg-icons";
@@ -6,23 +6,16 @@ import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
 import Infos from "./Infos";
-import Mandataires from "./Mandataires";
-import Accords from "./Accords";
+import EnterpriseRelationship from "./EnterpriseRelationship";
 import Muteco from "./Muteco";
-import Direccte from "../SharedComponents/Direccte";
-import Finances from "./Finances";
+import Direccte from "./Direccte";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
+import { useScrollToLocationHash } from "../../../../helpers/hooks";
 
 const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
-  useEffect(() => {
-    const scrollTarget = document.getElementById(location.hash.slice(1));
-    window.scrollTo({
-      behavior: scrollTarget ? "smooth" : "auto",
-      top: scrollTarget ? scrollTarget.offsetTop + 70 : 0
-    });
-  });
+  useScrollToLocationHash({ location });
 
   return (
     <section className="data-sheet container">
@@ -49,21 +42,17 @@ const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
               anchors={[
                 { label: "Informations légales", link: "infos" },
                 { label: "Visites et contrôles", link: "direccte" },
-                { label: "Accords d'entreprise", link: "accords" },
+                { label: "Relation travail", link: "relationship" },
                 {
                   label: "Mutations économiques",
                   link: "muteco"
-                },
-                { label: "Données financières", link: "finances" },
-                { label: "Mandataires sociaux", link: "mandataires" }
+                }
               ]}
             />
             <Infos enterprise={enterprise} headOffice={headOffice} />
             <Direccte enterprise={enterprise} />
-            <Accords enterprise={enterprise} />
+            <EnterpriseRelationship enterprise={enterprise} />
             <Muteco enterprise={enterprise} />
-            <Finances establishment={headOffice} />
-            <Mandataires enterprise={enterprise} />
           </div>
           <UsersFeedback fullWidth />
         </div>

@@ -22,7 +22,7 @@ const UsersFeedback = ({
 }) => {
   return (
     <section
-      className={classNames("no-print", {
+      className={classNames({
         "user-review": true,
         "user-review--fullwidth": fullWidth
       })}

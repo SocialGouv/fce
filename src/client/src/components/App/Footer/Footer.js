@@ -5,7 +5,7 @@ import mariane from "../../../assets/img/logo_gouv.png";
 import "./footer.scss";
 
 const Footer = () => (
-  <footer className="footer no-print">
+  <footer className="footer">
     <div className="container">
       <div className="footer__gouv">
         <div className="footer__gouv-text">

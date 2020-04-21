@@ -17,12 +17,7 @@ const globalConfig = {
   interactions: {
     poles: ["C", "3E_SEER", "3E_SRC", "T"],
     types: {
-      control: [
-        "interactions_C",
-        "interactions_T",
-        "interactions_T",
-        "interactions_3E_SRC"
-      ],
+      control: ["interactions_C", "interactions_T", "interactions_3E_SRC"],
       visit: ["interactions_3E_SEER"]
     }
   },

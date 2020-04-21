@@ -6,6 +6,7 @@ import { faHistory } from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../../../services/Config";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
+import Finances from "./Finances";
 import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
 
@@ -41,10 +42,13 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
           />
           <Data
             name="Etablissements"
-            value={`${
-              enterprise.nombre_etablissements_actifs
-            } actif(s) et ${enterprise.etablissements.length -
-              enterprise.nombre_etablissements_actifs} fermé(s)`}
+            value={
+              enterprise.nombre_etablissements_actifs &&
+              `${
+                enterprise.nombre_etablissements_actifs
+              } actif(s) et ${enterprise.etablissements.length -
+                enterprise.nombre_etablissements_actifs} fermé(s)`
+            }
           />
 
           <Data
@@ -78,13 +82,17 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
           <Data
             name="Capital Social"
-            value={`${enterprise.capital_social} €`}
-            emptyValue="non"
+            value={
+              enterprise.capital_social && `${enterprise.capital_social} €`
+            }
           />
           <Data
             name="Numéro de TVA intra communautaire"
             value={enterprise.numero_tva_intracommunautaire}
           />
+        </Subcategory>
+        <Subcategory subtitle="Données financières" sourceCustom="DGFIP">
+          <Finances establishment={headOffice} />
         </Subcategory>
         <Subcategory
           subtitle="Mandataires sociaux"

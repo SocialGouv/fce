@@ -1,14 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
+import { faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
+import SeeDetailsLink from "../../../../shared/SeeDetailsLink";
+import State from "../../../../shared/State";
 import { sortAgreements } from "../../../../../helpers/Relationships";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { toI18nDate } from "../../../../../helpers/Date";
 import Config from "../../../../../services/Config";
+
+import "./agreements.scss";
 
 export const Agreements = ({
   enterprise,
@@ -35,14 +38,19 @@ export const Agreements = ({
       />
       {nbAccords > 0 && (
         <>
-          <table className="table is-hoverable">
+          <table className="table is-hoverable enterprise-agreements">
             <thead>
               <tr>
                 <th className="th">SIRET</th>
-                <th className="th">Catégorie établissement</th>
                 <th className="th table__center-cell">État</th>
-                <th className="th">Nb accords déposés</th>
-                <th className="th">Date signature dernier accord</th>
+                <th className="th">Catégorie établissement</th>
+                <th className="th enterprise-agreements__count">
+                  Nb accords déposés
+                </th>
+                <th className="th enterprise-agreements__last">
+                  Date signature du dernier
+                </th>
+                <th className="th see-details"></th>
               </tr>
             </thead>
             <tbody>
@@ -50,24 +58,18 @@ export const Agreements = ({
                 ({ siret, categorie, etat, date, totalEtab }) => {
                   return (
                     <tr key={siret}>
-                      <td>
-                        <Link to={`/establishment/${siret}`}>{siret}</Link>
+                      <td>{siret}</td>
+                      <td className="table__center-cell">
+                        {etat && <State state={etat} />}
                       </td>
                       <td>{categorie}</td>
-                      <td className="table__center-cell">
-                        {etat && (
-                          <FontAwesomeIcon
-                            className={
-                              etat === Config.get("establishmentState").actif
-                                ? "icon--success"
-                                : "icon--danger"
-                            }
-                            icon={faCircle}
-                          />
-                        )}
-                      </td>
-                      <td>{totalEtab}</td>
+                      <td className="has-text-right">{totalEtab}</td>
                       <td>{toI18nDate(date)}</td>
+                      <td className="has-text-centered">
+                        <SeeDetailsLink
+                          link={`/establishment/${siret}/#relation`}
+                        />
+                      </td>
                     </tr>
                   );
                 }

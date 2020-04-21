@@ -10,21 +10,25 @@
         background: linear-gradient(to bottom, #ffffff 15%, $grey-geyser);
 
         &__tr {
-            box-shadow: 2px 2px 6px $grey-geyser;
             border: solid 1px $grey-geyser;
             border-bottom: 0;
             border-radius: 0.325rem;
             color: #777 !important;
+            @media not print {
+                box-shadow: 2px 2px 6px $grey-geyser;
+            }
         }
 
         &__th {
             &--important {
                 color: $primary !important;
-                box-shadow: 2px 2px 6px $grey-geyser;
                 border: solid 1px $grey-geyser;
                 border-bottom: 1px solid $primary !important;
                 line-height: 2rem;
                 border-radius: 0.325rem;
+                @media not print {
+                    box-shadow: 2px 2px 6px $grey-geyser;
+                }
             }
 
             &--is-sortable {

@@ -36,6 +36,7 @@ export const getRupcoDataForEstablishment = (rows) =>
         etat,
         nombre_de_ruptures_de_contrats_en_debut_de_procedure,
         nombre_de_ruptures_de_contrats_en_fin_de_procedure,
+        historique_si,
         etablissements,
       }) => ({
         date_enregistrement: getFormatedDate(date_enregistrement),
@@ -46,6 +47,7 @@ export const getRupcoDataForEstablishment = (rows) =>
           +nombre_de_ruptures_de_contrats_en_fin_de_procedure ||
           +nombre_de_ruptures_de_contrats_en_debut_de_procedure ||
           0,
+        historique_si,
         autres_etablissements: etablissements && etablissements.split(","),
       })
     )
@@ -65,6 +67,7 @@ export const getRupcoDataForEnterprise = (rows) => {
         siret,
         nombre_de_ruptures_de_contrats_en_debut_de_procedure,
         nombre_de_ruptures_de_contrats_en_fin_de_procedure,
+        historique_si,
       }
     ) => {
       if (!rupcoList[numero]) {
@@ -76,6 +79,7 @@ export const getRupcoDataForEnterprise = (rows) => {
           situation_juridique,
           date_jugement: getFormatedDate(date_jugement),
           nombre_de_ruptures: 0,
+          historique_si,
           etablissements: [],
         };
       }

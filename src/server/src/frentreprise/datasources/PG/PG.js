@@ -16,6 +16,7 @@ import PolesCompetitivite from "../../../models/PolesCompetitivite";
 import Iae from "../../../models/Iae";
 import ContratsAides from "../../../models/ContratsAides";
 import Successions from "../../../models/Successions";
+import Apprentissage from "../../../models/Apprentissage";
 
 export const _ = {
   requestDB: Symbol("_requestDB"),
@@ -40,7 +41,8 @@ export default class PG extends DataSource {
       [Etablissements.getActivitePartielle, new ActivitePartielle()],
       [Etablissements.getPse, new Pse()],
       [Etablissements.getPredecesseur, new Successions()],
-      [Etablissements.getSuccesseur, new Successions()]
+      [Etablissements.getSuccesseur, new Successions()],
+      [Etablissements.getApprentissage, new Apprentissage()]
     );
   }
 
@@ -54,7 +56,8 @@ export default class PG extends DataSource {
       [Entreprises.getIdcc, new Idcc()],
       [Entreprises.getAccords, new Accords()],
       [Entreprises.getActivitePartielle, new ActivitePartielle()],
-      [Entreprises.getPseList, new Pse()]
+      [Entreprises.getPseList, new Pse()],
+      [Entreprises.getApprentissage, new Apprentissage()]
     );
   }
 

@@ -65,6 +65,7 @@ class DireccteEtablissement extends Etablissement {
           "contrat_aide_alternance_n1",
           "contrat_aide_salaries_n1",
           "contrat_aide_embauches_n1",
+          "apprentissage",
           "_dataSources",
           "_success",
         ],

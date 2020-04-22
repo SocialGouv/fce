@@ -31,6 +31,7 @@ export const getRupcoDataForEstablishment = (rows) =>
     .map(
       ({
         date_enregistrement,
+        type,
         numero,
         etat,
         nombre_de_ruptures_de_contrats_en_debut_de_procedure,
@@ -38,6 +39,7 @@ export const getRupcoDataForEstablishment = (rows) =>
         etablissements,
       }) => ({
         date_enregistrement: getFormatedDate(date_enregistrement),
+        type,
         numero,
         etat,
         nombre_de_ruptures:

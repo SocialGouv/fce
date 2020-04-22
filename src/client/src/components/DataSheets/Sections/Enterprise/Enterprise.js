@@ -9,6 +9,7 @@ import EnterpriseRelationship from "./EnterpriseRelationship";
 import Muteco from "./Muteco";
 import Direccte from "./Direccte";
 import Finances from "./Finances";
+import Helps from "./Helps";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
@@ -45,7 +46,8 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
                   link: "muteco"
                 },
                 { label: "Données financières", link: "finances" },
-                { label: "Mandataires sociaux", link: "mandataires" }
+                { label: "Mandataires sociaux", link: "mandataires" },
+                { label: "Aides et agréments", link: "helps" }
               ]}
             />
             <Infos enterprise={enterprise} headOffice={headOffice} />
@@ -53,6 +55,7 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
             <EnterpriseRelationship enterprise={enterprise} />
             <Muteco enterprise={enterprise} />
             <Finances establishment={headOffice} />
+            <Helps enterprise={enterprise} />
           </div>
           <UsersFeedback fullWidth />
         </div>

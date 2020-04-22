@@ -6,13 +6,18 @@ import Subcategory from "../../../SharedComponents/Subcategory";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
 
 const Apprentissage = ({ apprentissage }) => {
+  console.log({ apprentissage });
+
   const total = apprentissage
-    ? Object.values(apprentissage).reduce(
-        (total, { signes }) => total + signes,
-        0
-      )
+    ? apprentissage.reduce((total, { signes }) => {
+        return Object.values(signes).reduce(
+          (total, nbApprentissage) => total + nbApprentissage,
+          total
+        );
+      }, 0)
     : 0;
-  const hasApprentissage = !!total;
+
+  const hasApprentissage = false;
 
   return (
     <>
@@ -29,26 +34,18 @@ const Apprentissage = ({ apprentissage }) => {
           <table className="table is-bordered is-fullwidth">
             <thead>
               <tr>
-                <th></th>
-                {Object.keys(apprentissage).map(year => (
-                  <th key={year}>{year}</th>
-                ))}
+                <th>Siret</th>
+                <th>État</th>
+                <th>Commune</th>
+                <th>Nombre de contrats</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th>Nombre de contrats d{`'`}apprentissage signés</th>
-                {Object.entries(apprentissage).map(([year, { signes }]) => (
-                  <td key={year}>{signes}</td>
-                ))}
-              </tr>
-
-              <tr>
-                <th>Nombre de contrats rompus </th>
-                {Object.entries(apprentissage).map(([year, { rompus }]) => (
-                  <td key={year}>{rompus}</td>
-                ))}
-              </tr>
+              {apprentissage.map(({ siret, signes }) => (
+                <tr key={siret}>
+                  <td>{siret}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         )}
@@ -57,6 +54,8 @@ const Apprentissage = ({ apprentissage }) => {
   );
 };
 
-Apprentissage.propTypes = { apprentissage: PropTypes.object };
+Apprentissage.propTypes = {
+  apprentissage: PropTypes.arrayOf(PropTypes.object)
+};
 
 export default Apprentissage;

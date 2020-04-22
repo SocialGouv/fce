@@ -1,13 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+import _get from "lodash.get";
 
 import Data from "../../../SharedComponents/Data";
 import Subcategory from "../../../SharedComponents/Subcategory";
+import State from "../../../../../shared/State";
+import SeeDetailsLink from "../../../../../shared/SeeDetailsLink";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
+import { getEstablishment } from "../../../../../../helpers/Enterprise";
+import { arraySum } from "../../../../../../helpers/utils";
 
-const Apprentissage = ({ apprentissage }) => {
-  console.log({ apprentissage });
-
+const Apprentissage = ({ apprentissage, etablissements }) => {
   const total = apprentissage
     ? apprentissage.reduce((total, { signes }) => {
         return Object.values(signes).reduce(
@@ -17,7 +20,7 @@ const Apprentissage = ({ apprentissage }) => {
       }, 0)
     : 0;
 
-  const hasApprentissage = false;
+  const hasApprentissage = !!total;
 
   return (
     <>
@@ -31,21 +34,45 @@ const Apprentissage = ({ apprentissage }) => {
           sourceSi="Ari@ne"
         />
         {hasApprentissage && (
-          <table className="table is-bordered is-fullwidth">
+          <table className="table is-fullwidth is-hoverable mt-3">
             <thead>
               <tr>
-                <th>Siret</th>
-                <th>État</th>
-                <th>Commune</th>
-                <th>Nombre de contrats</th>
+                <th className="th">Siret</th>
+                <th className="th table__center-cell">État</th>
+                <th className="th">Commune</th>
+                <th className="th">Nombre de contrats</th>
+                <th className="th see-details"></th>
               </tr>
             </thead>
             <tbody>
-              {apprentissage.map(({ siret, signes }) => (
-                <tr key={siret}>
-                  <td>{siret}</td>
-                </tr>
-              ))}
+              {apprentissage.map(({ siret, signes }) => {
+                const establishment = getEstablishment(siret, etablissements);
+                const etat = _get(establishment, "etat_etablissement");
+                const codePostal = _get(
+                  establishment,
+                  "adresse_components.code_postal"
+                );
+                const localite = _get(
+                  establishment,
+                  "adresse_components.localite"
+                );
+
+                return (
+                  <tr key={siret}>
+                    <td>{siret}</td>
+                    <td className="table__center-cell">
+                      {etat && <State state={etat} />}
+                    </td>
+                    <td>{`${codePostal ? codePostal : ""} ${
+                      localite ? localite : ""
+                    }`}</td>
+                    <td>{arraySum(Object.values(signes))}</td>
+                    <td className="has-text-centered">
+                      <SeeDetailsLink link={`/establishment/${siret}/#helps`} />
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         )}
@@ -55,6 +82,7 @@ const Apprentissage = ({ apprentissage }) => {
 };
 
 Apprentissage.propTypes = {
+  etablissements: PropTypes.arrayOf(PropTypes.object).isRequired,
   apprentissage: PropTypes.arrayOf(PropTypes.object)
 };
 

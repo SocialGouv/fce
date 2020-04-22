@@ -463,6 +463,12 @@
     width: max-content;
 }
 
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
+
 /*** Text ***/
 .is-first-letter-uppercase {
     &::first-letter {

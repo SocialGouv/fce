@@ -1,1 +1,1 @@
-export * from "./Interactions";
+export * from "./interactions";

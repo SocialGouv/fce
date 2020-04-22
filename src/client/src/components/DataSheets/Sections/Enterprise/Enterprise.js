@@ -1,5 +1,6 @@
-import PropTypes from "prop-types";
 import React from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { faPrint } from "@fortawesome/pro-solid-svg-icons";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
@@ -8,13 +9,15 @@ import Infos from "./Infos";
 import EnterpriseRelationship from "./EnterpriseRelationship";
 import Muteco from "./Muteco";
 import Direccte from "./Direccte";
-import Finances from "./Finances";
 import Helps from "./Helps";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
+import { useScrollToLocationHash } from "../../../../helpers/hooks";
 
-const Enterprise = ({ enterprise, headOffice, establishments }) => {
+const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
+  useScrollToLocationHash({ location });
+
   return (
     <section className="data-sheet container">
       <div className="data-sheet__print-section w-100">
@@ -45,8 +48,6 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
                   label: "Mutations économiques",
                   link: "muteco"
                 },
-                { label: "Données financières", link: "finances" },
-                { label: "Mandataires sociaux", link: "mandataires" },
                 { label: "Aides et agréments", link: "helps" }
               ]}
             />
@@ -54,7 +55,6 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
             <Direccte enterprise={enterprise} />
             <EnterpriseRelationship enterprise={enterprise} />
             <Muteco enterprise={enterprise} />
-            <Finances establishment={headOffice} />
             <Helps enterprise={enterprise} />
           </div>
           <UsersFeedback fullWidth />
@@ -67,7 +67,8 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
 Enterprise.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired
+  headOffice: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
-export default withLoading(Enterprise);
+export default withRouter(withLoading(Enterprise));

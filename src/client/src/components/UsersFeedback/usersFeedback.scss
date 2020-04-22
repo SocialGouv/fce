@@ -1,9 +1,11 @@
 @import "../App/variables";
+@import "../App/placeholders";
 
 .user-review {
     width: 40em;
     max-width: 100%;
     margin: 1.5rem auto;
+    @extend %print-hidden;
 
     &--fullwidth {
         width: 100%;

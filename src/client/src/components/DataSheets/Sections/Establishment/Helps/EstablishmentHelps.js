@@ -5,6 +5,7 @@ import { faMedkit } from "@fortawesome/pro-solid-svg-icons";
 
 import Agrements from "./Subcategory/Agrements";
 import ContratsAides from "./Subcategory/ContratsAides";
+import Apprentissage from "./Subcategory/Apprentissage";
 
 const EstablishmentHelps = ({ establishment }) => {
   return (
@@ -18,6 +19,7 @@ const EstablishmentHelps = ({ establishment }) => {
       <div className="section-datas">
         <Agrements establishment={establishment} />
         <ContratsAides establishment={establishment} />
+        <Apprentissage apprentissage={establishment.apprentissage} />
       </div>
     </section>
   );

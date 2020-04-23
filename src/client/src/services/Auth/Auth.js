@@ -6,17 +6,21 @@ const AUTH_KEY = "fce_token";
 const AUTH_CLIENT_VERIFICATION_KEY = "fce_client";
 
 export default class Auth {
-  static sendMagicLink(email, browser) {
-    const clientVerificationKey = this.generateClientVerificationKey();
-    Local.set(AUTH_CLIENT_VERIFICATION_KEY, clientVerificationKey);
-    return Http.post("/sendMagicLink", {
-      email,
-      clientVerificationKey,
-      browser
+  static sendCode(email) {
+    return Http.post("/requestAuthCode", {
+      email
     });
   }
 
-  static loginWithMagicLink(key) {
+  static login(email, code) {
+    console.log("Auth login", email, code);
+    return Http.post("/login", {
+      code,
+      email
+    });
+  }
+
+  static loginWithToken(key) {
     this.logout();
     const clientVerificationKey = Local.get(AUTH_CLIENT_VERIFICATION_KEY);
     return Http.post("/login", {

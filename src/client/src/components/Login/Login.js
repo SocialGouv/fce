@@ -1,16 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LoginHome from "./steps/LoginHome";
-import LoginForm from "./steps/LoginForm";
+import LoginForm from "./steps/Form";
 import "./login.scss";
 
 const Login = ({
   login,
+  sendCode,
   hasError,
   errorMessage,
-  updateForm,
   loading,
-  email = "",
   step,
   setStep,
   showSuccessNotif,
@@ -23,11 +22,10 @@ const Login = ({
       ) : (
         <LoginForm
           login={login}
-          updateForm={updateForm}
+          sendCode={sendCode}
           loading={loading}
           hasError={hasError}
           errorMessage={errorMessage}
-          email={email}
           step={step}
           setStep={setStep}
           showSuccessNotif={showSuccessNotif}
@@ -42,9 +40,7 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
   hasError: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
-  updateForm: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  email: PropTypes.string,
   step: PropTypes.string.isRequired,
   setStep: PropTypes.func.isRequired,
   showSuccessNotif: PropTypes.bool.isRequired,

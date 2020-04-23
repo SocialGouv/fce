@@ -6,7 +6,7 @@ import { faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
 import _get from "lodash.get";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import Data from "../Data";
-import State from "../../../../shared/State";
+import State from "../../SharedComponents/State";
 
 class EstablishmentView extends React.Component {
   constructor(props) {

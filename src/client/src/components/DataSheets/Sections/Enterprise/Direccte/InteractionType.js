@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Subcategory from "../../SharedComponents/Subcategory";
-import SeeDetailsLink from "../../../../shared/SeeDetailsLink";
-import State from "../../../../shared/State";
+import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
+import State from "../../SharedComponents/State";
 
 import "./interactionType.scss";
 

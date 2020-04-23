@@ -1,6 +1,3 @@
-import { subMonths, format } from "date-fns";
-
-import { getSubMonthValueForApiEffectifEtp } from "../helpers/effectifsEtp";
 import utils from "../../../Utils/utils";
 
 export default async (siren, Axios, params) => {

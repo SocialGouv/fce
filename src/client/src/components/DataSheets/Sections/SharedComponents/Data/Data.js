@@ -43,7 +43,7 @@ const Data = ({
               />
             )}
           </div>
-          {sourceSi && (
+          {(sourceSi || sourceCustom) && (
             <Source
               si={sourceSi}
               sourceDate={sourceDate}

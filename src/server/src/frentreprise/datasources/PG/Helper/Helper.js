@@ -9,6 +9,7 @@ export const getFormatedDate = (date, outputFormat = "yyyy-MM-dd") => {
 
   const datesFormats = [
     "yyyy-MM-dd",
+    "yyyy/MM/dd",
     "dd/MM/yyyy",
     "ddMMMyyyy",
     "dd/MM/yy",

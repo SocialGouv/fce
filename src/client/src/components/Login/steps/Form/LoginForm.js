@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faChevronRight } from "@fortawesome/pro-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/pro-solid-svg-icons";
 import StepForm from "./StepForm";
 import HeadForm from "./HeadForm";
 import Button from "../../../shared/Button";
 import Config from "../../../../services/Config";
+import SuccessMessage from "./SuccessMessage";
 
 const LoginForm = ({
   login,
@@ -38,40 +39,34 @@ const LoginForm = ({
           />
         )}
         {step === "login-form-code" && (
-          <StepForm
-            inputLabel="Code (reçu par e-mail)"
-            inputValue={code || ""}
-            onChangeCallback={setCode}
-            buttonText="Me connecter"
-            submitCallback={evt => login(evt, email, code)}
-            errorMessage={errorMessage}
-            loading={loading}
-            hasError={hasError}
-          />
-        )}
-        {step === "login-form-success" && (
-          <div>
+          <>
             {showSuccessNotif && (
-              <div className="login__notif login__notif--success has-mt-2 has-mb-2 swing-in-top-fwd">
-                <FontAwesomeIcon icon={faCheck} />
-                <p>
-                  Un message d{"'"}activation a été envoyé à {email}. Veuillez
-                  suivre les instructions qu{"'"}il contient.
-                </p>
-              </div>
+              <SuccessMessage
+                message={`Un code d'activation a été envoyé à ${email}. Veuillez l'entrée dans le champs ci-dessous.`}
+              />
             )}
-            <div className="login__links">
+            <StepForm
+              inputLabel="Code (reçu par e-mail)"
+              inputValue={code || ""}
+              onChangeCallback={setCode}
+              buttonText="Me connecter"
+              submitCallback={evt => login(evt, email, code)}
+              errorMessage={errorMessage}
+              loading={loading}
+              hasError={hasError}
+            />
+            <div className="login__links pt-4">
               <Button
-                value="Renvoyer le lien d'activation"
+                value="Renvoyer le code"
                 icon={faChevronRight}
                 buttonClasses={[
                   "login__button",
                   "login__button--as-link",
                   "has-text-link"
                 ]}
-                callback={() => {
+                callback={evt => {
                   setShowSuccessNotif(false);
-                  login();
+                  sendCode(evt, email);
                 }}
               />
               <Button
@@ -83,7 +78,7 @@ const LoginForm = ({
                   "has-text-link"
                 ]}
                 callback={() => {
-                  setStep("login-form");
+                  setStep("login-form-email");
                 }}
               />
               <a
@@ -96,7 +91,7 @@ const LoginForm = ({
                 <span className="pl-2">Nous contacter</span>
               </a>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>
@@ -104,6 +99,7 @@ const LoginForm = ({
 };
 
 LoginForm.propTypes = {
+  sendCode: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
   hasError: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,

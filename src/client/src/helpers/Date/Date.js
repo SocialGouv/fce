@@ -16,6 +16,14 @@ export const getCustomPastYear = N => {
     .format("YYYY");
 };
 
+export const getMonthName = (month, shortName = false) => {
+  if (!month) {
+    return "";
+  }
+  const format = shortName ? "MMM" : "MMMM";
+  return Moment(`2020-${month}-01`).format(format);
+};
+
 export const getLastDateInteraction = (interactions, format = "DD/MM/YYYY") => {
   const moments =
     Array.isArray(interactions) &&

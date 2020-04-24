@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { faPrint } from "@fortawesome/pro-solid-svg-icons";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
@@ -12,13 +13,17 @@ import Direccte from "../SharedComponents/Direccte";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
+import { useScrollToLocationHash } from "../../../../helpers/hooks";
 
 const Establishment = ({
   establishment,
   establishments,
   enterprise,
-  headOffice
+  headOffice,
+  location
 }) => {
+  useScrollToLocationHash({ location, offset: 70 });
+
   return (
     <section className="data-sheet container">
       <div className="data-sheet__print-section w-100">
@@ -71,7 +76,8 @@ Establishment.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired
+  headOffice: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
-export default withLoading(Establishment);
+export default withRouter(withLoading(Establishment));

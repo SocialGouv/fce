@@ -8,7 +8,13 @@ const getEntreprise = async (SIREN, Axios, params) => {
       const fields = [
         "categorie_entreprise",
         "siren",
-        "raison_sociale",
+        {
+          in: "raison_sociale",
+          out: "raison_sociale",
+          callback: (raisonSociale) =>
+            raisonSociale &&
+            raisonSociale.replace("*/", " ").replace("/", "").trim(),
+        },
         "nom_commercial",
         "nom",
         "prenom",

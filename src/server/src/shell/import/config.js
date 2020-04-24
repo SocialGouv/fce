@@ -130,6 +130,58 @@ const config = {
       },
     },
   },
+  etablissements_idcc: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dares",
+      fileMatch: /^TRANS(.)*IDCC(.)*.csv$/,
+      outputFileName: "etablissements_idcc.csv",
+    },
+    ingest: {
+      table: "etablissements_idcc",
+      filename: `${FILES_FOLDER}/etablissements_idcc.csv`,
+      cols: ["mois", "siret", "idcc", "date_maj"],
+      delimiter: ",",
+      truncate: true,
+      history: false,
+      date: {
+        field: "date_maj",
+        format: "YYYY/MM/DD",
+      },
+    },
+  },
+  etablissements_dsn_eff: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dares",
+      fileMatch: /^TRANS(.)*effectifs(.)*.csv$/,
+      outputFileName: "etablissements_dsn_eff.csv",
+    },
+    ingest: {
+      table: "etablissements_dsn_eff",
+      filename: `${FILES_FOLDER}/etablissements_dsn_eff.csv`,
+      cols: [
+        "mois",
+        "siret",
+        "eff",
+        "hommes",
+        "femmes",
+        "cdd",
+        "cdi",
+        "cdi_inter",
+        "inter_mission",
+        "interim",
+        "date_maj",
+      ],
+      delimiter: ",",
+      truncate: true,
+      history: false,
+      date: {
+        field: "date_maj",
+        format: "YYYY/MM/DD",
+      },
+    },
+  },
 };
 
 module.exports = config;

@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { Local } from "OhMyCache";
 import Auth from "../../services/Auth";
 import LoginView from "../../components/Login";
 import _get from "lodash.get";
-
-const AUTH_KEY = "fce_token";
 
 const Login = ({ history }) => {
   const [hasError, setHasError] = useState(false);
@@ -17,57 +14,51 @@ const Login = ({ history }) => {
 
   const sendCode = (evt, email) => {
     evt && evt.preventDefault();
-    _initStates();
+    initStates();
 
     Auth.sendCode(email)
       .then(response => {
-        if (response.data && response.data.success) {
-          _sendSuccess();
-          setStep("login-form-code");
-        } else {
-          _sendFail(
-            _get(response, "data.message", "Le code n'a pas pu être envoyé")
-          );
+        if (!_get(response, "data.success")) {
+          throw new Error(_get(response, "data.message"));
         }
+
+        setSuccess();
+        setStep("login-form-code");
       })
-      .catch(() => {
-        _sendFail("Le code n'a pas pu être envoyé");
+      .catch(e => {
+        setError(e.message || "Le code n'a pas pu être envoyé");
       });
   };
 
   const login = (evt, email, code) => {
     evt && evt.preventDefault();
-    _initStates();
+    initStates();
 
     Auth.login(email, code)
       .then(response => {
-        if (response.data && response.data.success) {
-          Local.set(AUTH_KEY, response.data.token);
-          history.push("/");
-        } else {
-          _sendFail(
-            _get(response, "data.message", "La tentative de connexion a échoué")
-          );
+        if (!_get(response, "data.success")) {
+          throw new Error(_get(response, "data.message"));
         }
+
+        history.push("/");
       })
       .catch(e => {
-        console.log(e);
-        _sendFail("La tentative de connexion a échoué");
+        setError(e.message || "Le code n'a pas pu être envoyé");
       });
   };
 
-  const _initStates = () => {
+  const initStates = () => {
     setHasError(false);
     setLoading(true);
   };
 
-  const _sendSuccess = () => {
+  const setSuccess = () => {
     setHasError(false);
     setLoading(false);
     setShowSuccessNotif(true);
   };
 
-  const _sendFail = message => {
+  const setError = message => {
     setHasError(true);
     setErrorMessage(message);
     setLoading(false);

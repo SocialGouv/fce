@@ -1,9 +1,7 @@
 import { Local } from "OhMyCache";
 import Http from "../Http";
-import _get from "lodash.get";
 
 const AUTH_KEY = "fce_token";
-const AUTH_CLIENT_VERIFICATION_KEY = "fce_client";
 
 export default class Auth {
   static sendCode(email) {
@@ -16,20 +14,11 @@ export default class Auth {
     return Http.post("/login", {
       code,
       email
-    });
-  }
-
-  static loginWithToken(key) {
-    this.logout();
-    const clientVerificationKey = Local.get(AUTH_CLIENT_VERIFICATION_KEY);
-    return Http.post("/login", {
-      key,
-      clientVerificationKey
     }).then(response => {
-      const token = _get(response, "data.token");
-      if (token) {
-        Local.set(AUTH_KEY, token);
+      if (response.data && response.data.success) {
+        Local.set(AUTH_KEY, response.data.token);
       }
+
       return response;
     });
   }

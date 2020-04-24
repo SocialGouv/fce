@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
+import { Local } from "OhMyCache";
 import Auth from "../../services/Auth";
 import LoginView from "../../components/Login";
 import _get from "lodash.get";
 
-const Login = () => {
+const AUTH_KEY = "fce_token";
+
+const Login = ({ history }) => {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -34,19 +39,12 @@ const Login = () => {
     evt && evt.preventDefault();
     _initStates();
 
-    console.log("login", email, code);
-
     Auth.login(email, code)
       .then(response => {
-        console.log(response);
         if (response.data && response.data.success) {
-          _sendSuccess();
-          setStep("login-form-success");
-          if (showSuccessNotif === false) {
-            setShowSuccessNotif(true);
-          }
+          Local.set(AUTH_KEY, response.data.token);
+          history.push("/");
         } else {
-          console.log(response);
           _sendFail(
             _get(response, "data.message", "La tentative de connexion a échoué")
           );
@@ -66,12 +64,14 @@ const Login = () => {
   const _sendSuccess = () => {
     setHasError(false);
     setLoading(false);
+    setShowSuccessNotif(true);
   };
 
   const _sendFail = message => {
     setHasError(true);
     setErrorMessage(message);
     setLoading(false);
+    setShowSuccessNotif(false);
   };
 
   return (
@@ -89,4 +89,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func
+  })
+};
+
+export default withRouter(Login);

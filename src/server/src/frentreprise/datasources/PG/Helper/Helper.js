@@ -1,4 +1,6 @@
-import { parse, isValid, format } from "date-fns";
+import { parse, isValid, format, differenceInMonths, parseISO } from "date-fns";
+import _get from "lodash.get";
+import config from "config";
 
 export const getFormatedDate = (date) => {
   if (!date) {
@@ -26,10 +28,50 @@ export const getFormatedDate = (date) => {
   return null;
 };
 
+const hasValidProcedureDuration = (
+  date,
+  validDuration = config.rupco.pse.procedureDurationLimit
+) =>
+  date
+    ? differenceInMonths(new Date(), parseISO(date)) <= validDuration
+    : false;
+
+const proceduresWithBrokenContracts = ({ nombre_de_ruptures }) =>
+  nombre_de_ruptures > 0;
+
+const pseWithValidDuration = ({ type, date_enregistrement }) =>
+  type === "PSE" ? hasValidProcedureDuration(date_enregistrement) : true;
+
+const setLiceTypeLabel = (procedure) => {
+  if (!_get(procedure, "type", "").includes("LiceC")) {
+    return procedure;
+  }
+
+  return {
+    ...procedure,
+    type: config.rupco.lice.types[procedure.type],
+    rawType: procedure.type,
+  };
+};
+
+const setProcedureState = (procedure) => {
+  if (procedure.historique_si && !procedure.historique_si) {
+    return procedure;
+  }
+
+  return {
+    ...procedure,
+    etat: Object.keys(config.rupco.historicDataStates).includes(procedure.type)
+      ? config.rupco.historicDataStates[procedure.type]
+      : config.rupco.historicDataDefaultState,
+  };
+};
+
 export const getRupcoDataForEstablishment = (rows) =>
   rows
     .map(
       ({
+        siret: currentSiret,
         date_enregistrement,
         type,
         numero,
@@ -48,10 +90,15 @@ export const getRupcoDataForEstablishment = (rows) =>
           +nombre_de_ruptures_de_contrats_en_debut_de_procedure ||
           0,
         historique_si,
-        autres_etablissements: etablissements && etablissements.split(","),
+        autres_etablissements:
+          etablissements &&
+          etablissements.split(",").filter((siret) => siret !== currentSiret),
       })
     )
-    .filter(({ nombre_de_ruptures }) => nombre_de_ruptures > 0);
+    .filter(proceduresWithBrokenContracts)
+    .filter(pseWithValidDuration)
+    .map(setProcedureState)
+    .map(setLiceTypeLabel);
 
 export const getRupcoDataForEnterprise = (rows) => {
   const rupco = rows.reduce(
@@ -100,7 +147,9 @@ export const getRupcoDataForEnterprise = (rows) => {
     {}
   );
 
-  return Object.values(rupco).filter(
-    ({ nombre_de_ruptures }) => nombre_de_ruptures > 0
-  );
+  return Object.values(rupco)
+    .filter(proceduresWithBrokenContracts)
+    .filter(pseWithValidDuration)
+    .map(setProcedureState)
+    .map(setLiceTypeLabel);
 };

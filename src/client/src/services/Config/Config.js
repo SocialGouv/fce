@@ -13,8 +13,7 @@ const globalConfig = {
     expire: 86400 // 1j
   },
   sidebarEstablishmentsLimit: 20,
-  pse: { monthsProceduresLimit: 36 },
-  monthsProceduresLimit: 36,
+
   interactions: {
     poles: ["C", "3E_SEER", "3E_SRC", "T"],
     types: {

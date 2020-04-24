@@ -24,10 +24,3 @@ export const countValuesInArray = (array, fields) => {
     return acc + currentTotalFieldsValues;
   }, 0);
 };
-
-export const isIncluded = (str, arrayOfStrings) =>
-  arrayOfStrings.length > 0
-    ? arrayOfStrings.some(item =>
-        str.toLowerCase().includes(item.toLowerCase())
-      )
-    : false;

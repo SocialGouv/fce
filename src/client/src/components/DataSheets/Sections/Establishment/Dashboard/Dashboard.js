@@ -15,7 +15,7 @@ import { isIncluded } from "../../../../../helpers/utils";
 import {
   hasPse,
   isInProcessState,
-  isValidProcedureDuration
+  hasValidProcedureDuration
 } from "../../../../../helpers/Pse";
 
 import "./dashboard.scss";
@@ -38,7 +38,7 @@ const Dashboard = ({
       !!establishment.pse.find(
         pse =>
           isIncluded(pse.type_de_dossier, ["rcc"]) &&
-          isValidProcedureDuration(pse.date_enregistrement) &&
+          hasValidProcedureDuration(pse.date_enregistrement) &&
           !isInProcessState(pse.etat_du_dossier)
       ),
     pseActivity:
@@ -47,7 +47,7 @@ const Dashboard = ({
         pse =>
           isIncluded(pse.type_de_dossier, ["pse"]) &&
           !isInProcessState(pse.etat_du_dossier) &&
-          isValidProcedureDuration(pse.date_enregistrement) &&
+          hasValidProcedureDuration(pse.date_enregistrement) &&
           pse.contrats_ruptures_debut + pse.contrats_ruptures_fin > 0
       ),
     partialActivity: activite_partielle && activite_partielle.length > 0

@@ -1,32 +1,24 @@
 import { Local } from "OhMyCache";
 import Http from "../Http";
-import _get from "lodash.get";
 
 const AUTH_KEY = "fce_token";
-const AUTH_CLIENT_VERIFICATION_KEY = "fce_client";
 
 export default class Auth {
-  static sendMagicLink(email, browser) {
-    const clientVerificationKey = this.generateClientVerificationKey();
-    Local.set(AUTH_CLIENT_VERIFICATION_KEY, clientVerificationKey);
-    return Http.post("/sendMagicLink", {
-      email,
-      clientVerificationKey,
-      browser
+  static sendCode(email) {
+    return Http.post("/requestAuthCode", {
+      email
     });
   }
 
-  static loginWithMagicLink(key) {
-    this.logout();
-    const clientVerificationKey = Local.get(AUTH_CLIENT_VERIFICATION_KEY);
+  static login(email, code) {
     return Http.post("/login", {
-      key,
-      clientVerificationKey
+      code,
+      email
     }).then(response => {
-      const token = _get(response, "data.token");
-      if (token) {
-        Local.set(AUTH_KEY, token);
+      if (response.data && response.data.success) {
+        Local.set(AUTH_KEY, response.data.token);
       }
+
       return response;
     });
   }

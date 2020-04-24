@@ -20,7 +20,7 @@ const LoginHome = ({ setStep }) => (
       value="Me connecter"
       buttonClasses={["login__button", "is-secondary"]}
       callback={() => {
-        setStep("login-form");
+        setStep("login-form-email");
       }}
     />
   </div>

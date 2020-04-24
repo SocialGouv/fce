@@ -7,47 +7,42 @@ import {
   faChevronCircleDown
 } from "@fortawesome/pro-solid-svg-icons";
 
-import { countValuesInArray } from "../../../../../helpers/utils";
-
-const AccordionTable = ({ pse }) => {
+const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
   const [isActiveAccordion, setIsActiveAccordion] = useState(false);
-
-  const rupturesContrats =
-    countValuesInArray(pse.establishments, ["contrats_ruptures_fin"]) > 0
-      ? countValuesInArray(pse.establishments, ["contrats_ruptures_fin"])
-      : countValuesInArray(pse.establishments, ["contrats_ruptures_debut"]);
 
   return (
     <>
       <tbody>
         <tr>
-          <td className="has-text-centered">
-            <Value value={pse.dossier.date_enregistrement} />
+          {hasTypeColumn && (
+            <td className="has-text-right">
+              <Value value={procedure.type} />
+            </td>
+          )}
+          <td>
+            <Value value={procedure.date_enregistrement} />
           </td>
           <td>
-            <Value value={pse.dossier.numero_de_dossier} />
+            <Value value={procedure.numero} />
           </td>
-          <td className="has-text-centered">
-            <Value value={pse.dossier.situation_juridique} />
+          <td>
+            <Value value={procedure.etat} />
           </td>
-          <td className="has-text-centered">
-            <Value
-              value={
-                pse.dossier.date_de_jugement
-                  ? pse.dossier.date_de_jugement
-                  : "-"
-              }
-            />
+          <td>
+            <Value value={procedure.situation_juridique} />
           </td>
-          <td className="has-text-centered w-20">
-            <Value value={rupturesContrats} nonEmptyValues="0" />
+          <td>
+            <Value value={procedure.date_jugement} />
           </td>
-          <td className="has-text-centered has-text-link">
+          <td className="w-20">
+            <Value value={procedure.nombre_de_ruptures} nonEmptyValues="0" />
+          </td>
+          <td className="has-text-link">
             <div
               onClick={() => setIsActiveAccordion(!isActiveAccordion)}
               className="accordion-header"
             >
-              <Value value={pse.establishments.length} />
+              <Value value={procedure.etablissements.length} />
               <FontAwesomeIcon
                 icon={
                   isActiveAccordion ? faChevronCircleDown : faChevronCircleLeft
@@ -60,18 +55,14 @@ const AccordionTable = ({ pse }) => {
       </tbody>
       <tbody className="accordion-container">
         {isActiveAccordion &&
-          pse.establishments.map(establishment => (
-            <tr key={establishment.siret}>
-              <td colSpan={4} />
-              <td className="has-text-centered w-20">
-                {establishment.contrats_ruptures_fin > 0
-                  ? establishment.contrats_ruptures_fin
-                  : establishment.contrats_ruptures_debut}
-              </td>
-              <td className="has-text-centered has-text-link">
+          procedure.etablissements.map(etablissement => (
+            <tr key={etablissement.siret}>
+              <td colSpan={hasTypeColumn ? 6 : 5} />
+              <td className="w-20">{etablissement.nombre_de_ruptures}</td>
+              <td className="has-text-link">
                 <Value
-                  value={establishment.siret}
-                  link={`/establishment/${establishment.siret}`}
+                  value={etablissement.siret}
+                  link={`/establishment/${etablissement.siret}`}
                 />
               </td>
             </tr>
@@ -82,7 +73,8 @@ const AccordionTable = ({ pse }) => {
 };
 
 AccordionTable.propTypes = {
-  pse: PropTypes.object.isRequired
+  procedure: PropTypes.object.isRequired,
+  hasTypeColumn: PropTypes.bool
 };
 
 export default AccordionTable;

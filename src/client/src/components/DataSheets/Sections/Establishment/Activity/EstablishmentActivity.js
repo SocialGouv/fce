@@ -2,8 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory } from "@fortawesome/pro-solid-svg-icons";
+import _get from "lodash.get";
+
 import Config from "../../../../../services/Config";
 import { getSuccession } from "../../../../../helpers/Establishment";
+import { getMonthName } from "../../../../../helpers/Date";
 import Subcategory from "../../SharedComponents/Subcategory";
 
 const EstablishmentActivity = ({ establishment }) => {
@@ -54,12 +57,22 @@ const EstablishmentActivity = ({ establishment }) => {
               sourceSi: "Sirène-year",
               sourceDate: establishment.annee_tranche_effectif_insee
             },
-
             {
-              name: "Dernier effectif connu",
+              name: "Effectif physique",
               value: establishment.dernier_effectif_physique,
               nonEmptyValue: "",
               sourceSi: "DSN"
+            },
+            {
+              name: `Effectif en équivalent temps plein`,
+              value: _get(
+                establishment,
+                "effectifMensuelEtp.effectifs_mensuels"
+              ),
+              nonEmptyValue: "",
+              sourceCustom: `Acoss / DSN ${getMonthName(
+                _get(establishment, "effectifMensuelEtp.mois")
+              )} ${_get(establishment, "effectifMensuelEtp.annee", "")}`
             }
           ]}
         />

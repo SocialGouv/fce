@@ -6,7 +6,7 @@ import axios from "../../../lib/axios";
 
 export const _ = {
   axios: Symbol("_axios"),
-  requestAPIs: Symbol("_requestAPIs")
+  requestAPIs: Symbol("_requestAPIs"),
 };
 
 export default class ApiGouv extends DataSource {
@@ -16,7 +16,7 @@ export default class ApiGouv extends DataSource {
 
     this[_.axios] = axios.create({
       baseURL: baseURL,
-      timeout: 30000
+      timeout: 30000,
     });
     this.axiosConfig = axiosConfig;
   }
@@ -29,7 +29,8 @@ export default class ApiGouv extends DataSource {
       EtablissementsAPI.agefiph,
       EtablissementsAPI.exercices,
       EtablissementsAPI.association,
-      EtablissementsAPI.document_association
+      EtablissementsAPI.document_association,
+      EtablissementsAPI.effectifsMensuelEtp
     );
   }
 
@@ -40,7 +41,9 @@ export default class ApiGouv extends DataSource {
       EntreprisesAPI.getEntreprise,
       EntreprisesAPI.attestation_acoss,
       EntreprisesAPI.attestation_dgfip,
-      EntreprisesAPI.infogreffe_rcs
+      EntreprisesAPI.infogreffe_rcs,
+      EntreprisesAPI.effectifsMensuelEtp,
+      EntreprisesAPI.effectifsAnnuelEtp
     );
   }
 
@@ -57,8 +60,8 @@ export default class ApiGouv extends DataSource {
         token: this.token,
         context: "Tiers",
         recipient: "Direccte Occitanie",
-        object: "FCEE - Direccte Occitanie"
-      }
+        object: "FCEE - Direccte Occitanie",
+      },
     };
 
     if (axiosConfig.proxy && axiosConfig.proxy.tunnel === true) {
@@ -73,8 +76,9 @@ export default class ApiGouv extends DataSource {
       }
 
       if (axiosConfig.proxy.auth) {
-        agentConfig.proxy.proxyAuth = `${axiosConfig.proxy.auth.username ||
-          ""}:${axiosConfig.proxy.auth.password || ""}`;
+        agentConfig.proxy.proxyAuth = `${
+          axiosConfig.proxy.auth.username || ""
+        }:${axiosConfig.proxy.auth.password || ""}`;
       }
 
       axiosConfig.proxy = false;
@@ -82,12 +86,12 @@ export default class ApiGouv extends DataSource {
     }
 
     const requests = apiCalls
-      .filter(fn => typeof fn === "function")
-      .map(fn => {
+      .filter((fn) => typeof fn === "function")
+      .map((fn) => {
         return fn(identifier, this[_.axios], axiosConfig, this.db);
       });
 
-    await Promise.all(requests).then(results => {
+    await Promise.all(requests).then((results) => {
       Object.assign(out, ...results);
     });
 

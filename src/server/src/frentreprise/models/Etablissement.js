@@ -32,6 +32,7 @@ class DireccteEtablissement extends Etablissement {
           "dernier_effectif_physique",
           "date_dernier_effectif_physique",
           "source_dernier_effectif_physique",
+          "effectifMensuelEtp",
           "unite_controle_competente",
           "idcc",
           "agefiph_derniere_annee_conformite_connue",

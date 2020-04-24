@@ -5,6 +5,7 @@ import association from "./association";
 import predecesseur from "./predecesseur";
 import successeur from "./successeur";
 import document_association from "./document_association";
+import effectifsMensuelEtp from "./effectifsMensuelEtp";
 
 export default {
   getEtablissement,
@@ -13,5 +14,6 @@ export default {
   association,
   predecesseur,
   successeur,
-  document_association
+  document_association,
+  effectifsMensuelEtp,
 };

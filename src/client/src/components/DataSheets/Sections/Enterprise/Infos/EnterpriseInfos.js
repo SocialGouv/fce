@@ -20,6 +20,19 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
   const mandataires = enterprise.mandataires_sociaux || [];
 
+  const moisEffectifMensuelEtp = getMonthName(
+    _get(enterprise, "effectifMensuelEtp.mois")
+  );
+  const anneeEffectifMensuelEtp = _get(
+    enterprise,
+    "effectifMensuelEtp.annee",
+    ""
+  );
+  const anneeEffectifAnnuelEtp = _get(
+    enterprise,
+    "effectifAnnuelEtp.annee",
+    ""
+  );
   return (
     <section id="infos" className="data-sheet__section">
       <div className="section-header">
@@ -71,28 +84,14 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             sourceDate={enterprise.annee_tranche_effectif}
           />
           <Data
-            name={`Effectif de ${getMonthName(
-              _get(enterprise, "effectifMensuelEtp.mois")
-            )} ${_get(
-              enterprise,
-              "effectifMensuelEtp.annee",
-              ""
-            )} en équivalent temps plein`}
+            name={`Effectif de ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp} en équivalent temps plein`}
             value={_get(enterprise, "effectifMensuelEtp.effectifs_mensuels")}
-            sourceCustom={`Acoss ${getMonthName(
-              _get(enterprise, "effectifMensuelEtp.mois")
-            )} ${_get(enterprise, "effectifMensuelEtp.annee", "")}`}
+            sourceCustom={`Acoss ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
           />
           <Data
-            name={`Effectif ${_get(
-              enterprise,
-              "effectifAnnuelEtp.annee",
-              ""
-            )} en équivalent temps plein`}
+            name={`Effectif ${anneeEffectifAnnuelEtp} en équivalent temps plein`}
             value={_get(enterprise, "effectifAnnuelEtp.effectifs_annuels")}
-            sourceCustom={`Acoss ${getMonthName(
-              _get(enterprise, "effectifMensuelEtp.mois")
-            )} ${_get(enterprise, "effectifMensuelEtp.annee", "")}`}
+            sourceCustom={`Acoss ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
           />
         </Subcategory>
 

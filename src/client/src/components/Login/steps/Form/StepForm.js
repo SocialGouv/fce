@@ -9,15 +9,15 @@ import Button from "../../../shared/Button";
 export const StepForm = ({
   inputLabel = "",
   inputValue,
-  onChangeCallback,
+  onChange,
   buttonText = "Me connecter",
   errorMessage = "",
   hasError = false,
   loading = false,
-  submitCallback
+  onSubmit
 }) => {
   return (
-    <form className="login-form has-mt-2" onSubmit={submitCallback}>
+    <form className="login-form has-mt-2" onSubmit={onSubmit}>
       {hasError && (
         <div className="login__notif login__notif--error has-mb-1 shake-horizontal">
           <FontAwesomeIcon icon={faExclamationTriangle} />
@@ -36,7 +36,7 @@ export const StepForm = ({
             className="input"
             required
             value={inputValue}
-            onChange={e => onChangeCallback(e.target.value)}
+            onChange={e => onChange(e.target.value)}
           />
         </div>
       </div>
@@ -57,8 +57,8 @@ StepForm.propTypes = {
   errorMessage: PropTypes.string,
   hasError: PropTypes.bool,
   loading: PropTypes.bool,
-  submitCallback: PropTypes.func.isRequired,
-  onChangeCallback: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default StepForm;

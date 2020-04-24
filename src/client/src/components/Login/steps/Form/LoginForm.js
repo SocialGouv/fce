@@ -12,7 +12,7 @@ const LoginForm = ({
   login,
   sendCode,
   hasError,
-  errorMessage,
+  errorMessage = null,
   loading,
   step,
   setStep,
@@ -30,9 +30,9 @@ const LoginForm = ({
           <StepForm
             inputLabel="Adresse électronique (e-mail)"
             inputValue={email || ""}
-            onChangeCallback={setEmail}
+            onChange={setEmail}
             buttonText="Recevoir le code"
-            submitCallback={evt => sendCode(evt, email)}
+            onSubmit={evt => sendCode(evt, email)}
             errorMessage={errorMessage}
             loading={loading}
             hasError={hasError}
@@ -42,15 +42,15 @@ const LoginForm = ({
           <>
             {showSuccessNotif && (
               <SuccessMessage
-                message={`Un code d'activation a été envoyé à ${email}. Veuillez l'entrée dans le champs ci-dessous.`}
+                message={`Un code d'activation a été envoyé à ${email}. Veuillez l'entrer dans le champ ci-dessous.`}
               />
             )}
             <StepForm
               inputLabel="Code (reçu par e-mail)"
               inputValue={code || ""}
-              onChangeCallback={setCode}
+              onChange={setCode}
               buttonText="Me connecter"
-              submitCallback={evt => login(evt, email, code)}
+              onSubmit={evt => login(evt, email, code)}
               errorMessage={errorMessage}
               loading={loading}
               hasError={hasError}

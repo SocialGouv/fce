@@ -23,10 +23,10 @@ const HeadForm = ({ step }) => {
         <>
           <p className="has-mb-1">
             Pour accéder à l{"'"}application FCE, merci de renseigner le code
-            envoyé à votre adresse électronique (e-mail).
+            que vous avez reçu sur votre adresse électronique (e-mail).
           </p>
           <p className="has-mb-1">
-            Vous recevrez un lien de connexion qui sera valide durant 30 jours.
+            Votre authentification sera valide 30 jours.
             <br />
             Passé ce délai vous devrez renouveler votre demande.
           </p>

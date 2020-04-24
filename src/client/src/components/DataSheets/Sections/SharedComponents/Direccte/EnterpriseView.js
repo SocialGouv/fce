@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
+import { faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
 import _get from "lodash.get";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import Data from "../Data";
-import Config from "../../../../../services/Config";
+import State from "../../../../shared/State";
 
 class EstablishmentView extends React.Component {
   constructor(props) {
@@ -106,16 +106,7 @@ class EstablishmentView extends React.Component {
                     </Link>
                   </td>
                   <td className="table__center-cell">
-                    {etab.etat && (
-                      <FontAwesomeIcon
-                        className={
-                          etab.etat === Config.get("establishmentState").actif
-                            ? "icon--success"
-                            : "icon--danger"
-                        }
-                        icon={faCircle}
-                      />
-                    )}
+                    {etab.etat && <State state={etab.etat} />}
                   </td>
                   <td>{etab.dep}</td>
                   <td>{etab.commune}</td>

@@ -2,12 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory } from "@fortawesome/pro-solid-svg-icons";
+import _get from "lodash.get";
 
 import Config from "../../../../../services/Config";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
+import Finances from "./Finances";
 import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
+import { getMonthName } from "../../../../../helpers/Date";
 
 const EnterpriseInfos = ({ enterprise, headOffice }) => {
   const dashboardSizeRanges = {
@@ -17,6 +20,19 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
   const mandataires = enterprise.mandataires_sociaux || [];
 
+  const moisEffectifMensuelEtp = getMonthName(
+    _get(enterprise, "effectifMensuelEtp.mois")
+  );
+  const anneeEffectifMensuelEtp = _get(
+    enterprise,
+    "effectifMensuelEtp.annee",
+    ""
+  );
+  const anneeEffectifAnnuelEtp = _get(
+    enterprise,
+    "effectifAnnuelEtp.annee",
+    ""
+  );
   return (
     <section id="infos" className="data-sheet__section">
       <div className="section-header">
@@ -41,11 +57,19 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
           />
           <Data
             name="Etablissements"
-            value={`${
-              enterprise.nombre_etablissements_actifs
-            } actif(s) et ${enterprise.etablissements.length -
-              enterprise.nombre_etablissements_actifs} fermé(s)`}
+            value={
+              enterprise.nombre_etablissements_actifs &&
+              `${
+                enterprise.nombre_etablissements_actifs
+              } actif(s) et ${enterprise.etablissements.length -
+                enterprise.nombre_etablissements_actifs} fermé(s)`
+            }
           />
+
+          <Data name="Association" value={!!headOffice.association} />
+          {headOffice.association && (
+            <Data name="Numéro RNA" value={headOffice.association.id} />
+          )}
 
           <Data
             name="Tranche d'effectif"
@@ -56,13 +80,21 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
               } (${enterprise.annee_tranche_effectif ||
                 "Année non renseignée"})`
             }
+            sourceSi={"Sirène-year"}
+            sourceDate={enterprise.annee_tranche_effectif}
           />
-
-          <Data name="Association" value={!!headOffice.association} />
-          {headOffice.association && (
-            <Data name="Numéro RNA" value={headOffice.association.id} />
-          )}
+          <Data
+            name={`Effectif de ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp} en équivalent temps plein`}
+            value={_get(enterprise, "effectifMensuelEtp.effectifs_mensuels")}
+            sourceCustom={`Acoss ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
+          />
+          <Data
+            name={`Effectif ${anneeEffectifAnnuelEtp} en équivalent temps plein`}
+            value={_get(enterprise, "effectifAnnuelEtp.effectifs_annuels")}
+            sourceCustom={`Acoss ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
+          />
         </Subcategory>
+
         <Subcategory
           subtitle="Informations juridiques"
           sourceCustom="Infogreffe - RCS et DGFIP"
@@ -78,13 +110,17 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
           <Data
             name="Capital Social"
-            value={`${enterprise.capital_social} €`}
-            emptyValue="non"
+            value={
+              enterprise.capital_social && `${enterprise.capital_social} €`
+            }
           />
           <Data
             name="Numéro de TVA intra communautaire"
             value={enterprise.numero_tva_intracommunautaire}
           />
+        </Subcategory>
+        <Subcategory subtitle="Données financières" sourceCustom="DGFIP">
+          <Finances establishment={headOffice} />
         </Subcategory>
         <Subcategory
           subtitle="Mandataires sociaux"

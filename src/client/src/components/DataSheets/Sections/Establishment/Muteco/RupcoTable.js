@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import Value from "../../../../shared/Value";
+import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
+
+import "./RupcoTable.scss";
 
 const RupcoTable = ({ list, siren, hasTypeColumn = false }) => {
   return (
-    <table className="table mt-2">
+    <table className="table mt-2 rupco-table-establishment">
       <thead>
         <tr>
           {hasTypeColumn && <th>Type</th>}
@@ -24,27 +26,29 @@ const RupcoTable = ({ list, siren, hasTypeColumn = false }) => {
                 <Value value={dossier.type} />
               </td>
             )}
-            <td>
+            <td className="has-text-right">
               <Value value={dossier.date_enregistrement} />
             </td>
-            <td>
+            <td className="has-text-right">
               <Value value={dossier.numero} />
             </td>
-            <td>
+            <td className="w-20">
               <Value value={dossier.etat} />
             </td>
-            <td className="has-text-right">
+            <td className="has-text-right w-20">
               <Value value={dossier.nombre_de_ruptures} />
             </td>
-            <td>
+            <td className="w-30">
               <Value
                 value={
+                  dossier.autres_etablissements &&
                   !!dossier.autres_etablissements.length ? (
-                    <div>
-                      <div>Oui</div>
-                      <Link to={`/enterprise/${siren}/#muteco`}>
-                        Consulter la fiche de l{"'"}entreprise
-                      </Link>
+                    <div className="rupco-table-establishment__other-establishments">
+                      <span>Oui</span>
+                      <SeeDetailsLink
+                        link={`/enterprise/${siren}/#muteco`}
+                        text="Voir la fiche entreprise"
+                      />
                     </div>
                   ) : (
                     "Non"

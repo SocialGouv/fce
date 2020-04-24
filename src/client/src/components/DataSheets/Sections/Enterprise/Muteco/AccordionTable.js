@@ -15,14 +15,14 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
       <tbody>
         <tr>
           {hasTypeColumn && (
-            <td className="has-text-right">
+            <td className="w-15">
               <Value value={procedure.type} />
             </td>
           )}
-          <td>
+          <td className="has-text-right w-10">
             <Value value={procedure.date_enregistrement} />
           </td>
-          <td>
+          <td className="has-text-right">
             <Value value={procedure.numero} />
           </td>
           <td>
@@ -31,16 +31,16 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
           <td>
             <Value value={procedure.situation_juridique} />
           </td>
-          <td>
+          <td className="has-text-right w-10">
             <Value value={procedure.date_jugement} />
           </td>
-          <td className="w-20">
+          <td className="has-text-right w-10">
             <Value value={procedure.nombre_de_ruptures} nonEmptyValues="0" />
           </td>
-          <td className="has-text-link">
+          <td className="has-text-link w-10">
             <div
               onClick={() => setIsActiveAccordion(!isActiveAccordion)}
-              className="accordion-header"
+              className="has-text-right accordion-header"
             >
               <Value value={procedure.etablissements.length} />
               <FontAwesomeIcon
@@ -58,8 +58,10 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
           procedure.etablissements.map(etablissement => (
             <tr key={etablissement.siret}>
               <td colSpan={hasTypeColumn ? 6 : 5} />
-              <td className="w-20">{etablissement.nombre_de_ruptures}</td>
-              <td className="has-text-link">
+              <td className="has-text-right">
+                {etablissement.nombre_de_ruptures}
+              </td>
+              <td className="has-text-link has-text-right">
                 <Value
                   value={etablissement.siret}
                   link={`/establishment/${etablissement.siret}`}

@@ -38,6 +38,7 @@ const Login = ({
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  sendCode: PropTypes.func.isRequired,
   hasError: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
   loading: PropTypes.bool.isRequired,

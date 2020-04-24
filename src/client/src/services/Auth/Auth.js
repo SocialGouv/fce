@@ -13,7 +13,6 @@ export default class Auth {
   }
 
   static login(email, code) {
-    console.log("Auth login", email, code);
     return Http.post("/login", {
       code,
       email

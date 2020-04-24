@@ -57,7 +57,8 @@ StepForm.propTypes = {
   errorMessage: PropTypes.string,
   hasError: PropTypes.bool,
   loading: PropTypes.bool,
-  submitCallback: PropTypes.func.isRequired
+  submitCallback: PropTypes.func.isRequired,
+  onChangeCallback: PropTypes.func.isRequired
 };
 
 export default StepForm;

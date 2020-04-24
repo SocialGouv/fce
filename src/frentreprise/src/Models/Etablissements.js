@@ -1,5 +1,7 @@
 import Model from "./Model";
 
+const LIMIT_ETABLISSEMENTS = 20;
+
 export default class Etablissements extends Model {
   async getBySiret(siret) {
     const columns = await this._selectEntrepriseColumns();
@@ -16,10 +18,10 @@ export default class Etablissements extends Model {
         WHERE etab.siret = $1`,
         [siret]
       )
-      .then(res => {
+      .then((res) => {
         return res.rows && res.rows.length ? res.rows[0] : null;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error("Etablissements::getBySiret", e);
         return null;
       });
@@ -37,13 +39,14 @@ export default class Etablissements extends Model {
         FROM etablissements etab
         INNER JOIN entreprises ent ON etab.siren = ent.siren
         LEFT JOIN naf ON naf.code = etab.activiteprincipaleetablissement
-        WHERE etab.siren = $1`,
-        [siren]
+        WHERE etab.siren = $1
+        LIMIT $2`,
+        [siren, LIMIT_ETABLISSEMENTS]
       )
-      .then(res => {
+      .then((res) => {
         return res.rows;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error("Etablissements::findBySiren", e);
         return null;
       });
@@ -63,10 +66,10 @@ export default class Etablissements extends Model {
         `,
         params
       )
-      .then(res => {
+      .then((res) => {
         return res.rows;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error("Etablissements::search", e);
         return null;
       });
@@ -83,10 +86,10 @@ export default class Etablissements extends Model {
         `,
         params
       )
-      .then(res => {
+      .then((res) => {
         return res.rows && res.rows.length ? +res.rows[0].items : 0;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error("Etablissements::searchCount", e);
         return null;
       });
@@ -153,7 +156,7 @@ export default class Etablissements extends Model {
 
     return {
       query,
-      params
+      params,
     };
   }
 
@@ -162,10 +165,10 @@ export default class Etablissements extends Model {
       .query(
         `SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'entreprises'`
       )
-      .then(res => {
+      .then((res) => {
         return res.rows;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error("Etablissements::_selectEntrepriseColumns", e);
         return null;
       });

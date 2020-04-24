@@ -13,6 +13,7 @@ import getActivitePartielle from "./getActivitePartielle";
 import getPse from "./getPse";
 import getPredecesseur from "./getPredecesseur";
 import getSuccesseur from "./getSuccesseur";
+import getApprentissage from "./getApprentissage";
 
 export default {
   getInteractionsPole3ESEER,
@@ -30,4 +31,5 @@ export default {
   getPse,
   getPredecesseur,
   getSuccesseur,
+  getApprentissage,
 };

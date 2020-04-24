@@ -130,6 +130,35 @@ const config = {
       },
     },
   },
+  etablissements_apprentissage: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgefp",
+      fileMatch: /^(.)*Ariane(.)*.csv$/,
+      outputFileName: "etablissements_apprentissage.csv",
+    },
+    ingest: {
+      className: "ApprentissageIngestor",
+      table: "etablissements_apprentissage",
+      filename: `${FILES_FOLDER}/etablissements_apprentissage.csv`,
+      cols: [
+        "type_contrat",
+        "numero_enregistrement",
+        "date_debut",
+        "date_rupture",
+        "siret",
+        "empty",
+        "empty2",
+      ],
+      delimiter: ";",
+      truncate: true,
+      history: false,
+      date: {
+        field: "date_debut",
+        format: "DD/MM/YYYY",
+      },
+    },
+  },
   etablissements_idcc: {
     download: {
       className: "MinioDownloader",

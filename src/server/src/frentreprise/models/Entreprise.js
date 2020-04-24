@@ -47,6 +47,7 @@ export default class DireccteEntreprise extends Entreprise {
         "accords",
         "activite_partielle",
         "numero_tva_intracommunautaire",
+        "apprentissage",
         "effectifMensuelEtp",
         "effectifAnnuelEtp",
         "_dataSources",

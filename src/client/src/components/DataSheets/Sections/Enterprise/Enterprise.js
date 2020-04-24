@@ -9,6 +9,7 @@ import Infos from "./Infos";
 import EnterpriseRelationship from "./EnterpriseRelationship";
 import Muteco from "./Muteco";
 import Direccte from "./Direccte";
+import Helps from "./Helps";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
@@ -46,13 +47,15 @@ const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
                 {
                   label: "Mutations économiques",
                   link: "muteco"
-                }
+                },
+                { label: "Aides et agréments", link: "helps" }
               ]}
             />
             <Infos enterprise={enterprise} headOffice={headOffice} />
             <Direccte enterprise={enterprise} />
             <EnterpriseRelationship enterprise={enterprise} />
             <Muteco enterprise={enterprise} />
+            <Helps enterprise={enterprise} />
           </div>
           <UsersFeedback fullWidth />
         </div>

@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 
-import "./RupcoTable.scss";
-
 const RupcoTable = ({ list, siren, hasTypeColumn = false }) => {
   return (
     <table className="table mt-2 rupco-table-establishment">
@@ -22,7 +20,7 @@ const RupcoTable = ({ list, siren, hasTypeColumn = false }) => {
         {list.map(dossier => (
           <tr key={dossier.numero}>
             {hasTypeColumn && (
-              <td>
+              <td className="w-40">
                 <Value value={dossier.type} />
               </td>
             )}
@@ -43,8 +41,8 @@ const RupcoTable = ({ list, siren, hasTypeColumn = false }) => {
                 value={
                   dossier.autres_etablissements &&
                   !!dossier.autres_etablissements.length ? (
-                    <div className="rupco-table-establishment__other-establishments">
-                      <span>Oui</span>
+                    <div>
+                      <span className="mr-3">Oui</span>
                       <SeeDetailsLink
                         link={`/enterprise/${siren}/#muteco`}
                         text="Voir la fiche entreprise"

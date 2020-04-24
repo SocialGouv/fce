@@ -10,18 +10,7 @@ services:
       - .:/usr/src/app
       - /home/factory/deployment/shared/node_modules:/usr/src/app/node_modules
       - /home/factory/deployment/shared/.env:/usr/src/app/.env
-    tty: true
-
-  db:
-    image: postgres:9.6
-    network_mode: host
-    container_name: db
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    env_file:
-      - ./db.env
-    environment:
-      POSTGRES_DB: fce
+      - /home/factory/deployment/shared/certs:/var/certs
     tty: true
 
   appsearch:

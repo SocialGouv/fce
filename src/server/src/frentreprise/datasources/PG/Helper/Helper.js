@@ -2,7 +2,7 @@ import { parse, isValid, format, differenceInMonths, parseISO } from "date-fns";
 import _get from "lodash.get";
 import config from "config";
 
-export const getFormatedDate = (date) => {
+export const getFormatedDate = (date, outputFormat = "yyyy-MM-dd") => {
   if (!date) {
     return null;
   }
@@ -11,6 +11,7 @@ export const getFormatedDate = (date) => {
 
   const datesFormats = [
     "yyyy-MM-dd",
+    "yyyy/MM/dd",
     "dd/MM/yyyy",
     "ddMMMyyyy",
     "dd/MM/yy",
@@ -21,7 +22,7 @@ export const getFormatedDate = (date) => {
     const parsedDate = parse(date, dateFormat, new Date());
 
     if (isValid(parsedDate)) {
-      return format(parsedDate, "yyyy-MM-dd");
+      return format(parsedDate, outputFormat);
     }
   }
 

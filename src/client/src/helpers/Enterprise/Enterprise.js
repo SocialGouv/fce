@@ -8,3 +8,8 @@ export const getEnterpriseName = data => {
     `${_get(data, "nom", "")} ${_get(data, "prenom", "")}`.trim()
   );
 };
+
+export const getEstablishment = (siret, establishments) =>
+  establishments.find(
+    establishment => establishment.siret.trim() === siret.trim()
+  );

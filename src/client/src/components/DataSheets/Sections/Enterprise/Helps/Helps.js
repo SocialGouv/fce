@@ -3,11 +3,9 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedkit } from "@fortawesome/pro-solid-svg-icons";
 
-import Agrements from "./Subcategory/Agrements";
-import ContratsAides from "./Subcategory/ContratsAides";
 import Apprentissage from "./Subcategory/Apprentissage";
 
-const EstablishmentHelps = ({ establishment }) => {
+const Helps = ({ enterprise }) => {
   return (
     <section id="helps" className="data-sheet__section">
       <div className="section-header">
@@ -17,16 +15,17 @@ const EstablishmentHelps = ({ establishment }) => {
         <h2 className="title">Aides et agréments</h2>
       </div>
       <div className="section-datas">
-        <Agrements establishment={establishment} />
-        <ContratsAides establishment={establishment} />
-        <Apprentissage apprentissage={establishment.apprentissage} />
+        <Apprentissage
+          apprentissage={enterprise.apprentissage}
+          etablissements={enterprise.etablissements}
+        />
       </div>
     </section>
   );
 };
 
-EstablishmentHelps.propTypes = {
-  establishment: PropTypes.object.isRequired
+Helps.propTypes = {
+  enterprise: PropTypes.object.isRequired
 };
 
-export default EstablishmentHelps;
+export default Helps;

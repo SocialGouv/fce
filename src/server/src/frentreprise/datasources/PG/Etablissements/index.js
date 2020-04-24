@@ -15,6 +15,7 @@ import getLice from "./getLice";
 import getRcc from "./getRcc";
 import getPredecesseur from "./getPredecesseur";
 import getSuccesseur from "./getSuccesseur";
+import getApprentissage from "./getApprentissage";
 
 export default {
   getInteractionsPole3ESEER,
@@ -34,4 +35,5 @@ export default {
   getRcc,
   getPredecesseur,
   getSuccesseur,
+  getApprentissage,
 };

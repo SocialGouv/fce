@@ -2470,11 +2470,6 @@ crypto-random-string@^1.0.0:
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-1.0.0.tgz#a230f64f568310e1498009940790ec99545bca7e"
   integrity sha1-ojD2T1aDEOFJgAmUB5DsmVRbyn4=
 
-cryptr@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/cryptr/-/cryptr-4.0.2.tgz#8a93b5ca7667d1a6131e396bab23a134ff1f5dc6"
-  integrity sha512-gLTcYjmLGe0Kk1yyacvjNKvSdkWBNNgG2tDnbRQP7yE559x/RJLo/I3WAmwCXNXf/fzMHCNp9vDv3PCopZDpXw==
-
 cssom@0.3.x, "cssom@>= 0.3.2 < 0.4.0":
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/cssom/-/cssom-0.3.6.tgz#f85206cee04efa841f3c5982a74ba96ab20d65ad"
@@ -5483,14 +5478,6 @@ lru-cache@^5.1.1:
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
-
-magic-key@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/magic-key/-/magic-key-1.0.2.tgz#2af62aa8ac22b245b68fc82408fe1da8c7ef5113"
-  integrity sha512-wEIYhp5PZX1GfCvX5pZiA/5WdXmQLOKabHCZJbgeSsSe1xUKZuqhQ7j9/5uB6K6CEI+avpxOYYHQ+kLeK6tTXQ==
-  dependencies:
-    cryptr "^4.0.2"
-    email-validator "^2.0.4"
 
 make-dir@^1.0.0:
   version "1.3.0"

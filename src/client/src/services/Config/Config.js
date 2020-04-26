@@ -115,7 +115,7 @@ const globalConfig = {
     customDateFormats: {
       EOS: { default: "DD/MM/YYYY", monthYear: "MMM YY" },
       Sirène: { default: "DD/MM/YYYY", year: "YYYY" },
-      DSN: "MMM YY",
+      DSN: "MMM YYYY",
       Siene: "MMM YY",
       "ASP Extranet IAE2.0": "MMM YY",
       "ASP Extranet CUI": "MMM YY",

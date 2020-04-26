@@ -1,109 +1,89 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import Auth from "../../services/Auth";
 import LoginView from "../../components/Login";
 import _get from "lodash.get";
-import { getBrowserName } from "../../helpers/BrowserDetection";
 
-class Login extends Component {
-  state = {
-    email: "",
-    hasSuccess: false,
-    hasError: false,
-    errorMessage: null,
-    loading: false,
-    step: "login-home",
-    showSuccessNotif: true
-  };
+const Login = ({ history }) => {
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [step, setStep] = useState("login-home");
+  const [showSuccessNotif, setShowSuccessNotif] = useState(true);
 
-  login = evt => {
+  const sendCode = (evt, email) => {
     evt && evt.preventDefault();
-    this.setState({
-      hasError: false,
-      hasSuccess: false,
-      loading: true
-    });
+    initStates();
 
-    Auth.sendMagicLink(this.state.email, getBrowserName())
+    Auth.sendCode(email)
       .then(response => {
-        if (response.data && response.data.success) {
-          this._loginSuccess();
-          this.setStep("login-form-success");
-          if (this.state.showSuccessNotif === false) {
-            this.setShowSuccessNotif(true);
-          }
-        } else {
-          this._loginFail(
-            _get(response, "data.message", "La tentative de connexion a échoué")
-          );
+        if (!_get(response, "data.success")) {
+          throw new Error(_get(response, "data.message"));
         }
+
+        setSuccess();
+        setStep("login-form-code");
       })
-      .catch(() => {
-        this._loginFail("La tentative de connexion a échoué");
+      .catch(e => {
+        setError(e.message || "Le code n'a pas pu être envoyé");
       });
   };
 
-  _loginSuccess = () => {
-    this.setState({
-      hasError: false,
-      hasSuccess: true,
-      loading: false
-    });
+  const login = (evt, email, code) => {
+    evt && evt.preventDefault();
+    initStates();
+
+    Auth.login(email, code)
+      .then(response => {
+        if (!_get(response, "data.success")) {
+          throw new Error(_get(response, "data.message"));
+        }
+
+        history.push("/");
+      })
+      .catch(e => {
+        setError(e.message || "Le code n'a pas pu être envoyé");
+      });
   };
 
-  _loginFail = message => {
-    this.setState({
-      hasError: true,
-      errorMessage: message,
-      hasSuccess: false,
-      loading: false
-    });
+  const initStates = () => {
+    setHasError(false);
+    setLoading(true);
   };
 
-  updateLogin = evt => {
-    const target = evt.target;
-
-    this.setState({
-      [target.name]: target.value
-    });
+  const setSuccess = () => {
+    setHasError(false);
+    setLoading(false);
+    setShowSuccessNotif(true);
   };
 
-  setStep = step => {
-    this.setState({
-      step
-    });
+  const setError = message => {
+    setHasError(true);
+    setErrorMessage(message);
+    setLoading(false);
+    setShowSuccessNotif(false);
   };
 
-  setShowSuccessNotif = status => {
-    this.setState({
-      showSuccessNotif: status
-    });
-  };
+  return (
+    <LoginView
+      login={login}
+      sendCode={sendCode}
+      loading={loading}
+      hasError={hasError}
+      errorMessage={errorMessage}
+      step={step}
+      setStep={setStep}
+      showSuccessNotif={showSuccessNotif}
+      setShowSuccessNotif={setShowSuccessNotif}
+    />
+  );
+};
 
-  render() {
-    const {
-      hasError,
-      loading,
-      errorMessage,
-      email,
-      step,
-      showSuccessNotif
-    } = this.state;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func
+  })
+};
 
-    return (
-      <LoginView
-        login={this.login}
-        updateForm={this.updateLogin}
-        loading={loading}
-        hasError={hasError}
-        errorMessage={errorMessage}
-        email={email}
-        step={step}
-        setStep={this.setStep}
-        showSuccessNotif={showSuccessNotif}
-        setShowSuccessNotif={this.setShowSuccessNotif}
-      />
-    );
-  }
-}
-
-export default Login;
+export default withRouter(Login);

@@ -338,8 +338,8 @@ const config = {
       truncate: true,
       history: false,
       date: {
-        field: "date_maj",
-        format: "YYYY/MM/DD",
+        field: "mois",
+        format: "YYYY-MM",
       },
     },
   },

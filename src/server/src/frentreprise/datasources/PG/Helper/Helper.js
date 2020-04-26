@@ -31,7 +31,7 @@ export const getFormatedDate = (date, outputFormat = "yyyy-MM-dd") => {
 
 const hasValidProcedureDuration = (
   date,
-  validDuration = config.rupco.pse.procedureDurationLimit
+  validDuration = config.get("rupco.pse.procedureDurationLimit")
 ) =>
   date
     ? differenceInMonths(new Date(), parseISO(date)) <= validDuration
@@ -50,7 +50,7 @@ const setLiceTypeLabel = (procedure) => {
 
   return {
     ...procedure,
-    type: config.rupco.lice.types[procedure.type],
+    type: config.get("rupco.lice.types")[procedure.type],
     rawType: procedure.type,
   };
 };
@@ -62,9 +62,11 @@ const setProcedureState = (procedure) => {
 
   return {
     ...procedure,
-    etat: Object.keys(config.rupco.historicDataStates).includes(procedure.type)
-      ? config.rupco.historicDataStates[procedure.type]
-      : config.rupco.historicDataDefaultState,
+    etat: Object.keys(config.get("rupco.historicDataStates")).includes(
+      procedure.type
+    )
+      ? config.get("rupco.historicDataStates")[procedure.type]
+      : config.get("rupco.historicDataDefaultState"),
   };
 };
 

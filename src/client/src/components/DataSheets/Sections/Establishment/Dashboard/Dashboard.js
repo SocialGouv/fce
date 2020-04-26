@@ -29,16 +29,18 @@ const Dashboard = ({
   const hasInteractions = totalInteractions && totalInteractions.total > 0;
 
   const activity = {
-    hasPse: pse && !!pse.length,
-    hasRcc: rcc && !!rcc.length,
-    hasLice: lice && !!lice.length,
-    liceTypes: lice.reduce(
-      (liceTypes, currentProcedure) =>
-        liceTypes.includes(currentProcedure.rawType)
-          ? liceTypes
-          : [...liceTypes, currentProcedure.rawType],
-      []
-    ),
+    hasPse: !!(pse && pse.length),
+    hasRcc: !!(rcc && rcc.length),
+    hasLice: !!(lice && lice.length),
+    liceTypes:
+      lice &&
+      lice.reduce(
+        (liceTypes, currentProcedure) =>
+          liceTypes.includes(currentProcedure.rawType)
+            ? liceTypes
+            : [...liceTypes, currentProcedure.rawType],
+        []
+      ),
     partialActivity: activite_partielle && activite_partielle.length > 0
   };
 

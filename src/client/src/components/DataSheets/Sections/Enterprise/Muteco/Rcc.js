@@ -5,7 +5,7 @@ import ConditionalData from "../../SharedComponents/ConditionalData";
 import RupcoTable from "./RupcoTable";
 
 const Rcc = ({ enterprise: { rcc: rccList } }) => {
-  const hasRcc = rccList && !!rccList.length;
+  const hasRcc = !!(rccList && rccList.length);
 
   return (
     <Subcategory

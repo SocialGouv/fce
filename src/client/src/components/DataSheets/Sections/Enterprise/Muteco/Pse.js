@@ -5,7 +5,7 @@ import ConditionalData from "../../SharedComponents/ConditionalData";
 import RupcoTable from "../../Enterprise/Muteco/RupcoTable";
 
 const Pse = ({ enterprise: { pse: pseList } }) => {
-  const hasPse = pseList && !!pseList.length;
+  const hasPse = !!(pseList && pseList.length);
 
   return (
     <Subcategory subtitle="PSE" sourceSi="SI PSE/RUPCO">

@@ -5,7 +5,7 @@ import ConditionalData from "../../SharedComponents/ConditionalData";
 import RupcoTable from "./RupcoTable";
 
 const Lice = ({ enterprise: { lice: liceList } }) => {
-  const hasLice = liceList && !!liceList.length;
+  const hasLice = !!(liceList && liceList.length);
 
   return (
     <Subcategory

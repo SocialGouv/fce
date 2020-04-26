@@ -5,7 +5,7 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
 
 const Lice = ({ establishment: { lice: liceList }, enterprise: { siren } }) => {
-  const hasRcc = liceList && !!liceList.length;
+  const hasLice = !!(liceList && liceList.length);
 
   return (
     <Subcategory
@@ -14,9 +14,9 @@ const Lice = ({ establishment: { lice: liceList }, enterprise: { siren } }) => {
     >
       <ConditionalData
         text="Procédure(s) enregistrée(s) depuis le 2 décembre 2019"
-        showTable={hasRcc}
+        showTable={hasLice}
       />
-      {hasRcc && <RupcoTable list={liceList} siren={siren} hasTypeColumn />}
+      {hasLice && <RupcoTable list={liceList} siren={siren} hasTypeColumn />}
     </Subcategory>
   );
 };

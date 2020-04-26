@@ -5,7 +5,7 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
 
 const Rcc = ({ establishment: { rcc: rccList }, enterprise: { siren } }) => {
-  const hasRcc = rccList && !!rccList.length;
+  const hasRcc = !!(rccList && rccList.length);
 
   return (
     <Subcategory subtitle="RCC" sourceSi="SI PSE/RUPCO">

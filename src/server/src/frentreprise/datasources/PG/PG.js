@@ -60,9 +60,8 @@ export default class PG extends DataSource {
       [Entreprises.getActivitePartielle, new ActivitePartielle()],
       [Entreprises.getPse, new Rupco()],
       [Entreprises.getLice, new Rupco()],
-      [Entreprises.getRcc, new Rupco()][
-        (Entreprises.getApprentissage, new Apprentissage())
-      ]
+      [Entreprises.getRcc, new Rupco()],
+      [Entreprises.getApprentissage, new Apprentissage()]
     );
   }
 

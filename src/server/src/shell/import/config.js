@@ -259,6 +259,9 @@ const config = {
       date: {
         field: "date_enregistrement",
         format: "YYYY-MM-DD",
+      },
+    },
+  },
   etablissements_apprentissage: {
     download: {
       className: "MinioDownloader",

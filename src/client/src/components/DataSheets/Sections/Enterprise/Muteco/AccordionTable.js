@@ -7,13 +7,15 @@ import {
   faChevronCircleDown
 } from "@fortawesome/pro-solid-svg-icons";
 
+import "./AccordionTable.scss";
+
 const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
   const [isActiveAccordion, setIsActiveAccordion] = useState(false);
 
   return (
     <>
       <tbody>
-        <tr>
+        <tr className="accordion-table__row">
           {hasTypeColumn && (
             <td>
               <Value value={procedure.type} />
@@ -40,7 +42,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
           <td className="has-text-link">
             <div
               onClick={() => setIsActiveAccordion(!isActiveAccordion)}
-              className="has-text-right accordion-header"
+              className="has-text-right accordion-table__header"
             >
               <Value value={procedure.etablissements.length} />
               <FontAwesomeIcon
@@ -53,7 +55,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
           </td>
         </tr>
       </tbody>
-      <tbody className="accordion-container">
+      <tbody className="accordion-table__container">
         {isActiveAccordion &&
           procedure.etablissements.map(etablissement => (
             <tr key={etablissement.siret}>

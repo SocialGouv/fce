@@ -64,7 +64,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
               <td className="has-text-link has-text-right">
                 <Value
                   value={etablissement.siret}
-                  link={`/establishment/${etablissement.siret}`}
+                  link={`/establishment/${etablissement.siret}/#muteco`}
                 />
               </td>
             </tr>

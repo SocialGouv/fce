@@ -15,11 +15,11 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
       <tbody>
         <tr>
           {hasTypeColumn && (
-            <td className="w-15">
+            <td>
               <Value value={procedure.type} />
             </td>
           )}
-          <td className="has-text-right w-10">
+          <td className="has-text-right">
             <Value value={procedure.date_enregistrement} />
           </td>
           <td className="has-text-right">
@@ -31,13 +31,13 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
           <td>
             <Value value={procedure.situation_juridique} />
           </td>
-          <td className="has-text-right w-10">
+          <td className="has-text-right">
             <Value value={procedure.date_jugement} />
           </td>
-          <td className="has-text-right w-10">
+          <td className="has-text-right">
             <Value value={procedure.nombre_de_ruptures} nonEmptyValues="0" />
           </td>
-          <td className="has-text-link w-10">
+          <td className="has-text-link">
             <div
               onClick={() => setIsActiveAccordion(!isActiveAccordion)}
               className="has-text-right accordion-header"

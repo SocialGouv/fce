@@ -4,7 +4,7 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import ConditionalData from "../../SharedComponents/ConditionalData";
 import RupcoTable from "./RupcoTable";
 
-const Lice = ({ enterprise: { lice: liceList } }) => {
+const Lice = ({ liceList }) => {
   const hasLice = !!(liceList && liceList.length);
 
   return (
@@ -22,7 +22,7 @@ const Lice = ({ enterprise: { lice: liceList } }) => {
 };
 
 Lice.propTypes = {
-  enterprise: PropTypes.object.isRequired
+  liceList: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default Lice;

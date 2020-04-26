@@ -4,7 +4,7 @@ import ConditionalData from "../../SharedComponents/ConditionalData";
 import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
 
-const Pse = ({ establishment: { pse: pseList }, enterprise: { siren } }) => {
+const Pse = ({ pseList, siren }) => {
   const hasPse = !!(pseList && pseList.length);
 
   return (
@@ -19,8 +19,8 @@ const Pse = ({ establishment: { pse: pseList }, enterprise: { siren } }) => {
 };
 
 Pse.propTypes = {
-  establishment: PropTypes.object.isRequired,
-  enterprise: PropTypes.object.isRequired
+  pseList: PropTypes.arrayOf(PropTypes.object),
+  siren: PropTypes.string.isRequired
 };
 
 export default Pse;

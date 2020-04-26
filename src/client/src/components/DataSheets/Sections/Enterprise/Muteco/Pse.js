@@ -4,7 +4,7 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import ConditionalData from "../../SharedComponents/ConditionalData";
 import RupcoTable from "../../Enterprise/Muteco/RupcoTable";
 
-const Pse = ({ enterprise: { pse: pseList } }) => {
+const Pse = ({ pseList }) => {
   const hasPse = !!(pseList && pseList.length);
 
   return (
@@ -19,7 +19,7 @@ const Pse = ({ enterprise: { pse: pseList } }) => {
 };
 
 Pse.propTypes = {
-  enterprise: PropTypes.object.isRequired
+  pseList: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default Pse;

@@ -4,7 +4,7 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import ConditionalData from "../../SharedComponents/ConditionalData";
 import RupcoTable from "./RupcoTable";
 
-const Rcc = ({ enterprise: { rcc: rccList } }) => {
+const Rcc = ({ rccList }) => {
   const hasRcc = !!(rccList && rccList.length);
 
   return (
@@ -22,7 +22,7 @@ const Rcc = ({ enterprise: { rcc: rccList } }) => {
 };
 
 Rcc.propTypes = {
-  enterprise: PropTypes.object.isRequired
+  rccList: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default Rcc;

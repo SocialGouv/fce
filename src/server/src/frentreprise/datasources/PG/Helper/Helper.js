@@ -37,10 +37,9 @@ const hasValidProcedureDuration = (
     ? differenceInMonths(new Date(), parseISO(date)) <= validDuration
     : false;
 
-const proceduresWithBrokenContracts = ({ nombre_de_ruptures }) =>
-  nombre_de_ruptures > 0;
+const hasBrokenContracts = ({ nombre_de_ruptures }) => nombre_de_ruptures > 0;
 
-const pseWithValidDuration = ({ type, date_enregistrement }) =>
+const hasPseValidDuration = ({ type, date_enregistrement }) =>
   type === "PSE" ? hasValidProcedureDuration(date_enregistrement) : true;
 
 const setLiceTypeLabel = (procedure) => {
@@ -98,10 +97,11 @@ export const getRupcoDataForEstablishment = (rows) =>
           etablissements.split(",").filter((siret) => siret !== currentSiret),
       })
     )
-    .filter(proceduresWithBrokenContracts)
-    .filter(pseWithValidDuration)
-    .map(setProcedureState)
-    .map(setLiceTypeLabel);
+    .filter(
+      (procedure) =>
+        hasBrokenContracts(procedure) && hasPseValidDuration(procedure)
+    )
+    .map((procedure) => setProcedureState(setLiceTypeLabel(procedure)));
 
 export const getRupcoDataForEnterprise = (rows) => {
   const rupco = rows.reduce(
@@ -139,11 +139,13 @@ export const getRupcoDataForEnterprise = (rows) => {
         +nombre_de_ruptures_de_contrats_en_debut_de_procedure ||
         0;
 
-      rupcoList[numero].nombre_de_ruptures += nbRupturesEtablissement;
-      rupcoList[numero].etablissements.push({
-        siret,
-        nombre_de_ruptures: nbRupturesEtablissement,
-      });
+      if (nbRupturesEtablissement > 0) {
+        rupcoList[numero].nombre_de_ruptures += nbRupturesEtablissement;
+        rupcoList[numero].etablissements.push({
+          siret,
+          nombre_de_ruptures: nbRupturesEtablissement,
+        });
+      }
 
       return rupcoList;
     },
@@ -151,8 +153,9 @@ export const getRupcoDataForEnterprise = (rows) => {
   );
 
   return Object.values(rupco)
-    .filter(proceduresWithBrokenContracts)
-    .filter(pseWithValidDuration)
-    .map(setProcedureState)
-    .map(setLiceTypeLabel);
+    .filter(
+      (procedure) =>
+        hasBrokenContracts(procedure) && hasPseValidDuration(procedure)
+    )
+    .map((procedure) => setProcedureState(setLiceTypeLabel(procedure)));
 };

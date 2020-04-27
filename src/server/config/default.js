@@ -21,13 +21,13 @@ const config = {
     host: process.env.PG_HOST,
     user: process.env.PG_USER,
     password: process.env.PG_PASSWORD,
-    database: process.env.PG_DB,
-    ssl: {
+    database: process.env.PG_DB
+    /* ssl: {
       rejectUnauthorized: false,
       ca: fs.readFileSync("/var/certs/root.crt").toString(),
       key: fs.readFileSync("/var/certs/postgresql.key").toString(),
       cert: fs.readFileSync("/var/certs/postgresql.crt").toString()
-    }
+    } */
   },
   mail: JSON.parse(process.env.MAIL),
   proxy: false,

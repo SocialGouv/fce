@@ -9,8 +9,9 @@ export const sortAgreements = (agreements, establishments) =>
         etab => etab.siret.trim() === siret.trim()
       );
       const etat = _get(establishment, "etat_etablissement");
-      const categorie = _get(establishment, "categorie_etablissement");
-      const date = lastDate;
+      const categorie =
+        _get(establishment, "categorie_etablissement", "") || "";
+      const date = lastDate || "";
 
       return {
         siret,

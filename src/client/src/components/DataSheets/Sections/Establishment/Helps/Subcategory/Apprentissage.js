@@ -4,15 +4,10 @@ import PropTypes from "prop-types";
 import Data from "../../../SharedComponents/Data";
 import Subcategory from "../../../SharedComponents/Subcategory";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
+import { getHasApprentissage } from "../../../../../../helpers/Establishment";
 
 const Apprentissage = ({ apprentissage }) => {
-  const total = apprentissage
-    ? Object.values(apprentissage).reduce(
-        (total, { signes }) => total + signes,
-        0
-      )
-    : 0;
-  const hasApprentissage = !!total;
+  const hasApprentissage = getHasApprentissage(apprentissage);
 
   return (
     <>

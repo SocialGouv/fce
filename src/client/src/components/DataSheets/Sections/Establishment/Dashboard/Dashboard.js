@@ -8,7 +8,10 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
-import { isActiveEstablishment } from "../../../../../helpers/Establishment";
+import {
+  isActiveEstablishment,
+  getHasApprentissage
+} from "../../../../../helpers/Establishment";
 import Item from "./Item";
 
 import "./dashboard.scss";
@@ -95,7 +98,8 @@ const Dashboard = ({
         )}
       {(establishment.agrements_iae ||
         establishment.ea ||
-        establishment.contrat_aide) && (
+        establishment.contrat_aide ||
+        getHasApprentissage(establishment.apprentissage)) && (
         <Item icon={faMedkit} name="Aides" value="Oui" />
       )}
     </div>

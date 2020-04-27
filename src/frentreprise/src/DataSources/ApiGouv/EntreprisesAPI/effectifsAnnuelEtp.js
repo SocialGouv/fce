@@ -12,7 +12,7 @@ export default async (siren, Axios, params) => {
         const requestedYear = format(requestedDate, "yyyy");
 
         return {
-          effectifMensuelEtp: {
+          effectifAnnuelEtp: {
             annee: requestedYear,
             effectifs_annuels: undefined,
           },

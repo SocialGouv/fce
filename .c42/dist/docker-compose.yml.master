@@ -5,17 +5,28 @@ services:
     build: .docker/node
     network_mode: host
     container_name: server
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50M"
+        max-file: "3"
     volumes:
       - /mnt/data/export:/tmp/data
       - .:/usr/src/app
       - /home/factory/deployment/shared/node_modules:/usr/src/app/node_modules
       - /home/factory/deployment/shared/.env:/usr/src/app/.env
+      - /home/factory/deployment/shared/certs:/var/certs
     tty: true
 
   db:
     image: postgres:9.6
     network_mode: host
     container_name: db
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50M"
+        max-file: "3"
     volumes:
       - pgdata:/var/lib/postgresql/data
     env_file:
@@ -44,6 +55,11 @@ services:
     build: .docker/elasticsearch
     network_mode: host
     container_name: elasticsearch
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50M"
+        max-file: "3"
     volumes:
       - ./.docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
       - elasticdata:/usr/share/elasticsearch/data

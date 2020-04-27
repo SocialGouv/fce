@@ -26,7 +26,6 @@ export default class ApiGouv extends DataSource {
     return await this[_.requestAPIs](
       SIRET,
       EtablissementsAPI.getEtablissement,
-      EtablissementsAPI.agefiph,
       EtablissementsAPI.exercices,
       EtablissementsAPI.association,
       EtablissementsAPI.document_association,
@@ -39,8 +38,6 @@ export default class ApiGouv extends DataSource {
     return await this[_.requestAPIs](
       SIREN,
       EntreprisesAPI.getEntreprise,
-      EntreprisesAPI.attestation_acoss,
-      EntreprisesAPI.attestation_dgfip,
       EntreprisesAPI.infogreffe_rcs,
       EntreprisesAPI.effectifsMensuelEtp,
       EntreprisesAPI.effectifsAnnuelEtp

@@ -1,5 +1,4 @@
 import Model from "./Model";
-import siretToSiren from "../utils/siretToSiren";
 
 const TYPE_PSE = "PSE";
 const TYPE_LICE = "Lice";

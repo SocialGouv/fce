@@ -4,7 +4,9 @@ import getInteractionsPoleT from "./getInteractionsPoleT";
 import getInteractionsPoleC from "./getInteractionsPoleC";
 import getAccords from "./getAccords";
 import getActivitePartielle from "./getActivitePartielle";
-import getPseList from "./getPseList";
+import getPse from "./getPse";
+import getLice from "./getLice";
+import getRcc from "./getRcc";
 import getIdcc from "./getIdcc";
 import getApprentissage from "./getApprentissage";
 
@@ -15,7 +17,9 @@ export default {
   getInteractionsPoleC,
   getAccords,
   getActivitePartielle,
-  getPseList,
+  getPse,
+  getLice,
+  getRcc,
   getIdcc,
   getApprentissage,
 };

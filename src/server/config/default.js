@@ -36,6 +36,23 @@ const config = {
   userFeedback: {
     mailTo: process.env.MAIL_TO,
   },
+  rupco: {
+    pse: {
+      procedureDurationLimit: 36, // months
+    },
+    lice: {
+      types: {
+        "LiceC -10": "Licenciement moins de 10 salariés (2 à 9 salariés)",
+        "LiceC +10":
+          "Licenciement plus de 10 salariés (entreprise de moins de 50 salariés)",
+      },
+    },
+    historicDataDefaultState: "Non communiqué",
+    historicDataStates: {
+      cloture: "Clôturé",
+      BilanTermine: "Bilan terminé",
+    },
+  },
   jwt: {
     secret: process.env.JWT_SECRET,
     expire: process.env.JWT_EXPIRE,

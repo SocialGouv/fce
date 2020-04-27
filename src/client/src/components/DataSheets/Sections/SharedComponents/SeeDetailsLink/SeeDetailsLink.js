@@ -4,17 +4,18 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/pro-solid-svg-icons";
 
-const SeeDetailsLink = ({ link }) => {
+const SeeDetailsLink = ({ link, text = "Voir la fiche établissement" }) => {
   return (
     <Link to={link}>
       <FontAwesomeIcon icon={faEye} className="mr-2" />
-      <span>Voir le détail</span>
+      <span>{text}</span>
     </Link>
   );
 };
 
 SeeDetailsLink.propTypes = {
-  link: PropTypes.string.isRequired
+  link: PropTypes.string.isRequired,
+  text: PropTypes.string
 };
 
 export default SeeDetailsLink;

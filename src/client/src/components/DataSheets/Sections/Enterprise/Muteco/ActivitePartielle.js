@@ -1,11 +1,11 @@
 import React from "react";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import _get from "lodash.get";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
-import SeeDetailsLink from "../../../../shared/SeeDetailsLink";
-import State from "../../../../shared/State";
+import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
+import State from "../../SharedComponents/State";
 
 const ActivitePartielle = ({
   enterprise: { activite_partielle, etablissements }
@@ -112,7 +112,7 @@ const ActivitePartielle = ({
 };
 
 ActivitePartielle.propTypes = {
-  enterprise: Proptypes.object.isRequired
+  enterprise: PropTypes.object.isRequired
 };
 
 export default ActivitePartielle;

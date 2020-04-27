@@ -43,6 +43,8 @@ class DireccteEtablissement extends Etablissement {
           "structure_insertion_activite_economique_types",
           "activite_partielle",
           "pse",
+          "lice",
+          "rcc",
           "interactions_3E_SEER",
           "interactions_3E_SRC",
           "interactions_T",

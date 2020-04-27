@@ -4,8 +4,8 @@ import _get from "lodash.get";
 
 import Data from "../../../SharedComponents/Data";
 import Subcategory from "../../../SharedComponents/Subcategory";
-import State from "../../../../../shared/State";
-import SeeDetailsLink from "../../../../../shared/SeeDetailsLink";
+import State from "../../../SharedComponents/State";
+import SeeDetailsLink from "../../../SharedComponents/SeeDetailsLink";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
 import { getEstablishment } from "../../../../../../helpers/Enterprise";
 import { arraySum } from "../../../../../../helpers/utils";

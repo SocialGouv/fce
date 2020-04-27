@@ -11,7 +11,7 @@ import DsnEff from "../../../models/DsnEff";
 import Idcc from "../../../models/Idcc";
 import Accords from "../../../models/Accords";
 import ActivitePartielle from "../../../models/ActivitePartielle";
-import Pse from "../../../models/Pse";
+import Rupco from "../../../models/Rupco";
 import PolesCompetitivite from "../../../models/PolesCompetitivite";
 import Iae from "../../../models/Iae";
 import ContratsAides from "../../../models/ContratsAides";
@@ -39,7 +39,9 @@ export default class PG extends DataSource {
       [Etablissements.getIae, new Iae()],
       [Etablissements.getContratsAides, new ContratsAides()],
       [Etablissements.getActivitePartielle, new ActivitePartielle()],
-      [Etablissements.getPse, new Pse()],
+      [Etablissements.getPse, new Rupco()],
+      [Etablissements.getLice, new Rupco()],
+      [Etablissements.getRcc, new Rupco()],
       [Etablissements.getPredecesseur, new Successions()],
       [Etablissements.getSuccesseur, new Successions()],
       [Etablissements.getApprentissage, new Apprentissage()]
@@ -56,7 +58,9 @@ export default class PG extends DataSource {
       [Entreprises.getIdcc, new Idcc()],
       [Entreprises.getAccords, new Accords()],
       [Entreprises.getActivitePartielle, new ActivitePartielle()],
-      [Entreprises.getPseList, new Pse()],
+      [Entreprises.getPse, new Rupco()],
+      [Entreprises.getLice, new Rupco()],
+      [Entreprises.getRcc, new Rupco()],
       [Entreprises.getApprentissage, new Apprentissage()]
     );
   }

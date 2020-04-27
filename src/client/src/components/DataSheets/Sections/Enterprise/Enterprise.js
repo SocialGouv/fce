@@ -16,7 +16,7 @@ import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks";
 
 const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
-  useScrollToLocationHash({ location });
+  useScrollToLocationHash({ location, offset: 50 });
 
   return (
     <section className="data-sheet container">

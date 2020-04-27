@@ -62,7 +62,7 @@ const Establishment = ({
               establishment={establishment}
               enterprise={enterprise}
             />
-            <Muteco establishment={establishment} />
+            <Muteco establishment={establishment} enterprise={enterprise} />
             <Helps establishment={establishment} />
           </div>
           <UsersFeedback fullWidth />

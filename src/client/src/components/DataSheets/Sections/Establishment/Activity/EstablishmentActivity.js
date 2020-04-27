@@ -77,7 +77,7 @@ const EstablishmentActivity = ({ establishment }) => {
           ]}
         />
         <Subcategory
-          subtitle="Développement économiques"
+          subtitle="Développement économique"
           datas={[
             {
               name: "Filière stratégique",

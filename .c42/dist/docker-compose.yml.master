@@ -13,6 +13,18 @@ services:
       - /home/factory/deployment/shared/certs:/var/certs
     tty: true
 
+  db:
+    image: postgres:9.6
+    network_mode: host
+    container_name: db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - ./db.env
+    environment:
+      POSTGRES_DB: fce
+    tty: true
+
   appsearch:
     image: docker.elastic.co/app-search/app-search:7.6.1
     network_mode: host

@@ -18,6 +18,15 @@ export default async (siren, Axios, params) => {
       params
     )
     .then((data) => {
+      if (!data || !data.effectifs_mensuels) {
+        return {
+          effectifMensuelEtp: {
+            annee: requestedYear,
+            mois: requestedMonth,
+            effectifs_mensuels: undefined,
+          },
+        };
+      }
       return { effectifMensuelEtp: data };
     });
 };

@@ -91,7 +91,9 @@ const Search = ({
                         <Accordion
                           allowZeroExpanded
                           preExpanded={
-                            isOpenAdvancedSearch ? ["advancedSearch"] : []
+                            isOpenAdvancedSearch(filters)
+                              ? ["advancedSearch"]
+                              : []
                           }
                         >
                           <AccordionItem uuid="advancedSearch">

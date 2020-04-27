@@ -4,7 +4,7 @@ import Siret from "./Siret";
 import search from "./Search";
 
 export const _ = {
-  requestPG: Symbol("_requestPG")
+  requestPG: Symbol("_requestPG"),
 };
 
 export default class SirenePG extends DataSource {
@@ -29,12 +29,12 @@ export default class SirenePG extends DataSource {
   async [_.requestPG](identifier, ...dbCalls) {
     let out = {};
     const requests = dbCalls
-      .filter(fn => typeof fn === "function")
-      .map(async fn => {
+      .filter((fn) => typeof fn === "function")
+      .map(async (fn) => {
         return fn(identifier, this.db);
       });
 
-    await Promise.all(requests).then(results => {
+    await Promise.all(requests).then((results) => {
       Object.assign(out, ...results);
     });
 

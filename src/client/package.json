@@ -29,7 +29,6 @@
     "lodash.range": "^3.2.0",
     "mdx.macro": "^0.2.9",
     "moment": "^2.24.0",
-    "moment-range": "^4.0.2",
     "node-sass": "^4.13.1",
     "piwik-react-router": "^0.12.1",
     "prop-types": "^15.7.2",

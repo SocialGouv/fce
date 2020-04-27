@@ -1,23 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Data from "../../SharedComponents/Data";
-import Subcategory from "../../SharedComponents/Subcategory";
-import Value from "../../../../shared/Value";
-import Config from "../../../../../services/Config";
 import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
+import Data from "../../SharedComponents/Data";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Value from "../../../../shared/Value";
+import { getEnterpriseName } from "../../../../../helpers/Enterprise";
+import Config from "../../../../../services/Config";
 
-const EstablishmentRelationship = ({ establishment }) => {
-  const { code_idcc, libelle_idcc } = establishment;
-  const nbAccords = _get(establishment, "accords.total.count");
-  const raisonSociale =
-    (establishment.nom_commercial &&
-      establishment.nom_commercial.toLowerCase()) ||
-    `${(establishment.nom && establishment.nom.toLowerCase()) ||
-      ""} ${(establishment.prenom && establishment.prenom.toLowerCase()) ||
-      ""}`.trim() ||
-    null;
+const EstablishmentRelationship = ({
+  enterprise,
+  establishment: { idcc, accords }
+}) => {
+  const nbAccords = _get(accords, "total.count");
+  const raisonSociale = getEnterpriseName(enterprise);
 
   return (
     <section id="relation" className="data-sheet__section">
@@ -28,14 +25,23 @@ const EstablishmentRelationship = ({ establishment }) => {
         <h2 className="title">Relation travail</h2>
       </div>
       <div className="section-datas">
-        <Subcategory subtitle="Convention collective" source="DSN">
+        <Subcategory
+          subtitle="Convention(s) collective(s) appliquée(s)"
+          sourceSi="DSN"
+        >
           <div className="single-value">
-            <Value value={code_idcc && code_idcc} />
-            <span>{code_idcc && " - "}</span>
-            <Value value={libelle_idcc && libelle_idcc} empty="" />
+            <ul>
+              {idcc
+                ? idcc.map(({ code, libelle }) => (
+                    <li className="m-2" key={code}>
+                      <Value value={`${code} - ${libelle}`} />
+                    </li>
+                  ))
+                : "-"}
+            </ul>
           </div>
         </Subcategory>
-        <Subcategory subtitle="Accords d'entreprise" source="D@cccord">
+        <Subcategory subtitle="Accords d'entreprise" sourceSi="D@cccord">
           <Data
             name="Nombre total d'accords d'entreprise déposés depuis 1980"
             value={nbAccords}
@@ -46,7 +52,7 @@ const EstablishmentRelationship = ({ establishment }) => {
             <>
               <Data
                 name="Date de signature du dernier accord d'entreprise déposé"
-                value={_get(establishment, "accords.total.lastDate")}
+                value={_get(accords, "total.lastDate")}
                 emptyValue="aucun accord connu"
                 columnClasses={["is-7", "is-5"]}
               />
@@ -66,14 +72,14 @@ const EstablishmentRelationship = ({ establishment }) => {
                       <td className="w-40">{value}</td>
                       <td className="has-text-centered">
                         <Value
-                          value={_get(establishment, `accords.${key}.count`)}
+                          value={_get(accords, `${key}.count`)}
                           empty="-"
                           nonEmptyValues={[0, "0"]}
                         />
                       </td>
                       <td className="has-text-centered">
                         <Value
-                          value={_get(establishment, `accords.${key}.lastDate`)}
+                          value={_get(accords, `${key}.lastDate`)}
                           empty="-"
                         />
                       </td>
@@ -83,7 +89,10 @@ const EstablishmentRelationship = ({ establishment }) => {
               </table>
 
               <a
-                href={Config.get("legifranceSearchUrl") + raisonSociale}
+                href={
+                  Config.get("legifranceSearchUrl") +
+                  raisonSociale.toLowerCase()
+                }
                 target="_blank"
                 rel="noreferrer noopener"
               >
@@ -99,7 +108,8 @@ const EstablishmentRelationship = ({ establishment }) => {
 };
 
 EstablishmentRelationship.propTypes = {
-  establishment: PropTypes.object.isRequired
+  establishment: PropTypes.object.isRequired,
+  enterprise: PropTypes.object.isRequired
 };
 
 export default EstablishmentRelationship;

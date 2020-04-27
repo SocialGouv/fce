@@ -25,9 +25,5 @@ export const countValuesInArray = (array, fields) => {
   }, 0);
 };
 
-export const isIncluded = (str, arrayOfStrings) =>
-  arrayOfStrings.length > 0
-    ? arrayOfStrings.some(item =>
-        str.toLowerCase().includes(item.toLowerCase())
-      )
-    : false;
+export const arraySum = array =>
+  array.reduce((total, value) => total + value, 0);

@@ -1,7 +1,8 @@
 import React from "react";
-import Proptypes from "prop-types";
-import PSE from "./PSE";
-import RCC from "./RCC";
+import PropTypes from "prop-types";
+import Pse from "./Pse";
+import Rcc from "./Rcc";
+import Lice from "./Lice";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import _get from "lodash.get";
@@ -9,7 +10,7 @@ import Data from "../../SharedComponents/Data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUmbrella } from "@fortawesome/pro-solid-svg-icons";
 
-const EstablishmentMuteco = ({ establishment }) => {
+const EstablishmentMuteco = ({ establishment, enterprise }) => {
   const hasActivitePartielle = !!_get(establishment, `activite_partielle`);
 
   const totalActivitePartielle =
@@ -33,7 +34,7 @@ const EstablishmentMuteco = ({ establishment }) => {
         <h2 className="title">Mutations Économiques</h2>
       </div>
       <div className="section-datas">
-        <Subcategory subtitle="Activité partielle" source="APART">
+        <Subcategory subtitle="Activité partielle" sourceSi="APART">
           <Data
             name="Recours sur les 24 derniers mois"
             value={hasActivitePartielle}
@@ -90,15 +91,18 @@ const EstablishmentMuteco = ({ establishment }) => {
             </table>
           )}
         </Subcategory>
-        <PSE establishment={establishment} />
-        <RCC establishment={establishment} />
+
+        <Pse pseList={establishment.pse} siren={enterprise.siren} />
+        <Lice liceList={establishment.lice} siren={enterprise.siren} />
+        <Rcc rccList={establishment.rcc} siren={enterprise.siren} />
       </div>
     </section>
   );
 };
 
 EstablishmentMuteco.propTypes = {
-  establishment: Proptypes.object.isRequired
+  establishment: PropTypes.object.isRequired,
+  enterprise: PropTypes.object.isRequired
 };
 
 export default EstablishmentMuteco;

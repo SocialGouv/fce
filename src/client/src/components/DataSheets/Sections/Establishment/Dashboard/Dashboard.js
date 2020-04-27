@@ -11,13 +11,6 @@ import { getLastDateInteraction } from "../../../../../helpers/Date";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import Item from "./Item";
 
-import { isIncluded } from "../../../../../helpers/utils";
-import {
-  hasPse,
-  isInProcessState,
-  isValidProcedureDuration
-} from "../../../../../helpers/Pse";
-
 import "./dashboard.scss";
 
 const Dashboard = ({
@@ -27,28 +20,26 @@ const Dashboard = ({
     totalInteractions,
     interactions,
     dernier_effectif_physique,
-    tranche_effectif_insee
+    tranche_effectif_insee,
+    pse,
+    rcc,
+    lice
   }
 }) => {
   const hasInteractions = totalInteractions && totalInteractions.total > 0;
 
   const activity = {
-    rccActivity:
-      hasPse(establishment) &&
-      !!establishment.pse.find(
-        pse =>
-          isIncluded(pse.type_de_dossier, ["rcc"]) &&
-          isValidProcedureDuration(pse.date_enregistrement) &&
-          !isInProcessState(pse.etat_du_dossier)
-      ),
-    pseActivity:
-      hasPse(establishment) &&
-      !!establishment.pse.find(
-        pse =>
-          isIncluded(pse.type_de_dossier, ["pse"]) &&
-          !isInProcessState(pse.etat_du_dossier) &&
-          isValidProcedureDuration(pse.date_enregistrement) &&
-          pse.contrats_ruptures_debut + pse.contrats_ruptures_fin > 0
+    hasPse: !!(pse && pse.length),
+    hasRcc: !!(rcc && rcc.length),
+    hasLice: !!(lice && lice.length),
+    liceTypes:
+      lice &&
+      lice.reduce(
+        (liceTypes, currentProcedure) =>
+          liceTypes.includes(currentProcedure.rawType)
+            ? liceTypes
+            : [...liceTypes, currentProcedure.rawType],
+        []
       ),
     partialActivity: activite_partielle && activite_partielle.length > 0
   };
@@ -83,8 +74,9 @@ const Dashboard = ({
         value={hasInteractions ? lastControl : "Pas d'intervention connue"}
       />
       {activity &&
-        (activity.pseActivity ||
-          activity.rccActivity ||
+        (activity.hasPse ||
+          activity.hasRcc ||
+          activity.hasLice ||
           activity.partialActivity) && (
           <Item
             icon={faExclamationTriangle}
@@ -92,8 +84,10 @@ const Dashboard = ({
             smallText={true}
             value={
               <>
-                {activity.pseActivity && <div>PSE</div>}
-                {activity.rccActivity && <div>RCC</div>}
+                {activity.hasPse && <div>PSE</div>}
+                {activity.hasRcc && <div>RCC</div>}
+                {activity.hasLice &&
+                  activity.liceTypes.map(type => <div key={type}>{type}</div>)}
                 {activity.partialActivity && <div>Activité partielle</div>}
               </>
             }

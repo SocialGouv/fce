@@ -12,7 +12,7 @@ const _ = {
   dataSources: Symbol("_dataSources"),
   compareDataSource: Symbol("_compareDataSource"),
   askDataSource: Symbol("_askDataSource"),
-  isValidDataSources: Symbol("_isValidDataSources")
+  isValidDataSources: Symbol("_isValidDataSources"),
 };
 
 class frentreprise {
@@ -23,15 +23,15 @@ class frentreprise {
     this.addDataSource({
       name: "ApiGouv",
       priority: 80, // higher prevail
-      source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/")
+      source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/"),
     });
     this.addDataSource({
       name: "SirenePG",
       priority: 100, // higher prevail
       source: new SirenePG(),
       pagination: {
-        itemsByPage: 25
-      }
+        itemsByPage: 25,
+      },
     });
   }
 
@@ -53,12 +53,12 @@ class frentreprise {
 
     const entreprise = new this.EntrepriseModel(
       {
-        _dataSources: {}
+        _dataSources: {},
       },
       this.EtablissementModel
     );
 
-    await this[_.askDataSource]("getSIREN", SIREN, null, result => {
+    await this[_.askDataSource]("getSIREN", SIREN, null, (result) => {
       console.log(
         `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
       );
@@ -67,8 +67,8 @@ class frentreprise {
         ...result.data,
         _dataSources: {
           ...entreprise._dataSources,
-          [result.source.name]: !!Object.keys(result.data).length // Add current data source (true = success)
-        }
+          [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
+        },
       });
     });
 
@@ -77,39 +77,44 @@ class frentreprise {
     // We unduplicate SIRETs using a hash map
     const etablissementsLookups = Object.keys({
       [entreprise.siret_siege_social]: true,
-      [SIRET]: true
+      [SIRET]: true,
     });
 
     // Just wait for process to finish
     await Promise.all(
-      etablissementsLookups.map(lookSIRET => {
+      etablissementsLookups.map((lookSIRET) => {
         if (Validator.validateSIRET(lookSIRET)) {
-          return this[_.askDataSource]("getSIRET", lookSIRET, null, result => {
-            console.log(
-              `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
-            );
+          return this[_.askDataSource](
+            "getSIRET",
+            lookSIRET,
+            null,
+            (result) => {
+              console.log(
+                `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
+              );
 
-            const ets = entreprise.getEtablissement(lookSIRET);
+              const ets = entreprise.getEtablissement(lookSIRET);
 
-            ets.updateData({
-              ...result.data,
-              _dataSources: {
-                ...ets._dataSources,
-                [result.source.name]: !!Object.keys(result.data).length // Add current data source (true = success)
-              }
-            });
-          });
+              ets.updateData({
+                ...result.data,
+                _dataSources: {
+                  ...ets._dataSources,
+                  [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
+                },
+              });
+            }
+          );
         }
       })
     );
 
     entreprise.updateData({
-      _success: this[_.isValidDataSources](entreprise._dataSources)
+      _success: this[_.isValidDataSources](entreprise._dataSources),
     });
 
-    entreprise.etablissements.map(et => {
+    entreprise.etablissements.map((et) => {
       et.updateData({
-        _success: this[_.isValidDataSources](et._dataSources)
+        _success: this[_.isValidDataSources](et._dataSources),
       });
     });
 
@@ -121,7 +126,7 @@ class frentreprise {
     let hasError = false;
     let pagination = null;
 
-    await this[_.askDataSource]("search", terms, page, searchResult => {
+    await this[_.askDataSource]("search", terms, page, (searchResult) => {
       const { data: source_results } = searchResult;
       pagination = searchResult.pagination;
 
@@ -146,7 +151,7 @@ class frentreprise {
           `Using response from dataSource named ${searchResult.source.name} with priority : ${searchResult.source.priority}`
         );
 
-        source_results.forEach(result => {
+        source_results.forEach((result) => {
           const SIREN =
             (Validator.validateSIREN(result.siren) && result.siren) ||
             result.siret.substr(0, 9);
@@ -157,7 +162,7 @@ class frentreprise {
               results[SIREN] = new this.EntrepriseModel(
                 {
                   siren: SIREN,
-                  _dataSources: {}
+                  _dataSources: {},
                 },
                 this.EtablissementModel
               );
@@ -168,8 +173,8 @@ class frentreprise {
                 ...cleanObject(result),
                 _dataSources: {
                   ...results[SIREN].getEtablissement(SIRET)._dataSources,
-                  [searchResult.source.name]: true
-                }
+                  [searchResult.source.name]: true,
+                },
               });
             } else {
               results[SIREN].updateData(cleanObject(result));
@@ -191,7 +196,7 @@ class frentreprise {
   }
 
   getDataSource(name) {
-    return this[_.dataSources].find(ds => ds.name === name);
+    return this[_.dataSources].find((ds) => ds.name === name);
   }
 
   addDataSource(dataSource) {
@@ -201,7 +206,7 @@ class frentreprise {
   }
 
   removeDataSource(dataSource) {
-    this[_.dataSources] = this[_.dataSources].filter(ds => ds !== dataSource);
+    this[_.dataSources] = this[_.dataSources].filter((ds) => ds !== dataSource);
     return;
   }
 
@@ -212,9 +217,9 @@ class frentreprise {
     return a > b ? 1 : a < b ? -1 : 0;
   }
 
-  [_.askDataSource](method, request, page, forEach = result => result) {
+  [_.askDataSource](method, request, page, forEach = (result) => result) {
     return Promise.all(
-      this.getDataSources().map(dataSource => {
+      this.getDataSources().map((dataSource) => {
         console.log(
           `Asking [${method}] to dataSource named ${
             dataSource.name
@@ -225,7 +230,7 @@ class frentreprise {
           page && dataSource.pagination
             ? {
                 ...dataSource.pagination,
-                page
+                page,
               }
             : null;
 
@@ -233,36 +238,38 @@ class frentreprise {
           dataSource.source.setDb(this.db);
         }
 
-        return dataSource.source[method](request, pagination).then(response => {
-          const data =
-            typeof response === "object" && response.items
-              ? response.items
-              : response;
-          const paginationResponse =
-            pagination && typeof response === "object" && response.pagination
-              ? response.pagination
-              : {};
+        return dataSource.source[method](request, pagination).then(
+          (response) => {
+            const data =
+              typeof response === "object" && response.items
+                ? response.items
+                : response;
+            const paginationResponse =
+              pagination && typeof response === "object" && response.pagination
+                ? response.pagination
+                : {};
 
-          const cleanedData =
-            typeof data === "object"
-              ? Array.isArray(data)
-                ? data.map(cleanObject)
-                : cleanObject(data)
-              : data;
-          console.log(
-            `Got response for [${method}] from dataSource named ${
-              dataSource.name
-            } about request : ${JSON.stringify(request)}`
-          );
+            const cleanedData =
+              typeof data === "object"
+                ? Array.isArray(data)
+                  ? data.map(cleanObject)
+                  : cleanObject(data)
+                : data;
+            console.log(
+              `Got response for [${method}] from dataSource named ${
+                dataSource.name
+              } about request : ${JSON.stringify(request)}`
+            );
 
-          return Promise.resolve({
-            source: dataSource,
-            data: cleanedData,
-            pagination: paginationResponse
-          });
-        });
+            return Promise.resolve({
+              source: dataSource,
+              data: cleanedData,
+              pagination: paginationResponse,
+            });
+          }
+        );
       })
-    ).then(results => {
+    ).then((results) => {
       results
         .sort(
           (a, b) =>

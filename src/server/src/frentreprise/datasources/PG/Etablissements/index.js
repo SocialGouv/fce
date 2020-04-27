@@ -11,8 +11,11 @@ import getIae from "./getIae";
 import getContratsAides from "./getContratsAides";
 import getActivitePartielle from "./getActivitePartielle";
 import getPse from "./getPse";
+import getLice from "./getLice";
+import getRcc from "./getRcc";
 import getPredecesseur from "./getPredecesseur";
 import getSuccesseur from "./getSuccesseur";
+import getApprentissage from "./getApprentissage";
 
 export default {
   getInteractionsPole3ESEER,
@@ -28,6 +31,9 @@ export default {
   getContratsAides,
   getActivitePartielle,
   getPse,
+  getLice,
+  getRcc,
   getPredecesseur,
   getSuccesseur,
+  getApprentissage,
 };

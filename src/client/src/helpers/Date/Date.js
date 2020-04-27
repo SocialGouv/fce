@@ -1,7 +1,4 @@
 import Moment from "../../services/Moment";
-import { extendMoment } from "moment-range";
-
-const moment = extendMoment(Moment);
 
 export const toI18nDate = (date, format = "L") => {
   if (!date) {
@@ -16,6 +13,14 @@ export const getCustomPastYear = N => {
     .format("YYYY");
 };
 
+export const getMonthName = (month, shortName = false) => {
+  if (!month) {
+    return "";
+  }
+  const format = shortName ? "MMM" : "MMMM";
+  return Moment(`2020-${month}-01`).format(format);
+};
+
 export const getLastDateInteraction = (interactions, format = "DD/MM/YYYY") => {
   const moments =
     Array.isArray(interactions) &&
@@ -25,10 +30,5 @@ export const getLastDateInteraction = (interactions, format = "DD/MM/YYYY") => {
   return (moments && Moment.max(moments).format(format)) || "";
 };
 
-export const getRangeDateToNow = (date, format = "months") => {
-  const startDate = moment(date, "DD/MM/YYYY");
-  const endDate = moment();
-  const range = moment.range(startDate, endDate);
-
-  return range.diff(format);
-};
+export const sortByDate = sortableList =>
+  sortableList.sort((a, b) => new Date(b.date) - new Date(a.date));

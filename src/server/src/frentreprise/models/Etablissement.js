@@ -28,12 +28,13 @@ class DireccteEtablissement extends Etablissement {
           "etablissement_employeur",
           "tranche_effectif_insee",
           "annee_tranche_effectif_insee",
+          "dsnEffectif",
           "dernier_effectif_physique",
           "date_dernier_effectif_physique",
           "source_dernier_effectif_physique",
+          "effectifMensuelEtp",
           "unite_controle_competente",
-          "code_idcc",
-          "libelle_idcc",
+          "idcc",
           "agefiph_derniere_annee_conformite_connue",
           "donnees_ecofi",
           "eti_pepite",
@@ -42,6 +43,8 @@ class DireccteEtablissement extends Etablissement {
           "structure_insertion_activite_economique_types",
           "activite_partielle",
           "pse",
+          "lice",
+          "rcc",
           "interactions_3E_SEER",
           "interactions_3E_SRC",
           "interactions_T",
@@ -66,12 +69,13 @@ class DireccteEtablissement extends Etablissement {
           "contrat_aide_alternance_n1",
           "contrat_aide_salaries_n1",
           "contrat_aide_embauches_n1",
+          "apprentissage",
           "_dataSources",
-          "_success"
+          "_success",
         ],
         null
       ),
-      _raw: this.getData()
+      _raw: this.getData(),
     };
   }
 }

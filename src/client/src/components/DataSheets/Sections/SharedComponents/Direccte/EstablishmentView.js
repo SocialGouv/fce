@@ -42,7 +42,7 @@ const EstablishmentView = ({ establishment }) => {
           name="Unité de contrôle compétente (inspection du travail)"
           value={establishment.unite_controle_competente}
           columnClasses={["is-6", "is-6"]}
-          source="Siene"
+          sourceSi="Siene"
         />
 
         {_get(establishment, "totalInteractions.total") === 0 ? (

@@ -1,14 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Proptypes from "prop-types";
+import PropTypes from "prop-types";
 import _get from "lodash.get";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/pro-solid-svg-icons";
-
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
-import Config from "../../../../../services/Config";
+import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
+import State from "../../SharedComponents/State";
 
 const ActivitePartielle = ({
   enterprise: { activite_partielle, etablissements }
@@ -31,12 +28,12 @@ const ActivitePartielle = ({
     );
 
   return (
-    <Subcategory subtitle="Activité partielle" source="APART">
+    <Subcategory subtitle="Activité partielle" sourceSi="APART">
       <Data
         name="Nb d'établissements ayant eu recours à l'activité partielle au cours des 24 derniers mois"
         value={hasActivitePartielle && activite_partielle.length}
         emptyValue="0"
-        columnClasses={["is-9", "is-3"]}
+        columnClasses={["is-8", "is-4"]}
       />
       {hasActivitePartielle && (
         <>
@@ -44,13 +41,14 @@ const ActivitePartielle = ({
             <thead>
               <tr>
                 <th className="th">SIRET</th>
-                <th className="th">Catégorie établissement</th>
                 <th className="th table__center-cell">État</th>
-                <th className="th">Nombre total d{"'"}heures autorisées</th>
-                <th className="th">Nombre total d{"'"}heures consommées</th>
+                <th className="th">Catégorie établissement</th>
+                <th className="th">Nb total d{"'"}heures autorisées</th>
+                <th className="th">Nb total d{"'"}heures consommées</th>
                 <th className="th">
                   Date de décision de la dernière convention
                 </th>
+                <th className="th see-details"></th>
               </tr>
             </thead>
             <tbody>
@@ -67,25 +65,23 @@ const ActivitePartielle = ({
 
                   return (
                     <tr key={siret}>
-                      <td>
-                        <Link to={`/establishment/${siret}`}>{siret}</Link>
+                      <td>{siret}</td>
+                      <td className="table__center-cell">
+                        {etat && <State state={etat} />}
                       </td>
                       <td>{categorie}</td>
-                      <td className="table__center-cell">
-                        {etat && (
-                          <FontAwesomeIcon
-                            className={
-                              etat === Config.get("establishmentState").actif
-                                ? "icon--success"
-                                : "icon--danger"
-                            }
-                            icon={faCircle}
-                          />
-                        )}
+                      <td className="has-text-right">
+                        {Math.round(nbHeuresAutorisees)}
                       </td>
-                      <td>{Math.round(nbHeuresAutorisees)}</td>
-                      <td>{Math.round(nbHeuresConsommees)}</td>
+                      <td className="has-text-right">
+                        {Math.round(nbHeuresConsommees)}
+                      </td>
                       <td>{<Value value={date} />}</td>
+                      <td className="has-text-centered">
+                        <SeeDetailsLink
+                          link={`/establishment/${siret}/#muteco`}
+                        />
+                      </td>
                     </tr>
                   );
                 }
@@ -95,14 +91,16 @@ const ActivitePartielle = ({
             {totalActivitePartielle && (
               <tfoot>
                 <tr>
-                  <th colSpan="3">Total : </th>
-                  <td>
+                  <th className="has-text-right" colSpan="3">
+                    Totaux
+                  </th>
+                  <td className="has-text-right">
                     {Math.round(totalActivitePartielle.nbHeuresAutorisees)}
                   </td>
-                  <td>
+                  <td className="has-text-right">
                     {Math.round(totalActivitePartielle.nbHeuresConsommees)}
                   </td>
-                  <td />
+                  <td colSpan="2" />
                 </tr>
               </tfoot>
             )}
@@ -114,7 +112,7 @@ const ActivitePartielle = ({
 };
 
 ActivitePartielle.propTypes = {
-  enterprise: Proptypes.object.isRequired
+  enterprise: PropTypes.object.isRequired
 };
 
 export default ActivitePartielle;

@@ -5,17 +5,16 @@ const process = require("process");
 const config = {
   client: {
     baseUrl: process.env.CLIENT_BASE_URL,
-    magicLink: "/magic-link/{key}/browser/{browser}"
   },
   APIGouv: {
-    token: process.env.API_GOUV_TOKEN
+    token: process.env.API_GOUV_TOKEN,
   },
   SireneAPI: {
     enable: false,
     basicAuth: process.env.API_SIRENE_BASIC_AUTH,
     pagination: {
-      itemsByPage: 15
-    }
+      itemsByPage: 15,
+    },
   },
   db: {
     host: process.env.PG_HOST,
@@ -32,23 +31,38 @@ const config = {
   mail: JSON.parse(process.env.MAIL),
   proxy: false,
   apiTimeout: 10000,
-  magicKey: {
+  authCode: {
     allowedEmails: JSON.parse(process.env.MAGIC_KEY_ALLOWED_EMAILS).map(
-      mask => new RegExp(mask)
+      (mask) => new RegExp(mask)
     ),
-    privateKey: process.env.MAGIC_KEY_PRIVATE_KEY,
-    clientVerification: true,
-    expire: process.env.MAGIC_KEY_EXPIRE
-  },
-  magicLink: {
-    bcc: process.env.MAGIC_LINK_BCC
+    codeLength: 5,
+    maxFailures: 3,
+    expire: process.env.MAGIC_KEY_EXPIRE,
+    bcc: process.env.MAGIC_LINK_BCC,
   },
   userFeedback: {
-    mailTo: process.env.MAIL_TO
+    mailTo: process.env.MAIL_TO,
+  },
+  rupco: {
+    pse: {
+      procedureDurationLimit: 36, // months
+    },
+    lice: {
+      types: {
+        "LiceC -10": "Licenciement moins de 10 salariés (2 à 9 salariés)",
+        "LiceC +10":
+          "Licenciement plus de 10 salariés (entreprise de moins de 50 salariés)",
+      },
+    },
+    historicDataDefaultState: "Non communiqué",
+    historicDataStates: {
+      cloture: "Clôturé",
+      BilanTermine: "Bilan terminé",
+    },
   },
   jwt: {
     secret: process.env.JWT_SECRET,
-    expire: process.env.JWT_EXPIRE
+    expire: process.env.JWT_EXPIRE,
   },
   elasticIndexer: {
     appsearch_address: process.env.JWT_APPSEARCH_ADDRRESS,
@@ -68,16 +82,16 @@ const config = {
       "categoriejuridiqueunitelegale",
       "denominationusuelle1unitelegale",
       "denominationusuelle2unitelegale",
-      "denominationusuelle3unitelegale"
+      "denominationusuelle3unitelegale",
     ],
     appSearchConst: {
-      physicPersonJuridicCode: "1000"
-    }
+      physicPersonJuridicCode: "1000",
+    },
   },
   xlsxExport: {
     establishmentState: {
       A: "Actif",
-      F: "Fermé"
+      F: "Fermé",
     },
     inseeSizeRanges: {
       NN: "Unité non employeuse",
@@ -95,31 +109,31 @@ const config = {
       "42": "1 000 à 1 999 salariés",
       "51": "2 000 à 4 999 salariés",
       "52": "5 000 à 9 999 salariés",
-      "53": "10 000 salariés et plus"
-    }
+      "53": "10 000 salariés et plus",
+    },
   },
   sanitizeTables: [
     {
       fields: ["siret", "numero_de_dossier"],
       table: "etablissements_pse",
-      hasId: false
+      hasId: false,
     },
     {
       fields: ["code"],
       table: "departements",
-      hasId: false
+      hasId: false,
     },
     {
       fields: ["nom", "code_postal"],
       table: "communes",
-      hasId: false
+      hasId: false,
     },
     {
       fields: ["siret", "date_visite"],
       table: "interactions_pole_3e",
-      hasId: true
-    }
-  ]
+      hasId: true,
+    },
+  ],
 };
 
 if (process.env.HOST) {

@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PSE from "./PSE";
-import RCC from "./RCC";
+import Pse from "./Pse";
+import Rcc from "./Rcc";
+import Lice from "./Lice";
 import ActivitePartielle from "./ActivitePartielle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUmbrella } from "@fortawesome/pro-solid-svg-icons";
@@ -17,8 +18,9 @@ const EnterpriseMuteco = ({ enterprise }) => {
       </div>
       <div className="section-datas">
         <ActivitePartielle enterprise={enterprise} />
-        <PSE enterprise={enterprise} />
-        <RCC enterprise={enterprise} />
+        <Pse pseList={enterprise.pse} />
+        <Lice liceList={enterprise.lice} />
+        <Rcc rccList={enterprise.rcc} />
       </div>
     </section>
   );

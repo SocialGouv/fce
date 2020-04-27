@@ -463,10 +463,31 @@
     width: max-content;
 }
 
+@media print {
+    .no-print {
+        display: none !important;
+    }
+}
+
 /*** Text ***/
 .is-first-letter-uppercase {
     &::first-letter {
         text-transform: uppercase;
+    }
+}
+
+.is-text-button {
+    color: $blue;
+    text-decoration: none;
+    border: 0;
+    background-color: transparent;
+    font-size: 1rem;
+    padding-left: 0;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+        color: $dark-blue;
     }
 }
 

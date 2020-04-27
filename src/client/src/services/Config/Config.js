@@ -13,8 +13,14 @@ const globalConfig = {
     expire: 86400 // 1j
   },
   sidebarEstablishmentsLimit: 20,
-  monthsProceduresLimit: 36,
-  interactions: ["C", "3E_SEER", "3E_SRC", "T"],
+
+  interactions: {
+    poles: ["C", "3E_SEER", "3E_SRC", "T"],
+    types: {
+      control: ["interactions_C", "interactions_T", "interactions_3E_SRC"],
+      visit: ["interactions_3E_SEER"]
+    }
+  },
   region: {
     occitanie: 76
   },
@@ -109,7 +115,7 @@ const globalConfig = {
     customDateFormats: {
       EOS: { default: "DD/MM/YYYY", monthYear: "MMM YY" },
       Sirène: { default: "DD/MM/YYYY", year: "YYYY" },
-      DSN: "MMM YY",
+      DSN: "MMM YYYY",
       Siene: "MMM YY",
       "ASP Extranet IAE2.0": "MMM YY",
       "ASP Extranet CUI": "MMM YY",

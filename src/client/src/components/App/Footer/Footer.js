@@ -31,12 +31,12 @@ const Footer = () => (
             </Link>
           </li>
           <li className="footer__linkItem">
-            <Link
+            <a
               className="footer__link"
-              to={`mailto:${Config.get("contact.mailto")}`}
+              href={`mailto:${Config.get("contact.mailto")}`}
             >
               Contact
-            </Link>
+            </a>
           </li>
           <li className="footer__linkItem">
             <Link className="footer__link" to="about">

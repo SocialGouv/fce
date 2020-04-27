@@ -1,20 +1,23 @@
-import PropTypes from "prop-types";
 import React from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import { faPrint } from "@fortawesome/pro-solid-svg-icons";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
 import Infos from "./Infos";
-import Mandataires from "./Mandataires";
-import Accords from "./Accords";
+import EnterpriseRelationship from "./EnterpriseRelationship";
 import Muteco from "./Muteco";
-import Direccte from "../SharedComponents/Direccte";
-import Finances from "./Finances";
+import Direccte from "./Direccte";
+import Helps from "./Helps";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
+import { useScrollToLocationHash } from "../../../../helpers/hooks";
 
-const Enterprise = ({ enterprise, headOffice, establishments }) => {
+const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
+  useScrollToLocationHash({ location, offset: 50 });
+
   return (
     <section className="data-sheet container">
       <div className="data-sheet__print-section w-100">
@@ -40,21 +43,19 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
               anchors={[
                 { label: "Informations légales", link: "infos" },
                 { label: "Visites et contrôles", link: "direccte" },
-                { label: "Accords d'entreprise", link: "accords" },
+                { label: "Relation travail", link: "relationship" },
                 {
                   label: "Mutations économiques",
                   link: "muteco"
                 },
-                { label: "Données financières", link: "finances" },
-                { label: "Mandataires sociaux", link: "mandataires" }
+                { label: "Aides et agréments", link: "helps" }
               ]}
             />
             <Infos enterprise={enterprise} headOffice={headOffice} />
             <Direccte enterprise={enterprise} />
-            <Accords enterprise={enterprise} />
+            <EnterpriseRelationship enterprise={enterprise} />
             <Muteco enterprise={enterprise} />
-            <Finances establishment={headOffice} />
-            <Mandataires enterprise={enterprise} />
+            <Helps enterprise={enterprise} />
           </div>
           <UsersFeedback fullWidth />
         </div>
@@ -66,7 +67,8 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
 Enterprise.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired
+  headOffice: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
-export default withLoading(Enterprise);
+export default withRouter(withLoading(Enterprise));

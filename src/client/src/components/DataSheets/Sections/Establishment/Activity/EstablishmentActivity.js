@@ -2,8 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory } from "@fortawesome/pro-solid-svg-icons";
+import _get from "lodash.get";
+
 import Config from "../../../../../services/Config";
 import { getSuccession } from "../../../../../helpers/Establishment";
+import { getMonthName } from "../../../../../helpers/Date";
 import Subcategory from "../../SharedComponents/Subcategory";
 
 const EstablishmentActivity = ({ establishment }) => {
@@ -40,7 +43,7 @@ const EstablishmentActivity = ({ establishment }) => {
               nonEmptyValue: ""
             }
           ]}
-          source="Sirène"
+          sourceSi="Sirène"
         />
         <Subcategory
           subtitle="Effectifs"
@@ -51,20 +54,30 @@ const EstablishmentActivity = ({ establishment }) => {
                 establishment.tranche_effectif_insee
               ],
               nonEmptyValue: "",
-              source: "Sirène-year",
+              sourceSi: "Sirène-year",
               sourceDate: establishment.annee_tranche_effectif_insee
             },
-
             {
-              name: "Dernier effectif connu",
+              name: "Effectif physique",
               value: establishment.dernier_effectif_physique,
               nonEmptyValue: "",
-              source: "DSN"
+              sourceSi: "DSN"
+            },
+            {
+              name: `Effectif en équivalent temps plein`,
+              value: _get(
+                establishment,
+                "effectifMensuelEtp.effectifs_mensuels"
+              ),
+              nonEmptyValue: "",
+              sourceCustom: `Acoss / DSN ${getMonthName(
+                _get(establishment, "effectifMensuelEtp.mois")
+              )} ${_get(establishment, "effectifMensuelEtp.annee", "")}`
             }
           ]}
         />
         <Subcategory
-          subtitle="Développement économiques"
+          subtitle="Développement économique"
           datas={[
             {
               name: "Filière stratégique",
@@ -90,7 +103,7 @@ const EstablishmentActivity = ({ establishment }) => {
               nonEmptyValue: ""
             }
           ]}
-          source="EOS-monthYear"
+          sourceSi="EOS-monthYear"
         />
         {Array.isArray(establishment.pole_competitivite) &&
           !!establishment.pole_competitivite.length && (

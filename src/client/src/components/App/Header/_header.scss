@@ -21,6 +21,7 @@
         align-items: center;
         height: 80px;
         color: $dark;
+
         &:hover {
             text-decoration: none;
         }
@@ -30,6 +31,7 @@
         width: 65px;
         height: 38px;
         margin-right: 1rem;
+
         @include from($desktop) {
             margin-right: 2rem;
         }
@@ -51,12 +53,6 @@
         .button {
             width: 11.875rem;
             height: 2.25rem;
-            &:first-child {
-                margin-right: 1rem;
-                @include from($desktop) {
-                    margin-right: 1.875rem;
-                }
-            }
         }
     }
 }

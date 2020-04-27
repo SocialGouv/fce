@@ -1,9 +1,9 @@
 export default async (SIRET, Idcc) => {
-  return Idcc.getBySIRET(SIRET).then(idcc => {
-    if (!idcc) {
-      return null;
+  return Idcc.getBySIRET(SIRET).then((idcc) => {
+    if (!idcc || !idcc.length) {
+      return [];
     }
 
-    return { code_idcc: idcc.code, libelle_idcc: idcc.libelle };
+    return { idcc };
   });
 };

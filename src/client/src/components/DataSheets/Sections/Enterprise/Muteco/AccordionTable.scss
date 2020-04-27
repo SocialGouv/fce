@@ -1,0 +1,27 @@
+@import "../../../../App/variables";
+
+.accordion-table {
+    &__header {
+        cursor: pointer;
+        transition: color 200ms;
+
+        &:hover {
+            color: $dark-blue;
+        }
+    }
+
+    &__row {
+        border-bottom: 1px solid $grey-geyser;
+    }
+
+    &__container {
+        border-bottom: solid 1px $border-grey-light;
+        border-top: solid 1px $border-grey-light;
+        max-height: 13rem;
+        overflow: auto;
+
+        tr {
+            background-color: $pale-grey;
+        }
+    }
+}

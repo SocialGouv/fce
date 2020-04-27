@@ -67,19 +67,27 @@ const Sidebar = ({
 
         <section className="sidebar__establishments">
           <p className="sidebar__establishments-count">
-            <strong>
-              <Value value={establishments.length} empty="Aucun " />{" "}
-              établissement
-              {establishments.length > 1 && "s"}
-            </strong>
-
-            {!!closedEstablishmentsCount && (
+            {establishments.length >= limitItems ? (
+              <strong>
+                Plus de <Value value={establishments.length} /> établissements
+              </strong>
+            ) : (
               <>
-                <br />
-                <span>
-                  dont {closedEstablishmentsCount} fermé
-                  {closedEstablishmentsCount > 1 && "s"}
-                </span>
+                <strong>
+                  <Value value={establishments.length} empty="Aucun " />{" "}
+                  établissement
+                  {establishments.length > 1 && "s"}
+                </strong>
+
+                {!!closedEstablishmentsCount && (
+                  <>
+                    <br />
+                    <span>
+                      dont {closedEstablishmentsCount} fermé
+                      {closedEstablishmentsCount > 1 && "s"}
+                    </span>
+                  </>
+                )}
               </>
             )}
           </p>

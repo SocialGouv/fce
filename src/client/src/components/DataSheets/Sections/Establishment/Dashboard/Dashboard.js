@@ -10,7 +10,7 @@ import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import {
   isActiveEstablishment,
-  getHasApprentissage
+  hasApprentissage
 } from "../../../../../helpers/Establishment";
 import Item from "./Item";
 
@@ -99,7 +99,7 @@ const Dashboard = ({
       {(establishment.agrements_iae ||
         establishment.ea ||
         establishment.contrat_aide ||
-        getHasApprentissage(establishment.apprentissage)) && (
+        hasApprentissage(establishment.apprentissage)) && (
         <Item icon={faMedkit} name="Aides" value="Oui" />
       )}
     </div>

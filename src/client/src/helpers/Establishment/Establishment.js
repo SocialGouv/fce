@@ -13,7 +13,7 @@ export const isActiveEstablishment = establishment => {
   );
 };
 
-export const getHasApprentissage = apprentissage => {
+export const hasApprentissage = apprentissage => {
   const total = apprentissage
     ? Object.values(apprentissage).reduce(
         (total, { signes }) => total + signes,

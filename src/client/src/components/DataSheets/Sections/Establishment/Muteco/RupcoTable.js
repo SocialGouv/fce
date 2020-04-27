@@ -24,8 +24,6 @@ const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
               .etablissements.length > 1
           );
 
-          console.log(hasOtherEstablishments);
-
           return (
             <tr key={dossier.numero}>
               {hasTypeColumn && (

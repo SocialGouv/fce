@@ -27,3 +27,14 @@ export const countValuesInArray = (array, fields) => {
 
 export const arraySum = array =>
   array.reduce((total, value) => total + value, 0);
+
+export const toNumberFormatFr = (
+  number,
+  style = "decimal",
+  minimumFractionDigits = 0
+) =>
+  new Intl.NumberFormat("fr-FR", {
+    style,
+    currency: "EUR",
+    minimumFractionDigits
+  }).format(number);

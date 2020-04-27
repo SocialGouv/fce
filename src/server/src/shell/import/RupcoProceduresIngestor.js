@@ -11,7 +11,7 @@ class RupcoProceduresIngestor extends Ingestor {
     return execSync(
       `${this.psql} "DELETE FROM ${this.getConfig(
         "table"
-      )} WHERE historique_si IS NULL OR date_enregistrement IS NULL;"`
+      )} WHERE historique_si = FALSE OR date_enregistrement IS NULL;"`
     );
   }
 

@@ -1,6 +1,5 @@
 import getEtablissement from "./getEtablissement";
 import exercices from "./exercices";
-import agefiph from "./agefiph";
 import association from "./association";
 import predecesseur from "./predecesseur";
 import successeur from "./successeur";
@@ -10,7 +9,6 @@ import effectifsMensuelEtp from "./effectifsMensuelEtp";
 export default {
   getEtablissement,
   exercices,
-  agefiph,
   association,
   predecesseur,
   successeur,

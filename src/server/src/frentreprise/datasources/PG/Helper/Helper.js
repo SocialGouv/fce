@@ -37,10 +37,11 @@ const hasValidProcedureDuration = (
     ? differenceInMonths(new Date(), parseISO(date)) <= validDuration
     : false;
 
-const hasBrokenContracts = ({ nombre_de_ruptures }) => nombre_de_ruptures > 0;
+const hasBrokenContracts = ({ type = "", nombre_de_ruptures }) =>
+  type === "LiceC -10" ? true : nombre_de_ruptures > 0;
 
-const hasPseValidDuration = ({ type, date_enregistrement }) =>
-  type === "PSE" ? hasValidProcedureDuration(date_enregistrement) : true;
+const hasPseValidDuration = ({ type = "", date_enregistrement }) =>
+  type.includes("PSE") ? hasValidProcedureDuration(date_enregistrement) : true;
 
 const setLiceTypeLabel = (procedure) => {
   if (!_get(procedure, "type", "").includes("LiceC")) {
@@ -55,16 +56,16 @@ const setLiceTypeLabel = (procedure) => {
 };
 
 const setProcedureState = (procedure) => {
-  if (procedure.historique_si && !procedure.historique_si) {
+  if (procedure && !procedure.historique_si) {
     return procedure;
   }
 
   return {
     ...procedure,
     etat: Object.keys(config.get("rupco.historicDataStates")).includes(
-      procedure.type
+      procedure.etat
     )
-      ? config.get("rupco.historicDataStates")[procedure.type]
+      ? config.get("rupco.historicDataStates")[procedure.etat]
       : config.get("rupco.historicDataDefaultState"),
   };
 };
@@ -73,7 +74,6 @@ export const getRupcoDataForEstablishment = (rows) =>
   rows
     .map(
       ({
-        siret: currentSiret,
         date_enregistrement,
         type,
         numero,
@@ -81,7 +81,6 @@ export const getRupcoDataForEstablishment = (rows) =>
         nombre_de_ruptures_de_contrats_en_debut_de_procedure,
         nombre_de_ruptures_de_contrats_en_fin_de_procedure,
         historique_si,
-        etablissements,
       }) => ({
         date_enregistrement: getFormatedDate(date_enregistrement),
         type,
@@ -92,9 +91,6 @@ export const getRupcoDataForEstablishment = (rows) =>
           +nombre_de_ruptures_de_contrats_en_debut_de_procedure ||
           0,
         historique_si,
-        autres_etablissements:
-          etablissements &&
-          etablissements.split(",").filter((siret) => siret !== currentSiret),
       })
     )
     .filter(
@@ -139,7 +135,7 @@ export const getRupcoDataForEnterprise = (rows) => {
         +nombre_de_ruptures_de_contrats_en_debut_de_procedure ||
         0;
 
-      if (nbRupturesEtablissement > 0) {
+      if (type === "LiceC -10" || nbRupturesEtablissement > 0) {
         rupcoList[numero].nombre_de_ruptures += nbRupturesEtablissement;
         rupcoList[numero].etablissements.push({
           siret,

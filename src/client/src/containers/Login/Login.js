@@ -26,7 +26,8 @@ const Login = ({ history }) => {
         setStep("login-form-code");
       })
       .catch(e => {
-        setError(e.message || "Le code n'a pas pu être envoyé");
+        const message = _get(e, "response.data.error", e.message);
+        setError(message || "Le code n'a pas pu être envoyé");
       });
   };
 
@@ -43,7 +44,8 @@ const Login = ({ history }) => {
         history.push("/");
       })
       .catch(e => {
-        setError(e.message || "Le code n'a pas pu être envoyé");
+        const message = _get(e, "response.data.error", e.message);
+        setError(message || "Le code n'a pas pu être envoyé");
       });
   };
 

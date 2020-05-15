@@ -120,7 +120,7 @@ const config = {
         "nb_h_conso_cum",
         "cause",
       ],
-      delimiter: ",",
+      delimiter: ";",
       truncate: true,
       history: true,
       date: {

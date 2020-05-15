@@ -101,8 +101,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^APART_(.)*.xlsx$/,
-      converter: CONVERTER_XLSX_TO_CSV,
+      fileMatch: /^Extraction_FCE_S(.)*.csv$/,
       outputFileName: "etablissements_activite_partielle.csv",
     },
     ingest: {

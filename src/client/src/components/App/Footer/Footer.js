@@ -31,6 +31,11 @@ const Footer = () => (
             </Link>
           </li>
           <li className="footer__linkItem">
+            <Link className="footer__link" to="datasource">
+              Sources des données
+            </Link>
+          </li>
+          <li className="footer__linkItem">
             Contact : {Config.get("contact.mailto")}
           </li>
           <li className="footer__linkItem">

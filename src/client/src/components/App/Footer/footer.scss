@@ -74,7 +74,7 @@
             }
         }
 
-        &__linkItem {
+        &__link-item {
             @include from($tablet) {
                 padding: 0 0.5rem;
                 border-right: solid 1px;
@@ -87,6 +87,10 @@
 
         &__link {
             color: $footer-link;
+
+            &:hover {
+                color: $dark-grey;
+            }
         }
     }
 }

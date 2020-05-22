@@ -1,13 +1,15 @@
 import { subMonths, format } from "date-fns";
 
-import { getSubMonthValueForApiEffectifEtp } from "../helpers/effectifsEtp";
+import { API_EFFECTIF_ETP_SUB_MONTH_BEFORE_UPDATE_DAY } from "../helpers/effectifsEtp";
 import utils from "../../../Utils/utils";
 
 export default async (siret, Axios, params) => {
   const now = new Date();
-  const day = now.getDate();
 
-  const requestedDate = subMonths(now, getSubMonthValueForApiEffectifEtp(day));
+  const requestedDate = subMonths(
+    now,
+    API_EFFECTIF_ETP_SUB_MONTH_BEFORE_UPDATE_DAY
+  );
   const requestedYear = format(requestedDate, "yyyy");
   const requestedMonth = format(requestedDate, "MM");
 

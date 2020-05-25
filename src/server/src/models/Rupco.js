@@ -1,5 +1,4 @@
 import Model from "./Model";
-import siretToSiren from "../utils/siretToSiren";
 
 const TYPE_PSE = "PSE";
 const TYPE_LICE = "Lice";
@@ -35,15 +34,14 @@ export default class Rupco extends Model {
     return this.db
       .query(
         `
-        SELECT DISTINCT ON (e.numero) e.*, p.etat, etabs.*
+        SELECT DISTINCT ON (e.numero) e.*, p.etat
         FROM rupco_etablissements e
         INNER JOIN rupco_procedures p ON e.numero = p.numero
-        LEFT JOIN (SELECT ent.numero, string_agg(ent.siret, ',') as etablissements FROM rupco_etablissements ent WHERE ent.siren=$2 GROUP BY ent.siren, ent.numero ) etabs ON etabs.numero = e.numero
         WHERE e.siret = $1
-        AND e.type ILIKE $3
+        AND e.type ILIKE $2
         ${dateCondition}
         ORDER BY e.numero DESC`,
-        [siret, siretToSiren(siret), `${type}%`]
+        [siret, `${type}%`]
       )
       .then((res) => {
         return res.rows;

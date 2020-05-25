@@ -166,7 +166,6 @@ class IndexerUtilsAppsearch {
 
         bulkChunk.push({
           id: siret,
-          external_id: siret,
           siren: siren,
           siret: siret,
           enterprise_name: enterprise_name,

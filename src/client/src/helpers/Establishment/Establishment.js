@@ -12,3 +12,14 @@ export const isActiveEstablishment = establishment => {
     establishment.etat_etablissement === Config.get("establishmentState").actif
   );
 };
+
+export const hasApprentissage = apprentissage => {
+  const total = apprentissage
+    ? Object.values(apprentissage).reduce(
+        (total, { signes }) => total + signes,
+        0
+      )
+    : 0;
+
+  return !!total;
+};

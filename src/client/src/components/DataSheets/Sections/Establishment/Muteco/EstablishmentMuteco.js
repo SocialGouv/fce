@@ -92,9 +92,21 @@ const EstablishmentMuteco = ({ establishment, enterprise }) => {
           )}
         </Subcategory>
 
-        <Pse pseList={establishment.pse} siren={enterprise.siren} />
-        <Lice liceList={establishment.lice} siren={enterprise.siren} />
-        <Rcc rccList={establishment.rcc} siren={enterprise.siren} />
+        <Pse
+          pseList={establishment.pse}
+          siren={enterprise.siren}
+          enterprisePse={enterprise.pse}
+        />
+        <Lice
+          liceList={establishment.lice}
+          siren={enterprise.siren}
+          enterpriseLice={enterprise.lice}
+        />
+        <Rcc
+          rccList={establishment.rcc}
+          siren={enterprise.siren}
+          enterpriseRcc={enterprise.rcc}
+        />
       </div>
     </section>
   );

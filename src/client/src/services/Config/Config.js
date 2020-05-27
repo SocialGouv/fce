@@ -106,10 +106,11 @@ const globalConfig = {
     "31": "200 à 249 salariés",
     "32": "250 à 499 salariés",
     "41": "500 à 999 salariés",
-    "42": "1 000 à 1 999 salariés",
-    "51": "2 000 à 4 999 salariés",
-    "52": "5 000 à 9 999 salariés",
-    "53": "10 000 salariés et plus"
+    //utiliser "\u00a0" comme espace insécable, "&nbsp;" est rendu tel quel par react
+    "42": "1\u00a0000 à 1\u00a0999 salariés",
+    "51": "2\u00a0000 à 4\u00a0999 salariés",
+    "52": "5\u00a0000 à 9\u00a0999 salariés",
+    "53": "10\u00a0000 salariés et plus"
   },
   sources: {
     customDateFormats: {

@@ -61,7 +61,8 @@ const EstablishmentActivity = ({ establishment }) => {
               name: "Effectif physique",
               value: establishment.dernier_effectif_physique,
               nonEmptyValue: "",
-              sourceSi: "DSN"
+              sourceSi: "DSN",
+              hasNumberFormat: true
             },
             {
               name: `Effectif en équivalent temps plein`,
@@ -72,7 +73,8 @@ const EstablishmentActivity = ({ establishment }) => {
               nonEmptyValue: "",
               sourceCustom: `Acoss / DSN ${getMonthName(
                 _get(establishment, "effectifMensuelEtp.mois")
-              )} ${_get(establishment, "effectifMensuelEtp.annee", "")}`
+              )} ${_get(establishment, "effectifMensuelEtp.annee", "")}`,
+              hasNumberFormat: true
             }
           ]}
         />

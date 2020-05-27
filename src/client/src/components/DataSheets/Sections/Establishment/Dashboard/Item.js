@@ -17,9 +17,8 @@ const Item = ({ icon, name, value = "", smallText = false }) => {
       </div>
       <div className="flex-center dashboard-item-data">
         <div
-          className={`has-text-roboto has-text-grey-dark ${
-            smallText ? "dashboard-item--small-text" : "is-size-5"
-          }`}
+          className={`has-text-roboto has-text-grey-dark${smallText &&
+            " dashboard-item--small-text"}`}
         >
           <Value value={value} empty="-" />
         </div>

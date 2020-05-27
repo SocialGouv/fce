@@ -28,13 +28,17 @@ export const countValuesInArray = (array, fields) => {
 export const arraySum = array =>
   array.reduce((total, value) => total + value, 0);
 
-export const toNumberFormatFr = (
-  number,
-  style = "decimal",
-  minimumFractionDigits = 0
-) =>
-  new Intl.NumberFormat("fr-FR", {
-    style,
+export const formatNumber = (number, options = {}, locale = "fr-FR") => {
+  const defaultOptions = {
+    style: "decimal",
     currency: "EUR",
-    minimumFractionDigits
+    minimumFractionDigits: 0
+  };
+
+  return new Intl.NumberFormat(locale, {
+    ...defaultOptions,
+    ...options
   }).format(number);
+};
+
+export const formatTva = tva => `${tva.slice(0, 4)} ${tva.slice(4)}`;

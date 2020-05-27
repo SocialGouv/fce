@@ -9,6 +9,7 @@ import _get from "lodash.get";
 import Data from "../../SharedComponents/Data";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUmbrella } from "@fortawesome/pro-solid-svg-icons";
+import { formatNumber } from "../../../../../helpers/utils";
 
 const EstablishmentMuteco = ({ establishment, enterprise }) => {
   const hasActivitePartielle = !!_get(establishment, `activite_partielle`);
@@ -66,8 +67,12 @@ const EstablishmentMuteco = ({ establishment, enterprise }) => {
                       <td>{numConvention}</td>
                       <td>{nbAvenants}</td>
                       <td>{<Value value={date} />}</td>
-                      <td>{Math.round(nbHeuresAutorisees)}</td>
-                      <td>{Math.round(nbHeuresConsommees)}</td>
+                      <td className="has-text-right">
+                        {formatNumber(Math.round(nbHeuresAutorisees))}
+                      </td>
+                      <td className="has-text-right">
+                        {formatNumber(Math.round(nbHeuresConsommees))}
+                      </td>
                       <td>{motif}</td>
                     </tr>
                   )
@@ -77,12 +82,18 @@ const EstablishmentMuteco = ({ establishment, enterprise }) => {
               {totalActivitePartielle && (
                 <tfoot>
                   <tr>
-                    <th colSpan="3">Total : </th>
-                    <td>
-                      {Math.round(totalActivitePartielle.nbHeuresAutorisees)}
+                    <th colSpan="3" className="has-text-right">
+                      Total{" "}
+                    </th>
+                    <td className="has-text-right">
+                      {formatNumber(
+                        Math.round(totalActivitePartielle.nbHeuresAutorisees)
+                      )}
                     </td>
-                    <td>
-                      {Math.round(totalActivitePartielle.nbHeuresConsommees)}
+                    <td className="has-text-right">
+                      {formatNumber(
+                        Math.round(totalActivitePartielle.nbHeuresConsommees)
+                      )}
                     </td>
                     <td />
                   </tr>

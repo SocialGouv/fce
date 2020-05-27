@@ -31,7 +31,7 @@ const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
                   <Value value={dossier.type} />
                 </td>
               )}
-              <td className="has-text-right">
+              <td>
                 <Value value={dossier.date_enregistrement} />
               </td>
               <td className="has-text-right">
@@ -41,7 +41,7 @@ const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
                 <Value value={dossier.etat} />
               </td>
               <td className="has-text-right w-20">
-                <Value value={dossier.nombre_de_ruptures} />
+                <Value value={dossier.nombre_de_ruptures} hasNumberFormat />
               </td>
               <td className="w-30">
                 <Value

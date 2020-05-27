@@ -6,6 +6,7 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
+import { formatNumber } from "../../../../../helpers/utils";
 
 const ActivitePartielle = ({
   enterprise: { activite_partielle, etablissements }
@@ -71,10 +72,10 @@ const ActivitePartielle = ({
                       </td>
                       <td>{categorie}</td>
                       <td className="has-text-right">
-                        {Math.round(nbHeuresAutorisees)}
+                        {formatNumber(Math.round(nbHeuresAutorisees))}
                       </td>
                       <td className="has-text-right">
-                        {Math.round(nbHeuresConsommees)}
+                        {formatNumber(Math.round(nbHeuresConsommees))}
                       </td>
                       <td>{<Value value={date} />}</td>
                       <td className="has-text-centered">
@@ -95,10 +96,14 @@ const ActivitePartielle = ({
                     Totaux
                   </th>
                   <td className="has-text-right">
-                    {Math.round(totalActivitePartielle.nbHeuresAutorisees)}
+                    {formatNumber(
+                      Math.round(totalActivitePartielle.nbHeuresAutorisees)
+                    )}
                   </td>
                   <td className="has-text-right">
-                    {Math.round(totalActivitePartielle.nbHeuresConsommees)}
+                    {formatNumber(
+                      Math.round(totalActivitePartielle.nbHeuresConsommees)
+                    )}
                   </td>
                   <td colSpan="2" />
                 </tr>

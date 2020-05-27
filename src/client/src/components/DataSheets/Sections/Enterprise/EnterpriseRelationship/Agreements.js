@@ -9,6 +9,7 @@ import State from "../../SharedComponents/State";
 import { sortAgreements } from "../../../../../helpers/Relationships";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { toI18nDate } from "../../../../../helpers/Date";
+import { formatNumber } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 
 import "./agreements.scss";
@@ -63,7 +64,9 @@ export const Agreements = ({
                         {etat && <State state={etat} />}
                       </td>
                       <td>{categorie}</td>
-                      <td className="has-text-right">{totalEtab}</td>
+                      <td className="has-text-right">
+                        {totalEtab && formatNumber(totalEtab)}
+                      </td>
                       <td>{toI18nDate(date)}</td>
                       <td className="has-text-centered">
                         <SeeDetailsLink

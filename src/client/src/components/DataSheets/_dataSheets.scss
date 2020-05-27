@@ -138,6 +138,10 @@
 
                 padding: 2rem 0;
 
+                tfoot tr > td:not(:last-of-type) {
+                    border-right: solid 1px $grey-geyser;
+                }
+
                 &__center-cell {
                     text-align: center;
                 }

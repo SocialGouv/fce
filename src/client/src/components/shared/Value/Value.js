@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { toI18nDate } from "../../../helpers/Date";
+import { formatNumber } from "../../../helpers/utils";
 
 export default ({
   value,
@@ -10,7 +11,9 @@ export default ({
   dateFormat = "L",
   breakLines = false,
   link = false,
-  nonEmptyValues = []
+  nonEmptyValues = [],
+  hasNumberFormat = false,
+  numberFormatOptions = null
 }) => {
   if (value && React.isValidElement(value)) {
     return value;
@@ -60,6 +63,13 @@ export default ({
         {value}
       </Link>
     );
+  }
+
+  if (
+    (typeof value === "string" || typeof value === "number") &&
+    hasNumberFormat
+  ) {
+    return formatNumber(value, numberFormatOptions ? numberFormatOptions : {});
   }
 
   return value;

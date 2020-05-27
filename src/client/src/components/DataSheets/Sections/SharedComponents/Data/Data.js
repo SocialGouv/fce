@@ -81,7 +81,9 @@ Data.propTypes = {
   link: PropTypes.string,
   sourceSi: PropTypes.string,
   sourceCustom: PropTypes.string,
-  sourceDate: PropTypes.string
+  sourceDate: PropTypes.string,
+  hasNumberFormat: PropTypes.bool,
+  numberFormatOptions: PropTypes.object
 };
 
 export default Data;

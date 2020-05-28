@@ -1,4 +1,5 @@
 import _get from "lodash.get";
+import { formatNumber } from "../../helpers/utils";
 
 const hosts2config = require("./configs/hosts2configs.json");
 
@@ -106,11 +107,10 @@ const globalConfig = {
     "31": "200 à 249 salariés",
     "32": "250 à 499 salariés",
     "41": "500 à 999 salariés",
-    //utiliser "\u00a0" comme espace insécable, "&nbsp;" est rendu tel quel par react
-    "42": "1\u00a0000 à 1\u00a0999 salariés",
-    "51": "2\u00a0000 à 4\u00a0999 salariés",
-    "52": "5\u00a0000 à 9\u00a0999 salariés",
-    "53": "10\u00a0000 salariés et plus"
+    "42": `${formatNumber(1000)} à ${formatNumber(1999)} salariés`,
+    "51": `${formatNumber(2000)} à ${formatNumber(4999)} salariés`,
+    "52": `${formatNumber(5000)} à ${formatNumber(9999)} salariés`,
+    "53": `${formatNumber(10000)} salariés et plus`
   },
   sources: {
     customDateFormats: {

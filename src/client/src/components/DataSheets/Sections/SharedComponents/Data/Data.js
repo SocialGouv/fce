@@ -15,7 +15,9 @@ const Data = ({
   columnClasses = ["is-4", "is-8"],
   sourceSi = null,
   sourceCustom = null,
-  sourceDate = null
+  sourceDate = null,
+  hasNumberFormat = false,
+  numberFormatOptions = null
 }) => {
   return (
     <>
@@ -33,6 +35,8 @@ const Data = ({
                   value={value}
                   empty={emptyValue}
                   nonEmptyValues={nonEmptyValue}
+                  hasNumberFormat={hasNumberFormat}
+                  numberFormatOptions={numberFormatOptions}
                 />
               </Link>
             ) : (
@@ -40,6 +44,8 @@ const Data = ({
                 value={value}
                 empty={emptyValue}
                 nonEmptyValues={nonEmptyValue}
+                hasNumberFormat={hasNumberFormat}
+                numberFormatOptions={numberFormatOptions}
               />
             )}
           </div>
@@ -75,7 +81,9 @@ Data.propTypes = {
   link: PropTypes.string,
   sourceSi: PropTypes.string,
   sourceCustom: PropTypes.string,
-  sourceDate: PropTypes.string
+  sourceDate: PropTypes.string,
+  hasNumberFormat: PropTypes.bool,
+  numberFormatOptions: PropTypes.object
 };
 
 export default Data;

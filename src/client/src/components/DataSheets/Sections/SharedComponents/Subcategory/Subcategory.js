@@ -40,6 +40,8 @@ const Subcategory = ({
                 sourceSi={data.sourceSi}
                 sourceCustom={data.sourceCustom}
                 sourceDate={data.sourceDate}
+                hasNumberFormat={data.hasNumberFormat}
+                numberFormatOptions={data.numberFormatOptions}
               />
             );
           })}

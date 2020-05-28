@@ -10,7 +10,7 @@ const Finances = ({ establishment }) => {
   if (establishment.donnees_ecofi) {
     dates = Object.keys(establishment.donnees_ecofi).map((date, index) => {
       return (
-        <th key={index}>
+        <th className="has-text-right" key={index}>
           <Value value={date} empty="-" />
         </th>
       );
@@ -22,14 +22,18 @@ const Finances = ({ establishment }) => {
         minimumFractionDigits: 0
       }).format(ca);
       return (
-        <td key={index}>
+        <td className="has-text-right" key={index}>
           <Value value={ca} empty="-" />
         </td>
       );
     });
 
     emptyList = Object.values(establishment.donnees_ecofi).map((ca, index) => {
-      return <td key={index}>Non disponible</td>;
+      return (
+        <td className="has-text-right" key={index}>
+          Non disponible
+        </td>
+      );
     });
   }
 

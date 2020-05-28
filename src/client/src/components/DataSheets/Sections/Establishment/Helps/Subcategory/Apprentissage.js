@@ -5,6 +5,7 @@ import Data from "../../../SharedComponents/Data";
 import Subcategory from "../../../SharedComponents/Subcategory";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
 import { hasApprentissage } from "../../../../../../helpers/Establishment";
+import { formatNumber } from "../../../../../../helpers/utils";
 
 const Apprentissage = ({ apprentissage }) => {
   return (
@@ -24,7 +25,9 @@ const Apprentissage = ({ apprentissage }) => {
               <tr>
                 <th></th>
                 {Object.keys(apprentissage).map(year => (
-                  <th key={year}>{year}</th>
+                  <th className="has-text-right" key={year}>
+                    {year}
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -32,14 +35,18 @@ const Apprentissage = ({ apprentissage }) => {
               <tr>
                 <th>Nombre de contrats d{`'`}apprentissage signés</th>
                 {Object.entries(apprentissage).map(([year, { signes }]) => (
-                  <td key={year}>{signes}</td>
+                  <td className="has-text-right" key={year}>
+                    {signes && formatNumber(signes)}
+                  </td>
                 ))}
               </tr>
 
               <tr>
                 <th>Nombre de contrats rompus </th>
                 {Object.entries(apprentissage).map(([year, { rompus }]) => (
-                  <td key={year}>{rompus}</td>
+                  <td className="has-text-right" key={year}>
+                    {rompus && formatNumber(rompus)}
+                  </td>
                 ))}
               </tr>
             </tbody>

@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
+import { formatNumber } from "../../../../../helpers/utils";
 import {
   isActiveEstablishment,
   hasApprentissage
@@ -56,19 +57,19 @@ const Dashboard = ({
     "0 salarié": "0 salarié"
   };
 
+  const effectif = isActiveEstablishment(establishment)
+    ? (dernier_effectif_physique && formatNumber(dernier_effectif_physique)) ||
+      dashboardSizeRanges[tranche_effectif_insee] ||
+      "-"
+    : "0 salarié";
+
   return (
     <div className="dashboard columns">
       <Item
         icon={faChild}
         name="Effectif"
         smallText={tranche_effectif_insee === "00"}
-        value={
-          isActiveEstablishment(establishment)
-            ? dernier_effectif_physique ||
-              dashboardSizeRanges[tranche_effectif_insee] ||
-              "-"
-            : "0 salarié"
-        }
+        value={effectif}
       />
       <Item
         icon={faCalendarCheck}

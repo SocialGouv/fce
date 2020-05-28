@@ -13,7 +13,7 @@ export default ({
   link = false,
   nonEmptyValues = [],
   hasNumberFormat = false,
-  numberFormatOptions = null
+  numberFormatOptions = {}
 }) => {
   if (value && React.isValidElement(value)) {
     return value;
@@ -69,7 +69,7 @@ export default ({
     (typeof value === "string" || typeof value === "number") &&
     hasNumberFormat
   ) {
-    return formatNumber(value, numberFormatOptions ? numberFormatOptions : {});
+    return formatNumber(value, numberFormatOptions);
   }
 
   return value;

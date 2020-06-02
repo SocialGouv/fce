@@ -11,7 +11,6 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rating from "./Rating";
-import FieldError from "../FieldError";
 import {
   SET_USEFUL,
   SET_COMMENT

@@ -27,6 +27,8 @@ $footer-bg: $grey-geyser;
 $footer-link: $grey-tundora;
 $border-grey-light: $grey-geyser;
 $sidebar-establishment-bg: $white-alabaster;
+$rating-gradient: #e21717, #e75907, #e38906, #eeb12c, #f0d828, #b3dc04, #71d903,
+    #30d502, #02d112, #01ce4e, #00ca88;
 
 /* BORDER-RADIUS */
 $b-radius: 0.25rem;
@@ -54,16 +56,3 @@ $spacer-lg: $spacer * 1.5;
 $spacer-xl: $spacer * 3;
 
 @import "~bulma/sass/utilities/all";
-
-/*
-#00ca88
-#01ce4e
-#02d112
-#30d502
-#71d903
-#b3dc04
-#e0c805
-#e38906
-#e74907
-#ea0808
-*/

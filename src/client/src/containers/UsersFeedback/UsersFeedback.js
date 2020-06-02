@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useReducer } from "react";
 import PropTypes from "prop-types";
 import { captureException as sentryCaptureException } from "@sentry/browser";
 import Http from "../../services/Http";

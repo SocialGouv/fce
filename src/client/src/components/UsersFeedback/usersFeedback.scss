@@ -41,9 +41,9 @@
         font-size: 1.5rem;
 
         input {
-            opacity: 0;
             width: 0;
             height: 0;
+            opacity: 0;
         }
 
         & .radio {
@@ -60,49 +60,67 @@
 
     &__comment {
         padding: 1rem;
+
+        label {
+            font-weight: bold;
+        }
     }
 
     & .textarea {
-        margin-bottom: 1rem;
+        margin-bottom: $spacer;
         border: 1px solid $grey-geyser;
     }
 
     &__rating {
+        margin-bottom: $spacer-xl;
+
+        p {
+            font-weight: bold;
+        }
+    }
+
+    &__rates {
         display: flex;
+        flex-wrap: wrap;
     }
 
     &__rate {
         position: relative;
         display: flex;
         justify-content: center;
+
         &:not(:last-of-type) {
             margin-right: $spacer-xs;
         }
 
         &-radio {
             position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            z-index: 1;
             width: 1.5rem;
             height: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            z-index: 1;
         }
 
         &-span {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 4rem;
-            height: 4rem;
-            border: 1px solid #ccc;
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 1px solid $grey-geyser;
             border-radius: $b-radius;
-            background: $white-alabaster;
+            background-color: $grey-geyser;
             cursor: pointer;
-            transition: all 0.2s;
-        }
+            transition: background-color 0.3s;
 
-        &-radio:checked + &-span {
-            background-color: red;
+            // gradient colors for each rate from 0 to 10
+            // SASS list index starts at 1, to start with 0 : index - 1
+            @each $current-color in $rating-gradient {
+                &--#{index($rating-gradient, $current-color) - 1} {
+                    background-color: $current-color;
+                }
+            }
         }
     }
 

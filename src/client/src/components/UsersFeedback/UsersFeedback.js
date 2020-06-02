@@ -11,15 +11,20 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rating from "./Rating";
+import FieldError from "../FieldError";
 import {
   SET_USEFUL,
-  SET_COMMENT,
-  RESET
+  SET_COMMENT
 } from "../../containers/UsersFeedback/actionTypes";
 
 import "./usersFeedback.scss";
 
-const UsersFeedback = ({ state, dispatch, sendFeedback, fullWidth }) => {
+const UsersFeedback = ({
+  state: { useful, comment, rate },
+  dispatch,
+  sendFeedback,
+  fullWidth
+}) => {
   const handleChange = action => e => {
     dispatch({ type: action, payload: e.target.value });
   };
@@ -44,11 +49,11 @@ const UsersFeedback = ({ state, dispatch, sendFeedback, fullWidth }) => {
                   type="radio"
                   name="useful"
                   value="thumbup"
-                  checked={state.useful === "thumbup"}
+                  checked={useful === "thumbup"}
                   onChange={handleChange(SET_USEFUL)}
                 />
                 <label htmlFor="thumb-up" className="radio" title="Oui">
-                  {state.useful === "thumbup" ? (
+                  {useful === "thumbup" ? (
                     <FontAwesomeIcon icon={faSolidThumbsUp} />
                   ) : (
                     <FontAwesomeIcon icon={faLightThumbsUp} />
@@ -59,11 +64,11 @@ const UsersFeedback = ({ state, dispatch, sendFeedback, fullWidth }) => {
                   type="radio"
                   name="useful"
                   value="thumbdown"
-                  checked={state.useful === "thumbdown"}
+                  checked={useful === "thumbdown"}
                   onChange={handleChange(SET_USEFUL)}
                 />
                 <label htmlFor="thumb-down" className="radio" title="Non">
-                  {state.useful === "thumbdown" ? (
+                  {useful === "thumbdown" ? (
                     <FontAwesomeIcon icon={faSolidThumbsDown} />
                   ) : (
                     <FontAwesomeIcon icon={faLightThumbsDown} />
@@ -73,30 +78,31 @@ const UsersFeedback = ({ state, dispatch, sendFeedback, fullWidth }) => {
             </div>
           </fieldset>
 
-          {state.useful && (
+          {useful && (
             <div className="control user-feedback__comment">
               <label htmlFor="comment">
-                <strong>
-                  Souhaitez vous nous en dire davantage ? (facultatif)
-                </strong>
+                Souhaitez vous nous en dire davantage ? (facultatif)
               </label>
               <textarea
                 id="comment"
                 className="textarea"
                 name="comment"
-                value={state.comment}
+                value={comment}
                 onChange={handleChange(SET_COMMENT)}
               />
 
               <Rating
                 min={0}
                 max={10}
-                state={state}
+                rate={rate}
                 handleChange={handleChange}
               />
-
               <div className="user-feedback__buttons">
-                <button type="submit" className="button is-primary">
+                <button
+                  type="submit"
+                  className="button is-primary"
+                  disabled={!rate}
+                >
                   Envoyer
                 </button>
               </div>

@@ -10,7 +10,6 @@ $green-washed: rgba(34, 137, 31, 0.2);
 $green-forest: #22891f;
 $white-alabaster: #fafafa;
 $white-smoke: #f5f5f5;
-$pale-grey: #f5f5f7;
 $grey-geyser: #dde1e5;
 $grey-tundora: #4a4a4a;
 $dark-grey: #363636;
@@ -34,7 +33,7 @@ $b-radius: 0.25rem;
 
 /* SHADOWS */
 $fce-shadow: 0 0 6px rgba(100, 100, 100, 0.06),
-0 0 15px rgba(100, 100, 100, 0.15);
+    0 0 15px rgba(100, 100, 100, 0.15);
 
 /* FONT-SIZE */
 $font-size-section-title: 1.25rem;
@@ -42,12 +41,9 @@ $font-size-section-subtitle: 1.15rem;
 $font-size-small: 0.8rem;
 
 /* TYPOGRAPHY */
-$segoe: "Segoe Pro",
-sans-serif;
-$evolventa: "Evolventa",
-sans-serif;
-$roboto: "Roboto",
-sans-serif;
+$segoe: "Segoe Pro", sans-serif;
+$evolventa: "Evolventa", sans-serif;
+$roboto: "Roboto", sans-serif;
 
 /* SPACES */
 $spacer: 1rem;
@@ -58,3 +54,16 @@ $spacer-lg: $spacer * 1.5;
 $spacer-xl: $spacer * 3;
 
 @import "~bulma/sass/utilities/all";
+
+/*
+#00ca88
+#01ce4e
+#02d112
+#30d502
+#71d903
+#b3dc04
+#e0c805
+#e38906
+#e74907
+#ea0808
+*/

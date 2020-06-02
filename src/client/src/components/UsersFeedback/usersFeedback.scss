@@ -1,7 +1,7 @@
 @import "../App/variables";
 @import "../App/placeholders";
 
-.user-review {
+.user-feedback {
     width: 40em;
     max-width: 100%;
     margin: 1.5rem auto;
@@ -65,6 +65,45 @@
     & .textarea {
         margin-bottom: 1rem;
         border: 1px solid $grey-geyser;
+    }
+
+    &__rating {
+        display: flex;
+    }
+
+    &__rate {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        &:not(:last-of-type) {
+            margin-right: $spacer-xs;
+        }
+
+        &-radio {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 1;
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        &-span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 4rem;
+            height: 4rem;
+            border: 1px solid #ccc;
+            border-radius: $b-radius;
+            background: $white-alabaster;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        &-radio:checked + &-span {
+            background-color: red;
+        }
     }
 
     &__buttons {

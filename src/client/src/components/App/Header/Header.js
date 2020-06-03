@@ -60,7 +60,10 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
             {location.pathname !== "/login" && (
               <span>
                 Aidez-nous à l{"'"}améliorer en{" "}
-                <a className="beta-message__feedback-link" href="#user-review">
+                <a
+                  className="beta-message__feedback-link"
+                  href="#user-feedback"
+                >
                   donnant votre avis
                 </a>
               </span>

@@ -20,7 +20,7 @@ const Rating = ({ min, max, rate = null, handleChange }) => {
               type="radio"
               name="rate"
               value={`${number}`}
-              checked={rate === `${number}`}
+              checked={parseInt(rate) === number}
               onChange={handleChange(SET_RATE)}
             />
             <span

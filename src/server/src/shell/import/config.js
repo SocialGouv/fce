@@ -226,7 +226,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^RUPCO_procedure(.)*.csv$/,
+      fileMatch: /^RUPCO(.)*procedure(.)*.csv$/,
       outputFileName: "rupco_procedures.csv",
     },
     ingest: {
@@ -258,7 +258,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^RUPCO_etablissement(.)*.csv$/,
+      fileMatch: /^RUPCO(.)*etablissement(.)*.csv$/,
       outputFileName: "rupco_etablissements.csv",
     },
     ingest: {

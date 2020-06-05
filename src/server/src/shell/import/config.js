@@ -10,7 +10,7 @@ const config = {
       fileMatch: /^(.)*_WIKIT_UC.json$/,
       outputFileName: "wikit_uc.csv",
       converter: CONVERTER_JSON_TO_CSV,
-      mapFieldsFunction: (data) => ({
+      transformer: (data) => ({
         code: data.CODE_UC,
         libelle: data.LIB_UC,
         email: data["Courrier électronique"],
@@ -20,7 +20,7 @@ const config = {
       className: "WikitUc",
       table: "wikit_uc",
       filename: `${FILES_FOLDER}/wikit_uc.csv`,
-      cols: ["code", "libelle"],
+      cols: ["code", "libelle", "email"],
       delimiter: ",",
       truncate: true,
       history: false,

@@ -1,7 +1,7 @@
 const { parse, isValid, format } = require("date-fns");
 const OUT_FORMAT = "yyyy-MM-dd";
 
-const formatDate = date => {
+const formatDate = (date) => {
   if (!date) {
     return null;
   }

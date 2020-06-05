@@ -1,7 +1,32 @@
 const FILES_FOLDER = "/mnt/data/export";
 const CONVERTER_XLSX_TO_CSV = "xlsxToCsv";
+const CONVERTER_JSON_TO_CSV = "jsonToCsv";
 
 const config = {
+  wikit_uc: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgt",
+      fileMatch: /^(.)*_WIKIT_UC.json$/,
+      outputFileName: "wikit_uc.csv",
+      converter: CONVERTER_JSON_TO_CSV,
+      transformer: (data) => ({
+        code: data.CODE_UC,
+        libelle: data.LIB_UC,
+        email: data["Courrier électronique"],
+      }),
+    },
+    ingest: {
+      className: "WikitUcIngestor",
+      table: "wikit_uc",
+      filename: `${FILES_FOLDER}/wikit_uc.csv`,
+      cols: ["code", "libelle", "email"],
+      delimiter: ",",
+      truncate: true,
+      history: false,
+    },
+  },
+  // === import wikit_uc first ===
   interactions_pole_t: {
     download: {
       className: "MinioDownloader",
@@ -10,6 +35,7 @@ const config = {
       outputFileName: "interactions_pole_t.csv",
     },
     ingest: {
+      className: "InteractionsPole3TIngestor",
       table: "interactions_pole_t",
       historyTable: "interactions_pole_t_historique",
       filename: `${FILES_FOLDER}/interactions_pole_t.csv`,

@@ -13,13 +13,20 @@ class InteractionsPole3TIngestor extends Ingestor {
   _replaceRealisePourCodeByLabel(table) {
     console.log(`Replace Wikit Control Units labels for ${table}`);
 
-    const query = `UPDATE "${table}"
-                    SET realise_pour =
-                      CASE
-                        WHEN EXISTS (SELECT libelle FROM wikit_uc WHERE code = realise_pour)
-                          THEN (SELECT libelle FROM wikit_uc WHERE code = realise_pour)
-                          ELSE realise_pour
-                      END;`;
+    const query = `
+      UPDATE "${table}"
+      SET intervenant =
+        CASE
+          WHEN EXISTS (SELECT email FROM wikit_uc WHERE code = realise_pour)
+          THEN (SELECT email FROM wikit_uc WHERE code = realise_pour)
+          ELSE intervenant
+        END,
+      realise_pour =
+        CASE
+          WHEN EXISTS (SELECT libelle FROM wikit_uc WHERE code = realise_pour)
+          THEN (SELECT libelle FROM wikit_uc WHERE code = realise_pour)
+          ELSE realise_pour
+        END;`;
 
     return execSync(`${this.psql} "${query}"`);
   }

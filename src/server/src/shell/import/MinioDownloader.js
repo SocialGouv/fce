@@ -99,12 +99,12 @@ class MinioDownloader {
   }
 
   async _convertFile(converterFile) {
-    const { outputFileName, mapFieldsFunction = null } = this._config;
+    const { outputFileName, transformer = null } = this._config;
     const filePath = `${LOCAL_STORAGE_PATH}/${outputFileName}`;
 
     // eslint-disable-next-line security/detect-non-literal-require
     const converter = require(`./converter/${converterFile}`);
-    return await converter(filePath, mapFieldsFunction);
+    return await converter(filePath, transformer);
   }
 
   async _moveToArchive(bucket, file) {

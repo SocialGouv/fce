@@ -7,6 +7,7 @@ exports.up = (pgm) => {
   pgm.createTable(tablename, {
     code: { type: "varchar(6)", notNull: false },
     libelle: { type: "varchar(255)", notNull: false },
+    email: { type: "varchar(255)", notNull: false },
   });
   pgm.createIndex(tablename, "code");
 };

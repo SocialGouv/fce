@@ -15,7 +15,7 @@ class MinioDownloader {
       MINIO_PORT,
       MINIO_USE_SSL,
       MINIO_ACCESS_KEY,
-      MINIO_SECRET_KEY
+      MINIO_SECRET_KEY,
     } = process.env;
 
     this.minioClient = new Minio.Client({
@@ -23,7 +23,7 @@ class MinioDownloader {
       port: +MINIO_PORT,
       useSSL: !!MINIO_USE_SSL,
       accessKey: MINIO_ACCESS_KEY,
-      secretKey: MINIO_SECRET_KEY
+      secretKey: MINIO_SECRET_KEY,
     });
   }
 
@@ -72,13 +72,13 @@ class MinioDownloader {
 
     return new Promise((resolve, reject) => {
       const files = [];
-      stream.on("data", obj => {
+      stream.on("data", (obj) => {
         if (obj.name && obj.name.match(fileMatch)) {
           files.push(obj);
         }
         resolve(files);
       });
-      stream.on("error", err => {
+      stream.on("error", (err) => {
         console.error(err);
         reject(err);
       });
@@ -89,7 +89,7 @@ class MinioDownloader {
     const { outputFileName } = this._config;
     const filePath = `${LOCAL_STORAGE_PATH}/${outputFileName}`;
     return new Promise((resolve, reject) => {
-      this.minioClient.fGetObject(bucket, file.name, filePath, err => {
+      this.minioClient.fGetObject(bucket, file.name, filePath, (err) => {
         if (err) {
           return reject(err);
         }
@@ -99,12 +99,12 @@ class MinioDownloader {
   }
 
   async _convertFile(converterFile) {
-    const { outputFileName } = this._config;
+    const { outputFileName, transformer = null } = this._config;
     const filePath = `${LOCAL_STORAGE_PATH}/${outputFileName}`;
 
     // eslint-disable-next-line security/detect-non-literal-require
     const converter = require(`./converter/${converterFile}`);
-    return await converter(filePath);
+    return await converter(filePath, transformer);
   }
 
   async _moveToArchive(bucket, file) {
@@ -134,7 +134,7 @@ class MinioDownloader {
 
   async _removeToRoot(bucket, file) {
     return new Promise((resolve, reject) => {
-      this.minioClient.removeObject(bucket, file.name, err => {
+      this.minioClient.removeObject(bucket, file.name, (err) => {
         if (err) {
           return reject(err);
         }

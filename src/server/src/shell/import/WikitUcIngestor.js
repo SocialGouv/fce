@@ -2,7 +2,7 @@ const Ingestor = require("./Ingestor");
 // eslint-disable-next-line security/detect-child-process
 const { execSync } = require("child_process");
 
-class WikitUc extends Ingestor {
+class WikitUcIngestor extends Ingestor {
   /**
    * fixes the date in the month preceding the reception of the file
    */
@@ -17,4 +17,4 @@ class WikitUc extends Ingestor {
   }
 }
 
-module.exports = WikitUc;
+module.exports = WikitUcIngestor;

@@ -17,7 +17,7 @@ const config = {
       }),
     },
     ingest: {
-      className: "WikitUc",
+      className: "WikitUcIngestor",
       table: "wikit_uc",
       filename: `${FILES_FOLDER}/wikit_uc.csv`,
       cols: ["code", "libelle", "email"],

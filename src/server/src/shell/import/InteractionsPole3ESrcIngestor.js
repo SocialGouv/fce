@@ -25,13 +25,6 @@ class InteractionsPole3ESrcIngestor extends Ingestor {
     );
   }
 
-  _removeEntitiesWithInvalidSIRET(table) {
-    console.log("Remove entities with invalid SIRET");
-    const query = `DELETE FROM ${table} WHERE siret IS NULL OR siret = ''`;
-
-    return execSync(`${this.psql} "${query}"`);
-  }
-
   _fixDateFormat(table) {
     console.log("Fix date format");
     return execSync(

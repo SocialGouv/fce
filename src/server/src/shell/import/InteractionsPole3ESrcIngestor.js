@@ -7,12 +7,35 @@ class InteractionsPole3ESrcIngestor extends Ingestor {
    * Set SIRET siege if it's a SIREN
    */
   async afterPsqlCopy() {
-    console.log("Set SIRET siege if it's a SIREN");
+    this._replaceSIRENBySIRET(this.getConfig("table"));
+    this._fixDateFormat(this.getConfig("table"));
+  }
 
+  _replaceSIRENBySIRET(table) {
+    console.log("Replace SIREN By SIRET");
     return execSync(
-      `${this.psql} "UPDATE ${this.getConfig(
-        "table"
-      )} SET siret = concat(siret, (SELECT nicsiegeunitelegale FROM entreprises WHERE siren = siret LIMIT 1)) WHERE length(siret) = 9;"`
+      `${this.psql} "UPDATE ${table}
+      SET siret =
+        CASE
+          WHEN numero_etablissement IS NOT NULL
+          THEN concat(siret, numero_etablissement)
+          ELSE concat(siret, (SELECT nicsiegeunitelegale FROM entreprises WHERE siren = siret LIMIT 1))
+        END;
+      "`
+    );
+  }
+
+  _removeEntitiesWithInvalidSIRET(table) {
+    console.log("Remove entities with invalid SIRET");
+    const query = `DELETE FROM ${table} WHERE siret IS NULL OR siret = ''`;
+
+    return execSync(`${this.psql} "${query}"`);
+  }
+
+  _fixDateFormat(table) {
+    console.log("Fix date format");
+    return execSync(
+      `${this.psql} "UPDATE ${table} SET "date" = LEFT("date", 10);"`
     );
   }
 }

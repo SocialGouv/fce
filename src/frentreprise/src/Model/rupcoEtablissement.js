@@ -20,6 +20,13 @@ const rupcoEtablissement = (sequelize, DataTypes) => {
     }
   );
 
+  RupcoEtablissement.associate = (models) => {
+    RupcoEtablissement.hasOne(models.RupcoProcedure, {
+      foreignKey: "numero",
+      sourceKey: "numero",
+    });
+  };
+
   return RupcoEtablissement;
 };
 

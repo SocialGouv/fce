@@ -1,3 +1,19 @@
+const associatedSources = [
+  { type: "hasMany", model: "Accord" },
+  { type: "hasMany", model: "ActivitePartielle" },
+  { type: "hasMany", model: "Apprentissage" },
+  { type: "hasOne", model: "ContratAide" },
+  { type: "hasOne", model: "DsnEff" },
+  { type: "hasOne", model: "Iae" },
+  { type: "hasMany", model: "Idcc" },
+  { type: "hasMany", model: "InteractionsPole3ESEER" },
+  { type: "hasMany", model: "InteractionsPole3ESRC" },
+  { type: "hasMany", model: "InteractionsPoleC" },
+  { type: "hasMany", model: "InteractionsPoleT" },
+  { type: "hasMany", model: "PolesCompetitivite" },
+  { type: "hasOne", model: "UcEff" },
+];
+
 const etablissement = (sequelize, DataTypes) => {
   const Etablissement = sequelize.define(
     "etablissement",
@@ -59,6 +75,8 @@ const etablissement = (sequelize, DataTypes) => {
     }
   );
 
+  Etablissement.associatedSources = associatedSources;
+
   Etablissement.associate = (models) => {
     Etablissement.belongsTo(models.Naf, {
       foreignKey: "activiteprincipaleetablissement",
@@ -68,9 +86,26 @@ const etablissement = (sequelize, DataTypes) => {
       foreignKey: "siren",
       targetKey: "siren",
     });
-    Etablissement.hasMany(models.Accord, {
+    Etablissement.hasMany(models.RupcoEtablissement, {
       foreignKey: "siret",
       sourceKey: "siret",
+    });
+    associatedSources.forEach(({ type, model }) => {
+      Etablissement[type](models[model], {
+        foreignKey: "siret",
+        sourceKey: "siret",
+      });
+    });
+
+    Etablissement.Successeur = Etablissement.hasOne(models.Succession, {
+      as: "successeur",
+      foreignKey: "siretetablissementpredecesseur",
+      targetKey: "siret",
+    });
+    Etablissement.Predecesseur = Etablissement.hasOne(models.Succession, {
+      as: "predecesseur",
+      foreignKey: "siretetablissementsuccesseur",
+      targetKey: "siret",
     });
   };
 

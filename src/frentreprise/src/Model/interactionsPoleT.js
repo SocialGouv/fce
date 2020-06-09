@@ -10,7 +10,7 @@ const interactionsPoleT = (sequelize, DataTypes) => {
       intervenant: DataTypes.STRING,
     },
     {
-      tableName: "interactions_pole_c",
+      tableName: "interactions_pole_t",
     }
   );
 

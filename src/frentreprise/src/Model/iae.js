@@ -12,7 +12,7 @@ const iae = (sequelize, DataTypes) => {
       AI_SI2018: DataTypes.INTEGER,
       ETTI_SI2018: DataTypes.INTEGER,
       EI_ETP2018: DataTypes.FLOAT,
-      sACI_ETP2018iret: DataTypes.FLOAT,
+      ACI_ETP2018: DataTypes.FLOAT,
       AI_ETP2018: DataTypes.FLOAT,
       ETTI_ETP2018: DataTypes.FLOAT,
     },

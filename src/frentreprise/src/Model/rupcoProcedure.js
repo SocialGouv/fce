@@ -1,6 +1,6 @@
-const rupcoProcedures = (sequelize, DataTypes) => {
-  const RupcoProcedures = sequelize.define(
-    "rupcoProcedures",
+const rupcoProcedure = (sequelize, DataTypes) => {
+  const RupcoProcedure = sequelize.define(
+    "rupcoProcedure",
     {
       numero: DataTypes.INTEGER,
       type: DataTypes.STRING,
@@ -19,7 +19,7 @@ const rupcoProcedures = (sequelize, DataTypes) => {
     }
   );
 
-  return RupcoProcedures;
+  return RupcoProcedure;
 };
 
-export default rupcoProcedures;
+export default rupcoProcedure;

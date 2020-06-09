@@ -1,6 +1,6 @@
-const successions = (sequelize, DataTypes) => {
-  const Successions = sequelize.define(
-    "successions",
+const succession = (sequelize, DataTypes) => {
+  const Succession = sequelize.define(
+    "succession",
     {
       siretetablissementpredecesseur: DataTypes.STRING,
       siretetablissementsuccesseur: DataTypes.STRING,
@@ -14,7 +14,7 @@ const successions = (sequelize, DataTypes) => {
     }
   );
 
-  return Successions;
+  return Succession;
 };
 
-export default successions;
+export default succession;

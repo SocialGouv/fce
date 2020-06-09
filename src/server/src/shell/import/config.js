@@ -90,30 +90,6 @@ const config = {
       className: "InteractionsPole3ESrcIngestor",
       table: "interactions_pole_3e_src",
       filename: `${FILES_FOLDER}/interactions_pole_3e_src.csv`,
-      /*
-        Numero dossier;             => Numéro de dossier (col 3)
-        N° SIREN;                   => N° SIRET (col 2)
-        N° Etablissement;
-        Code region;
-        Libelle region;             => REGION (col 1)
-        Type de contrôle;           => Type de contrôle (col 4)
-        Date creation;              => Date de création (col 5)
-        Date derniere Modification;
-        Date cloture;
-        Cols;
-        Clos automatiquement;
-        Nature du contrôle;
-        Cible du contrôle
-
-        "numero_etablissement",
-    "code_region",
-    "date_derniere_modification",
-    "date_cloture",
-    "cols",
-    "clos_automatiquement",
-    "nature_controle",
-    "cible_controle",
-      */
       cols: [
         "numero_dossier",
         "siret",

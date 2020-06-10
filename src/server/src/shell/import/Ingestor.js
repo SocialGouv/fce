@@ -51,14 +51,14 @@ class Ingestor {
     console.log("Injestor finished");
   }
 
-  async beforeTruncate() {}
-  async afterTruncate() {}
-  async beforePsqlCopy() {}
-  async afterPsqlCopy() {}
-  async beforeBuildHistory() {}
-  async afterBuildHistory() {}
-  async beforeSaveProcessDate() {}
-  async afterSaveProcessDate() {}
+  async beforeTruncate() { }
+  async afterTruncate() { }
+  async beforePsqlCopy() { }
+  async afterPsqlCopy() { }
+  async beforeBuildHistory() { }
+  async afterBuildHistory() { }
+  async beforeSaveProcessDate() { }
+  async afterSaveProcessDate() { }
 
   async _createTmpFileWithNewHeader() {
     console.log("Create tmp file with new header");
@@ -91,7 +91,7 @@ class Ingestor {
       ","
     )}) FROM '${
       this.tmpFile
-    }' with (format csv, header true, delimiter '${delimiter}');"`;
+      }' with (format csv, header true, delimiter '${delimiter}');"`;
 
     return execSync(psqlImportQuery);
   }
@@ -102,7 +102,7 @@ class Ingestor {
       date: { field, format },
       table
     } = this._config;
-
+    console.log({ format, field, table })
     const query = `UPDATE import_updates SET date = (SELECT max(TO_DATE(${field}, '${format}')) FROM ${table}), date_import = CURRENT_TIMESTAMP
     WHERE \\"table\\" = '${table}';`;
 

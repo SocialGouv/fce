@@ -83,7 +83,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^SRC_Extraction(.)*.csv$/,
+      fileMatch: /^(.)*export_SRC(.)*.csv$/,
       outputFileName: "interactions_pole_3e_src.csv",
     },
     ingest: {
@@ -98,7 +98,7 @@ const config = {
         "libelle_region",
         "type_controle",
         "date",
-        "date_derniere_modification",
+        "date",
         "date_cloture",
         "cols",
         "clos_automatiquement",

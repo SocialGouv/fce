@@ -110,7 +110,7 @@ const config = {
       history: false,
       date: {
         field: "date",
-        format: "DD/MM/YYYY",
+        format: "YYYY-MM-DD",
       },
     },
   },

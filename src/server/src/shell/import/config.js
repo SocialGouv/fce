@@ -89,7 +89,7 @@ const config = {
     ingest: {
       className: "InteractionsPole3ESrcIngestor",
       table: "interactions_pole_3e_src",
-      filename: `${FILES_FOLDER}/interactions_pole_3e_src.csv`,
+      filename: `${FILES_FOLDER}/export_SRC.csv`,
       cols: [
         "numero_dossier",
         "siret",
@@ -97,8 +97,8 @@ const config = {
         "region",
         "libelle_region",
         "type_controle",
+        "date_creation",
         "date",
-        "date_derniere_modification",
         "date_cloture",
         "cols",
         "clos_automatiquement",

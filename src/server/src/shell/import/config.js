@@ -97,7 +97,7 @@ const config = {
         "region",
         "libelle_region",
         "type_controle",
-        "date",
+        "date_creation",
         "date",
         "date_cloture",
         "cols",

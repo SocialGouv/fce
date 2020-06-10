@@ -83,13 +83,13 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^SRC_Extraction(.)*.csv$/,
+      fileMatch: /^(.)*export_SRC(.)*.csv$/,
       outputFileName: "interactions_pole_3e_src.csv",
     },
     ingest: {
       className: "InteractionsPole3ESrcIngestor",
       table: "interactions_pole_3e_src",
-      filename: `${FILES_FOLDER}/export_SRC.csv`,
+      filename: `${FILES_FOLDER}/interactions_pole_3e_src.csv`,
       cols: [
         "numero_dossier",
         "siret",
@@ -97,7 +97,7 @@ const config = {
         "region",
         "libelle_region",
         "type_controle",
-        "date_creation",
+        "date",
         "date",
         "date_cloture",
         "cols",

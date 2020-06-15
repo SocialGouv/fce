@@ -10,7 +10,7 @@ const sequelize = new Sequelize("fce", "postgres", "root", {
 
 const models = {};
 
-var context = require.context("./", true, /\.(js)$/);
+const context = require.context("./", true, /\.(js)$/);
 context.keys().forEach((filenameWithPath) => {
   const filename = filenameWithPath.split("/").pop();
   const filenameWithoutExtension = filename.split(".").shift();

@@ -1,7 +1,7 @@
 import utils from "../../../Utils/utils";
 import getData from "../../getData";
 
-const formatEtab = async etab => {
+const formatEtab = async (etab) => {
   const getAdresseComponent = ({
     numerovoieetablissement,
     indicerepetitionetablissement,
@@ -10,7 +10,7 @@ const formatEtab = async etab => {
     complementadresseetablissement,
     codepostaletablissement,
     codecommuneetablissement,
-    libellecommuneetablissement
+    libellecommuneetablissement,
   }) => {
     return {
       numero_voie: numerovoieetablissement,
@@ -20,7 +20,7 @@ const formatEtab = async etab => {
       complement_adresse: complementadresseetablissement,
       code_postal: codepostaletablissement,
       code_insee_localite: codecommuneetablissement,
-      localite: libellecommuneetablissement
+      localite: libellecommuneetablissement,
     };
   };
 
@@ -29,16 +29,16 @@ const formatEtab = async etab => {
     {
       in: "etatadministratifetablissement",
       out: "actif",
-      callback: etat => etat && etat === "A"
+      callback: (etat) => etat && etat === "A",
     },
     {
       in: "etatadministratifetablissement",
-      out: "etat_etablissement"
+      out: "etat_etablissement",
     },
     {
       in: "etatadministratifetablissement",
       out: "etat_etablissement_libelle",
-      callback: etat => {
+      callback: (etat) => {
         switch (etat) {
           case "A":
             return "Actif";
@@ -49,54 +49,54 @@ const formatEtab = async etab => {
           default:
             return undefined;
         }
-      }
+      },
     },
     {
       in: "datedebut",
-      out: "date_fin"
+      out: "date_fin",
     },
     {
       in: "datederniertraitementetablissement",
-      out: "date_dernier_traitement_etablissement"
+      out: "date_dernier_traitement_etablissement",
     },
     {
       in: "enseigne1etablissement",
-      out: "enseigne"
+      out: "enseigne",
     },
     {
       in: "activiteprincipaleetablissement",
-      out: "naf"
+      out: "naf",
     },
     {
       in: "activiteprincipaleetablissement_libelle",
-      out: "libelle_naf"
+      out: "libelle_naf",
     },
     {
       in: "etablissementsiege",
       out: "siege_social",
-      callback: siege => siege === "true"
+      callback: (siege) => siege === "true",
     },
     {
       in: "etablissementsiege",
       out: "categorie_etablissement",
-      callback: siege_social =>
+      callback: (siege_social) =>
         utils.isEmpty(siege_social)
           ? undefined
           : siege_social === "true"
           ? "Siège social"
-          : "Établissement secondaire"
+          : "Établissement secondaire",
     },
     {
       in: "datecreationetablissement",
-      out: "date_creation"
+      out: "date_creation",
     },
     {
       in: "trancheeffectifsetablissement",
-      out: "tranche_effectif_insee"
+      out: "tranche_effectif_insee",
     },
     {
       in: "anneeeffectifsetablissement",
-      out: "annee_tranche_effectif_insee"
+      out: "annee_tranche_effectif_insee",
     },
     {
       in: "complementadresseetablissement",
@@ -104,7 +104,7 @@ const formatEtab = async etab => {
       callback: (complementAdresse, etab) => {
         const adresseComponent = getAdresseComponent(etab);
         return utils.isEmpty(adresseComponent) ? undefined : adresseComponent;
-      }
+      },
     },
     {
       in: "complementadresseetablissement",
@@ -114,34 +114,34 @@ const formatEtab = async etab => {
         return utils.isEmpty(adresseComponent)
           ? undefined
           : utils.getCleanAddress(adresseComponent);
-      }
+      },
     },
     {
       in: "caractereemployeuretablissement",
-      out: "etablissement_employeur"
+      out: "etablissement_employeur",
     },
     {
       in: "entreprise_denominationunitelegale",
-      out: "nom_commercial"
+      out: "nom_commercial",
     },
     {
       in: "entreprise_nomunitelegale",
-      out: "nom"
+      out: "nom",
     },
     {
       in: "entreprise_prenom1unitelegale",
-      out: "prenom"
-    }
+      out: "prenom",
+    },
   ];
   return typeof etab === "object" ? await getData(etab, fields) : {};
 };
 
-const formatEnt = async ent => {
+const formatEnt = async (ent) => {
   const fields = [
     "siren",
     {
       in: "denominationunitelegale",
-      out: "raison_sociale"
+      out: "raison_sociale",
     },
     { in: "sigleunitelegale", out: "sigle" },
     { in: "nomunitelegale", out: "nom" },
@@ -154,9 +154,9 @@ const formatEnt = async ent => {
             ent.prenom1unitelegale,
             ent.prenom2unitelegale,
             ent.prenom3unitelegale,
-            ent.prenom4unitelegale
+            ent.prenom4unitelegale,
           ]
-            .filter(a => a)
+            .filter((a) => a)
             .join(" ")
         )
           ? undefined
@@ -164,18 +164,18 @@ const formatEnt = async ent => {
               ent.prenom1unitelegale,
               ent.prenom2unitelegale,
               ent.prenom3unitelegale,
-              ent.prenom4unitelegale
+              ent.prenom4unitelegale,
             ]
-              .filter(a => a)
-              .join(" ")
+              .filter((a) => a)
+              .join(" "),
     },
     {
       in: "nomusageunitelegale",
-      out: "nom_commercial"
+      out: "nom_commercial",
     },
     {
       in: "categorieentreprise",
-      out: "categorie_entreprise"
+      out: "categorie_entreprise",
     },
     {
       in: "siren",
@@ -183,31 +183,31 @@ const formatEnt = async ent => {
       callback: (siren, { nicsiegeunitelegale }) =>
         utils.isEmpty(siren) || utils.isEmpty(nicsiegeunitelegale)
           ? undefined
-          : `${siren}${nicsiegeunitelegale}`
+          : `${siren}${nicsiegeunitelegale}`,
     },
     {
       in: "categoriejuridiqueunitelegale_libelle",
-      out: "categorie_juridique"
+      out: "categorie_juridique",
     },
     {
       in: "categoriejuridiqueunitelegale",
-      out: "categorie_juridique_code"
+      out: "categorie_juridique_code",
     },
     {
       in: "activiteprincipaleunitelegale",
-      out: "naf"
+      out: "naf",
     },
     {
       in: "activiteprincipaleunitelegale_libelle",
-      out: "libelle_naf"
+      out: "libelle_naf",
     },
     {
       in: "datecreationunitelegale",
-      out: "date_de_creation"
+      out: "date_de_creation",
     },
     {
       in: "etatadministratifunitelegale",
-      out: "etat_entreprise"
+      out: "etat_entreprise",
     },
     {
       in: "etatadministratifunitelegale",
@@ -218,24 +218,24 @@ const formatEnt = async ent => {
       ) =>
         etatadministratifunitelegale === "C"
           ? datedebut
-          : datederniertraitementunitelegale
+          : datederniertraitementunitelegale,
     },
     {
       in: "datedebut",
-      out: "date_de_radiation"
+      out: "date_de_radiation",
     },
     {
       in: "caractereemployeurunitelegale",
-      out: "entreprise_employeur"
+      out: "entreprise_employeur",
     },
     {
       in: "anneeeffectifsunitelegale",
-      out: "annee_tranche_effectif"
+      out: "annee_tranche_effectif",
     },
     {
       in: "trancheeffectifsunitelegale",
-      out: "tranche_effectif"
-    }
+      out: "tranche_effectif",
+    },
   ];
 
   return typeof ent === "object" ? await getData(ent, fields) : {};
@@ -243,5 +243,5 @@ const formatEnt = async ent => {
 
 export default {
   formatEtab,
-  formatEnt
+  formatEnt,
 };

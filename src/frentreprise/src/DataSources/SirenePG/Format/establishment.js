@@ -1,7 +1,8 @@
 import utils from "../../../Utils/utils";
 import getData from "../../getData";
+import sourcesFormat from "./establishmentSources";
 
-export default async (etablishment) => {
+export default async (establishment) => {
   const getAdresseComponent = ({
     numerovoieetablissement,
     indicerepetitionetablissement,
@@ -23,7 +24,8 @@ export default async (etablishment) => {
       localite: libellecommuneetablissement,
     };
   };
-  return getData(etablishment, [
+
+  let establismentFormatted = await getData(establishment, [
     "siret",
     {
       in: "etatadministratifetablissement",
@@ -132,4 +134,23 @@ export default async (etablishment) => {
       out: "prenom",
     },
   ]);
+
+  Object.entries(sourcesFormat).forEach(([field, method]) => {
+    const rawValue = establishment[field];
+
+    if (!rawValue) {
+      return false;
+    }
+
+    if (Array.isArray(rawValue) && !rawValue.length) {
+      return false;
+    }
+
+    establismentFormatted = {
+      ...establismentFormatted,
+      ...method(establishment),
+    };
+  });
+
+  return establismentFormatted;
 };

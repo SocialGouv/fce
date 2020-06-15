@@ -1,9 +1,7 @@
-import Etablissement from "../../../Models/Etablissements";
-import helpers from "../Helpers/helpers";
 import models from "../../../Model";
-import formatEstablishment from "../Helpers/formatEstablishment";
+import formatEstablishment from "../Format/establishment";
 
-const getSettlement = async (SIRET, db) => {
+const getSettlement = async (siret) => {
   const includes = [
     { model: models.Naf },
     { model: models.Entreprise },
@@ -19,7 +17,7 @@ const getSettlement = async (SIRET, db) => {
   ];
 
   const etablissement = await models.Etablissement.findOne({
-    where: { siret: SIRET },
+    where: { siret },
     include: includes,
   });
 

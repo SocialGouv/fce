@@ -17,6 +17,7 @@ export default class Auth {
     }).then(response => {
       if (response.data && response.data.success) {
         Local.set(AUTH_KEY, response.data.token);
+        Local.set("user_email", email);
       }
 
       return response;
@@ -25,6 +26,7 @@ export default class Auth {
 
   static logout() {
     Local.remove(AUTH_KEY);
+    Local.remove("user_email");
   }
 
   static isLogged() {

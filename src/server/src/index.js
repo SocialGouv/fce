@@ -1,6 +1,7 @@
 import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
+import * as Sentry from "@sentry/node";
 import apiRouter from "./api";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise from "frentreprise";
@@ -15,6 +16,8 @@ const app = express();
 const port = (config.has("port") && +config.get("port")) || 80;
 const host = (config.has("port") && config.get("host")) || undefined;
 
+Sentry.init({ dsn: config.get("sentryUrlKey") });
+
 function init() {
   frentreprise.EntrepriseModel = EntrepriseModel;
   frentreprise.EtablissementModel = EtablissementModel;
@@ -24,7 +27,7 @@ function init() {
   apiGouv.token = config.get("APIGouv.token");
   apiGouv.axiosConfig = {
     ...apiGouv.axiosConfig,
-    proxy: (config.has("proxy") && config.get("proxy")) || false
+    proxy: (config.has("proxy") && config.get("proxy")) || false,
   };
   if (config.has("apiTimeout")) {
     apiGouv.axiosConfig.timeout = config.get("apiTimeout");
@@ -42,7 +45,7 @@ function init() {
     }
     sireneAPI.axiosConfig = {
       ...sireneAPI.axiosConfig,
-      proxy: (config.has("proxy") && config.get("proxy")) || false
+      proxy: (config.has("proxy") && config.get("proxy")) || false,
     };
     if (config.has("apiTimeout")) {
       sireneAPI.axiosConfig.timeout = config.get("apiTimeout");
@@ -53,11 +56,11 @@ function init() {
     frentreprise.addDataSource({
       name: "Postgres",
       priority: 50,
-      source: new PG()
+      source: new PG(),
     });
   }
 
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
@@ -72,17 +75,20 @@ function init() {
 
 function run() {
   const htdocs_path = path.resolve(__dirname, "./htdocs");
+  app.use(Sentry.Handlers.requestHandler());
   app.use(express.static(htdocs_path));
   app.use("/api", apiRouter);
 
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     res.sendFile("index.html", { root: htdocs_path });
   });
+
+  app.use(Sentry.Handlers.errorHandler());
 
   app.listen(
     {
       host,
-      port
+      port,
     },
     () => {
       console.log(`Serving files from: ${htdocs_path}`);

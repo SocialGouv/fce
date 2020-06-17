@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   front:
@@ -37,7 +37,6 @@ services:
       - traefik.frontend.rule=Host:srv.fce.test
     environment:
       WATCH: 1
-
 
   builder:
     build: .c42/docker/builder
@@ -111,6 +110,18 @@ services:
       - "traefik.port=8025"
       - "traefik.frontend.rule=Host:mail.fce.test"
 
+  strapi:
+    image: strapi/strapi
+    networks:
+      - traefik
+      - default
+    volumes:
+      - ./src/strapi:/srv/app
+    ports:
+      - 1337
+    labels:
+      - "traefik.port=1337"
+      - "traefik.frontend.rule=Host:strapi.fce.test"
 
 networks:
   traefik:

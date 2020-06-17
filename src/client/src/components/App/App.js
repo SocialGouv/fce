@@ -27,15 +27,11 @@ import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
 
 const isActiveMaintenanceMode = Config.get("maintenanceMode");
+const configMatomo = Config.get("matomo");
+const piwik = PiwikReactRouter(configMatomo);
+
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
-
-const configMatomo =
-  process.env.NODE_ENV === "production"
-    ? Config.get("matomoProd")
-    : Config.get("matomoDev");
-
-const piwik = PiwikReactRouter(configMatomo);
 
 const App = () => {
   return (

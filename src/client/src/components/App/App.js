@@ -4,11 +4,13 @@ import { createBrowserHistory } from "history";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import PiwikReactRouter from "piwik-react-router";
+import { Local } from "OhMyCache";
 
 import "./app.scss";
 import configureStore from "../../services/Store";
 import Config from "../../services/Config";
 import PrivateRoute from "../../services/PrivateRoute";
+import { SetMatomo } from "../../helpers/SetMatomo";
 import ScrollToTop from "./ScrollToTop";
 import Maintenance from "../Maintenance";
 import Header from "./Header";
@@ -24,21 +26,27 @@ import DataSource from "../PublicPages/DataSource";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
 
+const isActiveMaintenanceMode = Config.get("maintenanceMode");
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
 
-if (Config.get("piwik")) {
-  const piwik = PiwikReactRouter(Config.get("piwik"));
-  history = piwik.connectToHistory(history);
-}
+const configMatomo =
+  process.env.NODE_ENV === "production"
+    ? Config.get("matomoProd")
+    : Config.get("matomoDev");
 
-const isActiveMaintenanceMode = Config.get("maintenanceMode");
+const piwik = PiwikReactRouter(configMatomo);
 
 const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Router history={history}>
+        <Router
+          history={piwik.connectToHistory(
+            history,
+            SetMatomo(configMatomo, Local.get("user_email"))
+          )}
+        >
           <ScrollToTop>
             <div className="app">
               <Header showBetaMessage={!isActiveMaintenanceMode} />

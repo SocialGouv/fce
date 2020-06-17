@@ -12,6 +12,13 @@ const idcc = (sequelize, DataTypes) => {
     }
   );
 
+  Idcc.associate = (models) => {
+    Idcc.hasOne(models.IdccDefinition, {
+      foreignKey: "code",
+      sourceKey: "idcc",
+    });
+  };
+
   return Idcc;
 };
 

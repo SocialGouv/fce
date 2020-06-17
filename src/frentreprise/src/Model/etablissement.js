@@ -5,7 +5,6 @@ const associatedSources = [
   { type: "hasOne", model: "ContratAide" },
   { type: "hasOne", model: "DsnEff" },
   { type: "hasOne", model: "Iae" },
-  { type: "hasMany", model: "Idcc" },
   { type: "hasMany", model: "InteractionsPole3ESEER" },
   { type: "hasMany", model: "InteractionsPole3ESRC" },
   { type: "hasMany", model: "InteractionsPoleC" },
@@ -87,6 +86,10 @@ const etablissement = (sequelize, DataTypes) => {
       targetKey: "siren",
     });
     Etablissement.hasMany(models.RupcoEtablissement, {
+      foreignKey: "siret",
+      sourceKey: "siret",
+    });
+    Etablissement.hasMany(models.Idcc, {
       foreignKey: "siret",
       sourceKey: "siret",
     });

@@ -14,6 +14,10 @@ const getSettlement = async (siret) => {
       model: models.RupcoEtablissement,
       include: [models.RupcoProcedure],
     },
+    {
+      model: models.Idcc,
+      include: [models.IdccDefinition],
+    },
   ];
 
   const etablissement = await models.Etablissement.findOne({

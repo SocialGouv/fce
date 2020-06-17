@@ -1,6 +1,6 @@
 import layout from "./layout";
 
-export default ({ useful, comment }) => {
+export default ({ useful, comment, rate }) => {
   const questionCss = "font-weight: bold; color: #2980b9; padding: 8px";
   const answerCss = "padding: 8px 8px 16px";
 
@@ -31,6 +31,17 @@ export default ({ useful, comment }) => {
     <tr>
       <td style="${answerCss}">
         ${comment.length > 0 ? comment : `Aucun commentaire`}
+      </td>
+    </tr>
+
+    <tr>
+      <td style="${questionCss}">
+        Recommendation
+      </td>
+    </tr>
+    <tr>
+      <td style="${answerCss}">
+        ${rate}
       </td>
     </tr>
   </table>

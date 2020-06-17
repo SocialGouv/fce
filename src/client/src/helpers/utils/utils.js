@@ -42,3 +42,6 @@ export const formatNumber = (number, options = {}, locale = "fr-FR") => {
 };
 
 export const formatTva = tva => `${tva.slice(0, 4)} ${tva.slice(4)}`;
+
+export const range = (min, max) =>
+  min === max ? [min] : [min, ...range(min + 1, max)];

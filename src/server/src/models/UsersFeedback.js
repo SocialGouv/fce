@@ -1,16 +1,16 @@
 import Model from "./Model";
 
 export default class UsersFeedback extends Model {
-  create({ useful, comment = "" }) {
+  create({ useful, comment = "", rate }) {
     return this.db
-      .query('INSERT INTO "users_feedback" (useful, comment) VALUES ($1, $2)', [
-        useful,
-        comment
-      ])
-      .then(res => {
+      .query(
+        'INSERT INTO "users_feedback" (useful, comment, rate) VALUES ($1, $2, $3)',
+        [useful, comment, rate]
+      )
+      .then((res) => {
         return res && res.rowCount;
       })
-      .catch(e => {
+      .catch((e) => {
         console.error("UsersFeedback::create", e);
         return false;
       });

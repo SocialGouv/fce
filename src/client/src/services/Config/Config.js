@@ -130,16 +130,6 @@ const globalConfig = {
     aci: "Atelier et chantier d'insertion",
     etti: "Entreprise de travail temporaire d'insertion"
   },
-  matomoDev: {
-    url: "//matomo.fce.test/",
-    serverTrackerName: "matomo.php",
-    siteId: 1
-  },
-  matomoProd: {
-    url: "//matomo.fabrique.social.gouv.fr",
-    serverTrackerName: "matomo.php",
-    siteId: 8
-  },
   legifranceSearchUrl:
     "https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale=",
   codeInseeLength: 5

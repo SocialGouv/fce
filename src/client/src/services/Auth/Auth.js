@@ -38,6 +38,10 @@ export default class Auth {
     return Local.get(AUTH_KEY);
   }
 
+  static getEmail() {
+    return Local.get(AUTH_EMAIL);
+  }
+
   /**
    * @link https://andywalpole.me/blog/140739/using-javascript-create-guid-from-users-browser-information
    */

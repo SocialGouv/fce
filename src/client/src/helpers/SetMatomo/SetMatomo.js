@@ -1,7 +1,9 @@
-export const SetMatomo = (config, userId) => {
+import Auth from "../../services/Auth";
+
+export const SetMatomo = config => {
   var _paq = window._paq || [];
 
-  _paq.push(["setUserId", userId]);
+  _paq.push(["setUserId", Auth.getEmail()]);
   _paq.push(["trackPageView"]);
 
   var d = document,

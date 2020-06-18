@@ -4,7 +4,6 @@ import { createBrowserHistory } from "history";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import PiwikReactRouter from "piwik-react-router";
-import { Local } from "OhMyCache";
 
 import "./app.scss";
 import configureStore from "../../services/Store";
@@ -38,10 +37,7 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Router
-          history={piwik.connectToHistory(
-            history,
-            SetMatomo(configMatomo, Local.get("user_email"))
-          )}
+          history={piwik.connectToHistory(history, SetMatomo(configMatomo))}
         >
           <ScrollToTop>
             <div className="app">

@@ -1,3 +1,13 @@
+const associatedSources = [
+  { type: "hasMany", model: "Accord" },
+  { type: "hasMany", model: "ActivitePartielle" },
+  { type: "hasMany", model: "Apprentissage" },
+  { type: "hasMany", model: "InteractionsPole3ESEER" },
+  { type: "hasMany", model: "InteractionsPole3ESRC" },
+  { type: "hasMany", model: "InteractionsPoleC" },
+  { type: "hasMany", model: "InteractionsPoleT" },
+];
+
 const entreprise = (sequelize, DataTypes) => {
   const Entreprise = sequelize.define(
     "entreprise",
@@ -44,10 +54,35 @@ const entreprise = (sequelize, DataTypes) => {
     }
   );
 
+  Entreprise.associatedSources = associatedSources;
+
   Entreprise.associate = (models) => {
+    Entreprise.belongsTo(models.Naf, {
+      foreignKey: "activiteprincipaleunitelegale",
+      targetKey: "code",
+    });
+    Entreprise.belongsTo(models.CategorieJuridique, {
+      foreignKey: "categoriejuridiqueunitelegale",
+      targetKey: "code",
+    });
     Entreprise.hasMany(models.Etablissement, {
       foreignKey: "siren",
       sourceKey: "siren",
+    });
+    Entreprise.hasMany(models.RupcoEtablissement, {
+      foreignKey: "siren",
+      sourceKey: "siren",
+    });
+    Entreprise.hasMany(models.Idcc, {
+      foreignKey: "siren",
+      sourceKey: "siren",
+    });
+
+    associatedSources.forEach(({ type, model }) => {
+      Entreprise[type](models[model], {
+        foreignKey: "siren",
+        sourceKey: "siren",
+      });
     });
   };
 

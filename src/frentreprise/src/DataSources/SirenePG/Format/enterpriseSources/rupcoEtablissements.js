@@ -29,36 +29,64 @@ const getByType = (rupcoEtablissements, typeToKeep) => {
     type.startsWith(typeToKeep)
   );
 
-  return getRupcoDataForEstablishment(rupcoEtablissementByType);
+  return getRupcoDataForEnterprise(rupcoEtablissementByType);
 };
 
-const getRupcoDataForEstablishment = (rows) =>
-  rows
-    .map(
-      ({
+const getRupcoDataForEnterprise = (rows) => {
+  const rupco = rows.reduce(
+    (
+      rupcoList,
+      {
         date_enregistrement,
         type,
         numero,
+        situation_juridique,
+        date_jugement,
+        siret,
         historique_si,
         rupcoProcedure,
         dataValues: {
           nombre_de_ruptures_de_contrats_en_debut_de_: nombre_de_ruptures_de_contrats_en_debut_de_procedure,
           nombre_de_ruptures_de_contrats_en_fin_de_pr: nombre_de_ruptures_de_contrats_en_fin_de_procedure,
         },
-      }) => ({
-        date_enregistrement: getFormatedDate(date_enregistrement),
-        type,
-        numero,
-        etat: _get(rupcoProcedure, "etat"),
-        nombre_de_ruptures:
-          +nombre_de_ruptures_de_contrats_en_fin_de_procedure ||
-          +nombre_de_ruptures_de_contrats_en_debut_de_procedure ||
-          0,
-        historique_si,
-      })
-    )
+      }
+    ) => {
+      if (!rupcoList[numero]) {
+        rupcoList[numero] = {
+          date_enregistrement: getFormatedDate(date_enregistrement),
+          type,
+          numero,
+          etat: _get(rupcoProcedure, "etat"),
+          situation_juridique,
+          date_jugement: getFormatedDate(date_jugement),
+          nombre_de_ruptures: 0,
+          historique_si,
+          etablissements: [],
+        };
+      }
+
+      const nbRupturesEtablissement =
+        +nombre_de_ruptures_de_contrats_en_fin_de_procedure ||
+        +nombre_de_ruptures_de_contrats_en_debut_de_procedure ||
+        0;
+
+      if (type === "LiceC -10" || nbRupturesEtablissement > 0) {
+        rupcoList[numero].nombre_de_ruptures += nbRupturesEtablissement;
+        rupcoList[numero].etablissements.push({
+          siret,
+          nombre_de_ruptures: nbRupturesEtablissement,
+        });
+      }
+
+      return rupcoList;
+    },
+    {}
+  );
+
+  return Object.values(rupco)
     .filter(
       (procedure) =>
         hasBrokenContracts(procedure) && hasPseValidDuration(procedure)
     )
     .map((procedure) => setProcedureState(setLiceTypeLabel(procedure)));
+};

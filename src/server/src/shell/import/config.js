@@ -17,6 +17,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: true,
+      generateSiren: true,
       date: {
         field: "date",
         format: "DD/MM/YYYY",
@@ -47,6 +48,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: true,
+      generateSiren: true,
       date: {
         field: "date_visite",
         format: "DD/MM/YYYY",
@@ -68,6 +70,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: false,
+      generateSiren: true,
       date: {
         field: "date",
         format: "DD/MM/YYYY",
@@ -91,6 +94,7 @@ const config = {
       delimiter: ",",
       truncate: true,
       history: true,
+      generateSiren: true,
       date: {
         field: "date",
         format: "YYYY-MM-DD",
@@ -123,6 +127,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: true,
+      generateSiren: true,
       date: {
         field: "date_decision",
         format: "YYYY-MM-DD",
@@ -156,6 +161,7 @@ const config = {
       delimiter: ",",
       truncate: true,
       history: false,
+      generateSiren: false,
       date: {
         field: "date_enregistrement",
         format: "YYYY-MM-DD",
@@ -190,6 +196,7 @@ const config = {
       delimiter: ",",
       truncate: true,
       history: false,
+      generateSiren: false,
       date: {
         field: "date_enregistrement",
         format: "YYYY-MM-DD",
@@ -222,6 +229,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: false,
+      generateSiren: false,
       date: {
         field: "date_enregistrement",
         format: "YYYY-MM-DD",
@@ -255,6 +263,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: false,
+      generateSiren: false,
       date: {
         field: "date_enregistrement",
         format: "YYYY-MM-DD",
@@ -284,6 +293,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: false,
+      generateSiren: true,
       date: {
         field: "date_debut",
         format: "DD/MM/YYYY",
@@ -304,6 +314,7 @@ const config = {
       delimiter: ",",
       truncate: true,
       history: false,
+      generateSiren: true,
       date: {
         field: "date_maj",
         format: "YYYY/MM/DD",
@@ -336,6 +347,7 @@ const config = {
       delimiter: ",",
       truncate: true,
       history: false,
+      generateSiren: true,
       date: {
         field: "mois",
         format: "YYYY-MM",

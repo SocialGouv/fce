@@ -24,7 +24,7 @@ class Ingestor {
   async execute() {
     console.log("Execute Injestor");
 
-    const { truncate, history } = this._config;
+    const { truncate, history, generateSiren } = this._config;
 
     await this._createTmpFileWithNewHeader();
 
@@ -36,6 +36,9 @@ class Ingestor {
 
     await this.beforePsqlCopy();
     await this._runPsqlCopy();
+    if (generateSiren) {
+      await this._generateSiren();
+    }
     await this.afterPsqlCopy();
 
     await this.beforeBuildHistory();
@@ -66,7 +69,7 @@ class Ingestor {
     const { filename, delimiter, cols } = this._config;
     fs.copyFileSync(filename, this.tmpFile);
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       lineReplace({
         file: this.tmpFile,
         line: 1,
@@ -74,7 +77,7 @@ class Ingestor {
         addNewLine: true,
         callback: () => {
           resolve();
-        }
+        },
       });
     });
   }
@@ -96,11 +99,20 @@ class Ingestor {
     return execSync(psqlImportQuery);
   }
 
+  _generateSiren() {
+    console.log("Generate SIREN");
+    return execSync(
+      `${this.psql} "UPDATE ${this.getConfig(
+        "table"
+      )} SET siren = LEFT(siret, 9);"`
+    );
+  }
+
   _saveProcessDate() {
     console.log("save process date");
     const {
       date: { field, format },
-      table
+      table,
     } = this._config;
 
     const query = `UPDATE import_updates SET date = (SELECT max(TO_DATE(${field}, '${format}')) FROM ${table}), date_import = CURRENT_TIMESTAMP
@@ -115,7 +127,7 @@ class Ingestor {
       psql: this.psql,
       config: this._config,
       PG: this.PG,
-      tmpFile: this.tmpFile
+      tmpFile: this.tmpFile,
     });
     return await history.execute();
   }

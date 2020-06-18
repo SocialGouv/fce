@@ -9,6 +9,7 @@ import "./app.scss";
 import configureStore from "../../services/Store";
 import Config from "../../services/Config";
 import PrivateRoute from "../../services/PrivateRoute";
+import { SetMatomo } from "../../helpers/SetMatomo";
 import ScrollToTop from "./ScrollToTop";
 import Maintenance from "../Maintenance";
 import Header from "./Header";
@@ -24,21 +25,20 @@ import DataSource from "../PublicPages/DataSource";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
 
+const isActiveMaintenanceMode = Config.get("maintenanceMode");
+const configMatomo = Config.get("matomo");
+const piwik = PiwikReactRouter(configMatomo);
+
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
-
-if (Config.get("piwik")) {
-  const piwik = PiwikReactRouter(Config.get("piwik"));
-  history = piwik.connectToHistory(history);
-}
-
-const isActiveMaintenanceMode = Config.get("maintenanceMode");
 
 const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Router history={history}>
+        <Router
+          history={piwik.connectToHistory(history, SetMatomo(configMatomo))}
+        >
           <ScrollToTop>
             <div className="app">
               <Header showBetaMessage={!isActiveMaintenanceMode} />

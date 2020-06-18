@@ -15,13 +15,21 @@ const config = require("config");
 const app = express();
 const port = (config.has("port") && +config.get("port")) || 80;
 const host = (config.has("port") && config.get("host")) || undefined;
+const sentryUrlKey = config.get("sentryUrlKey");
+const isDev = process.env.NODE_ENV === "development";
 
-Sentry.init({ dsn: config.get("sentryUrlKey") });
+if (!isDev) {
+  Sentry.init({ dsn: sentryUrlKey });
+}
 
 function init() {
   frentreprise.EntrepriseModel = EntrepriseModel;
   frentreprise.EtablissementModel = EtablissementModel;
   frentreprise.setDb(postgres);
+
+  if (!isDev) {
+    frentreprise.initSentry(sentryUrlKey);
+  }
 
   const apiGouv = frentreprise.getDataSource("ApiGouv").source;
   apiGouv.token = config.get("APIGouv.token");

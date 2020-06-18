@@ -1,5 +1,4 @@
 import * as Sentry from "@sentry/node";
-import config from "config";
 import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
@@ -16,10 +15,6 @@ const _ = {
   askDataSource: Symbol("_askDataSource"),
   isValidDataSources: Symbol("_isValidDataSources"),
 };
-
-Sentry.init({
-  dsn: config.get("sentryUrlKey"),
-});
 
 class frentreprise {
   constructor() {
@@ -43,6 +38,12 @@ class frentreprise {
 
   setDb(db) {
     this.db = db;
+  }
+
+  initSentry(sentryUrlKey) {
+    Sentry.init({
+      dsn: sentryUrlKey,
+    });
   }
 
   async getEntreprise(SiretOrSiren) {

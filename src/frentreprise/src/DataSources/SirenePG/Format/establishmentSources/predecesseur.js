@@ -1,5 +1,5 @@
 export default ({
-  successeur: {
+  predecesseur: {
     siretetablissementpredecesseur,
     dateliensuccession,
     transfertsiege,

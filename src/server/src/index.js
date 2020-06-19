@@ -4,7 +4,6 @@ import bodyParser from "body-parser";
 import apiRouter from "./api";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise from "frentreprise";
-import PG from "./frentreprise/datasources/PG/PG";
 import postgres from "./db/postgres";
 import EntrepriseModel from "./frentreprise/models/Entreprise";
 import EtablissementModel from "./frentreprise/models/Etablissement";
@@ -18,46 +17,19 @@ const host = (config.has("port") && config.get("host")) || undefined;
 function init() {
   frentreprise.EntrepriseModel = EntrepriseModel;
   frentreprise.EtablissementModel = EtablissementModel;
-  frentreprise.setDb(postgres);
+  frentreprise.setDb(config.get("db"));
 
   const apiGouv = frentreprise.getDataSource("ApiGouv").source;
   apiGouv.token = config.get("APIGouv.token");
   apiGouv.axiosConfig = {
     ...apiGouv.axiosConfig,
-    proxy: (config.has("proxy") && config.get("proxy")) || false
+    proxy: (config.has("proxy") && config.get("proxy")) || false,
   };
   if (config.has("apiTimeout")) {
     apiGouv.axiosConfig.timeout = config.get("apiTimeout");
   }
 
-  const sireneAPIConfig =
-    (config.has("SireneAPI") && config.get("SireneAPI")) || null;
-  if (sireneAPIConfig && sireneAPIConfig.enable) {
-    const sireneAPI = frentreprise.getDataSource("SireneAPI").source;
-    sireneAPI.basicAuth = sireneAPIConfig.basicAuth;
-
-    if (sireneAPIConfig.pagination) {
-      frentreprise.getDataSource("SireneAPI").pagination =
-        sireneAPIConfig.pagination;
-    }
-    sireneAPI.axiosConfig = {
-      ...sireneAPI.axiosConfig,
-      proxy: (config.has("proxy") && config.get("proxy")) || false
-    };
-    if (config.has("apiTimeout")) {
-      sireneAPI.axiosConfig.timeout = config.get("apiTimeout");
-    }
-  }
-
-  if (config.has("db")) {
-    frentreprise.addDataSource({
-      name: "Postgres",
-      priority: 50,
-      source: new PG()
-    });
-  }
-
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
       "Access-Control-Allow-Headers",
@@ -75,14 +47,14 @@ function run() {
   app.use(express.static(htdocs_path));
   app.use("/api", apiRouter);
 
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     res.sendFile("index.html", { root: htdocs_path });
   });
 
   app.listen(
     {
       host,
-      port
+      port,
     },
     () => {
       console.log(`Serving files from: ${htdocs_path}`);

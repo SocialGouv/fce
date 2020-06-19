@@ -41,4 +41,8 @@
     h6 {
         @extend .is-6;
     }
+
+    p {
+        margin-bottom: $spacer;
+    }
 }

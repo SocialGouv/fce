@@ -1,16 +1,26 @@
-import React, { lazy, Suspense } from "react";
-import { importMDX } from "mdx.macro";
+import React, { useState, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
 import PublicPage from "../PublicPages";
+import Config from "../../../services/Config";
 
-const Content = lazy(() => importMDX("./About.mdx"));
+const strapi_endpoint = Config.get("strapi.endpoint");
 
 const About = () => {
+  const [markdown, setMarkdown] = useState(null);
+
+  useEffect(() => {
+    fetch(`${strapi_endpoint}1`)
+      .then(response => response.json())
+      .then(data => {
+        setMarkdown(data.contenu);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
   return (
-    <PublicPage>
-      <Suspense fallback="...">
-        <Content />
-      </Suspense>
-    </PublicPage>
+    <PublicPage>{markdown && <ReactMarkdown source={markdown} />}</PublicPage>
   );
 };
 

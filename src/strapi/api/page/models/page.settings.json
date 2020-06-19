@@ -9,13 +9,17 @@
     "timestamps": true
   },
   "attributes": {
-    "title": {
+    "titre": {
       "type": "string",
-      "unique": true,
-      "required": true
+      "required": true,
+      "unique": true
     },
     "contenu": {
       "type": "richtext"
+    },
+    "url_key": {
+      "type": "uid",
+      "targetField": "titre"
     }
   }
 }

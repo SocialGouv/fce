@@ -1,26 +1,9 @@
 import utils from "../../../Utils/utils";
-import DocumentAssociationsCacheModel from "../../../Models/DocumentAssociationsCache";
 
 const document_association = async (SIRET, Axios, params, db) => {
-  const DocumentAssociationsCache = new DocumentAssociationsCacheModel(db);
-
-  try {
-    const documentAssociationCache = await DocumentAssociationsCache.getBySiret(
-      SIRET
-    );
-
-    if (documentAssociationCache) {
-      return {
-        document_association: JSON.parse(documentAssociationCache.value)
-      };
-    }
-  } catch (error) {
-    console.error(error);
-  }
-
   return await utils
     .requestAPI(Axios, `documents_associations/${SIRET}`, params)
-    .then(data => {
+    .then((data) => {
       if (
         data.documents &&
         Array.isArray(data.documents) &&

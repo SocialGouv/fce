@@ -522,7 +522,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Uti
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Utils_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Utils/utils */ \"./src/Utils/utils.js\");\n/* harmony import */ var _Models_DocumentAssociationsCache__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../Models/DocumentAssociationsCache */ \"./src/Models/DocumentAssociationsCache.js\");\n\n\n\nconst document_association = async (SIRET, Axios, params, db) => {\n  const DocumentAssociationsCache = new _Models_DocumentAssociationsCache__WEBPACK_IMPORTED_MODULE_1__[\"default\"](db);\n\n  try {\n    const documentAssociationCache = await DocumentAssociationsCache.getBySiret(SIRET);\n\n    if (documentAssociationCache) {\n      return {\n        document_association: JSON.parse(documentAssociationCache.value)\n      };\n    }\n  } catch (error) {\n    console.error(error);\n  }\n\n  return await _Utils_utils__WEBPACK_IMPORTED_MODULE_0__[\"default\"].requestAPI(Axios, `documents_associations/${SIRET}`, params).then(data => {\n    if (data.documents && Array.isArray(data.documents) && data.documents.length) {\n      const documents = data.documents;\n      const lastDocument = documents.reduce((acc, curr) => curr.type === \"Statuts\" && +curr.timestamp > +acc.timestamp && curr || acc, {\n        timestamp: 0\n      });\n      return {\n        document_association: lastDocument\n      };\n    }\n  });\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (document_association);\n\n//# sourceURL=webpack://frentreprise/./src/DataSources/ApiGouv/EtablissementsAPI/document_association.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Utils_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../Utils/utils */ \"./src/Utils/utils.js\");\n\n\nconst document_association = async (SIRET, Axios, params, db) => {\n  return await _Utils_utils__WEBPACK_IMPORTED_MODULE_0__[\"default\"].requestAPI(Axios, `documents_associations/${SIRET}`, params).then(data => {\n    if (data.documents && Array.isArray(data.documents) && data.documents.length) {\n      const documents = data.documents;\n      const lastDocument = documents.reduce((acc, curr) => curr.type === \"Statuts\" && +curr.timestamp > +acc.timestamp && curr || acc, {\n        timestamp: 0\n      });\n      return {\n        document_association: lastDocument\n      };\n    }\n  });\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (document_association);\n\n//# sourceURL=webpack://frentreprise/./src/DataSources/ApiGouv/EtablissementsAPI/document_association.js?");
 
 /***/ }),
 
@@ -1480,30 +1480,6 @@ eval("__webpack_require__.r(__webpack_exports__);\nconst succession = (sequelize
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\nconst ucEff = (sequelize, DataTypes) => {\n  const UcEff = sequelize.define(\"ucEff\", {\n    siret: DataTypes.STRING,\n    cod_section: DataTypes.STRING,\n    nme_ddtefp3: DataTypes.STRING,\n    nme_region: DataTypes.STRING,\n    dereffphy: DataTypes.INTEGER,\n    date_effphy_et: DataTypes.STRING,\n    source_effphy_et: DataTypes.INTEGER\n  }, {\n    tableName: \"etablissements_uc_eff\"\n  });\n  return UcEff;\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (ucEff);\n\n//# sourceURL=webpack://frentreprise/./src/Model/ucEff.js?");
-
-/***/ }),
-
-/***/ "./src/Models/DocumentAssociationsCache.js":
-/*!*************************************************!*\
-  !*** ./src/Models/DocumentAssociationsCache.js ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return DocumentAssociationsCache; });\n/* harmony import */ var _Model__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Model */ \"./src/Models/Model.js\");\n\nclass DocumentAssociationsCache extends _Model__WEBPACK_IMPORTED_MODULE_0__[\"default\"] {\n  getBySiret(siret) {\n    return this.db.query(\"SELECT * FROM document_associations_cache WHERE siret = $1 ORDER BY createdAt DESC\", [siret]).then(res => {\n      return res && res.rows && res.rows.length ? res.rows[0] : null;\n    }).catch(e => {\n      console.error(\"DocumentAssociationsCache::getBySiret\", e);\n      return null;\n    });\n  }\n\n}\n\n//# sourceURL=webpack://frentreprise/./src/Models/DocumentAssociationsCache.js?");
-
-/***/ }),
-
-/***/ "./src/Models/Model.js":
-/*!*****************************!*\
-  !*** ./src/Models/Model.js ***!
-  \*****************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Model; });\nclass Model {\n  constructor(db) {\n    this.db = db;\n  }\n\n}\n\n//# sourceURL=webpack://frentreprise/./src/Models/Model.js?");
 
 /***/ }),
 

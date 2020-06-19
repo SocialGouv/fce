@@ -9,6 +9,7 @@ import PG from "./frentreprise/datasources/PG/PG";
 import postgres from "./db/postgres";
 import EntrepriseModel from "./frentreprise/models/Entreprise";
 import EtablissementModel from "./frentreprise/models/Etablissement";
+import { isDev } from "./utils/isDev";
 
 require("dotenv").config();
 const config = require("config");
@@ -16,9 +17,8 @@ const app = express();
 const port = (config.has("port") && +config.get("port")) || 80;
 const host = (config.has("port") && config.get("host")) || undefined;
 const sentryUrlKey = config.get("sentryUrlKey");
-const isDev = process.env.NODE_ENV === "development";
 
-if (!isDev) {
+if (!isDev()) {
   Sentry.init({ dsn: sentryUrlKey });
 }
 
@@ -27,7 +27,7 @@ function init() {
   frentreprise.EtablissementModel = EtablissementModel;
   frentreprise.setDb(postgres);
 
-  if (!isDev) {
+  if (!isDev()) {
     frentreprise.initSentry(sentryUrlKey);
   }
 

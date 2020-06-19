@@ -1,11 +1,19 @@
 const associatedSources = [
-  { type: "hasMany", model: "Accord" },
-  { type: "hasMany", model: "ActivitePartielle" },
-  { type: "hasMany", model: "Apprentissage" },
-  { type: "hasMany", model: "InteractionsPole3ESEER" },
-  { type: "hasMany", model: "InteractionsPole3ESRC" },
-  { type: "hasMany", model: "InteractionsPoleC" },
-  { type: "hasMany", model: "InteractionsPoleT" },
+  { type: "hasMany", model: "Accord", entity: "accords" },
+  { type: "hasMany", model: "ActivitePartielle", entity: "activitePartielles" },
+  { type: "hasMany", model: "Apprentissage", entity: "apprentissages" },
+  {
+    type: "hasMany",
+    model: "InteractionsPole3ESEER",
+    entity: "interactionsPole3ESEERs",
+  },
+  {
+    type: "hasMany",
+    model: "InteractionsPole3ESRC",
+    entity: "interactionsPole3ESRCs",
+  },
+  { type: "hasMany", model: "InteractionsPoleC", entity: "interactionsPoleCs" },
+  { type: "hasMany", model: "InteractionsPoleT", entity: "interactionsPoleTs" },
 ];
 
 const entreprise = (sequelize, DataTypes) => {
@@ -65,10 +73,10 @@ const entreprise = (sequelize, DataTypes) => {
       foreignKey: "categoriejuridiqueunitelegale",
       targetKey: "code",
     });
-    Entreprise.hasMany(models.Etablissement, {
-      foreignKey: "siren",
-      sourceKey: "siren",
-    });
+    // Entreprise.hasMany(models.Etablissement, {
+    //   foreignKey: "siren",
+    //   sourceKey: "siren",
+    // });
     Entreprise.hasMany(models.RupcoEtablissement, {
       foreignKey: "siren",
       sourceKey: "siren",

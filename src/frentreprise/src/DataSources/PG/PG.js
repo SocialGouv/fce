@@ -1,7 +1,6 @@
 import DataSource from "../DataSource";
 import Siren from "./Siren";
 import Siret from "./Siret";
-import search from "./Search";
 
 export const _ = {
   requestPG: Symbol("_requestPG"),
@@ -22,8 +21,8 @@ export default class SirenePG extends DataSource {
     );
   }
 
-  async search(terms, page) {
-    return await search(terms, page, this.db);
+  async search() {
+    return false;
   }
 
   async [_.requestPG](identifier, ...dbCalls) {

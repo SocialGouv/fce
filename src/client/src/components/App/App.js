@@ -28,18 +28,22 @@ import { Error403, Error404 } from "../../components/Errors";
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
 const isActiveMaintenanceMode = Config.get("maintenanceMode");
-const configMatomo = Config.get("matomo");
+const matomoConfig = Config.get("matomo");
 
-if (configMatomo) {
-  const piwik = PiwikReactRouter(configMatomo);
-  history = piwik.connectToHistory(history, SetMatomo(configMatomo));
-}
+const getHistory = matomoConfig => {
+  if (!matomoConfig) {
+    return createBrowserHistory();
+  }
+
+  const piwik = PiwikReactRouter(matomoConfig);
+  return piwik.connectToHistory(history, SetMatomo(matomoConfig));
+};
 
 const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Router history={history}>
+        <Router history={getHistory(matomoConfig)}>
           <ScrollToTop>
             <div className="app">
               <Header showBetaMessage={!isActiveMaintenanceMode} />

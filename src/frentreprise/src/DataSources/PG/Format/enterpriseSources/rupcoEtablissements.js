@@ -45,10 +45,8 @@ const getRupcoDataForEnterprise = (rows) => {
         siret,
         historique_si,
         rupcoProcedure,
-        dataValues: {
-          nombre_de_ruptures_de_contrats_en_debut_de_: nombre_de_ruptures_de_contrats_en_debut_de_procedure,
-          nombre_de_ruptures_de_contrats_en_fin_de_pr: nombre_de_ruptures_de_contrats_en_fin_de_procedure,
-        },
+        nombre_de_ruptures_de_contrats_en_debut_de_procedure,
+        nombre_de_ruptures_de_contrats_en_fin_de_procedure,
       }
     ) => {
       if (!rupcoList[numero]) {

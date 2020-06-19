@@ -1,22 +1,29 @@
-import Etablissement from "../../../Models/Etablissements";
-import helpers from "../Helpers/helpers";
+import models from "../../../Model";
+import formatEstablishment from "../Format/establishment";
 
-const getSettlements = async (SIREN, db) => {
-  const etablissementModel = new Etablissement(db);
+const LIMIT_ETABLISSEMENTS = 20;
 
-  const etablissements = await etablissementModel.findBySiren(SIREN);
+const getSettlements = async (siren) => {
+  const etablissements = await models.Etablissement.findAll({
+    where: { siren },
+    order: [
+      ["etablissementsiege", "DESC"],
+      ["etatadministratifetablissement", "ASC"],
+    ],
+    limit: LIMIT_ETABLISSEMENTS,
+  });
 
   if (!etablissements) {
     return {};
   }
 
   const etabs = await Promise.all(
-    etablissements.map(async etab => await helpers.formatEtab(etab))
+    etablissements.map(async (etab) => await formatEstablishment(etab))
   );
 
   return {
-    nombre_etablissements_actifs: etabs.filter(eta => eta.actif).length,
-    _ets: etabs
+    nombre_etablissements_actifs: etabs.filter((eta) => eta.actif).length,
+    _ets: etabs,
   };
 };
 

@@ -25,20 +25,25 @@ import DataSource from "../PublicPages/DataSource";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
 
-const isActiveMaintenanceMode = Config.get("maintenanceMode");
-const configMatomo = Config.get("matomo");
-const piwik = PiwikReactRouter(configMatomo);
-
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
+const isActiveMaintenanceMode = Config.get("maintenanceMode");
+const matomoConfig = Config.get("matomo");
+
+const getHistory = matomoConfig => {
+  if (!matomoConfig) {
+    return createBrowserHistory();
+  }
+
+  const piwik = PiwikReactRouter(matomoConfig);
+  return piwik.connectToHistory(history, SetMatomo(matomoConfig));
+};
 
 const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Router
-          history={piwik.connectToHistory(history, SetMatomo(configMatomo))}
-        >
+        <Router history={getHistory(matomoConfig)}>
           <ScrollToTop>
             <div className="app">
               <Header showBetaMessage={!isActiveMaintenanceMode} />

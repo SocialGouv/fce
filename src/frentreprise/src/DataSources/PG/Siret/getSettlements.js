@@ -1,4 +1,4 @@
-import models from "../../../Model";
+import models from "../../../Models";
 import formatEstablishment from "../Format/establishment";
 
 const LIMIT_ETABLISSEMENTS = 20;

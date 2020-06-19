@@ -1,4 +1,4 @@
-import models from "../../../Model";
+import models from "../../../Models";
 import formatEnterprise from "../Format/enterprise";
 
 const getEntreprise = async (siren) => {

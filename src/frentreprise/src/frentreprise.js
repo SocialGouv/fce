@@ -2,7 +2,6 @@ import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
 import PG from "./DataSources/PG";
-
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
 import { Etablissement } from "./Entreprise";
@@ -30,10 +29,6 @@ class frentreprise {
       priority: 100, // higher prevail
       source: new PG(),
     });
-  }
-
-  setDb(db) {
-    this.db = db;
   }
 
   async getEntreprise(SiretOrSiren) {
@@ -230,10 +225,6 @@ class frentreprise {
                 page,
               }
             : null;
-
-        if (this.db) {
-          dataSource.source.setDb(this.db);
-        }
 
         return dataSource.source[method](request, pagination).then(
           (response) => {

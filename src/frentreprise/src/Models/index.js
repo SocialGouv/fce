@@ -1,7 +1,9 @@
 import Sequelize from "sequelize";
 
-const sequelize = new Sequelize("fce", "postgres", "root", {
-  host: "db",
+const { PG_HOST, PG_USER, PG_PASSWORD, PG_DB } = process.env;
+
+const sequelize = new Sequelize(PG_DB, PG_USER, PG_PASSWORD, {
+  host: PG_HOST,
   dialect: "postgres",
   define: {
     timestamps: false,

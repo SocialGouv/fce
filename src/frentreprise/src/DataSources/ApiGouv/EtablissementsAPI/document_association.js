@@ -1,6 +1,6 @@
 import utils from "../../../Utils/utils";
 
-const document_association = async (SIRET, Axios, params, db) => {
+const document_association = async (SIRET, Axios, params) => {
   return await utils
     .requestAPI(Axios, `documents_associations/${SIRET}`, params)
     .then((data) => {

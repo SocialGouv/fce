@@ -30,7 +30,7 @@ export default class SirenePG extends DataSource {
     const requests = dbCalls
       .filter((fn) => typeof fn === "function")
       .map(async (fn) => {
-        return fn(identifier, this.db);
+        return fn(identifier);
       });
 
     await Promise.all(requests).then((results) => {

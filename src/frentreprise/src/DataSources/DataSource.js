@@ -14,8 +14,4 @@ export default class DataSource {
   async search() {
     throw new NotImplementedError();
   }
-
-  setDb(db) {
-    this.db = db;
-  }
 }

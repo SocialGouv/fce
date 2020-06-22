@@ -4,7 +4,6 @@ import bodyParser from "body-parser";
 import apiRouter from "./api";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise from "frentreprise";
-import postgres from "./db/postgres";
 import EntrepriseModel from "./frentreprise/models/Entreprise";
 import EtablissementModel from "./frentreprise/models/Etablissement";
 
@@ -17,7 +16,6 @@ const host = (config.has("port") && config.get("host")) || undefined;
 function init() {
   frentreprise.EntrepriseModel = EntrepriseModel;
   frentreprise.EtablissementModel = EtablissementModel;
-  frentreprise.setDb(config.get("db"));
 
   const apiGouv = frentreprise.getDataSource("ApiGouv").source;
   apiGouv.token = config.get("APIGouv.token");

@@ -1,7 +1,32 @@
 const FILES_FOLDER = "/mnt/data/export";
 const CONVERTER_XLSX_TO_CSV = "xlsxToCsv";
+const CONVERTER_JSON_TO_CSV = "jsonToCsv";
 
 const config = {
+  wikit_uc: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgt",
+      fileMatch: /^(.)*_WIKIT_UC.json$/,
+      outputFileName: "wikit_uc.csv",
+      converter: CONVERTER_JSON_TO_CSV,
+      transformer: (data) => ({
+        code: data.CODE_UC,
+        libelle: data.LIB_UC,
+        email: data["Courrier électronique"],
+      }),
+    },
+    ingest: {
+      className: "WikitUcIngestor",
+      table: "wikit_uc",
+      filename: `${FILES_FOLDER}/wikit_uc.csv`,
+      cols: ["code", "libelle", "email"],
+      delimiter: ",",
+      truncate: true,
+      history: false,
+    },
+  },
+  // === import wikit_uc first ===
   interactions_pole_t: {
     download: {
       className: "MinioDownloader",
@@ -10,6 +35,7 @@ const config = {
       outputFileName: "interactions_pole_t.csv",
     },
     ingest: {
+      className: "InteractionsPole3TIngestor",
       table: "interactions_pole_t",
       historyTable: "interactions_pole_t_historique",
       filename: `${FILES_FOLDER}/interactions_pole_t.csv`,
@@ -59,21 +85,35 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^SRC_Extraction(.)*.csv$/,
+      fileMatch: /^(.)*export_SRC(.)*.csv$/,
       outputFileName: "interactions_pole_3e_src.csv",
     },
     ingest: {
       className: "InteractionsPole3ESrcIngestor",
       table: "interactions_pole_3e_src",
       filename: `${FILES_FOLDER}/interactions_pole_3e_src.csv`,
-      cols: ["region", "siret", "numero_dossier", "type_controle", "date"],
+      cols: [
+        "numero_dossier",
+        "siret",
+        "numero_etablissement",
+        "region",
+        "libelle_region",
+        "type_controle",
+        "date_creation",
+        "date",
+        "date_cloture",
+        "cols",
+        "clos_automatiquement",
+        "nature_controle",
+        "cible_controle",
+      ],
       delimiter: ";",
       truncate: true,
       history: false,
       generateSiren: true,
       date: {
         field: "date",
-        format: "DD/MM/YYYY",
+        format: "YYYY-MM-DD",
       },
     },
   },
@@ -105,7 +145,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^Extraction_FCE_S(.)*.csv$/,
+      fileMatch: /^APART_Extraction_FCE_S(.)*.csv$/,
       outputFileName: "etablissements_activite_partielle.csv",
     },
     ingest: {
@@ -207,7 +247,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^RUPCO_procedure(.)*.csv$/,
+      fileMatch: /^RUPCO(.)*procedure(.)*.csv$/,
       outputFileName: "rupco_procedures.csv",
     },
     ingest: {
@@ -240,7 +280,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^RUPCO_etablissement(.)*.csv$/,
+      fileMatch: /^RUPCO(.)*etablissement(.)*.csv$/,
       outputFileName: "rupco_etablissements.csv",
     },
     ingest: {

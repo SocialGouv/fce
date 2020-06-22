@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
@@ -28,6 +29,12 @@ class frentreprise {
       name: "PG",
       priority: 100, // higher prevail
       source: new PG(),
+    });
+  }
+
+  initSentry(sentryUrlKey) {
+    Sentry.init({
+      dsn: sentryUrlKey,
     });
   }
 

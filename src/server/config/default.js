@@ -1,5 +1,5 @@
 require("dotenv").config();
-const fs = require("fs");
+
 const process = require("process");
 
 const config = {
@@ -20,7 +20,7 @@ const config = {
     host: process.env.PG_HOST,
     user: process.env.PG_USER,
     password: process.env.PG_PASSWORD,
-    database: process.env.PG_DB
+    database: process.env.PG_DB,
     /* ssl: {
       rejectUnauthorized: false,
       ca: fs.readFileSync("/var/certs/root.crt").toString(),
@@ -28,6 +28,8 @@ const config = {
       cert: fs.readFileSync("/var/certs/postgresql.crt").toString()
     } */
   },
+  sentryUrlKey:
+    "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",
   mail: JSON.parse(process.env.MAIL),
   proxy: false,
   apiTimeout: 10000,

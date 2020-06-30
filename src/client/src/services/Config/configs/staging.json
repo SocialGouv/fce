@@ -1,7 +1,7 @@
 {
   "api_endpoint": "https://fce.prep.fabrique.social.gouv.fr/api",
   "strapi": {
-    "endpoint": "",
+    "endpoint": "https://fce.strapi.fabrique.social.gouv.fr/pages/",
     "pageIds": {
       "a-propos": 1,
       "cgu": 2,

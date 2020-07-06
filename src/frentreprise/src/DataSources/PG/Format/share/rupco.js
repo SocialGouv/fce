@@ -1,6 +1,23 @@
 import { differenceInMonths, parseISO } from "date-fns";
 import _get from "lodash.get";
 
+const TYPE_PSE = "PSE";
+const TYPE_LICE = "Lice";
+const TYPE_RCC = "RCC";
+
+export const getRupcoData = (rupcoEtablissements, getByType) => ({
+  pse: getPse(rupcoEtablissements, getByType),
+  rcc: getRcc(rupcoEtablissements, getByType),
+  lice: getLice(rupcoEtablissements, getByType),
+});
+
+const getPse = (rupcoEtablissements, getByType) =>
+  getByType(rupcoEtablissements, TYPE_PSE);
+const getRcc = (rupcoEtablissements, getByType) =>
+  getByType(rupcoEtablissements, TYPE_RCC);
+const getLice = (rupcoEtablissements, getByType) =>
+  getByType(rupcoEtablissements, TYPE_LICE);
+
 export const config = {
   pse: {
     procedureDurationLimit: 36, // months

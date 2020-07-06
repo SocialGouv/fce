@@ -1,5 +1,6 @@
 import _get from "lodash.get";
 import {
+  getRupcoData,
   hasBrokenContracts,
   hasPseValidDuration,
   setProcedureState,
@@ -7,22 +8,8 @@ import {
 } from "../share/rupco";
 import { getFormatedDate } from "../../Helpers";
 
-const TYPE_PSE = "PSE";
-const TYPE_LICE = "Lice";
-const TYPE_RCC = "RCC";
-
-export default ({ rupcoEtablissements }) => ({
-  pse: getPse(rupcoEtablissements),
-  rcc: getRcc(rupcoEtablissements),
-  lice: getLice(rupcoEtablissements),
-});
-
-const getPse = (rupcoEtablissements) =>
-  getByType(rupcoEtablissements, TYPE_PSE);
-const getRcc = (rupcoEtablissements) =>
-  getByType(rupcoEtablissements, TYPE_RCC);
-const getLice = (rupcoEtablissements) =>
-  getByType(rupcoEtablissements, TYPE_LICE);
+export default ({ rupcoEtablissements }) =>
+  getRupcoData(rupcoEtablissements, getByType);
 
 const getByType = (rupcoEtablissements, typeToKeep) => {
   const rupcoEtablissementByType = rupcoEtablissements.filter(({ type }) =>

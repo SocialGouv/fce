@@ -44,10 +44,6 @@ export default class ApiGouv extends DataSource {
     );
   }
 
-  async search() {
-    return false;
-  }
-
   async [_.requestAPIs](identifier, ...apiCalls) {
     let out = {};
 

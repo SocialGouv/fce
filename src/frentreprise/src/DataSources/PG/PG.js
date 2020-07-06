@@ -21,10 +21,6 @@ export default class SirenePG extends DataSource {
     );
   }
 
-  async search() {
-    return false;
-  }
-
   async [_.requestPG](identifier, ...dbCalls) {
     let out = {};
     const requests = dbCalls

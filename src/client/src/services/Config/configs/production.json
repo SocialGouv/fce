@@ -3,14 +3,5 @@
   "piwik": {
     "url": "https://matomo.fabrique.social.gouv.fr",
     "siteId": 8
-  },
-  "strapi": {
-    "endpoint": "https://fce.strapi.fabrique.social.gouv.fr/pages/",
-    "pageIds": {
-      "a-propos": 1,
-      "cgu": 2,
-      "sources-des-donnees": 3,
-      "mentions-legales": 4
-    }
   }
 }

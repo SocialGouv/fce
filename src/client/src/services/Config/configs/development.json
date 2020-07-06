@@ -1,12 +1,3 @@
 {
-  "api_endpoint": "https://srv.fce.test/api",
-  "strapi": {
-    "endpoint": "https://strapi.fce.test/pages/",
-    "pageIds": {
-      "a-propos": 1,
-      "cgu": 2,
-      "sources-des-donnees": 3,
-      "mentions-legales": 4
-    }
-  }
+  "api_endpoint": "https://srv.fce.test/api"
 }

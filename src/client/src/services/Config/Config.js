@@ -132,6 +132,15 @@ const globalConfig = {
   },
   legifranceSearchUrl:
     "https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale=",
+  strapi: {
+    endpoint: "https://fce.strapi.fabrique.social.gouv.fr/pages/",
+    pageIds: {
+      "a-propos": 1,
+      cgu: 2,
+      "sources-des-donnees": 3,
+      "mentions-legales": 4
+    }
+  },
   codeInseeLength: 5
 };
 

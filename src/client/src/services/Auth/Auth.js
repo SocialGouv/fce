@@ -2,6 +2,7 @@ import { Local } from "OhMyCache";
 import Http from "../Http";
 
 const AUTH_KEY = "fce_token";
+const AUTH_EMAIL = "user_email";
 
 export default class Auth {
   static sendCode(email) {
@@ -17,6 +18,7 @@ export default class Auth {
     }).then(response => {
       if (response.data && response.data.success) {
         Local.set(AUTH_KEY, response.data.token);
+        Local.set(AUTH_EMAIL, email);
       }
 
       return response;
@@ -25,6 +27,7 @@ export default class Auth {
 
   static logout() {
     Local.remove(AUTH_KEY);
+    Local.remove(AUTH_EMAIL);
   }
 
   static isLogged() {
@@ -33,6 +36,10 @@ export default class Auth {
 
   static getToken() {
     return Local.get(AUTH_KEY);
+  }
+
+  static getEmail() {
+    return Local.get(AUTH_EMAIL);
   }
 
   /**

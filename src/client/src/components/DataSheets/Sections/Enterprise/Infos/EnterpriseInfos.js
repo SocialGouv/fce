@@ -76,10 +76,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             name="Tranche d'effectif"
             value={
               enterprise.tranche_effectif &&
-              `${
-                dashboardSizeRanges[enterprise.tranche_effectif]
-              } (${enterprise.annee_tranche_effectif ||
-                "Année non renseignée"})`
+              dashboardSizeRanges[enterprise.tranche_effectif]
             }
             sourceSi={"Sirène-year"}
             sourceDate={enterprise.annee_tranche_effectif}
@@ -87,13 +84,13 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
           <Data
             name={`Effectif de ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp} en équivalent temps plein`}
             value={_get(enterprise, "effectifMensuelEtp.effectifs_mensuels")}
-            sourceCustom={`Acoss ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
+            sourceCustom={`Acoss / DSN ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
             hasNumberFormat
           />
           <Data
             name={`Effectif ${anneeEffectifAnnuelEtp} en équivalent temps plein`}
             value={_get(enterprise, "effectifAnnuelEtp.effectifs_annuels")}
-            sourceCustom={`Acoss ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
+            sourceCustom={`Acoss / DSN ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
             hasNumberFormat
           />
         </Subcategory>

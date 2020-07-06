@@ -18,7 +18,7 @@ import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import MagicLink from "../../containers/MagicLink";
 import Search from "../../containers/Search";
-import PublicPage from "../PublicPages/PublicPages";
+import PublicPage from "../../containers/PublicPage";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
 
@@ -71,23 +71,27 @@ const App = () => {
                       <Route
                         exact
                         path="/mentions-legales"
-                        render={() => <PublicPage page={"mentions-legales"} />}
+                        render={() => (
+                          <PublicPage pageIdentifier={"mentions-legales"} />
+                        )}
                       />
                       <Route
                         exact
                         path="/a-propos"
-                        render={() => <PublicPage page={"a-propos"} />}
+                        render={() => (
+                          <PublicPage pageIdentifier={"a-propos"} />
+                        )}
                       />
                       <Route
                         exact
                         path="/cgu"
-                        render={() => <PublicPage page={"cgu"} />}
+                        render={() => <PublicPage pageIdentifier={"cgu"} />}
                       />
                       <Route
                         exact
                         path="/sources-des-donnees"
                         render={() => (
-                          <PublicPage page={"sources-des-donnees"} />
+                          <PublicPage pageIdentifier={"sources-des-donnees"} />
                         )}
                       />
                       <Route exact path="/403" render={() => <Error403 />} />

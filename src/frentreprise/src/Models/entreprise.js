@@ -73,10 +73,6 @@ const entreprise = (sequelize, DataTypes) => {
       foreignKey: "categoriejuridiqueunitelegale",
       targetKey: "code",
     });
-    // Entreprise.hasMany(models.Etablissement, {
-    //   foreignKey: "siren",
-    //   sourceKey: "siren",
-    // });
     Entreprise.hasMany(models.RupcoEtablissement, {
       foreignKey: "siren",
       sourceKey: "siren",

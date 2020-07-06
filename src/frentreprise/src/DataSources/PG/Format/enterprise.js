@@ -14,26 +14,18 @@ export default async (enterprise) => {
     {
       in: "prenom1unitelegale",
       out: "prenom",
-      callback: (p1, ent) =>
-        utils.isEmpty(
-          [
-            ent.prenom1unitelegale,
-            ent.prenom2unitelegale,
-            ent.prenom3unitelegale,
-            ent.prenom4unitelegale,
-          ]
-            .filter((a) => a)
-            .join(" ")
-        )
-          ? undefined
-          : [
-              ent.prenom1unitelegale,
-              ent.prenom2unitelegale,
-              ent.prenom3unitelegale,
-              ent.prenom4unitelegale,
-            ]
-              .filter((a) => a)
-              .join(" "),
+      callback: (p1, ent) => {
+        const prenoms = [
+          ent.prenom1unitelegale,
+          ent.prenom2unitelegale,
+          ent.prenom3unitelegale,
+          ent.prenom4unitelegale,
+        ]
+          .filter((a) => a)
+          .join(" ");
+
+        return utils.isEmpty(prenoms) ? undefined : prenoms;
+      },
     },
     {
       in: "nomusageunitelegale",

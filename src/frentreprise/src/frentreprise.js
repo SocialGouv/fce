@@ -38,7 +38,7 @@ class frentreprise {
     });
   }
 
-  async getEntreprise(SiretOrSiren) {
+  async getEntreprise(SiretOrSiren, source) {
     SiretOrSiren = SiretOrSiren + "";
 
     const gotSIREN = Validator.validateSIREN(SiretOrSiren);
@@ -57,7 +57,7 @@ class frentreprise {
       this.EtablissementModel
     );
 
-    await this[_.askDataSource]("getSIREN", SIREN, null, (result) => {
+    await this[_.askDataSource]("getSIREN", SIREN, source, (result) => {
       console.log(
         `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
       );
@@ -86,7 +86,7 @@ class frentreprise {
           return this[_.askDataSource](
             "getSIRET",
             lookSIRET,
-            null,
+            source,
             (result) => {
               console.log(
                 `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
@@ -146,7 +146,7 @@ class frentreprise {
     return a > b ? 1 : a < b ? -1 : 0;
   }
 
-  [_.askDataSource](method, request, page, forEach = (result) => result) {
+  [_.askDataSource](method, request, source, forEach = (result) => result) {
     return Promise.all(
       this.getDataSources().map((dataSource) => {
         console.log(
@@ -155,44 +155,29 @@ class frentreprise {
           } with request : ${JSON.stringify(request)}`
         );
 
-        const pagination =
-          page && dataSource.pagination
-            ? {
-                ...dataSource.pagination,
-                page,
-              }
-            : null;
+        return dataSource.source[method](request).then((response) => {
+          const data =
+            typeof response === "object" && response.items
+              ? response.items
+              : response;
 
-        return dataSource.source[method](request, pagination).then(
-          (response) => {
-            const data =
-              typeof response === "object" && response.items
-                ? response.items
-                : response;
-            const paginationResponse =
-              pagination && typeof response === "object" && response.pagination
-                ? response.pagination
-                : {};
+          const cleanedData =
+            typeof data === "object"
+              ? Array.isArray(data)
+                ? data.map(cleanObject)
+                : cleanObject(data)
+              : data;
+          console.log(
+            `Got response for [${method}] from dataSource named ${
+              dataSource.name
+            } about request : ${JSON.stringify(request)}`
+          );
 
-            const cleanedData =
-              typeof data === "object"
-                ? Array.isArray(data)
-                  ? data.map(cleanObject)
-                  : cleanObject(data)
-                : data;
-            console.log(
-              `Got response for [${method}] from dataSource named ${
-                dataSource.name
-              } about request : ${JSON.stringify(request)}`
-            );
-
-            return Promise.resolve({
-              source: dataSource,
-              data: cleanedData,
-              pagination: paginationResponse,
-            });
-          }
-        );
+          return Promise.resolve({
+            source: dataSource,
+            data: cleanedData,
+          });
+        });
       })
     ).then((results) => {
       results

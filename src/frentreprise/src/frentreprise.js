@@ -1,5 +1,6 @@
 import * as Sentry from "@sentry/node";
 import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
+import NotFoundSourceError from "./Errors/NotFoundSourceError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
 import PG from "./DataSources/PG";
@@ -38,7 +39,7 @@ class frentreprise {
     });
   }
 
-  async getEntreprise(SiretOrSiren, source) {
+  async getEntreprise(SiretOrSiren, dataSourceName) {
     SiretOrSiren = SiretOrSiren + "";
 
     const gotSIREN = Validator.validateSIREN(SiretOrSiren);
@@ -57,19 +58,21 @@ class frentreprise {
       this.EtablissementModel
     );
 
-    await this[_.askDataSource]("getSIREN", SIREN, source, (result) => {
-      console.log(
-        `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
-      );
+    await this[_.askDataSource]("getSIREN", SIREN, dataSourceName).then(
+      (result) => {
+        console.log(
+          `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
+        );
 
-      entreprise.updateData({
-        ...result.data,
-        _dataSources: {
-          ...entreprise._dataSources,
-          [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
-        },
-      });
-    });
+        entreprise.updateData({
+          ...result.data,
+          _dataSources: {
+            ...entreprise._dataSources,
+            [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
+          },
+        });
+      }
+    );
 
     const SIRET = gotSIRET ? SiretOrSiren : "" + entreprise.siret_siege_social;
 
@@ -86,23 +89,22 @@ class frentreprise {
           return this[_.askDataSource](
             "getSIRET",
             lookSIRET,
-            source,
-            (result) => {
-              console.log(
-                `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
-              );
+            dataSourceName
+          ).then((result) => {
+            console.log(
+              `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
+            );
 
-              const ets = entreprise.getEtablissement(lookSIRET);
+            const ets = entreprise.getEtablissement(lookSIRET);
 
-              ets.updateData({
-                ...result.data,
-                _dataSources: {
-                  ...ets._dataSources,
-                  [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
-                },
-              });
-            }
-          );
+            ets.updateData({
+              ...result.data,
+              _dataSources: {
+                ...ets._dataSources,
+                [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
+              },
+            });
+          });
         }
       })
     );
@@ -146,46 +148,32 @@ class frentreprise {
     return a > b ? 1 : a < b ? -1 : 0;
   }
 
-  [_.askDataSource](method, request, source, forEach = (result) => result) {
-    return Promise.all(
-      this.getDataSources().map((dataSource) => {
-        console.log(
-          `Asking [${method}] to dataSource named ${
-            dataSource.name
-          } with request : ${JSON.stringify(request)}`
-        );
+  [_.askDataSource](method, request, dataSourceName) {
+    const dataSource = this.getDataSource(dataSourceName);
 
-        return dataSource.source[method](request).then((response) => {
-          const data =
-            typeof response === "object" && response.items
-              ? response.items
-              : response;
+    if (!dataSource) {
+      throw new NotFoundSourceError(dataSourceName);
+    }
 
-          const cleanedData =
-            typeof data === "object"
-              ? Array.isArray(data)
-                ? data.map(cleanObject)
-                : cleanObject(data)
-              : data;
-          console.log(
-            `Got response for [${method}] from dataSource named ${
-              dataSource.name
-            } about request : ${JSON.stringify(request)}`
-          );
+    return dataSource.source[method](request).then((response) => {
+      const data =
+        typeof response === "object" && response.items
+          ? response.items
+          : response;
 
-          return Promise.resolve({
-            source: dataSource,
-            data: cleanedData,
-          });
-        });
-      })
-    ).then((results) => {
-      results
-        .sort(
-          (a, b) =>
-            (a.source && b.source && this[_.compareDataSource](a, b)) || 0
-        )
-        .map(forEach);
+      const cleanedData =
+        typeof data === "object"
+          ? Array.isArray(data)
+            ? data.map(cleanObject)
+            : cleanObject(data)
+          : data;
+      console.log(
+        `Got response for [${method}] from dataSource named ${
+          dataSource.name
+        } about request : ${JSON.stringify(request)}`
+      );
+
+      return { data: cleanedData, source: dataSource };
     });
   }
 

@@ -30,7 +30,7 @@ const getAppSearchClient = () => {
 
 router.get("/entity", withAuth, function (req, res) {
   const query = (req.query["q"] || "").trim();
-  const source = (req.query["source"] || "").trim();
+  const dataSource = (req.query["dataSource"] || "").trim();
 
   const data = {
     query: {
@@ -40,12 +40,12 @@ router.get("/entity", withAuth, function (req, res) {
       },
       isSIRET: isSIRET(query),
       isSIREN: isSIREN(query),
-      source,
+      dataSource,
     },
   };
 
   const freCall = frentreprise
-    .getEntreprise(query, source)
+    .getEntreprise(query, dataSource)
     .then((entreprise) => {
       data.results = [entreprise.export()];
     }, logError.bind(this, data));

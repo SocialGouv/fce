@@ -1,3 +1,6 @@
+import { captureException as sentryCaptureException } from "@sentry/browser";
+import Config from "../../services/Config";
+
 export const joinNoFalsy = (arr, delimiter = "") =>
   arr.filter(element => !!element).join(delimiter);
 
@@ -45,3 +48,11 @@ export const formatTva = tva => `${tva.slice(0, 4)} ${tva.slice(4)}`;
 
 export const range = (min, max) =>
   min === max ? [min] : [min, ...range(min + 1, max)];
+
+export const handleError = e => {
+  if (Config.get("sentryUrl")) {
+    sentryCaptureException(e);
+  } else {
+    console.error(e);
+  }
+};

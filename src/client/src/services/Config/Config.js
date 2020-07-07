@@ -8,8 +8,6 @@ const log = console.warning || console.error || console.log;
 
 const globalConfig = {
   maintenanceMode: process.env.REACT_APP_MAINTENANCE === "true",
-  sentryUrlKey:
-    "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",
   auth: {
     expire: 86400 // 1j
   },
@@ -132,6 +130,15 @@ const globalConfig = {
   },
   legifranceSearchUrl:
     "https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale=",
+  strapi: {
+    endpoint: "https://fce.strapi.fabrique.social.gouv.fr/pages/",
+    pageIds: {
+      "a-propos": 1,
+      cgu: 2,
+      "sources-des-donnees": 3,
+      "mentions-legales": 4
+    }
+  },
   codeInseeLength: 5
 };
 

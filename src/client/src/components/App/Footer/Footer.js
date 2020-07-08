@@ -31,7 +31,7 @@ const Footer = () => (
             </Link>
           </li>
           <li className="footer__link-item">
-            <Link className="footer__link" to="datasource">
+            <Link className="footer__link" to="sources-des-donnees">
               Sources des données
             </Link>
           </li>
@@ -39,7 +39,7 @@ const Footer = () => (
             Contact : {Config.get("contact.mailto")}
           </li>
           <li className="footer__link-item">
-            <Link className="footer__link" to="about">
+            <Link className="footer__link" to="a-propos">
               A propos
             </Link>
           </li>

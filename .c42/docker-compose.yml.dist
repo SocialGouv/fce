@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   front:
@@ -37,7 +37,6 @@ services:
       - traefik.frontend.rule=Host:srv.fce.test
     environment:
       WATCH: 1
-
 
   builder:
     build: .c42/docker/builder

@@ -31,9 +31,11 @@ if ("serviceWorker" in navigator) {
   }, console.error);
 }
 
-if (process.env.NODE_ENV === "production") {
+const SENTRY_URL = Config.get("sentryUrl");
+
+if (SENTRY_URL) {
   Sentry.init({
-    dsn: Config.get("sentryUrlKey")
+    dsn: SENTRY_URL
   });
 }
 

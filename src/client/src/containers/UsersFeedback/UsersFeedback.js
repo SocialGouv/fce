@@ -1,9 +1,9 @@
 import React, { useReducer } from "react";
 import PropTypes from "prop-types";
-import { captureException as sentryCaptureException } from "@sentry/browser";
 import Http from "../../services/Http";
 import UsersFeedbackView from "../../components/UsersFeedback";
 import { SET_USEFUL, SET_COMMENT, SET_RATE, RESET } from "./actionTypes";
+import { handleError } from "../../helpers/utils";
 
 const initialState = { useful: "", comment: "", rate: null };
 
@@ -36,11 +36,7 @@ const UsersFeedback = ({ fullWidth }) => {
       }
     })
       .catch(e => {
-        if (process.env.NODE_ENV === "production") {
-          sentryCaptureException(e);
-        } else {
-          console.error(e);
-        }
+        handleError(e);
       })
       .finally(() => {
         dispatch({ type: RESET });

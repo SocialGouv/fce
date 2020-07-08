@@ -18,10 +18,7 @@ import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import MagicLink from "../../containers/MagicLink";
 import Search from "../../containers/Search";
-import LegalNotices from "../PublicPages/LegalNotices";
-import Cgu from "../PublicPages/Cgu";
-import About from "../PublicPages/About";
-import DataSource from "../PublicPages/DataSource";
+import PublicPage from "../../containers/PublicPage";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
 
@@ -74,14 +71,28 @@ const App = () => {
                       <Route
                         exact
                         path="/mentions-legales"
-                        render={() => <LegalNotices />}
+                        render={() => (
+                          <PublicPage pageIdentifier={"mentions-legales"} />
+                        )}
                       />
-                      <Route exact path="/about" render={() => <About />} />
-                      <Route exact path="/cgu" render={() => <Cgu />} />
                       <Route
                         exact
-                        path="/datasource"
-                        render={() => <DataSource />}
+                        path="/a-propos"
+                        render={() => (
+                          <PublicPage pageIdentifier={"a-propos"} />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path="/cgu"
+                        render={() => <PublicPage pageIdentifier={"cgu"} />}
+                      />
+                      <Route
+                        exact
+                        path="/sources-des-donnees"
+                        render={() => (
+                          <PublicPage pageIdentifier={"sources-des-donnees"} />
+                        )}
                       />
                       <Route exact path="/403" render={() => <Error403 />} />
                       <Route exact path="/404" render={() => <Error404 />} />

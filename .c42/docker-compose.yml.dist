@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   front:
@@ -37,7 +37,6 @@ services:
       - traefik.frontend.rule=Host:srv.fce.test
     environment:
       WATCH: 1
-
 
   builder:
     build: .c42/docker/builder
@@ -111,6 +110,42 @@ services:
       - "traefik.port=8025"
       - "traefik.frontend.rule=Host:mail.fce.test"
 
+  dbmatomo:
+    image: mariadb:10.5.3
+    volumes:
+      - dbmatomo:/var/lib/mysql
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=matomo
+
+    networks:
+      - traefik
+      - default
+
+  matomo:
+    image: matomo
+    volumes:
+      - matomo:/var/www/html
+    environment:
+      - MATOMO_DATABASE_HOST=dbmatomo
+      - VIRTUAL_HOST=
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=matomo
+      - MYSQL_USER=root
+      - MATOMO_DATABASE_ADAPTER=mysql
+      - MATOMO_DATABASE_TABLES_PREFIX=matomo_
+      - MATOMO_DATABASE_USERNAME=root
+      - MATOMO_DATABASE_PASSWORD=root
+      - MATOMO_DATABASE_DBNAME=matomo
+    ports:
+      - 80
+    networks:
+      - default
+      - traefik
+    labels:
+      - "traefik.frontend.rule=Host:matomo.fce.test"
 
 networks:
   traefik:
@@ -123,3 +158,5 @@ volumes:
       o: bind
       type: none
       device: .c42/tmp/pgdata
+  dbmatomo:
+  matomo:

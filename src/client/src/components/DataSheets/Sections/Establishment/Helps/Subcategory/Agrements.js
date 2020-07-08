@@ -56,11 +56,11 @@ const Agrements = ({ establishment }) => {
                   <td>
                     <Value value={agrement} />
                   </td>
-                  <td>
-                    <Value value={salariesInsertion} />
+                  <td className="has-text-right">
+                    <Value value={salariesInsertion} hasNumberFormat />
                   </td>
-                  <td>
-                    <Value value={etp && Math.round(etp)} />
+                  <td className="has-text-right">
+                    <Value value={etp && Math.round(etp)} hasNumberFormat />
                   </td>
                 </tr>
               );

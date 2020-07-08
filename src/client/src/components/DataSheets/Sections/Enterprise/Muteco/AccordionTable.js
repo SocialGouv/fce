@@ -21,7 +21,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
               <Value value={procedure.type} />
             </td>
           )}
-          <td className="has-text-right">
+          <td>
             <Value value={procedure.date_enregistrement} />
           </td>
           <td className="has-text-right">
@@ -37,14 +37,18 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
             <Value value={procedure.date_jugement} />
           </td>
           <td className="has-text-right">
-            <Value value={procedure.nombre_de_ruptures} nonEmptyValues="0" />
+            <Value
+              value={procedure.nombre_de_ruptures}
+              nonEmptyValues="0"
+              hasNumberFormat
+            />
           </td>
           <td className="has-text-link">
             <div
               onClick={() => setIsActiveAccordion(!isActiveAccordion)}
               className="has-text-right accordion-table__header"
             >
-              <Value value={procedure.etablissements.length} />
+              <Value value={procedure.etablissements.length} hasNumberFormat />
               <FontAwesomeIcon
                 icon={
                   isActiveAccordion ? faChevronCircleDown : faChevronCircleLeft

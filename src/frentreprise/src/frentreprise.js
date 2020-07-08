@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/node";
 import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
@@ -37,6 +38,12 @@ class frentreprise {
 
   setDb(db) {
     this.db = db;
+  }
+
+  initSentry(sentryUrlKey) {
+    Sentry.init({
+      dsn: sentryUrlKey,
+    });
   }
 
   async getEntreprise(SiretOrSiren) {

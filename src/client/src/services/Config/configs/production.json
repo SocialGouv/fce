@@ -1,7 +1,9 @@
 {
   "api_endpoint": "https://fce.fabrique.social.gouv.fr/api",
-  "piwik": {
-    "url": "https://matomo.fabrique.social.gouv.fr",
-    "siteId": 8
-  }
+  "matomo": {
+    "url": "//matomo.fabrique.social.gouv.fr",
+    "serverTrackerName": "matomo.php",
+    "siteId": "8"
+  },
+  "sentryUrl": "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35"
 }

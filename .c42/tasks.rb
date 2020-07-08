@@ -76,6 +76,9 @@ end
 desc 'server:migrate', "Migrate db table"
 shell_task 'server:migrate', 'c42 server:yarn migrate'
 
+desc 'server:migrate:up', 'Lance server:migrate up --no-check-order'
+shell_task 'server:migrate:up', 'c42 server:migrate up --no-check-order'
+
 desc 'frentreprise:upgrade', "Upgrade frentreprise"
 task 'frentreprise:upgrade' do
     run 'c42 frentreprise:yarn build'

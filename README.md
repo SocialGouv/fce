@@ -132,3 +132,12 @@ docker-compose exec server bash -c "yarn shell DownloadFile --id interactions_po
 ```bash
 docker-compose exec server bash -c "yarn shell IngestFile --id interactions_pole_t"
 ```
+
+### Preprod et prod
+
+```bash
+docker exec server ash -c "NODE_ENV=production node ./shell/run.js DownloadFile --id interactions_pole_t"
+
+docker exec server ash -c "NODE_ENV=production node ./shell/run.js IngestFile --id interactions_pole_t"
+```
+

@@ -9,6 +9,7 @@ import "./app.scss";
 import configureStore from "../../services/Store";
 import Config from "../../services/Config";
 import PrivateRoute from "../../services/PrivateRoute";
+import { SetMatomo } from "../../helpers/SetMatomo";
 import ScrollToTop from "./ScrollToTop";
 import Maintenance from "../Maintenance";
 import Header from "./Header";
@@ -17,27 +18,29 @@ import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import MagicLink from "../../containers/MagicLink";
 import Search from "../../containers/Search";
-import LegalNotices from "../PublicPages/LegalNotices";
-import Cgu from "../PublicPages/Cgu";
-import About from "../PublicPages/About";
+import PublicPage from "../../containers/PublicPage";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
 
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
-
-if (Config.get("piwik")) {
-  const piwik = PiwikReactRouter(Config.get("piwik"));
-  history = piwik.connectToHistory(history);
-}
-
 const isActiveMaintenanceMode = Config.get("maintenanceMode");
+const matomoConfig = Config.get("matomo");
+
+const getHistory = matomoConfig => {
+  if (!matomoConfig) {
+    return createBrowserHistory();
+  }
+
+  const piwik = PiwikReactRouter(matomoConfig);
+  return piwik.connectToHistory(history, SetMatomo(matomoConfig));
+};
 
 const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Router history={history}>
+        <Router history={getHistory(matomoConfig)}>
           <ScrollToTop>
             <div className="app">
               <Header showBetaMessage={!isActiveMaintenanceMode} />
@@ -68,10 +71,29 @@ const App = () => {
                       <Route
                         exact
                         path="/mentions-legales"
-                        render={() => <LegalNotices />}
+                        render={() => (
+                          <PublicPage pageIdentifier={"mentions-legales"} />
+                        )}
                       />
-                      <Route exact path="/about" render={() => <About />} />
-                      <Route exact path="/cgu" render={() => <Cgu />} />
+                      <Route
+                        exact
+                        path="/a-propos"
+                        render={() => (
+                          <PublicPage pageIdentifier={"a-propos"} />
+                        )}
+                      />
+                      <Route
+                        exact
+                        path="/cgu"
+                        render={() => <PublicPage pageIdentifier={"cgu"} />}
+                      />
+                      <Route
+                        exact
+                        path="/sources-des-donnees"
+                        render={() => (
+                          <PublicPage pageIdentifier={"sources-des-donnees"} />
+                        )}
+                      />
                       <Route exact path="/403" render={() => <Error403 />} />
                       <Route exact path="/404" render={() => <Error404 />} />
                       <Redirect to="/404" />

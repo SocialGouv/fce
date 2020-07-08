@@ -47,6 +47,7 @@ const EstablishmentRelationship = ({
             value={nbAccords}
             emptyValue="aucun accord connu"
             columnClasses={["is-7", "is-5"]}
+            hasNumberFormat
           />
           {nbAccords > 0 && (
             <>
@@ -60,24 +61,23 @@ const EstablishmentRelationship = ({
                 <thead>
                   <tr>
                     <th>Thématique</th>
-                    <th className="has-text-centered">Nombre d{"'"}accords</th>
-                    <th className="has-text-centered">
-                      Date de signature du dernier accord
-                    </th>
+                    <th className="has-text-right">Nombre d{"'"}accords</th>
+                    <th>Date de signature du dernier accord</th>
                   </tr>
                 </thead>
                 <tbody>
                   {Config.get("accords").map(({ key, value }) => (
                     <tr key={`accord-${key}`}>
                       <td className="w-40">{value}</td>
-                      <td className="has-text-centered">
+                      <td className="has-text-right">
                         <Value
                           value={_get(accords, `${key}.count`)}
                           empty="-"
                           nonEmptyValues={[0, "0"]}
+                          hasNumberFormat
                         />
                       </td>
-                      <td className="has-text-centered">
+                      <td>
                         <Value
                           value={_get(accords, `${key}.lastDate`)}
                           empty="-"

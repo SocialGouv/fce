@@ -106,7 +106,7 @@
                 margin-right: 0.5rem;
                 padding: 0.9rem;
                 border-radius: 100%;
-                background-color: $pale-grey;
+                background-color: $white-smoke;
             }
 
             > .title {
@@ -137,6 +137,10 @@
                 }
 
                 padding: 2rem 0;
+
+                tfoot tr > td:not(:last-of-type) {
+                    border-right: solid 1px $grey-geyser;
+                }
 
                 &__center-cell {
                     text-align: center;

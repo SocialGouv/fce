@@ -40,7 +40,7 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
                 <th className="th">Siret</th>
                 <th className="th table__center-cell">État</th>
                 <th className="th">Commune</th>
-                <th className="th">Nombre de contrats</th>
+                <th className="th has-text-right">Nombre de contrats</th>
                 <th className="th see-details"></th>
               </tr>
             </thead>
@@ -66,7 +66,9 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
                     <td>{`${codePostal ? codePostal : ""} ${
                       localite ? localite : ""
                     }`}</td>
-                    <td>{arraySum(Object.values(signes))}</td>
+                    <td className="has-text-right">
+                      {arraySum(Object.values(signes))}
+                    </td>
                     <td className="has-text-centered">
                       <SeeDetailsLink link={`/establishment/${siret}/#helps`} />
                     </td>

@@ -11,6 +11,7 @@ import Finances from "./Finances";
 import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
 import { getMonthName } from "../../../../../helpers/Date";
+import { formatTva } from "../../../../../helpers/utils";
 
 const EnterpriseInfos = ({ enterprise, headOffice }) => {
   const dashboardSizeRanges = {
@@ -73,7 +74,10 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
           <Data
             name="Tranche d'effectif"
-            value={enterprise.tranche_effectif && dashboardSizeRanges[enterprise.tranche_effectif]}
+            value={
+              enterprise.tranche_effectif &&
+              dashboardSizeRanges[enterprise.tranche_effectif]
+            }
             sourceSi={"Sirène-year"}
             sourceDate={enterprise.annee_tranche_effectif}
           />
@@ -81,11 +85,13 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             name={`Effectif de ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp} en équivalent temps plein`}
             value={_get(enterprise, "effectifMensuelEtp.effectifs_mensuels")}
             sourceCustom={`Acoss / DSN ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
+            hasNumberFormat
           />
           <Data
             name={`Effectif ${anneeEffectifAnnuelEtp} en équivalent temps plein`}
             value={_get(enterprise, "effectifAnnuelEtp.effectifs_annuels")}
             sourceCustom={`Acoss / DSN ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
+            hasNumberFormat
           />
         </Subcategory>
 
@@ -104,13 +110,16 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
           <Data
             name="Capital Social"
-            value={
-              enterprise.capital_social && `${enterprise.capital_social} €`
-            }
+            value={enterprise.capital_social && `${enterprise.capital_social}`}
+            hasNumberFormat
+            numberFormatOptions={{ style: "currency" }}
           />
           <Data
             name="Numéro de TVA intra communautaire"
-            value={enterprise.numero_tva_intracommunautaire}
+            value={
+              enterprise.numero_tva_intracommunautaire &&
+              formatTva(enterprise.numero_tva_intracommunautaire)
+            }
           />
         </Subcategory>
         <Subcategory subtitle="Données financières" sourceCustom="DGFIP">

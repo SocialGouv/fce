@@ -20,21 +20,26 @@ const Footer = () => (
 
       <div>
         <ul className="footer__links">
-          <li className="footer__linkItem">
+          <li className="footer__link-item">
             <Link className="footer__link" to="mentions-legales">
               Mentions légales
             </Link>
           </li>
-          <li className="footer__linkItem">
+          <li className="footer__link-item">
             <Link className="footer__link" to="cgu">
               CGU
             </Link>
           </li>
-          <li className="footer__linkItem">
+          <li className="footer__link-item">
+            <Link className="footer__link" to="sources-des-donnees">
+              Sources des données
+            </Link>
+          </li>
+          <li className="footer__link-item">
             Contact : {Config.get("contact.mailto")}
           </li>
-          <li className="footer__linkItem">
-            <Link className="footer__link" to="about">
+          <li className="footer__link-item">
+            <Link className="footer__link" to="a-propos">
               A propos
             </Link>
           </li>

@@ -31,16 +31,18 @@ const ContratsAides = ({ establishment }) => {
             </thead>
             <tbody>
               <tr>
-                <td>
+                <td className="has-text-right">
                   <Value
                     value={establishment.contrat_aide_salaries_n1}
                     nonEmptyValue={[0]}
+                    hasNumberFormat
                   />
                 </td>
-                <td>
+                <td className="has-text-right">
                   <Value
                     value={establishment.contrat_aide_embauches_n1}
                     nonEmptyValue={[0]}
+                    hasNumberFormat
                   />
                 </td>
               </tr>

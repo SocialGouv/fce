@@ -12,14 +12,14 @@ router.post("/feedback", withAuth, async (req, res) => {
   const mail = new Mail();
   const feedback = new UsersFeedback();
 
-  const { useful, comment } = req.body.params;
+  const { useful, comment, rate } = req.body.params;
 
   try {
     if (typeof useful !== "boolean") {
       console.error("'useful' parameter must be a boolean");
       return res.status(400).send({
         success: false,
-        error: "'useful' parameter must be a boolean"
+        error: "'useful' parameter must be a boolean",
       });
     }
 
@@ -27,14 +27,22 @@ router.post("/feedback", withAuth, async (req, res) => {
       console.error("'comment' parameter must be a string");
       return res.status(400).send({
         success: false,
-        error: "'comment' parameter must be a string"
+        error: "'comment' parameter must be a string",
+      });
+    }
+
+    if (typeof rate !== "string") {
+      console.error("'rate' parameter must be a string");
+      return res.status(400).send({
+        success: false,
+        error: "'rate' parameter must be a string",
       });
     }
 
     const cleanedComment = stripHtml(comment);
 
     try {
-      await feedback.create({ useful, comment: cleanedComment });
+      await feedback.create({ useful, comment: cleanedComment, rate });
     } catch (e) {
       console.error(
         "An error has occured, user feedback wasn't saved in database",
@@ -47,7 +55,7 @@ router.post("/feedback", withAuth, async (req, res) => {
       await mail.send(
         config.userFeedback.mailTo,
         "Retour utilisateur",
-        sendUserFeedbacklTpl({ useful, comment: cleanedComment })
+        sendUserFeedbacklTpl({ useful, comment: cleanedComment, rate })
       );
     } catch (e) {
       console.error("Email was not sent", e);
@@ -55,14 +63,14 @@ router.post("/feedback", withAuth, async (req, res) => {
     }
 
     return res.send({
-      success: true
+      success: true,
     });
   } catch (e) {
     console.error(`A problem occured with user feedback`, e, e.message);
 
     return res.status(500).json({
       success: false,
-      error: e.message
+      error: e.message,
     });
   }
 });

@@ -70,6 +70,7 @@ class Enterprise extends React.Component {
   }
 
   loadEntityByStore = () => {
+    return false;
     if (this.state.isEnterprise) {
       return this.loadEnterpriseByStore(this.props.match.params.siren);
     }
@@ -122,6 +123,7 @@ class Enterprise extends React.Component {
     this.props
       .loadEstablishment(siret)
       .then(response => {
+        console.log("ESTABLISHMENT LOADED", response);
         const { query, results } = response.data;
 
         const establishment =
@@ -136,16 +138,18 @@ class Enterprise extends React.Component {
         if (query.isSIRET && establishment) {
           this.loadEstablishmentByStore(siret);
         } else {
-          this.setState({
-            redirectTo: "/404"
-          });
+          console.error("404 petit BOOM !");
+          // this.setState({
+          //   redirectTo: "/404"
+          // });
         }
       })
       .catch(
         function() {
-          this.setState({
-            redirectTo: "/404"
-          });
+          console.error("404 BOOM !");
+          // this.setState({
+          //   redirectTo: "/404"
+          // });
         }.bind(this)
       );
   };
@@ -154,21 +158,24 @@ class Enterprise extends React.Component {
     this.props
       .loadEntreprise(siren)
       .then(response => {
+        console.log("ENTERPRISE LOADED", response);
         const { query, results } = response.data;
 
         if (query.isSIREN && results.length && results[0]._success) {
           this.loadEnterpriseByStore(siren);
         } else {
-          this.setState({
-            redirectTo: "/404"
-          });
+          console.error("404 petit BOOM !");
+          // this.setState({
+          //   redirectTo: "/404"
+          // });
         }
       })
       .catch(
         function() {
-          this.setState({
-            redirectTo: "/404"
-          });
+          console.error("404 BOOM !");
+          // this.setState({
+          //   redirectTo: "/404"
+          // });
         }.bind(this)
       );
   };

@@ -13,6 +13,12 @@ const globalConfig = {
   auth: {
     expire: 86400 // 1j
   },
+  dataSources: [
+    { id: "PG", priority: 100 },
+    { id: "ApiGouv", priority: 80 }
+    // { id: "Yep", priority: 80 },
+    // { id: "Yop", priority: 80 }
+  ],
   sidebarEstablishmentsLimit: 20,
 
   interactions: {

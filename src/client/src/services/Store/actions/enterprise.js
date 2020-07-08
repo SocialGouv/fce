@@ -1,5 +1,6 @@
 import * as types from "../constants/ActionTypes";
 import Http from "../../Http";
+import Config from "../../Config";
 
 export const setCurrentEnterprise = enterprise => dispatch => {
   dispatch({
@@ -17,9 +18,45 @@ export const loadEntreprise = siren => dispatch => {
 };
 
 const getEnterprise = term => dispatch => {
-  return Http.get("/entity", {
+  return new Promise((resolve, reject) => {
+    const dataSources = Config.get("dataSources");
+    let nbErrors = 0;
+
+    dataSources.map(({ id, priority }) => {
+      Http.get("/entity", {
+        params: {
+          q: term,
+          dataSource: id
+        }
+      })
+        .then(response => {
+          console.error("Un success", response.data.query.dataSource);
+          const enterprise = response?.data?.results?.[0];
+          if (enterprise) {
+            dispatch(setCurrentEnterprise(enterprise));
+          }
+          resolve(response);
+        })
+        .catch(e => {
+          nbErrors++;
+          console.error("Une erreur", e);
+          if (nbErrors === dataSources.length) {
+            console.error("FATAL ERROR !!!");
+            reject(e);
+          }
+        });
+    });
+  });
+  /*Promise.any(
+    Config.get("dataSources").map(({ id, priority }) => {
+      console.log({ id, priority });
+    })
+  );*/
+
+  /*return Http.get("/entity", {
     params: {
-      q: term
+      q: term,
+      dataSource: "PG"
     }
   })
     .then(function(response) {
@@ -31,5 +68,5 @@ const getEnterprise = term => dispatch => {
     })
     .catch(function(error) {
       return Promise.reject(error);
-    });
+    });*/
 };

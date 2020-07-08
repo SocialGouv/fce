@@ -153,7 +153,11 @@ router.post("/downloadXlsx", withAuth, async function (req, res) {
 });
 
 const sendResult = (data, response) => {
-  response.send(data);
+  if (data?.error) {
+    return response.status(400).send(data);
+  }
+
+  return response.send(data);
 };
 
 router.get("/communes", withAuth, function (req, res) {

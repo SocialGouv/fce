@@ -44,10 +44,6 @@ export default class ApiGouv extends DataSource {
     );
   }
 
-  async search() {
-    return false;
-  }
-
   async [_.requestAPIs](identifier, ...apiCalls) {
     let out = {};
 
@@ -85,7 +81,7 @@ export default class ApiGouv extends DataSource {
     const requests = apiCalls
       .filter((fn) => typeof fn === "function")
       .map((fn) => {
-        return fn(identifier, this[_.axios], axiosConfig, this.db);
+        return fn(identifier, this[_.axios], axiosConfig);
       });
 
     await Promise.all(requests).then((results) => {

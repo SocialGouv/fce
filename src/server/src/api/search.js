@@ -28,23 +28,23 @@ const getAppSearchClient = () => {
   return new AppSearchClient(undefined, apiKey, baseUrlFn);
 };
 
-router.get("/entity", withAuth, function(req, res) {
+router.get("/entity", withAuth, function (req, res) {
   const query = (req.query["q"] || "").trim();
 
   const data = {
     query: {
       format: "json",
       terms: {
-        q: query
+        q: query,
       },
       isSIRET: isSIRET(query),
-      isSIREN: isSIREN(query)
-    }
+      isSIREN: isSIREN(query),
+    },
   };
 
   const freCall = frentreprise
     .getEntreprise(data.query.terms.q)
-    .then(entreprise => {
+    .then((entreprise) => {
       data.results = [entreprise.export()];
       data.pagination = {};
     }, logError.bind(this, data));
@@ -55,48 +55,13 @@ router.get("/entity", withAuth, function(req, res) {
   });
 });
 
-router.get("/search", withAuth, function(req, res) {
-  const query = (req.query["q"] || "").trim();
-  const format = req.params["format"] || "json";
-  const page = format === "xlsx" ? null : +req.query["page"] || 1;
-
-  const data = {
-    query: {
-      format,
-      terms: {
-        q: query,
-        commune: (req.query["commune"] || "").trim(),
-        codePostal: (req.query["codePostal"] || "").trim(),
-        departement: (req.query["departement"] || "").trim(),
-        naf: Array.isArray(req.query["naf"]) ? req.query["naf"] : [],
-        siegeSocial:
-          req.query["siegeSocial"] === "1" ||
-          req.query["siegeSocial"] === "true" ||
-          req.query["siegeSocial"] === true
-      },
-      isSIRET: isSIRET(query),
-      isSIREN: isSIREN(query)
-    }
-  };
-
-  const freCall = frentreprise.search(data.query.terms, page).then(results => {
-    data.results = results.items.map(ent => ent.export());
-    data.pagination = results.pagination;
-  }, logError.bind(this, data));
-
-  freCall.then(() => {
-    data.size = (data.results && data.results.length) || 0;
-    sendResult(data, res);
-  });
-});
-
-router.post("/downloadXlsx", withAuth, async function(req, res) {
+router.post("/downloadXlsx", withAuth, async function (req, res) {
   const payload = req.body.payload;
 
   if (!payload || !payload.totalItems) {
     return res.send({
       code: 500,
-      error: "Export impossible, cette recherche n'a donné aucun résultat."
+      error: "Export impossible, cette recherche n'a donné aucun résultat.",
     });
   }
 
@@ -117,7 +82,7 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
         searchTerm === "" ? searchTerm : `"${searchTerm}"`,
         {
           filters: payload.filters,
-          page: { current: page, size: pageLimit }
+          page: { current: page, size: pageLimit },
         }
       );
 
@@ -126,7 +91,7 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
       console.error(error);
       res.send({
         code: 500,
-        message: error.message
+        message: error.message,
       });
     }
   }
@@ -134,12 +99,12 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
   if (!establishments.length) {
     return res.send({
       code: 500,
-      error: "Export impossible, cette recherche n'a donné aucun résultat."
+      error: "Export impossible, cette recherche n'a donné aucun résultat.",
     });
   }
 
   const wb = { SheetNames: [], Sheets: {} };
-  const dataJson = Object.values(establishments).map(tmpData => {
+  const dataJson = Object.values(establishments).map((tmpData) => {
     const cleanTmpData = [];
     delete tmpData._meta;
 
@@ -165,7 +130,7 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
       activite:
         cleanTmpData.activiteprincipaleetablissement +
         " - " +
-        cleanTmpData.activiteprincipaleetablissement_libelle
+        cleanTmpData.activiteprincipaleetablissement_libelle,
     };
 
     return formatedData;
@@ -180,7 +145,7 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
   );
 
   res.set({
-    "Content-type": "application/octet-stream"
+    "Content-type": "application/octet-stream",
   });
 
   res.send(wbout);
@@ -190,7 +155,7 @@ const sendResult = (data, response) => {
   response.send(data);
 };
 
-router.get("/communes", withAuth, function(req, res) {
+router.get("/communes", withAuth, function (req, res) {
   const query = (req.query["q"] || "").trim();
 
   if (query.length < 2) {
@@ -199,16 +164,16 @@ router.get("/communes", withAuth, function(req, res) {
 
   const communes = new Communes();
 
-  communes.search(query).then(communes => {
+  communes.search(query).then((communes) => {
     const success = Array.isArray(communes);
     return res.send({ success, results: communes });
   });
 });
 
-router.get("/naf", withAuth, function(req, res) {
+router.get("/naf", withAuth, function (req, res) {
   const naf = new Naf();
 
-  naf.findAll().then(nafs => {
+  naf.findAll().then((nafs) => {
     const success = Array.isArray(nafs);
     if (success) {
       return res.send({ success, results: nafs });
@@ -216,17 +181,17 @@ router.get("/naf", withAuth, function(req, res) {
     return res.send({
       success,
       results: [],
-      message: "Une erreur est survenue lors de la recherche d'un code NAF"
+      message: "Une erreur est survenue lors de la recherche d'un code NAF",
     });
   });
 });
 
-router.get("/departements", withAuth, function(req, res) {
+router.get("/departements", withAuth, function (req, res) {
   const query = (req.query["q"] || "").trim();
 
   const departements = new Departements();
 
-  departements.search(query).then(departements => {
+  departements.search(query).then((departements) => {
     const success = Array.isArray(departements);
     return res.send({ success, results: departements });
   });

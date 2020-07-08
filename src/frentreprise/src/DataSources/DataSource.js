@@ -10,12 +10,4 @@ export default class DataSource {
   async getSIREN() {
     throw new NotImplementedError();
   }
-
-  async search() {
-    throw new NotImplementedError();
-  }
-
-  setDb(db) {
-    this.db = db;
-  }
 }

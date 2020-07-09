@@ -23,7 +23,7 @@ export default class Entreprise extends BaseModel {
         ets = [ets];
       }
 
-      ets.forEach(etsData => {
+      ets.forEach((etsData) => {
         if (etsData && typeof etsData === "object") {
           if (validateSIRET(etsData.siret)) {
             this.getEtablissement(etsData.siret).updateData(
@@ -63,7 +63,7 @@ export default class Entreprise extends BaseModel {
    */
   getEtablissement(SIRET, createIfMissing = true) {
     return (
-      this[_ets].find(ets => ets.siret === SIRET) || // Search for SIRET
+      this[_ets].find((ets) => ets.siret === SIRET) || // Search for SIRET
       (createIfMissing && // If not present create it
       this[_ets].push(new this[_etsModel]({ siret: SIRET }, this)) && // Add it to our list
         this.getEtablissement(SIRET)) || // Call back itself to get created model

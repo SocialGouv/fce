@@ -2,8 +2,7 @@ import * as Sentry from "@sentry/node";
 import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
-import SirenePG from "./DataSources/SirenePG";
-
+import PG from "./DataSources/PG";
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
 import { Etablissement } from "./Entreprise";
@@ -27,17 +26,10 @@ class frentreprise {
       source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/"),
     });
     this.addDataSource({
-      name: "SirenePG",
+      name: "PG",
       priority: 100, // higher prevail
-      source: new SirenePG(),
-      pagination: {
-        itemsByPage: 25,
-      },
+      source: new PG(),
     });
-  }
-
-  setDb(db) {
-    this.db = db;
   }
 
   initSentry(sentryUrlKey) {
@@ -128,76 +120,6 @@ class frentreprise {
     return entreprise;
   }
 
-  async search(terms, page = 1) {
-    const results = {};
-    let hasError = false;
-    let pagination = null;
-
-    await this[_.askDataSource]("search", terms, page, (searchResult) => {
-      const { data: source_results } = searchResult;
-      pagination = searchResult.pagination;
-
-      if (source_results === false) {
-        console.log(
-          `Source named ${searchResult.source.name} doesn't support search. (it returned false)`
-        );
-      } else if (!Array.isArray(source_results)) {
-        if (
-          typeof source_results === "object" &&
-          Object.prototype.hasOwnProperty.call(source_results, "error") &&
-          source_results.error === true
-        ) {
-          hasError = true;
-        }
-        console.error(
-          `Source named ${searchResult.source.name} returned invalid data for search, array expected. Received:`,
-          source_results
-        );
-      } else {
-        console.log(
-          `Using response from dataSource named ${searchResult.source.name} with priority : ${searchResult.source.priority}`
-        );
-
-        source_results.forEach((result) => {
-          const SIREN =
-            (Validator.validateSIREN(result.siren) && result.siren) ||
-            result.siret.substr(0, 9);
-          const SIRET = Validator.validateSIRET(result.siret) && result.siret;
-
-          if (Validator.validateSIREN(SIREN)) {
-            if (!results[SIREN]) {
-              results[SIREN] = new this.EntrepriseModel(
-                {
-                  siren: SIREN,
-                  _dataSources: {},
-                },
-                this.EtablissementModel
-              );
-            }
-
-            if (SIRET) {
-              results[SIREN].getEtablissement(SIRET).updateData({
-                ...cleanObject(result),
-                _dataSources: {
-                  ...results[SIREN].getEtablissement(SIRET)._dataSources,
-                  [searchResult.source.name]: true,
-                },
-              });
-            } else {
-              results[SIREN].updateData(cleanObject(result));
-            }
-          }
-        });
-      }
-    });
-
-    let resultsValues = Object.values(results);
-
-    return !resultsValues.length && hasError
-      ? false
-      : { items: resultsValues, pagination };
-  }
-
   getDataSources() {
     return [...this[_.dataSources]].sort(this[_.compareDataSource]);
   }
@@ -240,10 +162,6 @@ class frentreprise {
                 page,
               }
             : null;
-
-        if (this.db) {
-          dataSource.source.setDb(this.db);
-        }
 
         return dataSource.source[method](request, pagination).then(
           (response) => {

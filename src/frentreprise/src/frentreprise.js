@@ -68,7 +68,7 @@ class frentreprise {
           ...result.data,
           _dataSources: {
             ...entreprise._dataSources,
-            [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
+            [result.source.name]: result.success,
           },
         });
       }
@@ -101,7 +101,7 @@ class frentreprise {
               ...result.data,
               _dataSources: {
                 ...ets._dataSources,
-                [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
+                [result.source.name]: result.success, // Add current data source (true = success)
               },
             });
           });
@@ -167,13 +167,21 @@ class frentreprise {
             ? data.map(cleanObject)
             : cleanObject(data)
           : data;
+      const success = dataSource.source[`${method}Check`](cleanedData);
+
       console.log(
         `Got response for [${method}] from dataSource named ${
           dataSource.name
-        } about request : ${JSON.stringify(request)}`
+        } about request : ${JSON.stringify(request)}, status : ${
+          success ? "Success" : "Failed"
+        }`
       );
 
-      return { data: cleanedData, source: dataSource };
+      return {
+        data: cleanedData,
+        source: dataSource,
+        success,
+      };
     });
   }
 

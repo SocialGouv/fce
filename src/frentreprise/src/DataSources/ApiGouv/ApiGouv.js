@@ -44,6 +44,14 @@ export default class ApiGouv extends DataSource {
     );
   }
 
+  getSIRENCheck(data) {
+    return !!data.siren;
+  }
+
+  getSIRETCheck(data) {
+    return !!data.siret;
+  }
+
   async [_.requestAPIs](identifier, ...apiCalls) {
     let out = {};
 

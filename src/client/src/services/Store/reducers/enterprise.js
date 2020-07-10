@@ -1,5 +1,5 @@
 import { SET_CURRENT_ENTERPRISE, RESET_STORE } from "../constants/ActionTypes";
-import addInteractions from "../utils/addInteractions";
+import updateEnterpriseAndEstablishments from "../utils/updateEnterpriseAndEstablishments";
 
 const initialState = {
   current: {}
@@ -8,15 +8,12 @@ const initialState = {
 const enterprise = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_ENTERPRISE: {
-      const enterprise = addInteractions(action.enterprise);
-      if (Array.isArray(enterprise.etablissements)) {
-        enterprise.etablissements.forEach((establishment, index) => {
-          enterprise.etablissements[index] = addInteractions(establishment);
-        });
-      }
       return {
         ...state,
-        current: enterprise
+        current: updateEnterpriseAndEstablishments(
+          state.current,
+          action.enterprise
+        )
       };
     }
     case RESET_STORE:

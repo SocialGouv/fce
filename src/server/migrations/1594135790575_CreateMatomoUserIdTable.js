@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-const tablename = "matomo_user_id"
+const tablename = "user_logins"
 
 exports.shorthands = undefined;
 

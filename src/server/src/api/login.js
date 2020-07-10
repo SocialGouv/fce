@@ -58,7 +58,7 @@ router.post("/requestAuthCode", async (req, res) => {
 router.post("/login", async function (req, res) {
   const userId = new MatomoUserId();
   const { code, email } = req.body;
-  const saltedEmail = email && saltedSha1(email, process.env.EMAIL_SALT);
+  const saltedEmail = email && saltedSha1(email, Config.get("emailSalt"));
 
   try {
     const { isValidCode, failureMessage } = await Auth.validateCode(
@@ -77,10 +77,6 @@ router.post("/login", async function (req, res) {
     try {
       await userId.create({ saltedEmail });
     } catch (e) {
-      console.error(
-        "An error has occured, userId wasn't saved in database",
-        e
-      );
       throw new Error("User userId wasn't saved in database");
     }
 

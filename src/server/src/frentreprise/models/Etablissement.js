@@ -75,7 +75,6 @@ class DireccteEtablissement extends Etablissement {
         ],
         null
       ),
-      _raw: this.getData(),
     };
   }
 }

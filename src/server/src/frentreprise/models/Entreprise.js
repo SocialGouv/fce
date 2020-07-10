@@ -64,7 +64,6 @@ export default class DireccteEntreprise extends Entreprise {
 
     return {
       ...data,
-      _raw: this.getData(),
     };
   }
 }

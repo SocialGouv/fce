@@ -3,7 +3,7 @@ import Auth from "../../services/Auth";
 export const SetMatomo = config => {
   var _paq = window._paq || [];
 
-  _paq.push(["setUserId", Auth.getEmail()]);
+  _paq.push(["setUserId", Auth.getUserId()]);
   _paq.push(["trackPageView"]);
 
   var d = document,

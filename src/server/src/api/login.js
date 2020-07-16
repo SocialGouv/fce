@@ -58,7 +58,7 @@ router.post("/requestAuthCode", async (req, res) => {
 router.post("/login", async function (req, res) {
   const userId = new MatomoUserId();
   const { code, email } = req.body;
-  const saltedEmail = email && saltedSha1(email, Config.get("emailSalt"));
+  const saltedEmail = email && saltedSha1(email, config.get("emailSalt"));
 
   try {
     const { isValidCode, failureMessage } = await Auth.validateCode(

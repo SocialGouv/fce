@@ -3,6 +3,7 @@ import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import NotFoundSourceError from "./Errors/NotFoundSourceError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
+import ApiGouvAssociations from "./DataSources/ApiGouvAssociations";
 import PG from "./DataSources/PG";
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
@@ -25,6 +26,11 @@ class frentreprise {
       name: "ApiGouv",
       priority: 80, // higher prevail
       source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/"),
+    });
+    this.addDataSource({
+      name: "ApiGouvAssociations",
+      priority: 80, // higher prevail
+      source: new ApiGouvAssociations("https://entreprise.api.gouv.fr:443/v2/"),
     });
     this.addDataSource({
       name: "PG",

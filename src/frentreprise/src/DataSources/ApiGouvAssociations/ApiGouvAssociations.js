@@ -1,6 +1,5 @@
 import DataSource from "../DataSource";
 import EtablissementsAPI from "./EtablissementsAPI";
-import EntreprisesAPI from "./EntreprisesAPI";
 import axios from "../../../lib/axios";
 import requestApi from "../../Utils/requestApi";
 
@@ -30,26 +29,16 @@ export default class ApiGouv extends DataSource {
         axiosConfig: this.axiosConfig,
         token: this.token,
       },
-      EtablissementsAPI.getEtablissement,
-      EtablissementsAPI.exercices,
-      EtablissementsAPI.effectifsMensuelEtp
+      EtablissementsAPI.association,
+      EtablissementsAPI.document_association
     );
   }
 
   // Entreprises
   async getSIREN(siren) {
-    return await requestApi(
+    return {
       siren,
-      {
-        axios: this[_.axios],
-        axiosConfig: this.axiosConfig,
-        token: this.token,
-      },
-      EntreprisesAPI.getEntreprise,
-      EntreprisesAPI.infogreffe_rcs,
-      EntreprisesAPI.effectifsMensuelEtp,
-      EntreprisesAPI.effectifsAnnuelEtp
-    );
+    };
   }
 
   getSIRENCheck(data) {
@@ -57,6 +46,6 @@ export default class ApiGouv extends DataSource {
   }
 
   getSIRETCheck(data) {
-    return !!data.siret;
+    return !!data?.association?.siret;
   }
 }

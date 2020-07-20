@@ -28,15 +28,17 @@ function init() {
     frentreprise.initSentry(sentryUrlKey);
   }
 
-  const apiGouv = frentreprise.getDataSource("ApiGouv").source;
-  apiGouv.token = config.get("APIGouv.token");
-  apiGouv.axiosConfig = {
-    ...apiGouv.axiosConfig,
-    proxy: (config.has("proxy") && config.get("proxy")) || false,
-  };
-  if (config.has("apiTimeout")) {
-    apiGouv.axiosConfig.timeout = config.get("apiTimeout");
-  }
+  ["ApiGouv", "ApiGouvAssociations"].forEach((sourceName) => {
+    const source = frentreprise.getDataSource(sourceName).source;
+    source.token = config.get("APIGouv.token");
+    source.axiosConfig = {
+      ...source.axiosConfig,
+      proxy: (config.has("proxy") && config.get("proxy")) || false,
+    };
+    if (config.has("apiTimeout")) {
+      source.axiosConfig.timeout = config.get("apiTimeout");
+    }
+  });
 
   app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

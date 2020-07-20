@@ -13,9 +13,8 @@ const globalConfig = {
   },
   dataSources: [
     { id: "PG", priority: 100 },
-    { id: "ApiGouv", priority: 80 }
-    // { id: "Yep", priority: 80 },
-    // { id: "Yop", priority: 80 }
+    { id: "ApiGouv", priority: 80 },
+    { id: "ApiGouvAssociations", priority: 80 }
   ],
   sidebarEstablishmentsLimit: 20,
 

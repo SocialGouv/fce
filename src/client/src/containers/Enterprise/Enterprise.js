@@ -36,10 +36,10 @@ const Enterprise = ({
     setState(Config.get("state.loading"));
     loadSources();
     return loadMethod(identifier)
-      .then(response => {
+      .then(() => {
         setState(Config.get("state.success"));
       })
-      .catch(e => {
+      .catch(() => {
         setState(Config.get("state.error"));
       });
   };
@@ -55,14 +55,19 @@ const Enterprise = ({
         siege_social || siret === enterprise.siret_siege_social
     );
 
-  console.log("**** RENDER ****", { isEnterprise, currentEnterprise });
+  const mustLoadEntity = identifier => {
+    if (identifier !== currentEnterprise.siren) {
+      return true;
+    }
+
+    return state !== Config.get("state.success");
+  };
 
   useEffect(() => {
-    console.log("**** EFFECT ****");
-    loadEntity(loadMethod, identifier);
+    if (mustLoadEntity(identifier)) {
+      loadEntity(loadMethod, identifier);
+    }
   }, [match]);
-
-  console.log({ state });
 
   if (state === Config.get("state.error")) {
     return <Error404 />;

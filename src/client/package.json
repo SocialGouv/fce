@@ -57,6 +57,7 @@
     "postbuild": "chown -R --reference=package.json .",
     "postinstall": "chown -R --reference=package.json .",
     "test": "react-scripts test --env=jsdom",
+    "testci": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "prettier": "prettier --write 'src/**/*.{js,scss}'",
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore src"

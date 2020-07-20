@@ -145,7 +145,13 @@ const globalConfig = {
       "mentions-legales": 4
     }
   },
-  codeInseeLength: 5
+  codeInseeLength: 5,
+  state: {
+    loading: "loading",
+    success: "success",
+    error: "error",
+    finish: "finish"
+  }
 };
 
 function initConfig() {

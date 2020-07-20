@@ -22,7 +22,11 @@ const getEnterprise = term => dispatch => {
     const dataSources = Config.get("dataSources");
     let nbErrors = 0;
 
-    dataSources.map(({ id, priority }) => {
+    dispatch({
+      type: types.SET_START_LOADING_ENTERPRISE
+    });
+
+    dataSources.map(({ id }) => {
       Http.get("/entity", {
         params: {
           q: term,
@@ -30,43 +34,24 @@ const getEnterprise = term => dispatch => {
         }
       })
         .then(response => {
-          console.error("Un success", response.data.query.dataSource);
           const enterprise = response?.data?.results?.[0];
           if (enterprise) {
             dispatch(setCurrentEnterprise(enterprise));
           }
+          dispatch({
+            type: types.SET_SOURCE_COMPLETED_ENTERPRISE
+          });
           resolve(response);
         })
         .catch(e => {
           nbErrors++;
-          console.error("Une erreur", e);
+          dispatch({
+            type: types.SET_SOURCE_COMPLETED_ENTERPRISE
+          });
           if (nbErrors === dataSources.length) {
-            console.error("FATAL ERROR !!!");
             reject(e);
           }
         });
     });
   });
-  /*Promise.any(
-    Config.get("dataSources").map(({ id, priority }) => {
-      console.log({ id, priority });
-    })
-  );*/
-
-  /*return Http.get("/entity", {
-    params: {
-      q: term,
-      dataSource: "PG"
-    }
-  })
-    .then(function(response) {
-      const enterprise = response.data.results.length
-        ? response.data.results[0]
-        : null;
-      dispatch(setCurrentEnterprise(enterprise));
-      return Promise.resolve(response);
-    })
-    .catch(function(error) {
-      return Promise.reject(error);
-    });*/
 };

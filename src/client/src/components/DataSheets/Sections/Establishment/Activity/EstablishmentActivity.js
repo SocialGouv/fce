@@ -64,18 +64,17 @@ const EstablishmentActivity = ({ establishment }) => {
               sourceSi: "DSN",
               hasNumberFormat: true
             },
-            {
-              name: `Effectif en équivalent temps plein`,
-              value: _get(
-                establishment,
-                "effectifMensuelEtp.effectifs_mensuels"
-              ),
-              nonEmptyValue: "",
-              sourceCustom: `Acoss / DSN ${getMonthName(
-                _get(establishment, "effectifMensuelEtp.mois")
-              )} ${_get(establishment, "effectifMensuelEtp.annee", "")}`,
-              hasNumberFormat: true
-            }
+            ...(establishment.effectifMensuelEtp
+              ? establishment.effectifMensuelEtp.map(
+                  ({ annee, mois, effectifs_mensuels }) => ({
+                    name: `Effectif ETP ${getMonthName(mois)}`,
+                    value: effectifs_mensuels,
+                    nonEmptyValue: "",
+                    sourceCustom: `Acoss / DSN ${getMonthName(mois)} ${annee}`,
+                    hasNumberFormat: true
+                  })
+                )
+              : [])
           ]}
         />
         <Subcategory

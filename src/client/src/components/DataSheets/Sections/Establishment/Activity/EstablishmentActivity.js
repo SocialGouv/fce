@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory } from "@fortawesome/pro-solid-svg-icons";
-import _get from "lodash.get";
 
 import Config from "../../../../../services/Config";
 import { getSuccession } from "../../../../../helpers/Establishment";

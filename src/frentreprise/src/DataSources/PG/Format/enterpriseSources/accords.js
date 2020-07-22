@@ -2,10 +2,20 @@ import { getFormatedDate } from "../../Helpers";
 
 export default ({ accords }) => {
   const accordsBySiret = accords.reduce(
-    (accordsBySiret, { siret, dt_sign }) => {
+    (accordsBySiret, { siret, dt_sign, etablissement }) => {
       dt_sign = getFormatedDate(dt_sign);
       if (!Object.prototype.hasOwnProperty.call(accordsBySiret, siret)) {
-        accordsBySiret[siret] = { count: 0, lastDate: null };
+        accordsBySiret[siret] = {
+          count: 0,
+          lastDate: null,
+          etablissement: {
+            etat_etablissement: etablissement?.etatadministratifetablissement,
+            adresse_components: {
+              code_postal: etablissement?.codepostaletablissement,
+              localite: etablissement?.libellecommuneetablissement,
+            },
+          },
+        };
       }
 
       accordsBySiret[siret].count += 1;

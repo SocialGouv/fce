@@ -1,5 +1,4 @@
 const associatedSources = [
-  { type: "hasMany", model: "Accord", entity: "accords" },
   { type: "hasMany", model: "ActivitePartielle", entity: "activitePartielles" },
   { type: "hasMany", model: "Apprentissage", entity: "apprentissages" },
 ];
@@ -82,6 +81,10 @@ const entreprise = (sequelize, DataTypes) => {
       sourceKey: "siren",
     });
     Entreprise.hasMany(models.InteractionsPoleT, {
+      foreignKey: "siren",
+      sourceKey: "siren",
+    });
+    Entreprise.hasMany(models.Accord, {
       foreignKey: "siren",
       sourceKey: "siren",
     });

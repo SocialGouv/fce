@@ -23,6 +23,13 @@ const accord = (sequelize, DataTypes) => {
     }
   );
 
+  Accord.associate = (models) => {
+    Accord.hasOne(models.Etablissement, {
+      foreignKey: "siret",
+      sourceKey: "siret",
+    });
+  };
+
   return Accord;
 };
 

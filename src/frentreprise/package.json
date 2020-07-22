@@ -16,6 +16,8 @@
     "follow-redirects": "^1.10.0",
     "is-buffer": "^2.0.4",
     "lodash.get": "^4.4.2",
+    "lodash.isequal": "^4.5.0",
+    "lodash.uniqwith": "^4.5.0",
     "pg": "^7.0.0",
     "pg-hstore": "^2.3.3",
     "qs": "^6.9.2",

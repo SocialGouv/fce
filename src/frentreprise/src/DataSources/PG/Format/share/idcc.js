@@ -1,3 +1,6 @@
+import _uniqWith from "lodash.uniqwith";
+import _isEqual from "lodash.isequal";
+
 const CODE_SANS_CONVENTION_COLLECTIVE = "9999";
 
 export default ({ idccs }) => {
@@ -11,5 +14,5 @@ export default ({ idccs }) => {
       libelle,
     }));
 
-  return { idcc: idccList };
+  return { idcc: _uniqWith(idccList, _isEqual) };
 };

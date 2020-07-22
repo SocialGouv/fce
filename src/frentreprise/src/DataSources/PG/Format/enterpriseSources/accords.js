@@ -10,10 +10,10 @@ export default ({ accords }) => {
           lastDate: null,
           etablissement: {
             etat_etablissement: etablissement?.etatadministratifetablissement,
-            adresse_components: {
-              code_postal: etablissement?.codepostaletablissement,
-              localite: etablissement?.libellecommuneetablissement,
-            },
+            categorie_etablissement:
+              etablissement?.etablissementsiege === "true"
+                ? "Siège social"
+                : "Établissement secondaire",
           },
         };
       }

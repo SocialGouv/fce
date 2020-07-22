@@ -6,8 +6,7 @@ export const sortAgreements = agreements =>
   Object.entries(agreements)
     .map(([siret, { count: totalEtab, lastDate, etablissement }]) => {
       const etat = _get(etablissement, "etat_etablissement");
-      const categorie =
-        _get(etablissement, "categorie_etablissement", "") || "";
+      const categorie = _get(etablissement, "categorie_etablissement") || "";
       const date = lastDate || "";
 
       return {

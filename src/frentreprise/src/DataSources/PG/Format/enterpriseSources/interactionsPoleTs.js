@@ -11,6 +11,14 @@ export default ({ interactionsPoleTs }) => {
       date: getFormatedDate(interaction.date),
       agent: interaction.intervenant && interaction.intervenant.trim(),
       note: interaction.action_sur && interaction.action_sur.trim(),
+      etablissement: {
+        etat_etablissement:
+          interaction?.etablissement?.etatadministratifetablissement,
+        adresse_components: {
+          code_postal: interaction?.etablissement?.codepostaletablissement,
+          localite: interaction?.etablissement?.libellecommuneetablissement,
+        },
+      },
     };
   });
 

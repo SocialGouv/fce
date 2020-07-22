@@ -13,6 +13,13 @@ const interactionsPole3ESRC = (sequelize, DataTypes) => {
     }
   );
 
+  InteractionsPole3ESRC.associate = (models) => {
+    InteractionsPole3ESRC.hasOne(models.Etablissement, {
+      foreignKey: "siret",
+      sourceKey: "siret",
+    });
+  };
+
   return InteractionsPole3ESRC;
 };
 

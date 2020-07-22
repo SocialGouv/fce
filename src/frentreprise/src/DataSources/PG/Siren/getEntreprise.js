@@ -21,6 +21,26 @@ const getEntreprise = async (siren) => {
         entity: "rupcoEtablissements",
       },
       { model: "Idcc", include: [models.IdccDefinition], entity: "idccs" },
+      {
+        model: "InteractionsPole3ESEER",
+        include: [models.Etablissement],
+        entity: "interactionsPole3ESEERs",
+      },
+      {
+        model: "InteractionsPole3ESRC",
+        include: [models.Etablissement],
+        entity: "interactionsPole3ESRCs",
+      },
+      {
+        model: "InteractionsPoleC",
+        include: [models.Etablissement],
+        entity: "interactionsPoleCs",
+      },
+      {
+        model: "InteractionsPoleT",
+        include: [models.Etablissement],
+        entity: "interactionsPoleTs",
+      },
     ],
   ];
 

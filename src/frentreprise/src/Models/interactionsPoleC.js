@@ -16,6 +16,13 @@ const interactionsPoleC = (sequelize, DataTypes) => {
     }
   );
 
+  InteractionsPoleC.associate = (models) => {
+    InteractionsPoleC.hasOne(models.Etablissement, {
+      foreignKey: "siret",
+      sourceKey: "siret",
+    });
+  };
+
   return InteractionsPoleC;
 };
 

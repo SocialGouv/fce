@@ -32,6 +32,16 @@ const Enterprise = ({
   const identifier = isEnterprise ? match.params.siren : match.params.siret;
   const loadMethod = isEnterprise ? loadEntreprise : loadEstablishment;
 
+  useEffect(() => {
+    if (mustLoadEntity(identifier)) {
+      loadEntity(loadMethod, identifier);
+    }
+  }, [match]);
+
+  if (state === Config.get("state.error")) {
+    return <Error404 />;
+  }
+
   const loadEntity = (loadMethod, identifier) => {
     setState(Config.get("state.loading"));
     loadSources();
@@ -63,31 +73,32 @@ const Enterprise = ({
     return state !== Config.get("state.success");
   };
 
-  useEffect(() => {
-    if (mustLoadEntity(identifier)) {
-      loadEntity(loadMethod, identifier);
-    }
-  }, [match]);
+  const headOffice = getHeadOffice(currentEnterprise);
+  const establishments = currentEnterprise.etablissements || [];
+  const establishment = isEnterprise
+    ? null
+    : getEstablishment(currentEnterprise, identifier);
 
-  if (state === Config.get("state.error")) {
-    return <Error404 />;
-  }
+  const isLoadedEnterprise = () =>
+    !!(state === Config.get("state.success") && establishments.length);
+  const isLoadedEstablishment = () =>
+    !!(state === Config.get("state.success") && establishment);
 
   return isEnterprise ? (
     <EnterpriseView
       enterprise={currentEnterprise}
-      headOffice={getHeadOffice(currentEnterprise)}
-      establishments={currentEnterprise.etablissements || []}
-      isLoaded={state === Config.get("state.success")}
+      headOffice={headOffice}
+      establishments={establishments}
+      isLoaded={isLoadedEnterprise()}
       history={history}
     />
   ) : (
     <EstablishmentView
       enterprise={currentEnterprise}
-      headOffice={getHeadOffice(currentEnterprise)}
-      establishment={getEstablishment(currentEnterprise, identifier)}
-      establishments={currentEnterprise.etablissements || []}
-      isLoaded={state === Config.get("state.success")}
+      headOffice={headOffice}
+      establishment={establishment}
+      establishments={establishments}
+      isLoaded={isLoadedEstablishment()}
       history={history}
     />
   );

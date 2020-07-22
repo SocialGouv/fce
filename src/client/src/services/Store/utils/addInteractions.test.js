@@ -14,7 +14,14 @@ describe("addInteractions", () => {
           type: "top",
           agent: "Maitre Grims",
           filiere: "",
-          eti_pepite: ""
+          eti_pepite: "",
+          etablissement: {
+            adresse_components: {
+              code_postal: "78250",
+              localite: "MEULAN-EN-YVELINES"
+            },
+            etat_etablissement: "A"
+          }
         },
         {
           siret: "12345678900002",
@@ -24,7 +31,14 @@ describe("addInteractions", () => {
           type: "top",
           agent: "Maitre Grims",
           filiere: "",
-          eti_pepite: ""
+          eti_pepite: "",
+          etablissement: {
+            adresse_components: {
+              code_postal: "78250",
+              localite: "MEULAN-EN-YVELINES"
+            },
+            etat_etablissement: "A"
+          }
         }
       ],
       interactions_3E_SRC: [
@@ -34,7 +48,14 @@ describe("addInteractions", () => {
           pole: "3E_SRC",
           unite: `SRC c'est un dossier`,
           type: "tap",
-          agent: null
+          agent: null,
+          etablissement: {
+            adresse_components: {
+              code_postal: "78250",
+              localite: "MEULAN-EN-YVELINES"
+            },
+            etat_etablissement: "A"
+          }
         }
       ],
       interactions_C: null,
@@ -51,7 +72,14 @@ describe("addInteractions", () => {
           type: "top",
           agent: "Maitre Grims",
           filiere: "",
-          eti_pepite: ""
+          eti_pepite: "",
+          etablissement: {
+            adresse_components: {
+              code_postal: "78250",
+              localite: "MEULAN-EN-YVELINES"
+            },
+            etat_etablissement: "A"
+          }
         },
         {
           siret: "12345678900002",
@@ -61,7 +89,14 @@ describe("addInteractions", () => {
           type: "top",
           agent: "Maitre Grims",
           filiere: "",
-          eti_pepite: ""
+          eti_pepite: "",
+          etablissement: {
+            adresse_components: {
+              code_postal: "78250",
+              localite: "MEULAN-EN-YVELINES"
+            },
+            etat_etablissement: "A"
+          }
         },
         {
           siret: "12345678900001",
@@ -69,7 +104,14 @@ describe("addInteractions", () => {
           pole: "3E_SRC",
           unite: `SRC c'est un dossier`,
           type: "tap",
-          agent: null
+          agent: null,
+          etablissement: {
+            adresse_components: {
+              code_postal: "78250",
+              localite: "MEULAN-EN-YVELINES"
+            },
+            etat_etablissement: "A"
+          }
         }
       ],
       totalInteractions: {
@@ -94,7 +136,14 @@ describe("addInteractions", () => {
           type: "top",
           agent: "Maitre Grims",
           filiere: "",
-          eti_pepite: ""
+          eti_pepite: "",
+          etablissement: {
+            adresse_components: {
+              code_postal: "78250",
+              localite: "MEULAN-EN-YVELINES"
+            },
+            etat_etablissement: "A"
+          }
         },
         {
           siret: "12345678900002",
@@ -104,7 +153,14 @@ describe("addInteractions", () => {
           type: "top",
           agent: "Maitre Grims",
           filiere: "",
-          eti_pepite: ""
+          eti_pepite: "",
+          etablissement: {
+            adresse_components: {
+              code_postal: "78250",
+              localite: "MEULAN-EN-YVELINES"
+            },
+            etat_etablissement: "A"
+          }
         }
       ],
       interactions_3E_SRC: [
@@ -114,7 +170,14 @@ describe("addInteractions", () => {
           pole: "3E_SRC",
           unite: `SRC c'est un dossier`,
           type: "tap",
-          agent: null
+          agent: null,
+          etablissement: {
+            adresse_components: {
+              code_postal: "78250",
+              localite: "MEULAN-EN-YVELINES"
+            },
+            etat_etablissement: "A"
+          }
         }
       ]
     };

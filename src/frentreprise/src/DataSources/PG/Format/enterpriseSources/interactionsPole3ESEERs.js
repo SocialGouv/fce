@@ -13,6 +13,14 @@ export default ({ interactionsPole3ESEERs }) => {
       agent: interaction.inspecteurs && interaction.inspecteurs.trim(),
       filiere: interaction.filieres && interaction.filieres.trim(),
       eti_pepite: interaction.suivi_eti && interaction.suivi_eti.trim(),
+      etablissement: {
+        etat_etablissement:
+          interaction?.etablissement?.etatadministratifetablissement,
+        adresse_components: {
+          code_postal: interaction?.etablissement?.codepostaletablissement,
+          localite: interaction?.etablissement?.libellecommuneetablissement,
+        },
+      },
     };
   });
 

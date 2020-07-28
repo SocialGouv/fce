@@ -1,19 +1,6 @@
 const associatedSources = [
-  { type: "hasMany", model: "Accord", entity: "accords" },
   { type: "hasMany", model: "ActivitePartielle", entity: "activitePartielles" },
   { type: "hasMany", model: "Apprentissage", entity: "apprentissages" },
-  {
-    type: "hasMany",
-    model: "InteractionsPole3ESEER",
-    entity: "interactionsPole3ESEERs",
-  },
-  {
-    type: "hasMany",
-    model: "InteractionsPole3ESRC",
-    entity: "interactionsPole3ESRCs",
-  },
-  { type: "hasMany", model: "InteractionsPoleC", entity: "interactionsPoleCs" },
-  { type: "hasMany", model: "InteractionsPoleT", entity: "interactionsPoleTs" },
 ];
 
 const entreprise = (sequelize, DataTypes) => {
@@ -78,6 +65,26 @@ const entreprise = (sequelize, DataTypes) => {
       sourceKey: "siren",
     });
     Entreprise.hasMany(models.Idcc, {
+      foreignKey: "siren",
+      sourceKey: "siren",
+    });
+    Entreprise.hasMany(models.InteractionsPole3ESEER, {
+      foreignKey: "siren",
+      sourceKey: "siren",
+    });
+    Entreprise.hasMany(models.InteractionsPole3ESRC, {
+      foreignKey: "siren",
+      sourceKey: "siren",
+    });
+    Entreprise.hasMany(models.InteractionsPoleC, {
+      foreignKey: "siren",
+      sourceKey: "siren",
+    });
+    Entreprise.hasMany(models.InteractionsPoleT, {
+      foreignKey: "siren",
+      sourceKey: "siren",
+    });
+    Entreprise.hasMany(models.Accord, {
       foreignKey: "siren",
       sourceKey: "siren",
     });

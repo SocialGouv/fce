@@ -21,14 +21,6 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
   const mandataires = enterprise.mandataires_sociaux || [];
 
-  const moisEffectifMensuelEtp = getMonthName(
-    _get(enterprise, "effectifMensuelEtp.mois")
-  );
-  const anneeEffectifMensuelEtp = _get(
-    enterprise,
-    "effectifMensuelEtp.annee",
-    ""
-  );
   const anneeEffectifAnnuelEtp = _get(
     enterprise,
     "effectifAnnuelEtp.annee",
@@ -81,16 +73,22 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             sourceSi={"Sirène-year"}
             sourceDate={enterprise.annee_tranche_effectif}
           />
-          <Data
-            name={`Effectif de ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp} en équivalent temps plein`}
-            value={_get(enterprise, "effectifMensuelEtp.effectifs_mensuels")}
-            sourceCustom={`Acoss / DSN ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
-            hasNumberFormat
-          />
+          {enterprise.effectifMensuelEtp &&
+            enterprise.effectifMensuelEtp.map(
+              ({ annee, mois, effectifs_mensuels }) => (
+                <Data
+                  key={`${annee}-${mois}`}
+                  name={`Effectif ETP ${getMonthName(mois)}`}
+                  value={effectifs_mensuels}
+                  sourceCustom={`Acoss / DSN ${getMonthName(mois)} ${annee}`}
+                  hasNumberFormat
+                />
+              )
+            )}
           <Data
             name={`Effectif ${anneeEffectifAnnuelEtp} en équivalent temps plein`}
             value={_get(enterprise, "effectifAnnuelEtp.effectifs_annuels")}
-            sourceCustom={`Acoss / DSN ${moisEffectifMensuelEtp} ${anneeEffectifMensuelEtp}`}
+            sourceCustom={`Acoss / DSN ${anneeEffectifAnnuelEtp}`}
             hasNumberFormat
           />
         </Subcategory>

@@ -11,6 +11,11 @@ const globalConfig = {
   auth: {
     expire: 86400 // 1j
   },
+  dataSources: [
+    { id: "PG", priority: 100 },
+    { id: "ApiGouv", priority: 80 },
+    { id: "ApiGouvAssociations", priority: 80 }
+  ],
   sidebarEstablishmentsLimit: 20,
 
   interactions: {
@@ -139,7 +144,13 @@ const globalConfig = {
       "mentions-legales": 4
     }
   },
-  codeInseeLength: 5
+  codeInseeLength: 5,
+  state: {
+    loading: "loading",
+    success: "success",
+    error: "error",
+    finish: "finish"
+  }
 };
 
 function initConfig() {

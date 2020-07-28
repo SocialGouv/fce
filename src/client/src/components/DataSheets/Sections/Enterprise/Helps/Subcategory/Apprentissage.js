@@ -50,11 +50,11 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
                 const etat = _get(establishment, "etat_etablissement");
                 const codePostal = _get(
                   establishment,
-                  "adresse_components.code_postal"
+                  "adresse_composant.code_postal"
                 );
                 const localite = _get(
                   establishment,
-                  "adresse_components.localite"
+                  "adresse_composant.localite"
                 );
 
                 return (

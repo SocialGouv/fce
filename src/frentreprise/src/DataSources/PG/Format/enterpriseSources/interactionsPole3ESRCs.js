@@ -11,6 +11,14 @@ export default ({ interactionsPole3ESRCs }) => {
       }`,
       type: interaction.type_controle && interaction.type_controle.trim(),
       agent: null,
+      etablissement: {
+        etat_etablissement:
+          interaction?.etablissement?.etatadministratifetablissement,
+        adresse_composant: {
+          code_postal: interaction?.etablissement?.codepostaletablissement,
+          localite: interaction?.etablissement?.libellecommuneetablissement,
+        },
+      },
     };
   });
 

@@ -10,4 +10,12 @@ export default class DataSource {
   async getSIREN() {
     throw new NotImplementedError();
   }
+
+  getSIRETCheck() {
+    throw new NotImplementedError();
+  }
+
+  getSIRENCheck() {
+    throw new NotImplementedError();
+  }
 }

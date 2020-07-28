@@ -21,6 +21,14 @@ export default class SirenePG extends DataSource {
     );
   }
 
+  getSIRENCheck(data) {
+    return !!data.siren;
+  }
+
+  getSIRETCheck(data) {
+    return !!data.siret;
+  }
+
   async [_.requestPG](identifier, ...dbCalls) {
     let out = {};
     const requests = dbCalls

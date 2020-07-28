@@ -2,6 +2,7 @@ import Communes from "../models/Communes";
 import Naf from "../models/Naf";
 import Departements from "../models/Departements";
 import withAuth from "../middlewares/auth";
+import NotFoundException from "../Exceptions/NotFoundException";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
 
@@ -28,8 +29,26 @@ const getAppSearchClient = () => {
   return new AppSearchClient(undefined, apiKey, baseUrlFn);
 };
 
+const isSuccessEnterprise = (data) => {
+  return !!data.results?.[0]._success;
+};
+
+const isSuccessEstablishment = (data, siret) => {
+  const establishments = data?.results?.[0]?.etablissements;
+  if (!Array.isArray(establishments)) {
+    return false;
+  }
+
+  const establishment = establishments.find(
+    (establishment) => establishment?.siret === siret
+  );
+
+  return !!establishment?._success;
+};
+
 router.get("/entity", withAuth, function (req, res) {
   const query = (req.query["q"] || "").trim();
+  const dataSource = (req.query["dataSource"] || "").trim();
 
   const data = {
     query: {
@@ -39,20 +58,33 @@ router.get("/entity", withAuth, function (req, res) {
       },
       isSIRET: isSIRET(query),
       isSIREN: isSIREN(query),
+      dataSource,
     },
   };
 
   const freCall = frentreprise
-    .getEntreprise(data.query.terms.q)
+    .getEntreprise(query, dataSource)
     .then((entreprise) => {
       data.results = [entreprise.export()];
-      data.pagination = {};
+      const success = isSIREN(query)
+        ? isSuccessEnterprise(data)
+        : isSuccessEstablishment(data, query);
+
+      if (!success) {
+        data.code = 404;
+        throw new NotFoundException(`${query} in ${dataSource}`);
+      }
     }, logError.bind(this, data));
 
-  freCall.then(() => {
-    data.size = (data.results && data.results.length) || 0;
-    sendResult(data, res);
-  });
+  freCall
+    .then(() => {
+      data.size = (data.results && data.results.length) || 0;
+      sendResult(data, res);
+    })
+    .catch((e) => {
+      logError(data, e);
+      sendResult(data, res);
+    });
 });
 
 router.post("/downloadXlsx", withAuth, async function (req, res) {
@@ -152,7 +184,11 @@ router.post("/downloadXlsx", withAuth, async function (req, res) {
 });
 
 const sendResult = (data, response) => {
-  response.send(data);
+  if (data?.error) {
+    return response.status(data.code || 400).send(data);
+  }
+
+  return response.send(data);
 };
 
 router.get("/communes", withAuth, function (req, res) {

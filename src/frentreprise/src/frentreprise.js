@@ -1,7 +1,9 @@
 import * as Sentry from "@sentry/node";
 import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
+import NotFoundSourceError from "./Errors/NotFoundSourceError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
+import ApiGouvAssociations from "./DataSources/ApiGouvAssociations";
 import PG from "./DataSources/PG";
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
@@ -26,6 +28,11 @@ class frentreprise {
       source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/"),
     });
     this.addDataSource({
+      name: "ApiGouvAssociations",
+      priority: 80, // higher prevail
+      source: new ApiGouvAssociations("https://entreprise.api.gouv.fr:443/v2/"),
+    });
+    this.addDataSource({
       name: "PG",
       priority: 100, // higher prevail
       source: new PG(),
@@ -38,7 +45,7 @@ class frentreprise {
     });
   }
 
-  async getEntreprise(SiretOrSiren) {
+  async getEntreprise(SiretOrSiren, dataSourceName) {
     SiretOrSiren = SiretOrSiren + "";
 
     const gotSIREN = Validator.validateSIREN(SiretOrSiren);
@@ -57,19 +64,21 @@ class frentreprise {
       this.EtablissementModel
     );
 
-    await this[_.askDataSource]("getSIREN", SIREN, null, (result) => {
-      console.log(
-        `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
-      );
+    await this[_.askDataSource]("getSIREN", SIREN, dataSourceName).then(
+      (result) => {
+        console.log(
+          `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
+        );
 
-      entreprise.updateData({
-        ...result.data,
-        _dataSources: {
-          ...entreprise._dataSources,
-          [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
-        },
-      });
-    });
+        entreprise.updateData({
+          ...result.data,
+          _dataSources: {
+            ...entreprise._dataSources,
+            [result.source.name]: result.success,
+          },
+        });
+      }
+    );
 
     const SIRET = gotSIRET ? SiretOrSiren : "" + entreprise.siret_siege_social;
 
@@ -86,23 +95,22 @@ class frentreprise {
           return this[_.askDataSource](
             "getSIRET",
             lookSIRET,
-            null,
-            (result) => {
-              console.log(
-                `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
-              );
+            dataSourceName
+          ).then((result) => {
+            console.log(
+              `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
+            );
 
-              const ets = entreprise.getEtablissement(lookSIRET);
+            const ets = entreprise.getEtablissement(lookSIRET);
 
-              ets.updateData({
-                ...result.data,
-                _dataSources: {
-                  ...ets._dataSources,
-                  [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
-                },
-              });
-            }
-          );
+            ets.updateData({
+              ...result.data,
+              _dataSources: {
+                ...ets._dataSources,
+                [result.source.name]: result.success, // Add current data source (true = success)
+              },
+            });
+          });
         }
       })
     );
@@ -146,61 +154,40 @@ class frentreprise {
     return a > b ? 1 : a < b ? -1 : 0;
   }
 
-  [_.askDataSource](method, request, page, forEach = (result) => result) {
-    return Promise.all(
-      this.getDataSources().map((dataSource) => {
-        console.log(
-          `Asking [${method}] to dataSource named ${
-            dataSource.name
-          } with request : ${JSON.stringify(request)}`
-        );
+  [_.askDataSource](method, request, dataSourceName) {
+    const dataSource = this.getDataSource(dataSourceName);
 
-        const pagination =
-          page && dataSource.pagination
-            ? {
-                ...dataSource.pagination,
-                page,
-              }
-            : null;
+    if (!dataSource) {
+      throw new NotFoundSourceError(dataSourceName);
+    }
 
-        return dataSource.source[method](request, pagination).then(
-          (response) => {
-            const data =
-              typeof response === "object" && response.items
-                ? response.items
-                : response;
-            const paginationResponse =
-              pagination && typeof response === "object" && response.pagination
-                ? response.pagination
-                : {};
+    return dataSource.source[method](request).then((response) => {
+      const data =
+        typeof response === "object" && response.items
+          ? response.items
+          : response;
 
-            const cleanedData =
-              typeof data === "object"
-                ? Array.isArray(data)
-                  ? data.map(cleanObject)
-                  : cleanObject(data)
-                : data;
-            console.log(
-              `Got response for [${method}] from dataSource named ${
-                dataSource.name
-              } about request : ${JSON.stringify(request)}`
-            );
+      const cleanedData =
+        typeof data === "object"
+          ? Array.isArray(data)
+            ? data.map(cleanObject)
+            : cleanObject(data)
+          : data;
+      const success = dataSource.source[`${method}Check`](cleanedData);
 
-            return Promise.resolve({
-              source: dataSource,
-              data: cleanedData,
-              pagination: paginationResponse,
-            });
-          }
-        );
-      })
-    ).then((results) => {
-      results
-        .sort(
-          (a, b) =>
-            (a.source && b.source && this[_.compareDataSource](a, b)) || 0
-        )
-        .map(forEach);
+      console.log(
+        `Got response for [${method}] from dataSource named ${
+          dataSource.name
+        } about request : ${JSON.stringify(request)}, status : ${
+          success ? "Success" : "Failed"
+        }`
+      );
+
+      return {
+        data: cleanedData,
+        source: dataSource,
+        success,
+      };
     });
   }
 

@@ -24,6 +24,7 @@
     "clipboard": "^2.0.6",
     "core-js": "^3.6.4",
     "downloadjs": "^1.4.7",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.find": "^4.6.0",
     "lodash.get": "^4.4.2",
     "lodash.range": "^3.2.0",
@@ -56,10 +57,10 @@
     "postbuild": "chown -R --reference=package.json .",
     "postinstall": "chown -R --reference=package.json .",
     "test": "react-scripts test --env=jsdom",
+    "testci": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "prettier": "prettier --write 'src/**/*.{js,scss}'",
-    "lint": "eslint --max-warnings=0 --ignore-path .gitignore src",
-    "pretest": "npm run lint"
+    "lint": "eslint --max-warnings=0 --ignore-path .gitignore src"
   },
   "devDependencies": {
     "eslint": "^6.8.0",

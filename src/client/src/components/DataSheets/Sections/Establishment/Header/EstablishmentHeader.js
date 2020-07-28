@@ -13,9 +13,9 @@ import "./establishmentHeader.scss";
 const EstablishmentHeader = ({
   enterprise,
   establishment,
-  establishment: { adresse_components }
+  establishment: { adresse_composant }
 }) => {
-  const address = adresse_components && formatAddress(adresse_components);
+  const address = adresse_composant && formatAddress(adresse_composant);
 
   const isActive = isActiveEstablishment(establishment);
   const stateClass = isActive ? "icon--success" : "icon--danger";
@@ -107,7 +107,7 @@ const EstablishmentHeader = ({
 EstablishmentHeader.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
-  adresse_components: PropTypes.object
+  adresse_composant: PropTypes.object
 };
 
 export default EstablishmentHeader;

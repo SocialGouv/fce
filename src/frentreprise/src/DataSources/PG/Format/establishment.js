@@ -101,7 +101,7 @@ export default async (establishment) => {
     },
     {
       in: "complementadresseetablissement",
-      out: "adresse_components",
+      out: "adresse_composant",
       callback: (complementAdresse, etab) => {
         const adresseComponent = getAdresseComponent(etab);
         return utils.isEmpty(adresseComponent) ? undefined : adresseComponent;

@@ -14,7 +14,7 @@ export default ({ interactionsPoleTs }) => {
       etablissement: {
         etat_etablissement:
           interaction?.etablissement?.etatadministratifetablissement,
-        adresse_components: {
+        adresse_composant: {
           code_postal: interaction?.etablissement?.codepostaletablissement,
           localite: interaction?.etablissement?.libellecommuneetablissement,
         },

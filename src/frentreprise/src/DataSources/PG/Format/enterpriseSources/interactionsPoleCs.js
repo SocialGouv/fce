@@ -13,7 +13,7 @@ export default ({ interactionsPoleCs }) => {
         note: null,
         etablissement: {
           etat_etablissement: etablissement?.etatadministratifetablissement,
-          adresse_components: {
+          adresse_composant: {
             code_postal: etablissement?.codepostaletablissement,
             localite: etablissement?.libellecommuneetablissement,
           },

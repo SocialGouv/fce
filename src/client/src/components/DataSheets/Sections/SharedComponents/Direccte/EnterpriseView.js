@@ -54,10 +54,7 @@ class EstablishmentView extends React.Component {
           etab => etab.siret.trim() === siret.trim()
         );
 
-        const codePostal = _get(
-          establishment,
-          "adresse_components.code_postal"
-        );
+        const codePostal = _get(establishment, "adresse_composant.code_postal");
 
         const etablissementInterractions = enterprise.interactions.filter(
           interaction => interaction.siret.trim() === siret.trim()
@@ -67,7 +64,7 @@ class EstablishmentView extends React.Component {
           siret,
           etat: _get(establishment, "etat_etablissement"),
           dep: codePostal && codePostal.substr(0, 2),
-          commune: _get(establishment, "adresse_components.localite"),
+          commune: _get(establishment, "adresse_composant.localite"),
           lastControlDate: getLastDateInteraction(etablissementInterractions)
         };
       }

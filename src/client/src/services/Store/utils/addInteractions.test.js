@@ -16,7 +16,7 @@ describe("addInteractions", () => {
           filiere: "",
           eti_pepite: "",
           etablissement: {
-            adresse_components: {
+            adresse_composant: {
               code_postal: "78250",
               localite: "MEULAN-EN-YVELINES"
             },
@@ -33,7 +33,7 @@ describe("addInteractions", () => {
           filiere: "",
           eti_pepite: "",
           etablissement: {
-            adresse_components: {
+            adresse_composant: {
               code_postal: "78250",
               localite: "MEULAN-EN-YVELINES"
             },
@@ -50,7 +50,7 @@ describe("addInteractions", () => {
           type: "tap",
           agent: null,
           etablissement: {
-            adresse_components: {
+            adresse_composant: {
               code_postal: "78250",
               localite: "MEULAN-EN-YVELINES"
             },
@@ -74,7 +74,7 @@ describe("addInteractions", () => {
           filiere: "",
           eti_pepite: "",
           etablissement: {
-            adresse_components: {
+            adresse_composant: {
               code_postal: "78250",
               localite: "MEULAN-EN-YVELINES"
             },
@@ -91,7 +91,7 @@ describe("addInteractions", () => {
           filiere: "",
           eti_pepite: "",
           etablissement: {
-            adresse_components: {
+            adresse_composant: {
               code_postal: "78250",
               localite: "MEULAN-EN-YVELINES"
             },
@@ -106,7 +106,7 @@ describe("addInteractions", () => {
           type: "tap",
           agent: null,
           etablissement: {
-            adresse_components: {
+            adresse_composant: {
               code_postal: "78250",
               localite: "MEULAN-EN-YVELINES"
             },
@@ -138,7 +138,7 @@ describe("addInteractions", () => {
           filiere: "",
           eti_pepite: "",
           etablissement: {
-            adresse_components: {
+            adresse_composant: {
               code_postal: "78250",
               localite: "MEULAN-EN-YVELINES"
             },
@@ -155,7 +155,7 @@ describe("addInteractions", () => {
           filiere: "",
           eti_pepite: "",
           etablissement: {
-            adresse_components: {
+            adresse_composant: {
               code_postal: "78250",
               localite: "MEULAN-EN-YVELINES"
             },
@@ -172,7 +172,7 @@ describe("addInteractions", () => {
           type: "tap",
           agent: null,
           etablissement: {
-            adresse_components: {
+            adresse_composant: {
               code_postal: "78250",
               localite: "MEULAN-EN-YVELINES"
             },

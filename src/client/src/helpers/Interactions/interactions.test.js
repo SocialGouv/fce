@@ -319,7 +319,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "A",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "31000",
           localite: "TOULOUSE"
         }
@@ -335,7 +335,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "A",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "31000",
           localite: "TOULOUSE"
         }
@@ -351,7 +351,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "A",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "32000",
           localite: "AUCH"
         }
@@ -367,7 +367,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "F",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "64000",
           localite: "BAYONNE"
         }
@@ -385,7 +385,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "A",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "31000",
           localite: "TOULOUSE"
         }
@@ -401,7 +401,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "A",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "31000",
           localite: "TOULOUSE"
         }
@@ -417,7 +417,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "A",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "32000",
           localite: "AUCH"
         }
@@ -433,7 +433,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "A",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "81000",
           localite: "ALBI"
         }
@@ -451,7 +451,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "A",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "31000",
           localite: "TOULOUSE"
         }
@@ -467,7 +467,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "A",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "31000",
           localite: "TOULOUSE"
         }
@@ -483,7 +483,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "F",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "64000",
           localite: "BAYONNE"
         }
@@ -499,7 +499,7 @@ const sampleEnterprise = {
       note: null,
       etablissement: {
         etat_etablissement: "A",
-        adresse_components: {
+        adresse_composant: {
           code_postal: "81000",
           localite: "ALBI"
         }

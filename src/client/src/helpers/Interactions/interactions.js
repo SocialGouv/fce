@@ -54,11 +54,11 @@ export const getEnterpriseInteractions = ({ enterprise, type }) => {
           const etat = _get(interaction, "etablissement.etat_etablissement");
           const codePostal = _get(
             interaction,
-            "etablissement.adresse_components.code_postal"
+            "etablissement.adresse_composant.code_postal"
           );
           const localite = _get(
             interaction,
-            "etablissement.adresse_components.localite"
+            "etablissement.adresse_composant.localite"
           );
 
           return {

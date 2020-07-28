@@ -14,7 +14,7 @@ const Establishment = ({ establishment }) => {
   const isActive = isActiveEstablishment(establishment);
   const stateClass = isActive ? "icon--success" : "icon--danger";
 
-  const codePostal = _get(establishment, "adresse_components.code_postal");
+  const codePostal = _get(establishment, "adresse_composant.code_postal");
   const formatedPostalCode = codePostal ? `${codePostal.slice(0, 2)} - ` : "";
 
   return (
@@ -36,8 +36,8 @@ const Establishment = ({ establishment }) => {
 
         <Value
           value={
-            establishment.adresse_components &&
-            establishment.adresse_components.localite
+            establishment.adresse_composant &&
+            establishment.adresse_composant.localite
           }
           empty=""
         />

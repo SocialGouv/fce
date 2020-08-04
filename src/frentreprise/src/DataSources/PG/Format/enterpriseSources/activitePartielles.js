@@ -1,7 +1,12 @@
+import _orderBy from "lodash.orderby";
 import { getFormatedDate } from "../../Helpers";
 
 export default ({ activitePartielles }) => {
-  const activitePartielleBySiret = activitePartielles.reduce(
+  const activitePartielleBySiret = _orderBy(
+    activitePartielles,
+    ["dataValues.siret", "dataValues.date_decision", "dataValues.num_avenant"],
+    ["asc", "asc", "asc"]
+  ).reduce(
     (
       activitesPartielles,
       {

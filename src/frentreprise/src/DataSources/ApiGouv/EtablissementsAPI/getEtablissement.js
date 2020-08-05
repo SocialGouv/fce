@@ -16,7 +16,7 @@ const getEtablissement = async (SIRET, Axios, params) => {
               ? undefined
               : siege_social
               ? "Siège social"
-              : "Établissement secondaire",
+              : "Étab secondaire",
         },
         "enseigne",
         "naf",

@@ -67,13 +67,10 @@
     }
 
     & .textarea {
-        margin-bottom: $space;
         border: 1px solid $grey-geyser;
     }
 
     &__rating {
-        margin-bottom: $space-xl;
-
         p {
             font-weight: bold;
         }
@@ -88,10 +85,6 @@
         position: relative;
         display: flex;
         justify-content: center;
-
-        &:not(:last-of-type) {
-            margin-right: $space-xs;
-        }
 
         &-radio {
             position: absolute;

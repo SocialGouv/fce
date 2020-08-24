@@ -3,10 +3,6 @@
     padding: 2rem;
     background-color: white;
 
-    &__block {
-        margin: 1rem 0;
-    }
-
     h1,
     h2,
     h3,
@@ -43,6 +39,6 @@
     }
 
     p {
-        margin-bottom: $space;
+        @extend .mb-4;
     }
 }

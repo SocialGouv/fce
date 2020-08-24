@@ -20,6 +20,8 @@
         }
 
         &__th {
+            white-space: nowrap;
+
             &--important {
                 color: $primary !important;
                 border: solid 1px $grey-geyser;
@@ -34,10 +36,6 @@
             &--is-sortable {
                 cursor: pointer;
             }
-        }
-
-        &__sortable-icon {
-            margin-right: 0.25rem;
         }
     }
 

@@ -15,6 +15,8 @@ import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks";
 
+import "../../dataSheets.scss";
+
 const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
   useScrollToLocationHash({ location, offset: 50 });
 

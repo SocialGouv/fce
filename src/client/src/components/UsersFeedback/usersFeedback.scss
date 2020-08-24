@@ -67,12 +67,12 @@
     }
 
     & .textarea {
-        margin-bottom: $spacer;
+        margin-bottom: $space;
         border: 1px solid $grey-geyser;
     }
 
     &__rating {
-        margin-bottom: $spacer-xl;
+        margin-bottom: $space-xl;
 
         p {
             font-weight: bold;
@@ -90,7 +90,7 @@
         justify-content: center;
 
         &:not(:last-of-type) {
-            margin-right: $spacer-xs;
+            margin-right: $space-xs;
         }
 
         &-radio {

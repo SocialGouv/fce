@@ -48,11 +48,11 @@ $evolventa: "Evolventa", sans-serif;
 $roboto: "Roboto", sans-serif;
 
 /* SPACES */
-$spacer: 1rem;
-$spacer-xxs: $spacer * 0.12;
-$spacer-xs: $spacer * 0.25;
-$spacer-sm: $spacer * 0.5;
-$spacer-lg: $spacer * 1.5;
-$spacer-xl: $spacer * 3;
+$space: 1rem;
+$space-xxs: $space * 0.12;
+$space-xs: $space * 0.25;
+$space-sm: $space * 0.5;
+$space-lg: $space * 1.5;
+$space-xl: $space * 3;
 
 @import "~bulma/sass/utilities/all";

@@ -26,14 +26,16 @@ const EstablishmentHeader = ({
         <Value value={getEnterpriseName(enterprise) || null} empty=" " />
       </h1>
       <div className="columns">
-        <InfoBox
-          value={establishment.categorie_etablissement}
-          infoBoxClasses={[
-            "has-text-weight-bold",
-            "has-text-roboto",
-            "is-size-6"
-          ]}
-        />
+        <div className="column">
+          <InfoBox
+            value={establishment.categorie_etablissement}
+            infoBoxClasses={[
+              "has-text-weight-bold",
+              "has-text-roboto",
+              "is-size-6"
+            ]}
+          />
+        </div>
       </div>
       <div className="columns is-vcentered w-100">
         <div className="column is-4">

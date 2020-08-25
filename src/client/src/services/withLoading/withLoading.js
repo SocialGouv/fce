@@ -8,8 +8,9 @@ const withLoading = BaseComponent => {
     isLoaded ? (
       <BaseComponent {...props} />
     ) : (
-      <div className="container">
-        <FontAwesomeIcon icon={faSpinner} spin /> Chargement en cours...
+      <div className="flex-center mt-2">
+        <FontAwesomeIcon icon={faSpinner} spin />
+        <span className="ml-2">Chargement en cours...</span>
       </div>
     );
 

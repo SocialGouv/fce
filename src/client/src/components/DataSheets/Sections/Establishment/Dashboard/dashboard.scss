@@ -1,11 +1,11 @@
 @import "./../../../../App/variables";
 
-.dashboard {
+.dashboard .column {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
 
-    &-item {
+    .dashboard-item {
         margin-right: 2rem;
         border: solid 1px $primary;
         border-radius: 0.35rem;

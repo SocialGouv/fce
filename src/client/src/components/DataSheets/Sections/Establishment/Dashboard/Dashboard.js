@@ -65,44 +65,50 @@ const Dashboard = ({
 
   return (
     <div className="dashboard columns">
-      <Item
-        icon={faChild}
-        name="Effectif"
-        smallText={tranche_effectif_insee === "00"}
-        value={effectif}
-      />
-      <Item
-        icon={faCalendarCheck}
-        name="Visites"
-        smallText={!hasInteractions}
-        value={hasInteractions ? lastControl : "Pas d'intervention connue"}
-      />
-      {activity &&
-        (activity.hasPse ||
-          activity.hasRcc ||
-          activity.hasLice ||
-          activity.partialActivity) && (
-          <Item
-            icon={faExclamationTriangle}
-            name="Mut Eco"
-            smallText={true}
-            value={
-              <>
-                {activity.hasPse && <div>PSE</div>}
-                {activity.hasRcc && <div>RCC</div>}
-                {activity.hasLice &&
-                  activity.liceTypes.map(type => <div key={type}>{type}</div>)}
-                {activity.partialActivity && <div>Activité partielle</div>}
-              </>
-            }
-          />
+      <div className="column">
+        <Item
+          icon={faChild}
+          name="Effectif"
+          smallText={tranche_effectif_insee === "00"}
+          value={effectif}
+        />
+
+        <Item
+          icon={faCalendarCheck}
+          name="Visites"
+          smallText={!hasInteractions}
+          value={hasInteractions ? lastControl : "Pas d'intervention connue"}
+        />
+
+        {activity &&
+          (activity.hasPse ||
+            activity.hasRcc ||
+            activity.hasLice ||
+            activity.partialActivity) && (
+            <Item
+              icon={faExclamationTriangle}
+              name="Mut Eco"
+              smallText={true}
+              value={
+                <>
+                  {activity.hasPse && <div>PSE</div>}
+                  {activity.hasRcc && <div>RCC</div>}
+                  {activity.hasLice &&
+                    activity.liceTypes.map(type => (
+                      <div key={type}>{type}</div>
+                    ))}
+                  {activity.partialActivity && <div>Activité partielle</div>}
+                </>
+              }
+            />
+          )}
+        {(establishment.agrements_iae ||
+          establishment.ea ||
+          establishment.contrat_aide ||
+          hasApprentissage(establishment.apprentissage)) && (
+          <Item icon={faMedkit} name="Aides" value="Oui" />
         )}
-      {(establishment.agrements_iae ||
-        establishment.ea ||
-        establishment.contrat_aide ||
-        hasApprentissage(establishment.apprentissage)) && (
-        <Item icon={faMedkit} name="Aides" value="Oui" />
-      )}
+      </div>
     </div>
   );
 };

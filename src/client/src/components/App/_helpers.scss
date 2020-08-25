@@ -1,6 +1,6 @@
 @import "./variables";
 
-/*** Alignment ***/
+/*** Layout ***/
 .flex-center {
     display: flex;
     justify-content: center;
@@ -20,43 +20,23 @@
     text-align: center;
 }
 
-.w-100 {
-    width: 100%;
+$widths: (
+    "100": 100%,
+    "75": 75%,
+    "50": 50%,
+    "40": 40%,
+    "30": 30%,
+    "25": 25%,
+    "20": 20%,
+    "15": 15%,
+    "10": 10%
+);
+@each $class, $width in $widths {
+    .w-#{class} {
+        width: $width;
+    }
 }
 
-.w-75 {
-    width: 75%;
-}
-
-.w-50 {
-    width: 50%;
-}
-
-.w-40 {
-    width: 40%;
-}
-
-.w-30 {
-    width: 30%;
-}
-
-.w-25 {
-    width: 25%;
-}
-
-.w-20 {
-    width: 20%;
-}
-
-.w-15 {
-    width: 15%;
-}
-
-.w-10 {
-    width: 10%;
-}
-
-/*** Helpers utils ***/
 .is-overflow-x {
     overflow-x: scroll;
 }
@@ -93,13 +73,13 @@
     }
 }
 
-/*** Bulma override ***/
+/*** Buttons ***/
 .is-secondary {
     @extend .is-info;
 }
 
 .is-grey {
     @extend .is-white;
-    color: #808080 !important;
-    border-color: #808080 !important;
+    color: $grey !important;
+    border-color: $grey !important;
 }

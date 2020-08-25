@@ -17,7 +17,7 @@
 
     &__panel {
         background: $white;
-        border: solid 1px $grey-geyser;
+        border: $border-grey-light;
     }
 
     &__useful {
@@ -67,7 +67,7 @@
     }
 
     & .textarea {
-        border: 1px solid $grey-geyser;
+        border: $border-grey-light;
     }
 
     &__rating {
@@ -101,7 +101,7 @@
             align-items: center;
             width: 2.5rem;
             height: 2.5rem;
-            border: 1px solid $grey-geyser;
+            border: $border-grey-light;
             border-radius: $b-radius;
             background-color: $grey-geyser;
             cursor: pointer;
@@ -122,7 +122,7 @@
         justify-content: flex-end;
 
         .button {
-            border: 1px solid $grey-geyser;
+            border: $border-grey-light;
         }
     }
 }

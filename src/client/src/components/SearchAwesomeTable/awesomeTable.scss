@@ -1,31 +1,48 @@
 @import "../App/variables";
 @import "~bulma/bulma";
 
-.at {
+%at-footer-button {
+    @extend .is-white;
+    color: #4c4c4c !important;
+    border: 0;
+    height: 3rem !important;
+    width: 30%;
+}
+
+.table.at {
     width: 100%;
     overflow: hidden;
     border-radius: 0.325rem;
 
-    &__head {
+    th {
+        color: $grey-tundora;
+
+        &:not(:last-of-type) {
+            border-right: $border-grey-light;
+        }
+    }
+
+    .at__head {
         background: linear-gradient(to bottom, #ffffff 15%, $grey-geyser);
 
         &__tr {
-            border: solid 1px $grey-geyser;
+            border: $border-grey-light;
             border-bottom: 0;
             border-radius: 0.325rem;
-            color: #777 !important;
             @media not print {
                 box-shadow: 2px 2px 6px $grey-geyser;
             }
         }
 
         &__th {
+            vertical-align: middle;
             white-space: nowrap;
+            color: $grey-tundora;
 
             &--important {
-                color: $primary !important;
-                border: solid 1px $grey-geyser;
-                border-bottom: 1px solid $primary !important;
+                color: $primary;
+                border: $border-grey-light;
+                border-bottom: 1px solid $primary;
                 line-height: 2rem;
                 border-radius: 0.325rem;
                 @media not print {
@@ -39,27 +56,26 @@
         }
     }
 
-    &__body {
+    .at__body {
         &__tr {
             cursor: pointer;
-            border-left: solid 1px $grey-geyser;
-            border-right: solid 1px $grey-geyser;
+            border-left: $border-grey-light;
+            border-right: $border-grey-light;
             border-radius: 0.325rem;
             height: 2.7rem;
             margin: auto 0;
 
             &:hover {
-                background-color: $light-sky-blue !important;
+                background-color: $light-sky-blue;
             }
         }
 
         &__th,
         &__td {
             padding: 0.75rem;
-            border-top: 1px solid $grey-geyser;
-            border-right: 1px solid #ffffff99 !important;
+            border-top: $border-grey-light;
             color: #555;
-            vertical-align: middle !important;
+            vertical-align: middle;
 
             a {
                 font-weight: 700;
@@ -82,75 +98,56 @@
         }
     }
 
-    &__footer {
+    .at__footer {
         &__tr {
-            border: solid 1px $grey-geyser;
+            border: $border-grey-light;
             border-top: 0;
             border-radius: 0.325rem;
         }
 
         &__td {
             text-align: center;
-            border-width: 1px 0 0 !important;
+            border-width: 1px 0 0;
+
+            .pageNav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            .pager {
+                display: inline-flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: 40%;
+                height: 2.5rem;
+            }
+
+            .is-prev-button {
+                @extend %at-footer-button;
+                background-color: #e6e6e6 !important;
+
+                &:hover {
+                    background-color: darken(#e6e6e6, 10%) !important;
+                }
+            }
+
+            .is-next-button {
+                @extend %at-footer-button;
+                background-color: #ccc !important;
+
+                &:hover {
+                    background-color: darken(#ccc, 10%) !important;
+                }
+            }
         }
     }
-}
-
-.at.table th:not([align]) {
-    color: $grey-tundora;
-    text-align: center;
-    border-right: solid 1px $light-sky-blue;
-}
-
-.pager {
-    display: inline-flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 40%;
-    height: 2.5rem;
 }
 
 @media print {
     .table {
         overflow: hidden;
-    }
-}
-
-.is-prev-button {
-    @extend .is-white;
-    color: #4c4c4c !important;
-    background-color: #e6e6e6 !important;
-    border: 0;
-    height: 3rem !important;
-    width: 30%;
-
-    &:hover {
-        background-color: darken(#e6e6e6, 10%) !important;
-    }
-
-    .icon {
-        position: absolute;
-        left: 1rem;
-        width: 30%;
-    }
-}
-
-.is-next-button {
-    @extend .is-white;
-    color: #4c4c4c !important;
-    background-color: #ccc !important;
-    border: 0;
-    height: 3rem !important;
-    width: 30%;
-
-    &:hover {
-        background-color: darken(#ccc, 10%) !important;
-    }
-
-    .icon {
-        position: absolute;
-        right: 1rem;
-        width: 30%;
     }
 }

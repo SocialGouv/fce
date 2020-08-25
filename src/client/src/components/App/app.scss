@@ -54,6 +54,10 @@ a {
     }
 }
 
+.table {
+    @extend .is-striped;
+}
+
 .container {
     width: 100%;
 }

@@ -25,10 +25,12 @@ $info-error-bg: $red-washed;
 $app-container-background: $white-smoke;
 $footer-bg: $grey-geyser;
 $footer-link: $grey-tundora;
-$border-grey-light: $grey-geyser;
 $sidebar-establishment-bg: $white-alabaster;
 $rating-gradient: #e21717, #e75907, #e38906, #eeb12c, #f0d828, #b3dc04, #71d903,
     #30d502, #02d112, #01ce4e, #00ca88;
+
+/* BORDERS */
+$border-grey-light: 1px solid $grey-geyser;
 
 /* BORDER-RADIUS */
 $b-radius: 0.25rem;

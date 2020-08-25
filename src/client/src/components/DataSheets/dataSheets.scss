@@ -132,15 +132,15 @@
             }
 
             & .table {
-                th {
-                    color: $grey-tundora;
-                    border-right: solid 1px $grey-geyser;
-                }
-
                 padding: 2rem 0;
 
+                th {
+                    color: $grey-tundora;
+                }
+
+                th:not(:last-of-type),
                 tfoot tr > td:not(:last-of-type) {
-                    border-right: solid 1px $grey-geyser;
+                    border-right: $border-grey-light;
                 }
 
                 &__center-cell {
@@ -214,7 +214,7 @@
 
 .mandataire {
     padding: 1rem 0;
-    border-bottom: solid 1px $grey-geyser;
+    border-bottom: $border-grey-light;
 
     .columns {
         margin-bottom: 0;

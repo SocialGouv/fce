@@ -51,13 +51,13 @@ const SearchAwesomeTable = ({
               })}
               onClick={() => isSortableField && sortColumn(field.sortKey)}
             >
+              {field.headName}
               {isSortableField && (
                 <FontAwesomeIcon
-                  className="at__head__sortable-icon mr-2"
+                  className="at__head__sortable-icon ml-2"
                   icon={getSortIcon(field.sortKey, currentSort)}
                 />
               )}
-              {field.headName}
             </th>
           );
         })}
@@ -98,32 +98,34 @@ const SearchAwesomeTable = ({
       <tfoot className="at__footer">
         <tr className="at__footer__tr">
           <td className="at__footer__td" colSpan={fields.length}>
-            <Button
-              value={prevText}
-              icon={faAngleLeft}
-              iconClasses={["fa-2x"]}
-              buttonClasses={["is-prev-button", "is-pulled-left"]}
-              isDisabled={pagination.current === pagination.min}
-              callback={() => {
-                pagination.handlePageChange(--pagination.current);
-              }}
-            />
-            <Pager
-              handlePageChange={pagination.handlePageChange}
-              currentPage={pagination.current}
-              max={pagination.pages}
-            />
-            <Button
-              value={nextText}
-              icon={faAngleRight}
-              iconClasses={["fa-2x"]}
-              rowReverse={true}
-              buttonClasses={["is-next-button", "is-pulled-right"]}
-              isDisabled={pagination.current === pagination.pages}
-              callback={() => {
-                pagination.handlePageChange(++pagination.current);
-              }}
-            />
+            <div className="pageNav">
+              <Button
+                value={prevText}
+                icon={faAngleLeft}
+                iconClasses={["fa-2x", "mr-2"]}
+                buttonClasses={["is-prev-button"]}
+                isDisabled={pagination.current === pagination.min}
+                callback={() => {
+                  pagination.handlePageChange(--pagination.current);
+                }}
+              />
+              <Pager
+                handlePageChange={pagination.handlePageChange}
+                currentPage={pagination.current}
+                max={pagination.pages}
+              />
+              <Button
+                value={nextText}
+                icon={faAngleRight}
+                iconClasses={["fa-2x", "ml-2"]}
+                rowReverse={true}
+                buttonClasses={["is-next-button"]}
+                isDisabled={pagination.current === pagination.pages}
+                callback={() => {
+                  pagination.handlePageChange(++pagination.current);
+                }}
+              />
+            </div>
           </td>
         </tr>
       </tfoot>

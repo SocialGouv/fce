@@ -24,6 +24,7 @@ const Enterprise = ({
   loadSources
 }) => {
   const [state, setState] = useState(null);
+  const [currentUrl, setCurrentUrl] = useState("");
 
   const isEnterprise = Object.prototype.hasOwnProperty.call(
     match.params,
@@ -35,6 +36,7 @@ const Enterprise = ({
   useEffect(() => {
     if (mustLoadEntity(identifier)) {
       loadEntity(loadMethod, identifier);
+      setCurrentUrl(match.url);
     }
   }, [match]);
 
@@ -66,7 +68,9 @@ const Enterprise = ({
     );
 
   const mustLoadEntity = identifier => {
-    if (identifier !== currentEnterprise.siren) {
+    const nextUrl = match.url;
+
+    if (identifier !== currentEnterprise.siren && currentUrl !== nextUrl) {
       return true;
     }
 

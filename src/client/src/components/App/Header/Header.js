@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { resetSearch } from "../../../services/Store/actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faPlus } from "@fortawesome/pro-light-svg-icons";
-import Button from "../../shared/Button";
 import logo from "../../../assets/img/logo_gouv-65w38h.png";
 
 import "./header.scss";
@@ -32,20 +32,27 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
               location.pathname.includes("/enterprise")) && (
               <div className="header__buttons">
                 <div className="navbar-end is-flex">
-                  <Link to="/">
-                    <Button
-                      value="Liste des résultats"
-                      icon={faChevronLeft}
-                      buttonClasses={["is-outlined", "mr-4"]}
-                    />
+                  <Link to="/" className="button mr-4">
+                    <span className="button-icon mr-2">
+                      <FontAwesomeIcon icon={faChevronLeft} />
+                    </span>
+                    <span className="has-text-weight-bold">
+                      Liste des résultats
+                    </span>
                   </Link>
                   <Link
                     to="/"
                     onClick={() => {
                       resetSearch();
                     }}
+                    className="button"
                   >
-                    <Button value="Nouvelle recherche" icon={faPlus} />
+                    <span className="button-icon mr-2">
+                      <FontAwesomeIcon icon={faPlus} />
+                    </span>
+                    <span className="has-text-weight-bold">
+                      Nouvelle recherche
+                    </span>
                   </Link>
                 </div>
               </div>

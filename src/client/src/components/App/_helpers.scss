@@ -74,6 +74,11 @@ $widths: (
 }
 
 /*** Buttons ***/
+.button-icon {
+    font-size: 1rem;
+    @extend .mr-1;
+}
+
 .is-secondary {
     @extend .is-info;
 }

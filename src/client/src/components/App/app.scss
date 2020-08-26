@@ -67,12 +67,7 @@ a {
 }
 
 .title {
-    margin: 0 0 1rem;
-}
-
-.button__icon {
-    font-size: 1rem;
-    margin-right: 0.5rem;
+    @extend .mb-4;
 }
 
 .icon {

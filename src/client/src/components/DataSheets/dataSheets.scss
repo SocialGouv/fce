@@ -4,6 +4,10 @@
 .data-sheet {
     &.container {
         width: 100%;
+
+        @include from($tablet) {
+            padding: 0 $spacing-4;
+        }
     }
 
     &__print-section {

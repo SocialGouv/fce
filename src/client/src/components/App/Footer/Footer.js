@@ -6,7 +6,7 @@ import "./footer.scss";
 
 const Footer = () => (
   <footer className="footer">
-    <div className="container">
+    <div className="container px-4">
       <div className="footer__gouv">
         <div className="footer__gouv-text">
           Un service fourni par l{"'"}incubateur des ministères sociaux

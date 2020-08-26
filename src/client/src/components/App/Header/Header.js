@@ -13,7 +13,7 @@ import "./header.scss";
 const Header = ({ resetSearch, location, showBetaMessage }) => {
   return (
     <header className="app-header">
-      <div className="container">
+      <div className="container px-4">
         <nav>
           <div className="header__items is-tablet">
             <Link

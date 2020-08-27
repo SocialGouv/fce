@@ -11,9 +11,9 @@
     }
 
     &__print-section {
-        margin: 1.5rem 0;
         display: flex;
         justify-content: flex-end;
+        margin: $spacing-5 0;
         @extend %print-hidden;
     }
 

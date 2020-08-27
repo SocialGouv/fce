@@ -20,20 +20,9 @@
     text-align: center;
 }
 
-$widths: (
-    "100": 100%,
-    "75": 75%,
-    "50": 50%,
-    "40": 40%,
-    "30": 30%,
-    "25": 25%,
-    "20": 20%,
-    "15": 15%,
-    "10": 10%
-);
-@each $class, $width in $widths {
-    .w-#{class} {
-        width: $width;
+@for $width from 1 through 10 {
+    .col-width-#{$width}0 {
+        width: $width * 10%;
     }
 }
 
@@ -75,8 +64,8 @@ $widths: (
 
 /*** Buttons ***/
 .button-icon {
+    margin-right: $spacing-1;
     font-size: 1rem;
-    @extend .mr-1;
 }
 
 .is-secondary {

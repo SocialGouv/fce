@@ -4,7 +4,7 @@ import Button from "../../../../shared/Button";
 
 const PrintSection = () => {
   return (
-    <div className="data-sheet__print-section w-100">
+    <div className="data-sheet__print-section">
       <Button
         value="Imprimer"
         buttonClasses={["is-grey"]}

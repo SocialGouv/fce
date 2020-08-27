@@ -3,6 +3,7 @@
 
 .app {
     .footer {
+        @extend %print-hidden;
         display: flex;
         align-items: center;
         padding: 0;
@@ -12,13 +13,11 @@
             height: 200px;
         }
 
-        @extend %print-hidden;
-
         .container {
             display: flex;
             flex-direction: column-reverse;
             justify-content: space-between;
-            padding: 1rem 0;
+            padding: $spacing-4 0;
 
             @include from($tablet) {
                 flex-direction: row;
@@ -40,7 +39,7 @@
             max-width: 13rem;
             font-style: italic;
             text-align: center;
-            padding-bottom: 0.5rem;
+            padding-bottom: $spacing-2;
 
             @include from($tablet) {
                 font-size: 1rem;
@@ -55,7 +54,7 @@
 
             @include from($tablet) {
                 width: 150px;
-                padding: 5px;
+                padding: $spacing-1;
             }
         }
 
@@ -74,7 +73,7 @@
 
         &__link-item {
             @include from($tablet) {
-                padding: 0 0.5rem;
+                padding: 0 $spacing-2;
                 border-right: solid 1px;
 
                 &:last-child {

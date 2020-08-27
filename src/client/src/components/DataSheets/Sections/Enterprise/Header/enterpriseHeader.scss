@@ -2,9 +2,11 @@
 @import "./../../../../App/placeholders";
 
 .enterprise-header {
-    scroll-margin: 7rem;
     @extend %data-sheet-header;
     @extend %print-margin-padding;
+    width: 100%;
+    margin-bottom: $spacing-5;
+    scroll-margin: 7rem;
 
     &__status {
         display: flex;

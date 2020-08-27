@@ -1,19 +1,19 @@
 @import "../App/variables";
-@import "../App/mixins";
+@import "../App/placeholders";
 
 .magiclink {
     &__container {
         display: flex;
         justify-content: center;
-        padding-top: 2rem;
+        padding-top: $spacing-5;
         text-align: center;
     }
 
     &__message {
-        padding: 0.5rem;
+        @extend %error;
+        padding: $spacing-2;
         font-family: $roboto;
         font-size: 14px;
         border-radius: $b-radius;
-        @include error;
     }
 }

@@ -8,7 +8,7 @@
         margin: 0;
 
         &:last-child {
-            margin-bottom: 2rem;
+            margin-bottom: $spacing-6;
         }
 
         &:not(:last-child) {
@@ -29,6 +29,6 @@
 
     & + .table,
     .table + & {
-        margin-top: 2rem;
+        margin-top: $spacing-5;
     }
 }

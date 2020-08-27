@@ -1,6 +1,8 @@
+@import "../App/variables";
+
 .page {
     @extend .container;
-    padding: 2rem;
+    padding: $spacing-6;
     background-color: white;
 
     h1,
@@ -10,35 +12,25 @@
     h5,
     h6 {
         @extend .title;
-        margin-top: 1.5rem !important;
     }
 
     h1 {
-        @extend .is-1;
+        @extend .is-size-3;
+        @extend .is-size-4-mobile;
         margin-top: 0;
     }
 
     h2 {
-        @extend .is-2;
+        @extend .is-size-4;
+        @extend .is-size-5-mobile;
     }
 
     h3 {
-        @extend .is-3;
-    }
-
-    h4 {
-        @extend .is-4;
-    }
-
-    h5 {
-        @extend .is-5;
-    }
-
-    h6 {
-        @extend .is-6;
+        @extend .is-size-5;
+        @extend .is-size-6-mobile;
     }
 
     p {
-        @extend .mb-4;
+        margin-bottom: $spacing-4;
     }
 }

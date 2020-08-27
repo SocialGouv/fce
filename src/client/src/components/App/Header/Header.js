@@ -23,7 +23,11 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
                 resetSearch();
               }}
             >
-              <img className="header__logo" src={logo} alt="Logo Marianne" />
+              <img
+                className="header__logo mr-4"
+                src={logo}
+                alt="Logo Marianne"
+              />
               <div className="header__title is-dark">
                 Fiche Commune Entreprise
               </div>
@@ -69,7 +73,7 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
               <span>
                 Aidez-nous à l{"'"}améliorer en{" "}
                 <a
-                  className="beta-message__feedback-link"
+                  className="beta-message__feedback-link ml-1 px-2 py-1"
                   href="#user-feedback"
                 >
                   donnant votre avis

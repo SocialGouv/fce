@@ -65,7 +65,7 @@ const Dashboard = ({
 
   return (
     <div className="dashboard columns">
-      <div className="column">
+      <div className="column container">
         <Item
           icon={faChild}
           name="Effectif"

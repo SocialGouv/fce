@@ -8,7 +8,7 @@
 
     &__container {
         background-color: $primary;
-        padding: 2rem 0;
+        padding: $spacing-5 0;
         color: $light;
     }
 
@@ -77,7 +77,7 @@
 
                     &:first-of-type {
                         border: 1px solid #fff;
-                        margin-bottom: 1rem;
+                        margin-bottom: $spacing-4;
                     }
 
                     &:last-of-type {
@@ -92,7 +92,7 @@
         }
 
         .filters__checkboxes {
-            margin-top: 0.5rem;
+            margin-top: $spacing-2;
 
             .filter-state {
                 display: flex;
@@ -110,8 +110,8 @@
             .label {
                 color: $white-smoke;
                 font-weight: bold;
-                margin-right: 1rem;
-                margin-bottom: 0.4rem;
+                margin-right: $spacing-4;
+                margin-bottom: $spacing-4;
 
                 &.label--state {
                     font-weight: normal;
@@ -120,7 +120,9 @@
         }
     }
 
-    /* react-accessible-accordion */
+    /* -------------------------------------- */
+    /* ----- react-accessible-accordion ----- */
+    /* -------------------------------------- */
 
     .accordion__heading {
         width: 12rem;
@@ -129,7 +131,6 @@
     .accordion__button {
         cursor: pointer;
         width: 100%;
-        padding-left: 0.2rem;
         text-decoration: underline;
         text-align: left;
         border: none;
@@ -143,11 +144,13 @@
     }
 
     .accordion__button:before {
+        position: relative;
+        left: 2px;
         display: inline-block;
         content: "";
         height: 12px;
         width: 12px;
-        margin-right: 12px;
+        margin-right: $spacing-4;
         border-bottom: 2px solid currentColor;
         border-right: 2px solid currentColor;
         transform: rotate(45deg);
@@ -160,13 +163,13 @@
     }
 
     .accordion__panel {
-        padding-top: 1rem;
+        padding-top: $spacing-4;
         animation: fadein 0.35s ease-in;
     }
 
-    /* -------------------------------------------------- */
-    /* ---------------- Animation part ------------------ */
-    /* -------------------------------------------------- */
+    /* --------------------- */
+    /* ----- Animation ----- */
+    /* --------------------- */
 
     @keyframes fadein {
         0% {

@@ -1,6 +1,5 @@
 @import "fonts";
 @import "variables";
-@import "mixins";
 @import "placeholders";
 @import "helpers";
 @import "animations";
@@ -44,7 +43,7 @@ a {
         flex-direction: column;
 
         @media print {
-            padding-top: 1rem;
+            padding-top: $spacing-4;
         }
 
         .bg-info a {

@@ -1,4 +1,9 @@
+@import "../../../../App/variables";
+
 .direccte-interactions {
+    width: 100%;
+    margin-top: $spacing-3;
+
     &__city {
         min-width: 16rem;
     }

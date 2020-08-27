@@ -2,10 +2,10 @@
 @import "../App/placeholders";
 
 .user-feedback {
+    @extend %print-hidden;
     width: 40em;
     max-width: 100%;
-    margin: 1.5rem auto;
-    @extend %print-hidden;
+    margin: $spacing-5 auto;
 
     &--fullwidth {
         width: 100%;
@@ -24,7 +24,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.5rem 1rem;
+        padding: $spacing-2 $spacing-4;
         font-size: 1.2rem;
         font-weight: bold;
         color: $white;
@@ -47,7 +47,7 @@
         }
 
         & .radio {
-            margin-left: 1rem;
+            margin-left: $spacing-4;
             margin-bottom: 0;
             transition: transform 0.2s;
 
@@ -59,7 +59,7 @@
     }
 
     &__comment {
-        padding: 1rem;
+        padding: $spacing-4;
 
         label {
             font-weight: bold;

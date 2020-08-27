@@ -21,7 +21,7 @@ const EstablishmentHeader = ({
   const stateClass = isActive ? "icon--success" : "icon--danger";
 
   return (
-    <section id="header" className="establishment-header w-100 mb-4">
+    <section id="header" className="establishment-header">
       <h1 className="mb-4 is-capitalized has-text-weight-bold is-size-3">
         <Value value={getEnterpriseName(enterprise) || null} empty=" " />
       </h1>
@@ -37,7 +37,7 @@ const EstablishmentHeader = ({
           />
         </div>
       </div>
-      <div className="columns is-vcentered w-100">
+      <div className="columns is-vcentered">
         <div className="column is-4">
           <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
             SIRET :{" "}
@@ -52,7 +52,7 @@ const EstablishmentHeader = ({
           </span>
         </div>
       </div>
-      <div className="columns w-100">
+      <div className="columns">
         <div className="column is-4">
           <div className="establishment-header__status">
             <div className="active-item-value">

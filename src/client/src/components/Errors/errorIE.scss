@@ -1,6 +1,7 @@
 @import "../App/variables";
 
 .error-ie {
+    margin-top: $spacing-4;
     text-align: center;
     font-family: $segoe;
     font-size: 1.2rem;
@@ -23,7 +24,7 @@
     }
 
     &__browser {
-        padding: 1rem;
+        padding: $spacing-4;
         font-weight: bold;
     }
 
@@ -35,8 +36,8 @@
 
     &__link {
         max-width: 600px;
-        margin-bottom: 1rem;
-        padding: 0.5rem 1rem;
+        margin-bottom: $spacing-4;
+        padding: $spacing-2 $spacing-4;
         text-align: left;
         word-break: break-all;
         font-size: 1rem;

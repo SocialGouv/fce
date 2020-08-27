@@ -33,11 +33,6 @@
     &__logo {
         width: 65px;
         height: 38px;
-        margin-right: 1rem;
-
-        @include from($desktop) {
-            margin-right: 2rem;
-        }
     }
 
     &__title {
@@ -61,6 +56,7 @@
 }
 
 .beta-message {
+    @extend %print-hidden;
     display: flex;
     align-items: center;
     height: 40px;
@@ -72,11 +68,7 @@
     background-color: #ffe15b;
     box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
 
-    @extend %print-hidden;
-
     &__feedback-link {
-        padding: 0.1rem 0.6rem 0.2rem;
-        margin-left: 0.2rem;
         color: $black;
         background-color: $white;
         border-radius: 0.25rem;

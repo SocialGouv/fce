@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import Value from "../../../../../shared/Value";
 
+import "./finances.scss";
+
 const Finances = ({ establishment }) => {
   let dates = [];
   let caList = [];
@@ -38,7 +40,7 @@ const Finances = ({ establishment }) => {
   }
 
   return establishment.donnees_ecofi ? (
-    <table className="table is-hoverable w-100 mt-4">
+    <table className="enterprise-finances table is-hoverable">
       <thead>
         <tr>
           <th>Date fin exercice</th>

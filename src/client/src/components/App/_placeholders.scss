@@ -19,10 +19,22 @@
 }
 
 %data-sheet-header {
-    padding: 2rem;
+    padding: $spacing-5;
     background-color: $white;
     border-radius: 0.325rem;
     @media not print {
         box-shadow: $fce-shadow;
     }
+}
+
+%success {
+    color: $info-success;
+    border: 1px solid $info-success;
+    background-color: $info-success-bg;
+}
+
+%error {
+    color: $info-error;
+    border: 1px solid $info-error;
+    background-color: $info-error-bg;
 }

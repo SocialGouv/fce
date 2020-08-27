@@ -29,11 +29,11 @@ const EstablishmentRelationship = ({
           subtitle="Convention(s) collective(s) appliquée(s)"
           sourceSi="DSN"
         >
-          <div className="single-value">
+          <div className="section-datas__list">
             <ul>
               {idcc
                 ? idcc.map(({ code, libelle }) => (
-                    <li className="m-2" key={code}>
+                    <li className="section-datas__list-item" key={code}>
                       <Value value={`${code} - ${libelle}`} />
                     </li>
                   ))
@@ -68,7 +68,7 @@ const EstablishmentRelationship = ({
                 <tbody>
                   {Config.get("accords").map(({ key, value }) => (
                     <tr key={`accord-${key}`}>
-                      <td className="w-40">{value}</td>
+                      <td className="col-width-40">{value}</td>
                       <td className="has-text-right">
                         <Value
                           value={_get(accords, `${key}.count`)}

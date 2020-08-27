@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { faPrint } from "@fortawesome/pro-solid-svg-icons";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
@@ -11,9 +10,9 @@ import Helps from "./Helps";
 import Relationship from "./Relationship";
 import Direccte from "../SharedComponents/Direccte";
 import QuickAccess from "../SharedComponents/QuickAccess";
-import Button from "../../../shared/Button";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks";
+import PrintSection from "../SharedComponents/PrintSection";
 
 import "../../dataSheets.scss";
 
@@ -28,14 +27,7 @@ const Establishment = ({
 
   return (
     <section className="data-sheet container">
-      <div className="data-sheet__print-section w-100">
-        <Button
-          value="Imprimer"
-          buttonClasses={["is-grey"]}
-          icon={faPrint}
-          callback={() => window.print()}
-        />
-      </div>
+      <PrintSection />
       <div className="columns print-wrapper">
         <div className="column is-3 aside-box is-hidden-touch">
           <Sidebar

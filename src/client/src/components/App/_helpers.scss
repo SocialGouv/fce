@@ -52,7 +52,7 @@
     text-decoration: none;
     border: 0;
     background-color: transparent;
-    font-size: 1rem;
+    font-size: $font-size-base;
     padding-left: 0;
     cursor: pointer;
 
@@ -65,7 +65,7 @@
 /*** Buttons ***/
 .button-icon {
     margin-right: $spacing-1;
-    font-size: 1rem;
+    font-size: $font-size-base;
 }
 
 .is-secondary {

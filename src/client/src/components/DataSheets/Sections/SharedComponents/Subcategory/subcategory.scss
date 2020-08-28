@@ -1,15 +1,19 @@
 @import "./../../../../App/variables";
 
 .subcategory {
-    margin: 1rem 0 2rem 0;
+    margin: $spacing-4 0;
 
     &__header {
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-        margin-bottom: 0;
-        padding-bottom: 0.75rem;
+
+        padding-bottom: $spacing-3;
         border-bottom: solid 2px $faced-blue;
+
+        table {
+            margin-bottom: $spacing-4;
+        }
     }
 
     &__title {

@@ -2,10 +2,10 @@
 @import "../App/placeholders";
 
 .user-feedback {
+    @extend %print-hidden;
     width: 40em;
     max-width: 100%;
-    margin: 1.5rem auto;
-    @extend %print-hidden;
+    margin: $spacing-5 auto;
 
     &--fullwidth {
         width: 100%;
@@ -17,14 +17,14 @@
 
     &__panel {
         background: $white;
-        border: solid 1px $grey-geyser;
+        border: $border-grey-light;
     }
 
     &__useful {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.5rem 1rem;
+        padding: $spacing-2 $spacing-4;
         font-size: 1.2rem;
         font-weight: bold;
         color: $white;
@@ -47,7 +47,7 @@
         }
 
         & .radio {
-            margin-left: 1rem;
+            margin-left: $spacing-4;
             margin-bottom: 0;
             transition: transform 0.2s;
 
@@ -59,7 +59,7 @@
     }
 
     &__comment {
-        padding: 1rem;
+        padding: $spacing-4;
 
         label {
             font-weight: bold;
@@ -67,13 +67,10 @@
     }
 
     & .textarea {
-        margin-bottom: $spacer;
-        border: 1px solid $grey-geyser;
+        border: $border-grey-light;
     }
 
     &__rating {
-        margin-bottom: $spacer-xl;
-
         p {
             font-weight: bold;
         }
@@ -88,10 +85,6 @@
         position: relative;
         display: flex;
         justify-content: center;
-
-        &:not(:last-of-type) {
-            margin-right: $spacer-xs;
-        }
 
         &-radio {
             position: absolute;
@@ -108,7 +101,7 @@
             align-items: center;
             width: 2.5rem;
             height: 2.5rem;
-            border: 1px solid $grey-geyser;
+            border: $border-grey-light;
             border-radius: $b-radius;
             background-color: $grey-geyser;
             cursor: pointer;
@@ -129,7 +122,7 @@
         justify-content: flex-end;
 
         .button {
-            border: 1px solid $grey-geyser;
+            border: $border-grey-light;
         }
     }
 }

@@ -18,7 +18,7 @@ const InteractionType = ({ type, interactions }) => {
   return (
     <Subcategory subtitle={subtitle}>
       {interactions.length && (
-        <table className="table is-hoverable w-100 direccte-interactions mt-3">
+        <table className="table is-hoverable direccte-interactions">
           <thead>
             <tr>
               <th className="th">SIRET</th>

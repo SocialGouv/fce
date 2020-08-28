@@ -1,5 +1,5 @@
 import React from "react";
-import ClassNames from "classnames";
+import classNames from "classnames";
 import PropTypes from "prop-types";
 import Value from "../Value";
 
@@ -7,7 +7,15 @@ import "./infoBox.scss";
 
 const InfoBox = ({ value, infoBoxClasses }) => {
   return (
-    <span className={`infoBox has-text-primary ${ClassNames(infoBoxClasses)}`}>
+    <span
+      className={classNames([
+        "infoBox",
+        "has-text-primary",
+        "px-3",
+        "py-2",
+        ...infoBoxClasses
+      ])}
+    >
       <Value value={value} empty="" />
     </span>
   );

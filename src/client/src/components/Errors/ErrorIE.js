@@ -28,7 +28,7 @@ const ErrorIE = () => {
     browsers.find(browser => browser.name === targetedBrowserName);
 
   return (
-    <div className="error-ie mt-4">
+    <div className="error-ie">
       {targetedBrowserName ? (
         <div className="container">
           <h1 className="error-ie__title">

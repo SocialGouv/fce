@@ -1,15 +1,12 @@
 @import "fonts";
 @import "variables";
-@import "mixins";
 @import "placeholders";
-@import "globals";
+@import "helpers";
 @import "animations";
 @import "typography";
 @import "pages";
 @import "~bulma/bulma";
 @import "~bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio";
-@import "Header/header";
-@import "../DataSheets/dataSheets";
 
 html {
     min-height: 100%;
@@ -46,7 +43,7 @@ a {
         flex-direction: column;
 
         @media print {
-            padding-top: 1rem;
+            padding-top: $spacing-4;
         }
 
         .bg-info a {
@@ -54,6 +51,10 @@ a {
             text-decoration: underline;
         }
     }
+}
+
+.table {
+    @extend .is-striped;
 }
 
 .container {
@@ -65,12 +66,7 @@ a {
 }
 
 .title {
-    margin: 0 0 1rem;
-}
-
-.button__icon {
-    font-size: 1rem;
-    margin-right: 0.5rem;
+    @extend .mb-4;
 }
 
 .icon {

@@ -1,16 +1,15 @@
-@import '../../../../App/variables';
+@import "../../../../App/variables";
 @import "../../../../App/placeholders";
 
-
 .quick-access {
+    @extend %print-hidden;
     position: sticky;
     top: 0;
     z-index: 1;
     background-color: $white;
     border-radius: 0.325rem;
     opacity: 0.9;
-    transition: all .2s ease-in-out;
-    @extend %print-hidden;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
         opacity: 1;
@@ -29,7 +28,7 @@
 }
 
 .tabs li.is-active a {
-    color: $secondary;
+    color: $primary;
     border-bottom: solid;
     border-width: 3px;
 }

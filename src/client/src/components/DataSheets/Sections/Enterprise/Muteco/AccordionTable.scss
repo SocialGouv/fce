@@ -11,12 +11,12 @@
     }
 
     &__row {
-        border-bottom: 1px solid $grey-geyser;
+        border-bottom: $border-grey-light;
     }
 
     &__container {
-        border-bottom: solid 1px $border-grey-light;
-        border-top: solid 1px $border-grey-light;
+        border-bottom: $border-grey-light;
+        border-top: $border-grey-light;
         max-height: 13rem;
         overflow: auto;
 

@@ -6,7 +6,7 @@ import "./footer.scss";
 
 const Footer = () => (
   <footer className="footer">
-    <div className="container">
+    <div className="container px-4">
       <div className="footer__gouv">
         <div className="footer__gouv-text">
           Un service fourni par l{"'"}incubateur des ministères sociaux
@@ -21,25 +21,28 @@ const Footer = () => (
       <div>
         <ul className="footer__links">
           <li className="footer__link-item">
-            <Link className="footer__link" to="mentions-legales">
+            <Link className="footer__link" to="/mentions-legales">
               Mentions légales
             </Link>
           </li>
           <li className="footer__link-item">
-            <Link className="footer__link" to="cgu">
+            <Link className="footer__link" to="/cgu">
               CGU
             </Link>
           </li>
           <li className="footer__link-item">
-            <Link className="footer__link" to="sources-des-donnees">
+            <Link className="footer__link" to="/sources-des-donnees">
               Sources des données
             </Link>
           </li>
           <li className="footer__link-item">
-            Contact : {Config.get("contact.mailto")}
+            Contact :{" "}
+            <a href={`mailto:${Config.get("contact.mailto")}`}>
+              {Config.get("contact.mailto")}
+            </a>
           </li>
           <li className="footer__link-item">
-            <Link className="footer__link" to="a-propos">
+            <Link className="footer__link" to="/a-propos">
               A propos
             </Link>
           </li>

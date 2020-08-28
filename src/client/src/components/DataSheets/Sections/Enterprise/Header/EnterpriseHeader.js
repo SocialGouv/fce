@@ -43,21 +43,23 @@ const EnterpriseHeader = ({
       {isRedirectedToHeadOffice && (
         <Redirect to={`/establishment/${enterprise.siret_siege_social}`} />
       )}
-      <section id="header" className="enterprise-header w-100 mb-4">
+      <section id="header" className="enterprise-header">
         <h1 className="mb-4 is-capitalized has-text-weight-bold is-size-3">
           <Value value={getEnterpriseName(enterprise) || null} empty=" " />
         </h1>
         <div className="columns">
-          <InfoBox
-            value="Entreprise"
-            infoBoxClasses={[
-              "has-text-weight-bold",
-              "has-text-roboto",
-              "is-size-6"
-            ]}
-          />
+          <div className="column pb-0">
+            <InfoBox
+              value="Entreprise"
+              infoBoxClasses={[
+                "has-text-weight-bold",
+                "has-text-roboto",
+                "is-size-6"
+              ]}
+            />
+          </div>
         </div>
-        <div className="columns is-vcentered w-100">
+        <div className="enterprise-header__infos columns is-vcentered">
           <div className="column is-4">
             <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
               SIREN :{" "}
@@ -78,7 +80,7 @@ const EnterpriseHeader = ({
           </div>
         </div>
 
-        <div className="columns is-vcentered w-100">
+        <div className="columns is-vcentered">
           <div className="column is-4">
             <div className="enterprise-header__status">
               <div className="active-item-value">
@@ -122,7 +124,7 @@ const EnterpriseHeader = ({
             />
           </div>
         </div>
-        <div className="columns w-100">
+        <div className="columns">
           <span className="column is-size-6">
             Voir sur{" "}
             <a

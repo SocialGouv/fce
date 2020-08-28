@@ -9,11 +9,11 @@ export const CollectiveAgreements = ({ idccList = null }) => {
       subtitle="Convention(s) collective(s) appliquée(s)"
       sourceSi="DSN"
     >
-      <div className="single-value">
+      <div className="section-datas__list">
         <ul>
           {idccList
             ? idccList.map(({ code, libelle }) => (
-                <li className="m-2" key={code}>
+                <li className="section-datas__list-item" key={code}>
                   <Value value={`${code} - ${libelle}`} />
                 </li>
               ))

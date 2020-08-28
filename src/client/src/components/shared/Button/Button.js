@@ -22,7 +22,7 @@ const Button = ({
     >
       {rowReverse && <span className="pr-2">{value}</span>}
       {icon && (
-        <span className="button__icon">
+        <span className="button-icon">
           <FontAwesomeIcon className={ClassNames(iconClasses)} icon={icon} />
         </span>
       )}

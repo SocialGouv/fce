@@ -2,9 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import Value from "../../../../../shared/Value";
 
+import "./enterprise-mandataires.scss";
+
 const Mandataires = ({ mandataires }) => {
   return (
-    <table className="table is-hoverable w-100 mt-4">
+    <table className="enterprise-mandataires table is-hoverable">
       <thead>
         <tr>
           <th className="th">Fonction</th>

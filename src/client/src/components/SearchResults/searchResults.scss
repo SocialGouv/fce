@@ -5,9 +5,13 @@
         zoom: 40%;
     }
 
+    & > .columns {
+        margin-bottom: 0;
+    }
+
     &__title {
         width: 80%;
-        margin: 0.5rem auto;
+        margin: $spacing-2 auto;
         font-size: 2.35rem;
         font-weight: 700;
         text-align: center;
@@ -29,14 +33,6 @@
             > div {
                 flex: 0 0 100%;
                 max-width: 100%;
-            }
-        }
-
-        .result-list {
-            margin-top: 2rem;
-
-            .result-item {
-                cursor: pointer;
             }
         }
     }

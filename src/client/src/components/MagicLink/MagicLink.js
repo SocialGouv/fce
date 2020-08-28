@@ -6,7 +6,7 @@ import "./magicLink.scss";
 import { Link } from "react-router-dom";
 
 const MagicLink = ({ hasError, errorMessage, loading, isIE }) => (
-  <div className="magiclink__container container has-mt-2">
+  <div className="magiclink__container container mt-2">
     {hasError &&
       (isIE ? (
         <div>
@@ -23,7 +23,7 @@ const MagicLink = ({ hasError, errorMessage, loading, isIE }) => (
         </div>
       ) : (
         <div>
-          <div className="magiclink__message has-mb-1">{errorMessage}</div>
+          <div className="magiclink__message mb-1">{errorMessage}</div>
           <Link to={`/login`}>Faire une nouvelle demande de connexion</Link>
         </div>
       ))}

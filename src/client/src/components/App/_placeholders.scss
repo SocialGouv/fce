@@ -21,7 +21,8 @@
 %data-sheet-header {
     padding: $spacing-5;
     background-color: $white;
-    border-radius: 0.325rem;
+    border-radius: $b-radius-2;
+
     @media not print {
         box-shadow: $fce-shadow;
     }

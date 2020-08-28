@@ -12,7 +12,7 @@
 .table.at {
     width: 100%;
     overflow: hidden;
-    border-radius: 0.325rem;
+    border-radius: $b-radius-2;
 
     th {
         color: $grey-tundora;
@@ -28,7 +28,7 @@
         &__tr {
             border: $border-grey-light;
             border-bottom: 0;
-            border-radius: 0.325rem;
+            border-radius: $b-radius-2;
 
             @media not print {
                 box-shadow: 2px 2px 6px $grey-geyser;
@@ -45,7 +45,7 @@
                 border: $border-grey-light;
                 border-bottom: 1px solid $primary;
                 line-height: 2rem;
-                border-radius: 0.325rem;
+                border-radius: $b-radius-2;
 
                 @media not print {
                     box-shadow: 2px 2px 6px $grey-geyser;
@@ -63,7 +63,7 @@
             cursor: pointer;
             border-left: $border-grey-light;
             border-right: $border-grey-light;
-            border-radius: 0.325rem;
+            border-radius: $b-radius-2;
             height: 2.7rem;
             margin: auto 0;
 
@@ -104,7 +104,7 @@
         &__tr {
             border: $border-grey-light;
             border-top: 0;
-            border-radius: 0.325rem;
+            border-radius: $b-radius-2;
         }
 
         &__td {

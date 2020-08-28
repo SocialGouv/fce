@@ -60,13 +60,13 @@
         justify-content: center;
         align-items: center;
         font-family: $roboto;
-        border-radius: $b-radius;
+        border-radius: $b-radius-1;
 
         &--as-link.button {
             width: unset;
             height: unset;
 
-            > span {
+            >span {
                 font-weight: normal;
             }
 
@@ -123,7 +123,7 @@
         padding: $spacing-2;
         font-family: $roboto;
         font-size: 14px;
-        border-radius: $b-radius;
+        border-radius: $b-radius-1;
 
         &--success {
             @extend %success;
@@ -133,7 +133,7 @@
             @extend %error;
         }
 
-        > .svg-inline--fa {
+        >.svg-inline--fa {
             position: relative;
             top: 1px;
             width: 16px;

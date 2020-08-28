@@ -71,7 +71,7 @@
     &__feedback-link {
         color: $black;
         background-color: $white;
-        border-radius: 0.25rem;
+        border-radius: $b-radius-1;
         transition: color 0.3s, background-color 0.3s;
 
         &:hover {

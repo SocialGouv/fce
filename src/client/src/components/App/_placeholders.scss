@@ -24,7 +24,7 @@
     border-radius: $b-radius-2;
 
     @media not print {
-        box-shadow: $fce-shadow;
+        box-shadow: $b-shadow-spread;
     }
 }
 

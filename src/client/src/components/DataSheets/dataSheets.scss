@@ -24,7 +24,7 @@
         padding: $spacing-4 $spacing-5;
 
         @media not print {
-            box-shadow: $fce-shadow;
+            box-shadow: $b-shadow-spread;
         }
     }
 
@@ -38,7 +38,7 @@
             opacity: 0.9;
 
             @media not print {
-                box-shadow: $fce-shadow;
+                box-shadow: $b-shadow-spread;
             }
 
             &:hover {
@@ -65,7 +65,7 @@
             justify-content: flex-start;
             border-radius: $b-radius-2 $b-radius-2 0 0;
             background: $white;
-            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: $b-shadow-spread;
             position: relative;
             padding: 0 $spacing-5;
 
@@ -102,7 +102,7 @@
 
         .section-datas {
             @extend %print-margin-padding;
-            box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: $b-shadow-spread;
             padding: $spacing-5;
             align-self: stretch;
 

@@ -49,8 +49,9 @@ $b-radius-1: 0.25rem;
 $b-radius-2: 0.325rem;
 
 /* SHADOWS */
-$fce-shadow: 0 0 6px rgba(100, 100, 100, 0.06),
+$b-shadow-spread: 0 0 6px rgba(100, 100, 100, 0.06),
 0 0 15px rgba(100, 100, 100, 0.15);
+$b-shadow-at: 2px 2px 6px $grey-geyser;
 
 /* FONT-SIZE */
 $font-size-section-title: 1.25rem;

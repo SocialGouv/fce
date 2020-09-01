@@ -75,4 +75,8 @@ $spacing-4: map-get($spacing-values, "4"); // 1rem
 $spacing-5: map-get($spacing-values, "5"); // 1.5rem
 $spacing-6: map-get($spacing-values, "6"); // 3rem
 
+/* ANIMATIONS */
+$duration-short: 200ms;
+$duration-average: 300ms;
+
 @import "~bulma/sass/utilities/all";

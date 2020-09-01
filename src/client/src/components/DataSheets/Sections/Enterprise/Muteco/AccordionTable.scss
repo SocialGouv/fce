@@ -3,7 +3,7 @@
 .accordion-table {
     &__header {
         cursor: pointer;
-        transition: color 200ms;
+        transition: color $duration-short;
 
         &:hover {
             color: $dark-blue;

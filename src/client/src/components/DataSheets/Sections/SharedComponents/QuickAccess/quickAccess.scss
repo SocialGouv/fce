@@ -9,7 +9,7 @@
     background-color: $white;
     border-radius: $b-radius-2;
     opacity: 0.9;
-    transition: all 0.2s ease-in-out;
+    transition: opacity $duration-short;
 
     &:hover {
         opacity: 1;
@@ -29,8 +29,7 @@
 
 .tabs li.is-active a {
     color: $primary;
-    border-bottom: solid;
-    border-width: 3px;
+    border-bottom: 3px solid;
 }
 
 .tabs {

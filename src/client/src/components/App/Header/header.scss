@@ -72,7 +72,7 @@
         color: $black;
         background-color: $white;
         border-radius: $b-radius-1;
-        transition: color $duration-average, background-color $duration-average;
+        transition: color $duration-2, background-color $duration-2;
 
         &:hover {
             color: $white;

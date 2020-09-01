@@ -31,20 +31,6 @@
     &__main-content {
         @extend %print-block;
         @extend %print-margin-padding;
-
-        .sticky {
-            z-index: 2;
-            transition: opacity 0.2s;
-            opacity: 0.9;
-
-            @media not print {
-                box-shadow: $b-shadow-spread;
-            }
-
-            &:hover {
-                opacity: 1;
-            }
-        }
     }
 
     &__section {

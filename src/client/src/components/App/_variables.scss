@@ -29,20 +29,29 @@ $app-container-background: $white-smoke;
 $footer-bg: $grey-geyser;
 $footer-link: $grey-tundora;
 $sidebar-establishment-bg: $white-alabaster;
-$rating-gradient: #e21717, #e75907, #e38906, #eeb12c, #f0d828, #b3dc04, #71d903,
-    #30d502, #02d112, #01ce4e, #00ca88;
+$rating-gradient: #e21717,
+#e75907,
+#e38906,
+#eeb12c,
+#f0d828,
+#b3dc04,
+#71d903,
+#30d502,
+#02d112,
+#01ce4e,
+#00ca88;
 
 /* BORDERS */
 $border-grey-light: 1px solid $grey-geyser;
 
 /* BORDER-RADIUS */
-$b-radius-1: 0.25rem;
-$b-radius-2: 0.325rem;
+$border-radius-1: 0.25rem;
+$border-radius-2: 0.325rem;
 
 /* SHADOWS */
-$b-shadow-spread: 0 0 6px rgba(100, 100, 100, 0.06),
-    0 0 15px rgba(100, 100, 100, 0.15);
-$b-shadow-at: 2px 2px 6px $grey-geyser;
+$box-shadow-spread: 0 0 6px rgba(100, 100, 100, 0.06),
+0 0 15px rgba(100, 100, 100, 0.15);
+$box-shadow-awesome-table: 2px 2px 6px $grey-geyser;
 
 /* FONT-SIZE */
 $font-size-section-title: 1.25rem;
@@ -51,9 +60,12 @@ $font-size-base: 1rem;
 $font-size-small: 0.8rem;
 
 /* TYPOGRAPHY */
-$segoe: "Segoe Pro", sans-serif;
-$evolventa: "Evolventa", sans-serif;
-$roboto: "Roboto", sans-serif;
+$segoe: "Segoe Pro",
+sans-serif;
+$evolventa: "Evolventa",
+sans-serif;
+$roboto: "Roboto",
+sans-serif;
 
 /* SPACING (values from Bulma) */
 $spacing-1: map-get($spacing-values, "1"); // 0.25rem

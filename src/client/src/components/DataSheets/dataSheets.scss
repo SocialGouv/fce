@@ -20,11 +20,11 @@
     &__main-container {
         @extend %print-margin-padding;
         background-color: $white;
-        border-radius: $b-radius-2 $b-radius-2 0 0;
+        border-radius: $border-radius-2 $border-radius-2 0 0;
         padding: $spacing-4 $spacing-5;
 
         @media not print {
-            box-shadow: $b-shadow-spread;
+            box-shadow: $box-shadow-spread;
         }
     }
 
@@ -37,7 +37,7 @@
         scroll-margin: $spacing-6;
         margin: $spacing-5 0;
         background-color: $white;
-        border-radius: $b-radius-2;
+        border-radius: $border-radius-2;
         position: relative;
         display: flex;
         flex-direction: column;
@@ -49,9 +49,9 @@
             flex-direction: row;
             align-items: center;
             justify-content: flex-start;
-            border-radius: $b-radius-2 $b-radius-2 0 0;
+            border-radius: $border-radius-2 $border-radius-2 0 0;
             background: $white;
-            box-shadow: $b-shadow-spread;
+            box-shadow: $box-shadow-spread;
             position: relative;
             padding: 0 $spacing-5;
 
@@ -88,7 +88,7 @@
 
         .section-datas {
             @extend %print-margin-padding;
-            box-shadow: $b-shadow-spread;
+            box-shadow: $box-shadow-spread;
             padding: $spacing-5;
             align-self: stretch;
 

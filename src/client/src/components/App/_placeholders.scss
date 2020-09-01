@@ -21,10 +21,10 @@
 %data-sheet-header {
     padding: $spacing-5;
     background-color: $white;
-    border-radius: $b-radius-2;
+    border-radius: $border-radius-2;
 
     @media not print {
-        box-shadow: $b-shadow-spread;
+        box-shadow: $box-shadow-spread;
     }
 }
 

@@ -9,9 +9,9 @@
         display: block;
         padding: $spacing-4 0;
         overflow: auto;
-        border-radius: $b-radius-2;
+        border-radius: $border-radius-2;
         background-color: $white;
-        box-shadow: $b-shadow-spread;
+        box-shadow: $box-shadow-spread;
     }
 }
 
@@ -53,7 +53,7 @@
             height: 44px;
             padding-left: $spacing-4;
             font-weight: bold;
-            border-radius: $b-radius-2 $b-radius-2 0 0;
+            border-radius: $border-radius-2 $border-radius-2 0 0;
             border: $border-grey-light;
             border-bottom: 2px solid $primary;
             background-image: linear-gradient(to bottom, #ffffff, #e4e7eb);

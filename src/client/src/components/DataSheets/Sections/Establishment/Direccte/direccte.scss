@@ -1,0 +1,25 @@
+@import "../../../../App/variables";
+
+.data-sheet {
+    .direccte-interactions {
+        width: 100%;
+
+        &__title {
+            border-bottom: none;
+        }
+
+        &__table.table {
+            width: 100%;
+            margin: 0;
+
+            td {
+                vertical-align: middle;
+            }
+
+            th:first-child,
+            td:first-child {
+                text-align: right;
+            }
+        }
+    }
+}

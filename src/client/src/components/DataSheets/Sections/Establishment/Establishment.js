@@ -8,7 +8,7 @@ import Activity from "./Activity";
 import Muteco from "./Muteco";
 import Helps from "./Helps";
 import Relationship from "./Relationship";
-import Direccte from "../SharedComponents/Direccte";
+import Direccte from "./Direccte";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks";

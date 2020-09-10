@@ -34,7 +34,6 @@
     }
 
     &__print-section {
-        @extend %print-hidden;
         display: flex;
         justify-content: flex-end;
         margin: $spacing-5 0;
@@ -139,24 +138,6 @@
 
                 .see-details {
                     width: 10rem;
-                }
-            }
-
-            & .interactions__title {
-                border-bottom: none;
-            }
-
-            & .interactions__table {
-                width: 100%;
-                margin: 0;
-
-                td {
-                    vertical-align: middle;
-                }
-
-                th:first-child,
-                td:first-child {
-                    text-align: right;
                 }
             }
 

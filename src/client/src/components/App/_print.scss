@@ -65,28 +65,38 @@
         }
     }
 
-    .data-sheet__section {
-        & .section-header {
-            .icon {
-                display: block !important;
-                float: left !important;
-                padding: 0 0.5rem;
-            }
+    .data-sheet {
+        &__print-section {
+            display: none !important;
         }
 
-        & .section-datas {
-            dl,
-            dd,
-            dt {
-                @extend %reset-block;
+        &__section {
+            & .section-header {
+                &:before {
+                    display: none;
+                }
+
+                .icon {
+                    display: block !important;
+                    float: left !important;
+                    padding: 0 0.5rem;
+                }
             }
 
-            dl {
-                padding: 5pt 0 !important;
-            }
+            & .section-datas {
+                dl,
+                dd,
+                dt {
+                    @extend %reset-block;
+                }
 
-            .data__value {
-                @extend %margin-bottom-small;
+                dl {
+                    padding: 5pt 0 !important;
+                }
+
+                .data__value {
+                    @extend %margin-bottom-small;
+                }
             }
         }
     }

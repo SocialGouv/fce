@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _get from "lodash.get";
-
 import Data from "../../../SharedComponents/Data";
 import Subcategory from "../../../SharedComponents/Subcategory";
 import State from "../../../SharedComponents/State";

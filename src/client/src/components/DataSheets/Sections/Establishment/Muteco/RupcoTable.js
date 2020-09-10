@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 
+import "./rupcoTable.scss";
+
 const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
   return (
     <table className="table rupco-table-establishment">
@@ -48,7 +50,9 @@ const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
                   value={
                     hasOtherEstablishments ? (
                       <div>
-                        <span className="mr-3">Oui</span>
+                        <span className="rupco-table-establishment__other-establishments">
+                          Oui
+                        </span>
                         <SeeDetailsLink
                           link={`/enterprise/${siren}/#muteco`}
                           text="Voir la fiche entreprise"

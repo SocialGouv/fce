@@ -10,11 +10,11 @@ import Muteco from "./Muteco";
 import Direccte from "./Direccte";
 import Helps from "./Helps";
 import QuickAccess from "../SharedComponents/QuickAccess";
+import PrintSection from "../SharedComponents/PrintSection";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks";
 
 import "../../dataSheets.scss";
-import PrintSection from "../SharedComponents/PrintSection";
 
 const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
   useScrollToLocationHash({ location, offset: 50 });

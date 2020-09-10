@@ -4,12 +4,14 @@ import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
 import Value from "../../../../shared/Value";
-import Data from "../Data";
+import Data from "../../SharedComponents/Data";
 import Source from "../../../../../containers/Source";
 import { getLastInteraction } from "../../../../../helpers/Interactions";
 import Config from "../../../../../services/Config";
 
-const EstablishmentView = ({ establishment }) => {
+import "./direccte.scss";
+
+const Direccte = ({ establishment }) => {
   const lastInteractions = {
     T: {
       ...getLastInteraction(establishment.interactions_T),
@@ -30,7 +32,10 @@ const EstablishmentView = ({ establishment }) => {
   };
 
   return (
-    <section id="direccte" className="data-sheet__section">
+    <section
+      id="direccte"
+      className="data-sheet__section direccte-interactions"
+    >
       <div className="section-header">
         <span className="icon">
           <FontAwesomeIcon icon={faCalendarCheck} />
@@ -59,7 +64,7 @@ const EstablishmentView = ({ establishment }) => {
             columnClasses={["is-6", "is-6"]}
           />
         ) : (
-          <dl className="data dl columns interactions__title">
+          <dl className="data dl columns direccte-interactions__title">
             <dt className={`dt column is-first-letter-uppercase`}>
               Dernier contrôle ou visite au cours des 24 derniers mois (Pôle T,
               Pôle C, Pôle E)
@@ -68,7 +73,7 @@ const EstablishmentView = ({ establishment }) => {
         )}
 
         {establishment.interactions && establishment.interactions.length ? (
-          <table className="table is-bordered is-hoverable interactions__table mt-0">
+          <table className="table is-bordered is-hoverable direccte-interactions__table">
             <thead>
               <tr>
                 <th className="has-text-right">Pôle</th>
@@ -116,8 +121,8 @@ const EstablishmentView = ({ establishment }) => {
   );
 };
 
-EstablishmentView.propTypes = {
+Direccte.propTypes = {
   establishment: PropTypes.object
 };
 
-export default EstablishmentView;
+export default Direccte;

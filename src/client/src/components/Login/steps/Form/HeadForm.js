@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const HeadForm = ({ step }) => {
   return (
-    <div className="login__head-form">
+    <section className="login__head-form">
       <h1 className="login__title">Me connecter</h1>
       {step === "login-form-email" && (
         <>
@@ -32,7 +32,7 @@ const HeadForm = ({ step }) => {
           </p>
         </>
       )}
-    </div>
+    </section>
   );
 };
 

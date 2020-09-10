@@ -1,4 +1,8 @@
+@import "../../../../App/variables";
+
 .rupco-table {
+    margin-top: $spacing-2;
+
     &__type {
         width: 12rem;
     }

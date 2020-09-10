@@ -19,7 +19,7 @@ const ContratsAides = ({ establishment }) => {
           sourceSi="ASP Extranet CUI"
         />
         {establishment.contrat_aide && (
-          <table className="table is-bordered mt-3">
+          <table className="table is-fullwidth is-bordered">
             <thead>
               <tr>
                 <th>

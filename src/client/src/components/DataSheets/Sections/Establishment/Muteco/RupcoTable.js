@@ -5,7 +5,7 @@ import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 
 const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
   return (
-    <table className="table mt-2 rupco-table-establishment">
+    <table className="table rupco-table-establishment">
       <thead>
         <tr>
           {hasTypeColumn && <th>Type</th>}

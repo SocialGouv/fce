@@ -42,7 +42,7 @@ const EstablishmentMuteco = ({ establishment, enterprise }) => {
             columnClasses={["is-8", "is-4"]}
           />
           {hasActivitePartielle && (
-            <table className="table is-hoverable is-bordered mt-2">
+            <table className="table is-hoverable is-bordered">
               <thead>
                 <tr>
                   <th className="th">Numéro de convention</th>

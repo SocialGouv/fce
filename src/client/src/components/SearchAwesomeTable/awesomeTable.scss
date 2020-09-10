@@ -55,6 +55,10 @@
             &--is-sortable {
                 cursor: pointer;
             }
+
+            .svg-inline--fa {
+                margin-left: $spacing-2;
+            }
         }
     }
 

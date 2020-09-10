@@ -54,7 +54,6 @@ const SearchAwesomeTable = ({
               {field.headName}
               {isSortableField && (
                 <FontAwesomeIcon
-                  className="at__head__sortable-icon ml-2"
                   icon={getSortIcon(field.sortKey, currentSort)}
                 />
               )}

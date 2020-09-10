@@ -6,7 +6,7 @@ import "./RupcoTable.scss";
 
 const RupcoTable = ({ list, hasTypeColumn = false }) => (
   <div className="is-overflow-x">
-    <table className="table mt-2 is-max-content rupco-table">
+    <table className="table is-max-content rupco-table">
       <thead>
         <tr>
           {hasTypeColumn && <th className="rupco-table__type">Type</th>}

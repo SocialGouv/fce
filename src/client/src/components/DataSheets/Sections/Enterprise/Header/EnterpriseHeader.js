@@ -19,8 +19,6 @@ import Button from "../../../../shared/Button";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import Config from "../../../../../services/Config";
 
-import "./enterpriseHeader.scss";
-
 const EnterpriseHeader = ({
   enterprise,
   resetSearch,
@@ -43,8 +41,8 @@ const EnterpriseHeader = ({
       {isRedirectedToHeadOffice && (
         <Redirect to={`/establishment/${enterprise.siret_siege_social}`} />
       )}
-      <section id="header" className="enterprise-header">
-        <h1 className="mb-4 is-capitalized has-text-weight-bold is-size-3">
+      <section id="header" className="data-sheet-header">
+        <h1 className="is-capitalized has-text-weight-bold is-size-3 data-sheet-header__title">
           <Value value={getEnterpriseName(enterprise) || null} empty=" " />
         </h1>
         <div className="columns">
@@ -59,7 +57,7 @@ const EnterpriseHeader = ({
             />
           </div>
         </div>
-        <div className="enterprise-header__infos columns is-vcentered">
+        <div className="columns is-vcentered">
           <div className="column is-4">
             <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
               SIREN :{" "}
@@ -82,11 +80,11 @@ const EnterpriseHeader = ({
 
         <div className="columns is-vcentered">
           <div className="column is-4">
-            <div className="enterprise-header__status">
-              <div className="active-item-value">
+            <div className="data-sheet-header__status">
+              <div>
                 <FontAwesomeIcon
                   icon={isActiveEnterprise ? faCircle : faSquare}
-                  className={`mr-2 ${stateClass}`}
+                  className={`data-sheet-header__status-icon ${stateClass}`}
                 />
               </div>
               <div className="is-size-6 has-text-segoe has-text-grey-dark">

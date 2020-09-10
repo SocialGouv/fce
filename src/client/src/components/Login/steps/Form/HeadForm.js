@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 
 const HeadForm = ({ step }) => {
   return (
-    <>
+    <div className="login__head-form">
       <h1 className="login__title">Me connecter</h1>
       {step === "login-form-email" && (
         <>
-          <p className="mb-1">
+          <p>
             Pour accéder à l{"'"}application FCE, merci de renseigner votre
             adresse électronique (e-mail).
           </p>
-          <p className="mb-1">
+          <p>
             Vous allez recevoir un code temporaire pour valider votre adresse
             mail,
             <br />
@@ -21,18 +21,18 @@ const HeadForm = ({ step }) => {
       )}
       {step === "login-form-code" && (
         <>
-          <p className="mb-1">
+          <p>
             Pour accéder à l{"'"}application FCE, merci de renseigner le code
             que vous avez reçu sur votre adresse électronique (e-mail).
           </p>
-          <p className="mb-1">
+          <p>
             Votre authentification sera valide 30 jours.
             <br />
             Passé ce délai vous devrez renouveler votre demande.
           </p>
         </>
       )}
-    </>
+    </div>
   );
 };
 

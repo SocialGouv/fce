@@ -34,7 +34,7 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
           sourceSi="Ari@ne"
         />
         {hasApprentissage && (
-          <table className="table is-fullwidth is-hoverable mt-3">
+          <table className="table is-fullwidth is-hoverable">
             <thead>
               <tr>
                 <th className="th">Siret</th>

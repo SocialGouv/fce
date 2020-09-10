@@ -10,6 +10,29 @@
         }
     }
 
+    &-header {
+        margin-bottom: $spacing-5;
+        background-color: $white;
+        border-radius: $border-radius-2;
+
+        &__title {
+            margin-bottom: $spacing-4;
+        }
+
+        &__status {
+            display: flex;
+
+            &-icon {
+                margin-right: $spacing-2;
+            }
+        }
+
+        @media not print {
+            padding: $spacing-5;
+            box-shadow: $box-shadow-spread;
+        }
+    }
+
     &__print-section {
         @extend %print-hidden;
         display: flex;
@@ -18,7 +41,6 @@
     }
 
     &__main-container {
-        @extend %print-margin-padding;
         background-color: $white;
         border-radius: $border-radius-2 $border-radius-2 0 0;
         padding: $spacing-4 $spacing-5;
@@ -30,7 +52,6 @@
 
     &__main-content {
         @extend %print-block;
-        @extend %print-margin-padding;
     }
 
     &__section {
@@ -65,7 +86,7 @@
                 left: 0;
             }
 
-            >.icon {
+            > .icon {
                 color: $primary;
                 width: 1.15rem;
                 height: 1.25rem;
@@ -75,7 +96,7 @@
                 background-color: $white-smoke;
             }
 
-            >.title {
+            > .title {
                 font-family: $roboto;
                 font-weight: bold;
                 font-size: $font-size-section-title;
@@ -87,7 +108,6 @@
         }
 
         .section-datas {
-            @extend %print-margin-padding;
             box-shadow: $box-shadow-spread;
             padding: $spacing-5;
             align-self: stretch;
@@ -101,6 +121,7 @@
             }
 
             & .table {
+                margin-top: $spacing-4;
                 padding: $spacing-5 0;
 
                 th {
@@ -108,7 +129,7 @@
                 }
 
                 th:not(:last-of-type),
-                tfoot tr>td:not(:last-of-type) {
+                tfoot tr > td:not(:last-of-type) {
                     border-right: $border-grey-light;
                 }
 
@@ -144,12 +165,12 @@
             }
         }
 
-        >.dl {
+        > .dl {
             margin-bottom: 0;
         }
 
-        >.dd,
-        >.dt {
+        > .dd,
+        > .dt {
             padding: $spacing-4 0;
             word-wrap: break-word;
             color: $grey-tundora;

@@ -8,7 +8,6 @@ import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import { formatAddress } from "../../../../../helpers/Address";
 import InfoBox from "../../../../shared/InfoBox";
-import "./establishmentHeader.scss";
 
 const EstablishmentHeader = ({
   enterprise,
@@ -21,8 +20,8 @@ const EstablishmentHeader = ({
   const stateClass = isActive ? "icon--success" : "icon--danger";
 
   return (
-    <section id="header" className="establishment-header">
-      <h1 className="mb-4 is-capitalized has-text-weight-bold is-size-3">
+    <section id="header" className="data-sheet-header">
+      <h1 className="is-capitalized has-text-weight-bold is-size-3 data-sheet-header__title">
         <Value value={getEnterpriseName(enterprise) || null} empty=" " />
       </h1>
       <div className="columns">
@@ -54,11 +53,11 @@ const EstablishmentHeader = ({
       </div>
       <div className="columns">
         <div className="column is-4">
-          <div className="establishment-header__status">
-            <div className="active-item-value">
+          <div className="data-sheet-header__status">
+            <div>
               <FontAwesomeIcon
                 icon={isActive ? faCircle : faSquare}
-                className={`mr-2 ${stateClass}`}
+                className={`data-sheet-header__status-icon ${stateClass}`}
               />
             </div>
             <div className="is-size-6 has-text-segoe has-text-grey-dark">

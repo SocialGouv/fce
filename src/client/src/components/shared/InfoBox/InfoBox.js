@@ -7,17 +7,17 @@ import "./infoBox.scss";
 
 const InfoBox = ({ value, infoBoxClasses }) => {
   return (
-    <span
-      className={classNames([
-        "infoBox",
-        "has-text-primary",
-        "px-3",
-        "py-2",
-        ...infoBoxClasses
-      ])}
-    >
-      <Value value={value} empty="" />
-    </span>
+    <div className="info-box">
+      <span
+        className={classNames([
+          "info-box__pill",
+          "has-text-primary",
+          ...infoBoxClasses
+        ])}
+      >
+        <Value value={value} empty="" />
+      </span>
+    </div>
   );
 };
 

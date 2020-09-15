@@ -1,6 +1,9 @@
 @import "../App/variables";
 
 .app-search-results {
+    margin: 0 $spacing-6;
+    padding-top: $spacing-4;
+
     @media print {
         zoom: 40%;
     }

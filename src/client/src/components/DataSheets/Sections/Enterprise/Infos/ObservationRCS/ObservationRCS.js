@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { faChevronRight, faChevronUp } from "@fortawesome/pro-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import Data from "../../../SharedComponents/Data";
 import { toI18nDate, sortByDate } from "../../../../../../helpers/Date";
+
+import "./observationsRcs.scss";
 
 const ObservationRCS = ({ enterprise }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -20,13 +21,13 @@ const ObservationRCS = ({ enterprise }) => {
             obs.map(({ date, libelle }) => (
               <li
                 key={`rcs-obs-${date}-${libelle}`}
-                className="rcs-observations-item"
+                className="rcs-observations__item"
               >{`${toI18nDate(date)} - ${libelle}`}</li>
             ))
           ) : (
             <li
               key={`rcs-obs-${firstObs.date}-${firstObs.libelle}`}
-              className="rcs-observations-item"
+              className="rcs-observations__item"
             >{`${toI18nDate(firstObs.date, "L")} - ${firstObs.libelle}`}</li>
           )}
 
@@ -39,7 +40,7 @@ const ObservationRCS = ({ enterprise }) => {
                 icon={isExpanded ? faChevronUp : faChevronRight}
                 size="xs"
               />
-              <span className="pl-2">
+              <span className="rcs-observations__see-more-label">
                 {isExpanded ? "Replier" : "Lire la suite"}
               </span>
             </button>

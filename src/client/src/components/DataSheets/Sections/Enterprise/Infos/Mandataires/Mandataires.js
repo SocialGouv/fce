@@ -5,7 +5,7 @@ import Value from "../../../../../shared/Value";
 import "./enterprise-mandataires.scss";
 
 const Mandataires = ({ mandataires }) => {
-  return (
+  return mandataires && mandataires.length ? (
     <table className="enterprise-mandataires table is-hoverable">
       <thead>
         <tr>
@@ -31,6 +31,10 @@ const Mandataires = ({ mandataires }) => {
         ))}
       </tbody>
     </table>
+  ) : (
+    <p className="enterprise-mandataires__not-found has-text-centered">
+      Aucun mandataire n{"'"}a été trouvé
+    </p>
   );
 };
 

@@ -63,7 +63,9 @@ const Finances = ({ establishment }) => {
       </tbody>
     </table>
   ) : (
-    <p className="has-text-centered pt-2">Non disponible</p>
+    <p className="enterprise-finances__not-available has-text-centered">
+      Non disponible
+    </p>
   );
 };
 

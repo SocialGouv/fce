@@ -6,14 +6,12 @@ import { SET_RATE } from "../../containers/UsersFeedback/actionTypes";
 
 const Rating = ({ min, max, rate = null, handleChange }) => {
   return (
-    <div className="user-feedback__rating mb-6">
+    <div className="user-feedback__rating">
       <p>Recommanderiez-vous ce site à un(e) collègue ?</p>
       <div className="user-feedback__rates">
         {range(min, max).map((number, index) => (
           <label
-            className={classNames("user-feedback__rate", {
-              "mr-1": index !== max
-            })}
+            className="user-feedback__rate"
             key={`rating${number}`}
             tabIndex="0"
           >

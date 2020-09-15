@@ -1,3 +1,5 @@
+@import "../App/variables";
+
 @media print {
     %reset-spacing {
         margin: 0 !important;
@@ -47,11 +49,34 @@
         font-size: 2rem !important;
     }
 
-    .infoBox {
-        @extend %reset-block;
-        color: #000 !important;
-        font-size: 1.25rem !important;
-        text-transform: uppercase;
+    .app-header {
+        height: 40px;
+    }
+
+    .header {
+        &__logo {
+            //max-width: 20px !important;
+        }
+    }
+
+    .dashboard .column {
+        .dashboard-item {
+            @extend %reset-block;
+            height: auto !important;
+            border: none !important;
+        }
+    }
+
+    .info-box {
+        margin-bottom: $spacing-4 !important;
+        &__pill {
+            padding: 0.2rem !important;
+            color: #000 !important;
+            font-size: 1rem !important;
+            text-transform: uppercase;
+            border: 1px solid #000;
+            border-radius: 0 !important;
+        }
     }
 
     .subcategory {
@@ -66,6 +91,12 @@
     }
 
     .data-sheet {
+        &-header__status > div {
+            float: left;
+            margin: $spacing-2 0;
+            width: auto;
+        }
+
         &__print-section {
             display: none !important;
         }
@@ -73,13 +104,13 @@
         &__section {
             & .section-header {
                 &:before {
-                    display: none;
+                    display: none !important;
                 }
 
                 .icon {
                     display: block !important;
                     float: left !important;
-                    padding: 0 0.5rem;
+                    padding: 0 $spacing-2;
                 }
             }
 

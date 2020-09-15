@@ -1,0 +1,10 @@
+@import "../../App/variables";
+
+.button-icon {
+    &--before-label {
+        margin-left: $spacing-2;
+    }
+    &--after-label {
+        margin-right: $spacing-2;
+    }
+}

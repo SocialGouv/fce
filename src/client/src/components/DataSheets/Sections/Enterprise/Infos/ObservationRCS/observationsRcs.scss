@@ -1,0 +1,13 @@
+@import "../../../../../App/variables";
+
+.rcs-observations {
+    list-style: circle;
+
+    &__item {
+        margin-bottom: $spacing-2;
+    }
+
+    &__see-more-label {
+        padding-left: $spacing-2;
+    }
+}

@@ -24,9 +24,7 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
               }}
             >
               <img className="header__logo" src={logo} alt="Logo Marianne" />
-              <div className="header__title is-dark">
-                Fiche Commune Entreprise
-              </div>
+              <div className="header__title">Fiche Commune Entreprise</div>
             </Link>
             {(location.pathname.includes("/establishment") ||
               location.pathname.includes("/enterprise")) && (

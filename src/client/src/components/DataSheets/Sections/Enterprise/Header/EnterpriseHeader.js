@@ -45,18 +45,14 @@ const EnterpriseHeader = ({
         <h1 className="is-capitalized has-text-weight-bold is-size-3 data-sheet-header__title">
           <Value value={getEnterpriseName(enterprise) || null} empty=" " />
         </h1>
-        <div className="columns">
-          <div className="column pb-0">
-            <InfoBox
-              value="Entreprise"
-              infoBoxClasses={[
-                "has-text-weight-bold",
-                "has-text-roboto",
-                "is-size-6"
-              ]}
-            />
-          </div>
-        </div>
+        <InfoBox
+          value="Entreprise"
+          infoBoxClasses={[
+            "has-text-weight-bold",
+            "has-text-roboto",
+            "is-size-6"
+          ]}
+        />
         <div className="columns is-vcentered">
           <div className="column is-4">
             <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">

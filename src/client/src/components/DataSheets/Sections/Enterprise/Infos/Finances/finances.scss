@@ -1,3 +1,9 @@
+@import "../../../../../App/variables";
+
 .enterprise-finances {
     width: 100%;
+
+    &__not-available {
+        margin-top: $spacing-2;
+    }
 }

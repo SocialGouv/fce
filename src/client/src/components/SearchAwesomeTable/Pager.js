@@ -10,11 +10,11 @@ const Pager = ({ currentPage, max, handlePageChange }) => {
 
   return (
     <div className="pager">
-      <span className="pr-2 has-text-grey-dark">Page </span>
-      <div className="select is-grey-dark mr-1">
+      <span className="pager__label has-text-grey-dark">Page </span>
+      <div className="select is-grey-dark">
         <select
           onChange={e => handlePageChange(+e.target.value)}
-          className="pager__select is-hovered has-text-grey-dark"
+          className="is-hovered has-text-grey-dark"
         >
           <option
             className="has-text-grey-dark"

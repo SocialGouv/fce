@@ -1,8 +1,6 @@
 import models from "../../../Models";
 import formatEstablishment from "../Format/establishment";
 
-const LIMIT_ETABLISSEMENTS = 20;
-
 const getSettlements = async (siren) => {
   const etablissements = await models.Etablissement.findAll({
     where: { siren },
@@ -10,7 +8,6 @@ const getSettlements = async (siren) => {
       ["etablissementsiege", "DESC"],
       ["etatadministratifetablissement", "ASC"],
     ],
-    limit: LIMIT_ETABLISSEMENTS,
   });
 
   if (!etablissements) {

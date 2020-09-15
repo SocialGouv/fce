@@ -3,7 +3,7 @@
 @import "~bulma/sass/elements/button.sass";
 
 .login {
-    padding: $spacing-6 0;
+    padding: $spacing-6 $padding-app-x;
 
     &__container {
         display: flex;

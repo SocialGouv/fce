@@ -5,6 +5,10 @@
     padding: 0;
     background-color: $white;
 
+    .container {
+        padding: 0 $padding-app-x;
+    }
+
     &.columns {
         margin-bottom: 0;
     }

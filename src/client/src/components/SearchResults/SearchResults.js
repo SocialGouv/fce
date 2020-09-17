@@ -115,7 +115,7 @@ const SearchResults = ({
                   accessor: ({ etablissementsiege }) => {
                     const isSiege = etablissementsiege.raw === "true";
                     return Value({
-                      value: isSiege ? "Siège social" : "Établissement"
+                      value: isSiege ? "Siège social" : "Étab. secondaire"
                     });
                   }
                 },

@@ -85,7 +85,7 @@ export default async (establishment) => {
           ? undefined
           : siege_social === "true"
           ? "Siège social"
-          : "Étab secondaire",
+          : "Établissement",
     },
     {
       in: "datecreationetablissement",

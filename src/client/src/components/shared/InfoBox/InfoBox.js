@@ -5,6 +5,9 @@ import Value from "../Value";
 
 import "./infoBox.scss";
 
+const formatPrintLabel = value =>
+  `Données ${value === "Siège social" ? "du " : "de l'"}`;
+
 const InfoBox = ({ value, infoBoxClasses }) => {
   return (
     <div className="info-box">
@@ -15,6 +18,7 @@ const InfoBox = ({ value, infoBoxClasses }) => {
           ...infoBoxClasses
         ])}
       >
+        <span className="info-box__print">{formatPrintLabel(value)}</span>
         <Value value={value} empty="" />
       </span>
     </div>

@@ -1,5 +1,10 @@
 @import "../App/variables";
 
+// GLOBAL
+// APP HEADER
+// DATA SHEET
+// == DATA SHEET HEADER
+
 @media print {
     %reset-spacing {
         margin: 0 !important;
@@ -24,6 +29,8 @@
         margin-bottom: 20pt !important;
     }
 
+    // GLOBAL
+
     * {
         font-family: Arial, sans-serif !important;
         color: #000 !important;
@@ -41,23 +48,35 @@
     h4,
     h5,
     h6,
-    div {
+    div,
+    section {
         @extend %reset-block;
     }
 
     h1 {
         font-size: 2rem !important;
+        text-align: center;
     }
+
+    .icon,
+    .dashboard-item--header-icon,
+    .data-sheet-header__status svg {
+        display: none !important;
+    }
+
+    // APP HEADER
 
     .app-header {
         height: 40px;
     }
 
     .header {
-        &__logo {
-            //max-width: 20px !important;
+        &__home-link {
+            height: 100% !important;
         }
     }
+
+    // DATA SHEET HEADER
 
     .dashboard .column {
         .dashboard-item {
@@ -69,6 +88,8 @@
 
     .info-box {
         margin-bottom: $spacing-4 !important;
+        text-align: center;
+
         &__pill {
             padding: 0.2rem !important;
             color: #000 !important;
@@ -77,7 +98,13 @@
             border: 1px solid #000;
             border-radius: 0 !important;
         }
+
+        &__print {
+            display: inline !important;
+        }
     }
+
+    // DATA SHEET
 
     .subcategory {
         @extend %margin-bottom-big;
@@ -105,12 +132,6 @@
             & .section-header {
                 &:before {
                     display: none !important;
-                }
-
-                .icon {
-                    display: block !important;
-                    float: left !important;
-                    padding: 0 $spacing-2;
                 }
             }
 

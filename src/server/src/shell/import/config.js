@@ -3,6 +3,40 @@ const CONVERTER_XLSX_TO_CSV = "xlsxToCsv";
 const CONVERTER_JSON_TO_CSV = "jsonToCsv";
 
 const config = {
+  accords: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgt",
+      fileMatch: /^Daccord-Gestion-Extraction.*\.(txt|csv)$/,
+      outputFileName: "accords.csv",
+    },
+    ingest: {
+      className: "AccordsIngestor",
+      table: "etablissements_accords",
+      filename: `${FILES_FOLDER}/accords.csv`,
+      cols: [
+        "num_dos",
+        "siret",
+        "dt_sign",
+        "epargne",
+        "remuneration",
+        "temps_travail",
+        "conditions_travail",
+        "emploi",
+        "egalite_pro",
+        "classifications",
+        "formation",
+        "protection_sociale",
+        "droit_syndical",
+        "autres",
+        "nouvelles_technologies",
+      ],
+      delimiter: ";",
+      truncate: true,
+      generateSiren: true,
+      history: false,
+    },
+  },
   wikit_uc: {
     download: {
       className: "MinioDownloader",
@@ -247,7 +281,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^RUPCO(.)*procedure(.)*.csv$/,
+      fileMatch: /^(.)*export_procedure(.)*.csv$/,
       outputFileName: "rupco_procedures.csv",
     },
     ingest: {
@@ -280,7 +314,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^RUPCO(.)*etablissement(.)*.csv$/,
+      fileMatch: /^(.)*export_etablissement(.)*.csv$/,
       outputFileName: "rupco_etablissements.csv",
     },
     ingest: {

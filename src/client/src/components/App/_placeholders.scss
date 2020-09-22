@@ -18,6 +18,24 @@
     }
 }
 
+%is-grey {
+    color: $grey !important;
+    background-color: $white;
+    border-color: $grey !important;
+}
+
+%has-first-letter-uppercase {
+    &::first-letter {
+        text-transform: uppercase;
+    }
+}
+
+%flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 %success {
     color: $info-success;
     border: 1px solid $info-success;

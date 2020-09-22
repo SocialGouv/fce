@@ -33,14 +33,14 @@ const ObservationRCS = ({ enterprise }) => {
 
           {obs.length > 1 && (
             <button
-              className="is-text-button"
+              className="rcs-observations__button"
               onClick={() => setIsExpanded(!isExpanded)}
             >
               <FontAwesomeIcon
                 icon={isExpanded ? faChevronUp : faChevronRight}
                 size="xs"
               />
-              <span className="rcs-observations__see-more-label">
+              <span className="rcs-observations__button-label">
                 {isExpanded ? "Replier" : "Lire la suite"}
               </span>
             </button>

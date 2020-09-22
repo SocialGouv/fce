@@ -10,32 +10,23 @@ const Pager = ({ currentPage, max, handlePageChange }) => {
 
   return (
     <div className="pager">
-      <span className="pager__label has-text-grey-dark">Page </span>
-      <div className="select is-grey-dark">
+      <span className="pager__label">Page </span>
+      <div className="select">
         <select
           onChange={e => handlePageChange(+e.target.value)}
-          className="is-hovered has-text-grey-dark"
+          className="is-hovered"
         >
-          <option
-            className="has-text-grey-dark"
-            value={currentPage}
-            defaultValue
-            hidden
-          >
+          <option value={currentPage} defaultValue hidden>
             {currentPage}
           </option>
           {pageNumberList.map(pageNumber => (
-            <option
-              className="has-text-grey-dark"
-              value={pageNumber}
-              key={`page-${pageNumber}`}
-            >
+            <option value={pageNumber} key={`page-${pageNumber}`}>
               {pageNumber}
             </option>
           ))}
         </select>
       </div>
-      <span className="has-text-grey-dark">/ {limit}</span>
+      <span>/ {limit}</span>
     </div>
   );
 };

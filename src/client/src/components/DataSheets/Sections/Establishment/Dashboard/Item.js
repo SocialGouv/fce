@@ -1,27 +1,25 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Value from "../../../../shared/Value";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
+import Value from "../../../../shared/Value";
 import "./dashboard.scss";
 
 const Item = ({ icon, name, value = "", smallText = false }) => {
   return (
     <div className="dashboard-item">
-      <div className="dashboard-item--header">
-        <span className="dashboard-item--header-icon">
+      <div className="dashboard-item__header">
+        <span className="dashboard-item__header-icon">
           <FontAwesomeIcon icon={icon} />
         </span>
-        <span className="has-text-roboto has-text-grey-dark has-text-weight-semibold is-size-6">
-          {name}
-        </span>
+        <span className="dashboard-item__header-label">{name}</span>
       </div>
-      <div className="flex-center dashboard-item-data">
-        <div
-          className={`has-text-roboto has-text-grey-dark${smallText &&
-            " dashboard-item--small-text"}`}
-        >
-          <Value value={value} empty="-" />
-        </div>
+      <div
+        className={classNames("dashboard-item__data", {
+          "dashboard-item__data--small-text": smallText
+        })}
+      >
+        <Value value={value} empty="-" />
       </div>
     </div>
   );

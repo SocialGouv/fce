@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
-import Value from "../../../../shared/Value";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  setSearchTerm,
-  setSearchFilters,
-  resetSearch
-} from "../../../../../services/Store/actions";
 import {
   faArrowRight,
   faSquare,
   faCircle
 } from "@fortawesome/pro-solid-svg-icons";
+import Value from "../../../../shared/Value";
+import {
+  setSearchTerm,
+  setSearchFilters,
+  resetSearch
+} from "../../../../../services/Store/actions";
 import InfoBox from "../../../../shared/InfoBox";
 import Button from "../../../../shared/Button";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
@@ -42,27 +42,19 @@ const EnterpriseHeader = ({
         <Redirect to={`/establishment/${enterprise.siret_siege_social}`} />
       )}
       <section id="header" className="data-sheet-header">
-        <h1 className="is-capitalized has-text-weight-bold is-size-3 data-sheet-header__title">
+        <h1 className="data-sheet-header__title">
           <Value value={getEnterpriseName(enterprise) || null} empty=" " />
         </h1>
-        <InfoBox
-          value="Entreprise"
-          infoBoxClasses={[
-            "has-text-weight-bold",
-            "has-text-roboto",
-            "is-size-6"
-          ]}
-        />
+        <InfoBox value="Entreprise" />
+
         <div className="columns is-vcentered">
-          <div className="column is-4">
-            <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
-              SIREN :{" "}
-            </span>
-            <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
+          <div className="column is-4 data-sheet-header__siren">
+            <span>SIREN : </span>
+            <span>
               <Value value={enterprise.siren} empty="" />
             </span>
           </div>
-          <div className="column is-8">
+          <div className="column is-8 data-sheet-header__enterprise-button">
             <Button
               value="Voir le siège social"
               icon={faArrowRight}
@@ -83,7 +75,7 @@ const EnterpriseHeader = ({
                   className={`data-sheet-header__status-icon ${stateClass}`}
                 />
               </div>
-              <div className="is-size-6 has-text-segoe has-text-grey-dark">
+              <div className="has-text-segoe">
                 {isActiveEnterprise ? (
                   <span>
                     Ouvert depuis le{" "}
@@ -105,11 +97,11 @@ const EnterpriseHeader = ({
             </div>
           </div>
 
-          <div className="column is-8">
+          <div className="column is-8 data-sheet-header__enterprise-button">
             <Button
               value="Voir tous les établissements"
               icon={faArrowRight}
-              className="button is-secondary is-outlined has-text-weight-bold"
+              buttonClasses={["is-secondary", "is-outlined"]}
               onClick={() => {
                 resetSearch();
                 setSearchTerm(enterprise.siren);
@@ -118,8 +110,9 @@ const EnterpriseHeader = ({
             />
           </div>
         </div>
-        <div className="columns">
-          <span className="column is-size-6">
+
+        <div className="columns data-sheet-header__enterprise-external-link">
+          <span className="column">
             Voir sur{" "}
             <a
               className="is-link"

@@ -7,7 +7,22 @@
         margin-bottom: $spacing-2;
     }
 
-    &__see-more-label {
+    &__button-label {
         padding-left: $spacing-2;
+    }
+
+    &__button {
+        color: $blue;
+        text-decoration: none;
+        border: 0;
+        background-color: transparent;
+        font-size: $font-size-base;
+        padding-left: 0;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+            color: $dark-blue;
+        }
     }
 }

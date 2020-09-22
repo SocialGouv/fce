@@ -1,6 +1,7 @@
 @import "../../../../App/variables";
 
 .rupco-table-enterprise {
+    width: max-content;
     margin-top: $spacing-2;
 
     &__type {

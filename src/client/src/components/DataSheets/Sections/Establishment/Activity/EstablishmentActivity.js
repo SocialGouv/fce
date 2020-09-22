@@ -109,9 +109,7 @@ const EstablishmentActivity = ({ establishment }) => {
           !!establishment.pole_competitivite.length && (
             <ul>
               {establishment.pole_competitivite.map(pole => (
-                <li className="is-size-6 has-text-grey-dark" key={pole}>
-                  - {pole}
-                </li>
+                <li key={pole}>- {pole}</li>
               ))}
             </ul>
           )}

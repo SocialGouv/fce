@@ -21,32 +21,23 @@ const EstablishmentHeader = ({
 
   return (
     <section id="header" className="data-sheet-header">
-      <h1 className="is-capitalized has-text-weight-bold is-size-3 data-sheet-header__title">
+      <h1 className="data-sheet-header__title">
         <Value value={getEnterpriseName(enterprise) || null} empty=" " />
       </h1>
       <div className="columns">
         <div className="column">
-          <InfoBox
-            value={establishment.categorie_etablissement}
-            infoBoxClasses={[
-              "has-text-weight-bold",
-              "has-text-roboto",
-              "is-size-6"
-            ]}
-          />
+          <InfoBox value={establishment.categorie_etablissement} />
         </div>
       </div>
-      <div className="columns is-vcentered">
-        <div className="column is-4">
-          <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
-            SIRET :{" "}
-          </span>
-          <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
+      <div className="columns is-vcentered data-sheet-header__primary-infos">
+        <div className="column is-4 data-sheet-header__siret">
+          <span>SIRET : </span>
+          <span>
             <Value value={establishment.siret} empty="" />
           </span>
         </div>
         <div className="column is-8">
-          <span className="is-size-6 has-text-segoe has-text-grey-dark">
+          <span className="has-text-segoe">
             <Value value={address} empty="" />
           </span>
         </div>
@@ -60,7 +51,7 @@ const EstablishmentHeader = ({
                 className={`data-sheet-header__status-icon ${stateClass}`}
               />
             </div>
-            <div className="is-size-6 has-text-segoe has-text-grey-dark">
+            <div className="has-text-segoe">
               {isActive ? (
                 <span>
                   Ouvert depuis le{" "}
@@ -88,7 +79,7 @@ const EstablishmentHeader = ({
           </div>
         </div>
         <div className="column is-8">
-          <span className="is-size-6 has-text-segoe has-text-weight-semibold has-text-grey-dark">
+          <span className="has-text-segoe data-sheet-header__naf">
             <Value value={establishment.naf} empty="-" />{" "}
             <Value
               value={

@@ -34,9 +34,7 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
                     <span className="button-icon">
                       <FontAwesomeIcon icon={faChevronLeft} />
                     </span>
-                    <span className="has-text-weight-bold">
-                      Liste des résultats
-                    </span>
+                    <span>Liste des résultats</span>
                   </Link>
                   <Link
                     to="/"
@@ -48,9 +46,7 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
                     <span className="button-icon">
                       <FontAwesomeIcon icon={faPlus} />
                     </span>
-                    <span className="has-text-weight-bold">
-                      Nouvelle recherche
-                    </span>
+                    <span>Nouvelle recherche</span>
                   </Link>
                 </div>
               </div>
@@ -60,7 +56,7 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
       </div>
 
       {showBetaMessage && (
-        <div className="beta-message flex-center">
+        <div className="beta-message">
           <div>
             <span>Ce site est en beta-test. </span>
             {location.pathname !== "/login" && (

@@ -27,7 +27,7 @@
         justify-content: flex-start;
         align-items: center;
         height: 80px;
-        color: $dark;
+        color: $dark-grey;
 
         &:hover {
             text-decoration: none;
@@ -57,6 +57,7 @@
             width: 13rem;
             height: 2.25rem;
             margin-right: $spacing-4;
+            font-weight: bold;
 
             &-icon {
                 margin-right: $spacing-2;
@@ -67,8 +68,7 @@
 
 .beta-message {
     @extend %print-hidden;
-    display: flex;
-    align-items: center;
+    @extend %flex-center;
     height: 40px;
     font-size: 0.9rem;
     font-weight: bold;
@@ -81,7 +81,7 @@
     &__feedback-link {
         margin-left: $spacing-1;
         padding: $spacing-1 $spacing-2;
-        color: $black;
+        color: $dark-grey;
         background-color: $white;
         border-radius: $border-radius-1;
         transition: color $duration-2, background-color $duration-2;

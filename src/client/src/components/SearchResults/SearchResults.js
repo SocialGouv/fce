@@ -42,10 +42,10 @@ const SearchResults = ({
               {pagination.items > 1 && "s"}
             </h2>
           </div>
-          <div className="column is-2 export-button">
+          <div className="column is-2 app-search-results__export-section">
             <Button
               value="Export Excel"
-              buttonClasses={["is-grey"]}
+              buttonClasses={["app-search-results__export-button"]}
               icon={faFileExcel}
               callback={generateXlxs}
             />

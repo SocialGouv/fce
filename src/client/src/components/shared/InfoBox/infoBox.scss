@@ -5,6 +5,8 @@
 
     &__pill {
         padding: $spacing-2 $spacing-3;
+        font-family: $roboto;
+        font-weight: bold;
         background-color: #f5f5f7;
         border-radius: 1rem;
     }

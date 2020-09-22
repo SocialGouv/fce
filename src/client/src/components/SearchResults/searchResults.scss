@@ -1,4 +1,5 @@
 @import "../App/variables";
+@import "../App/placeholders";
 
 .app-search-results {
     margin: 0 $spacing-6;
@@ -21,10 +22,14 @@
         color: $black;
     }
 
-    .export-button {
+    &__export-section {
         display: flex;
         justify-content: flex-end;
         align-items: center;
+    }
+
+    &__export-button {
+        @extend %is-grey;
     }
 
     .result-row {

@@ -1,9 +1,12 @@
 @import "../App/variables";
 
-// GLOBAL
-// APP HEADER
-// DATA SHEET
-// == DATA SHEET HEADER
+/*
+- GLOBAL
+- APP HEADER
+- DATA SHEET :
+    >>> DATA SHEET HEADER
+    >>> DATA SHEET BODY
+*/
 
 @media print {
     %reset-spacing {
@@ -18,28 +21,29 @@
     }
 
     %margin-bottom-small {
-        margin-bottom: 5pt !important;
+        margin-bottom: 0.5rem !important;
     }
 
     %margin-bottom-medium {
-        margin-bottom: 10pt !important;
+        margin-bottom: 1rem !important;
     }
 
     %margin-bottom-big {
-        margin-bottom: 20pt !important;
+        margin-bottom: 2rem !important;
     }
 
     // GLOBAL
-
     * {
-        font-family: Arial, sans-serif !important;
+        position: relative !important;
+        font-family: Verdana, sans-serif !important;
         color: #000 !important;
         box-shadow: none !important;
         background-color: transparent !important;
     }
 
-    html {
-        font-size: 10pt !important;
+    html,
+    body {
+        font-size: 9pt !important;
     }
 
     h1,
@@ -55,17 +59,27 @@
 
     h1 {
         font-size: 2rem !important;
-        text-align: center;
+        text-align: center !important;
     }
 
+    table {
+        max-width: 100% !important;
+
+        tr,
+        th,
+        td {
+            border: 1px solid $grey-geyser !important;
+        }
+    }
+
+    // hide icons
     .icon,
-    .dashboard-item--header-icon,
+    .dashboard-item__header-icon,
     .data-sheet-header__status svg {
         display: none !important;
     }
 
     // APP HEADER
-
     .app-header {
         height: 40px;
     }
@@ -76,13 +90,23 @@
         }
     }
 
-    // DATA SHEET HEADER
-
+    // >>> DATA SHEET HEADER
     .dashboard .column {
+        margin-bottom: 2rem !important;
+
         .dashboard-item {
-            @extend %reset-block;
+            width: auto !important;
             height: auto !important;
             border: none !important;
+
+            div {
+                display: inline !important;
+            }
+
+            &__header {
+                margin-right: 1rem !important;
+                border-bottom: none !important;
+            }
         }
     }
 
@@ -94,8 +118,8 @@
             padding: 0.2rem !important;
             color: #000 !important;
             font-size: 1rem !important;
-            text-transform: uppercase;
-            border: 1px solid #000;
+            text-transform: uppercase !important;
+            border: 1px solid #000 !important;
             border-radius: 0 !important;
         }
 
@@ -104,24 +128,21 @@
         }
     }
 
-    // DATA SHEET
-
-    .subcategory {
-        @extend %margin-bottom-big;
-
-        .source {
-            span {
-                font-style: italic !important;
-                color: rgb(100, 100, 100) !important;
-            }
-        }
-    }
-
+    // >>> DATA SHEET BODY
     .data-sheet {
-        &-header__status > div {
-            float: left;
-            margin: $spacing-2 0;
-            width: auto;
+        &-header__siren,
+        &-header__siret {
+            font-size: 1.2rem !important;
+        }
+        &-header__primary-infos,
+        &-header__status,
+        &-header__naf {
+            @extend %reset-block;
+            @extend %margin-bottom-small;
+        }
+        &-header__enterprise-button,
+        &-header__enterprise-external-link {
+            display: none !important;
         }
 
         &__print-section {
@@ -130,12 +151,23 @@
 
         &__section {
             & .section-header {
+                @extend %margin-bottom-medium;
+                border-bottom: 2px solid $primary !important;
+
+                .title {
+                    @extend %margin-bottom-small;
+                    font-size: 1.3rem !important;
+                    text-transform: uppercase !important;
+                }
+
                 &:before {
                     display: none !important;
                 }
             }
 
             & .section-datas {
+                @extend %margin-bottom-big;
+
                 dl,
                 dd,
                 dt {
@@ -143,11 +175,36 @@
                 }
 
                 dl {
-                    padding: 5pt 0 !important;
+                    padding: 0.5rem 0 !important;
                 }
+
+                /* .data {
+                    page-break-inside: avoid !important;
+                } */
 
                 .data__value {
                     @extend %margin-bottom-small;
+                }
+
+                .subcategory {
+                    @extend %margin-bottom-medium;
+                    page-break-inside: avoid !important;
+
+                    &__header {
+                        border-bottom-width: 1px !important;
+                    }
+
+                    &__title {
+                        font-size: 1.2rem;
+                    }
+
+                    .source {
+                        span {
+                            font-size: 0.8rem;
+                            color: $grey !important;
+                            color-adjust: exact;
+                        }
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Helmet } from "react-helmet";
 import Value from "../../../../shared/Value";
 import Dashboard from "../Dashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,6 +22,10 @@ const EstablishmentHeader = ({
 
   return (
     <section id="header" className="data-sheet-header">
+      <Helmet>
+        <title>FCE - établissement {getEnterpriseName(enterprise) || ""}</title>
+      </Helmet>
+
       <h1 className="data-sheet-header__title">
         <Value value={getEnterpriseName(enterprise) || null} empty=" " />
       </h1>

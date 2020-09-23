@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
@@ -42,6 +43,10 @@ const EnterpriseHeader = ({
         <Redirect to={`/establishment/${enterprise.siret_siege_social}`} />
       )}
       <section id="header" className="data-sheet-header">
+        <Helmet>
+          <title>FCE - entreprise {getEnterpriseName(enterprise) || ""}</title>
+        </Helmet>
+
         <h1 className="data-sheet-header__title">
           <Value value={getEnterpriseName(enterprise) || null} empty=" " />
         </h1>

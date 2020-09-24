@@ -65,7 +65,7 @@ $spacing-4: map-get($spacing-values, "4"); // 1rem
 $spacing-5: map-get($spacing-values, "5"); // 1.5rem
 $spacing-6: map-get($spacing-values, "6"); // 3rem
 
-$padding-app-x: $spacing-2;
+$padding-app-x: $spacing-4;
 
 /* ANIMATIONS */
 $duration-1: 200ms;

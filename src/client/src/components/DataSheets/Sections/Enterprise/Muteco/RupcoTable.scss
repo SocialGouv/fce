@@ -1,31 +1,33 @@
 @import "../../../../App/variables";
 
-.rupco-table-enterprise {
-    width: max-content;
-    margin-top: $spacing-2;
+.data-sheet {
+    .rupco-table-enterprise {
+        width: max-content;
+        margin-top: $spacing-2;
 
-    &__type {
-        width: 12rem;
-    }
-    &__recording-date {
-        width: 10rem;
-    }
-    &__file-number {
-        width: 10rem;
-    }
-    &__state {
-        width: 14rem;
-    }
-    &__legal-situation {
-        width: 14rem;
-    }
-    &__judgement-date {
-        width: 10rem;
-    }
-    &__broken-contracts {
-        width: 12rem;
-    }
-    &__other-establishments {
-        width: 12rem;
+        &__type {
+            width: 12rem;
+        }
+        &__recording-date {
+            width: 10rem;
+        }
+        &__file-number {
+            width: 10rem;
+        }
+        &__state {
+            width: 14rem;
+        }
+        &__legal-situation {
+            width: 14rem;
+        }
+        &__judgement-date {
+            width: 10rem;
+        }
+        &__broken-contracts {
+            width: 12rem;
+        }
+        &__other-establishments {
+            width: 12rem;
+        }
     }
 }

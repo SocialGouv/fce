@@ -7,6 +7,7 @@ import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import _get from "lodash.get";
 import Data from "../../SharedComponents/Data";
+import Table from "../../SharedComponents/Table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUmbrella } from "@fortawesome/pro-solid-svg-icons";
 import { formatNumber } from "../../../../../helpers/utils";
@@ -42,7 +43,7 @@ const EstablishmentMuteco = ({ establishment, enterprise }) => {
             columnClasses={["is-8", "is-4"]}
           />
           {hasActivitePartielle && (
-            <table className="table is-hoverable is-bordered">
+            <Table isBordered>
               <thead>
                 <tr>
                   <th className="th">Numéro de convention</th>
@@ -99,7 +100,7 @@ const EstablishmentMuteco = ({ establishment, enterprise }) => {
                   </tr>
                 </tfoot>
               )}
-            </table>
+            </Table>
           )}
         </Subcategory>
 

@@ -8,10 +8,12 @@ import "./seeDetailsLink.scss";
 
 const SeeDetailsLink = ({ link, text = "Voir la fiche établissement" }) => {
   return (
-    <Link to={link} className="see-details-link">
-      <FontAwesomeIcon icon={faEye} className="see-details-link__icon" />
-      <span>{text}</span>
-    </Link>
+    <div className="see-details-link">
+      <Link to={link} className="see-details-link__link">
+        <FontAwesomeIcon icon={faEye} className="see-details-link__icon" />
+        <span>{text}</span>
+      </Link>
+    </div>
   );
 };
 

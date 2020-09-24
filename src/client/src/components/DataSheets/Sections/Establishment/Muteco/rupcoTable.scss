@@ -2,6 +2,12 @@
 
 .rupco-table-establishment {
     &__other-establishments {
-        margin-right: $spacing-3;
+        width: 12rem;
+        text-align: center;
+
+        & + .see-details-link {
+            width: 100%;
+            text-align: center;
+        }
     }
 }

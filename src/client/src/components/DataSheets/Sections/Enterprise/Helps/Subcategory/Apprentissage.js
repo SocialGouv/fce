@@ -5,6 +5,7 @@ import Data from "../../../SharedComponents/Data";
 import Subcategory from "../../../SharedComponents/Subcategory";
 import State from "../../../SharedComponents/State";
 import SeeDetailsLink from "../../../SharedComponents/SeeDetailsLink";
+import Table from "../../../SharedComponents/Table";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
 import { getEstablishment } from "../../../../../../helpers/Enterprise";
 import { arraySum } from "../../../../../../helpers/utils";
@@ -33,7 +34,7 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
           sourceSi="Ari@ne"
         />
         {hasApprentissage && (
-          <table className="table is-fullwidth is-hoverable">
+          <Table>
             <thead>
               <tr>
                 <th className="th">Siret</th>
@@ -68,14 +69,14 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
                     <td className="has-text-right">
                       {arraySum(Object.values(signes))}
                     </td>
-                    <td className="has-text-centered">
+                    <td className="see-details">
                       <SeeDetailsLink link={`/establishment/${siret}/#helps`} />
                     </td>
                   </tr>
                 );
               })}
             </tbody>
-          </table>
+          </Table>
         )}
       </Subcategory>
     </>

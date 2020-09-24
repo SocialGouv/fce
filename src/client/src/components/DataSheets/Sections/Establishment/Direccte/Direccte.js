@@ -6,6 +6,7 @@ import { faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
+import Table from "../../SharedComponents/Table";
 import Source from "../../../../../containers/Source";
 import { getLastInteraction } from "../../../../../helpers/Interactions";
 import Config from "../../../../../services/Config";
@@ -74,8 +75,10 @@ const Direccte = ({ establishment }) => {
             </dl>
           )}
 
-          {establishment.interactions && establishment.interactions.length ? (
-            <table className="table is-bordered is-hoverable direccte-interactions__table">
+          {!!(
+            establishment.interactions && establishment.interactions.length
+          ) && (
+            <Table className="direccte-interactions__table" isBordered>
               <thead>
                 <tr>
                   <th className="has-text-right">Pôle</th>
@@ -118,8 +121,8 @@ const Direccte = ({ establishment }) => {
                   )
                 )}
               </tbody>
-            </table>
-          ) : null}
+            </Table>
+          )}
         </Subcategory>
       </div>
     </section>

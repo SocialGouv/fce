@@ -2,15 +2,14 @@
 @import "../App/placeholders";
 
 .app-search-results {
-    margin: 0 $spacing-6;
-    padding-top: $spacing-4;
-
-    @media print {
-        zoom: 40%;
+    &.container {
+        padding: 0 $padding-app-x;
     }
 
+    padding-top: $spacing-4;
+
     & > .columns {
-        margin-bottom: 0;
+        margin: 0;
     }
 
     &__title {

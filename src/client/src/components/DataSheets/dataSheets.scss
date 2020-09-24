@@ -131,28 +131,6 @@
                 margin: $spacing-2;
             }
 
-            & .table {
-                margin-top: $spacing-4;
-                padding: $spacing-5 0;
-
-                th {
-                    color: $grey-tundora;
-                }
-
-                th:not(:last-of-type),
-                tfoot tr > td:not(:last-of-type) {
-                    border-right: $border-grey-light;
-                }
-
-                &__center-cell {
-                    text-align: center;
-                }
-
-                .see-details {
-                    width: 10rem;
-                }
-            }
-
             .dt {
                 font-weight: 700;
             }

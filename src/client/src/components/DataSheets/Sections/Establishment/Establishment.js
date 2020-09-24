@@ -26,7 +26,7 @@ const Establishment = ({
   useScrollToLocationHash({ location, offset: 70 });
 
   return (
-    <section className="data-sheet container">
+    <section className="data-sheet container is-fullhd">
       <PrintSection />
       <div className="columns print-wrapper">
         <div className="column is-3 aside-box is-hidden-touch">

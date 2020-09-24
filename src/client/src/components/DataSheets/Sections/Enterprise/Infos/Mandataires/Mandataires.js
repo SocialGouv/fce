@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Value from "../../../../../shared/Value";
+import Table from "../../../SharedComponents/Table";
 
 import "./enterprise-mandataires.scss";
 
 const Mandataires = ({ mandataires }) => {
   return mandataires && mandataires.length ? (
-    <table className="enterprise-mandataires table is-hoverable">
+    <Table className="enterprise-mandataires">
       <thead>
         <tr>
           <th className="th">Fonction</th>
@@ -30,7 +31,7 @@ const Mandataires = ({ mandataires }) => {
           </tr>
         ))}
       </tbody>
-    </table>
+    </Table>
   ) : (
     <p className="enterprise-mandataires__not-found has-text-centered">
       Aucun mandataire n{"'"}a été trouvé

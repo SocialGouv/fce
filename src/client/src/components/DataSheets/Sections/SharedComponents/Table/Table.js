@@ -19,6 +19,7 @@ const Table = ({ isBordered, children, className = "" }) => {
 
 Table.propTypes = {
   isBordered: PropTypes.bool,
+  className: PropTypes.string,
   children: PropTypes.node
 };
 

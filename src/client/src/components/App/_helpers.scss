@@ -1,14 +1,11 @@
 @import "./variables";
+@import "./placeholders";
 
 /*** Tables ***/
 @for $width from 1 through 10 {
     .col-width-#{$width}0 {
         width: $width * 10%;
     }
-}
-
-.is-overflow-x {
-    overflow-x: scroll;
 }
 
 /*** Buttons ***/

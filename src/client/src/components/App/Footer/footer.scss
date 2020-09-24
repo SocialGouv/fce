@@ -3,7 +3,6 @@
 
 .app {
     .footer {
-        @extend %print-hidden;
         display: flex;
         align-items: center;
         padding: 0;

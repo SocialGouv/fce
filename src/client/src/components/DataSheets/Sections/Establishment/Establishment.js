@@ -28,7 +28,7 @@ const Establishment = ({
   return (
     <section className="data-sheet container is-fullhd">
       <PrintSection />
-      <div className="columns print-wrapper">
+      <div className="columns">
         <div className="column is-3 aside-box is-hidden-touch">
           <Sidebar
             enterprise={enterprise}

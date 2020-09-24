@@ -23,9 +23,5 @@
         &__center-cell {
             text-align: center;
         }
-
-        .see-details {
-            @extend %print-hidden;
-        }
     }
 }

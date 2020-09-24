@@ -62,10 +62,6 @@
         }
     }
 
-    &__main-content {
-        @extend %print-block;
-    }
-
     &__section {
         scroll-margin: $spacing-6;
         margin: $spacing-5 0;

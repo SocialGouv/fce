@@ -50,6 +50,7 @@ const globalConfig = {
       endpointBase: process.env.REACT_APP_SEARCH_ENDPOINT_BASE
     },
     defaultOptions: {
+      sort: { etatadministratifetablissement: "asc" },
       result_fields: {
         siren: { raw: {} },
         siret: { raw: {} },

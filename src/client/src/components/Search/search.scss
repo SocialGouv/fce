@@ -135,7 +135,7 @@
             outline: none;
 
             span {
-                outline: -webkit-focus-ring-color auto 1px;
+                box-shadow: 0 0 4px $white;
             }
         }
     }

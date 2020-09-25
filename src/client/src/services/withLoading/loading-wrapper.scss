@@ -1,0 +1,11 @@
+@import "../../components/App/variables";
+@import "../../components/App/placeholders";
+
+.loading-wrapper {
+    @extend %flex-center;
+    margin-top: $spacing-2;
+
+    &__label {
+        margin-left: $spacing-2;
+    }
+}

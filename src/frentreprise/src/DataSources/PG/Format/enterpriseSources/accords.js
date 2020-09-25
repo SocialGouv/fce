@@ -13,7 +13,7 @@ export default ({ accords }) => {
             categorie_etablissement:
               etablissement?.etablissementsiege === "true"
                 ? "Siège social"
-                : "Étab secondaire",
+                : "Établissement",
           },
         };
       }

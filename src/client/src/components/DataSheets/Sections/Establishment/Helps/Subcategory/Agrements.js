@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import _get from "lodash.get";
 
 import Value from "../../../../../shared/Value";
+import Table from "../../../SharedComponents/Table";
 import Subcategory from "../../../SharedComponents/Subcategory";
 import Config from "../../../../../../services/Config";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
@@ -30,7 +31,7 @@ const Agrements = ({ establishment }) => {
       />
 
       {hasAgrements && (
-        <table className="table is-hoverable">
+        <Table>
           <thead>
             <tr>
               <th />
@@ -66,7 +67,7 @@ const Agrements = ({ establishment }) => {
               );
             })}
           </tbody>
-        </table>
+        </Table>
       )}
     </>
   );

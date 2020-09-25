@@ -1,64 +1,10 @@
 @import "./variables";
+@import "./placeholders";
 
-/*** Layout ***/
-.flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.h-center {
-    margin: 0 auto;
-    width: 100%;
-}
-
-.v-center {
-    margin: auto 0;
-}
-
-.text-centered {
-    text-align: center;
-}
-
+/*** Tables ***/
 @for $width from 1 through 10 {
     .col-width-#{$width}0 {
         width: $width * 10%;
-    }
-}
-
-.is-overflow-x {
-    overflow-x: scroll;
-}
-
-.is-max-content {
-    width: max-content;
-}
-
-@media print {
-    .no-print {
-        display: none !important;
-    }
-}
-
-/*** Text ***/
-.is-first-letter-uppercase {
-    &::first-letter {
-        text-transform: uppercase;
-    }
-}
-
-.is-text-button {
-    color: $blue;
-    text-decoration: none;
-    border: 0;
-    background-color: transparent;
-    font-size: $font-size-base;
-    padding-left: 0;
-    cursor: pointer;
-
-    &:hover {
-        text-decoration: underline;
-        color: $dark-blue;
     }
 }
 
@@ -70,10 +16,4 @@
 
 .is-secondary {
     @extend .is-info;
-}
-
-.is-grey {
-    @extend .is-white;
-    color: $grey !important;
-    border-color: $grey !important;
 }

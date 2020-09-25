@@ -17,7 +17,6 @@ const globalConfig = {
     { id: "ApiGouvAssociations", priority: 80 }
   ],
   sidebarEstablishmentsLimit: 20,
-
   interactions: {
     poles: ["C", "3E_SEER", "3E_SRC", "T"],
     types: {

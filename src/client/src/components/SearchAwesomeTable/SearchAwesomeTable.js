@@ -54,7 +54,6 @@ const SearchAwesomeTable = ({
               {field.headName}
               {isSortableField && (
                 <FontAwesomeIcon
-                  className="at__head__sortable-icon ml-2"
                   icon={getSortIcon(field.sortKey, currentSort)}
                 />
               )}
@@ -102,8 +101,8 @@ const SearchAwesomeTable = ({
               <Button
                 value={prevText}
                 icon={faAngleLeft}
-                iconClasses={["fa-2x", "mr-2"]}
-                buttonClasses={["is-prev-button"]}
+                iconClasses={["fa-2x"]}
+                buttonClasses={["prev-button"]}
                 isDisabled={pagination.current === pagination.min}
                 callback={() => {
                   pagination.handlePageChange(--pagination.current);
@@ -117,9 +116,9 @@ const SearchAwesomeTable = ({
               <Button
                 value={nextText}
                 icon={faAngleRight}
-                iconClasses={["fa-2x", "ml-2"]}
+                iconClasses={["fa-2x"]}
                 rowReverse={true}
-                buttonClasses={["is-next-button"]}
+                buttonClasses={["next-button"]}
                 isDisabled={pagination.current === pagination.pages}
                 callback={() => {
                   pagination.handlePageChange(++pagination.current);

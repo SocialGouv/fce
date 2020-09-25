@@ -9,9 +9,7 @@ const TableCellState = ({ siret, etat }) => (
     <FontAwesomeIcon
       data-tip
       data-for={siret}
-      className={
-        isActiveEstablishment(etat) ? "icon--success mr-1" : "icon--danger mr-1"
-      }
+      className={isActiveEstablishment(etat) ? "icon--success" : "icon--danger"}
       icon={isActiveEstablishment(etat) ? faCircle : faSquare}
     />
     <div>{isActiveEstablishment(etat) ? "Ouvert" : "Fermé"}</div>

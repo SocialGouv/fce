@@ -1,0 +1,13 @@
+@import "../../../../App/variables";
+
+.rupco-table-establishment {
+    &__other-establishments {
+        width: 12rem;
+        text-align: center;
+
+        & + .see-details-link {
+            width: 100%;
+            text-align: center;
+        }
+    }
+}

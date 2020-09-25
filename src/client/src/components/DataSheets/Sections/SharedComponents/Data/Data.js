@@ -22,11 +22,7 @@ const Data = ({
   return (
     <>
       <dl className="data dl columns">
-        <dt
-          className={`dt column ${columnClasses[0]} is-first-letter-uppercase`}
-        >
-          {name}
-        </dt>
+        <dt className={`dt column ${columnClasses[0]}`}>{name}</dt>
         <dd className={`dd column ${columnClasses[1]}`}>
           <div>
             {link ? (

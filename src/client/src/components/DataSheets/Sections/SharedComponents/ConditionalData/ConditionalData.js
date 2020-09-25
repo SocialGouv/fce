@@ -5,7 +5,7 @@ import Data from "../Data";
 const ConditionalData = ({ text, showTable = false }) =>
   showTable ? (
     <dl className="data dl columns">
-      <dt className={`dt column is-first-letter-uppercase`}>{text}</dt>
+      <dt className={`dt column`}>{text}</dt>
     </dl>
   ) : (
     <Data

@@ -127,13 +127,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
           subtitle="Mandataires sociaux"
           sourceCustom="Infogreffe - RCS"
         >
-          {mandataires.length ? (
-            <Mandataires enterprise={enterprise} mandataires={mandataires} />
-          ) : (
-            <p className="has-text-centered pt-2">
-              Aucun mandataire n{"'"}a été trouvé
-            </p>
-          )}
+          <Mandataires mandataires={mandataires} />
         </Subcategory>
       </div>
     </section>

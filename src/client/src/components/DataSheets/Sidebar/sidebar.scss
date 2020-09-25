@@ -2,9 +2,7 @@
 @import "../../App/placeholders";
 
 .aside-box {
-    @extend %print-hidden;
-
-    >.aside-contain {
+    > .aside-contain {
         position: relative;
         display: block;
         padding: $spacing-4 0;

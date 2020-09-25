@@ -4,6 +4,7 @@ import _get from "lodash.get";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
+import Table from "../../SharedComponents/Table";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
 import { formatNumber } from "../../../../../helpers/utils";
@@ -38,7 +39,7 @@ const ActivitePartielle = ({
       />
       {hasActivitePartielle && (
         <>
-          <table className="table is-hoverable">
+          <Table>
             <thead>
               <tr>
                 <th className="th">SIRET</th>
@@ -78,7 +79,7 @@ const ActivitePartielle = ({
                         {formatNumber(Math.round(nbHeuresConsommees))}
                       </td>
                       <td>{<Value value={date} />}</td>
-                      <td className="has-text-centered">
+                      <td className="see-details">
                         <SeeDetailsLink
                           link={`/establishment/${siret}/#muteco`}
                         />
@@ -109,7 +110,7 @@ const ActivitePartielle = ({
                 </tr>
               </tfoot>
             )}
-          </table>
+          </Table>
         </>
       )}
     </Subcategory>

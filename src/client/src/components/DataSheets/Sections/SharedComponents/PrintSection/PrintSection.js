@@ -7,7 +7,7 @@ const PrintSection = () => {
     <div className="data-sheet__print-section">
       <Button
         value="Imprimer"
-        buttonClasses={["is-grey"]}
+        buttonClasses={["data-sheet__print-button"]}
         icon={faPrint}
         callback={() => window.print()}
       />

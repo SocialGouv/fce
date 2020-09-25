@@ -1,31 +1,19 @@
-%print-hidden {
-    @media print {
-        display: none !important;
-    }
-}
-
-%print-block {
-    @media print {
-        display: block !important;
-        width: 100%;
-    }
-}
-
-%print-margin-padding {
-    @media print {
-        padding: 0.2cm !important;
-        margin: 0 !important;
-    }
-}
-
-%data-sheet-header {
-    padding: $spacing-5;
+%is-grey {
+    color: $grey !important;
     background-color: $white;
-    border-radius: $border-radius-2;
+    border-color: $grey !important;
+}
 
-    @media not print {
-        box-shadow: $box-shadow-spread;
+%has-first-letter-uppercase {
+    &::first-letter {
+        text-transform: uppercase;
     }
+}
+
+%flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 %success {

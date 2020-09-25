@@ -4,6 +4,7 @@ import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 import Data from "../../SharedComponents/Data";
+import Table from "../../SharedComponents/Table";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Value from "../../../../shared/Value";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
@@ -57,7 +58,7 @@ const EstablishmentRelationship = ({
                 emptyValue="aucun accord connu"
                 columnClasses={["is-7", "is-5"]}
               />
-              <table className="table is-hoverable">
+              <Table>
                 <thead>
                   <tr>
                     <th>Thématique</th>
@@ -86,7 +87,7 @@ const EstablishmentRelationship = ({
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
 
               <a
                 href={

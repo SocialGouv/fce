@@ -84,7 +84,7 @@ const UsersFeedback = ({
               </label>
               <textarea
                 id="comment"
-                className="textarea mb-4"
+                className="textarea"
                 name="comment"
                 value={comment}
                 onChange={handleChange(SET_COMMENT)}

@@ -7,6 +7,7 @@
 @import "pages";
 @import "~bulma/bulma";
 @import "~bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio";
+@import "print";
 
 html {
     min-height: 100%;
@@ -14,9 +15,10 @@ html {
 }
 
 body {
-    height: 100%;
     position: relative;
+    height: 100%;
     margin: 0;
+    color: $text-grey-dark;
     background-color: $app-container-background;
 }
 
@@ -26,10 +28,6 @@ a {
     &:hover {
         text-decoration: none;
     }
-}
-
-.print-wrapper {
-    @extend %print-block;
 }
 
 .app {

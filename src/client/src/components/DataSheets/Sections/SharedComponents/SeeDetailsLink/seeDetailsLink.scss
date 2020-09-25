@@ -1,0 +1,14 @@
+@import "../../../../App/variables";
+
+.see-details-link {
+    width: 9rem;
+    text-align: center;
+
+    &__link {
+        font-size: 0.9rem;
+    }
+
+    &__icon {
+        margin-right: $spacing-2;
+    }
+}

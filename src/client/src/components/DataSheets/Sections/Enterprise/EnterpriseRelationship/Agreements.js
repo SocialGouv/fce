@@ -6,6 +6,7 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
+import Table from "../../SharedComponents/Table";
 import { sortAgreements } from "../../../../../helpers/Relationships";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { toI18nDate } from "../../../../../helpers/Date";
@@ -39,7 +40,7 @@ export const Agreements = ({
       />
       {nbAccords > 0 && (
         <>
-          <table className="table is-hoverable enterprise-agreements">
+          <Table className="enterprise-agreements">
             <thead>
               <tr>
                 <th className="th">SIRET</th>
@@ -68,7 +69,7 @@ export const Agreements = ({
                         {totalEtab && formatNumber(totalEtab)}
                       </td>
                       <td>{toI18nDate(date)}</td>
-                      <td className="has-text-centered">
+                      <td className="see-details">
                         <SeeDetailsLink
                           link={`/establishment/${siret}/#relation`}
                         />
@@ -78,7 +79,7 @@ export const Agreements = ({
                 }
               )}
             </tbody>
-          </table>
+          </Table>
 
           <a
             href={

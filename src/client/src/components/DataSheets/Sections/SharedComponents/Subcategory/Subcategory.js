@@ -6,7 +6,7 @@ import Source from "../../../../../containers/Source";
 import "./subcategory.scss";
 
 const Subcategory = ({
-  subtitle,
+  subtitle = null,
   datas = [],
   children,
   sourceSi = null,
@@ -15,16 +15,18 @@ const Subcategory = ({
 }) => {
   return (
     <div className="subcategory">
-      <div className="subcategory__header">
-        <h3 className="subcategory__title">{subtitle}</h3>
-        {(sourceCustom || sourceSi) && (
-          <Source
-            si={sourceSi}
-            sourceDate={sourceDate}
-            sourceCustom={sourceCustom}
-          />
-        )}
-      </div>
+      {subtitle && (
+        <div className="subcategory__header">
+          <h3 className="subcategory__title">{subtitle}</h3>
+          {(sourceCustom || sourceSi) && (
+            <Source
+              si={sourceSi}
+              sourceDate={sourceDate}
+              sourceCustom={sourceCustom}
+            />
+          )}
+        </div>
+      )}
       {children
         ? children
         : datas.map(data => {
@@ -50,7 +52,7 @@ const Subcategory = ({
 };
 
 Subcategory.propTypes = {
-  subtitle: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
   sourceSi: PropTypes.string,
   sourceCustom: PropTypes.string,
   sourceDate: PropTypes.string,

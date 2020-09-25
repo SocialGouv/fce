@@ -10,19 +10,19 @@ import Muteco from "./Muteco";
 import Direccte from "./Direccte";
 import Helps from "./Helps";
 import QuickAccess from "../SharedComponents/QuickAccess";
+import PrintSection from "../SharedComponents/PrintSection";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks";
 
 import "../../dataSheets.scss";
-import PrintSection from "../SharedComponents/PrintSection";
 
 const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
   useScrollToLocationHash({ location, offset: 50 });
 
   return (
-    <section className="data-sheet container">
+    <section className="data-sheet container is-fullhd">
       <PrintSection />
-      <div className="columns print-wrapper">
+      <div className="columns">
         <div className="column is-3 aside-box is-hidden-touch">
           <Sidebar
             enterprise={enterprise}

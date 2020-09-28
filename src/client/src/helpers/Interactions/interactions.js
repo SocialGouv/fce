@@ -51,16 +51,15 @@ export const getEnterpriseInteractions = ({ enterprise, type }) => {
     ? getEstablishmentsLastInteractions(interactionsByType)
         .sort((a, b) => b.date.localeCompare(a.date))
         .map(interaction => {
-          const establishment = enterprise.etablissements.find(
-            ({ siret }) => siret === interaction.siret
-          );
-
-          const etat = _get(establishment, "etat_etablissement");
+          const etat = _get(interaction, "etablissement.etat_etablissement");
           const codePostal = _get(
-            establishment,
-            "adresse_components.code_postal"
+            interaction,
+            "etablissement.adresse_composant.code_postal"
           );
-          const localite = _get(establishment, "adresse_components.localite");
+          const localite = _get(
+            interaction,
+            "etablissement.adresse_composant.localite"
+          );
 
           return {
             siret: interaction.siret,

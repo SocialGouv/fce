@@ -5,7 +5,6 @@
     .footer {
         display: flex;
         align-items: center;
-        height: 150px;
         padding: 0;
         background-color: $footer-bg;
 
@@ -13,13 +12,11 @@
             height: 200px;
         }
 
-        @extend %print-hidden;
-
         .container {
             display: flex;
             flex-direction: column-reverse;
             justify-content: space-between;
-            padding: 1rem 0;
+            padding: $spacing-4 $padding-app-x;
 
             @include from($tablet) {
                 flex-direction: row;
@@ -37,14 +34,14 @@
 
         &__gouv-text {
             font-family: $segoe;
-            font-size: 0.9rem;
+            font-size: $font-size-small;
             max-width: 13rem;
             font-style: italic;
             text-align: center;
-            padding-bottom: 0.5rem;
+            padding-bottom: $spacing-2;
 
             @include from($tablet) {
-                font-size: 1rem;
+                font-size: $font-size-base;
                 max-width: 16rem;
                 text-align: left;
             }
@@ -56,27 +53,26 @@
 
             @include from($tablet) {
                 width: 150px;
-                padding: 5px;
+                padding: $spacing-1;
             }
         }
 
         &__links {
-            margin-top: 2rem;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
+            margin-bottom: $spacing-2;
+            font-size: $font-size-base;
             font-family: $segoe;
             text-align: center;
 
             @include from($tablet) {
-                margin-top: 0;
-                margin-bottom: 1rem;
                 display: flex;
+                margin-top: 0;
+                margin-bottom: $spacing-4;
             }
         }
 
         &__link-item {
             @include from($tablet) {
-                padding: 0 0.5rem;
+                padding: 0 $spacing-2;
                 border-right: solid 1px;
 
                 &:last-child {

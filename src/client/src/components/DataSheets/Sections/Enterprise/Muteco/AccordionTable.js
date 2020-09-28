@@ -53,7 +53,6 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
                 icon={
                   isActiveAccordion ? faChevronCircleDown : faChevronCircleLeft
                 }
-                className="ml-2"
               />
             </div>
           </td>

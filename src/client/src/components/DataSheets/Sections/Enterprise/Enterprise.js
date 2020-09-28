@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { faPrint } from "@fortawesome/pro-solid-svg-icons";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
@@ -11,24 +10,19 @@ import Muteco from "./Muteco";
 import Direccte from "./Direccte";
 import Helps from "./Helps";
 import QuickAccess from "../SharedComponents/QuickAccess";
-import Button from "../../../shared/Button";
+import PrintSection from "../SharedComponents/PrintSection";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks";
+
+import "../../dataSheets.scss";
 
 const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
   useScrollToLocationHash({ location, offset: 50 });
 
   return (
-    <section className="data-sheet container">
-      <div className="data-sheet__print-section w-100">
-        <Button
-          value="Imprimer"
-          buttonClasses={["is-grey"]}
-          icon={faPrint}
-          callback={() => window.print()}
-        />
-      </div>
-      <div className="columns print-wrapper">
+    <section className="data-sheet container is-fullhd">
+      <PrintSection />
+      <div className="columns">
         <div className="column is-3 aside-box is-hidden-touch">
           <Sidebar
             enterprise={enterprise}

@@ -36,6 +36,16 @@ pipeline {
         }
       }
     }
+    stage('Tests') {
+      steps {
+        echo "Check unit tests $BRANCH_NAME on $JENKINS_URL ..."
+        sshagent(['67d7d1aa-02cd-4ea0-acea-b19ec38d4366']) {
+          sh '''
+              docker-compose run --rm front yarn testci
+          '''
+        }
+      }
+    }
     stage('Deploy staging') {
       when {
         anyOf {

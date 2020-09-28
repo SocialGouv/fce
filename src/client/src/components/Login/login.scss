@@ -1,15 +1,14 @@
 @import "../App/variables";
-@import "../App/mixins";
+@import "../App/placeholders";
 @import "~bulma/sass/elements/button.sass";
 
 .login {
-    padding-bottom: 2rem;
+    padding: $spacing-6 $padding-app-x;
 
     &__container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-top: 2rem;
         font-family: $segoe;
 
         @include from(425px) {
@@ -17,7 +16,7 @@
         }
 
         &--form {
-            max-width: 555px;
+            max-width: 38rem;
             text-align: left;
         }
     }
@@ -28,28 +27,35 @@
         font-weight: bold;
         line-height: 1.2;
         max-width: 34rem;
-        margin-bottom: 1rem;
+        margin-bottom: $spacing-4;
 
         @include from($tablet) {
             font-size: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: $spacing-5;
+        }
+    }
+
+    &__head-form {
+        p {
+            margin-bottom: $spacing-2;
         }
     }
 
     &__subtitle {
         font-family: $evolventa;
-        font-size: 1rem;
+        font-size: $font-size-base;
         line-height: 1.3;
-        max-width: 40rem;
-        margin-bottom: 1rem;
+        max-width: 38rem;
+        margin-bottom: $spacing-4;
 
         @include from($tablet) {
             font-size: 1.25rem;
-            margin-bottom: 2rem;
+            margin-bottom: $spacing-5;
         }
     }
 
     &__info {
+        margin-bottom: $spacing-4;
         line-height: 1.2;
     }
 
@@ -60,7 +66,7 @@
         justify-content: center;
         align-items: center;
         font-family: $roboto;
-        border-radius: $b-radius;
+        border-radius: $border-radius-1;
 
         &--as-link.button {
             width: unset;
@@ -120,23 +126,25 @@
     &__notif {
         display: flex;
         align-items: baseline;
-        padding: 0.5rem;
+        margin-bottom: $spacing-2;
+        padding: $spacing-2;
         font-family: $roboto;
         font-size: 14px;
-        border-radius: $b-radius;
+        border-radius: $border-radius-1;
 
         &--success {
-            @include success;
+            @extend %success;
         }
 
         &--error {
-            @include error;
+            @extend %error;
         }
 
         > .svg-inline--fa {
-            padding-top: 2px;
+            position: relative;
+            top: 1px;
             width: 16px;
-            margin-right: 0.5rem;
+            margin-right: $spacing-2;
         }
     }
 

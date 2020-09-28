@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import Subcategory from "../../SharedComponents/Subcategory";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
-
-import "./interactionType.scss";
+import Table from "../../SharedComponents/Table";
 
 const InteractionType = ({ type, interactions }) => {
   const isControl = type === "control";
@@ -18,12 +17,12 @@ const InteractionType = ({ type, interactions }) => {
   return (
     <Subcategory subtitle={subtitle}>
       {interactions.length && (
-        <table className="table is-hoverable w-100 direccte-interactions mt-3">
+        <Table>
           <thead>
             <tr>
               <th className="th">SIRET</th>
               <th className="th table__center-cell">État</th>
-              <th className="th direccte-interactions__city">Commune</th>
+              <th className="th">Commune</th>
               <th className="th">Date dernier contrôle connu</th>
               <th className="th">Pôle</th>
               <th className="th see-details"></th>
@@ -39,7 +38,7 @@ const InteractionType = ({ type, interactions }) => {
                 <td>{etab.commune}</td>
                 <td>{etab.date}</td>
                 <td>{etab.pole}</td>
-                <td className="has-text-centered">
+                <td className="see-details">
                   <SeeDetailsLink
                     link={`/establishment/${etab.siret}/#direccte`}
                   />
@@ -47,7 +46,7 @@ const InteractionType = ({ type, interactions }) => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       )}
     </Subcategory>
   );

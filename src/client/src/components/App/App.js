@@ -16,7 +16,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
-import MagicLink from "../../containers/MagicLink";
 import Search from "../../containers/Search";
 import PublicPage from "../../containers/PublicPage";
 import IEChecker from "../../components/IEChecker";
@@ -63,11 +62,6 @@ const App = () => {
                         component={Enterprise}
                       />
                       <Route exact path="/login" render={() => <Login />} />
-                      <Route
-                        exact
-                        path="/magic-link/:key/browser/:browser"
-                        render={() => <MagicLink />}
-                      />
                       <Route
                         exact
                         path="/mentions-legales"

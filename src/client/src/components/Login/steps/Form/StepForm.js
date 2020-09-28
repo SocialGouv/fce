@@ -17,9 +17,9 @@ export const StepForm = ({
   onSubmit
 }) => {
   return (
-    <form className="login-form has-mt-2" onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       {hasError && (
-        <div className="login__notif login__notif--error has-mb-1 shake-horizontal">
+        <div className="login__notif login__notif--error shake-horizontal">
           <FontAwesomeIcon icon={faExclamationTriangle} />
           <p>{errorMessage}</p>
         </div>

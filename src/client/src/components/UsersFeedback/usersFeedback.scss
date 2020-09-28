@@ -4,8 +4,7 @@
 .user-feedback {
     width: 40em;
     max-width: 100%;
-    margin: 1.5rem auto;
-    @extend %print-hidden;
+    margin: $spacing-5 auto;
 
     &--fullwidth {
         width: 100%;
@@ -17,21 +16,21 @@
 
     &__panel {
         background: $white;
-        border: solid 1px $grey-geyser;
+        border: $border-grey-light;
     }
 
     &__useful {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.5rem 1rem;
+        padding: $spacing-2 $spacing-4;
         font-size: 1.2rem;
         font-weight: bold;
         color: $white;
         background: $primary;
 
         legend {
-            font-size: 1rem;
+            font-size: $font-size-base;
         }
     }
 
@@ -47,9 +46,9 @@
         }
 
         & .radio {
-            margin-left: 1rem;
+            margin-left: $spacing-4;
             margin-bottom: 0;
-            transition: transform 0.2s;
+            transition: transform $duration-1;
 
             &:hover {
                 transform: scale(1.1);
@@ -59,20 +58,23 @@
     }
 
     &__comment {
-        padding: 1rem;
+        padding: $spacing-4;
 
         label {
             font-weight: bold;
         }
+
+        textarea {
+            margin-bottom: $spacing-4;
+        }
     }
 
     & .textarea {
-        margin-bottom: $spacer;
-        border: 1px solid $grey-geyser;
+        border: $border-grey-light;
     }
 
     &__rating {
-        margin-bottom: $spacer-xl;
+        margin-bottom: $spacing-6;
 
         p {
             font-weight: bold;
@@ -90,7 +92,7 @@
         justify-content: center;
 
         &:not(:last-of-type) {
-            margin-right: $spacer-xs;
+            margin-right: $spacing-1;
         }
 
         &-radio {
@@ -108,11 +110,11 @@
             align-items: center;
             width: 2.5rem;
             height: 2.5rem;
-            border: 1px solid $grey-geyser;
-            border-radius: $b-radius;
+            border: $border-grey-light;
+            border-radius: $border-radius-1;
             background-color: $grey-geyser;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color $duration-2;
 
             // gradient colors for each rate from 0 to 10
             // SASS list index starts at 1, to start with 0 : index - 1
@@ -129,7 +131,7 @@
         justify-content: flex-end;
 
         .button {
-            border: 1px solid $grey-geyser;
+            border: $border-grey-light;
         }
     }
 }

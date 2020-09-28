@@ -55,7 +55,7 @@ const LoginForm = ({
               loading={loading}
               hasError={hasError}
             />
-            <div className="login__links pt-4">
+            <div className="login__links">
               <Button
                 value="Renvoyer le code"
                 icon={faChevronRight}
@@ -85,10 +85,10 @@ const LoginForm = ({
                 className="login__link has-text-link"
                 href={`mailto:${Config.get("contact.mailto")}`}
               >
-                <span className="button__icon">
+                <span className="button-icon button-icon--after-label">
                   <FontAwesomeIcon icon={faChevronRight} />
                 </span>
-                <span className="pl-2">Nous contacter</span>
+                <span>Nous contacter</span>
               </a>
             </div>
           </>

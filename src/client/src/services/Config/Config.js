@@ -11,8 +11,12 @@ const globalConfig = {
   auth: {
     expire: 86400 // 1j
   },
+  dataSources: [
+    { id: "PG", priority: 100 },
+    { id: "ApiGouv", priority: 80 },
+    { id: "ApiGouvAssociations", priority: 80 }
+  ],
   sidebarEstablishmentsLimit: 20,
-
   interactions: {
     poles: ["C", "3E_SEER", "3E_SRC", "T"],
     types: {
@@ -45,6 +49,7 @@ const globalConfig = {
       endpointBase: process.env.REACT_APP_SEARCH_ENDPOINT_BASE
     },
     defaultOptions: {
+      sort: { etatadministratifetablissement: "asc" },
       result_fields: {
         siren: { raw: {} },
         siret: { raw: {} },
@@ -139,7 +144,13 @@ const globalConfig = {
       "mentions-legales": 4
     }
   },
-  codeInseeLength: 5
+  codeInseeLength: 5,
+  state: {
+    loading: "loading",
+    success: "success",
+    error: "error",
+    finish: "finish"
+  }
 };
 
 function initConfig() {

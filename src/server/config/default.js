@@ -32,7 +32,7 @@ const config = {
     "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",
   mail: JSON.parse(process.env.MAIL),
   proxy: false,
-  apiTimeout: 10000,
+  apiTimeout: 25000,
   authCode: {
     allowedEmails: JSON.parse(process.env.MAGIC_KEY_ALLOWED_EMAILS).map(
       (mask) => new RegExp(mask)
@@ -136,6 +136,7 @@ const config = {
       hasId: true,
     },
   ],
+  emailSalt: process.env.EMAIL_SALT
 };
 
 if (process.env.HOST) {

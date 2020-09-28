@@ -1,0 +1,9 @@
+@import "../../../../../App/variables";
+
+.enterprise-mandataires {
+    width: 100%;
+
+    &__not-found {
+        padding-top: $spacing-2;
+    }
+}

@@ -3,9 +3,6 @@ const Ingestor = require("./Ingestor");
 const { execSync } = require("child_process");
 
 class WikitUcIngestor extends Ingestor {
-  /**
-   * fixes the date in the month preceding the reception of the file
-   */
   _saveProcessDate() {
     console.log("save process date");
     const { table } = this._config;

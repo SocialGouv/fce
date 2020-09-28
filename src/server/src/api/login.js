@@ -1,8 +1,10 @@
 import express from "express";
+import saltedSha1 from "salted-sha1";
 import config from "config";
 import Mail from "../utils/mail";
 import authRequestCodeTpl from "../templates/email/authRequestCode";
 import Auth from "../utils/auth";
+import MatomoUserId from "../models/MatomoUserId";
 
 const router = express.Router();
 
@@ -54,7 +56,9 @@ router.post("/requestAuthCode", async (req, res) => {
 });
 
 router.post("/login", async function (req, res) {
+  const userId = new MatomoUserId();
   const { code, email } = req.body;
+  const saltedEmail = email && saltedSha1(email, config.get("emailSalt"));
 
   try {
     const { isValidCode, failureMessage } = await Auth.validateCode(
@@ -70,11 +74,18 @@ router.post("/login", async function (req, res) {
     const user = { email };
     const token = Auth.generateToken(user);
 
+    try {
+      await userId.create({ saltedEmail });
+    } catch (e) {
+      throw new Error("User userId wasn't saved in database");
+    }
+
     console.log(`${user.email} logged with code`);
 
     return res.send({
       success: true,
       token,
+      saltedEmail
     });
   } catch (e) {
     console.error(`Authentification code is invalid`, e.message);

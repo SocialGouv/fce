@@ -1,23 +1,34 @@
 @import "../App/variables";
+@import "../App/placeholders";
 
 .app-search-results {
-    @media print {
-        zoom: 40%;
+    &.container {
+        padding: 0 $padding-app-x;
+    }
+
+    padding-top: $spacing-4;
+
+    & > .columns {
+        margin: 0;
     }
 
     &__title {
         width: 80%;
-        margin: 0.5rem auto;
+        margin: $spacing-2 auto;
         font-size: 2.35rem;
         font-weight: 700;
         text-align: center;
         color: $black;
     }
 
-    .export-button {
+    &__export-section {
         display: flex;
         justify-content: flex-end;
         align-items: center;
+    }
+
+    &__export-button {
+        @extend %is-grey;
     }
 
     .result-row {
@@ -29,14 +40,6 @@
             > div {
                 flex: 0 0 100%;
                 max-width: 100%;
-            }
-        }
-
-        .result-list {
-            margin-top: 2rem;
-
-            .result-item {
-                cursor: pointer;
             }
         }
     }

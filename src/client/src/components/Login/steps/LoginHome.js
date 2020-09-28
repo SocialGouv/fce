@@ -11,7 +11,7 @@ const LoginHome = ({ setStep }) => (
       L{"'"}état civil, l{"'"}activité et les données de l{"'"}administration
       dans une seule fiche destinée aux agents publics
     </p>
-    <p className="login__info has-mb-2">
+    <p className="login__info">
       Ce service est destiné aux agents de service public.
       <br />
       Pour y accéder veuillez vous identifier.

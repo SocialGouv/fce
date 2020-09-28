@@ -1,0 +1,19 @@
+@import "./variables";
+@import "./placeholders";
+
+/*** Tables ***/
+@for $width from 1 through 10 {
+    .col-width-#{$width}0 {
+        width: $width * 10%;
+    }
+}
+
+/*** Buttons ***/
+.button-icon {
+    margin-right: $spacing-1;
+    font-size: $font-size-base;
+}
+
+.is-secondary {
+    @extend .is-info;
+}

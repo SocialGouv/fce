@@ -11,11 +11,11 @@ export default class DataSource {
     throw new NotImplementedError();
   }
 
-  async search() {
+  getSIRETCheck() {
     throw new NotImplementedError();
   }
 
-  setDb(db) {
-    this.db = db;
+  getSIRENCheck() {
+    throw new NotImplementedError();
   }
 }

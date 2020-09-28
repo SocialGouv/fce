@@ -14,16 +14,16 @@ const allowedExtension = ".csv";
 const tables = {
   enterprises: "entreprises",
   establishments: "etablissements",
-  establishmentsSuccessions: "etablissements_successions"
+  establishmentsSuccessions: "etablissements_successions",
 };
 const indexes = {
   entreprises: [
-    { col: "siren", name: "entreprises_siren", type: PRIMARY_INDEX }
+    { col: "siren", name: "entreprises_siren", type: PRIMARY_INDEX },
   ],
   etablissements: [
     { col: "siret", name: "etablissements_siret", type: PRIMARY_INDEX },
-    { col: "siren", name: "etablissements_siren", type: INDEX }
-  ]
+    { col: "siren", name: "etablissements_siren", type: INDEX },
+  ],
 };
 const delimiter = ",";
 
@@ -36,25 +36,25 @@ class ImportSireneShell extends Shell {
     const {
       enterprises_filename: enterprisesFilename,
       establishments_filename: establishmentsFilename,
-      establishments_successions_filename: establishmentsSuccessionsFilename
+      establishments_successions_filename: establishmentsSuccessionsFilename,
     } = this._options;
 
     const processes = [
       {
         name: "Enterprises",
         filename: enterprisesFilename,
-        table: tables.enterprises
+        table: tables.enterprises,
       },
       {
         name: "Establishments",
         filename: establishmentsFilename,
-        table: tables.establishments
+        table: tables.establishments,
       },
       {
         name: "EstablishmentsSuccessions",
         filename: establishmentsSuccessionsFilename,
-        table: tables.establishmentsSuccessions
-      }
+        table: tables.establishmentsSuccessions,
+      },
     ];
 
     try {
@@ -111,6 +111,10 @@ class ImportSireneShell extends Shell {
 
     if (!(await this.createIndexes(tableName))) {
       throw new Error(`Create indexes for table "${tableName}" failed`);
+    }
+
+    if (!(await this.updateImportDate(tableName))) {
+      console.error(`Update date for table "${tableName}" failed`);
     }
 
     return ingestResponse;
@@ -218,6 +222,14 @@ class ImportSireneShell extends Shell {
     console.log(`start command ${importCsvCmd}`);
 
     return exec(importCsvCmd);
+  }
+
+  async updateImportDate(table) {
+    console.log(`start update import date for table ${table}`);
+
+    return !!(await PG.query(
+      `UPDATE import_updates SET date = CURRENT_TIMESTAMP, date_import = CURRENT_TIMESTAMP WHERE fournisseur = 'Insee' AND si = 'Sirène'`
+    ));
   }
 }
 

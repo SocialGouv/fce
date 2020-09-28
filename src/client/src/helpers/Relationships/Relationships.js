@@ -2,15 +2,11 @@ import _get from "lodash.get";
 
 // sort by category first (Siège before Etablissement secondaire)
 // then sort by date
-export const sortAgreements = (agreements, establishments) =>
+export const sortAgreements = agreements =>
   Object.entries(agreements)
-    .map(([siret, { count: totalEtab, lastDate }]) => {
-      const establishment = establishments.find(
-        etab => etab.siret.trim() === siret.trim()
-      );
-      const etat = _get(establishment, "etat_etablissement");
-      const categorie =
-        _get(establishment, "categorie_etablissement", "") || "";
+    .map(([siret, { count: totalEtab, lastDate, etablissement }]) => {
+      const etat = _get(etablissement, "etat_etablissement");
+      const categorie = _get(etablissement, "categorie_etablissement") || "";
       const date = lastDate || "";
 
       return {

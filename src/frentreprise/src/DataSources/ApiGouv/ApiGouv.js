@@ -1,8 +1,8 @@
-import tunnel from "tunnel";
 import DataSource from "../DataSource";
 import EtablissementsAPI from "./EtablissementsAPI";
 import EntreprisesAPI from "./EntreprisesAPI";
 import axios from "../../../lib/axios";
+import requestApi from "../../Utils/requestApi";
 
 export const _ = {
   axios: Symbol("_axios"),
@@ -22,21 +22,29 @@ export default class ApiGouv extends DataSource {
   }
 
   // Etablissements
-  async getSIRET(SIRET) {
-    return await this[_.requestAPIs](
-      SIRET,
+  async getSIRET(siret) {
+    return await requestApi(
+      siret,
+      {
+        axios: this[_.axios],
+        axiosConfig: this.axiosConfig,
+        token: this.token,
+      },
       EtablissementsAPI.getEtablissement,
       EtablissementsAPI.exercices,
-      EtablissementsAPI.association,
-      EtablissementsAPI.document_association,
       EtablissementsAPI.effectifsMensuelEtp
     );
   }
 
   // Entreprises
-  async getSIREN(SIREN) {
-    return await this[_.requestAPIs](
-      SIREN,
+  async getSIREN(siren) {
+    return await requestApi(
+      siren,
+      {
+        axios: this[_.axios],
+        axiosConfig: this.axiosConfig,
+        token: this.token,
+      },
       EntreprisesAPI.getEntreprise,
       EntreprisesAPI.infogreffe_rcs,
       EntreprisesAPI.effectifsMensuelEtp,
@@ -44,54 +52,11 @@ export default class ApiGouv extends DataSource {
     );
   }
 
-  async search() {
-    return false;
+  getSIRENCheck(data) {
+    return !!data.siren;
   }
 
-  async [_.requestAPIs](identifier, ...apiCalls) {
-    let out = {};
-
-    const axiosConfig = {
-      ...this.axiosConfig,
-      params: {
-        token: this.token,
-        context: "Tiers",
-        recipient: "Direccte Occitanie",
-        object: "FCEE - Direccte Occitanie",
-      },
-    };
-
-    if (axiosConfig.proxy && axiosConfig.proxy.tunnel === true) {
-      const agentConfig = { proxy: {} };
-
-      if (axiosConfig.proxy.host) {
-        agentConfig.proxy.host = axiosConfig.proxy.host;
-      }
-
-      if (axiosConfig.proxy.port) {
-        agentConfig.proxy.port = axiosConfig.proxy.port;
-      }
-
-      if (axiosConfig.proxy.auth) {
-        agentConfig.proxy.proxyAuth = `${
-          axiosConfig.proxy.auth.username || ""
-        }:${axiosConfig.proxy.auth.password || ""}`;
-      }
-
-      axiosConfig.proxy = false;
-      axiosConfig.httpsAgent = tunnel.httpsOverHttp(agentConfig);
-    }
-
-    const requests = apiCalls
-      .filter((fn) => typeof fn === "function")
-      .map((fn) => {
-        return fn(identifier, this[_.axios], axiosConfig, this.db);
-      });
-
-    await Promise.all(requests).then((results) => {
-      Object.assign(out, ...results);
-    });
-
-    return out;
+  getSIRETCheck(data) {
+    return !!data.siret;
   }
 }

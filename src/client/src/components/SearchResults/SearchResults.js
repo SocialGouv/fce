@@ -32,7 +32,7 @@ const SearchResults = ({
   }
 
   return (
-    <div className="app-search-results mx-6">
+    <div className="app-search-results container is-fullhd">
       {pagination.items > 0 && (
         <div className="columns">
           <div className="column is-8 is-offset-2">
@@ -42,10 +42,10 @@ const SearchResults = ({
               {pagination.items > 1 && "s"}
             </h2>
           </div>
-          <div className="column is-2 export-button">
+          <div className="column is-2 app-search-results__export-section">
             <Button
               value="Export Excel"
-              buttonClasses={["is-grey"]}
+              buttonClasses={["app-search-results__export-button"]}
               icon={faFileExcel}
               callback={generateXlxs}
             />
@@ -53,125 +53,120 @@ const SearchResults = ({
         </div>
       )}
 
-      <div className="columns result-row">
-        <div className="column is-12 pb-0">
-          {results.length === 0 && (
-            <div className="notification is-primary is-light">
-              Aucun résultat
-            </div>
-          )}
+      <div className="result-row">
+        {results.length === 0 && (
+          <div className="notification is-primary is-light">Aucun résultat</div>
+        )}
 
-          {!!results.length ? (
-            <div>
-              <SearchAwesomeTable
-                showPagination={pagination && pagination.pages > 1}
-                pagination={{ ...pagination, min: 1 }}
-                prevText="Précédent"
-                nextText="Suivant"
-                isLoading={isLoading}
-                isSortable={true}
-                sortColumn={sort}
-                currentSort={currentSort}
-                data={results}
-                fields={[
-                  {
-                    headName: "SIRET",
-                    sortKey: "siret",
-                    importantHead: true,
-                    accessor: ({ siret: { raw: siret } }) =>
-                      Value({
-                        value: siret,
-                        link: `/establishment/${siret}`
-                      }),
-                    link: ({ siret: { raw: siret } }) =>
-                      `/establishment/${siret}`
-                  },
-                  {
-                    headName: "État",
-                    sortKey: "etatadministratifetablissement",
-                    accessor: ({
-                      siret: { raw: siret },
-                      etatadministratifetablissement: { raw: etat }
-                    }) => TableCellState({ siret, etat })
-                  },
-                  {
-                    headName: "Raison sociale / Nom",
-                    sortKey: "enterprise_name",
-                    html: true,
-                    accessor: ({
-                      enterprise_name: { raw: enterpriseName },
-                      enseigne1etablissement: { raw: enseigne }
-                    }) => {
-                      let name = `<div>${enterpriseName}</div>`;
+        {!!results.length ? (
+          <div>
+            <SearchAwesomeTable
+              showPagination={pagination && pagination.pages > 1}
+              pagination={{ ...pagination, min: 1 }}
+              prevText="Précédent"
+              nextText="Suivant"
+              isLoading={isLoading}
+              isSortable={true}
+              sortColumn={sort}
+              currentSort={currentSort}
+              data={results}
+              fields={[
+                {
+                  headName: "SIRET",
+                  sortKey: "siret",
+                  importantHead: true,
+                  accessor: ({ siret: { raw: siret } }) =>
+                    Value({
+                      value: siret,
+                      link: `/establishment/${siret}`
+                    }),
+                  link: ({ siret: { raw: siret } }) => `/establishment/${siret}`
+                },
+                {
+                  headName: "État",
+                  sortKey: "etatadministratifetablissement",
+                  accessor: ({
+                    siret: { raw: siret },
+                    etatadministratifetablissement: { raw: etat }
+                  }) => TableCellState({ siret, etat })
+                },
+                {
+                  headName: "Raison sociale / Nom",
+                  sortKey: "enterprise_name",
+                  html: true,
+                  accessor: ({
+                    enterprise_name: { raw: enterpriseName },
+                    enseigne1etablissement: { raw: enseigne }
+                  }) => {
+                    let name = `<div>${enterpriseName}</div>`;
 
-                      if (enseigne) {
-                        name += `<div>(Enseigne : ${enseigne})</div>`;
-                      }
-
-                      return Value({
-                        value: name
-                      });
+                    if (enseigne) {
+                      name += `<div>(Enseigne : ${enseigne})</div>`;
                     }
-                  },
-                  {
-                    headName: "Catégorie établissement",
-                    sortKey: "etablissementsiege",
-                    accessor: ({ etablissementsiege }) => {
-                      const isSiege = etablissementsiege.raw === "true";
-                      return Value({
-                        value: isSiege ? "Siège social" : "Établissement"
-                      });
-                    }
-                  },
-                  {
-                    headName: "Code postal",
-                    sortKey: "codepostaletablissement",
-                    accessor: ({
-                      codepostaletablissement: { raw: postalCode },
-                      libellecommuneetablissement: { raw: town }
-                    }) =>
-                      Value({
-                        value: joinNoFalsy([postalCode, town], " - ")
-                      })
-                  },
-                  {
-                    headName: "Effectif",
-                    sortKey: "trancheeffectifsetablissement",
-                    accessor: ({
-                      trancheeffectifsetablissement: {
-                        raw: trancheEffectifInsee
-                      },
-                      etatadministratifetablissement: { raw: etat }
-                    }) =>
-                      Value({
-                        value: isActiveEstablishment(etat)
-                          ? staffSizeRanges[trancheEffectifInsee]
-                          : "0 salarié"
-                      })
-                  },
-                  {
-                    headName: "Activité",
-                    sortKey: "activiteprincipaleetablissement",
-                    accessor: ({
-                      activiteprincipaleetablissement: { raw: naf },
-                      activiteprincipaleetablissement_libelle: {
-                        raw: libelle_naf
-                      }
-                    }) =>
-                      naf &&
-                      Value({
-                        value: `${naf === null ? "" : naf} ${
-                          libelle_naf === null ? "" : " - " + libelle_naf
-                        }`
-                      })
+
+                    return Value({
+                      value: name
+                    });
                   }
-                ]}
-              />
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
+                },
+                {
+                  headName: "Catégorie établissement",
+                  sortKey: "etablissementsiege",
+                  accessor: ({ etablissementsiege }) => {
+                    const isSiege = etablissementsiege.raw === "true";
+                    return Value({
+                      value: isSiege ? "Siège social" : "Étab. secondaire"
+                    });
+                  }
+                },
+                {
+                  headName: "Code postal",
+                  sortKey: "codepostaletablissement",
+                  accessor: ({
+                    codepostaletablissement: { raw: postalCode },
+                    libellecommuneetablissement: { raw: town }
+                  }) =>
+                    Value({
+                      value: joinNoFalsy([postalCode, town], " - ")
+                    })
+                },
+                {
+                  headName: "Effectif",
+                  sortKey: "trancheeffectifsetablissement",
+                  accessor: ({
+                    trancheeffectifsetablissement: {
+                      raw: trancheEffectifInsee
+                    },
+                    etatadministratifetablissement: { raw: etat }
+                  }) =>
+                    Value({
+                      value: isActiveEstablishment(etat)
+                        ? staffSizeRanges[trancheEffectifInsee]
+                        : "0 salarié"
+                    })
+                },
+                {
+                  headName: "Activité",
+                  sortKey: "activiteprincipaleetablissement",
+                  accessor: ({
+                    activiteprincipaleetablissement: { raw: naf },
+                    activiteprincipaleetablissement_libelle: {
+                      raw: libelle_naf
+                    }
+                  }) =>
+                    naf &&
+                    Value({
+                      value: `${naf === null ? "" : naf} ${
+                        libelle_naf === null ? "" : " - " + libelle_naf
+                      }`
+                    })
+                }
+              ]}
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

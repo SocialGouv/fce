@@ -3,6 +3,40 @@ const CONVERTER_XLSX_TO_CSV = "xlsxToCsv";
 const CONVERTER_JSON_TO_CSV = "jsonToCsv";
 
 const config = {
+  accords: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgt",
+      fileMatch: /^Daccord-Gestion-Extraction.*\.(txt|csv)$/,
+      outputFileName: "accords.csv",
+    },
+    ingest: {
+      className: "AccordsIngestor",
+      table: "etablissements_accords",
+      filename: `${FILES_FOLDER}/accords.csv`,
+      cols: [
+        "num_dos",
+        "siret",
+        "dt_sign",
+        "epargne",
+        "remuneration",
+        "temps_travail",
+        "conditions_travail",
+        "emploi",
+        "egalite_pro",
+        "classifications",
+        "formation",
+        "protection_sociale",
+        "droit_syndical",
+        "autres",
+        "nouvelles_technologies",
+      ],
+      delimiter: ";",
+      truncate: true,
+      generateSiren: true,
+      history: false,
+    },
+  },
   wikit_uc: {
     download: {
       className: "MinioDownloader",
@@ -43,6 +77,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: true,
+      generateSiren: true,
       date: {
         field: "date",
         format: "DD/MM/YYYY",
@@ -73,6 +108,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: true,
+      generateSiren: true,
       date: {
         field: "date_visite",
         format: "DD/MM/YYYY",
@@ -108,6 +144,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: false,
+      generateSiren: true,
       date: {
         field: "date",
         format: "YYYY-MM-DD",
@@ -131,6 +168,7 @@ const config = {
       delimiter: ",",
       truncate: true,
       history: true,
+      generateSiren: true,
       date: {
         field: "date",
         format: "YYYY-MM-DD",
@@ -163,6 +201,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: true,
+      generateSiren: true,
       date: {
         field: "date_decision",
         format: "YYYY-MM-DD",
@@ -196,6 +235,7 @@ const config = {
       delimiter: ",",
       truncate: true,
       history: false,
+      generateSiren: false,
       date: {
         field: "date_enregistrement",
         format: "YYYY-MM-DD",
@@ -230,6 +270,7 @@ const config = {
       delimiter: ",",
       truncate: true,
       history: false,
+      generateSiren: false,
       date: {
         field: "date_enregistrement",
         format: "YYYY-MM-DD",
@@ -240,7 +281,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^RUPCO(.)*procedure(.)*.csv$/,
+      fileMatch: /^(.)*export_procedure(.)*.csv$/,
       outputFileName: "rupco_procedures.csv",
     },
     ingest: {
@@ -262,6 +303,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: false,
+      generateSiren: false,
       date: {
         field: "date_enregistrement",
         format: "YYYY-MM-DD",
@@ -272,7 +314,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^RUPCO(.)*etablissement(.)*.csv$/,
+      fileMatch: /^(.)*export_etablissement(.)*.csv$/,
       outputFileName: "rupco_etablissements.csv",
     },
     ingest: {
@@ -295,6 +337,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: false,
+      generateSiren: false,
       date: {
         field: "date_enregistrement",
         format: "YYYY-MM-DD",
@@ -324,6 +367,7 @@ const config = {
       delimiter: ";",
       truncate: true,
       history: false,
+      generateSiren: true,
       date: {
         field: "date_debut",
         format: "DD/MM/YYYY",
@@ -344,6 +388,7 @@ const config = {
       delimiter: ",",
       truncate: true,
       history: false,
+      generateSiren: true,
       date: {
         field: "date_maj",
         format: "YYYY/MM/DD",
@@ -376,6 +421,7 @@ const config = {
       delimiter: ",",
       truncate: true,
       history: false,
+      generateSiren: true,
       date: {
         field: "mois",
         format: "YYYY-MM",

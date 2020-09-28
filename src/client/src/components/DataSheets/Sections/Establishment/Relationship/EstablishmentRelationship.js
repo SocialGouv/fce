@@ -4,6 +4,7 @@ import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 import Data from "../../SharedComponents/Data";
+import Table from "../../SharedComponents/Table";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Value from "../../../../shared/Value";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
@@ -29,11 +30,11 @@ const EstablishmentRelationship = ({
           subtitle="Convention(s) collective(s) appliquée(s)"
           sourceSi="DSN"
         >
-          <div className="single-value">
+          <div className="section-datas__list">
             <ul>
               {idcc
                 ? idcc.map(({ code, libelle }) => (
-                    <li className="m-2" key={code}>
+                    <li className="section-datas__list-item" key={code}>
                       <Value value={`${code} - ${libelle}`} />
                     </li>
                   ))
@@ -57,7 +58,7 @@ const EstablishmentRelationship = ({
                 emptyValue="aucun accord connu"
                 columnClasses={["is-7", "is-5"]}
               />
-              <table className="table is-hoverable">
+              <Table>
                 <thead>
                   <tr>
                     <th>Thématique</th>
@@ -68,7 +69,7 @@ const EstablishmentRelationship = ({
                 <tbody>
                   {Config.get("accords").map(({ key, value }) => (
                     <tr key={`accord-${key}`}>
-                      <td className="w-40">{value}</td>
+                      <td className="col-width-40">{value}</td>
                       <td className="has-text-right">
                         <Value
                           value={_get(accords, `${key}.count`)}
@@ -86,7 +87,7 @@ const EstablishmentRelationship = ({
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </Table>
 
               <a
                 href={

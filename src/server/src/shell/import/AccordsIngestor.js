@@ -2,7 +2,7 @@ const Ingestor = require("./Ingestor");
 // eslint-disable-next-line security/detect-child-process
 const { execSync } = require("child_process");
 
-class WikitUcIngestor extends Ingestor {
+class AccordsIngestor extends Ingestor {
   _saveProcessDate() {
     console.log("save process date");
     const { table } = this._config;
@@ -14,4 +14,4 @@ class WikitUcIngestor extends Ingestor {
   }
 }
 
-module.exports = WikitUcIngestor;
+module.exports = AccordsIngestor;

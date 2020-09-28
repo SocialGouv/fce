@@ -10,14 +10,6 @@ const getSettlements = async (siren) => {
     ],
   });
 
-  console.log("=============");
-  console.log("=============");
-  console.log("=============");
-  console.log(JSON.stringify({ etablissements }, null, 2));
-  console.log("=============");
-  console.log("=============");
-  console.log("=============");
-
   if (!etablissements) {
     return {};
   }

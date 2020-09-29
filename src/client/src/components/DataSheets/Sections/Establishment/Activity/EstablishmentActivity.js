@@ -14,6 +14,24 @@ const EstablishmentActivity = ({ establishment }) => {
     establishment.predecesseur
   );
 
+  const isLoadingEffectifMensuelEtp = !establishment.effectifMensuelEtp;
+
+  const effectifMensuelEtpData = !!establishment.effectifMensuelEtp?.length
+    ? establishment.effectifMensuelEtp.map(
+        ({ annee, mois, effectifs_mensuels }) => ({
+          name: `Effectif ETP ${getMonthName(mois)}`,
+          value: effectifs_mensuels,
+          nonEmptyValue: "",
+          sourceCustom: `Acoss / DSN ${getMonthName(mois)} ${annee}`,
+          hasNumberFormat: true
+        })
+      )
+    : [
+        {
+          name: `Effectif ETP`
+        }
+      ];
+
   return (
     <section id="activity" className="data-sheet__section">
       <div className="section-header">
@@ -63,17 +81,14 @@ const EstablishmentActivity = ({ establishment }) => {
               sourceSi: "DSN",
               hasNumberFormat: true
             },
-            ...(establishment.effectifMensuelEtp
-              ? establishment.effectifMensuelEtp.map(
-                  ({ annee, mois, effectifs_mensuels }) => ({
-                    name: `Effectif ETP ${getMonthName(mois)}`,
-                    value: effectifs_mensuels,
-                    nonEmptyValue: "",
-                    sourceCustom: `Acoss / DSN ${getMonthName(mois)} ${annee}`,
-                    hasNumberFormat: true
-                  })
-                )
-              : [])
+            ...(isLoadingEffectifMensuelEtp
+              ? [
+                  {
+                    name: `Effectif ETP`,
+                    value: "Chargement en cours..."
+                  }
+                ]
+              : effectifMensuelEtpData)
           ]}
         />
         <Subcategory

@@ -19,6 +19,22 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
     "0 salarié": "0 salarié"
   };
 
+  const isLoadingEffectifMensuelEtp = !enterprise.effectifMensuelEtp;
+
+  const effectifMensuelEtpData = !!enterprise.effectifMensuelEtp?.length ? (
+    enterprise.effectifMensuelEtp.map(({ annee, mois, effectifs_mensuels }) => (
+      <Data
+        key={`${annee}-${mois}`}
+        name={`Effectif ETP ${getMonthName(mois)}`}
+        value={effectifs_mensuels}
+        sourceCustom={`Acoss / DSN ${getMonthName(mois)} ${annee}`}
+        hasNumberFormat
+      />
+    ))
+  ) : (
+    <Data name={`Effectif ETP`} />
+  );
+
   const mandataires = enterprise.mandataires_sociaux || [];
 
   const anneeEffectifAnnuelEtp = _get(
@@ -73,18 +89,11 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             sourceSi={"Sirène-year"}
             sourceDate={enterprise.annee_tranche_effectif}
           />
-          {enterprise.effectifMensuelEtp &&
-            enterprise.effectifMensuelEtp.map(
-              ({ annee, mois, effectifs_mensuels }) => (
-                <Data
-                  key={`${annee}-${mois}`}
-                  name={`Effectif ETP ${getMonthName(mois)}`}
-                  value={effectifs_mensuels}
-                  sourceCustom={`Acoss / DSN ${getMonthName(mois)} ${annee}`}
-                  hasNumberFormat
-                />
-              )
-            )}
+          {isLoadingEffectifMensuelEtp ? (
+            <Data name={`Effectif ETP`} value="Chargement en cours..." />
+          ) : (
+            effectifMensuelEtpData
+          )}
           <Data
             name={`Effectif ${anneeEffectifAnnuelEtp} en équivalent temps plein`}
             value={_get(enterprise, "effectifAnnuelEtp.effectifs_annuels")}

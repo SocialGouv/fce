@@ -13,7 +13,10 @@ const Direccte = ({ enterprise }) => {
   const visitInteractions = getEnterpriseVisits(enterprise);
 
   return (
-    <section id="direccte" className="data-sheet__section">
+    <section
+      id="direccte"
+      className="data-sheet__section direccte-interactions-enterprise"
+    >
       <div className="section-header">
         <span className="icon">
           <FontAwesomeIcon icon={faCalendarCheck} />

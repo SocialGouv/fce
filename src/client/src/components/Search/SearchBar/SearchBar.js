@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/pro-solid-svg-icons";
 
-const SearchBar = ({ label, searchTerm, setSearchTerm, isLoading }) => {
+const SearchBar = ({ label, searchTerm, setSearchTerm }) => {
   return (
     <div className="control is-expanded">
       <label htmlFor="term" className="label">
@@ -34,20 +33,6 @@ const SearchBar = ({ label, searchTerm, setSearchTerm, isLoading }) => {
             </button>
           )}
         </div>
-
-        <div className="search-form__button">
-          <button
-            className={classNames(
-              "action",
-              "button",
-              "is-secondary",
-              "is-medium",
-              { "is-loading": isLoading }
-            )}
-          >
-            Rechercher
-          </button>
-        </div>
       </div>
     </div>
   );
@@ -56,8 +41,7 @@ const SearchBar = ({ label, searchTerm, setSearchTerm, isLoading }) => {
 SearchBar.propTypes = {
   label: PropTypes.string.isRequired,
   searchTerm: PropTypes.string.isRequired,
-  setSearchTerm: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  setSearchTerm: PropTypes.func.isRequired
 };
 
 export default SearchBar;

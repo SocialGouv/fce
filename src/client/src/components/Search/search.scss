@@ -1,4 +1,5 @@
 @import "../App/variables";
+@import "../App/placeholders";
 
 %search-button {
     display: flex;
@@ -23,6 +24,10 @@
     }
 
     .search-form {
+        .label {
+            height: $spacing-5;
+        }
+
         &__search {
             display: flex;
             align-items: flex-start;
@@ -33,7 +38,6 @@
             align-items: center;
             max-width: 100%;
             width: 100%;
-            margin-right: $spacing-5;
             color: $dark-grey;
             background-color: #fff;
             border: 1px solid #dbdbdb;
@@ -44,6 +48,7 @@
             }
 
             .input {
+                height: 3rem;
                 border: none;
                 box-shadow: none;
             }
@@ -66,9 +71,20 @@
             justify-content: space-between;
         }
 
-        &__button .action.button {
-            @extend %search-button;
-            border: 1px solid #fff;
+        &__buttons {
+            @extend %flex-center;
+            display: flex;
+            flex-direction: column;
+            margin-top: $spacing-5 + $spacing-4;
+
+            &--align-top {
+                justify-content: flex-start;
+            }
+
+            .action.button {
+                @extend %search-button;
+                border: 1px solid #fff;
+            }
         }
 
         &__reset.button {

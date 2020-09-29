@@ -4,7 +4,7 @@
 %search-button {
     display: flex;
     justify-content: center;
-    width: 12rem;
+    width: 100%;
     color: inherit;
 }
 
@@ -84,6 +84,10 @@
             .action.button {
                 @extend %search-button;
                 border: 1px solid #fff;
+            }
+
+            > div {
+                width: 100%;
             }
         }
 

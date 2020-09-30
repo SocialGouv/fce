@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory } from "@fortawesome/pro-solid-svg-icons";
+import { faHistory, faSpinner } from "@fortawesome/pro-solid-svg-icons";
 
 import Config from "../../../../../services/Config";
 import { getSuccession } from "../../../../../helpers/Establishment";
@@ -85,7 +85,13 @@ const EstablishmentActivity = ({ establishment }) => {
               ? [
                   {
                     name: `Effectif ETP`,
-                    value: "Chargement en cours..."
+
+                    value: (
+                      <div>
+                        <span>Chargement en cours </span>
+                        <FontAwesomeIcon icon={faSpinner} spin />
+                      </div>
+                    )
                   }
                 ]
               : effectifMensuelEtpData)

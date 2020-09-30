@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory } from "@fortawesome/pro-solid-svg-icons";
+import { faHistory, faSpinner } from "@fortawesome/pro-solid-svg-icons";
 import _get from "lodash.get";
 
 import Config from "../../../../../services/Config";
@@ -90,7 +90,15 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             sourceDate={enterprise.annee_tranche_effectif}
           />
           {isLoadingEffectifMensuelEtp ? (
-            <Data name={`Effectif ETP`} value="Chargement en cours..." />
+            <Data
+              name={`Effectif ETP`}
+              value={
+                <div>
+                  <span>Chargement en cours </span>
+                  <FontAwesomeIcon icon={faSpinner} spin />
+                </div>
+              }
+            />
           ) : (
             effectifMensuelEtpData
           )}

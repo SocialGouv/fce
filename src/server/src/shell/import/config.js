@@ -11,7 +11,6 @@ const config = {
       outputFileName: "accords.csv",
     },
     ingest: {
-      className: "AccordsIngestor",
       table: "etablissements_accords",
       filename: `${FILES_FOLDER}/accords.csv`,
       cols: [

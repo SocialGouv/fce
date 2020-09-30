@@ -55,8 +55,11 @@
         .button {
             width: 13rem;
             height: 2.25rem;
-            margin-right: $spacing-4;
             font-weight: bold;
+
+            &:not(:last-of-type) {
+                margin-right: $spacing-4;
+            }
 
             &-icon {
                 margin-right: $spacing-2;

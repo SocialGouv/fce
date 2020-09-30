@@ -164,6 +164,12 @@
         }
 
         &__section {
+            // CUSTOM RULES ON "Visites et contrôles"
+            &.direccte-interactions-enterprise,
+            &.direccte-interactions-establishment {
+                page-break-inside: avoid !important;
+            }
+
             & .section-header {
                 @extend %margin-bottom-medium;
                 border-bottom: 2pt solid $primary !important;

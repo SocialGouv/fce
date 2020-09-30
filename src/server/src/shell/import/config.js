@@ -35,6 +35,10 @@ const config = {
       truncate: true,
       generateSiren: true,
       history: false,
+      date: {
+        field: "dt_sign",
+        format: "YYYY-MM-DD",
+      },
     },
   },
   wikit_uc: {

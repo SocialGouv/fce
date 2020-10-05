@@ -1,4 +1,4 @@
 #!/bin/sh
 cd /usr/src/app
 npm install
-npm run start
+npm run nodemon

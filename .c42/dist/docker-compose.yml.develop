@@ -5,6 +5,7 @@ services:
     build: .docker/node
     network_mode: host
     container_name: server
+    restart: always
     logging:
       driver: "json-file"
       options:
@@ -21,6 +22,7 @@ services:
     image: postgres:9.6
     network_mode: host
     container_name: db
+    restart: always
     logging:
       driver: "json-file"
       options:
@@ -38,6 +40,7 @@ services:
     image: docker.elastic.co/app-search/app-search:7.6.1
     network_mode: host
     container_name: appsearch
+    restart: always
     logging:
       driver: "json-file"
       options:
@@ -54,6 +57,7 @@ services:
     build: .docker/elasticsearch
     network_mode: host
     container_name: elasticsearch
+    restart: always
     logging:
       driver: "json-file"
       options:

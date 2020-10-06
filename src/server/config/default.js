@@ -121,6 +121,11 @@ const config = {
       hasId: false,
     },
     {
+      fields: ["numero"],
+      table: "rupco_procedures",
+      hasId: true,
+    },
+    {
       fields: ["code"],
       table: "departements",
       hasId: false,

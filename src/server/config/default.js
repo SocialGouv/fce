@@ -116,14 +116,10 @@ const config = {
   },
   sanitizeTables: [
     {
-      fields: ["siret", "numero_de_dossier"],
-      table: "etablissements_pse",
-      hasId: false,
-    },
-    {
       fields: ["numero"],
       table: "rupco_procedures",
       hasId: true,
+      filterField: "date_enregistrement"
     },
     {
       fields: ["code"],

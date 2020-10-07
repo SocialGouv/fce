@@ -62,6 +62,9 @@ cp -rv .c42/dist/scripts/importCsv.sh ./dist/importCsv.sh
 cp -rv .c42/dist/config ./dist/config
 mv ./dist/config ./dist/.docker/config
 
+cp -rv .c42/dist/monitoring.yml ./dist/monitoring.yml
+mv ./dist/monitoring.yml ./dist/monitoring.yml
+
 cp -rv src/frentreprise ./dist
 cp -rv src/server/build/. ./dist
 cp -rv src/server/migrations/. ./dist/migrations

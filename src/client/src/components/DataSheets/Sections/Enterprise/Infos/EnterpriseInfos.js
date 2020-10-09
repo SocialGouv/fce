@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory, faSpinner } from "@fortawesome/pro-solid-svg-icons";
@@ -12,17 +12,25 @@ import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
 import { getMonthName } from "../../../../../helpers/Date";
 import { formatTva } from "../../../../../helpers/utils";
+import AllEffectifsEtpButton from "../../SharedComponents/AllEffectifsEtpButton";
 
 const EnterpriseInfos = ({ enterprise, headOffice }) => {
+  const [allEffectifsEtp, setAllEffectifsEtp] = useState(null);
+
   const dashboardSizeRanges = {
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
   };
 
   const isLoadingEffectifMensuelEtp = !enterprise.effectifMensuelEtp;
+  const effectifEtpData = allEffectifsEtp ?? enterprise.effectifMensuelEtp;
+  const showEffectifEtpButton =
+    Array.isArray(enterprise.effectifMensuelEtp) &&
+    enterprise.effectifMensuelEtp.length > 0 &&
+    !allEffectifsEtp;
 
-  const effectifMensuelEtpData = !!enterprise.effectifMensuelEtp?.length ? (
-    enterprise.effectifMensuelEtp.map(({ annee, mois, effectifs_mensuels }) => (
+  const EffectifEtpDataComponents = !!effectifEtpData?.length ? (
+    effectifEtpData.map(({ annee, mois, effectifs_mensuels }) => (
       <Data
         key={`${annee}-${mois}`}
         name={`Effectif ETP ${getMonthName(mois)}`}
@@ -100,7 +108,14 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
               }
             />
           ) : (
-            effectifMensuelEtpData
+            EffectifEtpDataComponents
+          )}
+          {showEffectifEtpButton && (
+            <AllEffectifsEtpButton
+              type="entreprise"
+              identifier={enterprise.siren}
+              setAllEffectifsEtp={setAllEffectifsEtp}
+            />
           )}
           <Data
             name={`Effectif ${anneeEffectifAnnuelEtp} en équivalent temps plein`}

@@ -85,10 +85,53 @@ router.post("/login", async function (req, res) {
     return res.send({
       success: true,
       token,
-      saltedEmail
+      saltedEmail,
     });
   } catch (e) {
     console.error(`Authentification code is invalid`, e.message);
+    return res.status(401).json({
+      success: false,
+      error: e.message,
+    });
+  }
+});
+
+router.post("/tempLogin", async function (req, res) {
+  try {
+    console.log("MON BODY", req.body);
+    const { cred } = req.body;
+    const { isValidCred, failureMessage } = await Auth.useCred(cred);
+
+    if (!isValidCred) {
+      console.error("Login denied", failureMessage);
+      throw new Error(failureMessage);
+    }
+
+    const token = await Auth.generateTemporaryToken();
+    return res.send({
+      success: true,
+      token,
+    });
+  } catch (e) {
+    return res.status(401).json({
+      success: false,
+      error: e.message,
+    });
+  }
+});
+
+router.get("/askCredential", async function (req, res) {
+  const api_key = req.query.api_key;
+  try {
+    // TODO VERIFY API KEY
+    const cred = await Auth.askCredential();
+
+    return res.send({
+      success: true,
+      cred: cred,
+    });
+  } catch (e) {
+    console.error(`Auth :`, e.message);
     return res.status(401).json({
       success: false,
       error: e.message,

@@ -65,6 +65,7 @@ const config = {
   jwt: {
     secret: process.env.JWT_SECRET,
     expire: process.env.JWT_EXPIRE,
+    expireTemporary: process.env.JWT_TEMP_EXPIRE,
   },
   elasticIndexer: {
     appsearch_address: process.env.JWT_APPSEARCH_ADDRRESS,
@@ -119,7 +120,7 @@ const config = {
       fields: ["numero"],
       table: "rupco_procedures",
       hasId: true,
-      filterField: "date_enregistrement"
+      filterField: "date_enregistrement",
     },
     {
       fields: ["code"],
@@ -137,7 +138,7 @@ const config = {
       hasId: true,
     },
   ],
-  emailSalt: process.env.EMAIL_SALT
+  emailSalt: process.env.EMAIL_SALT,
 };
 
 if (process.env.HOST) {

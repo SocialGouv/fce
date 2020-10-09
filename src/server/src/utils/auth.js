@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import emailValidator from "email-validator";
 import util from "util";
 import AuthRequestsModel from "../models/AuthRequests";
+import AuthTempModel from "../models/AuthTemp";
+import AuthTemp from "../models/AuthTemp";
 
 export default class Auth {
   static generateToken(user) {
@@ -10,10 +12,26 @@ export default class Auth {
      * @link https://stackoverflow.com/questions/47117709/payload-error-in-jsonwebtoken
      */
     user = JSON.parse(JSON.stringify(user));
+    console.log(user);
 
     return jwt.sign(user, config.jwt.secret, {
       expiresIn: config.jwt.expire,
     });
+  }
+
+  static async generateTemporaryToken(user) {
+    user = { email: "temporary" };
+
+    return jwt.sign(user, config.jwt.secret, {
+      expiresIn: config.jwt.expireTemporary,
+    });
+  }
+
+  static async askCredential() {
+    const authTempModel = new AuthTempModel();
+
+    const { id } = await authTempModel.create();
+    return id;
   }
 
   static async checkToken(token) {
@@ -82,6 +100,22 @@ export default class Auth {
     };
   }
 
+  static async useCred(cred) {
+    const authTempModel = new AuthTempModel();
+    const authTemp = await authTempModel.getById(cred);
+
+    console.log({ authTemp });
+    if (!authTemp || isAlreadyActivated(authTemp.activated)) {
+      return {
+        isValidCred: false,
+        failureMessage:
+          "Votre lien as déjà été utiliser ou a expirée, veuillez regénérer un lien.",
+      };
+    }
+    authTempModel.desactivate(cred);
+    return { isValidCred: true };
+  }
+
   static generateCode(email) {
     const authRequests = new AuthRequestsModel();
     const code = generateRandomCode();
@@ -112,6 +146,10 @@ const isExpired = (date, expire) => {
   const now = timestampInSecond(Date.now());
 
   return created + +expire < now;
+};
+
+const isAlreadyActivated = (activated) => {
+  return !activated;
 };
 
 const timestampInSecond = (timestampInMillisecond) =>

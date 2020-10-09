@@ -30,6 +30,18 @@ export default class Auth {
     Local.remove(AUTH_USER_ID);
   }
 
+  static tempLogin(cred) {
+    return Http.post("/tempLogin", {
+      cred
+    }).then(response => {
+      if (response.data && response.data.success) {
+        console.log("SETTING NEW KEY: ", response.data.token);
+        Local.set(AUTH_KEY, response.data.token);
+      }
+      return response;
+    });
+  }
+
   static isLogged() {
     return !!Local.get(AUTH_KEY);
   }

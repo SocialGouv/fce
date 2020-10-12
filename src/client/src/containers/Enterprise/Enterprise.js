@@ -34,6 +34,9 @@ const Enterprise = ({
   const loadMethod = isEnterprise ? loadEntreprise : loadEstablishment;
 
   useEffect(() => {
+    if (state === Config.get("state.unauthorize")) {
+      setCurrentUrl("/login");
+    }
     if (mustLoadEntity(identifier)) {
       loadEntity(loadMethod, identifier);
       setCurrentUrl(match.url);
@@ -51,8 +54,13 @@ const Enterprise = ({
       .then(() => {
         setState(Config.get("state.success"));
       })
-      .catch(() => {
-        setState(Config.get("state.error"));
+      .catch(err => {
+        console.log(err, identifier);
+        if (err.response.status === 401) {
+          setState(Config.get("state.unauthorize"));
+        } else {
+          setState(Config.get("state.error"));
+        }
       });
   };
 

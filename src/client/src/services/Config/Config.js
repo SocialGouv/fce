@@ -149,7 +149,8 @@ const globalConfig = {
     loading: "loading",
     success: "success",
     error: "error",
-    finish: "finish"
+    finish: "finish",
+    unauthorize: "unauthorize"
   }
 };
 

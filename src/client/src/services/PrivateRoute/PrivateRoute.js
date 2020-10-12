@@ -5,7 +5,7 @@ import Auth from "../Auth";
 
 const PrivateRoute = ({ component: Component, location, history, ...rest }) => {
   async function getTempAuthAndRedirect(cred, location) {
-    const auth = await Auth.tempLogin(cred).then(response => {
+    await Auth.tempLogin(cred).then(() => {
       history.push(location.pathname);
     });
   }
@@ -54,7 +54,10 @@ const PrivateRoute = ({ component: Component, location, history, ...rest }) => {
 
 PrivateRoute.propTypes = {
   component: PropTypes.elementType,
-  location: PropTypes.object
+  location: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  })
 };
 
 export default PrivateRoute;

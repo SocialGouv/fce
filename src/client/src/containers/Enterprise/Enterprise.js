@@ -55,7 +55,6 @@ const Enterprise = ({
         setState(Config.get("state.success"));
       })
       .catch(err => {
-        console.log(err, identifier);
         if (err.response.status === 401) {
           setState(Config.get("state.unauthorize"));
         } else {

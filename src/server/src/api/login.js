@@ -122,7 +122,9 @@ router.post("/tempLogin", async function (req, res) {
 router.get("/askCredential", async function (req, res) {
   const api_key = req.query.api_key;
   try {
-    // TODO VERIFY API KEY
+    if (api_key != config.cred.token) {
+      throw new Error("API_KEY is not valid");
+    }
     const cred = await Auth.askCredential();
 
     return res.send({

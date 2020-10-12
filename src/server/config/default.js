@@ -62,8 +62,8 @@ const config = {
       BilanTermine: "Bilan terminé",
     },
   },
-  cred: {
-    token: process.env.CRED_API_KEY,
+  credential: {
+    token: process.env.CREDENTIAL_API_KEY,
   },
   jwt: {
     secret: process.env.JWT_SECRET,

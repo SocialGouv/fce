@@ -98,19 +98,19 @@ export default class Auth {
     };
   }
 
-  static async useCred(cred) {
+  static async useCredential(credential) {
     const authTempModel = new AuthTempModel();
-    const authTemp = await authTempModel.getById(cred);
+    const authTemp = await authTempModel.getById(credential);
 
     if (!authTemp || isAlreadyActivated(authTemp.activated)) {
       return {
-        isValidCred: false,
+        isValidCredential: false,
         failureMessage:
           "Votre lien as déjà été utiliser ou a expirée, veuillez regénérer un lien.",
       };
     }
-    authTempModel.desactivate(cred);
-    return { isValidCred: true };
+    authTempModel.desactivate(credential);
+    return { isValidCredential: true };
   }
 
   static generateCode(email) {

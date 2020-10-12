@@ -4,14 +4,14 @@ import { Route, Redirect } from "react-router-dom";
 import Auth from "../Auth";
 
 const PrivateRoute = ({ component: Component, location, history, ...rest }) => {
-  async function getTempAuthAndRedirect(cred, location) {
-    await Auth.tempLogin(cred).then(() => {
+  async function getTempAuthAndRedirect(credential, location) {
+    await Auth.tempLogin(credential).then(() => {
       history.push(location.pathname);
     });
   }
 
   const checkAuthorization = () => {
-    const credential = new URLSearchParams(location.search).get("cred");
+    const credential = new URLSearchParams(location.search).get("credential");
 
     if (Auth.isLogged()) {
       return {

@@ -30,9 +30,9 @@ export default class Auth {
     Local.remove(AUTH_USER_ID);
   }
 
-  static tempLogin(cred) {
+  static tempLogin(credential) {
     return Http.post("/tempLogin", {
-      cred
+      credential
     }).then(response => {
       if (response.data && response.data.success) {
         Local.set(AUTH_KEY, response.data.token);

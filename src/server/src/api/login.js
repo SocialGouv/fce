@@ -98,10 +98,12 @@ router.post("/login", async function (req, res) {
 
 router.post("/tempLogin", async function (req, res) {
   try {
-    const { cred } = req.body;
-    const { isValidCred, failureMessage } = await Auth.useCred(cred);
+    const { credential } = req.body;
+    const { isValidCredential, failureMessage } = await Auth.useCredential(
+      credential
+    );
 
-    if (!isValidCred) {
+    if (!isValidCredential) {
       console.error("Login denied", failureMessage);
       throw new Error(failureMessage);
     }
@@ -122,14 +124,14 @@ router.post("/tempLogin", async function (req, res) {
 router.get("/askCredential", async function (req, res) {
   const api_key = req.query.api_key;
   try {
-    if (api_key != config.cred.token) {
+    if (api_key != config.credential.token) {
       throw new Error("API_KEY is not valid");
     }
-    const cred = await Auth.askCredential();
+    const credential = await Auth.askCredential();
 
     return res.send({
       success: true,
-      cred: cred,
+      credential: credential,
     });
   } catch (e) {
     console.error(`Auth :`, e.message);

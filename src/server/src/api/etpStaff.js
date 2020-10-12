@@ -1,5 +1,6 @@
 import express from "express";
 import { eachMonthOfInterval, format } from "date-fns";
+// eslint-disable-next-line node/no-missing-import
 import frentreprise from "frentreprise";
 import withAuth from "../middlewares/auth";
 

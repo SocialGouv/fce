@@ -12,7 +12,7 @@ import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
 import { getMonthName } from "../../../../../helpers/Date";
 import { formatTva } from "../../../../../helpers/utils";
-import AllEffectifsEtpButton from "../../SharedComponents/AllEffectifsEtpButton";
+import AllEffectifsEtpButton from "../../../../../containers/AllEffectifsEtpButton";
 
 const EnterpriseInfos = ({ enterprise, headOffice }) => {
   const [allEffectifsEtp, setAllEffectifsEtp] = useState(null);

@@ -6,7 +6,8 @@ import Config from "../../../../../services/Config";
 import { getSuccession } from "../../../../../helpers/Establishment";
 import { getMonthName } from "../../../../../helpers/Date";
 import Subcategory from "../../SharedComponents/Subcategory";
-import AllEffectifsEtp from "../../SharedComponents/AllEffectifsEtpButton";
+import AllEffectifsEtp from "../../../../../containers/AllEffectifsEtpButton";
+
 import "./establishmentActivity.scss";
 
 const EstablishmentActivity = ({ establishment }) => {

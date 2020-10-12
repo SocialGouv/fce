@@ -98,7 +98,6 @@ router.post("/login", async function (req, res) {
 
 router.post("/tempLogin", async function (req, res) {
   try {
-    console.log("MON BODY", req.body);
     const { cred } = req.body;
     const { isValidCred, failureMessage } = await Auth.useCred(cred);
 

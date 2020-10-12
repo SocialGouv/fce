@@ -19,7 +19,7 @@ export default class Auth {
     });
   }
 
-  static async generateTemporaryToken(user) {
+  static generateTemporaryToken(user) {
     user = { email: "temporary" };
 
     return jwt.sign(user, config.jwt.secret, {
@@ -39,6 +39,7 @@ export default class Auth {
       const verify = util.promisify(jwt.verify).bind(jwt);
       const user = await verify(token, config.jwt.secret);
 
+      console.log("check token ?", user);
       return user;
     } catch (e) {
       console.error("Auth.checkToken()", e);

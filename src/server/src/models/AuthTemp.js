@@ -34,7 +34,7 @@ export default class AuthTemp extends Model {
         return res.rows && res.rows.length ? res.rows[0] : null;
       })
       .catch((e) => {
-        console.error("AuthTemp::getById");
+        console.error("AuthTemp::getById", e);
         return false;
       });
   }

@@ -4,7 +4,6 @@ import emailValidator from "email-validator";
 import util from "util";
 import AuthRequestsModel from "../models/AuthRequests";
 import AuthTempModel from "../models/AuthTemp";
-import AuthTemp from "../models/AuthTemp";
 
 export default class Auth {
   static generateToken(user) {
@@ -12,7 +11,6 @@ export default class Auth {
      * @link https://stackoverflow.com/questions/47117709/payload-error-in-jsonwebtoken
      */
     user = JSON.parse(JSON.stringify(user));
-    console.log(user);
 
     return jwt.sign(user, config.jwt.secret, {
       expiresIn: config.jwt.expire,
@@ -39,7 +37,6 @@ export default class Auth {
       const verify = util.promisify(jwt.verify).bind(jwt);
       const user = await verify(token, config.jwt.secret);
 
-      console.log("check token ?", user);
       return user;
     } catch (e) {
       console.error("Auth.checkToken()", e);
@@ -105,7 +102,6 @@ export default class Auth {
     const authTempModel = new AuthTempModel();
     const authTemp = await authTempModel.getById(cred);
 
-    console.log({ authTemp });
     if (!authTemp || isAlreadyActivated(authTemp.activated)) {
       return {
         isValidCred: false,

@@ -35,7 +35,6 @@ export default class Auth {
       cred
     }).then(response => {
       if (response.data && response.data.success) {
-        console.log("SETTING NEW KEY: ", response.data.token);
         Local.set(AUTH_KEY, response.data.token);
       }
       return response;

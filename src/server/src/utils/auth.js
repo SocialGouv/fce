@@ -18,7 +18,7 @@ export default class Auth {
   }
 
   static generateTemporaryToken(user) {
-    user = { email: "temporary" };
+    user = { email: "temporary" + new Date().getTime() };
 
     return jwt.sign(user, config.jwt.secret, {
       expiresIn: config.jwt.expireTemporary,
@@ -106,7 +106,7 @@ export default class Auth {
       return {
         isValidCredential: false,
         failureMessage:
-          "Votre lien as déjà été utiliser ou a expirée, veuillez regénérer un lien.",
+          "Votre lien a déjà été utilisé ou a expiré, veuillez régénérer un lien.",
       };
     }
     authTempModel.desactivate(credential);

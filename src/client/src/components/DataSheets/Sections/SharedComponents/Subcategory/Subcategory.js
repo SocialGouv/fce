@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 import Data from "../Data";
 import Source from "../../../../../containers/Source";
 
@@ -11,10 +12,11 @@ const Subcategory = ({
   children,
   sourceSi = null,
   sourceCustom = null,
-  sourceDate = null
+  sourceDate = null,
+  className = ""
 }) => {
   return (
-    <div className="subcategory">
+    <div className={classNames("subcategory", className)}>
       {subtitle && (
         <div className="subcategory__header">
           <h3 className="subcategory__title">{subtitle}</h3>
@@ -57,7 +59,8 @@ Subcategory.propTypes = {
   sourceCustom: PropTypes.string,
   sourceDate: PropTypes.string,
   datas: PropTypes.arrayOf(PropTypes.object),
-  children: PropTypes.node
+  children: PropTypes.node,
+  className: PropTypes.string
 };
 
 export default Subcategory;

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory } from "@fortawesome/pro-solid-svg-icons";
+import { faHistory, faSpinner } from "@fortawesome/pro-solid-svg-icons";
 import _get from "lodash.get";
 
 import Config from "../../../../../services/Config";
@@ -12,12 +12,36 @@ import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
 import { getMonthName } from "../../../../../helpers/Date";
 import { formatTva } from "../../../../../helpers/utils";
+import AllEffectifsEtpButton from "../../../../../containers/AllEffectifsEtpButton";
 
 const EnterpriseInfos = ({ enterprise, headOffice }) => {
+  const [allEffectifsEtp, setAllEffectifsEtp] = useState(null);
+
   const dashboardSizeRanges = {
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
   };
+
+  const isLoadingEffectifMensuelEtp = !enterprise.effectifMensuelEtp;
+  const effectifEtpData = allEffectifsEtp ?? enterprise.effectifMensuelEtp;
+  const showEffectifEtpButton =
+    Array.isArray(enterprise.effectifMensuelEtp) &&
+    enterprise.effectifMensuelEtp.length > 0 &&
+    !allEffectifsEtp;
+
+  const EffectifEtpDataComponents = !!effectifEtpData?.length ? (
+    effectifEtpData.map(({ annee, mois, effectifs_mensuels }) => (
+      <Data
+        key={`${annee}-${mois}`}
+        name={`Effectif ETP ${getMonthName(mois)}`}
+        value={effectifs_mensuels}
+        sourceCustom={`Acoss / DSN ${getMonthName(mois)} ${annee}`}
+        hasNumberFormat
+      />
+    ))
+  ) : (
+    <Data name={`Effectif ETP`} />
+  );
 
   const mandataires = enterprise.mandataires_sociaux || [];
 
@@ -73,18 +97,26 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             sourceSi={"Sirène-year"}
             sourceDate={enterprise.annee_tranche_effectif}
           />
-          {enterprise.effectifMensuelEtp &&
-            enterprise.effectifMensuelEtp.map(
-              ({ annee, mois, effectifs_mensuels }) => (
-                <Data
-                  key={`${annee}-${mois}`}
-                  name={`Effectif ETP ${getMonthName(mois)}`}
-                  value={effectifs_mensuels}
-                  sourceCustom={`Acoss / DSN ${getMonthName(mois)} ${annee}`}
-                  hasNumberFormat
-                />
-              )
-            )}
+          {isLoadingEffectifMensuelEtp ? (
+            <Data
+              name={`Effectif ETP`}
+              value={
+                <div>
+                  <span>Chargement en cours </span>
+                  <FontAwesomeIcon icon={faSpinner} spin />
+                </div>
+              }
+            />
+          ) : (
+            EffectifEtpDataComponents
+          )}
+          {showEffectifEtpButton && (
+            <AllEffectifsEtpButton
+              type="entreprise"
+              identifier={enterprise.siren}
+              setAllEffectifsEtp={setAllEffectifsEtp}
+            />
+          )}
           <Data
             name={`Effectif ${anneeEffectifAnnuelEtp} en équivalent temps plein`}
             value={_get(enterprise, "effectifAnnuelEtp.effectifs_annuels")}

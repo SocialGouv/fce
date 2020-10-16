@@ -36,7 +36,7 @@ const Direccte = ({ establishment }) => {
   return (
     <section
       id="direccte"
-      className="data-sheet__section direccte-interactions"
+      className="data-sheet__section direccte-interactions-establishment"
     >
       <div className="section-header">
         <span className="icon">

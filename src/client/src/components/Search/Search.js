@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 import SearchResults from "../SearchResults";
 import SiegeFilter from "./Filters/SiegeFilter";
 import StateFilter from "./Filters/StateFilter";
@@ -35,11 +36,7 @@ const Search = ({
   divisionsNaf,
   loadLocations
 }) => {
-  const isOpenAdvancedSearch = filters => {
-    const hasNaf = filters.naf && filters.naf.length;
-    const hasLocation = filters.location && filters.location.length;
-    return hasNaf || hasLocation;
-  };
+  const [isOpenAdvancedSearch, setIsOpenAdvancedSearch] = useState(true);
 
   return (
     <div className="app-search">
@@ -58,81 +55,103 @@ const Search = ({
               sendRequest(searchTerm, options);
             }}
           >
-            <div className="field is-grouped is-grouped-centered">
-              <SearchBar
-                label="Nom ou raison sociale, SIRET ou SIREN"
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-                resetSearch={resetSearch}
-                isLoading={isLoading}
-              />
-            </div>
-
-            <div className="search-form__toolbar">
-              <div className="columns filters__checkboxes">
-                <div className="column is-4">
-                  <SiegeFilter
-                    filters={filters}
-                    addFilter={addFilter}
-                    removeFilter={removeFilter}
+            <div className="columns">
+              <div className="column is-10">
+                <div className="field is-grouped is-grouped-centered">
+                  <SearchBar
+                    label="Nom ou raison sociale, SIRET ou SIREN"
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    resetSearch={resetSearch}
+                    isLoading={isLoading}
                   />
                 </div>
-                <div className="column is-8">
-                  <StateFilter
-                    filters={filters}
-                    addFilter={addFilter}
-                    removeFilter={removeFilter}
-                  />
+
+                <div className="columns filters__checkboxes">
+                  <div className="column is-4">
+                    <SiegeFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                    />
+                  </div>
+                  <div className="column is-8">
+                    <StateFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                    />
+                  </div>
+                </div>
+
+                <div className="columns">
+                  <div className="column">
+                    <Accordion
+                      allowZeroExpanded
+                      preExpanded={["advancedSearch"]}
+                      onChange={e => {
+                        setIsOpenAdvancedSearch(!!e.length);
+                      }}
+                    >
+                      <AccordionItem uuid="advancedSearch">
+                        <AccordionItemHeading>
+                          <AccordionItemButton>
+                            <span>Recherche avancée</span>
+                          </AccordionItemButton>
+                        </AccordionItemHeading>
+                        <AccordionItemPanel>
+                          <div className="columns filters__selects">
+                            <div className="column is-half">
+                              <NafFilter
+                                filters={filters}
+                                addFilter={addFilter}
+                                removeFilter={removeFilter}
+                                divisionsNaf={divisionsNaf}
+                              />
+                            </div>
+                            <div className="column is-half">
+                              <LocationFilter
+                                filters={filters}
+                                addFilter={addFilter}
+                                removeFilter={removeFilter}
+                                loadLocations={loadLocations}
+                              />
+                            </div>
+                          </div>
+                        </AccordionItemPanel>
+                      </AccordionItem>
+                    </Accordion>
+                  </div>
                 </div>
               </div>
 
-              <button
-                className="button is-text search-form__reset"
-                onClick={e => {
-                  e.preventDefault();
-                  resetSearch();
-                }}
+              <div
+                className={classNames("column is-2 search-form__buttons", {
+                  "search-form__buttons--align-top": !isOpenAdvancedSearch
+                })}
               >
-                Vider la recherche
-              </button>
-            </div>
-
-            <div className="columns">
-              <div className="column">
-                <Accordion
-                  allowZeroExpanded
-                  preExpanded={
-                    isOpenAdvancedSearch(filters) ? ["advancedSearch"] : []
-                  }
-                >
-                  <AccordionItem uuid="advancedSearch">
-                    <AccordionItemHeading>
-                      <AccordionItemButton>
-                        <span>Recherche avancée</span>
-                      </AccordionItemButton>
-                    </AccordionItemHeading>
-                    <AccordionItemPanel>
-                      <div className="columns filters__selects">
-                        <div className="column is-half">
-                          <NafFilter
-                            filters={filters}
-                            addFilter={addFilter}
-                            removeFilter={removeFilter}
-                            divisionsNaf={divisionsNaf}
-                          />
-                        </div>
-                        <div className="column is-half">
-                          <LocationFilter
-                            filters={filters}
-                            addFilter={addFilter}
-                            removeFilter={removeFilter}
-                            loadLocations={loadLocations}
-                          />
-                        </div>
-                      </div>
-                    </AccordionItemPanel>
-                  </AccordionItem>
-                </Accordion>
+                <div>
+                  <button
+                    className={classNames(
+                      "action",
+                      "button",
+                      "is-secondary",
+                      "is-medium",
+                      { "is-loading": isLoading }
+                    )}
+                  >
+                    Rechercher
+                  </button>
+                  <button
+                    className="button is-text search-form__reset"
+                    onClick={e => {
+                      e.preventDefault();
+                      resetSearch();
+                    }}
+                  >
+                    Vider la recherche
+                  </button>
+                </div>
               </div>
             </div>
           </form>

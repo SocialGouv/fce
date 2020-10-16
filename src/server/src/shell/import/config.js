@@ -11,7 +11,6 @@ const config = {
       outputFileName: "accords.csv",
     },
     ingest: {
-      className: "AccordsIngestor",
       table: "etablissements_accords",
       filename: `${FILES_FOLDER}/accords.csv`,
       cols: [
@@ -35,6 +34,10 @@ const config = {
       truncate: true,
       generateSiren: true,
       history: false,
+      date: {
+        field: "dt_sign",
+        format: "YYYY-MM-DD",
+      },
     },
   },
   wikit_uc: {

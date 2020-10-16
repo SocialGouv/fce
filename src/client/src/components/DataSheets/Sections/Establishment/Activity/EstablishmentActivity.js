@@ -1,19 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory } from "@fortawesome/pro-solid-svg-icons";
-
+import { faHistory, faSpinner } from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../../../services/Config";
 import { getSuccession } from "../../../../../helpers/Establishment";
 import { getMonthName } from "../../../../../helpers/Date";
 import Subcategory from "../../SharedComponents/Subcategory";
+import AllEffectifsEtp from "../../../../../containers/AllEffectifsEtpButton";
+
+import "./establishmentActivity.scss";
 
 const EstablishmentActivity = ({ establishment }) => {
+  const [allEffectifsEtp, setAllEffectifsEtp] = useState(null);
+
   const succession = getSuccession(
     establishment.successeur,
     establishment.predecesseur
   );
 
+  const isLoadingEffectifMensuelEtp = !establishment.effectifMensuelEtp;
+  const effectifEtpData = allEffectifsEtp ?? establishment.effectifMensuelEtp;
+  const showEffectifEtpButton =
+    Array.isArray(establishment.effectifMensuelEtp) &&
+    establishment.effectifMensuelEtp.length > 0 &&
+    !allEffectifsEtp;
+
+  const EffectifEtpDataComponents = !!effectifEtpData?.length
+    ? effectifEtpData.map(({ annee, mois, effectifs_mensuels }) => ({
+        name: `Effectif ETP ${getMonthName(mois)}`,
+        value: effectifs_mensuels,
+        nonEmptyValue: "",
+        sourceCustom: `Acoss / DSN ${getMonthName(mois)} ${annee}`,
+        hasNumberFormat: true
+      }))
+    : [
+        {
+          name: `Effectif ETP`
+        }
+      ];
   return (
     <section id="activity" className="data-sheet__section">
       <div className="section-header">
@@ -45,6 +69,7 @@ const EstablishmentActivity = ({ establishment }) => {
           sourceSi="Sirène"
         />
         <Subcategory
+          className="effectifs-establishment"
           subtitle="Effectifs"
           datas={[
             {
@@ -63,19 +88,29 @@ const EstablishmentActivity = ({ establishment }) => {
               sourceSi: "DSN",
               hasNumberFormat: true
             },
-            ...(establishment.effectifMensuelEtp
-              ? establishment.effectifMensuelEtp.map(
-                  ({ annee, mois, effectifs_mensuels }) => ({
-                    name: `Effectif ETP ${getMonthName(mois)}`,
-                    value: effectifs_mensuels,
-                    nonEmptyValue: "",
-                    sourceCustom: `Acoss / DSN ${getMonthName(mois)} ${annee}`,
-                    hasNumberFormat: true
-                  })
-                )
-              : [])
+            ...(isLoadingEffectifMensuelEtp
+              ? [
+                  {
+                    name: `Effectif ETP`,
+
+                    value: (
+                      <div>
+                        <span>Chargement en cours </span>
+                        <FontAwesomeIcon icon={faSpinner} spin />
+                      </div>
+                    )
+                  }
+                ]
+              : EffectifEtpDataComponents)
           ]}
         />
+        {showEffectifEtpButton && (
+          <AllEffectifsEtp
+            type="etablissement"
+            identifier={establishment.siret}
+            setAllEffectifsEtp={setAllEffectifsEtp}
+          />
+        )}
         <Subcategory
           subtitle="Développement économique"
           datas={[

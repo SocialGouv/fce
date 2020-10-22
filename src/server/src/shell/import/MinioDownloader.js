@@ -3,7 +3,7 @@ const process = require("process");
 const { format } = require("date-fns");
 const Minio = require("minio");
 
-const LOCAL_STORAGE_PATH = "/tmp/data";
+const LOCAL_STORAGE_PATH = "/mnt/data/export";
 const ARCHIVE_FOLDER = "archives";
 
 class MinioDownloader {

@@ -136,7 +136,7 @@ const config = {
       hasId: true,
     },
   ],
-  emailSalt: process.env.EMAIL_SALT,
+  emailSalt: process.env.EMAIL_SALT
 };
 
 if (process.env.HOST) {

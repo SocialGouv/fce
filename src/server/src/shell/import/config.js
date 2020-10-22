@@ -1,4 +1,4 @@
-const FILES_FOLDER = "/tmp/data";
+const FILES_FOLDER = "/mnt/data/export";
 const CONVERTER_XLSX_TO_CSV = "xlsxToCsv";
 const CONVERTER_JSON_TO_CSV = "jsonToCsv";
 

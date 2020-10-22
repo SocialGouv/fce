@@ -13,7 +13,7 @@ class Exporter {
     this.psql = PSQL_BASE_CMD;
     this.PG = require("../lib/postgres");
     this.exportDate = format(new Date(), "yyyy-MM-dd_HH-mm");
-    this.LOCAL_STORAGE_PATH = "/tmp/data";
+    this.LOCAL_STORAGE_PATH = "/mnt/data/export";
   }
 
   getConfig(key) {

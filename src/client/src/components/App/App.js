@@ -49,17 +49,29 @@ const App = () => {
                     <Maintenance />
                   ) : (
                     <Switch>
-                      <PrivateRoute exact path="/" component={Search} />
-                      <PrivateRoute exact path="/search" component={Search} />
+                      <PrivateRoute
+                        exact
+                        path="/"
+                        component={Search}
+                        history={history}
+                      />
+                      <PrivateRoute
+                        exact
+                        path="/search"
+                        component={Search}
+                        history={history}
+                      />
                       <PrivateRoute
                         exact
                         path="/enterprise/:siren"
                         component={Enterprise}
+                        history={history}
                       />
                       <PrivateRoute
                         exact
                         path="/establishment/:siret"
                         component={Enterprise}
+                        history={history}
                       />
                       <Route exact path="/login" render={() => <Login />} />
                       <Route

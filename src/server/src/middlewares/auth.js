@@ -21,7 +21,7 @@ export default async (req, res, next) => {
     console.error("auth middleware", e);
     res.status(401).json({
       success: false,
-      message: "Authentication failed"
+      message: "Authentication failed",
     });
   }
 };

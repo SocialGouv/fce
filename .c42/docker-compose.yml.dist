@@ -49,7 +49,7 @@ services:
       - ./src/frentreprise/:/frentreprise
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
-      - .c42/share/mntDataExport/:/mnt/data/export
+      - .c42/share/mntDataExport/:/tmp/data
       - .c42/share/tmp/:/tmp
     labels:
       - traefik.frontend.rule=Host:srv.fce.test
@@ -70,7 +70,7 @@ services:
       - default
     volumes:
       - .c42/tmp/pgdata:/var/lib/postgresql/data
-      - .c42/share/mntDataExport/:/mnt/data/export
+      - .c42/share/mntDataExport/:/tmp/data
       - .c42/share/tmp/:/tmp
     environment:
       POSTGRES_PASSWORD: root

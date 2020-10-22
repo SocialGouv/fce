@@ -3,7 +3,7 @@ const process = require("process");
 const fs = require("fs");
 const Minio = require("minio");
 
-const LOCAL_STORAGE_PATH = "/mnt/data/export";
+const LOCAL_STORAGE_PATH = "/tmp/data";
 
 class MinioUploader {
   constructor(config) {

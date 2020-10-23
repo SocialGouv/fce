@@ -9,6 +9,7 @@ import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import { formatAddress } from "../../../../../helpers/Address";
 import InfoBox from "../../../../shared/InfoBox";
+import { formatSiret } from "../../../../../helpers/utils";
 
 const EstablishmentHeader = ({
   enterprise,
@@ -38,7 +39,7 @@ const EstablishmentHeader = ({
         <div className="column is-4 data-sheet-header__siret">
           <span>SIRET : </span>
           <span>
-            <Value value={establishment.siret} empty="" />
+            <Value value={formatSiret(establishment.siret)} empty="" />
           </span>
         </div>
         <div className="column is-8">

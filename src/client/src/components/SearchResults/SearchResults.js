@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import Config from "../../services/Config";
 import { isActiveEstablishment } from "../../helpers/Search";
-import { joinNoFalsy } from "../../helpers/utils";
+import { formatSiret, joinNoFalsy } from "../../helpers/utils";
 import Value from "../shared/Value";
 import GenerateXlxs from "./Xlsx/GenerateXlsx";
 import SearchAwesomeTable from "../SearchAwesomeTable";
@@ -77,7 +77,7 @@ const SearchResults = ({
                   importantHead: true,
                   accessor: ({ siret: { raw: siret } }) =>
                     Value({
-                      value: siret,
+                      value: formatSiret(siret),
                       link: `/establishment/${siret}`
                     }),
                   link: ({ siret: { raw: siret } }) => `/establishment/${siret}`

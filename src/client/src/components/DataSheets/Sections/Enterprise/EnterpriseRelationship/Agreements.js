@@ -10,7 +10,7 @@ import Table from "../../SharedComponents/Table";
 import { sortAgreements } from "../../../../../helpers/Relationships";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { toI18nDate } from "../../../../../helpers/Date";
-import { formatNumber } from "../../../../../helpers/utils";
+import { formatNumber, formatSiret } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 
 import "./agreements.scss";
@@ -44,7 +44,7 @@ export const Agreements = ({
             <thead>
               <tr>
                 <th className="th">SIRET</th>
-                <th className="th table__center-cell">État</th>
+                <th className="th table-cell--center-cell">État</th>
                 <th className="th">Catégorie établissement</th>
                 <th className="th enterprise-agreements__count">
                   Nb accords déposés
@@ -60,8 +60,10 @@ export const Agreements = ({
                 ({ siret, categorie, etat, date, totalEtab }) => {
                   return (
                     <tr key={siret}>
-                      <td>{siret}</td>
-                      <td className="table__center-cell">
+                      <td className="table-cell--nowrap">
+                        {formatSiret(siret)}
+                      </td>
+                      <td className="table-cell--center-cell">
                         {etat && <State state={etat} />}
                       </td>
                       <td>{categorie}</td>

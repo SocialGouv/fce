@@ -12,6 +12,8 @@ exports.up = (pgm) => {
       default: pgm.func("current_timestamp"),
     },
     key: { type: "varchar(64)", notNull: true },
+  }, {
+    ifNotExists: true
   });
 };
 

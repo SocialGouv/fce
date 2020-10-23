@@ -36,6 +36,7 @@ export default class Auth {
     }).then(response => {
       if (response.data && response.data.success) {
         Local.set(AUTH_KEY, response.data.token);
+        Local.set(AUTH_USER_ID, response.data.saltedEmail);
       }
       return response;
     });

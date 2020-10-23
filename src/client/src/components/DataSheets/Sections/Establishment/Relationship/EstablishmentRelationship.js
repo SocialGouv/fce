@@ -16,10 +16,6 @@ const EstablishmentRelationship = ({
 }) => {
   const nbAccords = _get(accords, "total.count");
   const raisonSociale = getEnterpriseName(enterprise);
-  const nbAccordCat = Config.get("accords").reduce((acc, { key }) => {
-    const val = _get(accords, `${key}.count`);
-    return acc + val;
-  }, 0);
 
   return (
     <section id="relation" className="data-sheet__section">
@@ -59,41 +55,39 @@ const EstablishmentRelationship = ({
               <Data
                 name="Date de signature du dernier accord d'entreprise déposé"
                 value={_get(accords, "total.lastDate")}
-                emptyValue="-"
+                emptyValue="aucun accord connu"
                 columnClasses={["is-7", "is-5"]}
               />
-              {nbAccordCat > 0 && (
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Thématique</th>
-                      <th className="has-text-right">Nombre d{"'"}accords</th>
-                      <th>Date de signature du dernier accord</th>
+              <Table>
+                <thead>
+                  <tr>
+                    <th>Thématique</th>
+                    <th className="has-text-right">Nombre d{"'"}accords</th>
+                    <th>Date de signature du dernier accord</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Config.get("accords").map(({ key, value }) => (
+                    <tr key={`accord-${key}`}>
+                      <td className="col-width-40">{value}</td>
+                      <td className="has-text-right">
+                        <Value
+                          value={_get(accords, `${key}.count`)}
+                          empty="-"
+                          nonEmptyValues={[0, "0"]}
+                          hasNumberFormat
+                        />
+                      </td>
+                      <td>
+                        <Value
+                          value={_get(accords, `${key}.lastDate`)}
+                          empty="-"
+                        />
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {Config.get("accords").map(({ key, value }) => (
-                      <tr key={`accord-${key}`}>
-                        <td className="col-width-40">{value}</td>
-                        <td className="has-text-right">
-                          <Value
-                            value={_get(accords, `${key}.count`)}
-                            empty="-"
-                            nonEmptyValues={[0, "0"]}
-                            hasNumberFormat
-                          />
-                        </td>
-                        <td>
-                          <Value
-                            value={_get(accords, `${key}.lastDate`)}
-                            empty="-"
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              )}
+                  ))}
+                </tbody>
+              </Table>
 
               <a
                 href={

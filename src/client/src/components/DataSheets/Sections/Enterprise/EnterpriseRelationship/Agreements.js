@@ -35,7 +35,7 @@ export const Agreements = ({
       <Data
         name="Nb total d'accords déposés par les différents établissements de l'entreprise"
         value={nbAccords}
-        emptyValue="-"
+        emptyValue="aucun accord connu"
         columnClasses={["is-9", "is-3"]}
       />
       {nbAccords > 0 && (

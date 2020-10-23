@@ -1,7 +1,6 @@
 import { getFormatedDate } from "../../Helpers";
 
 export default ({ accords }) => {
-  console.log(accords);
   const totalAccords = accords.reduce(
     (acc, accord) => {
       accord.dt_sign = getFormatedDate(accord.dt_sign);

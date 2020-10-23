@@ -1,9 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, useHistory } from "react-router-dom";
 import Auth from "../Auth";
 
-const PrivateRoute = ({ component: Component, location, history, ...rest }) => {
+const PrivateRoute = ({ component: Component, location, ...rest }) => {
+  let history = useHistory();
+
   async function getTempAuthAndRedirect(credential, location) {
     await Auth.tempLogin(credential).then(() => {
       history.push(location.pathname);

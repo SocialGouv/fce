@@ -142,7 +142,6 @@ router.get("/askCredential", async function (req, res) {
   const saltedKey =
     api_key && saltedSha1(api_key, config.get("credential.token"));
 
-  console.log(saltedKey);
   try {
     const apiKeyExist = await apiKeys.getByKey(saltedKey);
     console.log(apiKeyExist);

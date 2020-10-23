@@ -8,7 +8,7 @@ import {
   faSortUp,
   faSortDown
 } from "@fortawesome/pro-duotone-svg-icons";
-import classname from "classnames";
+import classNames from "classnames";
 import Button from "../shared/Button";
 import LoadSpinner from "../shared/LoadSpinner";
 import Pager from "./Pager";
@@ -44,7 +44,7 @@ const SearchAwesomeTable = ({
           return (
             <th
               key={field.headName}
-              className={classname({
+              className={classNames({
                 at__head__th: true,
                 "at__head__th--important": field.importantHead,
                 "at__head__th--is-sortable": isSortableField
@@ -77,7 +77,12 @@ const SearchAwesomeTable = ({
             onClick={() => history.push(`/establishment/${element.siret.raw}`)}
           >
             {fields.map((field, index) => (
-              <td key={index} className="at__body__td">
+              <td
+                key={index}
+                className={classNames("at__body__td", {
+                  "table-cell--nowrap": index === 0
+                })}
+              >
                 {field.html ? (
                   <span
                     dangerouslySetInnerHTML={{

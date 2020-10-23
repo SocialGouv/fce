@@ -8,7 +8,7 @@ import SeeDetailsLink from "../../../SharedComponents/SeeDetailsLink";
 import Table from "../../../SharedComponents/Table";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
 import { getEstablishment } from "../../../../../../helpers/Enterprise";
-import { arraySum } from "../../../../../../helpers/utils";
+import { arraySum, formatSiret } from "../../../../../../helpers/utils";
 
 const Apprentissage = ({ apprentissage, etablissements }) => {
   const total = apprentissage
@@ -38,7 +38,7 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
             <thead>
               <tr>
                 <th className="th">Siret</th>
-                <th className="th table__center-cell">État</th>
+                <th className="th table-cell--center-cell">État</th>
                 <th className="th">Commune</th>
                 <th className="th has-text-right">Nombre de contrats</th>
                 <th className="th see-details"></th>
@@ -59,8 +59,8 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
 
                 return (
                   <tr key={siret}>
-                    <td>{siret}</td>
-                    <td className="table__center-cell">
+                    <td className="table-cell--nowrap">{formatSiret(siret)}</td>
+                    <td className="table-cell--center-cell">
                       {etat && <State state={etat} />}
                     </td>
                     <td>{`${codePostal ? codePostal : ""} ${

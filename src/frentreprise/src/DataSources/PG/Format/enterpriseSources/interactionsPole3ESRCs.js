@@ -1,6 +1,7 @@
 import { getFormatedDate } from "../../Helpers";
 
 export default ({ interactionsPole3ESRCs }) => {
+  console.log("Debug compilation")
   const interactions = interactionsPole3ESRCs.map((interaction) => {
     return {
       siret: interaction.siret,

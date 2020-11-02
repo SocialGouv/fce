@@ -11,7 +11,7 @@ import Finances from "./Finances";
 import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
 import { getMonthName } from "../../../../../helpers/Date";
-import { formatTva } from "../../../../../helpers/utils";
+import { formatSiret, formatTva } from "../../../../../helpers/utils";
 import AllEffectifsEtpButton from "../../../../../containers/AllEffectifsEtpButton";
 
 const EnterpriseInfos = ({ enterprise, headOffice }) => {
@@ -70,7 +70,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
           <Data name="Catégorie" value={enterprise.categorie_entreprise} />
           <Data
             name="Siège social (SIRET)"
-            value={enterprise.siret_siege_social}
+            value={formatSiret(enterprise.siret_siege_social)}
           />
           <Data
             name="Etablissements"

@@ -53,6 +53,17 @@ a {
 
 .table {
     @extend .is-striped;
+
+    &-cell {
+        &--center-cell {
+            text-align: center;
+        }
+
+        &--nowrap,
+        &--nowrap a {
+            white-space: nowrap;
+        }
+    }
 }
 
 .container {

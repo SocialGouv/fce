@@ -18,6 +18,7 @@ import {
 import InfoBox from "../../../../shared/InfoBox";
 import Button from "../../../../shared/Button";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
+import { formatSiren } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 
 const EnterpriseHeader = ({
@@ -56,7 +57,7 @@ const EnterpriseHeader = ({
           <div className="column is-4 data-sheet-header__siren">
             <span>SIREN : </span>
             <span>
-              <Value value={enterprise.siren} empty="" />
+              <Value value={formatSiren(enterprise.siren)} empty="" />
             </span>
           </div>
           <div className="column is-8 data-sheet-header__enterprise-button">

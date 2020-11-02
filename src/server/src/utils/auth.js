@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import emailValidator from "email-validator";
 import util from "util";
 import AuthRequestsModel from "../models/AuthRequests";
+import AuthTempModel from "../models/AuthTemp";
 
 export default class Auth {
   static generateToken(user) {
@@ -14,6 +15,21 @@ export default class Auth {
     return jwt.sign(user, config.jwt.secret, {
       expiresIn: config.jwt.expire,
     });
+  }
+
+  static generateTemporaryToken(user) {
+    user = { email: "temporary" + new Date().getTime() };
+
+    return jwt.sign(user, config.jwt.secret, {
+      expiresIn: config.jwt.expireTemporary,
+    });
+  }
+
+  static async askCredential() {
+    const authTempModel = new AuthTempModel();
+
+    const { id } = await authTempModel.create();
+    return id;
   }
 
   static async checkToken(token) {
@@ -82,6 +98,21 @@ export default class Auth {
     };
   }
 
+  static async useCredential(credential) {
+    const authTempModel = new AuthTempModel();
+    const authTemp = await authTempModel.getById(credential);
+
+    if (!authTemp || isAlreadyActivated(authTemp.activated)) {
+      return {
+        isValidCredential: false,
+        failureMessage:
+          "Votre lien a déjà été utilisé ou a expiré, veuillez régénérer un lien.",
+      };
+    }
+    authTempModel.desactivate(credential);
+    return { isValidCredential: true };
+  }
+
   static generateCode(email) {
     const authRequests = new AuthRequestsModel();
     const code = generateRandomCode();
@@ -112,6 +143,10 @@ const isExpired = (date, expire) => {
   const now = timestampInSecond(Date.now());
 
   return created + +expire < now;
+};
+
+const isAlreadyActivated = (activated) => {
+  return !activated;
 };
 
 const timestampInSecond = (timestampInMillisecond) =>

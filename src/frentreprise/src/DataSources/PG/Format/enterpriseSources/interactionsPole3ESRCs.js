@@ -1,13 +1,14 @@
 import { getFormatedDate } from "../../Helpers";
 
 export default ({ interactionsPole3ESRCs }) => {
+  console.log("Debug compilation")
   const interactions = interactionsPole3ESRCs.map((interaction) => {
     return {
       siret: interaction.siret,
       date: getFormatedDate(interaction.date),
       pole: "3E_SRC",
       unite: `SRC ${
-        interaction.region__name && interaction.region__name.trim()
+        interaction.libelle_region && interaction.libelle_region.trim()
       }`,
       type: interaction.type_controle && interaction.type_controle.trim(),
       agent: null,
@@ -22,5 +23,5 @@ export default ({ interactionsPole3ESRCs }) => {
     };
   });
 
-  return { interactions_3E_SEER: interactions };
+  return { interactions_3E_SRC: interactions };
 };

@@ -7,9 +7,13 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
   let history = useHistory();
 
   async function getTempAuthAndRedirect(credential, location) {
-    await Auth.tempLogin(credential).then(() => {
-      history.push(location.pathname);
-    });
+    await Auth.tempLogin(credential)
+      .then(() => {
+        history.push(location.pathname);
+      })
+      .catch(e => {
+        history.push("/login");
+      });
   }
 
   const checkAuthorization = () => {

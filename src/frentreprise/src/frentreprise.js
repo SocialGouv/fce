@@ -17,6 +17,8 @@ const _ = {
   isValidDataSources: Symbol("_isValidDataSources"),
 };
 
+const DEBUG = false;
+
 class frentreprise {
   constructor() {
     this.EntrepriseModel = Entreprise;
@@ -66,9 +68,11 @@ class frentreprise {
 
     await this[_.askDataSource]("getSIREN", SIREN, dataSourceName).then(
       (result) => {
-        console.log(
-          `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
-        );
+        if (DEBUG) {
+          console.log(
+            `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
+          );
+        }
 
         entreprise.updateData({
           ...result.data,
@@ -175,13 +179,15 @@ class frentreprise {
           : data;
       const success = dataSource.source[`${method}Check`](cleanedData);
 
-      console.log(
-        `Got response for [${method}] from dataSource named ${
-          dataSource.name
-        } about request : ${JSON.stringify(request)}, status : ${
-          success ? "Success" : "Failed"
-        }`
-      );
+      if (DEBUG) {
+        console.log(
+          `Got response for [${method}] from dataSource named ${
+            dataSource.name
+          } about request : ${JSON.stringify(request)}, status : ${
+            success ? "Success" : "Failed"
+          }`
+        );
+      }
 
       return {
         data: cleanedData,

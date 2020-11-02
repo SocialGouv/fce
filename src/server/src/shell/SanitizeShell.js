@@ -9,7 +9,7 @@ class SanitizeShell extends Shell {
     return `SELECT ${fields}, count(*) FROM ${table} GROUP BY ${fields} HAVING count(*) > 1`.toString();
   }
 
-  async getDeleteQuery(hasId, fields, table) {
+  async getDeleteQuery(hasId, fields, table, filterField = null) {
     const baseRequest = `DELETE FROM ${table} a USING ${table} b WHERE a.id < b.id AND `;
 
     if (hasId) {
@@ -18,6 +18,9 @@ class SanitizeShell extends Shell {
         requestFragment.push(`a.${field} = b.${field}`);
       });
 
+      if (filterField) {
+        requestFragment.push(`a.${filterField} <= b.${filterField}`)
+      }
       console.log(`${baseRequest}${requestFragment.join(" AND ")};`);
 
       return `${baseRequest}${requestFragment.join(" AND ")};`.toString();
@@ -72,7 +75,8 @@ class SanitizeShell extends Shell {
               await this.getDeleteQuery(
                 tableInfo.hasId,
                 tableInfo.fields,
-                tableInfo.table
+                tableInfo.table,
+                tableInfo.filterField ? tableInfo.filterField : null
               )
             ).catch(error => {
               console.error(error);

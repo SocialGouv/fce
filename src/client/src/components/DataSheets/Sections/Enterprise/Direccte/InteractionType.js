@@ -4,6 +4,7 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
 import Table from "../../SharedComponents/Table";
+import { formatSiret } from "../../../../../helpers/utils";
 
 const InteractionType = ({ type, interactions }) => {
   const isControl = type === "control";
@@ -21,7 +22,7 @@ const InteractionType = ({ type, interactions }) => {
           <thead>
             <tr>
               <th className="th">SIRET</th>
-              <th className="th table__center-cell">État</th>
+              <th className="th table-cell--center-cell">État</th>
               <th className="th">Commune</th>
               <th className="th">Date dernier contrôle connu</th>
               <th className="th">Pôle</th>
@@ -31,8 +32,10 @@ const InteractionType = ({ type, interactions }) => {
           <tbody>
             {interactions.map(etab => (
               <tr key={etab.siret + etab.pole}>
-                <td>{etab.siret}</td>
-                <td className="table__center-cell">
+                <td className="table-cell--nowrap">
+                  {formatSiret(etab.siret)}
+                </td>
+                <td className="table-cell--center-cell">
                   {etab.etat && <State state={etab.etat} />}
                 </td>
                 <td>{etab.commune}</td>

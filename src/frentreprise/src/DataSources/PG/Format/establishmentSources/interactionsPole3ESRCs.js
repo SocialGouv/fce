@@ -6,7 +6,7 @@ export default ({ interactionsPole3ESRCs }) => {
       date: getFormatedDate(interaction.date),
       pole: "3E_SRC",
       unite: `SRC ${
-        interaction.region__name && interaction.region__name.trim()
+        interaction.libelle_region && interaction.libelle_region.trim()
       }`,
       type: interaction.type_controle && interaction.type_controle.trim(),
       agent: null,

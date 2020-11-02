@@ -11,7 +11,7 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
       .then(() => {
         history.push(location.pathname);
       })
-      .catch(e => {
+      .catch(() => {
         history.push("/login");
       });
   }

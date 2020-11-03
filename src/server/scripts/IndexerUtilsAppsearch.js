@@ -18,7 +18,7 @@ const startScriptTime = new Date();
 
 class IndexerUtilsAppsearch {
   constructor(query, type) {
-    this.mainProcess(query).catch(error => console.log(error));
+    this.mainProcess(query).catch((error) => console.log(error));
     this.type = type;
   }
   async mainProcess(query) {
@@ -31,7 +31,7 @@ class IndexerUtilsAppsearch {
     console.log("Start process Data");
     tasks.push(
       limit(() =>
-        this.processData(establishmentResultCursor, PgClient).catch(error =>
+        this.processData(establishmentResultCursor, PgClient).catch((error) =>
           console.log(error)
         )
       )
@@ -51,13 +51,14 @@ class IndexerUtilsAppsearch {
           if (result.length !== 0) {
             tasks.push(
               limit(() =>
-                this.processData(establishmentResultCursor, PgClient).catch(
-                  error => console.log(error)
-                )
+                this.processData(
+                  establishmentResultCursor,
+                  PgClient
+                ).catch((error) => console.log(error))
               )
             );
             this.insertBulk(result)
-              .then(result => {
+              .then((result) => {
                 console.log(
                   "indexing...",
                   "active process:",
@@ -67,18 +68,18 @@ class IndexerUtilsAppsearch {
                 );
                 client
                   .indexDocuments(engineName, result)
-                  .then(response => {
+                  .then((response) => {
                     //Get execution time for getting row set
                     const end = new Date() - start;
                     console.info("Row set execution time: %dms", end);
                     resolve();
                   })
-                  .catch(error => {
+                  .catch((error) => {
                     console.log(error);
                     reject();
                   });
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
           } else {
@@ -98,7 +99,7 @@ class IndexerUtilsAppsearch {
                     PgClient.release();
                     resolve();
                   })
-                  .catch(error => console.log(error));
+                  .catch((error) => console.log(error));
               } else {
                 PgClient.release();
                 resolve();
@@ -121,9 +122,14 @@ class IndexerUtilsAppsearch {
         trancheeffectifsetablissement,
         etablissementsiege,
         etatadministratifetablissement,
+        numerovoieetablissement,
+        indicerepetitionetablissement,
+        typevoieetablissement,
+        libellevoieetablissement,
+        complementadresseetablissement,
+        libellecommuneetablissement,
         codepostaletablissement,
         codecommuneetablissement,
-        libellecommuneetablissement,
         activiteprincipaleetablissement,
         activiteprincipaleetablissement_libelle,
         denominationusuelleetablissement,
@@ -138,7 +144,7 @@ class IndexerUtilsAppsearch {
         entreprise_denominationusuelle2unitelegale,
         entreprise_denominationusuelle3unitelegale,
         entreprise_prenom1unitelegale,
-        entreprise_nomusageunitelegale
+        entreprise_nomusageunitelegale,
       }) => {
         let enterprise_name = entreprise_denominationunitelegale;
 
@@ -153,6 +159,16 @@ class IndexerUtilsAppsearch {
             activiteprincipaleetablissement.slice(0, 2)) ||
           null;
 
+        const numeroVoie = numerovoieetablissement || "";
+        const indiceRepetition = indicerepetitionetablissement || "";
+        const typeVoie = typevoieetablissement
+          ? ` ${typevoieetablissement}`
+          : "";
+        const libelleVoie = libellevoieetablissement
+          ? ` ${libellevoieetablissement}`
+          : "";
+        const adresse = `${numeroVoie}${indiceRepetition}${typeVoie}${libelleVoie}`;
+
         const departement =
           (codepostaletablissement && codepostaletablissement.slice(0, 2)) ||
           null;
@@ -166,33 +182,35 @@ class IndexerUtilsAppsearch {
 
         bulkChunk.push({
           id: siret,
-          siren: siren,
-          siret: siret,
-          enterprise_name: enterprise_name,
-          entreprise_denominationunitelegale: entreprise_denominationunitelegale,
-          establishment_name: establishment_name,
-          trancheeffectifsetablissement: trancheeffectifsetablissement,
-          etablissementsiege: etablissementsiege,
-          etatadministratifetablissement: etatadministratifetablissement,
-          codepostaletablissement: codepostaletablissement,
-          departement: departement,
-          libellecommuneetablissement: libellecommuneetablissement,
-          naf_division: naf_division,
-          codecommuneetablissement: codecommuneetablissement,
-          activiteprincipaleetablissement: activiteprincipaleetablissement,
-          activiteprincipaleetablissement_libelle: activiteprincipaleetablissement_libelle,
-          denominationusuelleetablissement: denominationusuelleetablissement,
-          enseigne1etablissement: enseigne1etablissement,
-          enseigne2etablissement: enseigne2etablissement,
-          enseigne3etablissement: enseigne3etablissement,
-          entreprise_denominationusuelle1unitelegale: entreprise_denominationusuelle1unitelegale,
-          entreprise_denominationusuelle2unitelegale: entreprise_denominationusuelle2unitelegale,
-          entreprise_denominationusuelle3unitelegale: entreprise_denominationusuelle3unitelegale,
-          entreprise_prenomusuelunitelegale: entreprise_prenomusuelunitelegale,
-          entreprise_nomunitelegale: entreprise_nomunitelegale,
-          entreprise_prenom1unitelegale: entreprise_prenom1unitelegale,
-          entreprise_nomusageunitelegale: entreprise_nomusageunitelegale,
-          entreprise_categoriejuridiqueunitelegale: entreprise_categoriejuridiqueunitelegale
+          siren,
+          siret,
+          enterprise_name,
+          entreprise_denominationunitelegale,
+          establishment_name,
+          trancheeffectifsetablissement,
+          etablissementsiege,
+          etatadministratifetablissement,
+          departement,
+          adresse,
+          complementadresseetablissement,
+          libellecommuneetablissement,
+          codepostaletablissement,
+          naf_division,
+          codecommuneetablissement,
+          activiteprincipaleetablissement,
+          activiteprincipaleetablissement_libelle,
+          denominationusuelleetablissement,
+          enseigne1etablissement,
+          enseigne2etablissement,
+          enseigne3etablissement,
+          entreprise_denominationusuelle1unitelegale,
+          entreprise_denominationusuelle2unitelegale,
+          entreprise_denominationusuelle3unitelegale,
+          entreprise_prenomusuelunitelegale,
+          entreprise_nomunitelegale,
+          entreprise_prenom1unitelegale,
+          entreprise_nomusageunitelegale,
+          entreprise_categoriejuridiqueunitelegale,
         });
       }
     );

@@ -156,7 +156,10 @@ router.post("/downloadXlsx", withAuth, async function (req, res) {
       categorie_etablissement: cleanTmpData.etablissementsiege
         ? "Siège social"
         : "Établissement",
+      adresse: cleanTmpData.adresse,
+      "complément d'adresse": cleanTmpData.complementadresseetablissement,
       code_postal: cleanTmpData.codepostaletablissement,
+      ville: cleanTmpData.libellecommuneetablissement,
       effectif:
         xlsxConfig.inseeSizeRanges[cleanTmpData.trancheeffectifsetablissement],
       activite:

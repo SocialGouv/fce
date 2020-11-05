@@ -140,6 +140,11 @@ const config = {
       table: "interactions_pole_3e",
       hasId: true,
     },
+    {
+      fields: ["siret", "mois"],
+      table: "etablissements_dsn_effectif",
+      hasId: true,
+    },
   ],
   emailSalt: process.env.EMAIL_SALT,
 };

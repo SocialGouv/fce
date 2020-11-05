@@ -7,11 +7,17 @@ import { getSuccession } from "../../../../../helpers/Establishment";
 import { getMonthName } from "../../../../../helpers/Date";
 import Subcategory from "../../SharedComponents/Subcategory";
 import AllEffectifsEtp from "../../../../../containers/AllEffectifsEtpButton";
+import AllEffectifsDsn from "../../../../../containers/AllEffectifsDsnButton";
+import _get from "lodash.get";
+import Table from "../../SharedComponents/Table";
+import Value from "../../../../shared/Value";
+import Data from "../../SharedComponents/Data";
 
 import "./establishmentActivity.scss";
 
 const EstablishmentActivity = ({ establishment }) => {
   const [allEffectifsEtp, setAllEffectifsEtp] = useState(null);
+  const [allEffectifDsn, setAllEffectifsDsn] = useState(null);
 
   const succession = getSuccession(
     establishment.successeur,
@@ -72,22 +78,6 @@ const EstablishmentActivity = ({ establishment }) => {
           className="effectifs-establishment"
           subtitle="Effectifs"
           datas={[
-            {
-              name: "Tranche Effectif INSEE",
-              value: Config.get("inseeSizeRanges")[
-                establishment.tranche_effectif_insee
-              ],
-              nonEmptyValue: "",
-              sourceSi: "Sirène-year",
-              sourceDate: establishment.annee_tranche_effectif_insee
-            },
-            {
-              name: "Effectif physique",
-              value: establishment.dernier_effectif_physique,
-              nonEmptyValue: "",
-              sourceSi: "DSN",
-              hasNumberFormat: true
-            },
             ...(isLoadingEffectifMensuelEtp
               ? [
                   {
@@ -103,7 +93,81 @@ const EstablishmentActivity = ({ establishment }) => {
                 ]
               : EffectifEtpDataComponents)
           ]}
-        />
+        >
+          <Data
+            name="Tranche Effectif INSEE"
+            value={
+              Config.get("inseeSizeRanges")[
+                establishment.tranche_effectif_insee
+              ]
+            }
+            nonEmptyValue=""
+            sourceSi="Sirène-year"
+            sourceDate={establishment.annee_tranche_effectif_insee}
+          />
+          <Data
+            name="Effectif physique"
+            value={establishment.dernier_effectif_physique}
+            nonEmptyValue=""
+            sourceSi="DSN"
+            hasNumberFormat={true}
+          />
+          {!allEffectifDsn && (
+            <AllEffectifsDsn
+              type="etablissement"
+              identifier={establishment.siret}
+              setAllEffectifsDsn={setAllEffectifsDsn}
+            />
+          )}
+          {allEffectifDsn && (
+            <Table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Effectif Total</th>
+                  <th>Homme</th>
+                  <th>Femme</th>
+                  <th>CDD</th>
+                  <th>CDI</th>
+                  <th>Total Interim</th>
+                  <th>CDI Inter</th>
+                  <th>Inter mission</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allEffectifDsn.map(effectif => (
+                  <tr key={`effectif-${effectif?.id}`}>
+                    <td>{effectif?.mois}</td>
+                    <td>
+                      <Value value={effectif?.eff} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.hommes} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.femmes} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.cdd} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.cdi} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.interim} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.cdi_inter} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.inter_mission} empty="-" />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
+        </Subcategory>
         {showEffectifEtpButton && (
           <AllEffectifsEtp
             type="etablissement"

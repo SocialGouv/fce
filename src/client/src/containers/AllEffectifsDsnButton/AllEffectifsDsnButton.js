@@ -18,7 +18,6 @@ const AllEffectifsDsnButton = ({ type, identifier, setAllEffectifsDsn }) => {
     Http.get(`/dsn-effectif/${type}/${identifier}`)
       .then(res => {
         setIsLoading(false);
-        console.log(res.data.data);
         setAllEffectifsDsn(res.data?.data);
       })
       .catch(e => {

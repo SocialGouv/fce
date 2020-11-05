@@ -3,7 +3,6 @@ import express from "express";
 import withAuth from "../middlewares/auth";
 import Effectif from "../models/Effectif";
 import { eachMonthOfInterval, subMonths, format } from "date-fns";
-import _clone from "lodash.clonedeep";
 
 const monthInitial = {
   eff: 0,

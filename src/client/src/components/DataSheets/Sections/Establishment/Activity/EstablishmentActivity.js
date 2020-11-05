@@ -8,7 +8,6 @@ import { getMonthName } from "../../../../../helpers/Date";
 import Subcategory from "../../SharedComponents/Subcategory";
 import AllEffectifsEtp from "../../../../../containers/AllEffectifsEtpButton";
 import AllEffectifsDsn from "../../../../../containers/AllEffectifsDsnButton";
-import _get from "lodash.get";
 import Table from "../../SharedComponents/Table";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";

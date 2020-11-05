@@ -5,11 +5,10 @@ import Config from "../../services/Config";
 import { isActiveEstablishment } from "../../helpers/Search";
 import { formatSiret, joinNoFalsy } from "../../helpers/utils";
 import Value from "../shared/Value";
-import GenerateXlxs from "./Xlsx/GenerateXlsx";
 import SearchAwesomeTable from "../SearchAwesomeTable";
 import TableCellState from "../SearchAwesomeTable/TableCellState";
 import Button from "../shared/Button";
-import { faFileExcel } from "@fortawesome/pro-solid-svg-icons";
+import { faFileExcel, faSpinnerThird } from "@fortawesome/pro-solid-svg-icons";
 
 import "./searchResults.scss";
 
@@ -18,18 +17,14 @@ const SearchResults = ({
   pagination,
   isLoading,
   sort,
-  currentSort
+  currentSort,
+  generateXlsx,
+  downloadXlsxStatus
 }) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
   };
-
-  function generateXlxs() {
-    if (results && results.length) {
-      return new GenerateXlxs(pagination).download();
-    }
-  }
 
   return (
     <div className="app-search-results container is-fullhd">
@@ -44,10 +39,15 @@ const SearchResults = ({
           </div>
           <div className="column is-2 app-search-results__export-section">
             <Button
-              value="Export Excel"
+              value={
+                downloadXlsxStatus.isLoading
+                  ? "Export en cours"
+                  : "Export Excel"
+              }
               buttonClasses={["app-search-results__export-button"]}
-              icon={faFileExcel}
-              callback={generateXlxs}
+              icon={downloadXlsxStatus.isLoading ? faSpinnerThird : faFileExcel}
+              faProps={{ spin: downloadXlsxStatus.isLoading }}
+              callback={() => generateXlsx(pagination)}
             />
           </div>
         </div>
@@ -177,7 +177,9 @@ SearchResults.propTypes = {
   pagination: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   sort: PropTypes.func.isRequired,
-  currentSort: PropTypes.object.isRequired
+  currentSort: PropTypes.object.isRequired,
+  generateXlsx: PropTypes.func.isRequired,
+  downloadXlsxStatus: PropTypes.object.isRequired
 };
 
 export default withRouter(SearchResults);

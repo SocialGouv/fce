@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import downloadjs from "downloadjs";
 import { connect } from "react-redux";
+import moment from "moment";
 import {
   setSearchTerm,
   setSearchFilters,
@@ -30,6 +32,12 @@ const Search = ({
   setSearchError,
   resetSearch
 }) => {
+  const [downloadXlsxStatus, setDownloadXlsxStatus] = useState({
+    isLoading: false,
+    success: false,
+    error: null
+  });
+
   const allFiltersOptions = {
     ...(search.filters.siege && { etablissementsiege: "true" }),
     ...(search.filters.state.length === 1 && {
@@ -99,11 +107,13 @@ const Search = ({
     client
       .search(formatSearchInput(query), options)
       .then(resultList => {
-        setSearchResults(resultList);
+        setSearchResults(resultList, options.filters);
         setSearchIsLoading(false);
       })
       .catch(error => {
-        setSearchError(error);
+        setSearchError(
+          `Une erreur est survenue lors de la communication avec l{"'"}API`
+        );
         setSearchIsLoading(false);
         console.error(`error: ${error}`);
       });
@@ -225,6 +235,50 @@ const Search = ({
     });
   };
 
+  const generateXlsx = () => {
+    setDownloadXlsxStatus({ isLoading: true, succes: false, error: null });
+
+    const exportDate = moment().format("YYYY-MM-DD_HH-m-s");
+
+    Http.post(
+      "/downloadXlsx",
+      {
+        payload: {
+          totalItems: search.results.info.meta.page.total_results,
+          searchTerm: search.term,
+          filters: search.results.resultsFilters
+        }
+      },
+      { responseType: "blob" }
+    )
+      .then(response => {
+        setDownloadXlsxStatus({
+          isLoading: false,
+          succes: true,
+          error: null
+        });
+        if (response.data && response.data) {
+          const fileName = `FceExport-${exportDate}.xlsx`;
+
+          return downloadjs(
+            new Blob([response.data], {
+              type: response.headers["content-type"]
+            }),
+            fileName,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          );
+        }
+      })
+      .catch(async error => {
+        const errorMessage = await error.response.data.text();
+        setDownloadXlsxStatus({
+          isLoading: false,
+          succes: false,
+          error: errorMessage
+        });
+      });
+  };
+
   useEffect(() => {
     if (search.term) {
       sendRequest(search.term, options);
@@ -234,7 +288,7 @@ const Search = ({
   return (
     <SearchView
       isLoading={search.isLoading}
-      error={search.error}
+      error={search.error || downloadXlsxStatus.error}
       resultList={search.results}
       sendRequest={sendRequest}
       searchTerm={search.term}
@@ -249,6 +303,8 @@ const Search = ({
       options={options}
       divisionsNaf={divisionsNaf}
       loadLocations={loadLocations}
+      generateXlsx={generateXlsx}
+      downloadXlsxStatus={downloadXlsxStatus}
     />
   );
 };
@@ -270,8 +326,8 @@ const mapDispatchToProps = dispatch => {
     setSearchSort: sort => {
       return dispatch(setSearchSort(sort));
     },
-    setSearchResults: results => {
-      dispatch(setSearchResults(results));
+    setSearchResults: (results, resultsFilters) => {
+      dispatch(setSearchResults(results, resultsFilters));
     },
     setSearchIsLoading: isLoading => {
       dispatch(setSearchIsLoading(isLoading));

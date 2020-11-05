@@ -8,6 +8,7 @@ import "./button.scss";
 const Button = ({
   value = "Valider",
   icon = null,
+  faProps = {},
   rowReverse = false,
   isDisabled = false,
   iconClasses,
@@ -30,7 +31,11 @@ const Button = ({
             `button-icon--${rowReverse ? "before" : "after"}-label`
           ])}
         >
-          <FontAwesomeIcon className={classNames(iconClasses)} icon={icon} />
+          <FontAwesomeIcon
+            className={classNames(iconClasses)}
+            icon={icon}
+            {...faProps}
+          />
         </span>
       )}
       {!rowReverse && <span>{value}</span>}
@@ -41,6 +46,7 @@ const Button = ({
 Button.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   icon: PropTypes.object,
+  faProps: PropTypes.object,
   buttonClasses: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   callback: PropTypes.func,
   rowReverse: PropTypes.bool,

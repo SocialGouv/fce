@@ -34,14 +34,18 @@ const Enterprise = ({
   const loadMethod = isEnterprise ? loadEntreprise : loadEstablishment;
 
   useEffect(() => {
-    if (state === Config.get("state.unauthorize")) {
-      setCurrentUrl("/login");
-    }
     if (mustLoadEntity(identifier)) {
       loadEntity(loadMethod, identifier);
       setCurrentUrl(match.url);
     }
   }, [match]);
+
+  useEffect(() => {
+    if (state === Config.get("state.unauthorize")) {
+      setCurrentUrl("/login");
+      history.push("/login");
+    }
+  }, [state]);
 
   if (state === Config.get("state.error")) {
     return <Error404 />;

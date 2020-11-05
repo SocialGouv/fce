@@ -5,14 +5,14 @@ export default class Establishment extends Model {
     return this.db
       .query(
         `SELECT
-        numerovoieetablissement,
-        indicerepetitionetablissement,
-        typevoieetablissement,
-        libellevoieetablissement,
-        complementadresseetablissement
+          numerovoieetablissement,
+          indicerepetitionetablissement,
+          typevoieetablissement,
+          libellevoieetablissement,
+          complementadresseetablissement
         FROM etablissements
-        WHERE siret = '${siret}'`,
-        [],
+        WHERE siret = $1`,
+        [siret],
         false
       )
       .then((res) => {

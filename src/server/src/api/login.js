@@ -5,6 +5,7 @@ import Mail from "../utils/mail";
 import authRequestCodeTpl from "../templates/email/authRequestCode";
 import Auth from "../utils/auth";
 import MatomoUserId from "../models/MatomoUserId";
+import MailingList from "../models/MailingList";
 import ApiKeys from "../models/ApiKeys";
 
 const router = express.Router();
@@ -58,8 +59,13 @@ router.post("/requestAuthCode", async (req, res) => {
 
 router.post("/login", async function (req, res) {
   const userId = new MatomoUserId();
+  const mailingList = new MailingList();
+
   const { code, email } = req.body;
   const saltedEmail = email && saltedSha1(email, config.get("emailSalt"));
+
+  const addEmailResult = await mailingList.addEmail(email);
+  console.log({ addEmailResult });
 
   try {
     const { isValidCode, failureMessage } = await Auth.validateCode(

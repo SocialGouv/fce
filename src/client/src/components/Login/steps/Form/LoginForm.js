@@ -54,6 +54,7 @@ const LoginForm = ({
               errorMessage={errorMessage}
               loading={loading}
               hasError={hasError}
+              showNewsletterSignup
             />
             <div className="login__links">
               <Button

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import ClassNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,16 +12,43 @@ export const StepForm = ({
   onChange,
   buttonText = "Me connecter",
   errorMessage = "",
+  showNewsletterSignup = false,
   hasError = false,
   loading = false,
   onSubmit
 }) => {
+  const [isSubscribedToNewsletter, setIsSubscribedToNewsletter] = useState(
+    false
+  );
+
   return (
     <form onSubmit={onSubmit}>
       {hasError && (
         <div className="login__notif login__notif--error shake-horizontal">
           <FontAwesomeIcon icon={faExclamationTriangle} />
           <p>{errorMessage}</p>
+        </div>
+      )}
+      {showNewsletterSignup && (
+        <div className="login__newsletter">
+          <input
+            id="newsletter"
+            name="newsletter"
+            type="checkbox"
+            checked={isSubscribedToNewsletter}
+            onChange={() =>
+              setIsSubscribedToNewsletter(!isSubscribedToNewsletter)
+            }
+          />
+          <label htmlFor="newsletter">
+            <strong>Je souhaite recevoir des informations par email.</strong>
+          </label>
+          {isSubscribedToNewsletter && (
+            <div>
+              Dès votre connexion votre addresse email sera ajoutée à notre
+              liste de diffusion.
+            </div>
+          )}
         </div>
       )}
       <div className="field">
@@ -56,6 +83,7 @@ StepForm.propTypes = {
   buttonText: PropTypes.string,
   errorMessage: PropTypes.string,
   hasError: PropTypes.bool,
+  showNewsletterSignup: PropTypes.bool,
   loading: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired

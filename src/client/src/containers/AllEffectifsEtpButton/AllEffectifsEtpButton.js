@@ -12,8 +12,8 @@ const AllEffectifsEtpButton = ({ type, identifier, setAllEffectifsEtp }) => {
     setAllEffectifsEtp,
     setIsLoading
   }) => e => {
-    setIsLoading(true);
     e.preventDefault();
+    setIsLoading(true);
 
     Http.get(`/etp-staff/${type}/${identifier}`)
       .then(res => {

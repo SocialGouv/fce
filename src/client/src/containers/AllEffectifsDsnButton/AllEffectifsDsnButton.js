@@ -12,8 +12,9 @@ const AllEffectifsDsnButton = ({ type, identifier, setAllEffectifsDsn }) => {
     setAllEffectifsDsn,
     setIsLoading
   }) => e => {
-    setIsLoading(true);
     e.preventDefault();
+
+    setIsLoading(true);
 
     Http.get(`/dsn-effectif/${type}/${identifier}`)
       .then(res => {

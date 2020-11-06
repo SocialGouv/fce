@@ -38,15 +38,15 @@ router.get("/dsn-effectif/:type/:identifier", withAuth, async (req, res) => {
   }
 
   try {
-    let lastYearEffectif = await effectifs.search(identifier);
+    const allYearEffectif = await effectifs.search(identifier);
 
     const lastTwelveMonthsToFetch = eachMonthOfInterval({
       start: subMonths(new Date(), 12),
       end: new Date(),
     });
 
-    lastYearEffectif = lastTwelveMonthsToFetch.map((month) => {
-      const corespondingMonth = lastYearEffectif.filter(
+    const lastYearEffectif = lastTwelveMonthsToFetch.map((month) => {
+      const corespondingMonth = allYearEffectif.filter(
         (effectif) => effectif.mois === format(month, "yyyy-MM")
       );
 

@@ -21,16 +21,16 @@ router.post("/unsubscribe", async (req, res) => {
 
     return res.send({
       success: true,
-      message: "Cet email n'est plus abonné à notre lettre d'information.",
+      message: "Vous ne recevrez plus d'information à propos de FCE.",
     });
   } catch (e) {
     console.error("/unsubscribe - Error :", e);
 
-    return res
-      .status(500)
-      .send(
-        "Nous sommes désolés, une erreur est survenue. Veuillez réessayer ultérieurement."
-      );
+    return res.status(500).json({
+      success: false,
+      error:
+        "Nous sommes désolés, une erreur est survenue. Veuillez réessayer ultérieurement.",
+    });
   }
 });
 

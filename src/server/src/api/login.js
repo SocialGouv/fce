@@ -81,8 +81,6 @@ router.post("/login", async function (req, res) {
 
       console.log(`Email address ${email} was added to the mailing list.`);
 
-      // UNSUBSCRIBE LINK WITH COLOR !!!
-      // UNSUBSCRIBE COMPONENT CLIENT-SIDE !!!
       const mail = new Mail();
 
       console.log("hash", addEmailResponse.rows?.[0]?.hash);
@@ -98,7 +96,7 @@ router.post("/login", async function (req, res) {
 
         console.log({ mailResponse });
       } catch (e) {
-        throw new Error("Mailing list confirmation email was not send.", e);
+        throw new Error("Mailing list confirmation email was not sent.", e);
       }
     } catch (e) {
       console.error("/login - Email subscription error : ", e);

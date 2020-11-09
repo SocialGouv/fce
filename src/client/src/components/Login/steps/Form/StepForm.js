@@ -41,8 +41,8 @@ export const StepForm = ({
           </label>
           {isCheckedSubscription && (
             <div>
-              Dès votre connexion votre addresse email sera ajoutée à notre
-              liste de diffusion. Un email de confirmation vous sera envoyé.
+              Dès votre connexion votre adresse email sera ajoutée à notre liste
+              de contacts. Un email de confirmation vous sera envoyé.
             </div>
           )}
         </div>

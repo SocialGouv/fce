@@ -16,6 +16,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
+import Unsubscribe from "../../containers/Unsubscribe";
 import Search from "../../containers/Search";
 import PublicPage from "../../containers/PublicPage";
 import IEChecker from "../../components/IEChecker";
@@ -62,6 +63,10 @@ const App = () => {
                         component={Enterprise}
                       />
                       <Route exact path="/login" render={() => <Login />} />
+                      <Route
+                        path="/unsubscribe/:hash"
+                        component={Unsubscribe}
+                      />
                       <Route
                         exact
                         path="/mentions-legales"

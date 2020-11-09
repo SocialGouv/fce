@@ -181,7 +181,7 @@ const Search = ({
 
 Search.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.string,
+  error: PropTypes.string.isRequired,
   resultList: PropTypes.object,
   sendRequest: PropTypes.func.isRequired,
   searchTerm: PropTypes.string.isRequired,

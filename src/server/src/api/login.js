@@ -3,6 +3,7 @@ import saltedSha1 from "salted-sha1";
 import config from "config";
 import Mail from "../utils/mail";
 import authRequestCodeTpl from "../templates/email/authRequestCode";
+import mailingListSignup from "../templates/email/mailingListSignup";
 import Auth from "../utils/auth";
 import MatomoUserId from "../models/MatomoUserId";
 import MailingList from "../models/MailingList";
@@ -45,8 +46,12 @@ router.post("/requestAuthCode", async (req, res) => {
 
     console.log(`Send authentification code to ${email}`);
 
+    const mailingList = new MailingList();
+    const isSubscribedToMailingList = await mailingList.isSubscribed(email);
+
     return res.send({
       success: true,
+      isSubscribedToMailingList,
     });
   } catch (e) {
     console.error(`Cannot send code to ${email}`, e.message);
@@ -61,11 +66,44 @@ router.post("/login", async function (req, res) {
   const userId = new MatomoUserId();
   const mailingList = new MailingList();
 
-  const { code, email } = req.body;
+  const { code, email, isCheckedSubscription } = req.body;
   const saltedEmail = email && saltedSha1(email, config.get("emailSalt"));
 
-  const addEmailResult = await mailingList.addEmail(email);
-  console.log({ addEmailResult });
+  if (isCheckedSubscription) {
+    try {
+      const addEmailResponse = await mailingList.addEmail(email);
+
+      if (!addEmailResponse) {
+        throw new Error(
+          `An error has occured, email address ${email} was not added to the mailing list.`
+        );
+      }
+
+      console.log(`Email address ${email} was added to the mailing list.`);
+
+      // UNSUBSCRIBE LINK WITH COLOR !!!
+      // UNSUBSCRIBE COMPONENT CLIENT-SIDE !!!
+      const mail = new Mail();
+
+      console.log("hash", addEmailResponse.rows?.[0]?.hash);
+
+      try {
+        const mailResponse = await mail.send(
+          email,
+          "Inscription à la lettre d'information FCE",
+          mailingListSignup({
+            unsubscribeHash: addEmailResponse.rows?.[0]?.hash,
+          })
+        );
+
+        console.log({ mailResponse });
+      } catch (e) {
+        throw new Error("Mailing list confirmation email was not send.", e);
+      }
+    } catch (e) {
+      console.error("/login - Email subscription error : ", e);
+    }
+  }
 
   try {
     const { isValidCode, failureMessage } = await Auth.validateCode(

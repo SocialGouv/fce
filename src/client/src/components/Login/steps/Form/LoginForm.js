@@ -17,10 +17,12 @@ const LoginForm = ({
   step,
   setStep,
   showSuccessNotif,
-  setShowSuccessNotif
+  setShowSuccessNotif,
+  showMailingListSignup
 }) => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
+  const [isCheckedSubscription, setIsCheckedSubscription] = useState(false);
 
   return (
     <div className="login__container login__container--form container">
@@ -50,11 +52,13 @@ const LoginForm = ({
               inputValue={code || ""}
               onChange={setCode}
               buttonText="Me connecter"
-              onSubmit={evt => login(evt, email, code)}
+              onSubmit={evt => login(evt, email, code, isCheckedSubscription)}
               errorMessage={errorMessage}
               loading={loading}
               hasError={hasError}
-              showNewsletterSignup
+              showMailingListSignup={showMailingListSignup}
+              isCheckedSubscription={isCheckedSubscription}
+              setIsCheckedSubscription={setIsCheckedSubscription}
             />
             <div className="login__links">
               <Button

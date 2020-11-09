@@ -12,15 +12,13 @@ export const StepForm = ({
   onChange,
   buttonText = "Me connecter",
   errorMessage = "",
-  showNewsletterSignup = false,
+  showMailingListSignup,
+  isCheckedSubscription,
+  setIsCheckedSubscription,
   hasError = false,
   loading = false,
   onSubmit
 }) => {
-  const [isSubscribedToNewsletter, setIsSubscribedToNewsletter] = useState(
-    false
-  );
-
   return (
     <form onSubmit={onSubmit}>
       {hasError && (
@@ -29,24 +27,22 @@ export const StepForm = ({
           <p>{errorMessage}</p>
         </div>
       )}
-      {showNewsletterSignup && (
-        <div className="login__newsletter">
+      {showMailingListSignup && (
+        <div className="login__mailing-list">
           <input
-            id="newsletter"
-            name="newsletter"
+            id="mailing-list"
+            name="mailing-list"
             type="checkbox"
-            checked={isSubscribedToNewsletter}
-            onChange={() =>
-              setIsSubscribedToNewsletter(!isSubscribedToNewsletter)
-            }
+            checked={isCheckedSubscription}
+            onChange={() => setIsCheckedSubscription(!isCheckedSubscription)}
           />
-          <label htmlFor="newsletter">
+          <label htmlFor="mailing-list">
             <strong>Je souhaite recevoir des informations par email.</strong>
           </label>
-          {isSubscribedToNewsletter && (
+          {isCheckedSubscription && (
             <div>
               Dès votre connexion votre addresse email sera ajoutée à notre
-              liste de diffusion.
+              liste de diffusion. Un email de confirmation vous sera envoyé.
             </div>
           )}
         </div>
@@ -83,7 +79,9 @@ StepForm.propTypes = {
   buttonText: PropTypes.string,
   errorMessage: PropTypes.string,
   hasError: PropTypes.bool,
-  showNewsletterSignup: PropTypes.bool,
+  showMailingListSignup: PropTypes.bool.isRequired,
+  isCheckedSubscription: PropTypes.bool.isRequired,
+  setIsCheckedSubscription: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired

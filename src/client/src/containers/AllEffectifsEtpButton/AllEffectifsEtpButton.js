@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Http from "../../services/Http";
-import AllEffectifsEtpButtonView from "../../components/DataSheets/Sections/SharedComponents/AllEffectifsEtpButton";
+import AllEffectifsEtpButtonView from "../../components/DataSheets/Sections/SharedComponents/AllEffectifsButton";
 
 const AllEffectifsEtpButton = ({ type, identifier, setAllEffectifsEtp }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,8 +12,8 @@ const AllEffectifsEtpButton = ({ type, identifier, setAllEffectifsEtp }) => {
     setAllEffectifsEtp,
     setIsLoading
   }) => e => {
-    setIsLoading(true);
     e.preventDefault();
+    setIsLoading(true);
 
     Http.get(`/etp-staff/${type}/${identifier}`)
       .then(res => {
@@ -28,12 +28,13 @@ const AllEffectifsEtpButton = ({ type, identifier, setAllEffectifsEtp }) => {
 
   return (
     <AllEffectifsEtpButtonView
-      getAllEffectifsEtp={getAllEffectifsEtp({
+      getAllEffectifs={getAllEffectifsEtp({
         type,
         identifier,
         setAllEffectifsEtp,
         setIsLoading
       })}
+      value="Afficher tous les effectifs ETP"
       isLoading={isLoading}
     />
   );

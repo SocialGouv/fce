@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node build/server.js",
-    "watch": "webpack --color --watch --inspect-brk=0.0.0.0 & nodemon",
+    "watch": "webpack --color --watch & nodemon --expose-gc --inspect=0.0.0.0",
     "nodemon": "nodemon build/server.js",
     "build": "NODE_ENV=production webpack --color",
     "postbuild": "chown -R --reference=package.json .",
@@ -78,7 +78,7 @@
     "jest": "^23.6.0",
     "jest-express": "^1.11.3",
     "node-debug": "^0.1.0",
-    "nodemon": "^1.17.1",
+    "nodemon": "^2.0.6",
     "post-compile-webpack-plugin": "^0.1.1",
     "prettier": "^2.0.3",
     "supertest": "^3.3.0",

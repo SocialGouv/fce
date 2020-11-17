@@ -29,26 +29,26 @@ const Subcategory = ({
           )}
         </div>
       )}
-      {children
-        ? children
-        : datas.map(data => {
-            return (
-              <Data
-                key={data.name}
-                name={data.name}
-                value={data.value}
-                emptyValue={data.emptyValue || "-"}
-                nonEmptyValue={data.nonEmptyValue}
-                link={data.link}
-                columnClasses={data.columnClasses}
-                sourceSi={data.sourceSi}
-                sourceCustom={data.sourceCustom}
-                sourceDate={data.sourceDate}
-                hasNumberFormat={data.hasNumberFormat}
-                numberFormatOptions={data.numberFormatOptions}
-              />
-            );
-          })}
+      {children}
+      {datas &&
+        datas.map(data => {
+          return (
+            <Data
+              key={data.name}
+              name={data.name}
+              value={data.value}
+              emptyValue={data.emptyValue || "-"}
+              nonEmptyValue={data.nonEmptyValue}
+              link={data.link}
+              columnClasses={data.columnClasses}
+              sourceSi={data.sourceSi}
+              sourceCustom={data.sourceCustom}
+              sourceDate={data.sourceDate}
+              hasNumberFormat={data.hasNumberFormat}
+              numberFormatOptions={data.numberFormatOptions}
+            />
+          );
+        })}
     </div>
   );
 };

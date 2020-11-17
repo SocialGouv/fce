@@ -5,6 +5,7 @@ import withAuth from "../middlewares/auth";
 import NotFoundException from "../Exceptions/NotFoundException";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
+import Establishment from "../models/Establishment";
 
 const express = require("express");
 const xlsx = require("xlsx");
@@ -91,15 +92,16 @@ router.post("/downloadXlsx", withAuth, async function (req, res) {
   const payload = req.body.payload;
 
   if (!payload || !payload.totalItems) {
-    return res.send({
-      code: 500,
-      error: "Export impossible, cette recherche n'a donné aucun résultat.",
-    });
+    return res
+      .status(404)
+      .send("Export impossible, cette recherche n'a donné aucun résultat.");
   }
 
   const searchTerm = payload.searchTerm;
   const totalItems = payload.totalItems;
+
   const client = getAppSearchClient();
+  const establishmentModel = new Establishment();
   const engineName = config.get("elasticIndexer.appsearch_engineName");
   const pageLimit = config.get("elasticIndexer.appsearch_pageLimit");
   const pages = Math.ceil(totalItems / pageLimit);
@@ -119,68 +121,80 @@ router.post("/downloadXlsx", withAuth, async function (req, res) {
       );
 
       establishments = [...establishments, ...response.results];
+
+      if (!establishments.length) {
+        return res
+          .status(404)
+          .send("Export impossible, cette recherche n'a donné aucun résultat.");
+      }
+
+      try {
+        const dataJson = await Promise.all(
+          establishments.map(async (establishment) => {
+            const cleanedData = Object.entries(establishment).reduce(
+              (acc, [key, value]) => ({ ...acc, [key]: value.raw }),
+              {}
+            );
+
+            const addressInformations = await establishmentModel.getAddress(
+              cleanedData.siret
+            );
+
+            return {
+              Siret: cleanedData.siret,
+              Etat:
+                xlsxConfig.establishmentState[
+                  cleanedData.etatadministratifetablissement
+                ],
+              "Raison sociale": cleanedData.establishment_name
+                ? cleanedData.establishment_name
+                : cleanedData.enterprise_name,
+              "Categorie établissement": cleanedData.etablissementsiege
+                ? "Siège social"
+                : "Établissement",
+              Adresse: addressInformations && addressInformations.adresse,
+              "Complément d'adresse":
+                addressInformations && addressInformations.complement_adresse,
+              "Code postal": cleanedData.codepostaletablissement,
+              Ville: cleanedData.libellecommuneetablissement,
+              Effectif:
+                xlsxConfig.inseeSizeRanges[
+                  cleanedData.trancheeffectifsetablissement
+                ],
+              Activité:
+                cleanedData.activiteprincipaleetablissement +
+                " - " +
+                cleanedData.activiteprincipaleetablissement_libelle,
+            };
+          })
+        );
+
+        const wb = { SheetNames: [], Sheets: {} };
+        const ws = xlsx.utils.json_to_sheet(dataJson);
+        const wsName = "FceExport";
+        xlsx.utils.book_append_sheet(wb, ws, wsName);
+
+        const wbout = Buffer.from(
+          xlsx.write(wb, { bookType: "xlsx", type: "buffer" })
+        );
+        res.set({
+          "Content-type": "application/octet-stream",
+        });
+
+        res.send(wbout);
+      } catch (error) {
+        console.error(error);
+        return res
+          .status(500)
+          .send("Une erreur est survenue, l'export a échoué.");
+      }
     } catch (error) {
       console.error(error);
-      res.send({
-        code: 500,
-        message: error.message,
-      });
+      return res
+        .status(400)
+        .send("Une erreur est survenue, l'export a échoué.");
     }
   }
-
-  if (!establishments.length) {
-    return res.send({
-      code: 500,
-      error: "Export impossible, cette recherche n'a donné aucun résultat.",
-    });
-  }
-
-  const wb = { SheetNames: [], Sheets: {} };
-  const dataJson = Object.values(establishments).map((tmpData) => {
-    const cleanTmpData = [];
-    delete tmpData._meta;
-
-    Object.entries(tmpData).forEach(([key, value]) => {
-      cleanTmpData[key] = value.raw;
-    });
-
-    const formatedData = {
-      siret: cleanTmpData.siret,
-      etat:
-        xlsxConfig.establishmentState[
-          cleanTmpData.etatadministratifetablissement
-        ],
-      raison_sociale: cleanTmpData.establishment_name
-        ? cleanTmpData.establishment_name
-        : cleanTmpData.enterprise_name,
-      categorie_etablissement: cleanTmpData.etablissementsiege
-        ? "Siège social"
-        : "Établissement",
-      code_postal: cleanTmpData.codepostaletablissement,
-      effectif:
-        xlsxConfig.inseeSizeRanges[cleanTmpData.trancheeffectifsetablissement],
-      activite:
-        cleanTmpData.activiteprincipaleetablissement +
-        " - " +
-        cleanTmpData.activiteprincipaleetablissement_libelle,
-    };
-
-    return formatedData;
-  });
-
-  const ws = xlsx.utils.json_to_sheet(dataJson);
-  const wsName = "FceExport";
-  xlsx.utils.book_append_sheet(wb, ws, wsName);
-
-  const wbout = Buffer.from(
-    xlsx.write(wb, { bookType: "xlsx", type: "buffer" })
-  );
-
-  res.set({
-    "Content-type": "application/octet-stream",
-  });
-
-  res.send(wbout);
 });
 
 const sendResult = (data, response) => {

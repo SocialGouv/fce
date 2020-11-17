@@ -3,6 +3,39 @@ const CONVERTER_XLSX_TO_CSV = "xlsxToCsv";
 const CONVERTER_JSON_TO_CSV = "jsonToCsv";
 
 const config = {
+  etablissements_dsn_effectif: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dares",
+      fileMatch: /^(.)*effectif(.)*.csv$/,
+      outputFileName: "etablissements_dsn_effectif.csv",
+    },
+    ingest: {
+      table: "etablissements_dsn_effectif",
+      filename: `${FILES_FOLDER}/etablissements_dsn_effectif.csv`,
+      cols: [
+        "mois",
+        "siret",
+        "eff",
+        "hommes",
+        "femmes",
+        "cdd",
+        "cdi",
+        "cdi_inter",
+        "inter_mission",
+        "interim",
+        "date_maj",
+      ],
+      delimiter: ",",
+      truncate: false,
+      history: false,
+      generateSiren: true,
+      date: {
+        field: "mois",
+        format: "YYYY-MM",
+      },
+    },
+  },
   accords: {
     download: {
       className: "MinioDownloader",

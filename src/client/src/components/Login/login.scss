@@ -170,9 +170,14 @@
         .field.has-addons {
             display: block;
 
-            .control:not(:last-child) {
+            .control {
                 margin-right: 0;
-                margin-bottom: 1em;
+                margin-bottom: $spacing-2;
+
+                button,
+                input {
+                    border-radius: 0.25rem !important;
+                }
 
                 button {
                     width: 100%;

@@ -7,7 +7,6 @@ import "./login.scss";
 const Login = ({
   login,
   sendCode,
-  hasError,
   errorMessage,
   loading,
   step,
@@ -24,7 +23,6 @@ const Login = ({
           login={login}
           sendCode={sendCode}
           loading={loading}
-          hasError={hasError}
           errorMessage={errorMessage}
           step={step}
           setStep={setStep}
@@ -39,7 +37,6 @@ const Login = ({
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   sendCode: PropTypes.func.isRequired,
-  hasError: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   step: PropTypes.string.isRequired,

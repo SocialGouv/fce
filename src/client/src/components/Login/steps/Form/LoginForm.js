@@ -22,8 +22,7 @@ const LoginForm = ({
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
 
-  const emailRegex = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim;
-  const isDisabledEmailSubmit = !emailRegex.test(email);
+  const isDisabledEmailSubmit = email === "";
   const isDisabledCodeSubmit = code.length < 5;
 
   const handleCodeChange = value => {
@@ -52,10 +51,9 @@ const LoginForm = ({
                     type="email"
                     name="email"
                     className="input"
-                    pattern={`${emailRegex}`}
                     required
                     value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    onChange={e => setEmail(e.target.value.trim())}
                   />
                 </div>
                 <div className="control">

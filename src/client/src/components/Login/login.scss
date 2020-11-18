@@ -152,4 +152,19 @@
         font-family: $roboto;
         font-weight: bold;
     }
+
+    @media screen and (max-width: 600px) {
+        .field.has-addons {
+            display: block;
+
+            .control:not(:last-child) {
+                margin-right: 0;
+                margin-bottom: 1em;
+
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }

@@ -47,11 +47,11 @@ router.post("/requestAuthCode", async (req, res) => {
     console.log(`Send authentification code to ${email}`);
 
     const mailingList = new MailingList();
-    const isSubscribedToMailingList = await mailingList.isSubscribed(email);
+    const isSubscribedResponse = await mailingList.isSubscribed(email);
 
     return res.send({
       success: true,
-      isSubscribedToMailingList,
+      isSubscribedToMailingList: isSubscribedResponse.isSubscribed,
     });
   } catch (e) {
     console.error(`Cannot send code to ${email}`, e.message);

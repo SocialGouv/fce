@@ -15,9 +15,10 @@ export default class MailingList extends Model {
         throw new Error("A database query error has occurred.");
       }
 
-      return !!selectEmailResponse.rowCount;
+      return { isSubscribed: !!selectEmailResponse.rowCount };
     } catch (e) {
       console.error("MailingList::isSubscribed", e);
+      return { error: e, isSubscribed: null };
     }
   }
 
@@ -27,6 +28,8 @@ export default class MailingList extends Model {
         "INSERT INTO mailing_list (email) VALUES ($1) ON CONFLICT DO NOTHING RETURNING id",
         [email]
       );
+
+      console.log({ insertEmailResponse });
 
       const emailId = insertEmailResponse.rows?.[0]?.id;
 
@@ -39,7 +42,7 @@ export default class MailingList extends Model {
       const hash = await bcryptHash(`${email}${emailId}`, 10);
 
       return await this.db.query(
-        "UPDATE mailing_list SET hash = $1 WHERE id = $2 RETURNING hash",
+        "UPDATE mailing_list SET hash = $1 WHERE id = $2 RETURNING hash, email",
         [hash, emailId]
       );
     } catch (e) {
@@ -72,12 +75,34 @@ export default class MailingList extends Model {
     }
   }
 
+  async sendSubscriptionEmail(subscribeResponse) {
+    const mail = new Mail();
+    const email = subscribeResponse.rows?.[0]?.email;
+
+    if (!email) {
+      throw new Error("Email address is missing");
+    }
+
+    try {
+      const mailResponse = await mail.send(
+        email,
+        "FCE - Désinscription de la liste de contacts",
+        mailingListUnsubscribe()
+      );
+
+      console.log({ mailResponse });
+      console.log(`Unsubscription email sent to ${email}`);
+    } catch (e) {
+      console.error("Mailing list unsubscription email was not sent.", e);
+    }
+  }
+
   async sendUnsubscriptionEmail(unsubscribeResponse) {
     const mail = new Mail();
     const email = unsubscribeResponse.rows?.[0]?.email;
 
     if (!email) {
-      throw new Error("Email is missing");
+      throw new Error("Email address is missing");
     }
 
     try {

@@ -1,5 +1,7 @@
 import Model from "./Model";
 import { hash as bcryptHash } from "bcrypt";
+import Mail from "../utils/mail";
+import mailingListUnsubscribe from "../templates/email/mailingListUnsubscribe";
 
 export default class MailingList extends Model {
   async isSubscribed(email) {
@@ -46,14 +48,49 @@ export default class MailingList extends Model {
     }
   }
 
-  async removeEmail(hash) {
+  async removeEmail(email) {
     try {
-      return await this.db.query("DELETE FROM mailing_list WHERE hash = $1", [
-        hash,
-      ]);
+      return await this.db.query(
+        "DELETE FROM mailing_list WHERE email = $1 RETURNING email",
+        [email]
+      );
     } catch (e) {
       console.error("MailingList::removeEmail", e);
       return false;
+    }
+  }
+
+  async removeEmailByHash(hash) {
+    try {
+      return await this.db.query(
+        "DELETE FROM mailing_list WHERE hash = $1 RETURNING email",
+        [hash]
+      );
+    } catch (e) {
+      console.error("MailingList::removeEmailByHash", e);
+      return false;
+    }
+  }
+
+  async sendUnsubscriptionEmail(unsubscribeResponse) {
+    const mail = new Mail();
+    const email = unsubscribeResponse.rows?.[0]?.email;
+
+    if (!email) {
+      throw new Error("Email is missing");
+    }
+
+    try {
+      const mailResponse = await mail.send(
+        email,
+        "FCE - Désinscription de la liste de contacts",
+        mailingListUnsubscribe()
+      );
+
+      console.log({ mailResponse });
+      console.log(`Unsubscription email sent to ${email}`);
+    } catch (e) {
+      console.error("Mailing list unsubscription email was not sent.", e);
     }
   }
 }

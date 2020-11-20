@@ -83,12 +83,10 @@ router.post("/login", async function (req, res) {
 
       const mail = new Mail();
 
-      console.log("hash", addEmailResponse.rows?.[0]?.hash);
-
       try {
         const mailResponse = await mail.send(
           email,
-          "Inscription à la lettre d'information FCE",
+          "FCE - Ajout à la liste de contacts",
           mailingListSignup({
             unsubscribeHash: addEmailResponse.rows?.[0]?.hash,
           })

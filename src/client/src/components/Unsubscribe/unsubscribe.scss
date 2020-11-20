@@ -1,0 +1,38 @@
+@import "../App/variables";
+
+.mailing-list-subscription {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: $spacing-2 $spacing-4;
+    font-weight: bold;
+    color: $white;
+    background: $primary;
+
+    & .react-toggle {
+        margin-left: $spacing-4;
+
+        .react-toggle-track {
+            background-color: $grey;
+            box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        &:hover {
+            .react-toggle-track {
+                background-color: darken($grey, 10%);
+            }
+        }
+
+        &--checked {
+            .react-toggle-track {
+                background-color: $success;
+            }
+            &:hover {
+                .react-toggle-track {
+                    background-color: darken($success, 10%);
+                }
+            }
+        }
+    }
+}

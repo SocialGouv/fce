@@ -15,6 +15,7 @@ import {
 } from "react-accessible-accordion";
 import SearchBar from "./SearchBar";
 import UsersFeedback from "../../containers/UsersFeedback";
+import Unsubscribe from "../../containers/Unsubscribe/Unsubscribe";
 
 import "./search.scss";
 
@@ -177,6 +178,7 @@ const Search = ({
       )}
 
       <UsersFeedback />
+      <Unsubscribe />
     </div>
   );
 };

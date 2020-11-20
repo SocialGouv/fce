@@ -1,47 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import UnsubscribeView from "../../components/Unsubscribe/Unsubscribe";
-import Http from "../../services/Http/index";
+import UnsubscribeView from "../../components/Unsubscribe";
+import Http from "../../services/Http";
 
 const Unsubscribe = () => {
-  const { pathname } = useLocation();
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  //const [notif, setNotif] = useState(null);
 
-  const [unsubscriptionResponse, setUnsubscriptionResponse] = useState({
-    isLoading: false,
-    success: null,
-    message: null,
-    error: null
-  });
-
-  useEffect(() => {
-    setUnsubscriptionResponse({ isLoading: true, success: null, error: null });
-
-    Http.post("/unsubscribe/", { hash: pathname.replace("/unsubscribe/", "") })
+  const getSubscriptionStatus = () => {
+    return Http.get("/mailing-list/user")
       .then(res => {
-        setUnsubscriptionResponse({
-          isLoading: false,
-          success: true,
-          message:
-            res.status !== 200
-              ? "Cette adresse email ne figure pas dans notre liste de contacts."
-              : res.data.message,
-          error: null
-        });
+        setIsSubscribed(res.data.isSubscribed);
       })
       .catch(e => {
         console.error(e);
-        setUnsubscriptionResponse({
-          isLoading: true,
-          success: false,
-          message: e.message,
-          error: true
-        });
       });
+  };
 
-    //setUnsubscriptionResponse({ loading: false, succes: false, error: null });
+  const handleChange = () => {
+    if (isSubscribed) {
+      Http.delete("/mailing-list/user")
+        .then(() => {
+          getSubscriptionStatus();
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    } else {
+      Http.post("/mailing-list/user")
+        .then(() => {
+          getSubscriptionStatus();
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    }
+  };
+
+  useEffect(() => {
+    getSubscriptionStatus();
   }, []);
 
-  return <UnsubscribeView unsubscriptionResponse={unsubscriptionResponse} />;
+  return (
+    <UnsubscribeView isSubscribed={isSubscribed} handleChange={handleChange} />
+  );
 };
 
 Unsubscribe.propTypes = {};

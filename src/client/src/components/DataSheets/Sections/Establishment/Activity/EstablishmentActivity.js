@@ -79,7 +79,7 @@ const EstablishmentActivity = ({ establishment }) => {
               ],
               nonEmptyValue: "",
               sourceSi: "Sirène-year",
-              sourceDate: establishment.annee_tranche_effectif_insee
+              sourceDate: String(establishment.annee_tranche_effectif_insee)
             },
             {
               name: "Effectif physique",

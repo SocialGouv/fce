@@ -8,7 +8,6 @@ import "react-toggle/style.css";
 import "./unsubscribe.scss";
 
 const Unsubscribe = ({ isSubscribed, handleChange, message, hasError }) => {
-  console.log(isSubscribed);
   return (
     <section className="control mailing-list-subscription">
       <AnimatePresence>

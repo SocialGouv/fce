@@ -3,7 +3,6 @@ import saltedSha1 from "salted-sha1";
 import config from "config";
 import Mail from "../utils/mail";
 import authRequestCodeTpl from "../templates/email/authRequestCode";
-import mailingListSignup from "../templates/email/mailingListSignup";
 import Auth from "../utils/auth";
 import MatomoUserId from "../models/MatomoUserId";
 import MailingList from "../models/MailingList";

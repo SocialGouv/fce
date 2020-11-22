@@ -112,7 +112,8 @@ LoginForm.propTypes = {
   step: PropTypes.string.isRequired,
   setStep: PropTypes.func.isRequired,
   showSuccessNotif: PropTypes.bool.isRequired,
-  setShowSuccessNotif: PropTypes.func.isRequired
+  setShowSuccessNotif: PropTypes.func.isRequired,
+  showMailingListSignup: PropTypes.bool.isRequired
 };
 
 export default LoginForm;

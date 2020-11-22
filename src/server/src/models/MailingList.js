@@ -1,7 +1,9 @@
 import Model from "./Model";
 import { hash as bcryptHash } from "bcrypt";
 import Mail from "../utils/mail";
+import HttpError from "../utils/HttpError";
 import mailingListUnsubscribe from "../templates/email/mailingListUnsubscribe";
+import mailingListSignup from "../templates/email/mailingListSignup";
 
 export default class MailingList extends Model {
   async isSubscribed(email) {
@@ -12,31 +14,29 @@ export default class MailingList extends Model {
       );
 
       if (!selectEmailResponse) {
-        throw new Error("A database query error has occurred.");
+        throw new HttpError(
+          "Postgres query error (MailingList::isSubscribed)",
+          500
+        );
       }
 
       return { isSubscribed: !!selectEmailResponse.rowCount };
     } catch (e) {
-      console.error("MailingList::isSubscribed", e);
-      return { error: e, isSubscribed: null };
+      return e;
     }
   }
 
   async addEmail(email) {
     try {
       const insertEmailResponse = await this.db.query(
-        "INSERT INTO mailing_list (email) VALUES ($1) ON CONFLICT DO NOTHING RETURNING id",
+        "INSERT INTO mailing_list (email) VALUES ($1) ON CONFLICT (email) DO NOTHING RETURNING id",
         [email]
       );
-
-      console.log({ insertEmailResponse });
 
       const emailId = insertEmailResponse.rows?.[0]?.id;
 
       if (!emailId) {
-        throw new Error(
-          "Email was not inserted into mailing_list table. It could already exist."
-        );
+        throw new HttpError(`Email ${email} already exists.`, 409);
       }
 
       const hash = await bcryptHash(`${email}${emailId}`, 10);
@@ -47,6 +47,9 @@ export default class MailingList extends Model {
       );
     } catch (e) {
       console.error("MailingList::addEmail", e);
+      if (e.status === 409) {
+        return e;
+      }
       return false;
     }
   }
@@ -77,23 +80,32 @@ export default class MailingList extends Model {
 
   async sendSubscriptionEmail(subscribeResponse) {
     const mail = new Mail();
-    const email = subscribeResponse.rows?.[0]?.email;
+    const { email, hash } = subscribeResponse.rows?.[0];
 
     if (!email) {
       throw new Error("Email address is missing");
     }
 
+    if (!hash) {
+      throw new Error("Hash is missing");
+    }
+
     try {
       const mailResponse = await mail.send(
         email,
-        "FCE - Désinscription de la liste de contacts",
-        mailingListUnsubscribe()
+        "FCE - Ajout à la liste de contacts",
+        mailingListSignup({
+          unsubscribeHash: hash,
+        })
       );
 
       console.log({ mailResponse });
-      console.log(`Unsubscription email sent to ${email}`);
+      console.log(`Subscription email sent to ${email}`);
     } catch (e) {
-      console.error("Mailing list unsubscription email was not sent.", e);
+      console.error(
+        `Mailing list subscription email was not sent to ${email}`,
+        e
+      );
     }
   }
 
@@ -115,7 +127,10 @@ export default class MailingList extends Model {
       console.log({ mailResponse });
       console.log(`Unsubscription email sent to ${email}`);
     } catch (e) {
-      console.error("Mailing list unsubscription email was not sent.", e);
+      console.error(
+        `Mailing list unsubscription email was not sent to ${email}.`,
+        e
+      );
     }
   }
 }

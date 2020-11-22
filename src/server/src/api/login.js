@@ -81,21 +81,7 @@ router.post("/login", async function (req, res) {
 
       console.log(`Email address ${email} was added to the mailing list.`);
 
-      const mail = new Mail();
-
-      try {
-        const mailResponse = await mail.send(
-          email,
-          "FCE - Ajout à la liste de contacts",
-          mailingListSignup({
-            unsubscribeHash: addEmailResponse.rows?.[0]?.hash,
-          })
-        );
-
-        console.log({ mailResponse });
-      } catch (e) {
-        throw new Error("Mailing list confirmation email was not sent.", e);
-      }
+      mailingList.sendSubscriptionEmail(addEmailResponse);
     } catch (e) {
       console.error("/login - Email subscription error : ", e);
     }

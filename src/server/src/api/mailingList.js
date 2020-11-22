@@ -1,6 +1,7 @@
 import MailingList from "../models/MailingList";
 import withAuth from "../middlewares/auth";
 import jwt from "jsonwebtoken";
+import HttpError from "../utils/HttpError";
 
 const express = require("express");
 const router = express.Router();
@@ -14,11 +15,15 @@ router.get("/mailing-list/user", withAuth, async (req, res) => {
     const mailingList = new MailingList();
     const isSubscribedResponse = await mailingList.isSubscribed(email);
 
-    if (isSubscribedResponse.error) throw new Error(e);
+    if (isSubscribedResponse instanceof HttpError) {
+      throw isSubscribedResponse;
+    }
 
     return res.send({
       error: null,
-      isSubscribed: isSubscribedResponse.isSubscribed,
+      result: {
+        isSubscribed: isSubscribedResponse.isSubscribed,
+      },
     });
   } catch (e) {
     console.error("GET /mailing-list/user - Error :", e);
@@ -40,18 +45,27 @@ router.post("/mailing-list/user", withAuth, async (req, res) => {
 
     const addEmailResponse = await mailingList.addEmail(email);
 
-    if (!addEmailResponse) {
-      throw new Error(
-        `An error has occured, email address ${email} was not added to the mailing list.`
-      );
+    if (addEmailResponse instanceof HttpError) {
+      throw addEmailResponse;
     }
 
-    return res.send({
+    mailingList.sendSubscriptionEmail(addEmailResponse);
+
+    return res.status(201).send({
       success: true,
-      message: "Votre email a été ajouté à notre liste de contacts.",
+      result: {
+        isSubscribed: true,
+      },
     });
   } catch (e) {
     console.error("POST /mailing-list/user - Error :", e);
+
+    if (e.status === 409) {
+      return res.status(409).json({
+        success: false,
+        error: "Email already exists",
+      });
+    }
 
     return res.status(500).json({
       success: false,
@@ -86,8 +100,7 @@ router.delete("/mailing-list/email", async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      error:
-        "Nous sommes désolés, une erreur est survenue. Veuillez réessayer ultérieurement.",
+      error: "Une erreur est survenue. Veuillez réessayer ultérieurement.",
     });
   }
 });
@@ -113,15 +126,14 @@ router.delete("/mailing-list/user", withAuth, async (req, res) => {
 
     return res.send({
       success: true,
-      message: "Vous ne recevrez plus d'information à propos de FCE.",
+      result: { isSubscribed: false },
     });
   } catch (e) {
     console.error("DELETE /mailing-list/user - Error :", e);
 
     return res.status(500).json({
       success: false,
-      error:
-        "Nous sommes désolés, une erreur est survenue. Veuillez réessayer ultérieurement.",
+      error: "Une erreur est survenue. Veuillez réessayer ultérieurement.",
     });
   }
 });

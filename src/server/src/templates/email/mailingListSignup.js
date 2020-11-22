@@ -18,7 +18,7 @@ export default ({ unsubscribeHash }) =>
 
   <tr>
     <td style="padding-bottom: 16px;">
-      Merci d'avoir accepté de recevoir des informations à propos de FCE. Vous venez d'être ajouté à notre liste de contacts.
+      Vous avez accepté de recevoir des informations sur le portail FCE (nouvelles données, fonctionalités, organisation d'évènements). Vous venez d'être ajouté à notre liste de contacts.
     </td>
   </tr>
 

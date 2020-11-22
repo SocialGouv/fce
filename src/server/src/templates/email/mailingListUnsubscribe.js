@@ -8,5 +8,10 @@ export default () =>
       Vous avez été désinscrit de notre liste de contacts. Vous ne recevrez plus d'informations à propos de FCE.
     </td>
   </tr>
+  <tr>
+    <td style="padding-bottom: 16px;">
+      Merci pour l'intérêt que vous avez porté à FCE. Vous pouvez vous réinscrire à tout moment depuis l'application.
+    </td>
+  </tr>
 </table>
 `);

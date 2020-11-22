@@ -160,24 +160,26 @@ const Search = ({
       </div>
 
       {resultList && (
-        <SearchResults
-          results={resultList.rawResults}
-          pagination={{
-            current: resultList.info.meta.page.current,
-            handlePageChange,
-            itemsPerPage: resultList.info.meta.page.size,
-            pages: resultList.info.meta.page.total_pages,
-            items: resultList.info.meta.page.total_results,
-            searchTerm,
-            options
-          }}
-          isLoading={isLoading}
-          sort={sort}
-          currentSort={currentSort}
-        />
+        <>
+          <SearchResults
+            results={resultList.rawResults}
+            pagination={{
+              current: resultList.info.meta.page.current,
+              handlePageChange,
+              itemsPerPage: resultList.info.meta.page.size,
+              pages: resultList.info.meta.page.total_pages,
+              items: resultList.info.meta.page.total_results,
+              searchTerm,
+              options
+            }}
+            isLoading={isLoading}
+            sort={sort}
+            currentSort={currentSort}
+          />
+          <UsersFeedback />
+        </>
       )}
 
-      <UsersFeedback />
       <Unsubscribe />
     </div>
   );

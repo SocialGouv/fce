@@ -8,13 +8,16 @@ const UnsubscribePage = () => {
 
   const [unsubscriptionResponse, setUnsubscriptionResponse] = useState({
     isLoading: false,
-    success: null,
     message: null,
-    error: null
+    hasError: null
   });
 
   useEffect(() => {
-    setUnsubscriptionResponse({ isLoading: true, success: null, error: null });
+    setUnsubscriptionResponse({
+      isLoading: true,
+      message: null,
+      hasError: null
+    });
 
     Http.delete("/mailing-list/email", {
       data: { hash: pathname.replace("/unsubscribe/", "") }
@@ -22,24 +25,22 @@ const UnsubscribePage = () => {
       .then(res => {
         setUnsubscriptionResponse({
           isLoading: false,
-          success: true,
           message:
             res.status !== 200
               ? "Cette adresse email ne figure pas dans notre liste de contacts."
               : res.data.message,
-          error: null
+          hasError: null
         });
       })
       .catch(e => {
         console.error(e);
         setUnsubscriptionResponse({
-          isLoading: true,
-          success: false,
-          message: e.message,
-          error: true
+          isLoading: false,
+          message: "Une erreur est survenue, réesayez ultérieurement.",
+          hasError: true
         });
       });
-  }, []);
+  }, [pathname]);
 
   return (
     <UnsubscribePageView unsubscriptionResponse={unsubscriptionResponse} />

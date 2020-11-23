@@ -9,7 +9,7 @@ export const formatSearchInput = query => {
   }
   /* remove spaces in SIRET and SIREN */
   const queryWithoutWhitespace = query.replace(/\s/g, "");
-  const isSirenOrSiret = [9, 14].includes(queryWithoutWhitespace.length);
+  const isSirenOrSiret = /^(\d{14}|\d{9})$/.test(queryWithoutWhitespace);
 
   return isSirenOrSiret ? `"${queryWithoutWhitespace}"` : `"${query}"`;
 };

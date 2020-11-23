@@ -36,6 +36,8 @@
     }
 
     &__head-form {
+        margin-bottom: $spacing-4;
+
         p {
             margin-bottom: $spacing-2;
         }
@@ -50,7 +52,6 @@
 
         @include from($tablet) {
             font-size: 1.25rem;
-            margin-bottom: $spacing-5;
         }
     }
 
@@ -66,6 +67,12 @@
             margin-right: $spacing-2;
             font-size: 2rem;
         }
+    }
+
+    &__code-input {
+        font-size: 1rem;
+        font-weight: bold;
+        letter-spacing: 0.2em;
     }
 
     &__button {
@@ -109,6 +116,11 @@
         flex-direction: column;
         align-items: flex-start;
         margin-top: $spacing-5;
+
+        > button,
+        > a {
+            padding-left: 0;
+        }
     }
 
     &__link {
@@ -136,7 +148,7 @@
     &__notif {
         display: flex;
         align-items: baseline;
-        margin-bottom: $spacing-2;
+        margin-bottom: $spacing-4;
         padding: $spacing-2;
         font-family: $roboto;
         font-size: 14px;
@@ -161,5 +173,25 @@
     .label {
         font-family: $roboto;
         font-weight: bold;
+    }
+
+    @media screen and (max-width: 600px) {
+        .field.has-addons {
+            display: block;
+
+            .control {
+                margin-right: 0;
+                margin-bottom: $spacing-2;
+
+                button,
+                input {
+                    border-radius: 0.25rem !important;
+                }
+
+                button {
+                    width: 100%;
+                }
+            }
+        }
     }
 }

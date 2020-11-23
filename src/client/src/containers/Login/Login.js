@@ -6,15 +6,14 @@ import LoginView from "../../components/Login";
 import _get from "lodash.get";
 
 const Login = ({ history }) => {
-  const [hasError, setHasError] = useState(false);
+  const [step, setStep] = useState("login-home");
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState("login-home");
   const [showSuccessNotif, setShowSuccessNotif] = useState(true);
   const [showMailingListSignup, setShowMailingListSignup] = useState(true);
 
-  const sendCode = (evt, email) => {
-    evt && evt.preventDefault();
+  const sendCode = (e, email) => {
+    e.preventDefault();
     initStates();
 
     Auth.sendCode(email)
@@ -35,8 +34,8 @@ const Login = ({ history }) => {
       });
   };
 
-  const login = (evt, email, code, isCheckedSubscription) => {
-    evt && evt.preventDefault();
+  const login = (e, email, code, isCheckedSubscription) => {
+    e.preventDefault();
     initStates();
 
     Auth.login(email, code, isCheckedSubscription)
@@ -54,18 +53,17 @@ const Login = ({ history }) => {
   };
 
   const initStates = () => {
-    setHasError(false);
+    setErrorMessage(null);
     setLoading(true);
   };
 
   const setSuccess = () => {
-    setHasError(false);
+    setErrorMessage(null);
     setLoading(false);
     setShowSuccessNotif(true);
   };
 
   const setError = message => {
-    setHasError(true);
     setErrorMessage(message);
     setLoading(false);
     setShowSuccessNotif(false);
@@ -76,7 +74,6 @@ const Login = ({ history }) => {
       login={login}
       sendCode={sendCode}
       loading={loading}
-      hasError={hasError}
       errorMessage={errorMessage}
       step={step}
       setStep={setStep}

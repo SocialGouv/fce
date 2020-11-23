@@ -41,6 +41,7 @@ services:
       - default
     ports:
       - 80
+      - 9229
     links:
       - db
       - mail

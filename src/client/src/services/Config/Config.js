@@ -9,7 +9,8 @@ const log = console.warning || console.error || console.log;
 const globalConfig = {
   maintenanceMode: process.env.REACT_APP_MAINTENANCE === "true",
   auth: {
-    expire: 86400 // 1j
+    expire: 86400, // 1j,
+    codeLength: 5
   },
   dataSources: [
     { id: "PG", priority: 100 },

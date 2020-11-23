@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import Button from "../../../../shared/Button";
 
-import "./allEffectifsEtpButton.scss";
+import "./allEffectifsButton.scss";
 
-const AllEffectifsEtpButton = ({ getAllEffectifsEtp, isLoading }) => {
+const AllEffectifsButton = ({ getAllEffectifs, value, isLoading }) => {
   return (
     <div className="all-effectifs-etp-button">
       <Button
-        onClick={getAllEffectifsEtp}
-        value="Afficher tous les effectifs ETP"
+        onClick={getAllEffectifs}
+        value={value}
         buttonClasses={classNames("is-primary", {
           "is-loading": isLoading
         })}
@@ -19,9 +19,10 @@ const AllEffectifsEtpButton = ({ getAllEffectifsEtp, isLoading }) => {
   );
 };
 
-AllEffectifsEtpButton.propTypes = {
+AllEffectifsButton.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  getAllEffectifsEtp: PropTypes.func.isRequired
+  value: PropTypes.string.isRequired,
+  getAllEffectifs: PropTypes.func.isRequired
 };
 
-export default AllEffectifsEtpButton;
+export default AllEffectifsButton;

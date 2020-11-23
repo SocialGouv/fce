@@ -71,7 +71,6 @@ router.post("/login", async function (req, res) {
   if (isCheckedSubscription) {
     try {
       const addEmailResponse = await mailingList.addEmail(email);
-
       if (!addEmailResponse) {
         throw new Error(
           `An error has occured, email address ${email} was not added to the mailing list.`

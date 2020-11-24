@@ -20,7 +20,6 @@ export const StepForm = ({ errorMessage, onSubmit, children }) => {
 StepForm.propTypes = {
   children: PropTypes.node,
   errorMessage: PropTypes.string,
-  loading: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired
 };
 

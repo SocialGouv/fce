@@ -15,6 +15,7 @@ import {
 } from "react-accessible-accordion";
 import SearchBar from "./SearchBar";
 import UsersFeedback from "../../containers/UsersFeedback";
+import Unsubscribe from "../../containers/Unsubscribe/Unsubscribe";
 
 import "./search.scss";
 
@@ -173,15 +174,17 @@ const Search = ({
           downloadXlsxStatus={downloadXlsxStatus}
         />
       )}
-
-      <UsersFeedback />
+      <div>
+        <UsersFeedback />
+        <Unsubscribe />
+      </div>
     </div>
   );
 };
 
 Search.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
+  error: PropTypes.string,
   resultList: PropTypes.object,
   sendRequest: PropTypes.func.isRequired,
   searchTerm: PropTypes.string.isRequired,

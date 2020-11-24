@@ -26,7 +26,7 @@ const getEnterprise = term => dispatch => {
       type: types.SET_START_LOADING_ENTERPRISE
     });
 
-    dataSources.map(({ id }) => {
+    dataSources.forEach(({ id }) => {
       Http.get("/entity", {
         params: {
           q: term,

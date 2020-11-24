@@ -60,6 +60,15 @@
         line-height: 1.2;
     }
 
+    &__mailing-list {
+        margin: $spacing-5 0;
+
+        input {
+            margin-right: $spacing-2;
+            font-size: 2rem;
+        }
+    }
+
     &__code-input {
         font-size: 1rem;
         font-weight: bold;

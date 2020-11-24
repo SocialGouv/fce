@@ -11,10 +11,11 @@ export default class Auth {
     });
   }
 
-  static login(email, code) {
+  static login(email, code, isCheckedSubscription) {
     return Http.post("/login", {
       code,
-      email
+      email,
+      isCheckedSubscription
     }).then(response => {
       if (response.data && response.data.success) {
         Local.set(AUTH_KEY, response.data.token);

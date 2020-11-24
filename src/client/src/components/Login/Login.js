@@ -12,7 +12,8 @@ const Login = ({
   step,
   setStep,
   showSuccessNotif,
-  setShowSuccessNotif
+  setShowSuccessNotif,
+  showMailingListSignup
 }) => {
   return (
     <section className="login">
@@ -28,6 +29,7 @@ const Login = ({
           setStep={setStep}
           showSuccessNotif={showSuccessNotif}
           setShowSuccessNotif={setShowSuccessNotif}
+          showMailingListSignup={showMailingListSignup}
         />
       )}
     </section>
@@ -42,7 +44,8 @@ Login.propTypes = {
   step: PropTypes.string.isRequired,
   setStep: PropTypes.func.isRequired,
   showSuccessNotif: PropTypes.bool.isRequired,
-  setShowSuccessNotif: PropTypes.func.isRequired
+  setShowSuccessNotif: PropTypes.func.isRequired,
+  showMailingListSignup: PropTypes.bool.isRequired
 };
 
 export default Login;

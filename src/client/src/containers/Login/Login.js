@@ -10,6 +10,7 @@ const Login = ({ history }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showSuccessNotif, setShowSuccessNotif] = useState(true);
+  const [showMailingListSignup, setShowMailingListSignup] = useState(true);
 
   const sendCode = (e, email) => {
     e.preventDefault();
@@ -22,6 +23,9 @@ const Login = ({ history }) => {
         }
 
         setSuccess();
+        setShowMailingListSignup(
+          !_get(response, "data.isSubscribedToMailingList")
+        );
         setStep("login-form-code");
       })
       .catch(e => {
@@ -30,11 +34,11 @@ const Login = ({ history }) => {
       });
   };
 
-  const login = (e, email, code) => {
+  const login = (e, email, code, isCheckedSubscription) => {
     e.preventDefault();
     initStates();
 
-    Auth.login(email, code)
+    Auth.login(email, code, isCheckedSubscription)
       .then(response => {
         if (!_get(response, "data.success")) {
           throw new Error(_get(response, "data.message"));
@@ -75,6 +79,7 @@ const Login = ({ history }) => {
       setStep={setStep}
       showSuccessNotif={showSuccessNotif}
       setShowSuccessNotif={setShowSuccessNotif}
+      showMailingListSignup={showMailingListSignup}
     />
   );
 };

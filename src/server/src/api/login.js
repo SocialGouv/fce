@@ -5,6 +5,7 @@ import Mail from "../utils/mail";
 import authRequestCodeTpl from "../templates/email/authRequestCode";
 import Auth from "../utils/auth";
 import MatomoUserId from "../models/MatomoUserId";
+import MailingList from "../models/MailingList";
 import ApiKeys from "../models/ApiKeys";
 
 const router = express.Router();
@@ -44,8 +45,12 @@ router.post("/requestAuthCode", async (req, res) => {
 
     console.log(`Send authentification code to ${email}`);
 
+    const mailingList = new MailingList();
+    const isSubscribedResponse = await mailingList.isSubscribed(email);
+
     return res.send({
       success: true,
+      isSubscribedToMailingList: isSubscribedResponse.isSubscribed,
     });
   } catch (e) {
     console.error(`Cannot send code to ${email}`, e.message);
@@ -58,8 +63,27 @@ router.post("/requestAuthCode", async (req, res) => {
 
 router.post("/login", async function (req, res) {
   const userId = new MatomoUserId();
-  const { code, email } = req.body;
+  const mailingList = new MailingList();
+
+  const { code, email, isCheckedSubscription } = req.body;
   const saltedEmail = email && saltedSha1(email, config.get("emailSalt"));
+
+  if (isCheckedSubscription) {
+    try {
+      const addEmailResponse = await mailingList.addEmail(email);
+      if (!addEmailResponse) {
+        throw new Error(
+          `An error has occured, email address ${email} was not added to the mailing list.`
+        );
+      }
+
+      console.log(`Email address ${email} was added to the mailing list.`);
+
+      mailingList.sendSubscriptionEmail(addEmailResponse);
+    } catch (e) {
+      console.error("/login - Email subscription error : ", e);
+    }
+  }
 
   try {
     const { isValidCode, failureMessage } = await Auth.validateCode(

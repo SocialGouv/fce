@@ -17,10 +17,12 @@ const LoginForm = ({
   step,
   setStep,
   showSuccessNotif,
-  setShowSuccessNotif
+  setShowSuccessNotif,
+  showMailingListSignup
 }) => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
+  const [isCheckedSubscription, setIsCheckedSubscription] = useState(false);
 
   const isDisabledEmailSubmit = email === "";
   const isDisabledCodeSubmit = code.length < 5;
@@ -79,11 +81,35 @@ const LoginForm = ({
               />
             )}
             <StepForm
-              onSubmit={e => login(e, email, code)}
+              onSubmit={e => login(e, email, code, isCheckedSubscription)}
               errorMessage={errorMessage}
-              loading={loading}
             >
               <div>
+                {showMailingListSignup && (
+                  <div className="login__mailing-list">
+                    <input
+                      id="mailing-list"
+                      name="mailing-list"
+                      type="checkbox"
+                      checked={isCheckedSubscription}
+                      onChange={() =>
+                        setIsCheckedSubscription(!isCheckedSubscription)
+                      }
+                    />
+                    <label htmlFor="mailing-list">
+                      <strong>
+                        Je souhaite recevoir des informations par email.
+                      </strong>
+                    </label>
+                    {isCheckedSubscription && (
+                      <div>
+                        Dès votre connexion votre adresse email sera ajoutée à
+                        notre liste de contacts. Un email de confirmation vous
+                        sera envoyé.
+                      </div>
+                    )}
+                  </div>
+                )}
                 <label htmlFor="code" className="label">
                   Code à 5 chiffres (reçu par e-mail)
                 </label>
@@ -167,7 +193,8 @@ LoginForm.propTypes = {
   step: PropTypes.string.isRequired,
   setStep: PropTypes.func.isRequired,
   showSuccessNotif: PropTypes.bool.isRequired,
-  setShowSuccessNotif: PropTypes.func.isRequired
+  setShowSuccessNotif: PropTypes.func.isRequired,
+  showMailingListSignup: PropTypes.bool.isRequired
 };
 
 export default LoginForm;

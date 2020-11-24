@@ -156,29 +156,28 @@ const Search = ({
       </div>
 
       {resultList && (
-        <>
-          <SearchResults
-            results={resultList.rawResults}
-            pagination={{
-              current: resultList.info.meta.page.current,
-              handlePageChange,
-              itemsPerPage: resultList.info.meta.page.size,
-              pages: resultList.info.meta.page.total_pages,
-              items: resultList.info.meta.page.total_results,
-              searchTerm,
-              options
-            }}
-            isLoading={isLoading}
-            sort={sort}
-            currentSort={currentSort}
-            generateXlsx={generateXlsx}
-            downloadXlsxStatus={downloadXlsxStatus}
-          />
-          <UsersFeedback />
-        </>
+        <SearchResults
+          results={resultList.rawResults}
+          pagination={{
+            current: resultList.info.meta.page.current,
+            handlePageChange,
+            itemsPerPage: resultList.info.meta.page.size,
+            pages: resultList.info.meta.page.total_pages,
+            items: resultList.info.meta.page.total_results,
+            searchTerm,
+            options
+          }}
+          isLoading={isLoading}
+          sort={sort}
+          currentSort={currentSort}
+          generateXlsx={generateXlsx}
+          downloadXlsxStatus={downloadXlsxStatus}
+        />
       )}
-
-      <Unsubscribe />
+      <div>
+        <UsersFeedback />
+        <Unsubscribe />
+      </div>
     </div>
   );
 };

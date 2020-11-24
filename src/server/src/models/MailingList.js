@@ -1,5 +1,5 @@
 import Model from "./Model";
-import { hash as bcryptHash } from "bcrypt";
+import { hash as bcryptHash } from "bcryptjs";
 import Mail from "../utils/mail";
 import HttpError from "../utils/HttpError";
 import mailingListUnsubscribe from "../templates/email/mailingListUnsubscribe";

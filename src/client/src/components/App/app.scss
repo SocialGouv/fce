@@ -40,6 +40,10 @@ a {
         display: flex;
         flex-direction: column;
 
+        &.ie11 {
+            min-height: calc(100vh - 320px);
+        }
+
         @media print {
             padding-top: $spacing-4;
         }

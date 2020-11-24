@@ -12,8 +12,30 @@
     background: $primary;
 
     &__notification.notification {
-        margin-bottom: $spacing-2;
+        width: 500px;
+        max-width: 100%;
+        margin: $spacing-3 auto !important;
         padding: 0.6em;
+        text-align: center;
+        transition: opacity 300ms, transform 300ms;
+
+        // react-transition-group
+        &.transition-enter {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        &.transition-enter-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        &.transition-exit {
+            opacity: 1;
+            transform: scale(1);
+        }
+        &.transition-exit-active {
+            opacity: 0;
+            transform: scale(0.8);
+        }
     }
 
     &__switch {

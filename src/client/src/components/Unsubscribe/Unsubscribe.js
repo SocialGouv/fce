@@ -2,44 +2,45 @@ import React from "react";
 import PropTypes from "prop-types";
 import Toggle from "react-toggle";
 import classNames from "classnames";
-import { motion, AnimatePresence } from "framer-motion";
+import { CSSTransition } from "react-transition-group";
 
 import "react-toggle/style.css";
 import "./unsubscribe.scss";
 
 const Unsubscribe = ({ isSubscribed, handleChange, message, hasError }) => {
   return (
-    <section className="control mailing-list-subscription">
-      <AnimatePresence>
-        {message && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className={classNames(
-              "notification mailing-list-subscription__notification",
-              {
-                "is-success": !hasError,
-                "is-danger": hasError
-              }
-            )}
-          >
-            {message}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="mailing-list-subscription__switch">
-        <label htmlFor="mailing-list-subscription-toggle">
-          Je souhaite recevoir des informations par email
-        </label>
-        <Toggle
-          id="mailing-list-subscription-toggle"
-          checked={isSubscribed}
-          name="burritoIsReady"
-          value="yes"
-          onChange={handleChange}
-        />
+    <section className="mailing-list-subscription">
+      <CSSTransition
+        in={message}
+        timeout={300}
+        classNames="transition"
+        unmountOnExit
+      >
+        <div
+          className={classNames(
+            "notification mailing-list-subscription__notification",
+            {
+              "is-success": !hasError,
+              "is-danger": hasError
+            }
+          )}
+        >
+          {message}
+        </div>
+      </CSSTransition>
+      <div className="control">
+        <div className="mailing-list-subscription__switch">
+          <label htmlFor="mailing-list-subscription-toggle">
+            Je souhaite recevoir des informations par email
+          </label>
+          <Toggle
+            id="mailing-list-subscription-toggle"
+            checked={isSubscribed}
+            name="burritoIsReady"
+            value="yes"
+            onChange={handleChange}
+          />
+        </div>
       </div>
     </section>
   );

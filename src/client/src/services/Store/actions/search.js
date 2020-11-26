@@ -21,10 +21,10 @@ export const setSearchSort = sort => dispatch => {
   });
 };
 
-export const setSearchResults = results => dispatch => {
+export const setSearchResults = (results, resultsFilters) => dispatch => {
   dispatch({
     type: types.SET_SEARCH_RESULTS,
-    results
+    results: { ...results, resultsFilters }
   });
 };
 

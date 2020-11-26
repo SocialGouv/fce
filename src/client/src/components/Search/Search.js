@@ -15,6 +15,7 @@ import {
 } from "react-accessible-accordion";
 import SearchBar from "./SearchBar";
 import UsersFeedback from "../../containers/UsersFeedback";
+import Unsubscribe from "../../containers/Unsubscribe/Unsubscribe";
 
 import "./search.scss";
 
@@ -34,20 +35,16 @@ const Search = ({
   sort,
   options,
   divisionsNaf,
-  loadLocations
+  loadLocations,
+  generateXlsx,
+  downloadXlsxStatus
 }) => {
   const [isOpenAdvancedSearch, setIsOpenAdvancedSearch] = useState(true);
-
   return (
     <div className="app-search">
       <div className="app-search__wrapper">
         <div className="container is-fullhd">
-          {error && (
-            <div className="notification is-danger">
-              Une erreur est survenue lors de la communication avec l{"'"}
-              API
-            </div>
-          )}
+          {error && <div className="notification is-danger">{error}</div>}
           <form
             className="form search-form"
             onSubmit={e => {
@@ -173,17 +170,21 @@ const Search = ({
           isLoading={isLoading}
           sort={sort}
           currentSort={currentSort}
+          generateXlsx={generateXlsx}
+          downloadXlsxStatus={downloadXlsxStatus}
         />
       )}
-
-      <UsersFeedback />
+      <div>
+        <UsersFeedback />
+        <Unsubscribe />
+      </div>
     </div>
   );
 };
 
 Search.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
+  error: PropTypes.string,
   resultList: PropTypes.object,
   sendRequest: PropTypes.func.isRequired,
   searchTerm: PropTypes.string.isRequired,
@@ -197,7 +198,9 @@ Search.propTypes = {
   sort: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   divisionsNaf: PropTypes.array.isRequired,
-  loadLocations: PropTypes.func.isRequired
+  loadLocations: PropTypes.func.isRequired,
+  generateXlsx: PropTypes.func.isRequired,
+  downloadXlsxStatus: PropTypes.object.isRequired
 };
 
 export default Search;

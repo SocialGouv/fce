@@ -3,6 +3,8 @@ import express from "express";
 import withAuth from "../middlewares/auth";
 import Effectif from "../models/Effectif";
 import { eachMonthOfInterval, subMonths, format } from "date-fns";
+import { effectif_dsn } from "../../config/default";
+import config from "config";
 
 const monthInitial = {
   eff: 0,
@@ -39,21 +41,31 @@ router.get("/dsn-effectif/:type/:identifier", withAuth, async (req, res) => {
 
   try {
     const allYearEffectif = await effectifs.search(identifier);
+    const allMonthToShow = await effectifs.fileUploadedFormMonth();
 
+    const monthWithFile = allMonthToShow.map((row) => row.mois);
     const lastTwelveMonthsToFetch = eachMonthOfInterval({
       start: subMonths(new Date(), 12),
       end: new Date(),
     });
+    const lastYearEffectif = lastTwelveMonthsToFetch
+      .filter((month) =>
+        monthWithFile.includes(format(month, "yyyy-MM")) ? true : false
+      )
+      .map((month) => {
+        const formatedMonth = format(month, "yyyy-MM");
+        const corespondingMonth = allYearEffectif.filter(
+          (effectif) => effectif.mois === formatedMonth
+        );
 
-    const lastYearEffectif = lastTwelveMonthsToFetch.map((month) => {
-      const corespondingMonth = allYearEffectif.filter(
-        (effectif) => effectif.mois === format(month, "yyyy-MM")
-      );
+        if (config.get("effectif_dsn.exclude").includes(formatedMonth)) {
+          return { ...monthInitial, mois: formatedMonth };
+        }
 
-      return corespondingMonth[0]
-        ? corespondingMonth[0]
-        : { ...monthInitial, mois: format(month, "yyyy-MM") };
-    });
+        return corespondingMonth[0]
+          ? corespondingMonth[0]
+          : { ...monthInitial, mois: formatedMonth };
+      });
 
     return res.send({
       success: true,

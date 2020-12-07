@@ -6,6 +6,7 @@ import NotFoundException from "../Exceptions/NotFoundException";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
 import Establishment from "../models/Establishment";
+import Effectif from "../models/Effectif";
 
 const express = require("express");
 const xlsx = require("xlsx");
@@ -232,6 +233,22 @@ router.get("/naf", withAuth, function (req, res) {
       success,
       results: [],
       message: "Une erreur est survenue lors de la recherche d'un code NAF",
+    });
+  });
+});
+
+router.get("/effectif", withAuth, function (req, res) {
+  const effectif = new Effectif();
+
+  effectif.findAllTranche().then((effectifs) => {
+    const success = Array.isArray(effectifs);
+    if (success) {
+      return res.send({success, results: effectifs});
+    }
+    return res.send({
+      success,
+      results: [];
+      message: "Une erreur est survenue lors de la recherche d'une tranche d'effectif"
     });
   });
 });

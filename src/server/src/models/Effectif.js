@@ -26,4 +26,15 @@ export default class Effectif extends Model {
         return null;
       });
   }
+  findAllTranche() {
+    return this.db
+      .query("SELECT * FROM effectif")
+      .then((res) => {
+        return res.rows;
+      })
+      .catch((e) => {
+        console.error("Effectif::findAll", e);
+        return null;
+      });
+  }
 }

@@ -142,6 +142,9 @@ const config = {
     },
   ],
   emailSalt: process.env.EMAIL_SALT,
+  effectif_dsn: {
+    exclude: ["2020-06"],
+  },
 };
 
 if (process.env.HOST) {

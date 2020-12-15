@@ -243,12 +243,13 @@ router.get("/effectif", withAuth, function (req, res) {
   effectif.findAllTranche().then((effectifs) => {
     const success = Array.isArray(effectifs);
     if (success) {
-      return res.send({success, results: effectifs});
+      return res.send({ success, results: effectifs });
     }
     return res.send({
       success,
-      results: [];
-      message: "Une erreur est survenue lors de la recherche d'une tranche d'effectif"
+      results: [],
+      message:
+        "Une erreur est survenue lors de la recherche d'une tranche d'effectif",
     });
   });
 });

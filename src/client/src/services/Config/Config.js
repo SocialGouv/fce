@@ -1,6 +1,4 @@
 import _get from "lodash.get";
-import { formatNumber } from "../../helpers/utils";
-
 const hosts2config = require("./configs/hosts2configs.json");
 
 let config = null;

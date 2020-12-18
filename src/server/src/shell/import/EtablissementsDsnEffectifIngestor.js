@@ -6,12 +6,40 @@ class EtablissementsDsnEffectifIngestor extends Ingestor {
   /**
    * Remove duplicate content and breaklines for inspecteurs
    */
-  async beforePsqlCopy() {
+
+  /** ATTTENTION A REMETRE AFTER !!!!!! */
+  async afterPsqlCopy() {
     this._wipeLastDsnTable();
     this._buildFromAllSiret();
-    this._updateUniteNonEmployeuse();
     this._updateLastMonthEffectif();
+    this._updateTrancheEffectif();
+    this._updateUniteNonEmployeuse();
     this._updateSecteurPlublic();
+  }
+
+  _updateTrancheEffectif() {
+    console.log("Replace tranche for effectif");
+    return execSync(
+      `${this.psql} "UPDATE last_dsn_effectif
+      SET trancheeffectifsetablissement =
+        CASE
+          WHEN effectif IS NULL THEN '-'
+          WHEN effectif = 0 THEN '0'
+          WHEN effectif > 0 AND effectif <= 2 THEN '01'
+          WHEN effectif > 2 AND effectif <= 5 THEN '02'
+          WHEN effectif > 5 AND effectif < 10 THEN '03'
+          WHEN effectif >= 10 AND effectif < 20 THEN '11'
+          WHEN effectif >= 20 AND effectif < 50 THEN '12'
+          WHEN effectif >= 50 AND effectif < 100 THEN '21'
+          WHEN effectif >= 100 AND effectif < 250 THEN '22'
+          WHEN effectif >= 250 AND effectif < 500 THEN '31'
+         WHEN effectif >= 500 AND effectif < 1000 THEN '32'
+         WHEN effectif >= 1000 AND effectif < 2000 THEN '41'
+        WHEN effectif >= 2000 AND effectif < 5000 THEN '42'
+          WHEN effectif >= 5000 THEN '51'
+         ELSE '-'
+        END"`
+    );
   }
 
   _wipeLastDsnTable() {
@@ -28,7 +56,7 @@ class EtablissementsDsnEffectifIngestor extends Ingestor {
   }
 
   _updateUniteNonEmployeuse() {
-    console.log("Addin NN");
+    console.log("Add in NN");
 
     const query = `UPDATE last_dsn_effectif
     SET trancheeffectifsetablissement=subquery.trancheeffectifsetablissement

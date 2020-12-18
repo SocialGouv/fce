@@ -1,4 +1,5 @@
 import _get from "lodash.get";
+import { formatNumber } from "../../helpers/utils";
 const hosts2config = require("./configs/hosts2configs.json");
 
 let config = null;
@@ -112,9 +113,9 @@ const globalConfig = {
     "22": "100 à 249 salariés",
     "31": "250 à 499 salariés",
     "32": "500 à 999 salariés",
-    "41": "1 000 à 1 999 salariés",
-    "42": `2 000 à 4 999 salariés`,
-    "51": `5 000 salariés et plus`
+    "41": `${formatNumber(1000)} à ${formatNumber(1999)} salariés`,
+    "42": `${formatNumber(2000)} à ${formatNumber(4999)} salariés`,
+    "51": `${formatNumber(5000)} salariés et plus`
   },
   sources: {
     customDateFormats: {

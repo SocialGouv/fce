@@ -57,7 +57,6 @@ const SearchResults = ({
         {results.length === 0 && (
           <div className="notification is-primary is-light">Aucun résultat</div>
         )}
-        {console.log(results)}
         {!!results.length ? (
           <div>
             <SearchAwesomeTable

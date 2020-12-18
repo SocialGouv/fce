@@ -28,7 +28,7 @@ export default class Effectif extends Model {
   }
   findAllTranche() {
     return this.db
-      .query("SELECT * FROM effectif")
+      .query("SELECT DISTINCT(effectif) FROM last_dsn_effectif")
       .then((res) => {
         return res.rows;
       })

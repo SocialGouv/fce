@@ -3,7 +3,6 @@ import express from "express";
 import withAuth from "../middlewares/auth";
 import Effectif from "../models/Effectif";
 import { eachMonthOfInterval, subMonths, format } from "date-fns";
-import { effectif_dsn } from "../../config/default";
 import config from "config";
 
 const monthInitial = {

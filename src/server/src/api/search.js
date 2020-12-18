@@ -237,23 +237,6 @@ router.get("/naf", withAuth, function (req, res) {
   });
 });
 
-router.get("/effectif", withAuth, function (req, res) {
-  const effectif = new Effectif();
-
-  effectif.findAllTranche().then((effectifs) => {
-    const success = Array.isArray(effectifs);
-    if (success) {
-      return res.send({ success, results: effectifs });
-    }
-    return res.send({
-      success,
-      results: [],
-      message:
-        "Une erreur est survenue lors de la recherche d'une tranche d'effectif",
-    });
-  });
-});
-
 router.get("/departements", withAuth, function (req, res) {
   const query = (req.query["q"] || "").trim();
 

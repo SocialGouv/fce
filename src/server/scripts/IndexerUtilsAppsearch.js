@@ -18,16 +18,13 @@ const startScriptTime = new Date();
 
 class IndexerUtilsAppsearch {
   constructor(query, type) {
-    console.log("INIT");
     this.mainProcess(query).catch((error) => console.log(error));
     this.type = type;
   }
   async mainProcess(query) {
     //Init PG Client and cursor
     const PgClient = await pool.connect();
-    console.log("ahahah");
     const establishmentResultCursor = PgClient.query(new Cursor(query));
-    console.log("ce la");
     console.log("Create Elastic client");
     //www todo
     console.log("Start process Data");

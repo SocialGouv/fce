@@ -57,7 +57,7 @@ const SearchResults = ({
         {results.length === 0 && (
           <div className="notification is-primary is-light">Aucun résultat</div>
         )}
-
+        {console.log(results)}
         {!!results.length ? (
           <div>
             <SearchAwesomeTable
@@ -132,17 +132,20 @@ const SearchResults = ({
                 },
                 {
                   headName: "Effectif",
-                  sortKey: "trancheeffectifsetablissement",
+                  sortKey: "lastdsntrancheeffectifsetablissement",
                   accessor: ({
-                    trancheeffectifsetablissement: {
-                      raw: trancheEffectifInsee
+                    lastdsntrancheeffectifsetablissement: {
+                      raw: trancheEffectif
                     },
                     etatadministratifetablissement: { raw: etat }
                   }) =>
                     Value({
-                      value: isActiveEstablishment(etat)
-                        ? staffSizeRanges[trancheEffectifInsee]
-                        : "0 salarié"
+                      value:
+                        trancheEffectif != "-"
+                          ? isActiveEstablishment(etat)
+                            ? staffSizeRanges[trancheEffectif]
+                            : "0 salarié"
+                          : "-"
                     })
                 },
                 {

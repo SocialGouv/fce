@@ -126,7 +126,7 @@ const Search = ({
       })
       .catch(error => {
         setSearchError(
-          `Une erreur est survenue lors de la communication avec l{"'"}API`
+          `Une erreur est survenue lors de la communication avec l'API`
         );
         setSearchIsLoading(false);
         console.error(`error: ${error}`);

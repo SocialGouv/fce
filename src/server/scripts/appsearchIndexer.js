@@ -12,5 +12,4 @@ let query = `SELECT etab.*, ${config.elasticIndexer.enterpriseFields.map(
         LEFT JOIN last_dsn_effectif ON last_dsn_effectif.siret = etab.siret
         `;
 
-console.log("tets");
 new IndexerUtilsAppsearch(query, "index");

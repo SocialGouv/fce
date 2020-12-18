@@ -6,8 +6,6 @@ class EtablissementsDsnEffectifIngestor extends Ingestor {
   /**
    * Remove duplicate content and breaklines for inspecteurs
    */
-
-  /** ATTTENTION A REMETRE AFTER !!!!!! */
   async afterPsqlCopy() {
     this._wipeLastDsnTable();
     this._buildFromAllSiret();
@@ -33,9 +31,9 @@ class EtablissementsDsnEffectifIngestor extends Ingestor {
           WHEN effectif >= 50 AND effectif < 100 THEN '21'
           WHEN effectif >= 100 AND effectif < 250 THEN '22'
           WHEN effectif >= 250 AND effectif < 500 THEN '31'
-         WHEN effectif >= 500 AND effectif < 1000 THEN '32'
-         WHEN effectif >= 1000 AND effectif < 2000 THEN '41'
-        WHEN effectif >= 2000 AND effectif < 5000 THEN '42'
+          WHEN effectif >= 500 AND effectif < 1000 THEN '32'
+          WHEN effectif >= 1000 AND effectif < 2000 THEN '41'
+          WHEN effectif >= 2000 AND effectif < 5000 THEN '42'
           WHEN effectif >= 5000 THEN '51'
          ELSE '-'
         END"`

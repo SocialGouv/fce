@@ -6,7 +6,6 @@ import NotFoundException from "../Exceptions/NotFoundException";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
 import Establishment from "../models/Establishment";
-import Effectif from "../models/Effectif";
 
 const express = require("express");
 const xlsx = require("xlsx");

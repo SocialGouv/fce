@@ -140,11 +140,13 @@ const SearchResults = ({
                   }) =>
                     Value({
                       value:
-                        trancheEffectif != "-"
+                        trancheEffectif !== "-" &&
+                        trancheEffectif !== "NN" &&
+                        trancheEffectif !== "SP"
                           ? isActiveEstablishment(etat)
                             ? staffSizeRanges[trancheEffectif]
                             : "0 salarié"
-                          : "-"
+                          : staffSizeRanges[trancheEffectif]
                     })
                 },
                 {

@@ -6,6 +6,7 @@ const tablename = "last_dsn_effectif";
 
 exports.up = (pgm) => {
   pgm.createTable(tablename, {
+    id: "id",
     siret: {
       default: null,
       type: "character varying(20)",

@@ -5,6 +5,7 @@ import SearchResults from "../SearchResults";
 import SiegeFilter from "./Filters/SiegeFilter";
 import StateFilter from "./Filters/StateFilter";
 import NafFilter from "./Filters/NafFilter";
+import EffectifFilter from "./Filters/EffectifFilter";
 import LocationFilter from "./Filters/LocationFilter";
 import {
   Accordion,
@@ -35,6 +36,7 @@ const Search = ({
   sort,
   options,
   divisionsNaf,
+  trancheEffectif,
   loadLocations,
   generateXlsx,
   downloadXlsxStatus
@@ -112,6 +114,16 @@ const Search = ({
                                 addFilter={addFilter}
                                 removeFilter={removeFilter}
                                 loadLocations={loadLocations}
+                              />
+                            </div>
+                          </div>
+                          <div className="columns filters__selects">
+                            <div className="column is-half">
+                              <EffectifFilter
+                                filters={filters}
+                                addFilter={addFilter}
+                                removeFilter={removeFilter}
+                                trancheEffectif={trancheEffectif}
                               />
                             </div>
                           </div>
@@ -198,6 +210,7 @@ Search.propTypes = {
   sort: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   divisionsNaf: PropTypes.array.isRequired,
+  trancheEffectif: PropTypes.array.isRequired,
   loadLocations: PropTypes.func.isRequired,
   generateXlsx: PropTypes.func.isRequired,
   downloadXlsxStatus: PropTypes.object.isRequired

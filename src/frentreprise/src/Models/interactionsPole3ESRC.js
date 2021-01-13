@@ -4,6 +4,7 @@ const interactionsPole3ESRC = (sequelize, DataTypes) => {
     {
       siret: DataTypes.STRING,
       region: DataTypes.STRING,
+      libelle_region: DataTypes.STRING,
       numero_dossier: DataTypes.STRING,
       type_controle: DataTypes.STRING,
       date: DataTypes.STRING,

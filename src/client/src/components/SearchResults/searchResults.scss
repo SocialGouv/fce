@@ -1,12 +1,15 @@
 @import "../App/variables";
+@import "../App/placeholders";
 
 .app-search-results {
-    @media print {
-        zoom: 40%;
+    &.container {
+        padding: 0 $padding-app-x;
     }
 
+    padding-top: $spacing-4;
+
     & > .columns {
-        margin-bottom: 0;
+        margin: 0;
     }
 
     &__title {
@@ -18,10 +21,15 @@
         color: $black;
     }
 
-    .export-button {
+    &__export-section {
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        padding-right: 0;
+    }
+
+    &__export-button {
+        @extend %is-grey;
     }
 
     .result-row {
@@ -38,6 +46,7 @@
     }
 
     .notification.is-light {
+        margin-top: $spacing-4;
         background-color: #d4ecff;
         color: #1d72aa;
     }

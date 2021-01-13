@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node build/server.js",
-    "watch": "webpack --color --watch --inspect-brk=0.0.0.0 & nodemon",
+    "watch": "webpack --color --watch & nodemon --expose-gc --inspect=0.0.0.0",
     "nodemon": "nodemon build/server.js",
     "build": "NODE_ENV=production webpack --color",
     "postbuild": "chown -R --reference=package.json .",
@@ -27,6 +27,7 @@
     "@sentry/node": "^5.17.0",
     "JSONStream": "^1.3.5",
     "array.prototype.flatmap": "^1.2.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "config": "^3.3.0",
     "csv-parser": "^2.3.2",
@@ -59,6 +60,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/preset-env": "^7.8.7",
     "@babel/register": "^7.8.6",
@@ -78,7 +80,7 @@
     "jest": "^23.6.0",
     "jest-express": "^1.11.3",
     "node-debug": "^0.1.0",
-    "nodemon": "^1.17.1",
+    "nodemon": "^2.0.6",
     "post-compile-webpack-plugin": "^0.1.1",
     "prettier": "^2.0.3",
     "supertest": "^3.3.0",

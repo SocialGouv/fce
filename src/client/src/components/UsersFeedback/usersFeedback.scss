@@ -2,7 +2,6 @@
 @import "../App/placeholders";
 
 .user-feedback {
-    @extend %print-hidden;
     width: 40em;
     max-width: 100%;
     margin: $spacing-5 auto;
@@ -64,6 +63,10 @@
         label {
             font-weight: bold;
         }
+
+        textarea {
+            margin-bottom: $spacing-4;
+        }
     }
 
     & .textarea {
@@ -71,6 +74,8 @@
     }
 
     &__rating {
+        margin-bottom: $spacing-6;
+
         p {
             font-weight: bold;
         }
@@ -85,6 +90,10 @@
         position: relative;
         display: flex;
         justify-content: center;
+
+        &:not(:last-of-type) {
+            margin-right: $spacing-1;
+        }
 
         &-radio {
             position: absolute;

@@ -40,6 +40,13 @@ const Enterprise = ({
     }
   }, [match]);
 
+  useEffect(() => {
+    if (state === Config.get("state.unauthorize")) {
+      setCurrentUrl("/login");
+      history.push("/login");
+    }
+  }, [state]);
+
   if (state === Config.get("state.error")) {
     return <Error404 />;
   }
@@ -51,8 +58,12 @@ const Enterprise = ({
       .then(() => {
         setState(Config.get("state.success"));
       })
-      .catch(() => {
-        setState(Config.get("state.error"));
+      .catch(err => {
+        if (err.response?.status === 401) {
+          setState(Config.get("state.unauthorize"));
+        } else {
+          setState(Config.get("state.error"));
+        }
       });
   };
 

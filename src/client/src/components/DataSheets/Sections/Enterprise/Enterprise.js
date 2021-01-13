@@ -10,51 +10,56 @@ import Muteco from "./Muteco";
 import Direccte from "./Direccte";
 import Helps from "./Helps";
 import QuickAccess from "../SharedComponents/QuickAccess";
+import PrintSection from "../SharedComponents/PrintSection";
 import UsersFeedback from "../../../../containers/UsersFeedback";
+import Unsubscribe from "../../../../containers/Unsubscribe";
+
 import { useScrollToLocationHash } from "../../../../helpers/hooks";
 
 import "../../dataSheets.scss";
-import PrintSection from "../SharedComponents/PrintSection";
 
 const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
   useScrollToLocationHash({ location, offset: 50 });
 
   return (
-    <section className="data-sheet container">
-      <PrintSection />
-      <div className="columns print-wrapper">
-        <div className="column is-3 aside-box is-hidden-touch">
-          <Sidebar
-            enterprise={enterprise}
-            headOffice={headOffice}
-            establishments={establishments}
-          />
-        </div>
-        <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
-          <Header enterprise={enterprise} />
-          <div className="data-sheet__main-container">
-            <QuickAccess
-              anchors={[
-                { label: "Informations légales", link: "infos" },
-                { label: "Visites et contrôles", link: "direccte" },
-                { label: "Relation travail", link: "relationship" },
-                {
-                  label: "Mutations économiques",
-                  link: "muteco"
-                },
-                { label: "Aides et agréments", link: "helps" }
-              ]}
+    <div>
+      <section className="data-sheet container is-fullhd">
+        <PrintSection />
+        <div className="columns">
+          <div className="column is-3 aside-box is-hidden-touch">
+            <Sidebar
+              enterprise={enterprise}
+              headOffice={headOffice}
+              establishments={establishments}
             />
-            <Infos enterprise={enterprise} headOffice={headOffice} />
-            <Direccte enterprise={enterprise} />
-            <EnterpriseRelationship enterprise={enterprise} />
-            <Muteco enterprise={enterprise} />
-            <Helps enterprise={enterprise} />
           </div>
-          <UsersFeedback fullWidth />
+          <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
+            <Header enterprise={enterprise} />
+            <div className="data-sheet__main-container">
+              <QuickAccess
+                anchors={[
+                  { label: "Informations légales", link: "infos" },
+                  { label: "Visites et contrôles", link: "direccte" },
+                  { label: "Relation travail", link: "relationship" },
+                  {
+                    label: "Mutations économiques",
+                    link: "muteco"
+                  },
+                  { label: "Aides et agréments", link: "helps" }
+                ]}
+              />
+              <Infos enterprise={enterprise} headOffice={headOffice} />
+              <Direccte enterprise={enterprise} />
+              <EnterpriseRelationship enterprise={enterprise} />
+              <Muteco enterprise={enterprise} />
+              <Helps enterprise={enterprise} />
+            </div>
+            <UsersFeedback fullWidth />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <Unsubscribe />
+    </div>
   );
 };
 

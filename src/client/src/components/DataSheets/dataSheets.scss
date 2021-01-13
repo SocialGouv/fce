@@ -4,21 +4,55 @@
 .data-sheet {
     &.container {
         width: 100%;
+        padding: 0 $padding-app-x;
+    }
 
-        @include from($tablet) {
-            padding: 0 $spacing-4;
+    &-header {
+        margin-bottom: $spacing-5;
+        background-color: $white;
+        border-radius: $border-radius-2;
+
+        &__siren,
+        &__siret {
+            font-family: $roboto;
+            font-weight: bold;
+        }
+
+        &__title {
+            margin-bottom: $spacing-4;
+            font-size: $font-size-datasheet-header;
+            font-weight: bold;
+        }
+
+        &__status {
+            display: flex;
+
+            &-icon {
+                margin-right: $spacing-2;
+            }
+        }
+
+        &__naf {
+            font-weight: bold;
+        }
+
+        @media not print {
+            padding: $spacing-5;
+            box-shadow: $box-shadow-spread;
         }
     }
 
     &__print-section {
-        @extend %print-hidden;
         display: flex;
         justify-content: flex-end;
         margin: $spacing-5 0;
     }
 
+    &__print-button {
+        @extend %is-grey;
+    }
+
     &__main-container {
-        @extend %print-margin-padding;
         background-color: $white;
         border-radius: $border-radius-2 $border-radius-2 0 0;
         padding: $spacing-4 $spacing-5;
@@ -26,11 +60,6 @@
         @media not print {
             box-shadow: $box-shadow-spread;
         }
-    }
-
-    &__main-content {
-        @extend %print-block;
-        @extend %print-margin-padding;
     }
 
     &__section {
@@ -42,7 +71,6 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        page-break-inside: avoid;
 
         .section-header {
             display: flex;
@@ -65,7 +93,7 @@
                 left: 0;
             }
 
-            >.icon {
+            > .icon {
                 color: $primary;
                 width: 1.15rem;
                 height: 1.25rem;
@@ -75,7 +103,7 @@
                 background-color: $white-smoke;
             }
 
-            >.title {
+            > .title {
                 font-family: $roboto;
                 font-weight: bold;
                 font-size: $font-size-section-title;
@@ -87,7 +115,6 @@
         }
 
         .section-datas {
-            @extend %print-margin-padding;
             box-shadow: $box-shadow-spread;
             padding: $spacing-5;
             align-self: stretch;
@@ -100,56 +127,17 @@
                 margin: $spacing-2;
             }
 
-            & .table {
-                padding: $spacing-5 0;
-
-                th {
-                    color: $grey-tundora;
-                }
-
-                th:not(:last-of-type),
-                tfoot tr>td:not(:last-of-type) {
-                    border-right: $border-grey-light;
-                }
-
-                &__center-cell {
-                    text-align: center;
-                }
-
-                .see-details {
-                    width: 10rem;
-                }
-            }
-
-            & .interactions__title {
-                border-bottom: none;
-            }
-
-            & .interactions__table {
-                width: 100%;
-                margin: 0;
-
-                td {
-                    vertical-align: middle;
-                }
-
-                th:first-child,
-                td:first-child {
-                    text-align: right;
-                }
-            }
-
             .dt {
                 font-weight: 700;
             }
         }
 
-        >.dl {
+        > .dl {
             margin-bottom: 0;
         }
 
-        >.dd,
-        >.dt {
+        > .dd,
+        > .dt {
             padding: $spacing-4 0;
             word-wrap: break-word;
             color: $grey-tundora;
@@ -159,13 +147,5 @@
     small {
         display: block;
         margin-bottom: $spacing-4;
-    }
-
-    .rcs-observations {
-        list-style: circle;
-
-        &-item {
-            margin-bottom: $spacing-2;
-        }
     }
 }

@@ -8,9 +8,10 @@ import Activity from "./Activity";
 import Muteco from "./Muteco";
 import Helps from "./Helps";
 import Relationship from "./Relationship";
-import Direccte from "../SharedComponents/Direccte";
+import Direccte from "./Direccte";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import UsersFeedback from "../../../../containers/UsersFeedback";
+import Unsubscribe from "../../../../containers/Unsubscribe";
 import { useScrollToLocationHash } from "../../../../helpers/hooks";
 import PrintSection from "../SharedComponents/PrintSection";
 
@@ -26,43 +27,46 @@ const Establishment = ({
   useScrollToLocationHash({ location, offset: 70 });
 
   return (
-    <section className="data-sheet container">
-      <PrintSection />
-      <div className="columns print-wrapper">
-        <div className="column is-3 aside-box is-hidden-touch">
-          <Sidebar
-            enterprise={enterprise}
-            headOffice={headOffice}
-            establishments={establishments}
-            isEstablishmentDisplayed={true}
-          />
-        </div>
-
-        <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
-          <Header establishment={establishment} enterprise={enterprise} />
-          <div className="data-sheet__main-container">
-            <QuickAccess
-              anchors={[
-                { label: "Activité", link: "activity" },
-                { label: "Visites et contrôles", link: "direccte" },
-                { label: "Relation travail", link: "relation" },
-                { label: "Mutations économiques", link: "muteco" },
-                { label: "Aides et agréments", link: "helps" }
-              ]}
-            />
-            <Activity establishment={establishment} enterprise={enterprise} />
-            <Direccte establishment={establishment} enterprise={enterprise} />
-            <Relationship
-              establishment={establishment}
+    <div>
+      <section className="data-sheet container is-fullhd">
+        <PrintSection />
+        <div className="columns">
+          <div className="column is-3 aside-box is-hidden-touch">
+            <Sidebar
               enterprise={enterprise}
+              headOffice={headOffice}
+              establishments={establishments}
+              isEstablishmentDisplayed={true}
             />
-            <Muteco establishment={establishment} enterprise={enterprise} />
-            <Helps establishment={establishment} />
           </div>
-          <UsersFeedback fullWidth />
+
+          <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
+            <Header establishment={establishment} enterprise={enterprise} />
+            <div className="data-sheet__main-container">
+              <QuickAccess
+                anchors={[
+                  { label: "Activité", link: "activity" },
+                  { label: "Visites et contrôles", link: "direccte" },
+                  { label: "Relation travail", link: "relation" },
+                  { label: "Mutations économiques", link: "muteco" },
+                  { label: "Aides et agréments", link: "helps" }
+                ]}
+              />
+              <Activity establishment={establishment} enterprise={enterprise} />
+              <Direccte establishment={establishment} enterprise={enterprise} />
+              <Relationship
+                establishment={establishment}
+                enterprise={enterprise}
+              />
+              <Muteco establishment={establishment} enterprise={enterprise} />
+              <Helps establishment={establishment} />
+            </div>
+            <UsersFeedback fullWidth />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <Unsubscribe />
+    </div>
   );
 };
 

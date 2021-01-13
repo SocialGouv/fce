@@ -1,0 +1,232 @@
+@import "../App/variables";
+
+/*
+- GLOBAL
+- APP HEADER
+- DATA SHEET :
+    >>> DATA SHEET HEADER
+    >>> DATA SHEET BODY
+*/
+
+@media print {
+    %reset-spacing {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    %reset-block {
+        width: 100%;
+        display: block !important;
+        @extend %reset-spacing;
+    }
+
+    %margin-bottom-small {
+        margin-bottom: 0.5rem !important;
+    }
+
+    %margin-bottom-medium {
+        margin-bottom: 1rem !important;
+    }
+
+    %margin-bottom-big {
+        margin-bottom: 2rem !important;
+    }
+
+    // GLOBAL
+    * {
+        position: relative !important;
+        font-family: Verdana, sans-serif !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }
+
+    html,
+    body {
+        font-size: 9pt !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    div,
+    section {
+        @extend %reset-block;
+    }
+
+    h1 {
+        font-size: 2rem !important;
+        text-align: center !important;
+    }
+
+    table {
+        max-width: 100% !important;
+
+        tr,
+        th,
+        td {
+            border: 1pt solid $grey-geyser !important;
+        }
+
+        th,
+        td {
+            padding: 0.35rem !important;
+        }
+    }
+
+    // >>> HIDE ELEMENTS
+    .header__buttons,
+    .beta-message,
+    .aside-box,
+    .quick-access,
+    .table .see-details,
+    .table .see-details-link,
+    .user-feedback,
+    .footer,
+    .icon,
+    .dashboard-item__header-icon,
+    .data-sheet-header__status svg,
+    [href^="https://www.legifrance.gouv.fr"] {
+        display: none !important;
+    }
+
+    // APP HEADER
+    .app-header {
+        height: 40px;
+    }
+
+    .header {
+        &__home-link {
+            height: 100% !important;
+        }
+    }
+
+    // >>> DATA SHEET HEADER
+    .dashboard .column {
+        margin-bottom: 2rem !important;
+
+        .dashboard-item {
+            width: auto !important;
+            height: auto !important;
+            border: none !important;
+
+            div {
+                display: inline !important;
+            }
+
+            &__header {
+                margin-right: 1rem !important;
+                border-bottom: none !important;
+            }
+        }
+    }
+
+    .info-box {
+        margin-bottom: $spacing-4 !important;
+        text-align: center;
+
+        &__pill {
+            padding: 0.2rem !important;
+            color: #000 !important;
+            font-size: 1rem !important;
+            text-transform: uppercase !important;
+            border: 1pt solid #000 !important;
+            border-radius: 0 !important;
+        }
+
+        &__print {
+            display: inline !important;
+        }
+    }
+
+    // >>> DATA SHEET BODY
+    .data-sheet {
+        &-header__siren,
+        &-header__siret {
+            font-size: 1.2rem !important;
+        }
+        &-header__primary-infos,
+        &-header__status,
+        &-header__naf {
+            @extend %reset-block;
+            @extend %margin-bottom-small;
+        }
+        &-header__enterprise-button,
+        &-header__enterprise-external-link {
+            display: none !important;
+        }
+
+        &__print-section {
+            display: none !important;
+        }
+
+        &__section {
+            // CUSTOM RULES ON "Visites et contrôles"
+            &.direccte-interactions-enterprise,
+            &.direccte-interactions-establishment {
+                page-break-inside: avoid !important;
+            }
+
+            & .section-header {
+                @extend %margin-bottom-medium;
+                border-bottom: 2pt solid $primary !important;
+
+                .title {
+                    @extend %margin-bottom-small;
+                    font-size: 1.3rem !important;
+                    text-transform: uppercase !important;
+                }
+
+                &:before {
+                    display: none !important;
+                }
+            }
+
+            & .section-datas {
+                @extend %margin-bottom-big;
+
+                dl,
+                dd,
+                dt {
+                    @extend %reset-block;
+                }
+
+                dl {
+                    padding: 0.5rem 0 !important;
+                }
+
+                /* .data {
+                    page-break-inside: avoid !important;
+                } */
+
+                .data__value {
+                    @extend %margin-bottom-small;
+                }
+
+                .subcategory {
+                    @extend %margin-bottom-medium;
+                    page-break-inside: avoid !important;
+
+                    &__header {
+                        border-bottom-width: 1pt !important;
+                    }
+
+                    &__title {
+                        font-size: 1.2rem;
+                    }
+
+                    .source {
+                        span {
+                            font-size: 0.8rem;
+                            color: $grey !important;
+                            color-adjust: exact;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

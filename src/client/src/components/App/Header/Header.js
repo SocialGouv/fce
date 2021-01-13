@@ -13,7 +13,7 @@ import "./header.scss";
 const Header = ({ resetSearch, location, showBetaMessage }) => {
   return (
     <header className="app-header">
-      <div className="container px-4">
+      <div className="container is-fullhd">
         <nav>
           <div className="header__items is-tablet">
             <Link
@@ -23,26 +23,18 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
                 resetSearch();
               }}
             >
-              <img
-                className="header__logo mr-4"
-                src={logo}
-                alt="Logo Marianne"
-              />
-              <div className="header__title is-dark">
-                Fiche Commune Entreprise
-              </div>
+              <img className="header__logo" src={logo} alt="Logo Marianne" />
+              <div className="header__title">Fiche Commune Entreprise</div>
             </Link>
             {(location.pathname.includes("/establishment") ||
               location.pathname.includes("/enterprise")) && (
               <div className="header__buttons">
                 <div className="navbar-end is-flex">
-                  <Link to="/" className="button mr-4">
-                    <span className="button-icon mr-2">
+                  <Link to="/" className="button">
+                    <span className="button-icon">
                       <FontAwesomeIcon icon={faChevronLeft} />
                     </span>
-                    <span className="has-text-weight-bold">
-                      Liste des résultats
-                    </span>
+                    <span>Liste des résultats</span>
                   </Link>
                   <Link
                     to="/"
@@ -51,12 +43,10 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
                     }}
                     className="button"
                   >
-                    <span className="button-icon mr-2">
+                    <span className="button-icon">
                       <FontAwesomeIcon icon={faPlus} />
                     </span>
-                    <span className="has-text-weight-bold">
-                      Nouvelle recherche
-                    </span>
+                    <span>Nouvelle recherche</span>
                   </Link>
                 </div>
               </div>
@@ -66,14 +56,14 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
       </div>
 
       {showBetaMessage && (
-        <div className="beta-message flex-center">
+        <div className="beta-message">
           <div>
             <span>Ce site est en beta-test. </span>
             {location.pathname !== "/login" && (
               <span>
                 Aidez-nous à l{"'"}améliorer en{" "}
                 <a
-                  className="beta-message__feedback-link ml-1 px-2 py-1"
+                  className="beta-message__feedback-link"
                   href="#user-feedback"
                 >
                   donnant votre avis

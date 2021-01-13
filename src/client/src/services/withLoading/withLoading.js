@@ -3,14 +3,16 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-solid-svg-icons";
 
+import "./loading-wrapper.scss";
+
 const withLoading = BaseComponent => {
   const WrappedComponent = ({ isLoaded, ...props }) =>
     isLoaded ? (
       <BaseComponent {...props} />
     ) : (
-      <div className="flex-center mt-2">
+      <div className="loading-wrapper">
         <FontAwesomeIcon icon={faSpinner} spin />
-        <span className="ml-2">Chargement en cours...</span>
+        <span className="loading-wrapper__label">Chargement en cours...</span>
       </div>
     );
 

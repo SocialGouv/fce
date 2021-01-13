@@ -6,10 +6,11 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
+import Table from "../../SharedComponents/Table";
 import { sortAgreements } from "../../../../../helpers/Relationships";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { toI18nDate } from "../../../../../helpers/Date";
-import { formatNumber } from "../../../../../helpers/utils";
+import { formatNumber, formatSiret } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 
 import "./agreements.scss";
@@ -39,11 +40,11 @@ export const Agreements = ({
       />
       {nbAccords > 0 && (
         <>
-          <table className="table is-hoverable enterprise-agreements">
+          <Table className="enterprise-agreements">
             <thead>
               <tr>
                 <th className="th">SIRET</th>
-                <th className="th table__center-cell">État</th>
+                <th className="th table-cell--center-cell">État</th>
                 <th className="th">Catégorie établissement</th>
                 <th className="th enterprise-agreements__count">
                   Nb accords déposés
@@ -59,8 +60,10 @@ export const Agreements = ({
                 ({ siret, categorie, etat, date, totalEtab }) => {
                   return (
                     <tr key={siret}>
-                      <td>{siret}</td>
-                      <td className="table__center-cell">
+                      <td className="table-cell--nowrap">
+                        {formatSiret(siret)}
+                      </td>
+                      <td className="table-cell--center-cell">
                         {etat && <State state={etat} />}
                       </td>
                       <td>{categorie}</td>
@@ -68,7 +71,7 @@ export const Agreements = ({
                         {totalEtab && formatNumber(totalEtab)}
                       </td>
                       <td>{toI18nDate(date)}</td>
-                      <td className="has-text-centered">
+                      <td className="see-details">
                         <SeeDetailsLink
                           link={`/establishment/${siret}/#relation`}
                         />
@@ -78,7 +81,7 @@ export const Agreements = ({
                 }
               )}
             </tbody>
-          </table>
+          </Table>
 
           <a
             href={

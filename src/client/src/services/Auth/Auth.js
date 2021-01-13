@@ -11,10 +11,11 @@ export default class Auth {
     });
   }
 
-  static login(email, code) {
+  static login(email, code, isCheckedSubscription) {
     return Http.post("/login", {
       code,
-      email
+      email,
+      isCheckedSubscription
     }).then(response => {
       if (response.data && response.data.success) {
         Local.set(AUTH_KEY, response.data.token);
@@ -28,6 +29,18 @@ export default class Auth {
   static logout() {
     Local.remove(AUTH_KEY);
     Local.remove(AUTH_USER_ID);
+  }
+
+  static tempLogin(credential) {
+    return Http.post("/tempLogin", {
+      credential
+    }).then(response => {
+      if (response.data && response.data.success) {
+        Local.set(AUTH_KEY, response.data.token);
+        Local.set(AUTH_USER_ID, response.data.saltedEmail);
+      }
+      return response;
+    });
   }
 
   static isLogged() {

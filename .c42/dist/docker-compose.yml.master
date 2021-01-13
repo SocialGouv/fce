@@ -1,10 +1,11 @@
-version: '3'
+version: "3"
 
 services:
   server:
     build: .docker/node
     network_mode: host
     container_name: server
+    restart: always
     logging:
       driver: "json-file"
       options:
@@ -22,6 +23,7 @@ services:
     image: postgres:9.6
     network_mode: host
     container_name: db
+    restart: always
     logging:
       driver: "json-file"
       options:
@@ -39,6 +41,7 @@ services:
     image: docker.elastic.co/app-search/app-search:7.6.1
     network_mode: host
     container_name: appsearch
+    restart: always
     logging:
       driver: "json-file"
       options:
@@ -55,6 +58,7 @@ services:
     build: .docker/elasticsearch
     network_mode: host
     container_name: elasticsearch
+    restart: always
     logging:
       driver: "json-file"
       options:
@@ -79,22 +83,22 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device:  /mnt/data/shared/pgdata
+      device: /mnt/data/shared/pgdata
   elasticdata:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device:  /mnt/data/shared/elasticdata
+      device: /mnt/data/shared/elasticdata
   appsearchdata_logs:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device:  /mnt/data/shared/appsearchdata/log
+      device: /mnt/data/shared/appsearchdata/log
   appsearchdata_tmp:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device:  /mnt/data/shared/appsearchdata/log
+      device: /mnt/data/shared/appsearchdata/log

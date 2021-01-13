@@ -2,10 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import Value from "../../../../shared/Value";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
+import Table from "../../SharedComponents/Table";
+
+import "./rupcoTable.scss";
 
 const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
   return (
-    <table className="table mt-2 rupco-table-establishment">
+    <Table className="rupco-table-establishment">
       <thead>
         <tr>
           {hasTypeColumn && <th>Type</th>}
@@ -43,12 +46,14 @@ const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
               <td className="has-text-right col-width-20">
                 <Value value={dossier.nombre_de_ruptures} hasNumberFormat />
               </td>
-              <td className="col-width-30">
+              <td>
                 <Value
                   value={
                     hasOtherEstablishments ? (
                       <div>
-                        <span className="mr-3">Oui</span>
+                        <div className="rupco-table-establishment__other-establishments">
+                          Oui
+                        </div>
                         <SeeDetailsLink
                           link={`/enterprise/${siren}/#muteco`}
                           text="Voir la fiche entreprise"
@@ -64,7 +69,7 @@ const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
           );
         })}
       </tbody>
-    </table>
+    </Table>
   );
 };
 

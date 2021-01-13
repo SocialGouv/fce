@@ -62,9 +62,13 @@ const config = {
       BilanTermine: "Bilan terminé",
     },
   },
+  credential: {
+    token: process.env.CREDENTIAL_API_KEY,
+  },
   jwt: {
     secret: process.env.JWT_SECRET,
     expire: process.env.JWT_EXPIRE,
+    expireTemporary: process.env.JWT_TEMP_EXPIRE,
   },
   elasticIndexer: {
     appsearch_address: process.env.JWT_APPSEARCH_ADDRRESS,
@@ -116,9 +120,10 @@ const config = {
   },
   sanitizeTables: [
     {
-      fields: ["siret", "numero_de_dossier"],
-      table: "etablissements_pse",
-      hasId: false,
+      fields: ["numero"],
+      table: "rupco_procedures",
+      hasId: true,
+      filterField: "date_enregistrement",
     },
     {
       fields: ["code"],
@@ -136,7 +141,10 @@ const config = {
       hasId: true,
     },
   ],
-  emailSalt: process.env.EMAIL_SALT
+  emailSalt: process.env.EMAIL_SALT,
+  effectif_dsn: {
+    exclude: ["2020-06"],
+  },
 };
 
 if (process.env.HOST) {

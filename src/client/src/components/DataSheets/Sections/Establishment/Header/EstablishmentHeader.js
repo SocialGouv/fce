@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Helmet } from "react-helmet";
 import Value from "../../../../shared/Value";
 import Dashboard from "../Dashboard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +9,7 @@ import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import { formatAddress } from "../../../../../helpers/Address";
 import InfoBox from "../../../../shared/InfoBox";
-import "./establishmentHeader.scss";
+import { formatSiret } from "../../../../../helpers/utils";
 
 const EstablishmentHeader = ({
   enterprise,
@@ -21,47 +22,42 @@ const EstablishmentHeader = ({
   const stateClass = isActive ? "icon--success" : "icon--danger";
 
   return (
-    <section id="header" className="establishment-header">
-      <h1 className="mb-4 is-capitalized has-text-weight-bold is-size-3">
+    <section id="header" className="data-sheet-header">
+      <Helmet>
+        <title>FCE - établissement {getEnterpriseName(enterprise) || ""}</title>
+      </Helmet>
+
+      <h1 className="data-sheet-header__title">
         <Value value={getEnterpriseName(enterprise) || null} empty=" " />
       </h1>
       <div className="columns">
         <div className="column">
-          <InfoBox
-            value={establishment.categorie_etablissement}
-            infoBoxClasses={[
-              "has-text-weight-bold",
-              "has-text-roboto",
-              "is-size-6"
-            ]}
-          />
+          <InfoBox value={establishment.categorie_etablissement} />
         </div>
       </div>
-      <div className="columns is-vcentered">
-        <div className="column is-4">
-          <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
-            SIRET :{" "}
-          </span>
-          <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
-            <Value value={establishment.siret} empty="" />
+      <div className="columns is-vcentered data-sheet-header__primary-infos">
+        <div className="column is-4 data-sheet-header__siret">
+          <span>SIRET : </span>
+          <span>
+            <Value value={formatSiret(establishment.siret)} empty="" />
           </span>
         </div>
         <div className="column is-8">
-          <span className="is-size-6 has-text-segoe has-text-grey-dark">
+          <span className="has-text-segoe">
             <Value value={address} empty="" />
           </span>
         </div>
       </div>
       <div className="columns">
         <div className="column is-4">
-          <div className="establishment-header__status">
-            <div className="active-item-value">
+          <div className="data-sheet-header__status">
+            <div>
               <FontAwesomeIcon
                 icon={isActive ? faCircle : faSquare}
-                className={`mr-2 ${stateClass}`}
+                className={`data-sheet-header__status-icon ${stateClass}`}
               />
             </div>
-            <div className="is-size-6 has-text-segoe has-text-grey-dark">
+            <div className="has-text-segoe">
               {isActive ? (
                 <span>
                   Ouvert depuis le{" "}
@@ -89,7 +85,7 @@ const EstablishmentHeader = ({
           </div>
         </div>
         <div className="column is-8">
-          <span className="is-size-6 has-text-segoe has-text-weight-semibold has-text-grey-dark">
+          <span className="has-text-segoe data-sheet-header__naf">
             <Value value={establishment.naf} empty="-" />{" "}
             <Value
               value={

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import SearchResults from "../SearchResults";
 import SiegeFilter from "./Filters/SiegeFilter";
 import StateFilter from "./Filters/StateFilter";
 import NafFilter from "./Filters/NafFilter";
+import EffectifFilter from "./Filters/EffectifFilter";
 import LocationFilter from "./Filters/LocationFilter";
 import {
   Accordion,
@@ -15,6 +16,7 @@ import {
 } from "react-accessible-accordion";
 import SearchBar from "./SearchBar";
 import UsersFeedback from "../../containers/UsersFeedback";
+import Unsubscribe from "../../containers/Unsubscribe/Unsubscribe";
 
 import "./search.scss";
 
@@ -34,127 +36,134 @@ const Search = ({
   sort,
   options,
   divisionsNaf,
-  loadLocations
+  trancheEffectif,
+  loadLocations,
+  generateXlsx,
+  downloadXlsxStatus
 }) => {
-  const isOpenAdvancedSearch = filters => {
-    const hasNaf = filters.naf && filters.naf.length;
-    const hasLocation = filters.location && filters.location.length;
-    return hasNaf || hasLocation;
-  };
-
+  const [isOpenAdvancedSearch, setIsOpenAdvancedSearch] = useState(true);
   return (
     <div className="app-search">
-      <div className="pb-4">
-        <div className="app-search__container px-4">
-          <div className="columns">
-            <div className="column is-offset-2-desktop is-offset-2-tablet is-8-desktop is-8-tablet search">
-              {error && (
-                <div className="notification is-danger">
-                  Une erreur est survenue lors de la communication avec l{"'"}
-                  API
+      <div className="app-search__wrapper">
+        <div className="container is-fullhd">
+          {error && <div className="notification is-danger">{error}</div>}
+          <form
+            className="form search-form"
+            onSubmit={e => {
+              e.preventDefault();
+              sendRequest(searchTerm, options);
+            }}
+          >
+            <div className="columns">
+              <div className="column is-10">
+                <div className="field is-grouped is-grouped-centered">
+                  <SearchBar
+                    label="Nom ou raison sociale, SIRET ou SIREN"
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    resetSearch={resetSearch}
+                    isLoading={isLoading}
+                  />
                 </div>
-              )}
-              <form
-                className="form search-form"
-                onSubmit={e => {
-                  e.preventDefault();
-                  sendRequest(searchTerm, options);
-                }}
-              >
+
+                <div className="columns filters__checkboxes">
+                  <div className="column is-4">
+                    <SiegeFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                    />
+                  </div>
+                  <div className="column is-8">
+                    <StateFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                    />
+                  </div>
+                </div>
+
                 <div className="columns">
-                  <div className="column is-four-fifths-widescreen">
-                    <div className="field is-grouped is-grouped-centered">
-                      <SearchBar
-                        label="Nom ou raison sociale, SIRET ou SIREN"
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                      />
-                    </div>
-                    <div className="columns filters__checkboxes">
-                      <div className="column is-4">
-                        <SiegeFilter
-                          filters={filters}
-                          addFilter={addFilter}
-                          removeFilter={removeFilter}
-                        />
-                      </div>
-                      <div className="column is-8">
-                        <StateFilter
-                          filters={filters}
-                          addFilter={addFilter}
-                          removeFilter={removeFilter}
-                        />
-                      </div>
-                    </div>
-                    <div className="columns">
-                      <div className="column">
-                        <Accordion
-                          allowZeroExpanded
-                          preExpanded={
-                            isOpenAdvancedSearch(filters)
-                              ? ["advancedSearch"]
-                              : []
-                          }
-                        >
-                          <AccordionItem uuid="advancedSearch">
-                            <AccordionItemHeading>
-                              <AccordionItemButton>
-                                <span>Recherche avancée</span>
-                              </AccordionItemButton>
-                            </AccordionItemHeading>
-                            <AccordionItemPanel>
-                              <div className="columns filters__selects">
-                                <div className="column is-half">
-                                  <NafFilter
-                                    filters={filters}
-                                    addFilter={addFilter}
-                                    removeFilter={removeFilter}
-                                    divisionsNaf={divisionsNaf}
-                                  />
-                                </div>
-                                <div className="column is-half">
-                                  <LocationFilter
-                                    filters={filters}
-                                    addFilter={addFilter}
-                                    removeFilter={removeFilter}
-                                    loadLocations={loadLocations}
-                                  />
-                                </div>
-                              </div>
-                            </AccordionItemPanel>
-                          </AccordionItem>
-                        </Accordion>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="control column buttons__wrapper">
-                    <div className="buttons__bloc">
-                      <button
-                        className={classNames(
-                          "action",
-                          "button",
-                          "is-secondary",
-                          "is-medium",
-                          { "is-loading": isLoading }
-                        )}
-                      >
-                        Rechercher
-                      </button>
-                      <button
-                        className="button is-text"
-                        onClick={e => {
-                          e.preventDefault();
-                          resetSearch();
-                        }}
-                      >
-                        Vider la recherche
-                      </button>
-                    </div>
+                  <div className="column">
+                    <Accordion
+                      allowZeroExpanded
+                      preExpanded={["advancedSearch"]}
+                      onChange={e => {
+                        setIsOpenAdvancedSearch(!!e.length);
+                      }}
+                    >
+                      <AccordionItem uuid="advancedSearch">
+                        <AccordionItemHeading>
+                          <AccordionItemButton>
+                            <span>Recherche avancée</span>
+                          </AccordionItemButton>
+                        </AccordionItemHeading>
+                        <AccordionItemPanel>
+                          <div className="columns filters__selects">
+                            <div className="column is-half">
+                              <NafFilter
+                                filters={filters}
+                                addFilter={addFilter}
+                                removeFilter={removeFilter}
+                                divisionsNaf={divisionsNaf}
+                              />
+                            </div>
+                            <div className="column is-half">
+                              <LocationFilter
+                                filters={filters}
+                                addFilter={addFilter}
+                                removeFilter={removeFilter}
+                                loadLocations={loadLocations}
+                              />
+                            </div>
+                          </div>
+                          <div className="columns filters__selects">
+                            <div className="column is-half">
+                              <EffectifFilter
+                                filters={filters}
+                                addFilter={addFilter}
+                                removeFilter={removeFilter}
+                                trancheEffectif={trancheEffectif}
+                              />
+                            </div>
+                          </div>
+                        </AccordionItemPanel>
+                      </AccordionItem>
+                    </Accordion>
                   </div>
                 </div>
-              </form>
+              </div>
+
+              <div
+                className={classNames("column is-2 search-form__buttons", {
+                  "search-form__buttons--align-top": !isOpenAdvancedSearch
+                })}
+              >
+                <div>
+                  <button
+                    className={classNames(
+                      "action",
+                      "button",
+                      "is-secondary",
+                      "is-medium",
+                      { "is-loading": isLoading }
+                    )}
+                  >
+                    Rechercher
+                  </button>
+                  <button
+                    className="button is-text search-form__reset"
+                    onClick={e => {
+                      e.preventDefault();
+                      resetSearch();
+                    }}
+                  >
+                    Vider la recherche
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
 
@@ -173,17 +182,21 @@ const Search = ({
           isLoading={isLoading}
           sort={sort}
           currentSort={currentSort}
+          generateXlsx={generateXlsx}
+          downloadXlsxStatus={downloadXlsxStatus}
         />
       )}
-
-      <UsersFeedback />
+      <div>
+        <UsersFeedback />
+        <Unsubscribe />
+      </div>
     </div>
   );
 };
 
 Search.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
+  error: PropTypes.string,
   resultList: PropTypes.object,
   sendRequest: PropTypes.func.isRequired,
   searchTerm: PropTypes.string.isRequired,
@@ -197,7 +210,10 @@ Search.propTypes = {
   sort: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   divisionsNaf: PropTypes.array.isRequired,
-  loadLocations: PropTypes.func.isRequired
+  trancheEffectif: PropTypes.array.isRequired,
+  loadLocations: PropTypes.func.isRequired,
+  generateXlsx: PropTypes.func.isRequired,
+  downloadXlsxStatus: PropTypes.object.isRequired
 };
 
 export default Search;

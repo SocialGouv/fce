@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/pro-solid-svg-icons";
 
 import "./AccordionTable.scss";
+import { formatSiret } from "../../../../../helpers/utils";
 
 const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
   const [isActiveAccordion, setIsActiveAccordion] = useState(false);
@@ -53,7 +54,6 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
                 icon={
                   isActiveAccordion ? faChevronCircleDown : faChevronCircleLeft
                 }
-                className="ml-2"
               />
             </div>
           </td>
@@ -69,7 +69,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
               </td>
               <td className="has-text-link has-text-right">
                 <Value
-                  value={etablissement.siret}
+                  value={formatSiret(etablissement.siret)}
                   link={`/establishment/${etablissement.siret}/#muteco`}
                 />
               </td>

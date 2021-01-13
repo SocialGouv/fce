@@ -3,6 +3,77 @@ const CONVERTER_XLSX_TO_CSV = "xlsxToCsv";
 const CONVERTER_JSON_TO_CSV = "jsonToCsv";
 
 const config = {
+  etablissements_dsn_effectif: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dares",
+      fileMatch: /^(.)*effectif(.)*.csv$/,
+      outputFileName: "etablissements_dsn_effectif.csv",
+    },
+    ingest: {
+      className: "EtablissementsDsnEffectifIngestor",
+      table: "etablissements_dsn_effectif",
+      filename: `${FILES_FOLDER}/etablissements_dsn_effectif.csv`,
+      cols: [
+        "mois",
+        "siret",
+        "eff",
+        "hommes",
+        "femmes",
+        "cdd",
+        "cdi",
+        "cdi_inter",
+        "inter_mission",
+        "interim",
+        "date_maj",
+      ],
+      delimiter: ",",
+      truncate: false,
+      history: false,
+      generateSiren: true,
+      date: {
+        field: "mois",
+        format: "YYYY-MM",
+      },
+    },
+  },
+  accords: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgt",
+      fileMatch: /^Daccord-Gestion-Extraction.*\.(txt|csv)$/,
+      outputFileName: "accords.csv",
+    },
+    ingest: {
+      table: "etablissements_accords",
+      filename: `${FILES_FOLDER}/accords.csv`,
+      cols: [
+        "num_dos",
+        "siret",
+        "dt_sign",
+        "epargne",
+        "remuneration",
+        "temps_travail",
+        "conditions_travail",
+        "emploi",
+        "egalite_pro",
+        "classifications",
+        "formation",
+        "protection_sociale",
+        "droit_syndical",
+        "autres",
+        "nouvelles_technologies",
+      ],
+      delimiter: ";",
+      truncate: true,
+      generateSiren: true,
+      history: false,
+      date: {
+        field: "dt_sign",
+        format: "YYYY-MM-DD",
+      },
+    },
+  },
   wikit_uc: {
     download: {
       className: "MinioDownloader",
@@ -247,7 +318,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^RUPCO(.)*procedure(.)*.csv$/,
+      fileMatch: /^(.)*export_procedure(.)*.csv$/,
       outputFileName: "rupco_procedures.csv",
     },
     ingest: {
@@ -280,7 +351,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^RUPCO(.)*etablissement(.)*.csv$/,
+      fileMatch: /^(.)*export_etablissement(.)*.csv$/,
       outputFileName: "rupco_etablissements.csv",
     },
     ingest: {

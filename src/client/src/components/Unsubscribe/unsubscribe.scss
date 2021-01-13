@@ -1,0 +1,70 @@
+@import "../App/variables";
+@import "../App/placeholders";
+
+.mailing-list-subscription {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: $spacing-2 $spacing-4;
+    font-weight: bold;
+    color: $white;
+    background: $primary;
+
+    &__notification.notification {
+        width: 500px;
+        max-width: 100%;
+        margin: $spacing-3 auto !important;
+        padding: 0.6em;
+        text-align: center;
+        transition: opacity 300ms, transform 300ms;
+
+        // react-transition-group
+        &.transition-enter {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        &.transition-enter-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        &.transition-exit {
+            opacity: 1;
+            transform: scale(1);
+        }
+        &.transition-exit-active {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+    }
+
+    &__switch {
+        @extend %flex-center;
+
+        .react-toggle {
+            margin-left: $spacing-4;
+
+            .react-toggle-track {
+                background-color: $grey;
+                box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.5);
+            }
+
+            &:hover {
+                .react-toggle-track {
+                    background-color: darken($grey, 10%);
+                }
+            }
+
+            &--checked {
+                .react-toggle-track {
+                    background-color: $success;
+                }
+                &:hover {
+                    .react-toggle-track {
+                        background-color: darken($success, 10%);
+                    }
+                }
+            }
+        }
+    }
+}

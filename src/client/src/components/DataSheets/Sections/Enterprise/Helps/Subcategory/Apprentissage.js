@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _get from "lodash.get";
-
 import Data from "../../../SharedComponents/Data";
 import Subcategory from "../../../SharedComponents/Subcategory";
 import State from "../../../SharedComponents/State";
 import SeeDetailsLink from "../../../SharedComponents/SeeDetailsLink";
+import Table from "../../../SharedComponents/Table";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
 import { getEstablishment } from "../../../../../../helpers/Enterprise";
-import { arraySum } from "../../../../../../helpers/utils";
+import { arraySum, formatSiret } from "../../../../../../helpers/utils";
 
 const Apprentissage = ({ apprentissage, etablissements }) => {
   const total = apprentissage
@@ -34,11 +34,11 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
           sourceSi="Ari@ne"
         />
         {hasApprentissage && (
-          <table className="table is-fullwidth is-hoverable mt-3">
+          <Table>
             <thead>
               <tr>
                 <th className="th">Siret</th>
-                <th className="th table__center-cell">État</th>
+                <th className="th table-cell--center-cell">État</th>
                 <th className="th">Commune</th>
                 <th className="th has-text-right">Nombre de contrats</th>
                 <th className="th see-details"></th>
@@ -59,8 +59,8 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
 
                 return (
                   <tr key={siret}>
-                    <td>{siret}</td>
-                    <td className="table__center-cell">
+                    <td className="table-cell--nowrap">{formatSiret(siret)}</td>
+                    <td className="table-cell--center-cell">
                       {etat && <State state={etat} />}
                     </td>
                     <td>{`${codePostal ? codePostal : ""} ${
@@ -69,14 +69,14 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
                     <td className="has-text-right">
                       {arraySum(Object.values(signes))}
                     </td>
-                    <td className="has-text-centered">
+                    <td className="see-details">
                       <SeeDetailsLink link={`/establishment/${siret}/#helps`} />
                     </td>
                   </tr>
                 );
               })}
             </tbody>
-          </table>
+          </Table>
         )}
       </Subcategory>
     </>

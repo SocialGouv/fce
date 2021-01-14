@@ -12,10 +12,6 @@
       "libelle": "Secteur public"
     },
     {
-        "code": "0",
-        "libelle": "0 salarié"
-    },
-    {
         "code": "01",
         "libelle": "1 ou 2 salarié"
     },

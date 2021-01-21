@@ -1,0 +1,57 @@
+@import "../../App/variables";
+
+.stats {
+    &-items {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    &-item {
+        display: grid;
+        padding: 1rem;
+        border: solid 2px $grey-geyser;
+        text-align: center;
+
+        &-label {
+            color: $grey !important;
+        }
+
+        &-value {
+            color: $primary;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+    }
+}
+
+.error {
+    color: $danger;
+    background-color:  #e74c3c3f;
+    padding: 1rem;
+    text-align: center;
+}
+
+.stats-filters {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1.5rem;
+
+    padding-bottom: 2rem;
+    margin: 2rem 0;
+
+    border-bottom: solid 1px $grey-geyser;
+
+    input[type=date]:focus {
+        outline: none !important;
+        border: none;
+
+        box-shadow: 0 0 0 1px #2684ff;
+        border: solid 1px #2684ff;
+        border-radius: 4px;
+
+        padding: 0.5rem;
+    }
+}
+

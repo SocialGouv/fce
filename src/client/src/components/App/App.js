@@ -14,6 +14,7 @@ import ScrollToTop from "./ScrollToTop";
 import Maintenance from "../Maintenance";
 import Header from "./Header";
 import Footer from "./Footer";
+import Statistics from "../PublicPage/Statistics";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import UnsubscribePage from "../../containers/UnsubscribePage";
@@ -101,6 +102,11 @@ const App = () => {
                                 pageIdentifier={"sources-des-donnees"}
                               />
                             )}
+                          />
+                          <Route
+                            exact
+                            path="/statistics"
+                            render={() => <Statistics />}
                           />
                           <Route
                             exact

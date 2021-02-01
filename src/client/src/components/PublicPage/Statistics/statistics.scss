@@ -30,6 +30,7 @@
     color: $danger;
     background-color:  #e74c3c3f;
     padding: 1rem;
+    margin-bottom: 1rem;
     text-align: center;
 }
 
@@ -42,16 +43,5 @@
     margin: 2rem 0;
 
     border-bottom: solid 1px $grey-geyser;
-
-    input[type=date]:focus {
-        outline: none !important;
-        border: none;
-
-        box-shadow: 0 0 0 1px #2684ff;
-        border: solid 1px #2684ff;
-        border-radius: 4px;
-
-        padding: 0.5rem;
-    }
 }
 

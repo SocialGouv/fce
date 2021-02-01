@@ -9,7 +9,7 @@ import "./app.scss";
 import configureStore from "../../services/Store";
 import Config from "../../services/Config";
 import PrivateRoute from "../../services/PrivateRoute";
-import { SetMatomo } from "../../helpers/SetMatomo";
+import SetMatomo from "../../helpers/Matomo/SetMatomo";
 import ScrollToTop from "./ScrollToTop";
 import Maintenance from "../Maintenance";
 import Header from "./Header";

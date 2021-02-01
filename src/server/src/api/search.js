@@ -168,20 +168,21 @@ router.post("/downloadXlsx", withAuth, async function (req, res) {
             };
           })
         );
+        if (pages === page) {
+          const wb = { SheetNames: [], Sheets: {} };
+          const ws = xlsx.utils.json_to_sheet(dataJson);
+          const wsName = "FceExport";
+          xlsx.utils.book_append_sheet(wb, ws, wsName);
 
-        const wb = { SheetNames: [], Sheets: {} };
-        const ws = xlsx.utils.json_to_sheet(dataJson);
-        const wsName = "FceExport";
-        xlsx.utils.book_append_sheet(wb, ws, wsName);
+          const wbout = Buffer.from(
+            xlsx.write(wb, { bookType: "xlsx", type: "buffer" })
+          );
+          res.set({
+            "Content-type": "application/octet-stream",
+          });
 
-        const wbout = Buffer.from(
-          xlsx.write(wb, { bookType: "xlsx", type: "buffer" })
-        );
-        res.set({
-          "Content-type": "application/octet-stream",
-        });
-
-        res.send(wbout);
+          res.send(wbout);
+        }
       } catch (error) {
         console.error(error);
         return res

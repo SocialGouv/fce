@@ -139,7 +139,6 @@ router.post("/downloadXlsx", withAuth, async function (req, res) {
             const addressInformations = await establishmentModel.getAddress(
               cleanedData.siret
             );
-            console.log(cleanedData);
 
             return {
               Siret: cleanedData.siret,

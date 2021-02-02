@@ -3,7 +3,7 @@ const associatedSources = [
   { type: "hasMany", model: "ActivitePartielle" },
   { type: "hasMany", model: "Apprentissage" },
   { type: "hasOne", model: "ContratAide" },
-  { type: "hasOne", model: "DsnEff" },
+  { type: "hasMany", model: "DsnEff" },
   { type: "hasOne", model: "Iae" },
   { type: "hasMany", model: "InteractionsPole3ESEER" },
   { type: "hasMany", model: "InteractionsPole3ESRC" },

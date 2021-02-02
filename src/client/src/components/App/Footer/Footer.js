@@ -36,6 +36,11 @@ const Footer = () => (
             </Link>
           </li>
           <li className="footer__link-item">
+            <Link className="footer__link" to="/statistics">
+              Statistiques
+            </Link>
+          </li>
+          <li className="footer__link-item">
             Contact :{" "}
             <a href={`mailto:${Config.get("contact.mailto")}`}>
               {Config.get("contact.mailto")}

@@ -6,6 +6,7 @@ const Shell = require("./Shell");
 class DownloadSireneShell extends Shell {
   async execute() {
     const baseSireneUrl = "https://files.data.gouv.fr/insee-sirene/";
+    const baseSirenePath = "/tmp/data/";
     const sireneFiles = [
       "StockUniteLegale_utf8.zip",
       "StockEtablissement_utf8.zip",
@@ -16,7 +17,7 @@ class DownloadSireneShell extends Shell {
 
     sireneFiles.forEach(fileName => {
       console.log("Download " + fileName);
-      this.downloadAndWriteFile(baseSireneUrl + fileName, fileName);
+      this.downloadAndWriteFile(baseSireneUrl + fileName, baseSirenePath + fileName);
     });
   }
 

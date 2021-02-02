@@ -15,4 +15,26 @@ export default class Effectif extends Model {
         return null;
       });
   }
+  fileUploadedFormMonth() {
+    return this.db
+      .query("SELECT DISTINCT(mois) FROM etablissements_dsn_effectif")
+      .then((res) => {
+        return res.rows;
+      })
+      .catch((e) => {
+        console.error("Effectif:search", e);
+        return null;
+      });
+  }
+  findAllTranche() {
+    return this.db
+      .query("SELECT DISTINCT(effectif) FROM last_dsn_effectif")
+      .then((res) => {
+        return res.rows;
+      })
+      .catch((e) => {
+        console.error("Effectif::findAll", e);
+        return null;
+      });
+  }
 }

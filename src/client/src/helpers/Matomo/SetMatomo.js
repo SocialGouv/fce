@@ -1,6 +1,6 @@
 import Auth from "../../services/Auth";
 
-export const SetMatomo = config => {
+const SetMatomo = config => {
   var _paq = window._paq || [];
 
   _paq.push(["setUserId", Auth.getUserId()]);
@@ -15,3 +15,5 @@ export const SetMatomo = config => {
   g.src = config.url + "matomo.js";
   s.parentNode.insertBefore(g, s);
 };
+
+export default SetMatomo;

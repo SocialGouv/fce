@@ -57,7 +57,6 @@ const SearchResults = ({
         {results.length === 0 && (
           <div className="notification is-primary is-light">Aucun résultat</div>
         )}
-
         {!!results.length ? (
           <div>
             <SearchAwesomeTable
@@ -131,18 +130,23 @@ const SearchResults = ({
                     })
                 },
                 {
-                  headName: "Effectif",
-                  sortKey: "trancheeffectifsetablissement",
+                  headName: "Effectif (DSN)",
+                  sortKey: "lastdsntrancheeffectifsetablissement",
                   accessor: ({
-                    trancheeffectifsetablissement: {
-                      raw: trancheEffectifInsee
+                    lastdsntrancheeffectifsetablissement: {
+                      raw: trancheEffectif
                     },
                     etatadministratifetablissement: { raw: etat }
                   }) =>
                     Value({
-                      value: isActiveEstablishment(etat)
-                        ? staffSizeRanges[trancheEffectifInsee]
-                        : "0 salarié"
+                      value:
+                        trancheEffectif !== "-" &&
+                        trancheEffectif !== "NN" &&
+                        trancheEffectif !== "SP"
+                          ? isActiveEstablishment(etat)
+                            ? staffSizeRanges[trancheEffectif]
+                            : "0 salarié"
+                          : staffSizeRanges[trancheEffectif]
                     })
                 },
                 {

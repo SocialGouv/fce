@@ -16,6 +16,7 @@ import * as AppSearch from "@elastic/app-search-javascript";
 import Http from "../../services/Http";
 import SearchView from "../../components/Search";
 import divisionsNaf from "./divisions-naf.json";
+import trancheEffectif from "./tranche-effectif.json";
 import Config from "../../services/Config";
 import { formatSearchInput } from "../../helpers/Search";
 
@@ -78,6 +79,19 @@ const Search = ({
     });
   }
 
+  if (Array.isArray(search.filters.effectif)) {
+    search.filters.effectif.forEach(({ value }) => {
+      if (
+        !Object.prototype.hasOwnProperty.call(
+          allFiltersOptions,
+          "lastdsntrancheeffectifsetablissement"
+        )
+      ) {
+        allFiltersOptions.lastdsntrancheeffectifsetablissement = [];
+      }
+      allFiltersOptions.lastdsntrancheeffectifsetablissement.push(value);
+    });
+  }
   const options = {
     ...defaultOptions,
     filters: {
@@ -112,7 +126,7 @@ const Search = ({
       })
       .catch(error => {
         setSearchError(
-          `Une erreur est survenue lors de la communication avec l{"'"}API`
+          `Une erreur est survenue lors de la communication avec l'API`
         );
         setSearchIsLoading(false);
         console.error(`error: ${error}`);
@@ -302,6 +316,7 @@ const Search = ({
       sort={sort}
       options={options}
       divisionsNaf={divisionsNaf}
+      trancheEffectif={trancheEffectif}
       loadLocations={loadLocations}
       generateXlsx={generateXlsx}
       downloadXlsxStatus={downloadXlsxStatus}

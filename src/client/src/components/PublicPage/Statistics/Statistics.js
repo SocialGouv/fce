@@ -70,7 +70,7 @@ const Statistics = () => {
     },
     {
       label: "Niveau de satisfaction des utilisateurs",
-      value: stats?.avg_satisfaction_rate || "-" + " / 10"
+      value: (stats?.avg_satisfaction_rate || "-") + " / 10"
     },
     { label: "Nombre de visite sur le site", value: stats?.nb_visits },
     {

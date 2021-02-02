@@ -15,4 +15,18 @@ export default class UsersFeedback extends Model {
         return false;
       });
   }
+
+  getSatisfactionRates(startDate) {
+    return this.db
+      .query(
+        `SELECT rate FROM "users_feedback" WHERE "createdAt" >= '${startDate}'`
+      )
+      .then((res) => {
+        return res.rows.map((row) => row.rate);
+      })
+      .catch((e) => {
+        console.error("UsersFeedback::get", e);
+        return false;
+      });
+  }
 }

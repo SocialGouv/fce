@@ -32,3 +32,8 @@ export const getLastDateInteraction = (interactions, format = "DD/MM/YYYY") => {
 
 export const sortByDate = sortableList =>
   sortableList.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+export const getStartDateStatsParam = (months = 1) =>
+  Moment()
+    .subtract(parseInt(months), "months")
+    .format("YYYY-MM-DD");

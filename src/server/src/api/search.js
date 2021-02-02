@@ -157,9 +157,9 @@ router.post("/downloadXlsx", withAuth, async function (req, res) {
                 addressInformations && addressInformations.complement_adresse,
               "Code postal": cleanedData.codepostaletablissement,
               Ville: cleanedData.libellecommuneetablissement,
-              Effectif:
+              "Dernier effectif DSN connu":
                 xlsxConfig.inseeSizeRanges[
-                  cleanedData.trancheeffectifsetablissement
+                  cleanedData.lastdsntrancheeffectifsetablissement
                 ],
               Activité:
                 cleanedData.activiteprincipaleetablissement +

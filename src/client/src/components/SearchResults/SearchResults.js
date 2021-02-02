@@ -130,7 +130,7 @@ const SearchResults = ({
                     })
                 },
                 {
-                  headName: "Effectif",
+                  headName: "Effectif (DSN)",
                   sortKey: "lastdsntrancheeffectifsetablissement",
                   accessor: ({
                     lastdsntrancheeffectifsetablissement: {

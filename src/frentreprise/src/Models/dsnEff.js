@@ -15,7 +15,7 @@ const dsnEff = (sequelize, DataTypes) => {
       date_maj: DataTypes.STRING,
     },
     {
-      tableName: "etablissements_dsn_effectif",
+      tableName: "etablissements_dsn_eff",
     }
   );
 

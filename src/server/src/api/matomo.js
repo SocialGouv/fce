@@ -1,13 +1,12 @@
 import axios from "axios";
 import qs from "query-string";
 
-import withAuth from "../middlewares/auth";
 import UsersFeedback from "../models/UsersFeedback";
 
 const express = require("express");
 const router = express.Router();
 
-router.get("/matomo/:months/:startDate", withAuth, async (req, res) => {
+router.get("/matomo/:months/:startDate", async (req, res) => {
   if (!process.env.MATOMO_ID_SITE || !process.env.MATOMO_TOKEN_AUTH) {
     console.error(
       "WARNING MATOMO: It seems matomo config in .env file is not completed"
@@ -38,7 +37,7 @@ router.get("/matomo/:months/:startDate", withAuth, async (req, res) => {
     module: "API",
     method: "API.get",
     idSite: process.env.MATOMO_ID_SITE,
-    date: `last${months}`,
+    date: `last${parseInt(months) + 1}`,
     period: "month",
     format: "JSON",
     token_auth: process.env.MATOMO_TOKEN_AUTH,

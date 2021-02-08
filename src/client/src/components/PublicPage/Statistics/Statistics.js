@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import _map from "lodash.map";
+import _omit from "lodash.omit";
 
 import {
   nbUsersReturningAverage,
@@ -7,7 +8,10 @@ import {
   getAverageRateTimeOnSite,
   sum
 } from "../../../helpers/Matomo/Statistics";
-import { getStartDateStatsParam } from "../../../helpers/Date";
+import {
+  getStartDateStatsParam,
+  getLastObjectStatsKey
+} from "../../../helpers/Date";
 import Http from "../../../services/Http";
 import StatsFilters from "./StatsFilters";
 import LoadSpinner from "../../../components/shared/LoadSpinner";
@@ -34,25 +38,26 @@ const Statistics = () => {
     };
 
     getStats(range.value).then(res => {
-      const nbUsersList = _map(extractStats(res), "nb_users");
+      const resData = _omit(res, getLastObjectStatsKey());
+      const nbUsersList = _map(extractStats(resData), "nb_users");
       const nbUsersReturningList = _map(
-        extractStats(res),
+        extractStats(resData),
         "nb_users_returning"
       );
 
       setStats({
-        nb_users: res?.users.length,
+        nb_users: resData.users.length,
         nb_users_returning_average: nbUsersReturningAverage(
           nbUsersList,
           nbUsersReturningList
         ),
-        nb_visits: sum(_map(extractStats(res), "nb_visits")),
+        nb_visits: sum(_map(extractStats(resData), "nb_visits")),
         avg_time_on_site: getAverageRateTimeOnSite(
-          _map(extractStats(res), "avg_time_on_site"),
+          _map(extractStats(resData), "avg_time_on_site"),
           range.value
         ),
-        nb_pageviews: sum(_map(extractStats(res), "nb_pageviews")),
-        avg_satisfaction_rate: res?.avg_satisfaction_rate,
+        nb_pageviews: sum(_map(extractStats(resData), "nb_pageviews")),
+        avg_satisfaction_rate: resData.avg_satisfaction_rate,
         graph_visits_data: _map(extractStats(res), (monthData, date) => {
           return { label: date, value: monthData.nb_visits };
         })
@@ -72,7 +77,7 @@ const Statistics = () => {
       label: "Niveau de satisfaction des utilisateurs",
       value: (stats?.avg_satisfaction_rate || "-") + " / 10"
     },
-    { label: "Nombre de visite sur le site", value: stats?.nb_visits },
+    { label: "Nombre de visites sur le site", value: stats?.nb_visits },
     {
       label: "Durée moyenne d’une visite",
       value: stats?.avg_time_on_site + " min"

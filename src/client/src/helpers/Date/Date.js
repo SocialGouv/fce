@@ -37,3 +37,5 @@ export const getStartDateStatsParam = (months = 1) =>
   Moment()
     .subtract(parseInt(months), "months")
     .format("YYYY-MM-DD");
+
+export const getLastObjectStatsKey = () => Moment().format("YYYY-MM");

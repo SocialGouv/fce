@@ -19,7 +19,7 @@ export default class UsersFeedback extends Model {
   getSatisfactionRates(startDate) {
     return this.db
       .query(
-        `SELECT rate FROM "users_feedback" WHERE "rate" IS NOT NULL AND "rate" != "" AND "createdAt" >= '${startDate}'`
+        `SELECT rate FROM "users_feedback" WHERE "rate" IS NOT NULL AND "rate" NOT LIKE '' AND "createdAt" >= '${startDate}'`
       )
       .then((res) => {
         return res.rows.map((row) => row.rate);

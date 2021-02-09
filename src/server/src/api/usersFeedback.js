@@ -32,11 +32,11 @@ router.post("/feedback", withAuth, async (req, res) => {
       });
     }
 
-    if (typeof rate !== "string") {
-      console.error("'rate' parameter must be a string");
+    if (typeof rate !== "string" || !rate) {
+      console.error("'rate' parameter must be a not empty string");
       return res.status(400).send({
         success: false,
-        error: "'rate' parameter must be a string",
+        error: "'rate' parameter must be a not empty string",
       });
     }
 

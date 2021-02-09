@@ -33,9 +33,18 @@ export const getLastDateInteraction = (interactions, format = "DD/MM/YYYY") => {
 export const sortByDate = sortableList =>
   sortableList.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-export const getStartDateStatsParam = (months = 1) =>
+export const getStartDateStatsParam = (months = 1) => {
+  /*
+   * Solution provisoire, bug impossible à reproduire localement :
+   * en prod et preprod, la requête ne retourne pas d'avis
+   * lorsqu'on est sur 12 mois, mais fonctionne à partir de 6.
+   * Donc sur 6 et 12 mois, on requête sur 6 mois
+   */
+  const monthsToSubstract = parseInt(months) === 12 ? 6 : months;
+
   Moment()
-    .subtract(parseInt(months), "months")
+    .subtract(parseInt(monthsToSubstract), "months")
     .format("YYYY-MM-DD");
+};
 
 export const getLastObjectStatsKey = () => Moment().format("YYYY-MM");

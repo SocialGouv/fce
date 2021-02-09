@@ -42,7 +42,7 @@ export const getStartDateStatsParam = (months = 1) => {
    */
   const monthsToSubstract = parseInt(months) === 12 ? 6 : months;
 
-  Moment()
+  return Moment()
     .subtract(parseInt(monthsToSubstract), "months")
     .format("YYYY-MM-DD");
 };

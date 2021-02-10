@@ -63,9 +63,11 @@ router.get("/matomo/:months/:startDate", async (req, res) => {
 
     const totalRate =
       Array.isArray(satisfactionRates) &&
-      satisfactionRates.reduce((a, b) => {
-        return parseInt(a) + parseInt(b);
-      }, 0);
+      satisfactionRates
+        .filter((rate) => !isNaN(parseInt(rate)))
+        .reduce((a, b) => {
+          return parseInt(a) + parseInt(b);
+        }, 0);
 
     const averageRate =
       Number.isInteger(totalRate) &&

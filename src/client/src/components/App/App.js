@@ -19,6 +19,7 @@ import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import UnsubscribePage from "../../containers/UnsubscribePage";
 import Search from "../../containers/Search";
+import HomePage from "../HomePage";
 import PublicPage from "../../containers/PublicPage";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
@@ -58,7 +59,7 @@ const App = () => {
                         <Maintenance />
                       ) : (
                         <Switch>
-                          <PrivateRoute exact path="/" component={Search} />
+                          <PrivateRoute exact path="/" component={HomePage} />
                           <PrivateRoute
                             exact
                             path="/search"

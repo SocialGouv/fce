@@ -5,6 +5,21 @@ import Chartjs from "chart.js";
 const VisitsGraph = ({ data }) => {
   const canvasRef = useRef(null);
   const [persistData, setPersistData] = useState(null);
+  const backgroundColors = [
+    "rgba(41, 128, 185, 0.25)",
+    "rgba(41, 128, 185, 0.30)",
+    "rgba(41, 128, 185, 0.35)",
+    "rgba(41, 128, 185, 0.40)",
+    "rgba(41, 128, 185, 0.45)",
+    "rgba(41, 128, 185, 0.50)",
+    "rgba(41, 128, 185, 0.55)",
+    "rgba(41, 128, 185, 0.60)",
+    "rgba(41, 128, 185, 0.65)",
+    "rgba(41, 128, 185, 0.70)",
+    "rgba(41, 128, 185, 0.75)",
+    "rgba(41, 128, 185, 0.80)",
+    "rgba(41, 128, 185, 0.85)"
+  ];
 
   if (!persistData) {
     setPersistData(data);
@@ -20,34 +35,8 @@ const VisitsGraph = ({ data }) => {
             {
               label: "Nombres de visites par mois",
               data: persistData.map(month => month.value),
-              backgroundColor: [
-                "rgba(41, 128, 185, 0.25)",
-                "rgba(41, 128, 185, 0.30)",
-                "rgba(41, 128, 185, 0.35)",
-                "rgba(41, 128, 185, 0.40)",
-                "rgba(41, 128, 185, 0.45)",
-                "rgba(41, 128, 185, 0.50)",
-                "rgba(41, 128, 185, 0.55)",
-                "rgba(41, 128, 185, 0.60)",
-                "rgba(41, 128, 185, 0.65)",
-                "rgba(41, 128, 185, 0.70)",
-                "rgba(41, 128, 185, 0.75)",
-                "rgba(41, 128, 185, 0.80)"
-              ],
-              borderColor: [
-                "rgba(41, 128, 185, 0.25)",
-                "rgba(41, 128, 185, 0.30)",
-                "rgba(41, 128, 185, 0.35)",
-                "rgba(41, 128, 185, 0.40)",
-                "rgba(41, 128, 185, 0.45)",
-                "rgba(41, 128, 185, 0.50)",
-                "rgba(41, 128, 185, 0.55)",
-                "rgba(41, 128, 185, 0.60)",
-                "rgba(41, 128, 185, 0.65)",
-                "rgba(41, 128, 185, 0.70)",
-                "rgba(41, 128, 185, 0.75)",
-                "rgba(41, 128, 185, 0.80)"
-              ],
+              backgroundColor: backgroundColors,
+              borderColor: backgroundColors,
               borderWidth: 2
             }
           ]

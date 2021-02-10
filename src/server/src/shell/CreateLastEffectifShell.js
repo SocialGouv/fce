@@ -4,7 +4,6 @@ require("dotenv").config();
 const Shell = require("./Shell");
 const pool = new Pool(config.get("db"));
 
-const { execSync } = require("child_process");
 const PSQL_BASE_CMD = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
 
 class CreateLastEffectifShell extends Shell {

@@ -55,19 +55,23 @@ router.get("/matomo/:months/:startDate", async (req, res) => {
   });
 
   try {
-    const satisfactionRates = await feedback.getSatisfactionRates(startDate);
+    const satisfactionRatesResponse = await feedback.getSatisfactionRates(
+      startDate
+    );
 
-    if (!satisfactionRates) {
+    if (!satisfactionRatesResponse) {
       throw Error("Error: UsersFeedback get query have failed");
     }
 
+    const satisfactionRates = satisfactionRatesResponse.filter(
+      (rate) => !isNaN(parseInt(rate))
+    );
+
     const totalRate =
       Array.isArray(satisfactionRates) &&
-      satisfactionRates
-        .filter((rate) => !isNaN(parseInt(rate)))
-        .reduce((a, b) => {
-          return parseInt(a) + parseInt(b);
-        }, 0);
+      satisfactionRates.reduce((a, b) => {
+        return parseInt(a) + parseInt(b);
+      }, 0);
 
     const averageRate =
       Number.isInteger(totalRate) &&

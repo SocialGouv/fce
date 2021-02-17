@@ -1,0 +1,38 @@
+@import "../App/variables";
+
+.home-page {
+    &__block {
+        padding: $spacing-5 6rem;
+
+        .block {
+            &__title {
+                font-size: $font-size-datasheet-header;
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: $spacing-3;
+            }
+        }
+
+        .icon-item {
+            width: 14rem;
+        }
+    }
+
+    &__summary {
+        color: $white;
+        text-align: center;
+        background-color: $deep-blue;
+
+        .button {
+            margin-top: $spacing-5;
+            background-color: $yellow;
+            border: none;
+            color: $deep-blue;
+            transition: background-color 150ms ease-in;
+
+            &:hover {
+                background-color: $brigth-yellow;
+            }
+        }
+    }
+}

@@ -157,7 +157,8 @@ const SearchResults = ({
                   sortKey: "activiteprincipaleetablissement",
                   accessor: fields => {
                     let naf = fields?.activiteprincipaleetablissement?.raw;
-                    let libelle_naf = fields?.activiteprincipaleetablissement_libelle?.raw;
+                    let libelle_naf =
+                      fields?.activiteprincipaleetablissement_libelle?.raw;
 
                     return (
                       naf &&
@@ -165,7 +166,8 @@ const SearchResults = ({
                         value: `${naf === undefined ? "" : naf} ${
                           libelle_naf === undefined ? "" : " - " + libelle_naf
                         }`
-                      });
+                      })
+                    );
                   }
                 }
               ]}

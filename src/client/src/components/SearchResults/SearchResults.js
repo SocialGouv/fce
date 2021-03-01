@@ -74,29 +74,32 @@ const SearchResults = ({
                   headName: "SIRET",
                   sortKey: "siret",
                   importantHead: true,
-                  accessor: ({ siret: { raw: siret } }) =>
-                    Value({
+                  accessor: fields => {
+                    let siret = fields?.siret?.raw;
+                    return Value({
                       value: formatSiret(siret),
                       link: `/establishment/${siret}`
-                    }),
+                    });
+                  },
                   link: ({ siret: { raw: siret } }) => `/establishment/${siret}`
                 },
                 {
                   headName: "État",
                   sortKey: "etatadministratifetablissement",
-                  accessor: ({
-                    siret: { raw: siret },
-                    etatadministratifetablissement: { raw: etat }
-                  }) => TableCellState({ siret, etat })
+                  accessor: fields => {
+                    let siret = fields?.siret?.raw;
+                    let etat = fields?.etatadministratifetablissement?.raw;
+                    return TableCellState({ siret, etat });
+                  }
                 },
                 {
                   headName: "Raison sociale / Nom",
                   sortKey: "enterprise_name",
                   html: true,
-                  accessor: ({
-                    enterprise_name: { raw: enterpriseName },
-                    enseigne1etablissement: { raw: enseigne }
-                  }) => {
+                  accessor: fields => {
+                    let enterpriseName = fields?.enterprise_name.raw;
+                    let enseigne = fields?.enseigne1etablissement.raw;
+
                     let name = `<div>${enterpriseName}</div>`;
 
                     if (enseigne) {
@@ -111,8 +114,8 @@ const SearchResults = ({
                 {
                   headName: "Catégorie établissement",
                   sortKey: "etablissementsiege",
-                  accessor: ({ etablissementsiege }) => {
-                    const isSiege = etablissementsiege.raw === "true";
+                  accessor: fields => {
+                    const isSiege = fields?.etablissementsiege?.raw === "true";
                     return Value({
                       value: isSiege ? "Siège social" : "Étab. secondaire"
                     });
@@ -121,24 +124,23 @@ const SearchResults = ({
                 {
                   headName: "Code postal",
                   sortKey: "codepostaletablissement",
-                  accessor: ({
-                    codepostaletablissement: { raw: postalCode },
-                    libellecommuneetablissement: { raw: town }
-                  }) =>
-                    Value({
+                  accessor: fields => {
+                    let postalCode = fields?.codepostaletablissement?.raw;
+                    let town = fields?.libellecommuneetablissement?.raw;
+                    return Value({
                       value: joinNoFalsy([postalCode, town], " - ")
-                    })
+                    });
+                  }
                 },
                 {
                   headName: "Effectif (DSN)",
                   sortKey: "lastdsntrancheeffectifsetablissement",
-                  accessor: ({
-                    lastdsntrancheeffectifsetablissement: {
-                      raw: trancheEffectif
-                    },
-                    etatadministratifetablissement: { raw: etat }
-                  }) =>
-                    Value({
+                  accessor: fields => {
+                    let trancheEffectif =
+                      fields?.lastdsntrancheeffectifsetablissement?.raw;
+                    let etat = fields?.etatadministratifetablissement?.raw;
+
+                    return Value({
                       value:
                         trancheEffectif !== "-" &&
                         trancheEffectif !== "NN" &&
@@ -147,23 +149,26 @@ const SearchResults = ({
                             ? staffSizeRanges[trancheEffectif]
                             : "0 salarié"
                           : staffSizeRanges[trancheEffectif]
-                    })
+                    });
+                  }
                 },
                 {
                   headName: "Activité",
                   sortKey: "activiteprincipaleetablissement",
-                  accessor: ({
-                    activiteprincipaleetablissement: { raw: naf },
-                    activiteprincipaleetablissement_libelle: {
-                      raw: libelle_naf
-                    }
-                  }) =>
-                    naf &&
-                    Value({
-                      value: `${naf === null ? "" : naf} ${
-                        libelle_naf === null ? "" : " - " + libelle_naf
-                      }`
-                    })
+                  accessor: fields => {
+                    let naf = fields?.activiteprincipaleetablissement?.raw;
+                    let libelle_naf =
+                      fields?.activiteprincipaleetablissement_libelle?.raw;
+
+                    return (
+                      naf &&
+                      Value({
+                        value: `${naf === undefined ? "" : naf} ${
+                          libelle_naf === undefined ? "" : " - " + libelle_naf
+                        }`
+                      })
+                    );
+                  }
                 }
               ]}
             />

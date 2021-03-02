@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Route, Redirect, useHistory } from "react-router-dom";
+
+import Layout from "../../components/App/Layout";
 import Auth from "../Auth";
 
 const PrivateRoute = ({ component: Component, location, ...rest }) => {
@@ -44,7 +46,9 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
       {...rest}
       render={props => {
         return authorization.auth ? (
-          <Component {...props} />
+          <Layout>
+            <Component {...props} />
+          </Layout>
         ) : (
           <Redirect
             to={{

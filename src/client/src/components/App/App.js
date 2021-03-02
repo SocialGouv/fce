@@ -4,26 +4,24 @@ import { createBrowserHistory } from "history";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/lib/integration/react";
 import PiwikReactRouter from "piwik-react-router";
-import classNames from "classnames";
+
 import "./app.scss";
 import configureStore from "../../services/Store";
 import Config from "../../services/Config";
 import PrivateRoute from "../../services/PrivateRoute";
-import SetMatomo from "../../helpers/Matomo/SetMatomo";
-import ScrollToTop from "./ScrollToTop";
+import HomePage from "../HomePage";
 import Maintenance from "../Maintenance";
-import Header from "./Header";
-import Footer from "./Footer";
 import Statistics from "../PublicPage/Statistics";
+import UnsubscribePage from "../../containers/UnsubscribePage";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
-import UnsubscribePage from "../../containers/UnsubscribePage";
-import Search from "../../containers/Search";
-import HomePage from "../HomePage";
 import PublicPage from "../../containers/PublicPage";
+import Search from "../../containers/Search";
+import Layout from "./Layout";
+import ScrollToTop from "./ScrollToTop";
 import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
-import { isIE } from "../../helpers/BrowserDetection";
+import SetMatomo from "../../helpers/Matomo/SetMatomo";
 
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
@@ -47,95 +45,128 @@ const App = () => {
           <ScrollToTop>
             <div className="app">
               <Switch>
-                <Route exact path="/" component={HomePage} />
-                <Header showBetaMessage={!isActiveMaintenanceMode} />
-                <div className={classNames("app-container", { ie11: isIE })}>
-                  <Switch>
-                    <Route
-                      path="/unsubscribe/:hash"
-                      component={UnsubscribePage}
-                    />
-                    <Route>
-                      <IEChecker>
-                        {isActiveMaintenanceMode ? (
-                          <Maintenance />
-                        ) : (
-                          <Switch>
-                            <PrivateRoute
-                              exact
-                              path="/search"
-                              component={Search}
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/enterprise/:siren"
-                              component={Enterprise}
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/establishment/:siret"
-                              component={Enterprise}
-                            />
-                            <Route
-                              exact
-                              path="/login"
-                              render={() => <Login />}
-                            />
-                            <Route
-                              exact
-                              path="/mentions-legales"
-                              render={() => (
+                <Route
+                  exact
+                  path="/"
+                  render={() => (
+                    <Layout withHeaderAndFooter={false}>
+                      <HomePage />
+                    </Layout>
+                  )}
+                />
+                <Switch>
+                  <Route
+                    exact
+                    path="/unsubscribe/:hash"
+                    render={props => (
+                      <Layout>
+                        <UnsubscribePage {...props} />
+                      </Layout>
+                    )}
+                  />
+                  <Route>
+                    <IEChecker>
+                      {isActiveMaintenanceMode ? (
+                        <Maintenance />
+                      ) : (
+                        <Switch>
+                          <PrivateRoute
+                            exact
+                            path="/search"
+                            component={Search}
+                          />
+                          <PrivateRoute
+                            exact
+                            path="/enterprise/:siren"
+                            component={Enterprise}
+                          />
+                          <PrivateRoute
+                            exact
+                            path="/establishment/:siret"
+                            component={Enterprise}
+                          />
+                          <Route
+                            exact
+                            path="/login"
+                            render={() => (
+                              <Layout>
+                                <Login />
+                              </Layout>
+                            )}
+                          />
+                          <Route
+                            exact
+                            path="/mentions-legales"
+                            render={() => (
+                              <Layout>
                                 <PublicPage
                                   pageIdentifier={"mentions-legales"}
                                 />
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/a-propos"
-                              render={() => (
+                              </Layout>
+                            )}
+                          />
+                          <Route
+                            exact
+                            path="/a-propos"
+                            render={() => (
+                              <Layout>
                                 <PublicPage pageIdentifier={"a-propos"} />
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/cgu"
-                              render={() => (
-                                <PublicPage pageIdentifier={"cgu"} />
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/sources-des-donnees"
-                              render={() => (
+                              </Layout>
+                            )}
+                          />
+                          <Route
+                            exact
+                            path="/cgu"
+                            render={() => (
+                              <Layout>
+                                <PublicPage pageIdentifier={"cgu"} />}
+                              </Layout>
+                            )}
+                          />
+                          <Route
+                            exact
+                            path="/sources-des-donnees"
+                            render={() => (
+                              <Layout>
                                 <PublicPage
                                   pageIdentifier={"sources-des-donnees"}
                                 />
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/statistics"
-                              render={() => <Statistics />}
-                            />
-                            <Route
-                              exact
-                              path="/403"
-                              render={() => <Error403 />}
-                            />
-                            <Route
-                              exact
-                              path="/404"
-                              render={() => <Error404 />}
-                            />
-                            <Redirect to="/404" />
-                          </Switch>
-                        )}
-                      </IEChecker>
-                    </Route>
-                  </Switch>
-                </div>
-                <Footer />
+                              </Layout>
+                            )}
+                          />
+                          <Route
+                            exact
+                            path="/statistics"
+                            render={() => (
+                              <Layout>
+                                <Statistics />
+                              </Layout>
+                            )}
+                          />
+                          <Route
+                            exact
+                            path="/403"
+                            render={() => (
+                              <Layout>
+                                <Error403 />
+                              </Layout>
+                            )}
+                          />
+                          <Route
+                            exact
+                            path="/404"
+                            render={() => (
+                              <Layout>
+                                <Error404 />
+                              </Layout>
+                            )}
+                          />
+                          <Redirect to="/404" />
+                        </Switch>
+                      )}
+                    </IEChecker>
+                  </Route>
+                </Switch>
               </Switch>
             </div>
           </ScrollToTop>

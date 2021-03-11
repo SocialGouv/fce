@@ -119,7 +119,7 @@ const App = () => {
                             path="/cgu"
                             render={() => (
                               <Layout>
-                                <PublicPage pageIdentifier={"cgu"} />}
+                                <PublicPage pageIdentifier={"cgu"} />
                               </Layout>
                             )}
                           />

@@ -1,37 +1,495 @@
 @import "../App/variables";
+@import "bulma/sass/utilities/mixins";
+
+@keyframes dotsLoader {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
 
 .home-page {
-    &__block {
-        padding: $spacing-5 6rem;
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 900;
+        text-align: center;
+        margin-bottom: $spacing-5;
+    }
 
-        .block {
-            &__title {
-                font-size: $font-size-datasheet-header;
-                font-weight: bold;
-                text-align: center;
-                margin-bottom: $spacing-3;
+    h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: $spacing-3;
+    }
+
+    p {
+        font-size: 1.25rem;
+    }
+
+    &__white-title {
+        color: $white;
+    }
+
+    &__blue-title {
+        color: $deep-blue;
+    }
+
+    .columns {
+        margin-bottom: 0;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        padding: 0 2rem;
+        margin: 0;
+
+        img {
+            max-height: 5rem;
+
+            &:last-child {
+                margin-left: 3rem;
             }
         }
 
-        .icon-item {
-            width: 14rem;
+        &__mailto {
+            display: flex;
+            justify-content: flex-end;
+
+            a {
+                padding: $spacing-4;
+                background-color: $deep-blue;
+                border: none;
+                color: $white;
+                font-weight: 600;
+                transition: background-color 150ms ease-in;
+
+                &:hover {
+                    background-color: darken($deep-blue, 5%);
+                }
+            }
         }
+    }
+
+    &__section {
+        padding: $spacing-5 6rem;
     }
 
     &__summary {
         color: $white;
         text-align: center;
         background-color: $deep-blue;
+    }
 
-        .button {
-            margin-top: $spacing-5;
+    .icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: $spacing-4 $spacing-6;
+
+        text-align: center;
+        font-size: 1.65rem;
+        font-weight: 600;
+
+        &__item {
+            position: relative;
+            justify-content: center;
+        }
+
+        &__image-container {
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dots {
+            display: flex;
+            justify-content: center;
+
+            div {
+                background-color: $deep-blue;
+                width: 5px;
+                height: 5px;
+                border-radius: 100%;
+                border: 1px solid $deep-blue;
+                margin: 0 2px;
+
+                &:nth-child(1) {
+                    animation: dotsLoader infinite ease-in-out;
+                    animation-duration: 1s;
+                }
+                &:nth-child(2) {
+                    animation: dotsLoader infinite ease-in-out;
+                    animation-duration: 1.05s;
+                }
+                &:nth-child(3) {
+                    animation: dotsLoader infinite ease-in-out;
+                    animation-duration: 1.1s;
+                }
+            }
+        }
+    }
+
+    .particles {
+        width: 100%;
+        height: 21rem;
+        background: $landing-page-gradient;
+
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    &__how-it-work {
+        padding: $spacing-5 6rem 0 6rem;
+
+        &__item {
+            display: flex;
+            color: $white;
+
+            h4 {
+                font-size: 1.25rem;
+                font-weight: 700;
+                padding-bottom: 1rem;
+            }
+
+            span {
+                position: relative;
+                font-size: 10rem;
+                font-weight: 900;
+                top: -14px;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            &:first-child {
+                span {
+                    position: relative;
+                    right: -16px;
+                }
+            }
+        }
+    }
+
+    &__daily-use {
+        padding-top: 0;
+
+        .columns {
+            margin-top: 0;
+        }
+
+        &__items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            overflow: scroll;
+            overflow-y: hidden;
+            width: 100%;
+        }
+
+        &__item {
+            border: solid 2px $white;
+            box-shadow: 8px 8px 1px 0 darken($deep-blue, 5%);
+            background-color: $deep-blue;
+
+            padding: 0.5rem 1rem;
+            margin: 0 2rem 0.5rem 0;
+            height: 18rem;
+            min-width: 24rem;
+            max-width: 24rem;
+
+            h4 {
+                font-size: 1.15rem;
+                font-weight: 700;
+                text-align: center;
+                margin-bottom: 3rem;
+                color: $white;
+            }
+
+            p {
+                font-size: 1rem;
+                font-weight: 400;
+                color: darken($white, 10%);
+            }
+        }
+
+        &__quote {
+            text-align: center;
+            padding: 3rem 0;
+
+            :first-child {
+                font-size: 1.75rem;
+                font-weight: bolder;
+            }
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 2rem;
+        background-color: $carolina-blue;
+
+        p {
+            font-size: 2.25rem;
+            font-weight: bolder;
+            color: $white;
+        }
+    }
+
+    &__link {
+        margin: 2rem 0;
+
+        a {
+            padding: $spacing-4;
             background-color: $yellow;
             border: none;
             color: $deep-blue;
+            font-weight: 600;
             transition: background-color 150ms ease-in;
 
             &:hover {
-                background-color: $brigth-yellow;
+                background-color: darken($yellow, 5%);
+                color: $deep-blue;
+            }
+        }
+    }
+}
+
+@media (max-width: $landing-page-breaking) {
+    .home-page {
+        &__header {
+            img {
+                max-height: 4.25rem;
+
+                &:last-child {
+                    margin-left: 2rem;
+                }
+            }
+
+            &__mailto {
+                font-size: 0.9rem;
+                a {
+                    padding: $spacing-3;
+                }
+            }
+        }
+
+        .icons {
+            padding: $spacing-4 0;
+
+            p {
+                font-size: 1rem;
+            }
+        }
+
+        &__how-it-work {
+            padding: $spacing-5 2rem;
+
+            &__item {
+                h4 {
+                    font-size: 1.15rem;
+                    padding-bottom: 0.5rem;
+                }
+
+                span {
+                    font-size: 8rem;
+                    font-weight: 900;
+                    top: 4px;
+                }
+
+                p {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
+        &__footer {
+            p {
+                font-size: 2rem;
+            }
+        }
+
+        &__daily-use {
+            &__items {
+                justify-content: start;
+
+                &:last-child {
+                    margin-right: 2rem;
+                }
+            }
+
+            &__quote {
+                padding: 2rem 0;
+                p {
+                    font-size: 1rem;
+                }
+
+                :first-child {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+}
+
+@include touch {
+    .home-page {
+        &__header {
+            padding: 1rem;
+
+            img {
+                max-height: 3.5rem;
+
+                &:last-child {
+                    margin-left: 0.2rem;
+                }
+            }
+
+            &__mailto {
+                font-size: 0.8rem;
+
+                a {
+                    text-align: center;
+                    padding: $spacing-2;
+                }
+            }
+        }
+
+        &__how-it-work {
+            padding: $spacing-5 6rem;
+
+            &__item {
+                h4 {
+                    font-size: 1.1rem;
+                    padding-bottom: 0.3rem;
+                }
+
+                span {
+                    top: 0px;
+                    font-size: 7rem;
+                    font-weight: 900;
+                    margin-right: 2rem;
+                }
+
+                p {
+                    font-size: 1rem;
+                }
+
+                &:first-child {
+                    span {
+                        position: relative;
+                        right: 0;
+                    }
+                }
+            }
+        }
+
+        .particles {
+            height: 40rem;
+        }
+
+        &__daily-use {
+            h2 {
+                position: relative;
+                margin-top: 3rem;
+            }
+        }
+    }
+
+    .icons {
+        flex-direction: column-reverse;
+        padding: $spacing-2;
+
+        p {
+            font-size: 1.1rem;
+        }
+    }
+}
+
+@include mobile {
+    .home-page {
+        h2 {
+            font-size: 2.25rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        &__header {
+            padding: 0;
+
+            img {
+                max-height: 3rem;
+            }
+        }
+
+        &__summary {
+            p {
+                font-size: 1.1rem;
+            }
+        }
+
+        &__section {
+            padding: $spacing-5;
+        }
+
+        .particles {
+            height: 43rem;
+        }
+
+        &__how-it-work {
+            padding: $spacing-5 3rem;
+
+            &__item {
+                span {
+                    top: 10px;
+                    margin-right: 1.5rem;
+                }
+
+                p {
+                    font-size: 0.9rem;
+                }
+
+                &:first-child {
+                    span {
+                        position: relative;
+                        right: 0;
+                    }
+                }
+            }
+        }
+
+        &__daily-use {
+            &__quote {
+                p {
+                    font-size: 0.9rem;
+                }
+
+                :first-child {
+                    font-size: 1.25rem;
+                    padding-bottom: 1rem;
+                }
+            }
+        }
+
+        &__footer {
+            display: block;
+            text-align: center;
+
+            p {
+                font-size: 1.8rem;
             }
         }
     }

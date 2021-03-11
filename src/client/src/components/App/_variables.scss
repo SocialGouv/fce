@@ -2,7 +2,9 @@
 
 /* COLORS */
 $dark-blue: #34495e;
-$deep-blue: #0B3583;
+$deep-blue: #284293;
+$cobalt-blue: #004aad;
+$carolina-blue: #22a1e2;
 $blue: #2980b9;
 $turquoise: #2aa995;
 $faced-blue: #5499c6;
@@ -11,8 +13,7 @@ $red-bright: #e74c3c;
 $red-washed: rgba(189, 10, 10, 0.14);
 $green-washed: rgba(34, 137, 31, 0.2);
 $green-forest: #22891f;
-$yellow: #FFBA49;
-$brigth-yellow: #FFB133;
+$yellow: #ffb133;
 $white-alabaster: #fafafa;
 $white-smoke: #f5f5f5;
 $grey-geyser: #dde1e5;
@@ -35,6 +36,13 @@ $footer-link: $grey-tundora;
 $sidebar-establishment-bg: $white-alabaster;
 $rating-gradient: #e21717, #e75907, #e38906, #eeb12c, #f0d828, #b3dc04, #71d903,
     #30d502, #02d112, #01ce4e, #00ca88;
+
+/* GRADIENT */
+$landing-page-gradient: linear-gradient(
+    90deg,
+    rgba(84, 88, 151, 1) 0%,
+    rgba(67, 102, 170, 1) 45%
+);
 
 /* BORDERS */
 $border-grey-light: 1px solid $grey-geyser;
@@ -73,5 +81,8 @@ $padding-app-x: $spacing-4;
 /* ANIMATIONS */
 $duration-1: 200ms;
 $duration-2: 300ms;
+
+/* MEDIA QUERY CUSTOM */
+$landing-page-breaking: 1366px;
 
 @import "~bulma/sass/utilities/all";

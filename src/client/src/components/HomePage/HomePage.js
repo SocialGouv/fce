@@ -13,11 +13,12 @@ import {
 import "./homePage.scss";
 
 const HomePage = () => {
-  const defaultUsers = 900;
-  const [users, setUsers] = useState(defaultUsers);
+  const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const defaultUsers = 900;
+
     const getUsers = () => {
       setIsLoading(true);
       return Http.get(`/matomo/getTotalUsers`)
@@ -29,7 +30,7 @@ const HomePage = () => {
     };
 
     getUsers().then(res => {
-      setUsers(res?.users?.length);
+      setUsers(res.users ? res?.users?.length : defaultUsers);
     });
   }, [setUsers, setIsLoading]);
 

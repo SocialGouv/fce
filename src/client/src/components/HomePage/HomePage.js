@@ -13,7 +13,8 @@ import {
 import "./homePage.scss";
 
 const HomePage = () => {
-  const [users, setUsers] = useState();
+  const defaultUsers = 900;
+  const [users, setUsers] = useState(defaultUsers);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const HomePage = () => {
     getUsers().then(res => {
       setUsers(res?.users?.length);
     });
-  }, []);
+  }, [setUsers, setIsLoading]);
 
   return (
     <div className="home-page">

@@ -43,8 +43,6 @@ export const Header = () => {
 };
 
 export const IconItems = ({ users, isLoading = false }) => {
-  const nbUsers = users || 800;
-
   // I can't use anonymous function without a display name for icon.
   // That's make a lint error
   const items = [
@@ -66,7 +64,7 @@ export const IconItems = ({ users, isLoading = false }) => {
       icon: function renderIcon(height) {
         return <NounPeopleIcon height={height} />;
       },
-      firstParagraph: `+ ${nbUsers} utilisateurs`,
+      firstParagraph: `+ ${users} utilisateurs`,
       secondParagraph: "dans les DIRECCTE"
     }
   ];
@@ -81,11 +79,11 @@ export const IconItems = ({ users, isLoading = false }) => {
               <div className="column is-4 is-hidden-touch icons__item">
                 <div className="icons__image-container">{item.icon(110)}</div>
                 {isLoading && index === 2 ? (
-                  <p className="dots">
+                  <div className="dots">
                     <div></div>
                     <div></div>
                     <div></div>
-                  </p>
+                  </div>
                 ) : (
                   <p>{item.firstParagraph}</p>
                 )}

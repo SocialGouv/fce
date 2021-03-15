@@ -197,6 +197,7 @@ class IndexerUtilsAppsearch {
           entreprise_categoriejuridiqueunitelegale: entreprise_categoriejuridiqueunitelegale,
           lastdsntrancheeffectifsetablissement: lastdsntrancheeffectifsetablissement,
           lastdsneffectif: lastdsneffectif,
+          updated_at: new Date(),
         });
       }
     );

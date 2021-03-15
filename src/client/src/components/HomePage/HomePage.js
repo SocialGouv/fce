@@ -17,21 +17,24 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const defaultUsers = 900;
-
     const getUsers = () => {
+      const defaultUsers = 900;
       setIsLoading(true);
+
       return Http.get(`/matomo/getTotalUsers`)
-        .then(res => res.data)
+        .then(res => {
+          setUsers(res.users?.length || defaultUsers);
+        })
         .catch(error => {
+          setUsers(defaultUsers);
           console.error(error);
         })
-        .finally(() => setIsLoading(false));
+        .finally(() => {
+          setIsLoading(false);
+        });
     };
 
-    getUsers().then(res => {
-      setUsers(res.users ? res?.users?.length : defaultUsers);
-    });
+    getUsers();
   }, [setUsers, setIsLoading]);
 
   return (

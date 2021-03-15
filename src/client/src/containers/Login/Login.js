@@ -11,6 +11,7 @@ const Login = ({ history }) => {
   const [loading, setLoading] = useState(false);
   const [showSuccessNotif, setShowSuccessNotif] = useState(true);
   const [showMailingListSignup, setShowMailingListSignup] = useState(true);
+  const redirectLoginSuccess = "/search";
 
   const sendCode = (e, email) => {
     e.preventDefault();
@@ -44,7 +45,7 @@ const Login = ({ history }) => {
           throw new Error(_get(response, "data.message"));
         }
 
-        history.push("/");
+        history.push(redirectLoginSuccess);
       })
       .catch(e => {
         const message = _get(e, "response.data.error", e.message);

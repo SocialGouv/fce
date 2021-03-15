@@ -46,7 +46,7 @@ const Statistics = () => {
       );
 
       setStats({
-        nb_users: resData.users.length,
+        nb_users: resData.users?.length,
         nb_users_returning_average: nbUsersReturningAverage(
           nbUsersList,
           nbUsersReturningList

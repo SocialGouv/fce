@@ -2,14 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Http from "../../services/Http";
 
-import {
-  Header,
-  Summary,
-  IconItems,
-  HowItWork,
-  DailyUse,
-  Footer
-} from "./sections";
+import { Summary, IconItems, HowItWork, DailyUse, Footer } from "./sections";
 import "./homePage.scss";
 
 const HomePage = () => {
@@ -39,7 +32,6 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      <Header />
       <Summary />
       <IconItems users={users} isLoading={isLoading} />
       <HowItWork />

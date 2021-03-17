@@ -11,37 +11,6 @@ const LoginLink = () => (
   </div>
 );
 
-export const Header = () => {
-  const marianneLogo = "img/FCE_logo_marianne_fiche.png";
-  const fceLogo = "img/FCE_logo.png";
-
-  return (
-    <>
-      <div className="home-page__header columns is-hidden-mobile is-justify-content-space-between">
-        <div className="column is-9">
-          <img src={marianneLogo} alt="marianne" />
-          <img src={fceLogo} alt="logo_fce" />
-        </div>
-        <div className="column is-3 home-page__header__mailto">
-          <a href="mailto:?subject=FCE - le portail de l'intelligence collective des agents publics">
-            Partager FCE avec un agent
-          </a>
-        </div>
-      </div>
-      <div className="columns home-page__header is-hidden-desktop is-hidden-tablet-only">
-        <div className="column is-flex is-justify-content-center">
-          <div>
-            <img src={marianneLogo} alt="marianne" />
-          </div>
-          <div>
-            <img src={fceLogo} alt="logo_fce" />
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-
 export const IconItems = ({ users, isLoading = false }) => {
   // I can't use anonymous function without a display name for icon.
   // That's make a lint error
@@ -122,6 +91,8 @@ export const Summary = () => (
 );
 
 export const HowItWork = () => {
+  const isMobile = window.screen.width <= 768;
+
   const particlesParams = {
     particles: {
       line_linked: {
@@ -132,7 +103,7 @@ export const HowItWork = () => {
         }
       },
       number: {
-        value: 40
+        value: isMobile ? 25 : 40
       },
       size: {
         value: 1

@@ -36,9 +36,21 @@ const LandingHeader = ({ withSharedButton = false }) => {
         )}
       </div>
       <div className="columns header is-hidden-desktop is-hidden-tablet-only">
-        <div className="column is-flex is-justify-content-center">
+        <div className="column header__mobile-content">
           <div>
-            <img src={marianneLogo} alt="marianne" />
+            <Link to="/">
+              <img
+                className="header__marianne"
+                src={marianneLogo}
+                alt="marianne"
+              />
+            </Link>
+          </div>
+          <div className="header__text">
+            <p>{`FICHE COMMUNE ENTREPRISE`}</p>
+            <p>
+              {`Le portail de l'intelligence collective des agents publics`}
+            </p>
           </div>
           <div>
             <img src={fceLogo} alt="logo_fce" />

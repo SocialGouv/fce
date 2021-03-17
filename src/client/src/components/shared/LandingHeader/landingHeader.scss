@@ -78,6 +78,20 @@
             }
         }
 
+        &__text {
+            margin: 0 $spacing-4;
+
+            p {
+                &:first-child {
+                    font-size: 1.25rem;
+                }
+
+                &:last-child {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
         &__mailto {
             font-size: 0.9rem;
             a {
@@ -99,6 +113,20 @@
             }
         }
 
+        &__text {
+            margin: 0 $spacing-3;
+
+            p {
+                &:first-child {
+                    font-size: 1.4rem;
+                }
+
+                &:last-child {
+                    font-size: 1rem;
+                }
+            }
+        }
+
         &__mailto {
             font-size: 0.8rem;
 
@@ -106,6 +134,11 @@
                 text-align: center;
                 padding: $spacing-2;
             }
+        }
+
+        &__mobile-content {
+            display: flex;
+            justify-content: space-between;
         }
     }
 }
@@ -116,6 +149,20 @@
 
         img {
             max-height: 3rem;
+        }
+
+        &__text {
+            margin: 0 $spacing-2;
+
+            p {
+                &:first-child {
+                    font-size: 0.9rem;
+                }
+
+                &:last-child {
+                    font-size: 0.6rem;
+                }
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/pro-solid-svg-icons";
-import { Agreements } from "./Agreements";
+import Agreements from "./Agreements";
 import { CollectiveAgreements } from "./CollectiveAgreements";
 
 const EnterpriseRelationship = ({ enterprise, enterprise: { idcc } }) => (

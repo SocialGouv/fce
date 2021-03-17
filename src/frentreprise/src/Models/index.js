@@ -8,6 +8,7 @@ const sequelize = new Sequelize(PG_DB, PG_USER, PG_PASSWORD, {
   define: {
     timestamps: false,
   },
+  logging: false,
 });
 
 const models = {};

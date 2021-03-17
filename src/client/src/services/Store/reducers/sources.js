@@ -2,7 +2,7 @@ import { SET_SOURCES } from "../constants/ActionTypes";
 
 const initialState = [];
 
-const search = (state = initialState, action) => {
+const sources = (state = initialState, action) => {
   switch (action.type) {
     case SET_SOURCES:
       return action.payload;
@@ -12,4 +12,4 @@ const search = (state = initialState, action) => {
   }
 };
 
-export default search;
+export default sources;

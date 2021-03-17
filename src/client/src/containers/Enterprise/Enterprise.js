@@ -10,6 +10,7 @@ import {
 } from "../../components/DataSheets";
 import { Error404 } from "../../components/Errors";
 import {
+  loadAgreements,
   loadSources,
   loadEstablishment,
   loadEntreprise
@@ -21,6 +22,7 @@ const Enterprise = ({
   currentEnterprise,
   loadEntreprise,
   loadEstablishment,
+  loadAgreements,
   loadSources
 }) => {
   const [state, setState] = useState(null);
@@ -54,6 +56,8 @@ const Enterprise = ({
   const loadEntity = (loadMethod, identifier) => {
     setState(Config.get("state.loading"));
     loadSources();
+    loadAgreements(identifier);
+
     return loadMethod(identifier)
       .then(() => {
         setState(Config.get("state.success"));
@@ -125,6 +129,7 @@ Enterprise.propTypes = {
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   currentEnterprise: PropTypes.object.isRequired,
+  loadAgreements: PropTypes.func.isRequired,
   loadSources: PropTypes.func.isRequired,
   loadEstablishment: PropTypes.func.isRequired,
   loadEntreprise: PropTypes.func.isRequired
@@ -143,6 +148,9 @@ const mapDispatchToProps = dispatch => {
     },
     loadEntreprise: siren => {
       return dispatch(loadEntreprise(siren));
+    },
+    loadAgreements: identifier => {
+      return dispatch(loadAgreements(identifier));
     },
     loadSources: () => {
       return dispatch(loadSources());

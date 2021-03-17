@@ -6,7 +6,7 @@ import LoginView from "../../components/Login";
 import _get from "lodash.get";
 
 const Login = ({ history }) => {
-  const [step, setStep] = useState("login-home");
+  const [step, setStep] = useState("login-form-email");
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showSuccessNotif, setShowSuccessNotif] = useState(true);

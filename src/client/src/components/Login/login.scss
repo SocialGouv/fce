@@ -22,7 +22,7 @@
     }
 
     &__title {
-        color: $primary;
+        color: $deep-blue;
         font-size: 1.2rem;
         font-weight: bold;
         line-height: 1.2;
@@ -108,6 +108,16 @@
                 color: #20638f !important;
                 text-decoration: underline;
             }
+        }
+    }
+
+    .is-deep-blue {
+        color: $white;
+        background-color: $carolina-blue;
+
+        &:hover {
+            color: $white;
+            background-color: darken($carolina-blue, 5%);
         }
     }
 

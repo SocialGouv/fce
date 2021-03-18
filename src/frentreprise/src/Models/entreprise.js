@@ -84,10 +84,6 @@ const entreprise = (sequelize, DataTypes) => {
       foreignKey: "siren",
       sourceKey: "siren",
     });
-    Entreprise.hasMany(models.Accord, {
-      foreignKey: "siren",
-      sourceKey: "siren",
-    });
 
     associatedSources.forEach(({ type, model }) => {
       Entreprise[type](models[model], {

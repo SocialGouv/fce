@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
@@ -8,15 +9,22 @@ import Table from "../../SharedComponents/Table";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Value from "../../../../shared/Value";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
+import { formatEstablishmentAgreements } from "../../../../../helpers/Relationships";
 import Config from "../../../../../services/Config";
 
 const EstablishmentRelationship = ({
   enterprise,
-  establishment: { idcc, accords }
+  establishment: { idcc, siret },
+  agreements
 }) => {
-  const nbAccords = _get(accords, "total.count");
+  const establishmentAgreements = formatEstablishmentAgreements(
+    agreements,
+    siret
+  );
+
   const raisonSociale = getEnterpriseName(enterprise);
-  const lastDate = _get(accords, "total.lastDate");
+  const nbAccords = establishmentAgreements.count;
+  const lastDate = establishmentAgreements.lastSignatureDate;
 
   return (
     <section id="relation" className="data-sheet__section">
@@ -74,7 +82,10 @@ const EstablishmentRelationship = ({
                         <td className="col-width-40">{value}</td>
                         <td className="has-text-right">
                           <Value
-                            value={_get(accords, `${key}.count`)}
+                            value={_get(
+                              establishmentAgreements.agreements,
+                              `${key}.count`
+                            )}
                             empty="-"
                             nonEmptyValues={[0, "0"]}
                             hasNumberFormat
@@ -82,7 +93,10 @@ const EstablishmentRelationship = ({
                         </td>
                         <td>
                           <Value
-                            value={_get(accords, `${key}.lastDate`)}
+                            value={_get(
+                              establishmentAgreements.agreements,
+                              `${key}.lastDate`
+                            )}
                             empty="-"
                           />
                         </td>
@@ -113,7 +127,14 @@ const EstablishmentRelationship = ({
 
 EstablishmentRelationship.propTypes = {
   establishment: PropTypes.object.isRequired,
-  enterprise: PropTypes.object.isRequired
+  enterprise: PropTypes.object.isRequired,
+  agreements: PropTypes.object.isRequired
 };
 
-export default EstablishmentRelationship;
+const mapStateToProps = state => {
+  return {
+    agreements: state.agreements
+  };
+};
+
+export default connect(mapStateToProps, null)(EstablishmentRelationship);

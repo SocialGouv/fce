@@ -8,6 +8,7 @@ import etpStaff from "./etpStaff";
 import mailingList from "./mailingList";
 import dsnEffectif from "./dsnEffectif";
 import matomo from "./matomo";
+import agreements from "./agreements";
 
 const router = express.Router();
 
@@ -19,5 +20,6 @@ router.use("", etpStaff);
 router.use("", mailingList);
 router.use("", dsnEffectif);
 router.use("", matomo);
+router.use("", agreements);
 
 export default router;

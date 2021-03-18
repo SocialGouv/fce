@@ -13,3 +13,17 @@
     margin-right: $spacing-1;
     font-size: $font-size-base;
 }
+
+.is-secondary {
+    @extend .is-info;
+}
+
+button.is-tertiary {
+    color: $white;
+    background-color: $carolina-blue;
+
+    &:hover {
+        color: $white;
+        background-color: darken($carolina-blue, 5%);
+    }
+}

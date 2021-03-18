@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import "./landingHeader.scss";
 
 const LandingHeader = ({ hasSharedButton = false }) => {
-  const marianneLogo = "img/FCE_logo_marianne.png";
-  const fceLogo = "img/FCE_logo.png";
+  const marianneLogo = "img/mariane.svg";
+  const fceLogo = "img/fce_logo.svg";
 
   return (
     <>

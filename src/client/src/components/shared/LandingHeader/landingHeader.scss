@@ -12,6 +12,10 @@
         margin-bottom: 0;
     }
 
+    .column {
+        padding: 0 0.75rem;
+    }
+
     div {
         &:first-child {
             display: flex;
@@ -20,11 +24,11 @@
     }
 
     &__marianne {
-        max-height: 6rem;
+        max-height: 7rem;
     }
 
     &__fce {
-        max-height: 4.5rem;
+        max-height: 6rem;
     }
 
     &__text {

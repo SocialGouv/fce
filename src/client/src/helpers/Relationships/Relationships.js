@@ -24,9 +24,7 @@ export const formatEnterpriseAgreements = agreements => {
     if (!a.lastSignatureDate) return 1;
     if (!b.lastSignatureDate) return -1;
 
-    return b.lastSignatureDate
-      ? b.lastSignatureDate.localeCompare(a.lastSignatureDate)
-      : -1;
+    return b.lastSignatureDate.localeCompare(a.lastSignatureDate);
   });
 };
 

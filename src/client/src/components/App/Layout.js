@@ -9,16 +9,16 @@ import Config from "../../services/Config";
 import { isIE } from "../../helpers/BrowserDetection";
 
 export const Layout = ({
-  withLandingHeader = false,
-  withSharedButton = false,
+  hasLandingHeader = false,
+  hasSharedButton = false,
   children
 }) => {
   const isActiveMaintenanceMode = Config.get("maintenanceMode");
 
   return (
     <>
-      {withLandingHeader ? (
-        <LandingHeader withSharedButton={withSharedButton} />
+      {hasLandingHeader ? (
+        <LandingHeader hasSharedButton={hasSharedButton} />
       ) : (
         <Header showBetaMessage={!isActiveMaintenanceMode} />
       )}
@@ -31,8 +31,8 @@ export const Layout = ({
 };
 
 Layout.propTypes = {
-  withLandingHeader: PropTypes.bool,
-  withSharedButton: PropTypes.bool,
+  hasLandingHeader: PropTypes.bool,
+  hasSharedButton: PropTypes.bool,
   children: PropTypes.node
 };
 

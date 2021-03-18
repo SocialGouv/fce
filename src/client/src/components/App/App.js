@@ -49,7 +49,7 @@ const App = () => {
                   exact
                   path="/"
                   render={() => (
-                    <Layout withLandingHeader={true} withSharedButton={true}>
+                    <Layout hasLandingHeader={true} hasSharedButton={true}>
                       <HomePage />
                     </Layout>
                   )}
@@ -89,7 +89,7 @@ const App = () => {
                             exact
                             path="/login"
                             render={() => (
-                              <Layout withLandingHeader={true}>
+                              <Layout hasLandingHeader={true}>
                                 <Login />
                               </Layout>
                             )}

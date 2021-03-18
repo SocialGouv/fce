@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "./landingHeader.scss";
 
-const LandingHeader = ({ withSharedButton = false }) => {
+const LandingHeader = ({ hasSharedButton = false }) => {
   const marianneLogo = "img/FCE_logo_marianne.png";
   const fceLogo = "img/FCE_logo.png";
 
@@ -27,7 +27,7 @@ const LandingHeader = ({ withSharedButton = false }) => {
           </div>
           <img className="header__fce" src={fceLogo} alt="logo_fce" />
         </div>
-        {withSharedButton && (
+        {hasSharedButton && (
           <div className="column is-3 header__mailto">
             <a href="mailto:?subject=FCE - le portail de l'intelligence collective des agents publics&body=https://fce.fabrique.social.gouv.fr/">
               Partager FCE avec un agent
@@ -62,7 +62,7 @@ const LandingHeader = ({ withSharedButton = false }) => {
 };
 
 LandingHeader.propTypes = {
-  withSharedButton: PropTypes.bool
+  hasSharedButton: PropTypes.bool
 };
 
 export default LandingHeader;

@@ -31,7 +31,7 @@ export const Layout = ({
 };
 
 Layout.propTypes = {
-  withHeaderAndFooter: PropTypes.bool,
+  withLandingHeader: PropTypes.bool,
   withSharedButton: PropTypes.bool,
   children: PropTypes.node
 };

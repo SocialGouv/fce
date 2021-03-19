@@ -367,7 +367,7 @@
         }
 
         .particles {
-            height: 43rem;
+            height: 42rem;
         }
 
         &__how-it-work {
@@ -412,6 +412,14 @@
             p {
                 font-size: 1.8rem;
             }
+        }
+    }
+}
+
+@media (max-width: $landing-page-mobile-breaking) {
+    .home-page {
+        .particles {
+            height: 48rem;
         }
     }
 }

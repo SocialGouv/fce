@@ -103,7 +103,7 @@ export const HowItWork = () => {
         }
       },
       number: {
-        value: isMobile ? 25 : 40
+        value: isMobile ? 15 : 40
       },
       size: {
         value: 1
@@ -113,11 +113,7 @@ export const HowItWork = () => {
       },
       opacity: {
         anim: {
-          enable: true,
-          opacity_min: 0.05,
-          opacity_max: 0.25,
-          speed: 1,
-          sync: false
+          enable: false
         },
         value: 0.25
       }

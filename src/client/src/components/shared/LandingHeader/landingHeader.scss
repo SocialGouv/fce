@@ -1,0 +1,172 @@
+@import "../../App/variables";
+@import "bulma/sass/utilities/mixins";
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    margin: 0;
+    box-shadow: $box-shadow-header;
+
+    &.columns {
+        margin-bottom: 0;
+    }
+
+    .column {
+        padding: 0 0.75rem;
+    }
+
+    div {
+        &:first-child {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__marianne {
+        max-height: 7rem;
+    }
+
+    &__fce {
+        max-height: 6rem;
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 $spacing-5;
+
+        p {
+            text-align: center;
+            font-weight: 900;
+
+            &:first-child {
+                color: $black;
+                font-size: 1.5rem;
+            }
+
+            &:last-child {
+                color: $deep-blue;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    &__mailto {
+        display: flex;
+        justify-content: flex-end;
+
+        a {
+            padding: $spacing-4;
+            background-color: $deep-blue;
+            border: none;
+            color: $white;
+            font-weight: 600;
+            transition: background-color 150ms ease-in;
+
+            &:hover {
+                background-color: darken($deep-blue, 5%);
+            }
+        }
+    }
+}
+
+@media (max-width: $landing-page-breaking) {
+    .header {
+        img {
+            max-height: 4.25rem;
+
+            &:last-child {
+                margin-left: 2rem;
+            }
+        }
+
+        &__text {
+            margin: 0 $spacing-4;
+
+            p {
+                &:first-child {
+                    font-size: 1.25rem;
+                }
+
+                &:last-child {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
+        &__mailto {
+            font-size: 0.9rem;
+            a {
+                padding: $spacing-3;
+            }
+        }
+    }
+}
+
+@include touch {
+    .header {
+        padding: 1rem;
+
+        img {
+            max-height: 3.5rem;
+
+            &:last-child {
+                margin-left: 0.2rem;
+            }
+        }
+
+        &__text {
+            margin: 0 $spacing-3;
+
+            p {
+                &:first-child {
+                    font-size: 1.4rem;
+                }
+
+                &:last-child {
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        &__mailto {
+            font-size: 0.8rem;
+
+            a {
+                text-align: center;
+                padding: $spacing-2;
+            }
+        }
+
+        &__mobile-content {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
+
+@include mobile {
+    .header {
+        padding: 0;
+
+        img {
+            max-height: 3rem;
+        }
+
+        &__text {
+            margin: 0 $spacing-2;
+
+            p {
+                &:first-child {
+                    font-size: 0.9rem;
+                }
+
+                &:last-child {
+                    font-size: 0.6rem;
+                }
+            }
+        }
+    }
+}

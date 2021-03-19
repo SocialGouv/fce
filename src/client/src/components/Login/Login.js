@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LoginHome from "./steps/LoginHome";
 import LoginForm from "./steps/Form";
 import "./login.scss";
 
@@ -17,21 +16,17 @@ const Login = ({
 }) => {
   return (
     <section className="login">
-      {step === "login-home" ? (
-        <LoginHome setStep={setStep} />
-      ) : (
-        <LoginForm
-          login={login}
-          sendCode={sendCode}
-          loading={loading}
-          errorMessage={errorMessage}
-          step={step}
-          setStep={setStep}
-          showSuccessNotif={showSuccessNotif}
-          setShowSuccessNotif={setShowSuccessNotif}
-          showMailingListSignup={showMailingListSignup}
-        />
-      )}
+      <LoginForm
+        login={login}
+        sendCode={sendCode}
+        loading={loading}
+        errorMessage={errorMessage}
+        step={step}
+        setStep={setStep}
+        showSuccessNotif={showSuccessNotif}
+        setShowSuccessNotif={setShowSuccessNotif}
+        showMailingListSignup={showMailingListSignup}
+      />
     </section>
   );
 };

@@ -34,7 +34,7 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
     } else {
       return {
         auth: false,
-        redirect: "/login"
+        redirect: "/home"
       };
     }
   };

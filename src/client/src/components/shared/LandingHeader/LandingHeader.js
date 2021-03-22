@@ -1,20 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import Auth from "../../../services/Auth";
 
 import "./landingHeader.scss";
 
 const LandingHeader = ({ hasSharedButton = false }) => {
   const marianneLogo = "img/mariane.svg";
   const fceLogo = "img/fce_logo.svg";
-  const pathRedirection = Auth.isLogged() ? "/search" : "/";
 
   return (
     <>
       <div className="header columns is-hidden-mobile is-justify-content-space-between">
         <div className="column is-9">
-          <Link to={pathRedirection}>
+          <Link to="/">
             <img
               className="header__marianne"
               src={marianneLogo}
@@ -40,7 +38,7 @@ const LandingHeader = ({ hasSharedButton = false }) => {
       <div className="columns header is-hidden-desktop is-hidden-tablet-only">
         <div className="column header__mobile-content">
           <div>
-            <Link to={pathRedirection}>
+            <Link to="/">
               <img
                 className="header__marianne"
                 src={marianneLogo}

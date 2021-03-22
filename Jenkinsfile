@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+      label {
+        label ""
+        customWorkspace "workspace/"+"fce-${BRANCH_NAME}-${BUILD_ID}".replaceAll("/","-")
+      }
+  }
   options {
       buildDiscarder(logRotator(numToKeepStr: '20'))
   }

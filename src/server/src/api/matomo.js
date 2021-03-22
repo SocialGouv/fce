@@ -6,12 +6,16 @@ import UsersFeedback from "../models/UsersFeedback";
 const express = require("express");
 const router = express.Router();
 
-router.get("/matomo/:months/:startDate", async (req, res) => {
+const checkConfig = () => {
   if (!process.env.MATOMO_ID_SITE || !process.env.MATOMO_TOKEN_AUTH) {
     console.error(
       "WARNING MATOMO: It seems matomo config in .env file is not completed"
     );
   }
+};
+
+router.get("/matomo/:months/:startDate", async (req, res) => {
+  checkConfig();
 
   const { startDate, months } = req.params;
   const feedback = new UsersFeedback();
@@ -85,6 +89,42 @@ router.get("/matomo/:months/:startDate", async (req, res) => {
       ...stats.data,
       users: users.data,
       avg_satisfaction_rate: averageRate,
+    });
+  } catch (error) {
+    console.error(
+      "Matomo data can't be fetch : ",
+      error.response.status,
+      error.response.statusText
+    );
+    res.status(error.response.status || 400).send({
+      success: false,
+      error:
+        error.response.statusText ||
+        "An error was occured: Matomo data can't be fetch",
+    });
+  }
+});
+
+router.get("/matomo/getTotalUsers", async (req, res) => {
+  checkConfig();
+
+  const endDate = new Date().toISOString().split("T")[0];
+
+  const usersParams = qs.stringify({
+    module: "API",
+    method: "UserId.getUsers",
+    idSite: process.env.MATOMO_ID_SITE,
+    date: `2020-01-01,${endDate}`,
+    period: "range",
+    format: "JSON",
+    filter_limit: "-1",
+    token_auth: process.env.MATOMO_TOKEN_AUTH,
+  });
+
+  try {
+    const users = await axios.get(`${process.env.MATOMO_URL}?${usersParams}`);
+    res.send({
+      users: users.data,
     });
   } catch (error) {
     console.error(

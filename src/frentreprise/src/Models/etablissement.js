@@ -1,5 +1,4 @@
 const associatedSources = [
-  { type: "hasMany", model: "Accord" },
   { type: "hasMany", model: "ActivitePartielle" },
   { type: "hasMany", model: "Apprentissage" },
   { type: "hasOne", model: "ContratAide" },

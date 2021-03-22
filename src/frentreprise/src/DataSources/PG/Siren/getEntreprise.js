@@ -41,11 +41,6 @@ const getEntreprise = async (siren) => {
         include: [models.Etablissement],
         entity: "interactionsPoleTs",
       },
-      {
-        model: "Accord",
-        include: [models.Etablissement],
-        entity: "accords",
-      },
     ],
   ];
 

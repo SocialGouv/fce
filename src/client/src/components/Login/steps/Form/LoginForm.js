@@ -64,7 +64,7 @@ const LoginForm = ({
                     value="Recevoir le code"
                     buttonClasses={classNames("login__button", {
                       "is-loading": loading,
-                      "is-secondary": !isDisabledEmailSubmit
+                      "is-tertiary": !isDisabledEmailSubmit
                     })}
                     isDisabled={isDisabledEmailSubmit}
                   />

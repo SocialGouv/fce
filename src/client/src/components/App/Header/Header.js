@@ -30,7 +30,7 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
               location.pathname.includes("/enterprise")) && (
               <div className="header__buttons">
                 <div className="navbar-end is-flex">
-                  <Link to="/" className="button">
+                  <Link to="/search" className="button">
                     <span className="button-icon">
                       <FontAwesomeIcon icon={faChevronLeft} />
                     </span>

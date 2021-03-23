@@ -122,6 +122,13 @@ docker-compose exec server bash -c "yarn shell DownloadFile --id interactions_po
 docker-compose exec server bash -c "yarn shell IngestFile --id interactions_pole_t"
 ```
 
+Pour l'import des PSI il faut préciser l'année de la donnée avec l'argument `--year YYYY` car on ne peut pas se baser sur les titres de colonne ou le nom du fichier. Cette donnée est en phase de test, le nom et le format de fichier pourraient changer. Le script d'import pourra être modifié si le format est validé.
+
+```bash
+docker-compose exec server bash -c "yarn shell IngestFile --id psi_siren --year 2020"
+docker-compose exec server bash -c "yarn shell IngestFile --id psi_siret --year 2020"
+```
+
 ### Preprod et prod
 
 ```bash
@@ -129,4 +136,3 @@ docker exec server ash -c "NODE_ENV=production node ./shell/run.js DownloadFile 
 
 docker exec server ash -c "NODE_ENV=production node ./shell/run.js IngestFile --id interactions_pole_t"
 ```
-

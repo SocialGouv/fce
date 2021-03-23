@@ -45,15 +45,6 @@ const App = () => {
           <ScrollToTop>
             <div className="app">
               <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={() => (
-                    <Layout hasLandingHeader={true} hasSharedButton={true}>
-                      <HomePage />
-                    </Layout>
-                  )}
-                />
                 <Switch>
                   <Route
                     exact
@@ -70,6 +61,7 @@ const App = () => {
                         <Maintenance />
                       ) : (
                         <Switch>
+                          <PrivateRoute exact path="/" component={Search} />
                           <PrivateRoute
                             exact
                             path="/search"
@@ -84,6 +76,18 @@ const App = () => {
                             exact
                             path="/establishment/:siret"
                             component={Enterprise}
+                          />
+                          <Route
+                            exact
+                            path="/home"
+                            render={() => (
+                              <Layout
+                                hasLandingHeader={true}
+                                hasSharedButton={true}
+                              >
+                                <HomePage />
+                              </Layout>
+                            )}
                           />
                           <Route
                             exact

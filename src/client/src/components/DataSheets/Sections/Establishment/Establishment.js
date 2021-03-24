@@ -24,7 +24,7 @@ const Establishment = ({
   headOffice,
   location
 }) => {
-  useScrollToLocationHash({ location, offset: 70 });
+  useScrollToLocationHash({ location });
 
   return (
     <div>

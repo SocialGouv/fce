@@ -11,6 +11,7 @@ import {
 import { Error404 } from "../../components/Errors";
 import {
   loadAgreements,
+  loadPsi,
   loadSources,
   loadEstablishment,
   loadEntreprise
@@ -20,9 +21,12 @@ const Enterprise = ({
   match,
   history,
   currentEnterprise,
+  agreements,
+  psi,
   loadEntreprise,
   loadEstablishment,
   loadAgreements,
+  loadPsi,
   loadSources
 }) => {
   const [state, setState] = useState(null);
@@ -56,7 +60,10 @@ const Enterprise = ({
   const loadEntity = (loadMethod, identifier) => {
     setState(Config.get("state.loading"));
     loadSources();
-    loadAgreements(identifier);
+    if (mustLoadPgApi(identifier)) {
+      loadAgreements(identifier);
+      loadPsi(identifier);
+    }
 
     return loadMethod(identifier)
       .then(() => {
@@ -90,6 +97,13 @@ const Enterprise = ({
     }
 
     return state !== Config.get("state.success");
+  };
+
+  const mustLoadPgApi = identifier => {
+    const isNewSiren = identifier.slice(0, 9) !== currentEnterprise.siren;
+    const pgApiErrors = [agreements.error, psi.error].filter(error => error);
+
+    return isNewSiren || !!pgApiErrors.length;
   };
 
   const headOffice = getHeadOffice(currentEnterprise);
@@ -137,7 +151,9 @@ Enterprise.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    currentEnterprise: state.enterprise.current
+    currentEnterprise: state.enterprise.current,
+    agreements: state.agreements,
+    psi: state.psi
   };
 };
 
@@ -151,6 +167,9 @@ const mapDispatchToProps = dispatch => {
     },
     loadAgreements: identifier => {
       return dispatch(loadAgreements(identifier));
+    },
+    loadPsi: identifier => {
+      return dispatch(loadPsi(identifier));
     },
     loadSources: () => {
       return dispatch(loadSources());

@@ -58,7 +58,7 @@ a {
 .table {
     @extend .is-striped;
 
-    &-cell {
+    td.table-cell, th.table-cell {
         &--center-cell {
             text-align: center;
         }

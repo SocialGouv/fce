@@ -8,10 +8,12 @@ import "./data.scss";
 
 const Data = ({
   name,
+  description = null,
   value,
   emptyValue = "-",
   nonEmptyValue,
   link = null,
+  className = "",
   columnClasses = ["is-4", "is-8"],
   sourceSi = null,
   sourceCustom = null,
@@ -21,9 +23,18 @@ const Data = ({
 }) => {
   return (
     <>
-      <dl className="data dl columns">
-        <dt className={`dt column ${columnClasses[0]}`}>{name}</dt>
-        <dd className={`dd column ${columnClasses[1]}`}>
+      <div className={`data dl columns ${className}`}>
+        <div className={`column ${columnClasses[0]}`}>
+          {description ? (
+            <div>
+              <div className="dt">{name}</div>
+              <div>{description}</div>
+            </div>
+          ) : (
+            <div className="dt">{name}</div>
+          )}
+        </div>
+        <div className={`dd column ${columnClasses[1]}`}>
           <div>
             {link ? (
               <Link to={link}>
@@ -52,14 +63,16 @@ const Data = ({
               sourceCustom={sourceCustom}
             />
           )}
-        </dd>
-      </dl>
+        </div>
+      </div>
     </>
   );
 };
 
 Data.propTypes = {
   name: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.element]),
+  description: PropTypes.node,
+  className: PropTypes.string,
   columnClasses: PropTypes.array,
   value: PropTypes.oneOfType([
     PropTypes.string,

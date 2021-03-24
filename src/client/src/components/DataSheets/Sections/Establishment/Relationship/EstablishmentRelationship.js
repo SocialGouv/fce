@@ -11,6 +11,7 @@ import Value from "../../../../shared/Value";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { formatEstablishmentAgreements } from "../../../../../helpers/Relationships";
 import Config from "../../../../../services/Config";
+import Psi from "./Psi";
 
 const EstablishmentRelationship = ({
   enterprise,
@@ -120,6 +121,8 @@ const EstablishmentRelationship = ({
             </>
           )}
         </Subcategory>
+
+        <Psi siret={siret} />
       </div>
     </section>
   );

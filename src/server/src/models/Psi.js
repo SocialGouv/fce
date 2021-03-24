@@ -26,8 +26,12 @@ export default class Psi extends Model {
       }
 
       return {
-        enterprises: employeesBySiren.rows,
-        establisments: employeesBySiret.rows,
+        enterprise: employeesBySiren.rows.length
+          ? employeesBySiren.rows[0].salaries_distincts
+          : 0,
+        establishments: employeesBySiret.rows.length
+          ? employeesBySiret.rows
+          : [],
       };
     } catch (e) {
       return e;

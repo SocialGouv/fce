@@ -1,0 +1,23 @@
+@import "./../../../../App/variables";
+
+.psi {
+    &__data {
+        .dd {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    &-table__label {
+        font-weight: 700;
+    }
+
+    &__description {
+        font-style: italic;
+        font-size: $font-size-small;
+
+        ul {
+            list-style: inside;
+        }
+    }
+}

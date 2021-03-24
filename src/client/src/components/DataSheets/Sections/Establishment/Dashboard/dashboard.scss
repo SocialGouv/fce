@@ -22,6 +22,7 @@
             padding: $spacing-2;
             border-bottom: solid 2px $primary;
             display: flex;
+            justify-content: center;
 
             &-icon {
                 color: $primary;

@@ -1,4 +1,5 @@
 @import "./../../../../App/variables";
+@import "./../../../../App/placeholders";
 
 .psi {
     &__data {
@@ -18,6 +19,16 @@
 
         ul {
             list-style: inside;
+        }
+    }
+}
+
+.psi-table {
+    &__button-wrapper {
+        @extend %flex-center;
+
+        .button {
+            width: 20rem;
         }
     }
 }

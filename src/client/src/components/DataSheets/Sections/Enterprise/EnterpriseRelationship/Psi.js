@@ -36,7 +36,7 @@ const Psi = ({ psi, establishments }) => {
     >
       <PgApiDataHandler isLoading={psi.isLoading} error={psi.error}>
         <Data
-          name={`Entreprise ayant au moins un contrat de PSI avec une entreprise étrangère`}
+          name={`Entreprise ayant au moins un contrat de PSI avec une entreprise étrangère en 2020`}
           className="psi__data"
           columnClasses={["is-10", "is-2"]}
           value={hasPsi ? "Oui" : "Non"}

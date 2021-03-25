@@ -122,7 +122,9 @@ const Dashboard = ({
           <Item
             icon={faGlobeAmericas}
             name="PSI"
-            value={psiData.salaries_distincts}
+            value={`${psiData.salaries_distincts} salarié${
+              psiData.salaries_distincts > 1 ? "s" : ""
+            }`}
           />
         )}
       </div>

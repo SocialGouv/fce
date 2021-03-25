@@ -10,6 +10,7 @@ let query = `SELECT etab.*, ${config.elasticIndexer.enterpriseFields.map(
         INNER JOIN entreprises ent ON etab.siren = ent.siren
         LEFT JOIN naf ON naf.code = etab.activiteprincipaleetablissement
         LEFT JOIN last_dsn_effectif ON last_dsn_effectif.siret = etab.siret
+        WHERE etab.appsearch_indexed = false
         `;
 
 new IndexerUtilsAppsearch(query, "index");

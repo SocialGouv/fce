@@ -25,8 +25,8 @@ const Psi = ({ psi, siret }) => {
             name={`Etablissement identifié comme lieu d'une ou plusieurs PSI`}
             description={
               <p className="psi__description">
-                (directement pour le compte de l'entreprise et/ou pour une autre
-                entreprise donneur d'ordre)
+                (directement pour le compte de l&apos;entreprise et/ou pour une
+                autre entreprise donneur d&apos;ordre)
               </p>
             }
             className="psi__data"
@@ -48,7 +48,8 @@ const Psi = ({ psi, siret }) => {
 };
 
 Psi.propTypes = {
-  psi: PropTypes.object.isRequired
+  psi: PropTypes.object.isRequired,
+  siret: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => {

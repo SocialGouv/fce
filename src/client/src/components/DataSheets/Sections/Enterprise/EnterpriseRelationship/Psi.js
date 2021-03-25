@@ -48,14 +48,14 @@ const Psi = ({ psi, establishments }) => {
               description={
                 <div className="psi__description">
                   <p>
-                    Dans le cadre de la réalisation d'une prestation les
+                    Dans le cadre de la réalisation d&apos;une prestation les
                     salariés peuvent être détachés sur :
                   </p>
                   <ul>
-                    <li>un ou plusieurs établissements de l'entreprise</li>
+                    <li>un ou plusieurs établissements de l&apos;entreprise</li>
                     <li>
-                      un ou plusieurs établissements d'une autre entreprise
-                      donneur d'ordre dans le cas d'une sous traitance
+                      un ou plusieurs établissements d&apos;une autre entreprise
+                      donneur d&apos;ordre dans le cas d&apos;une sous traitance
                     </li>
                     <li>
                       un chantier ou lieu temporaire de travail non rattaché à
@@ -77,6 +77,7 @@ const Psi = ({ psi, establishments }) => {
 };
 
 Psi.propTypes = {
+  establishments: PropTypes.object.isRequired,
   psi: PropTypes.object.isRequired
 };
 

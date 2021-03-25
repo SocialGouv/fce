@@ -138,15 +138,18 @@ const Enterprise = ({
 };
 
 Enterprise.propTypes = {
-  hasSearchResults: PropTypes.bool,
-  isLoaded: PropTypes.bool,
-  history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
+  agreements: PropTypes.object.isRequired,
+  psi: PropTypes.object.isRequired,
   currentEnterprise: PropTypes.object.isRequired,
+  hasSearchResults: PropTypes.bool,
+  history: PropTypes.object.isRequired,
+  isLoaded: PropTypes.bool,
   loadAgreements: PropTypes.func.isRequired,
-  loadSources: PropTypes.func.isRequired,
+  loadEntreprise: PropTypes.func.isRequired,
   loadEstablishment: PropTypes.func.isRequired,
-  loadEntreprise: PropTypes.func.isRequired
+  loadPsi: PropTypes.func,
+  loadSources: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {

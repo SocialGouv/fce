@@ -12,12 +12,12 @@ const PsiTable = ({ establishments }) => {
     <div className="psi-table">
       <div className="column is-12">
         <div className="psi-table__label">
-          Etablissement(s) identifié(s) comme lieu de réalisation d'au moins une
-          PSI
+          Etablissement(s) identifié(s) comme lieu de réalisation d&apos;au
+          moins une PSI
         </div>
         <p className="psi__description">
-          Directement pour le compte de l'entreprise et/ou pour une autre
-          entreprise donneur d'ordre
+          Directement pour le compte de l&apos;entreprise et/ou pour une autre
+          entreprise donneur d&apos;ordre
         </p>
       </div>
 

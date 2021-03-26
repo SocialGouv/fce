@@ -30,7 +30,7 @@ const config = {
       delimiter: ",",
       truncate: false,
       history: false,
-      generateSiren: true,
+      generateSiren: false,
       date: {
         field: "mois",
         format: "YYYY-MM",

@@ -46,25 +46,20 @@ const PsiTable = ({ establishments }) => {
             </tr>
           </thead>
           <tbody>
-            {establishments.map(
-              etab =>
-                console.log(etab) || (
-                  <tr key={etab.siret}>
-                    <td className="table-cell--nowrap">
-                      {formatSiret(etab.siret)}
-                    </td>
-                    <td className="table-cell--center-cell">
-                      {etab.etat && <State state={etab.etat} />}
-                    </td>
-                    <td>{etab.commune}</td>
-                    <td className="table-cell--nowrap see-details">
-                      <SeeDetailsLink
-                        link={`/establishment/${etab.siret}/#psi`}
-                      />
-                    </td>
-                  </tr>
-                )
-            )}
+            {establishments.map(etab => (
+              <tr key={etab.siret}>
+                <td className="table-cell--nowrap">
+                  {formatSiret(etab.siret)}
+                </td>
+                <td className="table-cell--center-cell">
+                  {etab.etat && <State state={etab.etat} />}
+                </td>
+                <td>{etab.commune}</td>
+                <td className="table-cell--nowrap see-details">
+                  <SeeDetailsLink link={`/establishment/${etab.siret}/#psi`} />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       )}

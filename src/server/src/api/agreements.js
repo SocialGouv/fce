@@ -21,6 +21,10 @@ router.get("/agreements/:siren", withAuth, async (req, res) => {
   try {
     const result = await agreement.findAllBySIREN(siren);
 
+    if (!result) {
+      throw new HttpError();
+    }
+
     if (result instanceof HttpError) {
       throw result;
     }

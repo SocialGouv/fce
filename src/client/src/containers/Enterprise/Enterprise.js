@@ -101,9 +101,9 @@ const Enterprise = ({
 
   const mustLoadPgApi = identifier => {
     const isNewSiren = identifier.slice(0, 9) !== currentEnterprise.siren;
-    const pgApiErrors = [agreements.error, psi.error].filter(error => error);
+    const hasPgApiErrors = !!(agreements.error || psi.error);
 
-    return isNewSiren || !!pgApiErrors.length;
+    return isNewSiren || hasPgApiErrors;
   };
 
   const headOffice = getHeadOffice(currentEnterprise);

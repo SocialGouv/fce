@@ -6,7 +6,7 @@ const IngestorBase = require("./import/Ingestor");
 class IngestFileShell extends Shell {
   async execute() {
     this.checkRequiredOption("id");
-    const id = this._options.id;
+    const { id, ...args } = this._options;
 
     if (!Object.prototype.hasOwnProperty.call(config, id)) {
       throw new MissingConfigException(id);
@@ -20,7 +20,7 @@ class IngestFileShell extends Shell {
         require(`./import/${className}`)
       : IngestorBase;
 
-    const ingestor = new Ingestor(ingestorConfig);
+    const ingestor = new Ingestor(ingestorConfig, args);
 
     ingestor.execute();
   }

@@ -1,0 +1,34 @@
+@import "./../../../../App/variables";
+@import "./../../../../App/placeholders";
+
+.psi {
+    &__data {
+        .dd {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    &-table__label {
+        font-weight: 700;
+    }
+
+    &__description {
+        font-style: italic;
+        font-size: $font-size-small;
+
+        ul {
+            list-style: inside;
+        }
+    }
+}
+
+.psi-table {
+    &__button-wrapper {
+        @extend %flex-center;
+
+        .button {
+            width: 20rem;
+        }
+    }
+}

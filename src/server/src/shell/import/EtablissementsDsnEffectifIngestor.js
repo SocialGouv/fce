@@ -1,10 +1,25 @@
 const Ingestor = require("./Ingestor");
+// eslint-disable-next-line security/detect-child-process
+const { execSync } = require("child_process");
 
 class EtablissementsDsnEffectifIngestor extends Ingestor {
-  /**
-   * Remove duplicate content and breaklines for inspecteurs
+  /*
+   * drop index to table
    */
-  async afterPsqlCopy() {}
+  beforePsqlCopy() {
+    console.log("BeforSave : drop index");
+    return execSync(`${this.psql} "DROP INDEX etablissement_effectif_siret"`);
+  }
+
+  /**
+   * add Index to siret
+   */
+  async afterPsqlCopy() {
+    console.log("afterSave : create index");
+    return execSync(
+      `${this.psql} "CREATE INDEX etablissement_effectif_siret ON etablissements_dsn_effectif USING btree (siret)"`
+    );
+  }
 }
 
 module.exports = EtablissementsDsnEffectifIngestor;

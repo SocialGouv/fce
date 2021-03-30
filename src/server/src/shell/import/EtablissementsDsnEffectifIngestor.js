@@ -8,7 +8,7 @@ class EtablissementsDsnEffectifIngestor extends Ingestor {
    */
   beforePsqlCopy() {
     console.log("BeforSave : drop index");
-    return execSync(`${this.psql} "DROP INDEX etablissement_effectif_siret"`);
+    return execSync(`${this.psql} "DROP INDEX etablissements_effectif_siret"`);
   }
 
   /**
@@ -17,7 +17,7 @@ class EtablissementsDsnEffectifIngestor extends Ingestor {
   async afterPsqlCopy() {
     console.log("afterSave : create index");
     return execSync(
-      `${this.psql} "CREATE INDEX etablissement_effectif_siret ON etablissements_dsn_effectif USING btree (siret)"`
+      `${this.psql} "CREATE INDEX etablissements_effectif_siret ON etablissements_dsn_effectif USING btree (siret)"`
     );
   }
 }

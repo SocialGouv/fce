@@ -6,7 +6,7 @@ exports.shorthands = undefined;
 exports.up = (pgm) => {
   pgm.dropColumn(tablename, "siren");
   pgm.sql(
-    `CREATE INDEX etablissements_effectif_siret ON etablissement_dsn_effectif USING btree (siret)`
+    `CREATE INDEX etablissement_effectif_siret ON etablissements_dsn_effectif USING btree (siret)`
   );
 };
 

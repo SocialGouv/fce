@@ -10,8 +10,9 @@ const TMP_DIR = "/tmp";
 const PSQL_BASE_CMD = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
 
 class Ingestor {
-  constructor(config) {
+  constructor(config, args) {
     this._config = config;
+    this.args = args;
     this.psql = PSQL_BASE_CMD;
     this.tmpFile = `${TMP_DIR}/${this.getConfig("table")}.csv`;
     this.PG = require("../lib/postgres");

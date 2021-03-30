@@ -1,25 +1,25 @@
 import withAuth from "../middlewares/auth";
-import Agreement from "../models/Agreement";
+import Psi from "../models/Psi";
 import HttpError from "../utils/HttpError";
 
 const express = require("express");
 const router = express.Router();
 
-router.get("/agreements/:siren", withAuth, async (req, res) => {
+router.get("/psi/:siren", withAuth, async (req, res) => {
   const { siren } = req.params;
 
   if (!siren || siren.length !== 9) {
-    const errorMessage = `siren parameter is invalid: ${siren}`;
+    const errorMessage = `Siren parameter is invalid: ${siren}`;
 
     return res.status(400).json({
       error: errorMessage,
     });
   }
 
-  const agreement = new Agreement();
+  const psi = new Psi();
 
   try {
-    const result = await agreement.findAllBySIREN(siren);
+    const result = await psi.getNumberOfEmployees(siren);
 
     if (!result) {
       throw new HttpError();
@@ -29,11 +29,13 @@ router.get("/agreements/:siren", withAuth, async (req, res) => {
       throw result;
     }
 
-    res.json({ agreements: result || [] });
+    res.json({
+      result,
+    });
   } catch (e) {
     console.error(e);
-    return res.status(500).json({
-      error: e,
+    return res.status(e.status).json({
+      error: e.message,
     });
   }
 });

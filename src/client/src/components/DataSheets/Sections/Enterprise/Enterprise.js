@@ -19,7 +19,7 @@ import { useScrollToLocationHash } from "../../../../helpers/hooks";
 import "../../dataSheets.scss";
 
 const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
-  useScrollToLocationHash({ location, offset: 50 });
+  useScrollToLocationHash({ location });
 
   return (
     <div>

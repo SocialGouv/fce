@@ -30,7 +30,7 @@ const config = {
       delimiter: ",",
       truncate: false,
       history: false,
-      generateSiren: true,
+      generateSiren: false,
       date: {
         field: "mois",
         format: "YYYY-MM",
@@ -463,6 +463,42 @@ const config = {
         field: "mois",
         format: "YYYY-MM",
       },
+    },
+  },
+  psi_siren: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgt",
+      fileMatch: /^ClientsPSI-Siren(.)*.csv$/,
+      outputFileName: "psi_siren.csv",
+    },
+    ingest: {
+      className: "PsiSirenIngestor",
+      table: "psi_siren",
+      filename: `${FILES_FOLDER}/psi_siren.csv`,
+      cols: ["siren", "salaries_distincts"],
+      delimiter: ";",
+      truncate: false,
+      history: false,
+      generateSiren: false,
+    },
+  },
+  psi_siret: {
+    download: {
+      className: "MinioDownloader",
+      bucket: "dgt",
+      fileMatch: /^ClientsPSI-Siret(.)*.csv$/,
+      outputFileName: "psi_siret.csv",
+    },
+    ingest: {
+      className: "PsiSiretIngestor",
+      table: "psi_siret",
+      filename: `${FILES_FOLDER}/psi_siret.csv`,
+      cols: ["siret", "salaries_distincts"],
+      delimiter: ";",
+      truncate: false,
+      history: false,
+      generateSiren: false,
     },
   },
 };

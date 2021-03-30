@@ -188,19 +188,16 @@
             & .section-datas {
                 @extend %margin-bottom-big;
 
-                dl,
-                dd,
-                dt {
+                // @TODO : rename dl, dd, dt classes to something more meaningful
+                .dl,
+                .dd,
+                .dt {
                     @extend %reset-block;
                 }
 
-                dl {
+                .dl {
                     padding: 0.5rem 0 !important;
                 }
-
-                /* .data {
-                    page-break-inside: avoid !important;
-                } */
 
                 .data__value {
                     @extend %margin-bottom-small;

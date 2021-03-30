@@ -16,6 +16,9 @@ const globalConfig = {
     { id: "ApiGouv", priority: 80 },
     { id: "ApiGouvAssociations", priority: 80 }
   ],
+  pgApi: {
+    timeout: 10000
+  },
   sidebarEstablishmentsLimit: 20,
   interactions: {
     poles: ["C", "3E_SEER", "3E_SRC", "T"],

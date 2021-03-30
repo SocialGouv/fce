@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   faChild,
   faCalendarCheck,
   faExclamationTriangle,
-  faMedkit
+  faMedkit,
+  faGlobeAmericas
 } from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
@@ -20,6 +22,7 @@ import "./dashboard.scss";
 const Dashboard = ({
   establishment,
   establishment: {
+    siret,
     activite_partielle,
     totalInteractions,
     interactions,
@@ -28,7 +31,8 @@ const Dashboard = ({
     pse,
     rcc,
     lice
-  }
+  },
+  psi
 }) => {
   const hasInteractions = totalInteractions && totalInteractions.total > 0;
 
@@ -62,6 +66,10 @@ const Dashboard = ({
       dashboardSizeRanges[tranche_effectif_insee] ||
       "-"
     : "0 salarié";
+
+  const psiData = psi.establishments.find(
+    establishment => establishment.siret === siret
+  );
 
   return (
     <div className="dashboard columns">
@@ -102,11 +110,22 @@ const Dashboard = ({
               }
             />
           )}
+
         {(establishment.agrements_iae ||
           establishment.ea ||
           establishment.contrat_aide ||
           hasApprentissage(establishment.apprentissage)) && (
           <Item icon={faMedkit} name="Aides" value="Oui" />
+        )}
+
+        {psiData && (
+          <Item
+            icon={faGlobeAmericas}
+            name="PSI"
+            value={`${psiData.salaries_distincts} salarié${
+              psiData.salaries_distincts > 1 ? "s" : ""
+            }`}
+          />
         )}
       </div>
     </div>
@@ -114,7 +133,14 @@ const Dashboard = ({
 };
 
 Dashboard.propTypes = {
-  establishment: PropTypes.object.isRequired
+  establishment: PropTypes.object.isRequired,
+  psi: PropTypes.object.isRequired
 };
 
-export default Dashboard;
+const mapStateToProps = state => {
+  return {
+    psi: state.psi
+  };
+};
+
+export default connect(mapStateToProps, null)(Dashboard);

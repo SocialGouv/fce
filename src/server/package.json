@@ -22,7 +22,7 @@
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore src"
   },
   "dependencies": {
-    "@elastic/app-search-node": "^7.6.0",
+    "@elastic/app-search-node": "^7.11.1",
     "@elastic/elasticsearch": "^7.6.0",
     "@sentry/node": "^5.17.0",
     "JSONStream": "^1.3.5",

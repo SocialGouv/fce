@@ -6,14 +6,15 @@ import Table from "../../SharedComponents/Table";
 import Button from "../../../../shared/Button/Button";
 import { formatSiret } from "../../../../../helpers/utils";
 
-const PsiTable = ({ establishments }) => {
+const PsiTable = ({ establishments, year }) => {
   const [isVisiblePsiTable, setIsVisiblePsiTable] = useState(false);
+  const s = establishments.length > 1 ? "s" : "";
   return (
-    <div className="psi-table">
+    <div className="psi-siret-table">
       <div className="column is-12">
-        <div className="psi-table__label">
-          Etablissement(s) identifié(s) comme lieu de réalisation d&apos;au
-          moins une PSI
+        <div className="psi-siret-table__label">
+          {establishments.length} établissement{s} identifié{s} comme lieu de
+          réalisation d&apos;au moins une PSI en {year}
         </div>
         <p className="psi__description">
           Directement pour le compte de l&apos;entreprise et/ou pour une autre
@@ -22,7 +23,7 @@ const PsiTable = ({ establishments }) => {
       </div>
 
       {establishments.length > 9 && (
-        <div className="psi-table__button-wrapper">
+        <div className="psi-siret-table__button-wrapper">
           <Button
             onClick={() => setIsVisiblePsiTable(prevState => !prevState)}
             value={
@@ -68,7 +69,8 @@ const PsiTable = ({ establishments }) => {
 };
 
 PsiTable.propTypes = {
-  establishments: PropTypes.array.isRequired
+  establishments: PropTypes.array.isRequired,
+  year: PropTypes.number.isRequired
 };
 
 export default PsiTable;

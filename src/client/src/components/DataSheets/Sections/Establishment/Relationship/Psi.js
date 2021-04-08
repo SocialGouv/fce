@@ -7,18 +7,23 @@ import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 
 import "./psi.scss";
 
-const Psi = ({ psi, siret }) => {
+const Psi = ({ psi, siret, sources }) => {
+  const currentYear = Number(sources.SIPSI.date.split("/").pop());
+  const lastYear = currentYear - 1;
+
   const establishmentPsi = psi.establishments?.find(
     establishment => establishment.siret === siret
   );
 
-  const hasPsi = Boolean(establishmentPsi);
+  const hasPsi = Boolean(
+    establishmentPsi?.current_year || establishmentPsi?.last_year
+  );
 
   return (
     <div id="psi">
       <Subcategory
         subtitle="Prestations de services internationales (PSI)"
-        sourceCustom="DGT/SIPSI 8/02/2021"
+        sourceSi="SIPSI"
       >
         <PgApiDataHandler isLoading={psi.isLoading} error={psi.error}>
           <Data
@@ -33,12 +38,20 @@ const Psi = ({ psi, siret }) => {
             columnClasses={["is-10", "is-2"]}
             value={hasPsi ? "Oui" : "Non"}
           />
-          {hasPsi && (
+          {!!establishmentPsi?.current_year && (
             <Data
-              name={`Nombre de salariés distincts détachés en 2020`}
+              name={`Nombre de salariés distincts détachés en ${currentYear}`}
               className="psi__data"
               columnClasses={["is-10", "is-2"]}
-              value={establishmentPsi.salaries_distincts}
+              value={establishmentPsi.current_year}
+            />
+          )}
+          {!!establishmentPsi?.last_year && (
+            <Data
+              name={`Nombre de salariés distincts détachés en ${lastYear}`}
+              className="psi__data"
+              columnClasses={["is-10", "is-2"]}
+              value={establishmentPsi.last_year}
             />
           )}
         </PgApiDataHandler>
@@ -49,12 +62,14 @@ const Psi = ({ psi, siret }) => {
 
 Psi.propTypes = {
   psi: PropTypes.object.isRequired,
-  siret: PropTypes.string.isRequired
+  siret: PropTypes.string.isRequired,
+  sources: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {
   return {
-    psi: state.psi
+    psi: state.psi,
+    sources: state.sources
   };
 };
 

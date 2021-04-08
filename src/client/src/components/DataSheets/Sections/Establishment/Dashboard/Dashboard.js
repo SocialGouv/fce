@@ -118,15 +118,7 @@ const Dashboard = ({
           <Item icon={faMedkit} name="Aides" value="Oui" />
         )}
 
-        {psiData && (
-          <Item
-            icon={faGlobeAmericas}
-            name="PSI"
-            value={`${psiData.salaries_distincts} salarié${
-              psiData.salaries_distincts > 1 ? "s" : ""
-            }`}
-          />
-        )}
+        {psiData && <Item icon={faGlobeAmericas} name="PSI" value={"@TODO"} />}
       </div>
     </div>
   );

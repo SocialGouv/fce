@@ -9,10 +9,6 @@
         }
     }
 
-    &-table__label {
-        font-weight: 700;
-    }
-
     &__description {
         font-style: italic;
         font-size: $font-size-small;
@@ -23,12 +19,24 @@
     }
 }
 
-.psi-table {
+.psi-siren-table.table {
+    margin-top: 0;
+}
+
+.psi-siret-table {
+    &__label {
+        font-weight: 700;
+    }
+
     &__button-wrapper {
         @extend %flex-center;
 
         .button {
             width: 20rem;
         }
+    }
+
+    & + & {
+        margin-top: $spacing-4;
     }
 }

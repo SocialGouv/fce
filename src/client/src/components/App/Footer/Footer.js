@@ -26,8 +26,8 @@ const Footer = () => (
             </Link>
           </li>
           <li className="footer__link-item">
-            <Link className="footer__link" to="/cgu">
-              CGU
+            <Link className="footer__link" to="/politique-de-confidentialite">
+              Politique de confidentialité
             </Link>
           </li>
           <li className="footer__link-item">

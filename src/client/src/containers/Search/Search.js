@@ -300,7 +300,7 @@ const Search = ({
     const { searchTerm, options } = searchParamsOnLoad.current;
     const sendRequest = sendRequestOnce.current;
     if (searchTerm) {
-      sendRequestOnce.current(searchTerm, options);
+      sendRequest(searchTerm, options);
     }
   }, [searchParamsOnLoad, sendRequestOnce]);
 

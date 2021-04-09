@@ -144,7 +144,7 @@ const globalConfig = {
     endpoint: "https://fce.strapi.fabrique.social.gouv.fr/pages/",
     pageIds: {
       "a-propos": 1,
-      cgu: 2,
+      "politique-de-confidentialite": 6,
       "sources-des-donnees": 3,
       "mentions-legales": 4
     }

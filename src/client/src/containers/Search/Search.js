@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import downloadjs from "downloadjs";
 import { connect } from "react-redux";
@@ -293,11 +293,16 @@ const Search = ({
       });
   };
 
+  const searchParamsOnLoad = useRef({ searchTerm: search.term, options });
+  const sendRequestOnce = useRef(sendRequest);
+
   useEffect(() => {
-    if (search.term) {
-      sendRequest(search.term, options);
+    const { searchTerm, options } = searchParamsOnLoad.current;
+    const sendRequest = sendRequestOnce.current;
+    if (searchTerm) {
+      sendRequestOnce.current(searchTerm, options);
     }
-  }, []);
+  }, [searchParamsOnLoad, sendRequestOnce]);
 
   return (
     <SearchView

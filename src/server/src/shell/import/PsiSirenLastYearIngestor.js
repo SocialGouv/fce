@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-escape */
+
 const PsiIngestor = require("./PsiIngestor");
 // eslint-disable-next-line security/detect-child-process
 const { execSync } = require("child_process");

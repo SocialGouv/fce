@@ -1,3 +1,5 @@
+/* eslint-disable security/detect-non-literal-regexp */
+
 const getYear = require("date-fns/getYear");
 const subYears = require("date-fns/subYears");
 
@@ -482,7 +484,7 @@ const config = {
     download: {
       className: "PsiDownloader",
       bucket: "dgt",
-      fileMatch: new RegExp(`^ClientsPSI-Siren-${currentYear}-\\d{8}.*.csv$`),
+      fileMatch: new RegExp(`^ClientsPSI-Siren-${currentYear}-\\d{8}.*\\.csv$`),
       outputFileName: `psi_siren_${currentYear}.csv`,
       writeUpdateDateToFile: true,
     },
@@ -502,7 +504,7 @@ const config = {
     download: {
       className: "PsiDownloader",
       bucket: "dgt",
-      fileMatch: new RegExp(`^ClientsPSI-Siret-${currentYear}-\\d{8}.*.csv$`),
+      fileMatch: new RegExp(`^ClientsPSI-Siret-${currentYear}-\\d{8}.*\\.csv$`),
       outputFileName: `psi_siret_${currentYear}.csv`,
     },
     ingest: {
@@ -522,7 +524,7 @@ const config = {
     download: {
       className: "PsiDownloader",
       bucket: "dgt",
-      fileMatch: new RegExp(`^ClientsPSI-Siren-${lastYear}-\\d{8}.*.csv$`),
+      fileMatch: new RegExp(`^ClientsPSI-Siren-${lastYear}-\\d{8}.*\\.csv$`),
       outputFileName: `psi_siren_${lastYear}.csv`,
     },
     ingest: {
@@ -542,7 +544,7 @@ const config = {
     download: {
       className: "PsiDownloader",
       bucket: "dgt",
-      fileMatch: new RegExp(`^ClientsPSI-Siret-${lastYear}-\\d{8}.*.csv$`),
+      fileMatch: new RegExp(`^ClientsPSI-Siret-${lastYear}-\\d{8}.*\\.csv$`),
       outputFileName: `psi_siret_${lastYear}.csv`,
     },
     ingest: {

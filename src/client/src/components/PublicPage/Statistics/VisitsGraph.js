@@ -54,7 +54,7 @@ const VisitsGraph = ({ data }) => {
         }
       });
     }
-  }, [persistData, canvasRef]);
+  }, [persistData, canvasRef, backgroundColors]);
 
   return <canvas ref={canvasRef} height="90" />;
 };

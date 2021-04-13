@@ -2,15 +2,13 @@
 @import "./../../../../App/placeholders";
 
 .psi {
+    scroll-margin: 3.6rem;
+
     &__data {
         .dd {
             display: flex;
             justify-content: center;
         }
-    }
-
-    &-table__label {
-        font-weight: 700;
     }
 
     &__description {
@@ -23,12 +21,39 @@
     }
 }
 
-.psi-table {
+.psi-siren-table.table {
+    margin-top: 0;
+}
+
+.psi-siret {
+    &__label {
+        font-weight: 700;
+    }
+
     &__button-wrapper {
-        @extend %flex-center;
+        padding: $spacing-3;
 
         .button {
             width: 20rem;
         }
     }
+
+    &__establishment-count {
+        padding: $spacing-3 $spacing-3 $spacing-2;
+        font-weight: bold;
+    }
+
+    &__table.table {
+        margin: 0 0 $spacing-5;
+
+        .psi-siret__table-cell-year {
+            font-size: $font-size-small;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
+
+    /* & + & {
+        margin-top: $spacing-4;
+    } */
 }

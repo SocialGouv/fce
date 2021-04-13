@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
@@ -12,8 +12,8 @@ import Direccte from "./Direccte";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import Unsubscribe from "../../../../containers/Unsubscribe";
-import { useScrollToLocationHash } from "../../../../helpers/hooks";
 import PrintSection from "../SharedComponents/PrintSection";
+import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 
 import "../../dataSheets.scss";
 
@@ -21,9 +21,9 @@ const Establishment = ({
   establishment,
   establishments,
   enterprise,
-  headOffice,
-  location
+  headOffice
 }) => {
+  const location = useLocation();
   useScrollToLocationHash({ location });
 
   return (
@@ -74,8 +74,7 @@ Establishment.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  headOffice: PropTypes.object.isRequired
 };
 
-export default withRouter(withLoading(Establishment));
+export default withLoading(Establishment);

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const tablename = "etablissements_dsn_effectif";
+const tablename = "psi_siren";
 
 exports.shorthands = undefined;
 

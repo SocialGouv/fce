@@ -1,6 +1,15 @@
+/* eslint-disable security/detect-non-literal-regexp */
+
+const getYear = require("date-fns/getYear");
+const subYears = require("date-fns/subYears");
+
 const FILES_FOLDER = "/mnt/data/export";
 const CONVERTER_XLSX_TO_CSV = "xlsxToCsv";
 const CONVERTER_JSON_TO_CSV = "jsonToCsv";
+
+const now = new Date();
+const currentYear = getYear(now);
+const lastYear = getYear(subYears(now, 1));
 
 const config = {
   etablissements_dsn_effectif: {
@@ -465,36 +474,85 @@ const config = {
       },
     },
   },
-  psi_siren: {
+  /**
+   * == PSI ==
+   * Table is truncated on current_year data ingestion :
+   * => ingest psi_siren_current_year before psi_siren_last_year
+   * => ingest psi_siret_current_year before psi_siret_last_year
+   * */
+  psi_siren_current_year: {
     download: {
-      className: "MinioDownloader",
+      className: "PsiDownloader",
       bucket: "dgt",
-      fileMatch: /^ClientsPSI-Siren(.)*.csv$/,
-      outputFileName: "psi_siren.csv",
+      fileMatch: new RegExp(`^ClientsPSI-Siren-${currentYear}-\\d{8}.*\\.csv$`),
+      outputFileName: `psi_siren_${currentYear}.csv`,
+      writeUpdateDateToFile: true,
     },
     ingest: {
-      className: "PsiSirenIngestor",
+      className: "PsiIngestor",
       table: "psi_siren",
-      filename: `${FILES_FOLDER}/psi_siren.csv`,
-      cols: ["siren", "salaries_distincts"],
+      filename: `${FILES_FOLDER}/psi_siren_${currentYear}.csv`,
+      cols: ["siren", "salaries_annee_courante"],
+      year: currentYear,
+      delimiter: ";",
+      truncate: true,
+      history: false,
+      generateSiren: false,
+    },
+  },
+  psi_siret_current_year: {
+    download: {
+      className: "PsiDownloader",
+      bucket: "dgt",
+      fileMatch: new RegExp(`^ClientsPSI-Siret-${currentYear}-\\d{8}.*\\.csv$`),
+      outputFileName: `psi_siret_${currentYear}.csv`,
+    },
+    ingest: {
+      className: "PsiIngestor",
+      table: "psi_siret",
+      filename: `${FILES_FOLDER}/psi_siret_${currentYear}.csv`,
+      cols: ["siret", "salaries_annee_courante"],
+      year: currentYear,
+      delimiter: ";",
+      truncate: true,
+      history: false,
+      generateSiren: false,
+    },
+  },
+  // ingest psi_siren_current_year first
+  psi_siren_last_year: {
+    download: {
+      className: "PsiDownloader",
+      bucket: "dgt",
+      fileMatch: new RegExp(`^ClientsPSI-Siren-${lastYear}-\\d{8}.*\\.csv$`),
+      outputFileName: `psi_siren_${lastYear}.csv`,
+    },
+    ingest: {
+      className: "PsiSirenLastYearIngestor",
+      table: "psi_siren",
+      filename: `${FILES_FOLDER}/psi_siren_${lastYear}.csv`,
+      cols: ["siren", "salaries_annee_precedente"],
+      year: lastYear,
       delimiter: ";",
       truncate: false,
       history: false,
       generateSiren: false,
     },
   },
-  psi_siret: {
+  // ingest psi_siret_current_year first
+  psi_siret_last_year: {
     download: {
-      className: "MinioDownloader",
+      className: "PsiDownloader",
       bucket: "dgt",
-      fileMatch: /^ClientsPSI-Siret(.)*.csv$/,
-      outputFileName: "psi_siret.csv",
+      fileMatch: new RegExp(`^ClientsPSI-Siret-${lastYear}-\\d{8}.*\\.csv$`),
+      outputFileName: `psi_siret_${lastYear}.csv`,
     },
     ingest: {
-      className: "PsiSiretIngestor",
+      className: "PsiSiretLastYearIngestor",
       table: "psi_siret",
-      filename: `${FILES_FOLDER}/psi_siret.csv`,
-      cols: ["siret", "salaries_distincts"],
+      filename: `${FILES_FOLDER}/psi_siret_${lastYear}.csv`,
+      cols: ["siret", "salaries_annee_precedente"],
+      year: lastYear,
       delimiter: ";",
       truncate: false,
       history: false,

@@ -40,43 +40,72 @@ const Enterprise = ({
   const loadMethod = isEnterprise ? loadEntreprise : loadEstablishment;
 
   useEffect(() => {
+    const mustLoadEntity = identifier => {
+      const nextUrl = match.url;
+
+      if (identifier !== currentEnterprise.siren && currentUrl !== nextUrl) {
+        return true;
+      }
+
+      return state !== Config.get("state.success");
+    };
+
+    const mustLoadPgApi = identifier => {
+      const isNewSiren = identifier.slice(0, 9) !== currentEnterprise.siren;
+      const hasPgApiErrors = !!(agreements.error || psi.error);
+
+      return isNewSiren || hasPgApiErrors;
+    };
+
+    const loadEntity = (loadMethod, identifier) => {
+      setState(Config.get("state.loading"));
+      loadSources();
+      if (mustLoadPgApi(identifier)) {
+        loadAgreements(identifier);
+        loadPsi(identifier);
+      }
+
+      return loadMethod(identifier)
+        .then(() => {
+          setState(Config.get("state.success"));
+        })
+        .catch(err => {
+          if (err.response?.status === 401) {
+            setState(Config.get("state.unauthorize"));
+          } else {
+            setState(Config.get("state.error"));
+          }
+        });
+    };
+
     if (mustLoadEntity(identifier)) {
       loadEntity(loadMethod, identifier);
       setCurrentUrl(match.url);
     }
-  }, [match]);
+  }, [
+    identifier,
+    match,
+    loadMethod,
+    agreements.error,
+    psi.error,
+    state,
+    currentEnterprise.siren,
+    currentUrl,
+    loadAgreements,
+    loadPsi,
+    loadSources
+  ]);
 
   useEffect(() => {
     if (state === Config.get("state.unauthorize")) {
       setCurrentUrl("/login");
       history.push("/login");
     }
-  }, [state]);
+  }, [state, history]);
 
   if (state === Config.get("state.error")) {
     return <Error404 />;
   }
-
-  const loadEntity = (loadMethod, identifier) => {
-    setState(Config.get("state.loading"));
-    loadSources();
-    if (mustLoadPgApi(identifier)) {
-      loadAgreements(identifier);
-      loadPsi(identifier);
-    }
-
-    return loadMethod(identifier)
-      .then(() => {
-        setState(Config.get("state.success"));
-      })
-      .catch(err => {
-        if (err.response?.status === 401) {
-          setState(Config.get("state.unauthorize"));
-        } else {
-          setState(Config.get("state.error"));
-        }
-      });
-  };
 
   const getEstablishment = (enterprise, searchSiret) =>
     enterprise.etablissements &&
@@ -88,23 +117,6 @@ const Enterprise = ({
       ({ siege_social, siret }) =>
         siege_social || siret === enterprise.siret_siege_social
     );
-
-  const mustLoadEntity = identifier => {
-    const nextUrl = match.url;
-
-    if (identifier !== currentEnterprise.siren && currentUrl !== nextUrl) {
-      return true;
-    }
-
-    return state !== Config.get("state.success");
-  };
-
-  const mustLoadPgApi = identifier => {
-    const isNewSiren = identifier.slice(0, 9) !== currentEnterprise.siren;
-    const hasPgApiErrors = !!(agreements.error || psi.error);
-
-    return isNewSiren || hasPgApiErrors;
-  };
 
   const headOffice = getHeadOffice(currentEnterprise);
   const establishments = currentEnterprise.etablissements || [];

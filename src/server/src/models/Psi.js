@@ -5,12 +5,12 @@ export default class Psi extends Model {
   async getNumberOfEmployees(siren) {
     try {
       const employeesBySirenQuery = this.db.query(
-        "SELECT siren, salaries_distincts FROM psi_siren WHERE siren=$1 and year='2020'",
+        "SELECT siren, salaries_annee_courante as current_year, salaries_annee_precedente as last_year FROM psi_siren WHERE siren=$1",
         [siren]
       );
 
       const employeesBySiretQuery = this.db.query(
-        "SELECT siret, salaries_distincts FROM psi_siret WHERE siret LIKE $1 and year='2020'",
+        "SELECT siret, salaries_annee_courante as current_year, salaries_annee_precedente as last_year FROM psi_siret WHERE siret LIKE $1",
         [`${siren}%`]
       );
 
@@ -27,8 +27,14 @@ export default class Psi extends Model {
 
       return {
         enterprise: employeesBySiren.rows.length
-          ? employeesBySiren.rows[0].salaries_distincts
-          : 0,
+          ? {
+              current_year: employeesBySiren.rows[0].current_year,
+              last_year: employeesBySiren.rows[0].last_year,
+            }
+          : {
+              current_year: 0,
+              last_year: 0,
+            },
         establishments: employeesBySiret.rows.length
           ? employeesBySiret.rows
           : [],

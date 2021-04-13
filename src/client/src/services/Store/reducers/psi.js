@@ -5,7 +5,10 @@ import {
 } from "../constants/ActionTypes";
 
 const initialState = {
-  enterprise: 0,
+  enterprise: {
+    current_year: 0,
+    last_year: 0
+  },
   establishments: [],
   isLoading: false,
   error: null

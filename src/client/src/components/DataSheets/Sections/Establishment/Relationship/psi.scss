@@ -1,10 +1,17 @@
 @import "./../../../../App/variables";
 
 .psi {
+    scroll-margin: 3.6rem;
+
     &__data {
         .dd {
             display: flex;
             justify-content: center;
+        }
+
+        .see-details-link {
+            width: auto;
+            text-align: left;
         }
     }
 

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
 import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
-import PsiTable from "./PsiTable";
+import { PsiSiret } from "./PsiSiret";
 
 import "./psi.scss";
 
@@ -43,79 +43,84 @@ const Psi = ({ psi, establishments, sources }) => {
   );
 
   return (
-    <Subcategory
-      subtitle="Prestations de services internationales (PSI)"
-      sourceSi="SIPSI"
-    >
-      <PgApiDataHandler isLoading={psi.isLoading} error={psi.error}>
-        <Data
-          name={`Entreprise ayant au moins un contrat de PSI avec une entreprise étrangère`}
-          className="psi__data"
-          columnClasses={["is-10", "is-2"]}
-          value={hasPsi ? "Oui" : "Non"}
-        />
-        {hasPsi && (
-          <>
-            <Data
-              name={`Nb total de salariés distincts détachés auprès de l'entreprise`}
-              description={
-                <div className="psi__description">
-                  <p>
-                    Dans le cadre de la réalisation d&apos;une prestation les
-                    salariés peuvent être détachés sur :
-                  </p>
-                  <ul>
-                    <li>un ou plusieurs établissements de l&apos;entreprise</li>
-                    <li>
-                      un ou plusieurs établissements d&apos;une autre entreprise
-                      donneur d&apos;ordre dans le cas d&apos;une sous traitance
-                    </li>
-                    <li>
-                      un chantier ou lieu temporaire de travail non rattaché à
-                      un établissement
-                    </li>
-                  </ul>
-                </div>
-              }
-              className="psi__data"
-              columnClasses={["is-10", "is-2"]}
-              value={
-                <table className="table is-bordered psi-siren-table">
-                  <thead>
-                    <tr>
-                      <th className="th has-text-right">{currentYear}</th>
-                      <th className="th has-text-right">{lastYear}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="has-text-right">
-                        {psi.enterprise.current_year}
-                      </td>
-                      <td className="has-text-right">
-                        {psi.enterprise.last_year}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              }
+    <div id="psi" className="psi">
+      <Subcategory
+        subtitle="Prestations de services internationales (PSI)"
+        sourceSi="SIPSI"
+      >
+        <PgApiDataHandler isLoading={psi.isLoading} error={psi.error}>
+          <Data
+            name={`Entreprise ayant au moins un contrat de PSI avec une entreprise étrangère`}
+            className="psi__data"
+            columnClasses={["is-10", "is-2"]}
+            value={hasPsi ? "Oui" : "Non"}
+          />
+          {hasPsi && (
+            <>
+              <Data
+                name={`Nb total de salariés distincts détachés auprès de l'entreprise`}
+                description={
+                  <div className="psi__description">
+                    <p>
+                      Dans le cadre de la réalisation d&apos;une prestation les
+                      salariés peuvent être détachés sur :
+                    </p>
+                    <ul>
+                      <li>
+                        un ou plusieurs établissements de l&apos;entreprise
+                      </li>
+                      <li>
+                        un ou plusieurs établissements d&apos;une autre
+                        entreprise donneur d&apos;ordre dans le cas d&apos;une
+                        sous traitance
+                      </li>
+                      <li>
+                        un chantier ou lieu temporaire de travail non rattaché à
+                        un établissement
+                      </li>
+                    </ul>
+                  </div>
+                }
+                className="psi__data"
+                columnClasses={["is-10", "is-2"]}
+                value={
+                  <table className="table is-bordered psi-siren-table">
+                    <thead>
+                      <tr>
+                        <th className="th has-text-right">{currentYear}</th>
+                        <th className="th has-text-right">{lastYear}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="has-text-right">
+                          {psi.enterprise.current_year}
+                        </td>
+                        <td className="has-text-right">
+                          {psi.enterprise.last_year}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                }
+              />
+            </>
+          )}
+          {Boolean(
+            establishmentsWithPsiCurrentYear.length ||
+              establishmentsWithPsiLastYear.length
+          ) && (
+            <PsiSiret
+              establishments={{
+                currentYear: establishmentsWithPsiCurrentYear,
+                lastYear: establishmentsWithPsiLastYear
+              }}
+              years={{ currentYear, lastYear }}
             />
-          </>
-        )}
-        {!!establishmentsWithPsiCurrentYear.length && (
-          <PsiTable
-            establishments={establishmentsWithPsiCurrentYear}
-            year={currentYear}
-          />
-        )}
-        {!!establishmentsWithPsiLastYear.length && (
-          <PsiTable
-            establishments={establishmentsWithPsiLastYear}
-            year={lastYear}
-          />
-        )}
-      </PgApiDataHandler>
-    </Subcategory>
+          )}
+        </PgApiDataHandler>
+      </Subcategory>
+    </div>
   );
 };
 

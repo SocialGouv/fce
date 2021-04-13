@@ -12,13 +12,14 @@
         border: solid 1px $primary;
         border-radius: $border-radius-2;
         padding: $spacing-3;
-        width: 8rem;
-        height: 8rem;
+        width: 8.6rem;
+        height: 8.6rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
 
         &__header {
+            margin-bottom: $spacing-3;
             padding: $spacing-2;
             border-bottom: solid 2px $primary;
             display: flex;

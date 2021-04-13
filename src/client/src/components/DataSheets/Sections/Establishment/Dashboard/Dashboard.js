@@ -67,9 +67,15 @@ const Dashboard = ({
       "-"
     : "0 salarié";
 
-  const psiData = psi.establishments.find(
+  const establishmentPsiData = psi.establishments.find(
     establishment => establishment.siret === siret
   );
+
+  const isEnterprisePsiContractor = Boolean(
+    psi.enterprise.current_year + psi.enterprise.last_year
+  );
+
+  const isEstablishmentWithPsi = Boolean(establishmentPsiData);
 
   return (
     <div className="dashboard columns">
@@ -118,7 +124,19 @@ const Dashboard = ({
           <Item icon={faMedkit} name="Aides" value="Oui" />
         )}
 
-        {psiData && <Item icon={faGlobeAmericas} name="PSI" value={"@TODO"} />}
+        {(isEnterprisePsiContractor || isEstablishmentWithPsi) && (
+          <Item
+            icon={faGlobeAmericas}
+            name="PSI"
+            smallText={true}
+            value={
+              <div>
+                {isEstablishmentWithPsi && <div>Salariés détachés</div>}
+                {isEnterprisePsiContractor && <div>Entreprise DO</div>}
+              </div>
+            }
+          />
+        )}
       </div>
     </div>
   );

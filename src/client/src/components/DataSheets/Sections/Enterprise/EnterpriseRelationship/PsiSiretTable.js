@@ -1,43 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
 import Table from "../../SharedComponents/Table";
-import Button from "../../../../shared/Button/Button";
 import { formatSiret } from "../../../../../helpers/utils";
 
-const PsiTable = ({ establishments, year }) => {
-  const [isVisiblePsiTable, setIsVisiblePsiTable] = useState(false);
-  const s = establishments.length > 1 ? "s" : "";
+export const PsiSiretTable = ({ establishments, year, isVisiblePsiTable }) => {
   return (
-    <div className="psi-siret-table">
-      <div className="column is-12">
-        <div className="psi-siret-table__label">
-          {establishments.length} établissement{s} identifié{s} comme lieu de
-          réalisation d&apos;au moins une PSI en {year}
-        </div>
-        <p className="psi__description">
-          Directement pour le compte de l&apos;entreprise et/ou pour une autre
-          entreprise donneur d&apos;ordre
-        </p>
+    <div>
+      <div className="psi-siret__establishment-count">
+        {establishments.length} établissement(s) identifié(s) en {year}
       </div>
 
-      {establishments.length > 9 && (
-        <div className="psi-siret-table__button-wrapper">
-          <Button
-            onClick={() => setIsVisiblePsiTable(prevState => !prevState)}
-            value={
-              isVisiblePsiTable
-                ? "Cacher la liste des établissements"
-                : "Afficher la liste des établissements"
-            }
-            buttonClasses="is-primary"
-          />
-        </div>
-      )}
-
-      {(establishments.length < 9 || isVisiblePsiTable) && (
-        <Table>
+      {!!establishments.length && isVisiblePsiTable && (
+        <Table className="psi-siret__table">
           <thead>
             <tr>
               <th className="th">SIRET</th>
@@ -68,9 +44,8 @@ const PsiTable = ({ establishments, year }) => {
   );
 };
 
-PsiTable.propTypes = {
+PsiSiretTable.propTypes = {
   establishments: PropTypes.array.isRequired,
+  isVisiblePsiTable: PropTypes.bool.isRequired,
   year: PropTypes.number.isRequired
 };
-
-export default PsiTable;

@@ -5,10 +5,10 @@ exports.shorthands = undefined;
 
 exports.up = (pgm) => {
   pgm.sql(
-    `INSERT INTO ${tablename} ("fournisseur", "si", "table") VALUES('DGT','SIPSI', 'psi_siren')`
+    `INSERT INTO ${tablename} ("fournisseur", "si", "table","date") VALUES('DGT','SIPSI', 'psi_siren', '2021-04-02')`
   );
   pgm.sql(
-    `INSERT INTO ${tablename} ("fournisseur", "si", "table") VALUES('DGT','SIPSI', 'psi_siret')`
+    `INSERT INTO ${tablename} ("fournisseur", "si", "table","date") VALUES('DGT','SIPSI', 'psi_siret', '2021-04-02')`
   );
 };
 

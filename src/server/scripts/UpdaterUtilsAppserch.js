@@ -16,7 +16,7 @@ let tasks = [];
 
 const startScriptTime = new Date();
 
-class IndexerUtilsAppsearch {
+class UpdaterUtilsAppserch {
   constructor(query, type) {
     this.mainProcess(query).catch((error) => console.log(error));
     this.type = type;
@@ -31,14 +31,14 @@ class IndexerUtilsAppsearch {
     console.log("Start process Data");
     tasks.push(
       limit(() =>
-        this.processData(establishmentResultCursor, PgClient, PgSecondClient).catch((error) =>
+        this.processData(establishmentResultCursor, PgClient).catch((error) =>
           console.log(error)
         )
       )
     );
   }
 
-  processData(establishmentResultCursor, PgClient, PgSecondClient) {
+  processData(establishmentResultCursor, PgClient) {
     const start = new Date();
     return new Promise((resolve, reject) => {
       establishmentResultCursor.read(
@@ -53,8 +53,7 @@ class IndexerUtilsAppsearch {
               limit(() =>
                 this.processData(
                   establishmentResultCursor,
-                  PgClient,
-                  PgSecondClient
+                  PgClient
                 ).catch((error) => console.log(error))
               )
             );
@@ -68,19 +67,12 @@ class IndexerUtilsAppsearch {
                   limit.pendingCount
                 );
                 client
-                  .indexDocuments(engineName, result)
+                  .updateDocuments(engineName, result)
                   .then((response) => {
                     //Get execution time for getting row set
                     const end = new Date() - start;
-                    let etabIds = result.map(({ id }) => id)
-                    PgSecondClient.query(
-                      `update etablissements set appsearch_indexed = true where siret in ('${etabIds.join("','")}')`
-                    )
-                      .then(() => {
-                        console.info("Row set execution time: %dms and flagged in base", end);
-                        resolve();
-                      })
-                      .catch((error) => console.log(error));
+                    console.info("Row set execution time: %dms", end);
+                    resolve();
                   })
                   .catch((error) => {
                     console.log(error);
@@ -98,7 +90,6 @@ class IndexerUtilsAppsearch {
               );
               console.log("Done");
               PgClient.release();
-              PgSecondClient.release();
               resolve();
               console.log("Clean reindex queue");
             });
@@ -114,32 +105,32 @@ class IndexerUtilsAppsearch {
     console.log("Map PgDataSet");
     await PgDataSet.map(
       ({
-        siren,
-        siret,
-        trancheeffectifsetablissement,
-        etablissementsiege,
-        etatadministratifetablissement,
-        codepostaletablissement,
-        codecommuneetablissement,
-        libellecommuneetablissement,
-        activiteprincipaleetablissement,
-        activiteprincipaleetablissement_libelle,
-        denominationusuelleetablissement,
-        enseigne1etablissement,
-        enseigne2etablissement,
-        enseigne3etablissement,
-        entreprise_nomunitelegale,
-        entreprise_categoriejuridiqueunitelegale,
-        entreprise_prenomusuelunitelegale,
-        entreprise_denominationunitelegale,
-        entreprise_denominationusuelle1unitelegale,
-        entreprise_denominationusuelle2unitelegale,
-        entreprise_denominationusuelle3unitelegale,
-        entreprise_prenom1unitelegale,
-        entreprise_nomusageunitelegale,
-        lastdsntrancheeffectifsetablissement,
-        lastdsneffectif,
-      }) => {
+         siren,
+         siret,
+         trancheeffectifsetablissement,
+         etablissementsiege,
+         etatadministratifetablissement,
+         codepostaletablissement,
+         codecommuneetablissement,
+         libellecommuneetablissement,
+         activiteprincipaleetablissement,
+         activiteprincipaleetablissement_libelle,
+         denominationusuelleetablissement,
+         enseigne1etablissement,
+         enseigne2etablissement,
+         enseigne3etablissement,
+         entreprise_nomunitelegale,
+         entreprise_categoriejuridiqueunitelegale,
+         entreprise_prenomusuelunitelegale,
+         entreprise_denominationunitelegale,
+         entreprise_denominationusuelle1unitelegale,
+         entreprise_denominationusuelle2unitelegale,
+         entreprise_denominationusuelle3unitelegale,
+         entreprise_prenom1unitelegale,
+         entreprise_nomusageunitelegale,
+         lastdsntrancheeffectifsetablissement,
+         lastdsneffectif,
+       }) => {
         let enterprise_name = entreprise_denominationunitelegale;
 
         const establishment_name =
@@ -195,7 +186,7 @@ class IndexerUtilsAppsearch {
           entreprise_categoriejuridiqueunitelegale: entreprise_categoriejuridiqueunitelegale,
           lastdsntrancheeffectifsetablissement: lastdsntrancheeffectifsetablissement,
           lastdsneffectif: lastdsneffectif,
-          created_at: new Date(),
+          updated_at: new Date(),
         });
       }
     );
@@ -204,4 +195,4 @@ class IndexerUtilsAppsearch {
   }
 }
 
-module.exports = IndexerUtilsAppsearch;
+module.exports = UpdaterUtilsAppserch;

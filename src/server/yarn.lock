@@ -1089,10 +1089,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@elastic/app-search-node@^7.6.0":
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/@elastic/app-search-node/-/app-search-node-7.6.0.tgz#43f394c9996848dc68b2dd093705d40b8857b6fd"
-  integrity sha512-wupxxjlOPdYaXTr6yL84yNmCS7nFftBcB/B4NuJpAPJEBvbPxQAM1AqPUrlKom/5++Z9coDRsbv8cGBo7zVkXg==
+"@elastic/app-search-node@^7.11.1":
+  version "7.11.1"
+  resolved "https://registry.yarnpkg.com/@elastic/app-search-node/-/app-search-node-7.11.1.tgz#82ec7539068811e5cb3fb3e065b4d6d5178316f3"
+  integrity sha512-ak00vyIy0XssYsGLGvH33hBTdxi8aemKF7wntxBNmx7DuJkbhFrtC1OEft0363EHh450iOAArjKdLyyU1O+Lxw==
   dependencies:
     jsonwebtoken "^8.1.1"
     request "^2.81.0"

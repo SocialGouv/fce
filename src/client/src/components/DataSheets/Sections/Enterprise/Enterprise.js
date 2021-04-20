@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
@@ -13,12 +13,12 @@ import QuickAccess from "../SharedComponents/QuickAccess";
 import PrintSection from "../SharedComponents/PrintSection";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import Unsubscribe from "../../../../containers/Unsubscribe";
-
-import { useScrollToLocationHash } from "../../../../helpers/hooks";
+import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 
 import "../../dataSheets.scss";
 
-const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
+const Enterprise = ({ enterprise, headOffice, establishments }) => {
+  const location = useLocation();
   useScrollToLocationHash({ location });
 
   return (
@@ -66,8 +66,7 @@ const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
 Enterprise.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  headOffice: PropTypes.object.isRequired
 };
 
-export default withRouter(withLoading(Enterprise));
+export default withLoading(Enterprise);

@@ -120,10 +120,14 @@ const App = () => {
                           />
                           <Route
                             exact
-                            path="/cgu"
+                            path="/politique-de-confidentialite"
                             render={() => (
                               <Layout>
-                                <PublicPage pageIdentifier={"cgu"} />
+                                <PublicPage
+                                  pageIdentifier={
+                                    "politique-de-confidentialite"
+                                  }
+                                />
                               </Layout>
                             )}
                           />

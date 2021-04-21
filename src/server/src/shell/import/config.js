@@ -528,7 +528,7 @@ const config = {
       outputFileName: `psi_siren_${lastYear}.csv`,
     },
     ingest: {
-      className: "PsiSirenLastYearIngestor",
+      className: "PsiLastYearIngestor",
       table: "psi_siren",
       filename: `${FILES_FOLDER}/psi_siren_${lastYear}.csv`,
       cols: ["siren", "salaries_annee_precedente"],
@@ -548,7 +548,7 @@ const config = {
       outputFileName: `psi_siret_${lastYear}.csv`,
     },
     ingest: {
-      className: "PsiSiretLastYearIngestor",
+      className: "PsiLastYearIngestor",
       table: "psi_siret",
       filename: `${FILES_FOLDER}/psi_siret_${lastYear}.csv`,
       cols: ["siret", "salaries_annee_precedente"],

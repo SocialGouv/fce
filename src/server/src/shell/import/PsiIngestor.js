@@ -5,11 +5,6 @@ const { readFile } = require("fs").promises;
 
 const LOCAL_STORAGE_PATH = "/mnt/data/export";
 class PsiIngestor extends Ingestor {
-  async afterPsqlCopy() {
-    this._removeLinesWithoutSiren();
-    this._setNullColumnsToZero();
-  }
-
   _saveProcessDate() {
     console.log("save process date");
     const { table } = this._config;
@@ -23,22 +18,6 @@ class PsiIngestor extends Ingestor {
       .catch((e) => {
         console.error(e);
       });
-  }
-
-  _removeLinesWithoutSiren() {
-    console.log("_removeLinesWithoutSiren");
-    const { table, cols } = this._config;
-    return execSync(`${this.psql} "DELETE FROM ${table} WHERE ${cols[0]}='';"`);
-  }
-
-  _setNullColumnsToZero() {
-    console.log("_setNullColumnsToZero");
-    const { table } = this._config;
-    return execSync(
-      `${this.psql} "\
-      UPDATE ${table} SET salaries_annee_courante=0 WHERE salaries_annee_courante IS NULL;\
-      UPDATE ${table} SET salaries_annee_precedente=0 WHERE salaries_annee_precedente IS NULL;"`
-    );
   }
 }
 

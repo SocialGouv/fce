@@ -78,7 +78,10 @@ const Direccte = ({ establishment }) => {
           {!!(
             establishment.interactions && establishment.interactions.length
           ) && (
-            <Table className="direccte-interactions__table" isBordered>
+            <Table
+              className="direccte-interactions-establishment__table"
+              isBordered
+            >
               <thead>
                 <tr>
                   <th className="has-text-right">Pôle</th>
@@ -110,6 +113,14 @@ const Direccte = ({ establishment }) => {
                             ]
                           }
                         />
+                        {lastInteraction.nature && lastInteraction.cible && (
+                          <div className="direccte-interactions-establishment__control-nature">
+                            <span>Nature du contrôle : </span>
+                            <Value
+                              value={`${lastInteraction.cible} - ${lastInteraction.nature}`}
+                            />
+                          </div>
+                        )}
                       </td>
                       <td>
                         <Value value={lastInteraction.agent} />

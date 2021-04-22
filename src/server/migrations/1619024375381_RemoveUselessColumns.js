@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-
-/* eslint-disable camelcase */
 const tablename = "etablissements_apprentissage";
 
 exports.shorthands = undefined;

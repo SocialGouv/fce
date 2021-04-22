@@ -41,11 +41,21 @@ const EstablishmentRelationship = ({
           sourceSi="DSN"
         >
           <div className="section-datas__list">
+            <div className="section-datas__list-description">
+              Cliquez sur la convention collective pour consulter son contenu
+              sur Legifrance
+            </div>
             <ul>
               {idcc
                 ? idcc.map(({ code, libelle }) => (
                     <li className="section-datas__list-item" key={code}>
-                      <Value value={`${code} - ${libelle}`} />
+                      <a
+                        href={Config.get("legifranceSearchUrl.idcc") + code}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        <Value value={`${code} - ${libelle}`} />
+                      </a>
                     </li>
                   ))
                 : "-"}
@@ -108,10 +118,7 @@ const EstablishmentRelationship = ({
               )}
 
               <a
-                href={
-                  Config.get("legifranceSearchUrl") +
-                  raisonSociale.toLowerCase()
-                }
+                href={Config.get("legifranceSearchUrl.accords") + siret}
                 target="_blank"
                 rel="noreferrer noopener"
               >

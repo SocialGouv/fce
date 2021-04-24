@@ -28,10 +28,10 @@ const Faq = ({ pageData = null, isLoading, hasError }) => {
             <h1>FAQ</h1>
             <p>
               <strong>
-                Vous rencontrez une difficulté dans l'utilisation de FCE ? Nous
-                mettons à votre disposition cette foire aux questions et des
-                tutoriels vidéo afin de répondre à vos interrogations et de vous
-                accompagner au mieux.
+                Vous rencontrez une difficulté dans l&apos;utilisation de FCE ?
+                Nous mettons à votre disposition cette foire aux questions et
+                des tutoriels vidéo afin de répondre à vos interrogations et de
+                vous accompagner au mieux.
               </strong>
             </p>
 

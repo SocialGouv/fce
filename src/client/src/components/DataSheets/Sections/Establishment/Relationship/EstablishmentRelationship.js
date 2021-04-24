@@ -8,13 +8,11 @@ import Data from "../../SharedComponents/Data";
 import Table from "../../SharedComponents/Table";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Value from "../../../../shared/Value";
-import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { formatEstablishmentAgreements } from "../../../../../helpers/Relationships";
 import Config from "../../../../../services/Config";
 import Psi from "./Psi";
 
 const EstablishmentRelationship = ({
-  enterprise,
   establishment: { idcc, siret },
   agreements
 }) => {

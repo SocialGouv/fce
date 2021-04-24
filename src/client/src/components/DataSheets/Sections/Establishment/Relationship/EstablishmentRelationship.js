@@ -23,7 +23,6 @@ const EstablishmentRelationship = ({
     siret
   );
 
-  const raisonSociale = getEnterpriseName(enterprise);
   const nbAccords = establishmentAgreements.count;
   const lastDate = establishmentAgreements.lastSignatureDate;
 

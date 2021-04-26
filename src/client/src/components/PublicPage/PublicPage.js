@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import htmlParser from "react-markdown/plugins/html-parser";
 import PropTypes from "prop-types";
 import UsersFeedback from "../../containers/UsersFeedback";
+import Unsubscribe from "../../containers/Unsubscribe";
 import LoadSpinner from "../shared/LoadSpinner";
 
 // allow <br> tags to allow
@@ -37,6 +38,7 @@ const PublicPage = ({ pageData = null, isLoading, hasError }) => {
         )}
       </div>
       <UsersFeedback fullWidth />
+      <Unsubscribe />
     </>
   );
 };

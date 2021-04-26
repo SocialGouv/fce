@@ -103,9 +103,16 @@ const App = () => {
                             path="/mentions-legales"
                             render={() => (
                               <Layout>
-                                <PublicPage
-                                  pageIdentifier={"mentions-legales"}
-                                />
+                                <PublicPage />
+                              </Layout>
+                            )}
+                          />
+                          <Route
+                            exact
+                            path="/faq"
+                            render={() => (
+                              <Layout>
+                                <PublicPage />
                               </Layout>
                             )}
                           />
@@ -114,7 +121,7 @@ const App = () => {
                             path="/a-propos"
                             render={() => (
                               <Layout>
-                                <PublicPage pageIdentifier={"a-propos"} />
+                                <PublicPage />
                               </Layout>
                             )}
                           />
@@ -123,11 +130,7 @@ const App = () => {
                             path="/politique-de-confidentialite"
                             render={() => (
                               <Layout>
-                                <PublicPage
-                                  pageIdentifier={
-                                    "politique-de-confidentialite"
-                                  }
-                                />
+                                <PublicPage />
                               </Layout>
                             )}
                           />
@@ -136,9 +139,7 @@ const App = () => {
                             path="/sources-des-donnees"
                             render={() => (
                               <Layout>
-                                <PublicPage
-                                  pageIdentifier={"sources-des-donnees"}
-                                />
+                                <PublicPage />
                               </Layout>
                             )}
                           />

@@ -1,10 +1,9 @@
 import React, { useEffect, useReducer } from "react";
-import PropTypes from "prop-types";
-import PublicPageView from "../../components/PublicPage";
+import PublicPageDefault from "../../components/PublicPage";
+import Faq from "../../components/PublicPage/Faq";
 import Config from "../../services/Config";
 import { handleError } from "../../helpers/utils";
-
-const strapiEndpoint = Config.get("strapi.endpoint");
+import { useLocation } from "react-router-dom";
 
 const initialState = {
   isLoading: false,
@@ -40,16 +39,22 @@ const reducer = (state, action) => {
   }
 };
 
-const PublicPage = ({ pageIdentifier }) => {
+const PublicPage = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const location = useLocation();
 
-  const strapiPageUrl = `${strapiEndpoint}${Config.get(
-    `strapi.pageIds.${pageIdentifier}`
-  )}`;
+  const ViewComponent = location.pathname === "/faq" ? Faq : PublicPageDefault;
+
+  const path =
+    location.pathname in Config.get("strapi.path")
+      ? Config.get(`strapi.path.${location.pathname}`)
+      : location.pathname;
+
+  const endpoint = `${Config.get("strapi.domain")}${path}`;
 
   useEffect(() => {
     dispatch({ type: "fetchStart" });
-    fetch(strapiPageUrl)
+    fetch(endpoint)
       .then(response => response.json())
       .then(data => {
         dispatch({ type: "fetchSuccess", payload: data });
@@ -58,19 +63,15 @@ const PublicPage = ({ pageIdentifier }) => {
         dispatch({ type: "fetchError" });
         handleError(error);
       });
-  }, [pageIdentifier, strapiPageUrl]);
+  }, [endpoint]);
 
   return (
-    <PublicPageView
+    <ViewComponent
       pageData={state.pageData}
       isLoading={state.isLoading}
       hasError={state.hasError}
     />
   );
-};
-
-PublicPage.propTypes = {
-  pageIdentifier: PropTypes.string.isRequired
 };
 
 export default PublicPage;

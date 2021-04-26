@@ -47,6 +47,11 @@ const Footer = () => (
             </a>
           </li>
           <li className="footer__link-item">
+            <Link className="footer__link" to="/faq">
+              FAQ
+            </Link>
+          </li>
+          <li className="footer__link-item">
             <Link className="footer__link" to="/a-propos">
               A propos
             </Link>

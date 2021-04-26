@@ -17,9 +17,12 @@
         }
     }
 
+    & > .column {
+        padding-left: 0;
+    }
+
     & .dt {
         @extend %has-first-letter-uppercase;
-        padding-left: 0;
     }
 
     & .dd {

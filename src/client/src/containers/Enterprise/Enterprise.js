@@ -88,7 +88,6 @@ const Enterprise = ({
     loadMethod,
     agreements.error,
     psi.error,
-    state,
     currentEnterprise.siren,
     currentUrl,
     loadAgreements,

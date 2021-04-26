@@ -7,6 +7,8 @@ const interactionsPole3ESRC = (sequelize, DataTypes) => {
       libelle_region: DataTypes.STRING,
       numero_dossier: DataTypes.STRING,
       type_controle: DataTypes.STRING,
+      nature_controle: DataTypes.STRING,
+      cible_controle: DataTypes.STRING,
       date: DataTypes.STRING,
     },
     {

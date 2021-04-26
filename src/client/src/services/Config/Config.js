@@ -138,15 +138,17 @@ const globalConfig = {
     aci: "Atelier et chantier d'insertion",
     etti: "Entreprise de travail temporaire d'insertion"
   },
-  legifranceSearchUrl:
-    "https://www.legifrance.gouv.fr/initRechAccordsEntreprise.do?champRaisonSociale=",
+  legifranceSearchUrl: {
+    accords: "https://www.legifrance.gouv.fr/liste/acco?siret=",
+    idcc: "https://www.legifrance.gouv.fr/liste/idcc?idcc_suggest="
+  },
   strapi: {
-    domain: "https://fce.strapi.fabrique.social.gouv.fr",
-    path: {
-      "/a-propos": "/pages/1",
-      "/politique-de-confidentialite": "/pages/6",
-      "/sources-des-donnees": "/pages/3",
-      "/mentions-legales": "/pages/4"
+    endpoint: "https://fce.strapi.fabrique.social.gouv.fr/pages/",
+    pageIds: {
+      "a-propos": 1,
+      "politique-de-confidentialite": 6,
+      "sources-des-donnees": 3,
+      "mentions-legales": 4
     }
   },
   codeInseeLength: 5,

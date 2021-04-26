@@ -8,13 +8,11 @@ import Data from "../../SharedComponents/Data";
 import Table from "../../SharedComponents/Table";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Value from "../../../../shared/Value";
-import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { formatEstablishmentAgreements } from "../../../../../helpers/Relationships";
 import Config from "../../../../../services/Config";
 import Psi from "./Psi";
 
 const EstablishmentRelationship = ({
-  enterprise,
   establishment: { idcc, siret },
   agreements
 }) => {
@@ -23,7 +21,6 @@ const EstablishmentRelationship = ({
     siret
   );
 
-  const raisonSociale = getEnterpriseName(enterprise);
   const nbAccords = establishmentAgreements.count;
   const lastDate = establishmentAgreements.lastSignatureDate;
 
@@ -41,11 +38,21 @@ const EstablishmentRelationship = ({
           sourceSi="DSN"
         >
           <div className="section-datas__list">
+            <div className="section-datas__list-description">
+              Cliquez sur la convention collective pour consulter son contenu
+              sur Legifrance
+            </div>
             <ul>
               {idcc
                 ? idcc.map(({ code, libelle }) => (
                     <li className="section-datas__list-item" key={code}>
-                      <Value value={`${code} - ${libelle}`} />
+                      <a
+                        href={Config.get("legifranceSearchUrl.idcc") + code}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        <Value value={`${code} - ${libelle}`} />
+                      </a>
                     </li>
                   ))
                 : "-"}
@@ -108,10 +115,7 @@ const EstablishmentRelationship = ({
               )}
 
               <a
-                href={
-                  Config.get("legifranceSearchUrl") +
-                  raisonSociale.toLowerCase()
-                }
+                href={Config.get("legifranceSearchUrl.accords") + siret}
                 target="_blank"
                 rel="noreferrer noopener"
               >

@@ -165,7 +165,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^(.)*export_SRC(.)*.csv$/,
+      fileMatch: /^exportMSDC_src.*\.csv$/,
       outputFileName: "interactions_pole_3e_src.csv",
     },
     ingest: {
@@ -182,7 +182,7 @@ const config = {
         "date_creation",
         "date",
         "date_cloture",
-        "cols",
+        "clos",
         "clos_automatiquement",
         "nature_controle",
         "cible_controle",
@@ -394,7 +394,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^(.)*Ariane(.)*.csv$/,
+      fileMatch: /^.*extractionFCE_dateDebutContratApresLe.*\.csv$/,
       outputFileName: "etablissements_apprentissage.csv",
     },
     ingest: {
@@ -402,13 +402,11 @@ const config = {
       table: "etablissements_apprentissage",
       filename: `${FILES_FOLDER}/etablissements_apprentissage.csv`,
       cols: [
+        "date_debut",
         "type_contrat",
         "numero_enregistrement",
-        "date_debut",
-        "date_rupture",
         "siret",
-        "empty",
-        "empty2",
+        "date_rupture",
       ],
       delimiter: ";",
       truncate: true,
@@ -528,7 +526,7 @@ const config = {
       outputFileName: `psi_siren_${lastYear}.csv`,
     },
     ingest: {
-      className: "PsiSirenLastYearIngestor",
+      className: "PsiLastYearIngestor",
       table: "psi_siren",
       filename: `${FILES_FOLDER}/psi_siren_${lastYear}.csv`,
       cols: ["siren", "salaries_annee_precedente"],
@@ -548,7 +546,7 @@ const config = {
       outputFileName: `psi_siret_${lastYear}.csv`,
     },
     ingest: {
-      className: "PsiSiretLastYearIngestor",
+      className: "PsiLastYearIngestor",
       table: "psi_siret",
       filename: `${FILES_FOLDER}/psi_siret_${lastYear}.csv`,
       cols: ["siret", "salaries_annee_precedente"],

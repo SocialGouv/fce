@@ -9,14 +9,14 @@
         &__table {
             margin-top: 0;
 
-            td {
-                vertical-align: middle;
-            }
-
             th:first-child,
             td:first-child {
                 text-align: right;
             }
+        }
+
+        &__control-nature {
+            font-size: $font-size-small;
         }
     }
 }

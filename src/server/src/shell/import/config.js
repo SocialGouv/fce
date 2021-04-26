@@ -394,7 +394,7 @@ const config = {
     download: {
       className: "MinioDownloader",
       bucket: "dgefp",
-      fileMatch: /^(.)*Ariane(.)*.csv$/,
+      fileMatch: /^.*extractionFCE_dateDebutContratApresLe.*\.csv$/,
       outputFileName: "etablissements_apprentissage.csv",
     },
     ingest: {
@@ -402,13 +402,11 @@ const config = {
       table: "etablissements_apprentissage",
       filename: `${FILES_FOLDER}/etablissements_apprentissage.csv`,
       cols: [
+        "date_debut",
         "type_contrat",
         "numero_enregistrement",
-        "date_debut",
-        "date_rupture",
         "siret",
-        "empty",
-        "empty2",
+        "date_rupture",
       ],
       delimiter: ";",
       truncate: true,

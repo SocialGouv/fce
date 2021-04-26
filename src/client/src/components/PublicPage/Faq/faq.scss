@@ -22,7 +22,7 @@
 
             &:focus {
                 outline: none;
-                box-shadow: $box-shadow-focus;
+                text-decoration: underline;
             }
         }
 

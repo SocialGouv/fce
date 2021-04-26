@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Value from "../../../../shared/Value";
-import Config from "../../../../../services/Config/index";
+import Config from "../../../../../services/Config";
 
 export const CollectiveAgreements = ({ idccList = null }) => {
   return (

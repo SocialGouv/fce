@@ -143,12 +143,12 @@ const globalConfig = {
     idcc: "https://www.legifrance.gouv.fr/liste/idcc?idcc_suggest="
   },
   strapi: {
-    endpoint: "https://fce.strapi.fabrique.social.gouv.fr/pages/",
-    pageIds: {
-      "a-propos": 1,
-      "politique-de-confidentialite": 6,
-      "sources-des-donnees": 3,
-      "mentions-legales": 4
+    domain: "https://fce.strapi.fabrique.social.gouv.fr",
+    path: {
+      "/a-propos": "/pages/1",
+      "/politique-de-confidentialite": "/pages/6",
+      "/sources-des-donnees": "/pages/3",
+      "/mentions-legales": "/pages/4"
     }
   },
   codeInseeLength: 5,

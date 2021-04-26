@@ -16,8 +16,6 @@ const Faq = ({ pageData = null, isLoading, hasError }) => {
     );
   }
 
-  console.log(pageData);
-
   return (
     <>
       <div className="page content faq">

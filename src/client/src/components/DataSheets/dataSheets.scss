@@ -123,8 +123,14 @@
                 margin-top: $spacing-3;
             }
 
+            &__list-description {
+                font-style: italic;
+                font-size: $font-size-small;
+                margin-bottom: $spacing-3;
+            }
+
             &__list-item {
-                margin: $spacing-2;
+                margin-bottom: $spacing-2;
             }
 
             .dt {

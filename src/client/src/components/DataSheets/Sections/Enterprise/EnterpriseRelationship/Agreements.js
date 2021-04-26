@@ -76,7 +76,8 @@ const Agreements = ({ enterprise, agreements }) => {
 
           <a
             href={
-              Config.get("legifranceSearchUrl") + raisonSociale.toLowerCase()
+              Config.get("legifranceSearchUrl.accords") +
+              raisonSociale.toLowerCase()
             }
             target="_blank"
             rel="noreferrer noopener"

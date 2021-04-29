@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "faqs",
+  "info": {
+    "name": "FAQ",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "faq_sections": {
+      "collection": "faq-section"
+    },
+    "faq_tutos_videos": {
+      "collection": "faq-tutos-video"
+    }
+  }
+}

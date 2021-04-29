@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_faq_question_faqs",
+  "info": {
+    "name": "question FAQ",
+    "icon": "info-circle",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "question": {
+      "type": "richtext",
+      "required": true
+    },
+    "reponse": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}

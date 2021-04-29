@@ -1,0 +1,85 @@
+{
+  "_from": "strapi-plugin-upload@3.2.1",
+  "_id": "strapi-plugin-upload@3.2.1",
+  "_inBundle": false,
+  "_integrity": "sha512-rJ6D23IdI8DYjccKB8f5gFrbafPnyaIZfJfbMt2y9CoYkHq06EGG9Tk3JEBVDKwnQy50NkkQlLbn5tJZ7o77dw==",
+  "_location": "/strapi-plugin-upload",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "strapi-plugin-upload@3.2.1",
+    "name": "strapi-plugin-upload",
+    "escapedName": "strapi-plugin-upload",
+    "rawSpec": "3.2.1",
+    "saveSpec": null,
+    "fetchSpec": "3.2.1"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/strapi-plugin-upload/-/strapi-plugin-upload-3.2.1.tgz",
+  "_shasum": "bc4febcbb97491cec67bc9c1a8d3dd8ee7cae865",
+  "_spec": "strapi-plugin-upload@3.2.1",
+  "_where": "/srv/app",
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@buffetjs/core": "3.3.1",
+    "@buffetjs/custom": "3.3.1",
+    "@buffetjs/hooks": "3.3.1",
+    "@buffetjs/icons": "3.3.1",
+    "@buffetjs/styles": "3.3.1",
+    "@buffetjs/utils": "3.3.1",
+    "byte-size": "^6.2.0",
+    "cropperjs": "^1.5.6",
+    "immer": "^7.0.8",
+    "immutable": "^3.8.2",
+    "is-valid-domain": "0.0.15",
+    "koa-range": "0.3.0",
+    "koa-static": "^5.0.0",
+    "lodash": "4.17.19",
+    "node-fetch": "2.6.1",
+    "react": "^16.13.1",
+    "react-copy-to-clipboard": "^5.0.1",
+    "react-dom": "^16.9.0",
+    "react-intl": "4.5.0",
+    "react-redux": "^7.0.2",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "reactstrap": "8.4.1",
+    "sharp": "0.26.0",
+    "strapi-helper-plugin": "3.2.1",
+    "strapi-provider-upload-local": "3.2.1",
+    "strapi-utils": "3.2.1",
+    "stream-to-array": "^2.3.0",
+    "uuid": "^3.2.1"
+  },
+  "deprecated": false,
+  "description": "This is the description of the plugin.",
+  "engines": {
+    "node": ">=10.16.0 <13",
+    "npm": ">=6.0.0"
+  },
+  "gitHead": "5a77b560e333604d052bfa83ad774769b5d6bc2e",
+  "license": "SEE LICENSE IN LICENSE",
+  "maintainers": [
+    {
+      "name": "A Strapi developer"
+    }
+  ],
+  "name": "strapi-plugin-upload",
+  "scripts": {
+    "test": "echo \"no tests yet\""
+  },
+  "strapi": {
+    "name": "Media Library",
+    "icon": "cloud-upload-alt",
+    "description": "upload.plugin.description",
+    "required": true
+  },
+  "version": "3.2.1"
+}

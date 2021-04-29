@@ -1,0 +1,23 @@
+version: "3.1"
+
+services:
+  n8n:
+    image: n8nio/n8n
+    restart: always
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=test
+      - N8N_BASIC_AUTH_PASSWORD=test
+      - N8N_PORT=3002
+    networks:
+      - traefik
+    ports:
+      - 3002:3002
+    volumes:
+      - ~/.n8n:/root/.n8n
+    labels:
+      - "traefik.port=3002"
+      - "traefik.frontend.rule=Host:n8n.fce.test"
+networks:
+  traefik:
+    external: true

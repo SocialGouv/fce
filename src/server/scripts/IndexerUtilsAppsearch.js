@@ -18,27 +18,27 @@ const startScriptTime = new Date();
 
 class IndexerUtilsAppsearch {
   constructor(query, type) {
-    this.mainProcess(query).catch(error => console.log(error));
+    this.mainProcess(query).catch((error) => console.log(error));
     this.type = type;
   }
   async mainProcess(query) {
     //Init PG Client and cursor
     const PgClient = await pool.connect();
+    const PgSecondClient = await pool.connect();
     const establishmentResultCursor = PgClient.query(new Cursor(query));
-
     console.log("Create Elastic client");
     //www todo
     console.log("Start process Data");
     tasks.push(
       limit(() =>
-        this.processData(establishmentResultCursor, PgClient).catch(error =>
+        this.processData(establishmentResultCursor, PgClient, PgSecondClient).catch((error) =>
           console.log(error)
         )
       )
     );
   }
 
-  processData(establishmentResultCursor, PgClient) {
+  processData(establishmentResultCursor, PgClient, PgSecondClient) {
     const start = new Date();
     return new Promise((resolve, reject) => {
       establishmentResultCursor.read(
@@ -51,13 +51,15 @@ class IndexerUtilsAppsearch {
           if (result.length !== 0) {
             tasks.push(
               limit(() =>
-                this.processData(establishmentResultCursor, PgClient).catch(
-                  error => console.log(error)
-                )
+                this.processData(
+                  establishmentResultCursor,
+                  PgClient,
+                  PgSecondClient
+                ).catch((error) => console.log(error))
               )
             );
             this.insertBulk(result)
-              .then(result => {
+              .then((result) => {
                 console.log(
                   "indexing...",
                   "active process:",
@@ -67,18 +69,25 @@ class IndexerUtilsAppsearch {
                 );
                 client
                   .indexDocuments(engineName, result)
-                  .then(response => {
+                  .then((response) => {
                     //Get execution time for getting row set
                     const end = new Date() - start;
-                    console.info("Row set execution time: %dms", end);
-                    resolve();
+                    let etabIds = result.map(({ id }) => id)
+                    PgSecondClient.query(
+                      `update etablissements set appsearch_indexed = true where siret in ('${etabIds.join("','")}')`
+                    )
+                      .then(() => {
+                        console.info("Row set execution time: %dms and flagged in base", end);
+                        resolve();
+                      })
+                      .catch((error) => console.log(error));
                   })
-                  .catch(error => {
+                  .catch((error) => {
                     console.log(error);
                     reject();
                   });
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
           } else {
@@ -87,22 +96,11 @@ class IndexerUtilsAppsearch {
                 "Final execution time: %dms",
                 new Date() - startScriptTime
               );
-
-              if (this.type === "update") {
-                console.log("Clean reindex queue");
-                PgClient.query(
-                  "update etablissements set need_reindex = false where need_reindex = true"
-                )
-                  .then(() => {
-                    console.log("Done");
-                    PgClient.release();
-                    resolve();
-                  })
-                  .catch(error => console.log(error));
-              } else {
-                PgClient.release();
-                resolve();
-              }
+              console.log("Done");
+              PgClient.release();
+              PgSecondClient.release();
+              resolve();
+              console.log("Clean reindex queue");
             });
           }
         }
@@ -138,7 +136,9 @@ class IndexerUtilsAppsearch {
         entreprise_denominationusuelle2unitelegale,
         entreprise_denominationusuelle3unitelegale,
         entreprise_prenom1unitelegale,
-        entreprise_nomusageunitelegale
+        entreprise_nomusageunitelegale,
+        lastdsntrancheeffectifsetablissement,
+        lastdsneffectif,
       }) => {
         let enterprise_name = entreprise_denominationunitelegale;
 
@@ -192,7 +192,10 @@ class IndexerUtilsAppsearch {
           entreprise_nomunitelegale: entreprise_nomunitelegale,
           entreprise_prenom1unitelegale: entreprise_prenom1unitelegale,
           entreprise_nomusageunitelegale: entreprise_nomusageunitelegale,
-          entreprise_categoriejuridiqueunitelegale: entreprise_categoriejuridiqueunitelegale
+          entreprise_categoriejuridiqueunitelegale: entreprise_categoriejuridiqueunitelegale,
+          lastdsntrancheeffectifsetablissement: lastdsntrancheeffectifsetablissement,
+          lastdsneffectif: lastdsneffectif,
+          created_at: new Date(),
         });
       }
     );

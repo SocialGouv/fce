@@ -1,28 +1,29 @@
-%print-hidden {
-    @media print {
-        display: none !important;
-    }
-}
-
-%print-block {
-    @media print {
-        display: block !important;
-        width: 100%;
-    }
-}
-
-%print-margin-padding {
-    @media print {
-        padding: 0.2cm !important;
-        margin: 0 !important;
-    }
-}
-
-%data-sheet-header {
-    padding: 2rem;
+%is-grey {
+    color: $grey !important;
     background-color: $white;
-    border-radius: 0.325rem;
-    @media not print {
-        box-shadow: $fce-shadow;
+    border-color: $grey !important;
+}
+
+%has-first-letter-uppercase {
+    &::first-letter {
+        text-transform: uppercase;
     }
+}
+
+%flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+%success {
+    color: $info-success;
+    border: 1px solid $info-success;
+    background-color: $info-success-bg;
+}
+
+%error {
+    color: $info-error;
+    border: 1px solid $info-error;
+    background-color: $info-error-bg;
 }

@@ -1,4 +1,4 @@
-FROM docker:stable-dind
+FROM docker:19.03.10
 
 RUN apk add --no-cache --update alpine-sdk curl git openssh zip tar ruby ruby-dev zlib python python-dev py-pip bash docker
 

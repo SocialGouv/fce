@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
+import downloadjs from "downloadjs";
 import { connect } from "react-redux";
+import moment from "moment";
 import {
   setSearchTerm,
   setSearchFilters,
@@ -14,7 +16,9 @@ import * as AppSearch from "@elastic/app-search-javascript";
 import Http from "../../services/Http";
 import SearchView from "../../components/Search";
 import divisionsNaf from "./divisions-naf.json";
+import trancheEffectif from "./tranche-effectif.json";
 import Config from "../../services/Config";
+import { formatSearchInput } from "../../helpers/Search";
 
 const client = AppSearch.createClient(Config.get("appSearch").client);
 const defaultOptions = Config.get("appSearch").defaultOptions;
@@ -29,6 +33,12 @@ const Search = ({
   setSearchError,
   resetSearch
 }) => {
+  const [downloadXlsxStatus, setDownloadXlsxStatus] = useState({
+    isLoading: false,
+    success: false,
+    error: null
+  });
+
   const allFiltersOptions = {
     ...(search.filters.siege && { etablissementsiege: "true" }),
     ...(search.filters.state.length === 1 && {
@@ -69,6 +79,19 @@ const Search = ({
     });
   }
 
+  if (Array.isArray(search.filters.effectif)) {
+    search.filters.effectif.forEach(({ value }) => {
+      if (
+        !Object.prototype.hasOwnProperty.call(
+          allFiltersOptions,
+          "lastdsntrancheeffectifsetablissement"
+        )
+      ) {
+        allFiltersOptions.lastdsntrancheeffectifsetablissement = [];
+      }
+      allFiltersOptions.lastdsntrancheeffectifsetablissement.push(value);
+    });
+  }
   const options = {
     ...defaultOptions,
     filters: {
@@ -96,13 +119,15 @@ const Search = ({
     setSearchError(null);
 
     client
-      .search(query === "" ? query : `"${query}"`, options)
+      .search(formatSearchInput(query), options)
       .then(resultList => {
-        setSearchResults(resultList);
+        setSearchResults(resultList, options.filters);
         setSearchIsLoading(false);
       })
       .catch(error => {
-        setSearchError(error);
+        setSearchError(
+          `Une erreur est survenue lors de la communication avec l'API`
+        );
         setSearchIsLoading(false);
         console.error(`error: ${error}`);
       });
@@ -224,16 +249,65 @@ const Search = ({
     });
   };
 
+  const generateXlsx = () => {
+    setDownloadXlsxStatus({ isLoading: true, succes: false, error: null });
+
+    const exportDate = moment().format("YYYY-MM-DD_HH-m-s");
+
+    Http.post(
+      "/downloadXlsx",
+      {
+        payload: {
+          totalItems: search.results.info.meta.page.total_results,
+          searchTerm: search.term,
+          filters: search.results.resultsFilters
+        }
+      },
+      { responseType: "blob" }
+    )
+      .then(response => {
+        setDownloadXlsxStatus({
+          isLoading: false,
+          succes: true,
+          error: null
+        });
+        if (response.data && response.data) {
+          const fileName = `FceExport-${exportDate}.xlsx`;
+
+          return downloadjs(
+            new Blob([response.data], {
+              type: response.headers["content-type"]
+            }),
+            fileName,
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          );
+        }
+      })
+      .catch(async error => {
+        const errorMessage = await error.response.data.text();
+        setDownloadXlsxStatus({
+          isLoading: false,
+          succes: false,
+          error: errorMessage
+        });
+      });
+  };
+
+  const searchParamsOnLoad = useRef({ searchTerm: search.term, options });
+  const sendRequestOnce = useRef(sendRequest);
+
   useEffect(() => {
-    if (search.term) {
-      sendRequest(search.term, options);
+    const { searchTerm, options } = searchParamsOnLoad.current;
+    const sendRequest = sendRequestOnce.current;
+    if (searchTerm) {
+      sendRequest(searchTerm, options);
     }
-  }, []);
+  }, [searchParamsOnLoad, sendRequestOnce]);
 
   return (
     <SearchView
       isLoading={search.isLoading}
-      error={search.error}
+      error={search.error || downloadXlsxStatus.error}
       resultList={search.results}
       sendRequest={sendRequest}
       searchTerm={search.term}
@@ -247,7 +321,10 @@ const Search = ({
       sort={sort}
       options={options}
       divisionsNaf={divisionsNaf}
+      trancheEffectif={trancheEffectif}
       loadLocations={loadLocations}
+      generateXlsx={generateXlsx}
+      downloadXlsxStatus={downloadXlsxStatus}
     />
   );
 };
@@ -269,8 +346,8 @@ const mapDispatchToProps = dispatch => {
     setSearchSort: sort => {
       return dispatch(setSearchSort(sort));
     },
-    setSearchResults: results => {
-      dispatch(setSearchResults(results));
+    setSearchResults: (results, resultsFilters) => {
+      dispatch(setSearchResults(results, resultsFilters));
     },
     setSearchIsLoading: isLoading => {
       dispatch(setSearchIsLoading(isLoading));

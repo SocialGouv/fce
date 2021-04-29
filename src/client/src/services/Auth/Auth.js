@@ -2,7 +2,7 @@ import { Local } from "OhMyCache";
 import Http from "../Http";
 
 const AUTH_KEY = "fce_token";
-const AUTH_EMAIL = "user_email";
+const AUTH_USER_ID = "user_id";
 
 export default class Auth {
   static sendCode(email) {
@@ -11,14 +11,15 @@ export default class Auth {
     });
   }
 
-  static login(email, code) {
+  static login(email, code, isCheckedSubscription) {
     return Http.post("/login", {
       code,
-      email
+      email,
+      isCheckedSubscription
     }).then(response => {
       if (response.data && response.data.success) {
         Local.set(AUTH_KEY, response.data.token);
-        Local.set(AUTH_EMAIL, email);
+        Local.set(AUTH_USER_ID, response.data.saltedEmail);
       }
 
       return response;
@@ -27,7 +28,19 @@ export default class Auth {
 
   static logout() {
     Local.remove(AUTH_KEY);
-    Local.remove(AUTH_EMAIL);
+    Local.remove(AUTH_USER_ID);
+  }
+
+  static tempLogin(credential) {
+    return Http.post("/tempLogin", {
+      credential
+    }).then(response => {
+      if (response.data && response.data.success) {
+        Local.set(AUTH_KEY, response.data.token);
+        Local.set(AUTH_USER_ID, response.data.saltedEmail);
+      }
+      return response;
+    });
   }
 
   static isLogged() {
@@ -38,8 +51,8 @@ export default class Auth {
     return Local.get(AUTH_KEY);
   }
 
-  static getEmail() {
-    return Local.get(AUTH_EMAIL);
+  static getUserId() {
+    return Local.get(AUTH_USER_ID);
   }
 
   /**

@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Table from "../../../SharedComponents/Table";
 import Value from "../../../../../shared/Value";
+
+import "./finances.scss";
 
 const Finances = ({ establishment }) => {
   let dates = [];
@@ -38,7 +41,7 @@ const Finances = ({ establishment }) => {
   }
 
   return establishment.donnees_ecofi ? (
-    <table className="table is-hoverable w-100 mt-4">
+    <Table className="enterprise-finances">
       <thead>
         <tr>
           <th>Date fin exercice</th>
@@ -59,9 +62,11 @@ const Finances = ({ establishment }) => {
           {emptyList}
         </tr>
       </tbody>
-    </table>
+    </Table>
   ) : (
-    <p className="has-text-centered pt-2">Non disponible</p>
+    <p className="enterprise-finances__not-available has-text-centered">
+      Non disponible
+    </p>
   );
 };
 

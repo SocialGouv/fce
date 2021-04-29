@@ -8,7 +8,7 @@ import {
   faSortUp,
   faSortDown
 } from "@fortawesome/pro-duotone-svg-icons";
-import classname from "classnames";
+import classNames from "classnames";
 import Button from "../shared/Button";
 import LoadSpinner from "../shared/LoadSpinner";
 import Pager from "./Pager";
@@ -44,20 +44,19 @@ const SearchAwesomeTable = ({
           return (
             <th
               key={field.headName}
-              className={classname({
+              className={classNames({
                 at__head__th: true,
                 "at__head__th--important": field.importantHead,
                 "at__head__th--is-sortable": isSortableField
               })}
               onClick={() => isSortableField && sortColumn(field.sortKey)}
             >
+              {field.headName}
               {isSortableField && (
                 <FontAwesomeIcon
-                  className="at__head__sortable-icon"
                   icon={getSortIcon(field.sortKey, currentSort)}
                 />
               )}
-              {field.headName}
             </th>
           );
         })}
@@ -78,7 +77,12 @@ const SearchAwesomeTable = ({
             onClick={() => history.push(`/establishment/${element.siret.raw}`)}
           >
             {fields.map((field, index) => (
-              <td key={index} className="at__body__td">
+              <td
+                key={index}
+                className={classNames("at__body__td", {
+                  "table-cell--nowrap": index === 0
+                })}
+              >
                 {field.html ? (
                   <span
                     dangerouslySetInnerHTML={{
@@ -98,32 +102,34 @@ const SearchAwesomeTable = ({
       <tfoot className="at__footer">
         <tr className="at__footer__tr">
           <td className="at__footer__td" colSpan={fields.length}>
-            <Button
-              value={prevText}
-              icon={faAngleLeft}
-              iconClasses={["fa-2x"]}
-              buttonClasses={["is-prev-button", "is-pulled-left"]}
-              isDisabled={pagination.current === pagination.min}
-              callback={() => {
-                pagination.handlePageChange(--pagination.current);
-              }}
-            />
-            <Pager
-              handlePageChange={pagination.handlePageChange}
-              currentPage={pagination.current}
-              max={pagination.pages}
-            />
-            <Button
-              value={nextText}
-              icon={faAngleRight}
-              iconClasses={["fa-2x"]}
-              rowReverse={true}
-              buttonClasses={["is-next-button", "is-pulled-right"]}
-              isDisabled={pagination.current === pagination.pages}
-              callback={() => {
-                pagination.handlePageChange(++pagination.current);
-              }}
-            />
+            <div className="pageNav">
+              <Button
+                value={prevText}
+                icon={faAngleLeft}
+                iconClasses={["fa-2x"]}
+                buttonClasses={["prev-button"]}
+                isDisabled={pagination.current === pagination.min}
+                callback={() => {
+                  pagination.handlePageChange(--pagination.current);
+                }}
+              />
+              <Pager
+                handlePageChange={pagination.handlePageChange}
+                currentPage={pagination.current}
+                max={pagination.pages}
+              />
+              <Button
+                value={nextText}
+                icon={faAngleRight}
+                iconClasses={["fa-2x"]}
+                rowReverse={true}
+                buttonClasses={["next-button"]}
+                isDisabled={pagination.current === pagination.pages}
+                callback={() => {
+                  pagination.handlePageChange(++pagination.current);
+                }}
+              />
+            </div>
           </td>
         </tr>
       </tfoot>

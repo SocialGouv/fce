@@ -4,9 +4,10 @@ import _get from "lodash.get";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
+import Table from "../../SharedComponents/Table";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
-import { formatNumber } from "../../../../../helpers/utils";
+import { formatNumber, formatSiret } from "../../../../../helpers/utils";
 
 const ActivitePartielle = ({
   enterprise: { activite_partielle, etablissements }
@@ -38,11 +39,11 @@ const ActivitePartielle = ({
       />
       {hasActivitePartielle && (
         <>
-          <table className="table is-hoverable">
+          <Table>
             <thead>
               <tr>
                 <th className="th">SIRET</th>
-                <th className="th table__center-cell">État</th>
+                <th className="th table-cell--center-cell">État</th>
                 <th className="th">Catégorie établissement</th>
                 <th className="th">Nb total d{"'"}heures autorisées</th>
                 <th className="th">Nb total d{"'"}heures consommées</th>
@@ -66,8 +67,10 @@ const ActivitePartielle = ({
 
                   return (
                     <tr key={siret}>
-                      <td>{siret}</td>
-                      <td className="table__center-cell">
+                      <td className="table-cell--nowrap">
+                        {formatSiret(siret)}
+                      </td>
+                      <td className="table-cell--center-cell">
                         {etat && <State state={etat} />}
                       </td>
                       <td>{categorie}</td>
@@ -78,7 +81,7 @@ const ActivitePartielle = ({
                         {formatNumber(Math.round(nbHeuresConsommees))}
                       </td>
                       <td>{<Value value={date} />}</td>
-                      <td className="has-text-centered">
+                      <td className="see-details">
                         <SeeDetailsLink
                           link={`/establishment/${siret}/#muteco`}
                         />
@@ -109,7 +112,7 @@ const ActivitePartielle = ({
                 </tr>
               </tfoot>
             )}
-          </table>
+          </Table>
         </>
       )}
     </Subcategory>

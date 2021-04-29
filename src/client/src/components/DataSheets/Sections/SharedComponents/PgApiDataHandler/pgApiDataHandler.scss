@@ -1,0 +1,12 @@
+@import "../../../../App/variables";
+
+.pg-api-data-handler {
+    &__message {
+        margin-top: $spacing-4;
+        text-align: center;
+
+        &--error {
+            color: $danger;
+        }
+    }
+}

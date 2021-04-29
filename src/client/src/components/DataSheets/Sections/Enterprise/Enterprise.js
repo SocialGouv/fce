@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { faPrint } from "@fortawesome/pro-solid-svg-icons";
+import { useLocation } from "react-router-dom";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
 import Header from "./Header";
@@ -11,64 +10,63 @@ import Muteco from "./Muteco";
 import Direccte from "./Direccte";
 import Helps from "./Helps";
 import QuickAccess from "../SharedComponents/QuickAccess";
-import Button from "../../../shared/Button";
+import PrintSection from "../SharedComponents/PrintSection";
 import UsersFeedback from "../../../../containers/UsersFeedback";
-import { useScrollToLocationHash } from "../../../../helpers/hooks";
+import Unsubscribe from "../../../../containers/Unsubscribe";
+import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 
-const Enterprise = ({ enterprise, headOffice, establishments, location }) => {
-  useScrollToLocationHash({ location, offset: 50 });
+import "../../dataSheets.scss";
+
+const Enterprise = ({ enterprise, headOffice, establishments }) => {
+  const location = useLocation();
+  useScrollToLocationHash({ location });
 
   return (
-    <section className="data-sheet container">
-      <div className="data-sheet__print-section w-100">
-        <Button
-          value="Imprimer"
-          buttonClasses={["is-grey"]}
-          icon={faPrint}
-          callback={() => window.print()}
-        />
-      </div>
-      <div className="columns print-wrapper">
-        <div className="column is-3 aside-box is-hidden-touch">
-          <Sidebar
-            enterprise={enterprise}
-            headOffice={headOffice}
-            establishments={establishments}
-          />
-        </div>
-        <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
-          <Header enterprise={enterprise} />
-          <div className="data-sheet__main-container">
-            <QuickAccess
-              anchors={[
-                { label: "Informations légales", link: "infos" },
-                { label: "Visites et contrôles", link: "direccte" },
-                { label: "Relation travail", link: "relationship" },
-                {
-                  label: "Mutations économiques",
-                  link: "muteco"
-                },
-                { label: "Aides et agréments", link: "helps" }
-              ]}
+    <div>
+      <section className="data-sheet container is-fullhd">
+        <PrintSection />
+        <div className="columns">
+          <div className="column is-3 aside-box is-hidden-touch">
+            <Sidebar
+              enterprise={enterprise}
+              headOffice={headOffice}
+              establishments={establishments}
             />
-            <Infos enterprise={enterprise} headOffice={headOffice} />
-            <Direccte enterprise={enterprise} />
-            <EnterpriseRelationship enterprise={enterprise} />
-            <Muteco enterprise={enterprise} />
-            <Helps enterprise={enterprise} />
           </div>
-          <UsersFeedback fullWidth />
+          <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
+            <Header enterprise={enterprise} />
+            <div className="data-sheet__main-container">
+              <QuickAccess
+                anchors={[
+                  { label: "Informations légales", link: "infos" },
+                  { label: "Visites et contrôles", link: "direccte" },
+                  { label: "Relation travail", link: "relationship" },
+                  {
+                    label: "Mutations économiques",
+                    link: "muteco"
+                  },
+                  { label: "Aides et agréments", link: "helps" }
+                ]}
+              />
+              <Infos enterprise={enterprise} headOffice={headOffice} />
+              <Direccte enterprise={enterprise} />
+              <EnterpriseRelationship enterprise={enterprise} />
+              <Muteco enterprise={enterprise} />
+              <Helps enterprise={enterprise} />
+            </div>
+            <UsersFeedback fullWidth />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <Unsubscribe />
+    </div>
   );
 };
 
 Enterprise.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired
+  headOffice: PropTypes.object.isRequired
 };
 
-export default withRouter(withLoading(Enterprise));
+export default withLoading(Enterprise);

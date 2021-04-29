@@ -2,24 +2,24 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter, Redirect } from "react-router-dom";
-import Value from "../../../../shared/Value";
+import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  setSearchTerm,
-  setSearchFilters,
-  resetSearch
-} from "../../../../../services/Store/actions";
 import {
   faArrowRight,
   faSquare,
   faCircle
 } from "@fortawesome/pro-solid-svg-icons";
+import Value from "../../../../shared/Value";
+import {
+  setSearchTerm,
+  setSearchFilters,
+  resetSearch
+} from "../../../../../services/Store/actions";
 import InfoBox from "../../../../shared/InfoBox";
 import Button from "../../../../shared/Button";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
+import { formatSiren } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
-
-import "./enterpriseHeader.scss";
 
 const EnterpriseHeader = ({
   enterprise,
@@ -43,30 +43,24 @@ const EnterpriseHeader = ({
       {isRedirectedToHeadOffice && (
         <Redirect to={`/establishment/${enterprise.siret_siege_social}`} />
       )}
-      <section id="header" className="enterprise-header w-100 mb-4">
-        <h1 className="mb-4 is-capitalized has-text-weight-bold is-size-3">
+      <section id="header" className="data-sheet-header">
+        <Helmet>
+          <title>FCE - entreprise {getEnterpriseName(enterprise) || ""}</title>
+        </Helmet>
+
+        <h1 className="data-sheet-header__title">
           <Value value={getEnterpriseName(enterprise) || null} empty=" " />
         </h1>
-        <div className="columns">
-          <InfoBox
-            value="Entreprise"
-            infoBoxClasses={[
-              "has-text-weight-bold",
-              "has-text-roboto",
-              "is-size-6"
-            ]}
-          />
-        </div>
-        <div className="columns is-vcentered w-100">
-          <div className="column is-4">
-            <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
-              SIREN :{" "}
-            </span>
-            <span className="is-size-6 has-text-roboto has-text-weight-semibold has-text-grey-dark">
-              <Value value={enterprise.siren} empty="" />
+        <InfoBox value="Entreprise" />
+
+        <div className="columns is-vcentered">
+          <div className="column is-4 data-sheet-header__siren">
+            <span>SIREN : </span>
+            <span>
+              <Value value={formatSiren(enterprise.siren)} empty="" />
             </span>
           </div>
-          <div className="column is-8">
+          <div className="column is-8 data-sheet-header__enterprise-button">
             <Button
               value="Voir le siège social"
               icon={faArrowRight}
@@ -78,16 +72,16 @@ const EnterpriseHeader = ({
           </div>
         </div>
 
-        <div className="columns is-vcentered w-100">
+        <div className="columns is-vcentered">
           <div className="column is-4">
-            <div className="enterprise-header__status">
-              <div className="active-item-value">
+            <div className="data-sheet-header__status">
+              <div>
                 <FontAwesomeIcon
                   icon={isActiveEnterprise ? faCircle : faSquare}
-                  className={`mr-2 ${stateClass}`}
+                  className={`data-sheet-header__status-icon ${stateClass}`}
                 />
               </div>
-              <div className="is-size-6 has-text-segoe has-text-grey-dark">
+              <div className="has-text-segoe">
                 {isActiveEnterprise ? (
                   <span>
                     Ouvert depuis le{" "}
@@ -109,11 +103,11 @@ const EnterpriseHeader = ({
             </div>
           </div>
 
-          <div className="column is-8">
+          <div className="column is-8 data-sheet-header__enterprise-button">
             <Button
               value="Voir tous les établissements"
               icon={faArrowRight}
-              className="button is-secondary is-outlined has-text-weight-bold"
+              buttonClasses={["is-secondary", "is-outlined"]}
               onClick={() => {
                 resetSearch();
                 setSearchTerm(enterprise.siren);
@@ -122,8 +116,9 @@ const EnterpriseHeader = ({
             />
           </div>
         </div>
-        <div className="columns w-100">
-          <span className="column is-size-6">
+
+        <div className="columns data-sheet-header__enterprise-external-link">
+          <span className="column">
             Voir sur{" "}
             <a
               className="is-link"

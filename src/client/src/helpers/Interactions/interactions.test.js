@@ -308,40 +308,6 @@ test("get the last interaction of each establishment", () => {
 });
 
 const sampleEnterprise = {
-  etablissements: [
-    {
-      siret: "34326262205742",
-      etat_etablissement: "A",
-      adresse_components: {
-        code_postal: "31000",
-        localite: "TOULOUSE"
-      }
-    },
-    {
-      siret: "34326262206666",
-      etat_etablissement: "A",
-      adresse_components: {
-        code_postal: "32000",
-        localite: "AUCH"
-      }
-    },
-    {
-      siret: "34326262207777",
-      etat_etablissement: "F",
-      adresse_components: {
-        code_postal: "64000",
-        localite: "BAYONNE"
-      }
-    },
-    {
-      siret: "34326262208888",
-      etat_etablissement: "A",
-      adresse_components: {
-        code_postal: "81000",
-        localite: "ALBI"
-      }
-    }
-  ],
   interactions_C: [
     {
       siret: "34326262205742",
@@ -350,7 +316,14 @@ const sampleEnterprise = {
       type: null,
       date: "2020-03-30",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "A",
+        adresse_composant: {
+          code_postal: "31000",
+          localite: "TOULOUSE"
+        }
+      }
     },
     {
       siret: "34326262205742",
@@ -359,7 +332,14 @@ const sampleEnterprise = {
       type: null,
       date: "2018-12-03",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "A",
+        adresse_composant: {
+          code_postal: "31000",
+          localite: "TOULOUSE"
+        }
+      }
     },
     {
       siret: "34326262206666",
@@ -368,7 +348,14 @@ const sampleEnterprise = {
       type: null,
       date: "2020-03-30",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "A",
+        adresse_composant: {
+          code_postal: "32000",
+          localite: "AUCH"
+        }
+      }
     },
     {
       siret: "34326262207777",
@@ -377,7 +364,14 @@ const sampleEnterprise = {
       type: null,
       date: "2020-01-30",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "F",
+        adresse_composant: {
+          code_postal: "64000",
+          localite: "BAYONNE"
+        }
+      }
     }
   ],
   interactions_T: [
@@ -388,7 +382,14 @@ const sampleEnterprise = {
       type: null,
       date: "2018-03-28",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "A",
+        adresse_composant: {
+          code_postal: "31000",
+          localite: "TOULOUSE"
+        }
+      }
     },
     {
       siret: "34326262205742",
@@ -397,7 +398,14 @@ const sampleEnterprise = {
       type: null,
       date: "2019-03-28",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "A",
+        adresse_composant: {
+          code_postal: "31000",
+          localite: "TOULOUSE"
+        }
+      }
     },
     {
       siret: "34326262206666",
@@ -406,7 +414,14 @@ const sampleEnterprise = {
       type: null,
       date: "2019-03-28",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "A",
+        adresse_composant: {
+          code_postal: "32000",
+          localite: "AUCH"
+        }
+      }
     },
     {
       siret: "34326262208888",
@@ -415,7 +430,14 @@ const sampleEnterprise = {
       type: null,
       date: "2020-03-28",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "A",
+        adresse_composant: {
+          code_postal: "81000",
+          localite: "ALBI"
+        }
+      }
     }
   ],
   interactions_3E_SRC: [
@@ -426,7 +448,14 @@ const sampleEnterprise = {
       type: null,
       date: "2019-11-15",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "A",
+        adresse_composant: {
+          code_postal: "31000",
+          localite: "TOULOUSE"
+        }
+      }
     },
     {
       siret: "34326262205742",
@@ -435,7 +464,14 @@ const sampleEnterprise = {
       type: null,
       date: "2020-02-01",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "A",
+        adresse_composant: {
+          code_postal: "31000",
+          localite: "TOULOUSE"
+        }
+      }
     },
     {
       siret: "34326262207777",
@@ -444,7 +480,14 @@ const sampleEnterprise = {
       type: null,
       date: "2019-11-15",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "F",
+        adresse_composant: {
+          code_postal: "64000",
+          localite: "BAYONNE"
+        }
+      }
     },
     {
       siret: "34326262208888",
@@ -453,7 +496,14 @@ const sampleEnterprise = {
       type: null,
       date: "2019-03-04",
       agent: null,
-      note: null
+      note: null,
+      etablissement: {
+        etat_etablissement: "A",
+        adresse_composant: {
+          code_postal: "81000",
+          localite: "ALBI"
+        }
+      }
     }
   ]
 };

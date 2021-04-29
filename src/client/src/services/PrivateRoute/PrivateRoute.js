@@ -1,20 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, useHistory } from "react-router-dom";
+
+import Layout from "../../components/App/Layout";
 import Auth from "../Auth";
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, location, ...rest }) => {
+  let history = useHistory();
+
+  async function getTempAuthAndRedirect(credential, location) {
+    await Auth.tempLogin(credential)
+      .then(() => {
+        history.push(location.pathname);
+      })
+      .catch(() => {
+        history.push("/login");
+      });
+  }
+
   const checkAuthorization = () => {
-    if (!Auth.isLogged()) {
+    const credential = new URLSearchParams(location.search).get("credential");
+
+    if (Auth.isLogged()) {
+      return {
+        auth: true
+      };
+    } else if (credential) {
+      getTempAuthAndRedirect(credential, location);
       return {
         auth: false,
-        redirect: "/login"
+        redirect: location.pathname
+      };
+    } else {
+      return {
+        auth: false,
+        redirect: "/home"
       };
     }
-
-    return {
-      auth: true
-    };
   };
 
   const authorization = checkAuthorization();
@@ -24,7 +46,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props => {
         return authorization.auth ? (
-          <Component {...props} />
+          <Layout>
+            <Component {...props} />
+          </Layout>
         ) : (
           <Redirect
             to={{
@@ -40,7 +64,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 PrivateRoute.propTypes = {
   component: PropTypes.elementType,
-  location: PropTypes.object
+  location: PropTypes.object,
+  history: PropTypes.shape({
+    push: PropTypes.func
+  })
 };
 
 export default PrivateRoute;

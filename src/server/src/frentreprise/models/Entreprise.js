@@ -62,9 +62,6 @@ export default class DireccteEntreprise extends Entreprise {
       return ets.export();
     });
 
-    return {
-      ...data,
-      _raw: this.getData(),
-    };
+    return data;
   }
 }

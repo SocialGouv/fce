@@ -1,15 +1,13 @@
 @import "fonts";
 @import "variables";
-@import "mixins";
 @import "placeholders";
-@import "globals";
+@import "helpers";
 @import "animations";
 @import "typography";
 @import "pages";
 @import "~bulma/bulma";
 @import "~bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio";
-@import "Header/header";
-@import "../DataSheets/dataSheets";
+@import "print";
 
 html {
     min-height: 100%;
@@ -17,9 +15,10 @@ html {
 }
 
 body {
-    height: 100%;
     position: relative;
+    height: 100%;
     margin: 0;
+    color: $text-grey-dark;
     background-color: $app-container-background;
 }
 
@@ -29,10 +28,6 @@ a {
     &:hover {
         text-decoration: none;
     }
-}
-
-.print-wrapper {
-    @extend %print-block;
 }
 
 .app {
@@ -45,13 +40,32 @@ a {
         display: flex;
         flex-direction: column;
 
+        &.ie11 {
+            min-height: calc(100vh - 320px);
+        }
+
         @media print {
-            padding-top: 1rem;
+            padding-top: $spacing-4;
         }
 
         .bg-info a {
             color: white;
             text-decoration: underline;
+        }
+    }
+}
+
+.table {
+    @extend .is-striped;
+
+    td.table-cell, th.table-cell {
+        &--center-cell {
+            text-align: center;
+        }
+
+        &--nowrap,
+        &--nowrap a {
+            white-space: nowrap;
         }
     }
 }
@@ -65,12 +79,7 @@ a {
 }
 
 .title {
-    margin: 0 0 1rem;
-}
-
-.button__icon {
-    font-size: 1rem;
-    margin-right: 0.5rem;
+    @extend .mb-4;
 }
 
 .icon {

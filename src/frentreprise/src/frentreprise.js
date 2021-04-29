@@ -1,9 +1,10 @@
 import * as Sentry from "@sentry/node";
 import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
+import NotFoundSourceError from "./Errors/NotFoundSourceError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
-import SirenePG from "./DataSources/SirenePG";
-
+import ApiGouvAssociations from "./DataSources/ApiGouvAssociations";
+import PG from "./DataSources/PG";
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";
 import { Etablissement } from "./Entreprise";
@@ -16,6 +17,8 @@ const _ = {
   isValidDataSources: Symbol("_isValidDataSources"),
 };
 
+const DEBUG = false;
+
 class frentreprise {
   constructor() {
     this.EntrepriseModel = Entreprise;
@@ -27,17 +30,15 @@ class frentreprise {
       source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/"),
     });
     this.addDataSource({
-      name: "SirenePG",
-      priority: 100, // higher prevail
-      source: new SirenePG(),
-      pagination: {
-        itemsByPage: 25,
-      },
+      name: "ApiGouvAssociations",
+      priority: 80, // higher prevail
+      source: new ApiGouvAssociations("https://entreprise.api.gouv.fr:443/v2/"),
     });
-  }
-
-  setDb(db) {
-    this.db = db;
+    this.addDataSource({
+      name: "PG",
+      priority: 100, // higher prevail
+      source: new PG(),
+    });
   }
 
   initSentry(sentryUrlKey) {
@@ -46,7 +47,7 @@ class frentreprise {
     });
   }
 
-  async getEntreprise(SiretOrSiren) {
+  async getEntreprise(SiretOrSiren, dataSourceName) {
     SiretOrSiren = SiretOrSiren + "";
 
     const gotSIREN = Validator.validateSIREN(SiretOrSiren);
@@ -65,19 +66,23 @@ class frentreprise {
       this.EtablissementModel
     );
 
-    await this[_.askDataSource]("getSIREN", SIREN, null, (result) => {
-      console.log(
-        `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
-      );
+    await this[_.askDataSource]("getSIREN", SIREN, dataSourceName).then(
+      (result) => {
+        if (DEBUG) {
+          console.log(
+            `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
+          );
+        }
 
-      entreprise.updateData({
-        ...result.data,
-        _dataSources: {
-          ...entreprise._dataSources,
-          [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
-        },
-      });
-    });
+        entreprise.updateData({
+          ...result.data,
+          _dataSources: {
+            ...entreprise._dataSources,
+            [result.source.name]: result.success,
+          },
+        });
+      }
+    );
 
     const SIRET = gotSIRET ? SiretOrSiren : "" + entreprise.siret_siege_social;
 
@@ -94,23 +99,22 @@ class frentreprise {
           return this[_.askDataSource](
             "getSIRET",
             lookSIRET,
-            null,
-            (result) => {
-              console.log(
-                `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
-              );
+            dataSourceName
+          ).then((result) => {
+            console.log(
+              `Using response from dataSource named ${result.source.name} with priority : ${result.source.priority}`
+            );
 
-              const ets = entreprise.getEtablissement(lookSIRET);
+            const ets = entreprise.getEtablissement(lookSIRET);
 
-              ets.updateData({
-                ...result.data,
-                _dataSources: {
-                  ...ets._dataSources,
-                  [result.source.name]: !!Object.keys(result.data).length, // Add current data source (true = success)
-                },
-              });
-            }
-          );
+            ets.updateData({
+              ...result.data,
+              _dataSources: {
+                ...ets._dataSources,
+                [result.source.name]: result.success, // Add current data source (true = success)
+              },
+            });
+          });
         }
       })
     );
@@ -126,76 +130,6 @@ class frentreprise {
     });
 
     return entreprise;
-  }
-
-  async search(terms, page = 1) {
-    const results = {};
-    let hasError = false;
-    let pagination = null;
-
-    await this[_.askDataSource]("search", terms, page, (searchResult) => {
-      const { data: source_results } = searchResult;
-      pagination = searchResult.pagination;
-
-      if (source_results === false) {
-        console.log(
-          `Source named ${searchResult.source.name} doesn't support search. (it returned false)`
-        );
-      } else if (!Array.isArray(source_results)) {
-        if (
-          typeof source_results === "object" &&
-          Object.prototype.hasOwnProperty.call(source_results, "error") &&
-          source_results.error === true
-        ) {
-          hasError = true;
-        }
-        console.error(
-          `Source named ${searchResult.source.name} returned invalid data for search, array expected. Received:`,
-          source_results
-        );
-      } else {
-        console.log(
-          `Using response from dataSource named ${searchResult.source.name} with priority : ${searchResult.source.priority}`
-        );
-
-        source_results.forEach((result) => {
-          const SIREN =
-            (Validator.validateSIREN(result.siren) && result.siren) ||
-            result.siret.substr(0, 9);
-          const SIRET = Validator.validateSIRET(result.siret) && result.siret;
-
-          if (Validator.validateSIREN(SIREN)) {
-            if (!results[SIREN]) {
-              results[SIREN] = new this.EntrepriseModel(
-                {
-                  siren: SIREN,
-                  _dataSources: {},
-                },
-                this.EtablissementModel
-              );
-            }
-
-            if (SIRET) {
-              results[SIREN].getEtablissement(SIRET).updateData({
-                ...cleanObject(result),
-                _dataSources: {
-                  ...results[SIREN].getEtablissement(SIRET)._dataSources,
-                  [searchResult.source.name]: true,
-                },
-              });
-            } else {
-              results[SIREN].updateData(cleanObject(result));
-            }
-          }
-        });
-      }
-    });
-
-    let resultsValues = Object.values(results);
-
-    return !resultsValues.length && hasError
-      ? false
-      : { items: resultsValues, pagination };
   }
 
   getDataSources() {
@@ -224,65 +158,42 @@ class frentreprise {
     return a > b ? 1 : a < b ? -1 : 0;
   }
 
-  [_.askDataSource](method, request, page, forEach = (result) => result) {
-    return Promise.all(
-      this.getDataSources().map((dataSource) => {
+  [_.askDataSource](method, request, dataSourceName) {
+    const dataSource = this.getDataSource(dataSourceName);
+
+    if (!dataSource) {
+      throw new NotFoundSourceError(dataSourceName);
+    }
+
+    return dataSource.source[method](request).then((response) => {
+      const data =
+        typeof response === "object" && response.items
+          ? response.items
+          : response;
+
+      const cleanedData =
+        typeof data === "object"
+          ? Array.isArray(data)
+            ? data.map(cleanObject)
+            : cleanObject(data)
+          : data;
+      const success = dataSource.source[`${method}Check`](cleanedData);
+
+      if (DEBUG) {
         console.log(
-          `Asking [${method}] to dataSource named ${
+          `Got response for [${method}] from dataSource named ${
             dataSource.name
-          } with request : ${JSON.stringify(request)}`
+          } about request : ${JSON.stringify(request)}, status : ${
+            success ? "Success" : "Failed"
+          }`
         );
+      }
 
-        const pagination =
-          page && dataSource.pagination
-            ? {
-                ...dataSource.pagination,
-                page,
-              }
-            : null;
-
-        if (this.db) {
-          dataSource.source.setDb(this.db);
-        }
-
-        return dataSource.source[method](request, pagination).then(
-          (response) => {
-            const data =
-              typeof response === "object" && response.items
-                ? response.items
-                : response;
-            const paginationResponse =
-              pagination && typeof response === "object" && response.pagination
-                ? response.pagination
-                : {};
-
-            const cleanedData =
-              typeof data === "object"
-                ? Array.isArray(data)
-                  ? data.map(cleanObject)
-                  : cleanObject(data)
-                : data;
-            console.log(
-              `Got response for [${method}] from dataSource named ${
-                dataSource.name
-              } about request : ${JSON.stringify(request)}`
-            );
-
-            return Promise.resolve({
-              source: dataSource,
-              data: cleanedData,
-              pagination: paginationResponse,
-            });
-          }
-        );
-      })
-    ).then((results) => {
-      results
-        .sort(
-          (a, b) =>
-            (a.source && b.source && this[_.compareDataSource](a, b)) || 0
-        )
-        .map(forEach);
+      return {
+        data: cleanedData,
+        source: dataSource,
+        success,
+      };
     });
   }
 

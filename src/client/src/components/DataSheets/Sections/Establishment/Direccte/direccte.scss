@@ -1,0 +1,22 @@
+@import "../../../../App/variables";
+
+.data-sheet {
+    .direccte-interactions-establishment {
+        &__title {
+            border-bottom: none;
+        }
+
+        &__table {
+            margin-top: 0;
+
+            th:first-child,
+            td:first-child {
+                text-align: right;
+            }
+        }
+
+        &__control-nature {
+            font-size: $font-size-small;
+        }
+    }
+}

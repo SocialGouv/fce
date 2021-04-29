@@ -1,40 +1,49 @@
 @import "./../../../../App/variables";
+@import "./../../../../App/placeholders";
 
-.dashboard {
+.dashboard .column {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: flex-start;
 
-    &-item {
-        margin-right: 2rem;
+    .dashboard-item {
+        margin-right: $spacing-5;
         border: solid 1px $primary;
-        border-radius: 0.35rem;
-        padding: 0.75rem;
-        width: 8rem;
-        height: 8rem;
+        border-radius: $border-radius-2;
+        padding: $spacing-3;
+        width: 8.6rem;
+        height: 8.6rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
 
-        &--header {
-            padding: 0.25rem;
-            border-bottom: solid 2px $secondary;
+        &__header {
+            margin-bottom: $spacing-3;
+            padding: $spacing-2;
+            border-bottom: solid 2px $primary;
             display: flex;
+            justify-content: center;
 
             &-icon {
                 color: $primary;
                 width: 1rem;
-                margin-right: 0.5rem;
+                margin-right: $spacing-2;
+            }
+
+            &-label {
+                font-weight: bold;
             }
         }
 
-        &--small-text {
-            font-size: 0.9rem;
-        }
-
-        &-data {
+        &__data {
+            @extend %flex-center;
             text-align: center;
             flex: 1;
+
+            &--small-text {
+                font-size: 0.9rem;
+            }
         }
     }
 }

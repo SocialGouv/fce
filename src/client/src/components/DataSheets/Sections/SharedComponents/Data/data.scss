@@ -1,14 +1,15 @@
 @import "./../../../../App/variables";
+@import "./../../../../App/placeholders";
 
 .data {
     display: flex;
-    border-bottom: solid 1px $grey-geyser;
+    border-bottom: $border-grey-light;
 
     &.columns {
         margin: 0;
 
         &:last-child {
-            margin-bottom: 2rem;
+            margin-bottom: $spacing-6;
         }
 
         &:not(:last-child) {
@@ -16,19 +17,22 @@
         }
     }
 
-    & .dt {
+    & > .column {
         padding-left: 0;
+    }
+
+    & .dt {
+        @extend %has-first-letter-uppercase;
     }
 
     & .dd {
         display: flex;
-        align-items: center;
         justify-content: space-between;
         padding-right: 0;
     }
 
-    &+.table,
-    .table+& {
-        margin-top: 2rem;
+    & + .table,
+    .table + & {
+        margin-top: $spacing-5;
     }
 }

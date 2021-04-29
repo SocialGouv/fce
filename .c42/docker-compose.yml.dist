@@ -12,9 +12,27 @@ services:
       - ./src/client/:/project
       - .npm:/.npm
       - $SSH_AUTH_SOCK:/ssh-agent
+    command: yarn start
+    tty: true
     labels:
       - traefik.frontend.rule=Host:fce.test
       - traefik.port=3000
+
+  storybook:
+    build: .c42/docker/front
+    networks:
+      - traefik
+      - default
+    ports:
+      - 6006
+    volumes:
+      - ./src/client/:/project
+      - .npm:/.npm
+      - $SSH_AUTH_SOCK:/ssh-agent
+    command: yarn storybook --ci
+    labels:
+      - traefik.frontend.rule=Host:story.fce.test
+      - traefik.port=6006
 
   server:
     build: .c42/docker/server
@@ -23,6 +41,7 @@ services:
       - default
     ports:
       - 80
+      - 9229
     links:
       - db
       - mail
@@ -51,7 +70,7 @@ services:
       - traefik
       - default
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - .c42/tmp/pgdata:/var/lib/postgresql/data
       - .c42/share/mntDataExport/:/mnt/data/export
       - .c42/share/tmp/:/tmp
     environment:
@@ -152,11 +171,5 @@ networks:
     external: true
 
 volumes:
-  pgdata:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: .c42/tmp/pgdata
   dbmatomo:
   matomo:

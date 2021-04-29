@@ -9,28 +9,30 @@ const SearchBar = ({ label, searchTerm, setSearchTerm }) => {
       <label htmlFor="term" className="label">
         {label}
       </label>
-      <div className="search-form__search-bar">
-        <input
-          type="text"
-          name="q"
-          id="term"
-          className="input is-medium"
-          onChange={e => {
-            setSearchTerm(e.target.value);
-          }}
-          value={searchTerm}
-        />
-        {searchTerm.length > 0 && (
-          <button
-            type="button"
-            className="button is-text"
-            onClick={() => {
-              setSearchTerm("");
+      <div className="search-form__search">
+        <div className="search-form__search-bar">
+          <input
+            type="text"
+            name="q"
+            id="term"
+            className="input is-medium"
+            onChange={e => {
+              setSearchTerm(e.target.value);
             }}
-          >
-            <FontAwesomeIcon icon={faTimes} />
-          </button>
-        )}
+            value={searchTerm}
+          />
+          {searchTerm.length > 0 && (
+            <button
+              type="button"
+              className="button is-text"
+              onClick={() => {
+                setSearchTerm("");
+              }}
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

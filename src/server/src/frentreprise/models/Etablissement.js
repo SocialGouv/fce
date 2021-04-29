@@ -13,7 +13,7 @@ class DireccteEtablissement extends Etablissement {
           "enseigne",
           "categorie_etablissement",
           "adresse",
-          "adresse_components",
+          "adresse_composant",
           "departement",
           "region",
           "code_region",
@@ -75,7 +75,6 @@ class DireccteEtablissement extends Etablissement {
         ],
         null
       ),
-      _raw: this.getData(),
     };
   }
 }

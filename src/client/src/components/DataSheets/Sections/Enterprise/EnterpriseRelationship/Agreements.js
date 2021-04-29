@@ -1,33 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
-import { sortAgreements } from "../../../../../helpers/Relationships";
+import Table from "../../SharedComponents/Table";
+import { formatEnterpriseAgreements } from "../../../../../helpers/Relationships";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { toI18nDate } from "../../../../../helpers/Date";
-import { formatNumber } from "../../../../../helpers/utils";
+import { formatNumber, formatSiret } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 
 import "./agreements.scss";
 
-export const Agreements = ({
-  enterprise,
-  enterprise: { accords, etablissements }
-}) => {
-  const nbAccords =
-    accords &&
-    Object.values(accords).reduce(
-      (total, { count: totalEtab }) => total + totalEtab,
-      0
-    );
-
+const Agreements = ({ enterprise, agreements }) => {
+  const nbAccords = agreements.totalCount;
   const raisonSociale = getEnterpriseName(enterprise);
-
-  const sortedAgreements = accords && sortAgreements(accords, etablissements);
+  const formatedAgreements = formatEnterpriseAgreements(agreements);
 
   return (
     <Subcategory subtitle="Accords d'entreprise" sourceSi="D@cccord">
@@ -39,11 +31,11 @@ export const Agreements = ({
       />
       {nbAccords > 0 && (
         <>
-          <table className="table is-hoverable enterprise-agreements">
+          <Table className="enterprise-agreements">
             <thead>
               <tr>
                 <th className="th">SIRET</th>
-                <th className="th table__center-cell">État</th>
+                <th className="th table-cell--center-cell">État</th>
                 <th className="th">Catégorie établissement</th>
                 <th className="th enterprise-agreements__count">
                   Nb accords déposés
@@ -55,20 +47,22 @@ export const Agreements = ({
               </tr>
             </thead>
             <tbody>
-              {sortedAgreements.map(
-                ({ siret, categorie, etat, date, totalEtab }) => {
+              {formatedAgreements.map(
+                ({ siret, category, state, count, lastSignatureDate }) => {
                   return (
                     <tr key={siret}>
-                      <td>{siret}</td>
-                      <td className="table__center-cell">
-                        {etat && <State state={etat} />}
+                      <td className="table-cell--nowrap">
+                        {formatSiret(siret)}
                       </td>
-                      <td>{categorie}</td>
+                      <td className="table-cell--center-cell">
+                        {state && <State state={state} />}
+                      </td>
+                      <td>{category}</td>
                       <td className="has-text-right">
-                        {totalEtab && formatNumber(totalEtab)}
+                        {count && formatNumber(count)}
                       </td>
-                      <td>{toI18nDate(date)}</td>
-                      <td className="has-text-centered">
+                      <td>{toI18nDate(lastSignatureDate)}</td>
+                      <td className="see-details">
                         <SeeDetailsLink
                           link={`/establishment/${siret}/#relation`}
                         />
@@ -78,11 +72,12 @@ export const Agreements = ({
                 }
               )}
             </tbody>
-          </table>
+          </Table>
 
           <a
             href={
-              Config.get("legifranceSearchUrl") + raisonSociale.toLowerCase()
+              Config.get("legifranceSearchUrl.accords") +
+              raisonSociale.toLowerCase()
             }
             target="_blank"
             rel="noreferrer noopener"
@@ -97,5 +92,14 @@ export const Agreements = ({
 };
 
 Agreements.propTypes = {
-  enterprise: PropTypes.object.isRequired
+  enterprise: PropTypes.object.isRequired,
+  agreements: PropTypes.object.isRequired
 };
+
+const mapStateToProps = state => {
+  return {
+    agreements: state.agreements
+  };
+};
+
+export default connect(mapStateToProps, null)(Agreements);

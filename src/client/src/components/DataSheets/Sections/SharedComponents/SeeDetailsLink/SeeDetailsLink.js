@@ -1,15 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/pro-solid-svg-icons";
 
+import "./seeDetailsLink.scss";
+
+const scrollWithOffset = el => {
+  const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+  const yOffset = -60;
+  window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
+};
+
 const SeeDetailsLink = ({ link, text = "Voir la fiche établissement" }) => {
   return (
-    <Link to={link}>
-      <FontAwesomeIcon icon={faEye} className="mr-2" />
-      <span>{text}</span>
-    </Link>
+    <div className="see-details-link">
+      <Link
+        to={link}
+        className="see-details-link__link"
+        scroll={el => scrollWithOffset(el)}
+      >
+        <FontAwesomeIcon icon={faEye} className="see-details-link__icon" />
+        <span>{text}</span>
+      </Link>
+    </div>
   );
 };
 

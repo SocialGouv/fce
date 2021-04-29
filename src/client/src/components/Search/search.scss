@@ -1,4 +1,12 @@
 @import "../App/variables";
+@import "../App/placeholders";
+
+%search-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: inherit;
+}
 
 .app-search {
     flex-grow: 1;
@@ -6,13 +14,25 @@
     flex-direction: column;
     justify-content: space-between;
 
-    &__container {
+    &__wrapper {
         background-color: $primary;
-        padding: 2rem 0;
         color: $light;
+
+        & .container {
+            padding: $padding-app-x;
+        }
     }
 
     .search-form {
+        .label {
+            height: $spacing-5;
+        }
+
+        &__search {
+            display: flex;
+            align-items: flex-start;
+        }
+
         &__search-bar {
             display: flex;
             align-items: center;
@@ -21,12 +41,14 @@
             color: $dark-grey;
             background-color: #fff;
             border: 1px solid #dbdbdb;
-            border-radius: 4px;
+            border-radius: $border-radius-1;
+
             @media not print {
                 box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
             }
 
             .input {
+                height: 3rem;
                 border: none;
                 box-shadow: none;
             }
@@ -43,56 +65,50 @@
                 }
             }
         }
+
+        &__toolbar {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &__buttons {
+            @extend %flex-center;
+            display: flex;
+            flex-direction: column;
+            margin-top: $spacing-5 + $spacing-4;
+
+            &--align-top {
+                justify-content: flex-start;
+            }
+
+            .action.button {
+                @extend %search-button;
+                border: 1px solid #fff;
+            }
+
+            > div {
+                width: 100%;
+            }
+        }
+
+        &__reset.button {
+            @extend %search-button;
+            font-weight: normal;
+            background: none;
+
+            &:hover {
+                font-weight: bold;
+            }
+        }
+
         .field {
             width: 100%;
-        }
-
-        .action {
-            width: 100%;
-        }
-
-        .columns {
-            align-items: center;
-        }
-
-        .buttons {
-            &__wrapper {
-                display: flex;
-
-                @media (min-width: 1216px) {
-                    justify-content: flex-end;
-                }
-            }
-
-            &__bloc {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-
-                .button {
-                    color: inherit;
-                    width: 12rem;
-                    display: flex;
-                    justify-content: center;
-
-                    &:first-of-type {
-                        border: 1px solid #fff;
-                        margin-bottom: 1rem;
-                    }
-
-                    &:last-of-type {
-                        font-weight: normal;
-                        background: none;
-                        &:hover {
-                            font-weight: bold;
-                        }
-                    }
-                }
-            }
+            margin-bottom: 0;
         }
 
         .filters__checkboxes {
-            margin-top: 0.5rem;
+            flex-grow: 1;
+            margin-top: $spacing-2;
 
             .filter-state {
                 display: flex;
@@ -110,8 +126,8 @@
             .label {
                 color: $white-smoke;
                 font-weight: bold;
-                margin-right: 1rem;
-                margin-bottom: 0.4rem;
+                margin-right: $spacing-4;
+                margin-bottom: $spacing-4;
 
                 &.label--state {
                     font-weight: normal;
@@ -120,7 +136,9 @@
         }
     }
 
-    /* react-accessible-accordion */
+    /* -------------------------------------- */
+    /* ----- react-accessible-accordion ----- */
+    /* -------------------------------------- */
 
     .accordion__heading {
         width: 12rem;
@@ -129,29 +147,31 @@
     .accordion__button {
         cursor: pointer;
         width: 100%;
-        padding-left: 0.2rem;
         text-decoration: underline;
         text-align: left;
         border: none;
+
         &:focus {
             outline: none;
 
             span {
-                outline: -webkit-focus-ring-color auto 1px;
+                box-shadow: 0 0 4px $white;
             }
         }
     }
 
     .accordion__button:before {
+        position: relative;
+        left: 2px;
         display: inline-block;
         content: "";
         height: 12px;
         width: 12px;
-        margin-right: 12px;
+        margin-right: $spacing-4;
         border-bottom: 2px solid currentColor;
         border-right: 2px solid currentColor;
         transform: rotate(45deg);
-        transition: transform 0.35s;
+        transition: transform $duration-2;
     }
 
     .accordion__button[aria-expanded="true"]::before,
@@ -160,13 +180,13 @@
     }
 
     .accordion__panel {
-        padding-top: 1rem;
-        animation: fadein 0.35s ease-in;
+        padding-top: $spacing-4;
+        animation: fadein $duration-2 ease-in;
     }
 
-    /* -------------------------------------------------- */
-    /* ---------------- Animation part ------------------ */
-    /* -------------------------------------------------- */
+    /* --------------------- */
+    /* ----- Animation ----- */
+    /* --------------------- */
 
     @keyframes fadein {
         0% {

@@ -8,6 +8,7 @@
     ansistrano_current_dir: "current"
     ansistrano_current_via: "symlink"
     ansistrano_deploy_via: "rsync"
+    ansistrano_keep_releases: 4
   roles:
     - { role: ansistrano.deploy }
   tasks:
@@ -28,6 +29,10 @@
         chdir: /home/factory/deployment/current/dist
     - name: Run migrations
       shell: docker-compose exec server ash -c "./node_modules/.bin/node-pg-migrate up --no-check-order"
+      args:
+        chdir: /home/factory/deployment/current/dist
+    - name: Rebuild frentreprise
+      shell: docker-compose exec server ash -c "cd /usr/src/app/frentreprise && npm run build"
       args:
         chdir: /home/factory/deployment/current/dist
 

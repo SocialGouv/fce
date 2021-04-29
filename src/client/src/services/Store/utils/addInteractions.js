@@ -1,6 +1,6 @@
 import Config from "../../Config";
 
-export default (entity, interactionsTerms = null) => {
+export default entity => {
   let interactions = [];
   let totalInteractions = {
     total: 0
@@ -11,10 +11,7 @@ export default (entity, interactionsTerms = null) => {
       const interactionsPole = entity[`interactions_${pole}`] || [];
       interactions = [...interactions, ...interactionsPole];
       totalInteractions[pole] = interactionsPole.length;
-
-      if (!interactionsTerms || interactionsTerms.includes(pole)) {
-        totalInteractions.total += interactionsPole.length;
-      }
+      totalInteractions.total += interactionsPole.length;
     } catch (e) {
       console.error(e);
       interactions[pole] = [];

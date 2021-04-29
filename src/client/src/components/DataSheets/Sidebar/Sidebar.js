@@ -115,7 +115,7 @@ const Sidebar = ({
                 <Button
                   value="Voir tous les établissements"
                   icon={faArrowRight}
-                  className="button is-secondary is-outlined has-text-weight-bold sidebar__view-all-button"
+                  className="button is-secondary is-outlined sidebar__view-all-button"
                   onClick={() => {
                     resetSearch();
                     setSearchTerm(enterprise.siren);

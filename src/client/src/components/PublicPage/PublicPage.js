@@ -27,7 +27,7 @@ const PublicPage = ({ pageData = null, isLoading, hasError }) => {
           <LoadSpinner />
         ) : (
           <>
-            <h1 className="title is-1">{pageData && pageData.titre}</h1>
+            <h1>{pageData && pageData.titre}</h1>
             <ReactMarkdown
               source={pageData && pageData.contenu}
               escapeHtml={false}

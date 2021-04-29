@@ -6,17 +6,6 @@ Le projet nécessite d'avoir un ssh agent. Vérifiez si la commande suivante ren
 `echo $SSH_AUTH_SOCK`
 
 Si ce n'est pas le cas, il faut mettre en place un ssh-agent sur votre shell.
-Voici une procédure rapide utilisant [ssh-find-agent](https://github.com/wwalker/ssh-find-agent):
-
-`sudo curl -o /etc/profile.d/ssh-find-agent.sh https://raw.githubusercontent.com/wwalker/ssh-find-agent/master/ssh-find-agent.sh`
-
-`sudo chmod a+x /etc/profile.d/ssh-find-agent.sh`
-
-`echo "ssh-find-agent -a || eval \$(ssh-agent) > /dev/null" >> ~/.bashrc`
-
-ou, si vous utilisez zsh :
-
-`echo "ssh-find-agent -a || eval \$(ssh-agent) > /dev/null" >> ~/.zshrc`
 
 ## Installation (projet)
 
@@ -133,6 +122,13 @@ docker-compose exec server bash -c "yarn shell DownloadFile --id interactions_po
 docker-compose exec server bash -c "yarn shell IngestFile --id interactions_pole_t"
 ```
 
+Pour l'import des PSI il faut préciser l'année de la donnée avec l'argument `--year YYYY` car on ne peut pas se baser sur les titres de colonne ou le nom du fichier. Cette donnée est en phase de test, le nom et le format de fichier pourraient changer. Le script d'import pourra être modifié si le format est validé.
+
+```bash
+docker-compose exec server bash -c "yarn shell IngestFile --id psi_siren --year 2020"
+docker-compose exec server bash -c "yarn shell IngestFile --id psi_siret --year 2020"
+```
+
 ### Preprod et prod
 
 ```bash
@@ -140,4 +136,3 @@ docker exec server ash -c "NODE_ENV=production node ./shell/run.js DownloadFile 
 
 docker exec server ash -c "NODE_ENV=production node ./shell/run.js IngestFile --id interactions_pole_t"
 ```
-

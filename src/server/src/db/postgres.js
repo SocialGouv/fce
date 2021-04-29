@@ -9,18 +9,21 @@ pool.on("error", (err, client) => {
 });
 
 export default {
-  query: (text, params = []) => {
+  query: (text, params = [], logQuery = true) => {
     const start = Date.now();
     return pool
       .query(text, params)
-      .then(res => {
-        const duration = Date.now() - start;
-        console.log("executed query", { text, duration, rows: res.rowCount });
+      .then((res) => {
+        if (logQuery) {
+          const duration = Date.now() - start;
+          console.log("executed query", { text, duration, rows: res.rowCount });
+        }
+
         return res;
       })
-      .catch(e => console.error(e.stack));
+      .catch((e) => console.error(e.stack));
   },
-  getClient: callback => {
+  getClient: (callback) => {
     pool.connect((err, client, done) => {
       const query = client.query.bind(client);
 
@@ -38,7 +41,7 @@ export default {
         );
       }, 5000);
 
-      const release = err => {
+      const release = (err) => {
         // call the actual 'done' method, returning this client to the pool
         done(err);
 
@@ -51,5 +54,5 @@ export default {
 
       callback(err, client, done);
     });
-  }
+  },
 };

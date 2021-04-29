@@ -3,13 +3,12 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import Config from "../../services/Config";
 import { isActiveEstablishment } from "../../helpers/Search";
-import { joinNoFalsy } from "../../helpers/utils";
+import { formatSiret, joinNoFalsy } from "../../helpers/utils";
 import Value from "../shared/Value";
-import GenerateXlxs from "./Xlsx/GenerateXlsx";
 import SearchAwesomeTable from "../SearchAwesomeTable";
 import TableCellState from "../SearchAwesomeTable/TableCellState";
 import Button from "../shared/Button";
-import { faFileExcel } from "@fortawesome/pro-solid-svg-icons";
+import { faFileExcel, faSpinnerThird } from "@fortawesome/pro-solid-svg-icons";
 
 import "./searchResults.scss";
 
@@ -18,21 +17,17 @@ const SearchResults = ({
   pagination,
   isLoading,
   sort,
-  currentSort
+  currentSort,
+  generateXlsx,
+  downloadXlsxStatus
 }) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
   };
 
-  function generateXlxs() {
-    if (results && results.length) {
-      return new GenerateXlxs(pagination).download();
-    }
-  }
-
   return (
-    <div className="app-search-results mx-6">
+    <div className="app-search-results container is-fullhd">
       {pagination.items > 0 && (
         <div className="columns">
           <div className="column is-8 is-offset-2">
@@ -42,136 +37,145 @@ const SearchResults = ({
               {pagination.items > 1 && "s"}
             </h2>
           </div>
-          <div className="column is-2 export-button">
+          <div className="column is-2 app-search-results__export-section">
             <Button
-              value="Export Excel"
-              buttonClasses={["is-grey"]}
-              icon={faFileExcel}
-              callback={generateXlxs}
+              value={
+                downloadXlsxStatus.isLoading
+                  ? "Export en cours"
+                  : "Export Excel"
+              }
+              buttonClasses={["app-search-results__export-button"]}
+              icon={downloadXlsxStatus.isLoading ? faSpinnerThird : faFileExcel}
+              faProps={{ spin: downloadXlsxStatus.isLoading }}
+              callback={() => generateXlsx(pagination)}
             />
           </div>
         </div>
       )}
 
-      <div className="columns result-row">
-        <div className="column is-12 pb-0">
-          {results.length === 0 && (
-            <div className="notification is-primary is-light">
-              Aucun résultat
-            </div>
-          )}
-
-          {!!results.length ? (
-            <div>
-              <SearchAwesomeTable
-                showPagination={pagination && pagination.pages > 1}
-                pagination={{ ...pagination, min: 1 }}
-                prevText="Précédent"
-                nextText="Suivant"
-                isLoading={isLoading}
-                isSortable={true}
-                sortColumn={sort}
-                currentSort={currentSort}
-                data={results}
-                fields={[
-                  {
-                    headName: "SIRET",
-                    sortKey: "siret",
-                    importantHead: true,
-                    accessor: ({ siret: { raw: siret } }) =>
-                      Value({
-                        value: siret,
-                        link: `/establishment/${siret}`
-                      }),
-                    link: ({ siret: { raw: siret } }) =>
-                      `/establishment/${siret}`
+      <div className="result-row">
+        {results.length === 0 && (
+          <div className="notification is-primary is-light">Aucun résultat</div>
+        )}
+        {!!results.length ? (
+          <div>
+            <SearchAwesomeTable
+              showPagination={pagination && pagination.pages > 1}
+              pagination={{ ...pagination, min: 1 }}
+              prevText="Précédent"
+              nextText="Suivant"
+              isLoading={isLoading}
+              isSortable={true}
+              sortColumn={sort}
+              currentSort={currentSort}
+              data={results}
+              fields={[
+                {
+                  headName: "SIRET",
+                  sortKey: "siret",
+                  importantHead: true,
+                  accessor: fields => {
+                    let siret = fields?.siret?.raw;
+                    return Value({
+                      value: formatSiret(siret),
+                      link: `/establishment/${siret}`
+                    });
                   },
-                  {
-                    headName: "État",
-                    sortKey: "etatadministratifetablissement",
-                    accessor: ({
-                      siret: { raw: siret },
-                      etatadministratifetablissement: { raw: etat }
-                    }) => TableCellState({ siret, etat })
-                  },
-                  {
-                    headName: "Raison sociale / Nom",
-                    sortKey: "enterprise_name",
-                    html: true,
-                    accessor: ({
-                      enterprise_name: { raw: enterpriseName },
-                      enseigne1etablissement: { raw: enseigne }
-                    }) => {
-                      let name = `<div>${enterpriseName}</div>`;
+                  link: ({ siret: { raw: siret } }) => `/establishment/${siret}`
+                },
+                {
+                  headName: "État",
+                  sortKey: "etatadministratifetablissement",
+                  accessor: fields => {
+                    let siret = fields?.siret?.raw;
+                    let etat = fields?.etatadministratifetablissement?.raw;
+                    return TableCellState({ siret, etat });
+                  }
+                },
+                {
+                  headName: "Raison sociale / Nom",
+                  sortKey: "enterprise_name",
+                  html: true,
+                  accessor: fields => {
+                    let enterpriseName = fields?.enterprise_name.raw;
+                    let enseigne = fields?.enseigne1etablissement.raw;
 
-                      if (enseigne) {
-                        name += `<div>(Enseigne : ${enseigne})</div>`;
-                      }
+                    let name = `<div>${enterpriseName}</div>`;
 
-                      return Value({
-                        value: name
-                      });
+                    if (enseigne) {
+                      name += `<div>(Enseigne : ${enseigne})</div>`;
                     }
-                  },
-                  {
-                    headName: "Catégorie établissement",
-                    sortKey: "etablissementsiege",
-                    accessor: ({ etablissementsiege }) => {
-                      const isSiege = etablissementsiege.raw === "true";
-                      return Value({
-                        value: isSiege ? "Siège social" : "Établissement"
-                      });
-                    }
-                  },
-                  {
-                    headName: "Code postal",
-                    sortKey: "codepostaletablissement",
-                    accessor: ({
-                      codepostaletablissement: { raw: postalCode },
-                      libellecommuneetablissement: { raw: town }
-                    }) =>
-                      Value({
-                        value: joinNoFalsy([postalCode, town], " - ")
-                      })
-                  },
-                  {
-                    headName: "Effectif",
-                    sortKey: "trancheeffectifsetablissement",
-                    accessor: ({
-                      trancheeffectifsetablissement: {
-                        raw: trancheEffectifInsee
-                      },
-                      etatadministratifetablissement: { raw: etat }
-                    }) =>
-                      Value({
-                        value: isActiveEstablishment(etat)
-                          ? staffSizeRanges[trancheEffectifInsee]
-                          : "0 salarié"
-                      })
-                  },
-                  {
-                    headName: "Activité",
-                    sortKey: "activiteprincipaleetablissement",
-                    accessor: ({
-                      activiteprincipaleetablissement: { raw: naf },
-                      activiteprincipaleetablissement_libelle: {
-                        raw: libelle_naf
-                      }
-                    }) =>
+
+                    return Value({
+                      value: name
+                    });
+                  }
+                },
+                {
+                  headName: "Catégorie établissement",
+                  sortKey: "etablissementsiege",
+                  accessor: fields => {
+                    const isSiege = fields?.etablissementsiege?.raw === "true";
+                    return Value({
+                      value: isSiege ? "Siège social" : "Étab. secondaire"
+                    });
+                  }
+                },
+                {
+                  headName: "Code postal",
+                  sortKey: "codepostaletablissement",
+                  accessor: fields => {
+                    let postalCode = fields?.codepostaletablissement?.raw;
+                    let town = fields?.libellecommuneetablissement?.raw;
+                    return Value({
+                      value: joinNoFalsy([postalCode, town], " - ")
+                    });
+                  }
+                },
+                {
+                  headName: "Effectif (DSN)",
+                  sortKey: "lastdsntrancheeffectifsetablissement",
+                  accessor: fields => {
+                    let trancheEffectif =
+                      fields?.lastdsntrancheeffectifsetablissement?.raw;
+                    let etat = fields?.etatadministratifetablissement?.raw;
+
+                    return Value({
+                      value:
+                        trancheEffectif !== "-" &&
+                        trancheEffectif !== "NN" &&
+                        trancheEffectif !== "SP"
+                          ? isActiveEstablishment(etat)
+                            ? staffSizeRanges[trancheEffectif]
+                            : "0 salarié"
+                          : staffSizeRanges[trancheEffectif]
+                    });
+                  }
+                },
+                {
+                  headName: "Activité",
+                  sortKey: "activiteprincipaleetablissement",
+                  accessor: fields => {
+                    let naf = fields?.activiteprincipaleetablissement?.raw;
+                    let libelle_naf =
+                      fields?.activiteprincipaleetablissement_libelle?.raw;
+
+                    return (
                       naf &&
                       Value({
-                        value: `${naf === null ? "" : naf} ${
-                          libelle_naf === null ? "" : " - " + libelle_naf
+                        value: `${naf === undefined ? "" : naf} ${
+                          libelle_naf === undefined ? "" : " - " + libelle_naf
                         }`
                       })
+                    );
                   }
-                ]}
-              />
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
+                }
+              ]}
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
@@ -182,7 +186,9 @@ SearchResults.propTypes = {
   pagination: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   sort: PropTypes.func.isRequired,
-  currentSort: PropTypes.object.isRequired
+  currentSort: PropTypes.object.isRequired,
+  generateXlsx: PropTypes.func.isRequired,
+  downloadXlsxStatus: PropTypes.object.isRequired
 };
 
 export default withRouter(SearchResults);

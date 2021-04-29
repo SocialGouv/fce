@@ -1,0 +1,11 @@
+@import "../../../../App/variables";
+
+.all-effectifs-etp-button {
+    display: flex;
+    justify-content: center;
+    margin-top: $spacing-4;
+
+    .effectifs-establishment + & {
+        margin-bottom: $spacing-6;
+    }
+}

@@ -4,15 +4,16 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { resetSearch } from "../../../services/Store/actions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faPlus } from "@fortawesome/pro-light-svg-icons";
-import Button from "../../shared/Button";
-
 import logo from "../../../assets/img/logo_gouv-65w38h.png";
+
+import "./header.scss";
 
 const Header = ({ resetSearch, location, showBetaMessage }) => {
   return (
     <header className="app-header">
-      <div className="container">
+      <div className="container is-fullhd">
         <nav>
           <div className="header__items is-tablet">
             <Link
@@ -23,28 +24,29 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
               }}
             >
               <img className="header__logo" src={logo} alt="Logo Marianne" />
-              <div className="header__title is-dark">
-                Fiche Commune Entreprise
-              </div>
+              <div className="header__title">Fiche Commune Entreprise</div>
             </Link>
             {(location.pathname.includes("/establishment") ||
               location.pathname.includes("/enterprise")) && (
               <div className="header__buttons">
                 <div className="navbar-end is-flex">
-                  <Link to="/">
-                    <Button
-                      value="Liste des résultats"
-                      icon={faChevronLeft}
-                      buttonClasses={["is-outlined", "mr-4"]}
-                    />
+                  <Link to="/search" className="button">
+                    <span className="button-icon">
+                      <FontAwesomeIcon icon={faChevronLeft} />
+                    </span>
+                    <span>Liste des résultats</span>
                   </Link>
                   <Link
                     to="/"
                     onClick={() => {
                       resetSearch();
                     }}
+                    className="button"
                   >
-                    <Button value="Nouvelle recherche" icon={faPlus} />
+                    <span className="button-icon">
+                      <FontAwesomeIcon icon={faPlus} />
+                    </span>
+                    <span>Nouvelle recherche</span>
                   </Link>
                 </div>
               </div>
@@ -54,7 +56,7 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
       </div>
 
       {showBetaMessage && (
-        <div className="beta-message flex-center">
+        <div className="beta-message">
           <div>
             <span>Ce site est en beta-test. </span>
             {location.pathname !== "/login" && (

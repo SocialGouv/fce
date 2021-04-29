@@ -10,8 +10,9 @@ const TMP_DIR = "/tmp";
 const PSQL_BASE_CMD = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
 
 class Ingestor {
-  constructor(config) {
+  constructor(config, args) {
     this._config = config;
+    this.args = args;
     this.psql = PSQL_BASE_CMD;
     this.tmpFile = `${TMP_DIR}/${this.getConfig("table")}.csv`;
     this.PG = require("../lib/postgres");
@@ -24,7 +25,7 @@ class Ingestor {
   async execute() {
     console.log("Execute Injestor");
 
-    const { truncate, history } = this._config;
+    const { truncate, history, generateSiren } = this._config;
 
     await this._createTmpFileWithNewHeader();
 
@@ -36,6 +37,9 @@ class Ingestor {
 
     await this.beforePsqlCopy();
     await this._runPsqlCopy();
+    if (generateSiren) {
+      await this._generateSiren();
+    }
     await this.afterPsqlCopy();
 
     await this.beforeBuildHistory();
@@ -51,14 +55,14 @@ class Ingestor {
     console.log("Injestor finished");
   }
 
-  async beforeTruncate() { }
-  async afterTruncate() { }
-  async beforePsqlCopy() { }
-  async afterPsqlCopy() { }
-  async beforeBuildHistory() { }
-  async afterBuildHistory() { }
-  async beforeSaveProcessDate() { }
-  async afterSaveProcessDate() { }
+  async beforeTruncate() {}
+  async afterTruncate() {}
+  async beforePsqlCopy() {}
+  async afterPsqlCopy() {}
+  async beforeBuildHistory() {}
+  async afterBuildHistory() {}
+  async beforeSaveProcessDate() {}
+  async afterSaveProcessDate() {}
 
   async _createTmpFileWithNewHeader() {
     console.log("Create tmp file with new header");
@@ -66,7 +70,7 @@ class Ingestor {
     const { filename, delimiter, cols } = this._config;
     fs.copyFileSync(filename, this.tmpFile);
 
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       lineReplace({
         file: this.tmpFile,
         line: 1,
@@ -74,7 +78,7 @@ class Ingestor {
         addNewLine: true,
         callback: () => {
           resolve();
-        }
+        },
       });
     });
   }
@@ -91,18 +95,27 @@ class Ingestor {
       ","
     )}) FROM '${
       this.tmpFile
-      }' with (format csv, header true, delimiter '${delimiter}');"`;
+    }' with (format csv, header true, delimiter '${delimiter}');"`;
 
     return execSync(psqlImportQuery);
+  }
+
+  _generateSiren() {
+    console.log("Generate SIREN");
+    return execSync(
+      `${this.psql} "UPDATE ${this.getConfig(
+        "table"
+      )} SET siren = LEFT(siret, 9);"`
+    );
   }
 
   _saveProcessDate() {
     console.log("save process date");
     const {
       date: { field, format },
-      table
+      table,
     } = this._config;
-    console.log({ format, field, table })
+
     const query = `UPDATE import_updates SET date = (SELECT max(TO_DATE(${field}, '${format}')) FROM ${table}), date_import = CURRENT_TIMESTAMP
     WHERE \\"table\\" = '${table}';`;
 
@@ -115,7 +128,7 @@ class Ingestor {
       psql: this.psql,
       config: this._config,
       PG: this.PG,
-      tmpFile: this.tmpFile
+      tmpFile: this.tmpFile,
     });
     return await history.execute();
   }

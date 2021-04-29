@@ -1,4 +1,5 @@
 import React from "react";
+import { HashLink as Link } from "react-router-hash-link";
 import PropTypes from "prop-types";
 import Scrollspy from "react-scrollspy";
 
@@ -21,7 +22,7 @@ const QuickAccess = ({ anchors }) => {
               key={anchor.label}
               className="quick-access__item has-text-weight-semibold has-text-grey"
             >
-              <a href={`#${anchor.link}`}>{anchor.label}</a>
+              <Link to={`#${anchor.link}`}>{anchor.label}</Link>
             </li>
           ))}
         </Scrollspy>

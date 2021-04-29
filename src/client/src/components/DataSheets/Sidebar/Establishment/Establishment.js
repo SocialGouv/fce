@@ -6,6 +6,7 @@ import Value from "../../../shared/Value";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faSquare } from "@fortawesome/pro-solid-svg-icons";
 import { isActiveEstablishment } from "../../../../helpers/Establishment";
+import { formatSiret } from "../../../../helpers/utils";
 import _get from "lodash.get";
 
 import "./establishment.scss";
@@ -14,7 +15,7 @@ const Establishment = ({ establishment }) => {
   const isActive = isActiveEstablishment(establishment);
   const stateClass = isActive ? "icon--success" : "icon--danger";
 
-  const codePostal = _get(establishment, "adresse_components.code_postal");
+  const codePostal = _get(establishment, "adresse_composant.code_postal");
   const formatedPostalCode = codePostal ? `${codePostal.slice(0, 2)} - ` : "";
 
   return (
@@ -28,7 +29,7 @@ const Establishment = ({ establishment }) => {
           to={`/establishment/${establishment.siret}`}
           className="establishment__siret"
         >
-          <Value value={establishment.siret} empty="" />
+          <Value value={formatSiret(establishment.siret)} empty="" />
         </Link>
       </div>
       <div className="establishment__location">
@@ -36,8 +37,8 @@ const Establishment = ({ establishment }) => {
 
         <Value
           value={
-            establishment.adresse_components &&
-            establishment.adresse_components.localite
+            establishment.adresse_composant &&
+            establishment.adresse_composant.localite
           }
           empty=""
         />

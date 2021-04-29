@@ -14,6 +14,7 @@ const initialState = {
   filters: {
     naf: [],
     location: [],
+    effectif: [],
     siege: null,
     state: Object.values(Config.get("establishmentState"))
   },
@@ -22,6 +23,13 @@ const initialState = {
     ascDirection: false
   },
   results: null,
+  resultsFilters: {
+    naf: [],
+    location: [],
+    effectif: [],
+    siege: null,
+    state: Object.values(Config.get("establishmentState"))
+  },
   isLoading: false,
   error: null
 };

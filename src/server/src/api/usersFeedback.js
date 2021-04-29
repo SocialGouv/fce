@@ -13,6 +13,7 @@ router.post("/feedback", withAuth, async (req, res) => {
   const feedback = new UsersFeedback();
 
   const { useful, comment, rate } = req.body.params;
+  const { referer } = req.headers;
 
   try {
     if (typeof useful !== "boolean") {
@@ -31,18 +32,18 @@ router.post("/feedback", withAuth, async (req, res) => {
       });
     }
 
-    if (typeof rate !== "string") {
-      console.error("'rate' parameter must be a string");
+    if (typeof rate !== "string" || !rate) {
+      console.error("'rate' parameter must be a not empty string");
       return res.status(400).send({
         success: false,
-        error: "'rate' parameter must be a string",
+        error: "'rate' parameter must be a not empty string",
       });
     }
 
     const cleanedComment = stripHtml(comment);
 
     try {
-      await feedback.create({ useful, comment: cleanedComment, rate });
+      await feedback.create({ useful, comment: cleanedComment, rate, referer });
     } catch (e) {
       console.error(
         "An error has occured, user feedback wasn't saved in database",
@@ -55,7 +56,7 @@ router.post("/feedback", withAuth, async (req, res) => {
       await mail.send(
         config.userFeedback.mailTo,
         "Retour utilisateur",
-        sendUserFeedbacklTpl({ useful, comment: cleanedComment, rate })
+        sendUserFeedbacklTpl({ useful, comment: cleanedComment, rate, referer })
       );
     } catch (e) {
       console.error("Email was not sent", e);

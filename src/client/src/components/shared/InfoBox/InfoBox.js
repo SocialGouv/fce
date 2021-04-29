@@ -1,25 +1,29 @@
 import React from "react";
-import ClassNames from "classnames";
 import PropTypes from "prop-types";
 import Value from "../Value";
 
 import "./infoBox.scss";
 
-const InfoBox = ({ value, infoBoxClasses }) => {
+const formatPrefix = value =>
+  `Données ${value.toLowerCase() === "siège social" ? "du " : "de l'"}`;
+
+const formatPostfix = value =>
+  value.toLowerCase() === "établissement" ? " secondaire" : "";
+
+const InfoBox = ({ value }) => {
   return (
-    <span className={`infoBox has-text-primary ${ClassNames(infoBoxClasses)}`}>
-      <Value value={value} empty="" />
-    </span>
+    <div className="info-box">
+      <span className="info-box__pill has-text-primary">
+        <span className="info-box__print">{formatPrefix(value)}</span>
+        <Value value={value} empty="" />
+        <span className="info-box__print">{formatPostfix(value)}</span>
+      </span>
+    </div>
   );
 };
 
 InfoBox.propTypes = {
-  value: PropTypes.string.isRequired,
-  infoBoxClasses: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.string,
-    PropTypes.array
-  ])
+  value: PropTypes.string.isRequired
 };
 
 export default InfoBox;

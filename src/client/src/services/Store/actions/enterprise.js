@@ -1,5 +1,6 @@
 import * as types from "../constants/ActionTypes";
 import Http from "../../Http";
+import Config from "../../Config";
 
 export const setCurrentEnterprise = enterprise => dispatch => {
   dispatch({
@@ -17,19 +18,40 @@ export const loadEntreprise = siren => dispatch => {
 };
 
 const getEnterprise = term => dispatch => {
-  return Http.get("/entity", {
-    params: {
-      q: term
-    }
-  })
-    .then(function(response) {
-      const enterprise = response.data.results.length
-        ? response.data.results[0]
-        : null;
-      dispatch(setCurrentEnterprise(enterprise));
-      return Promise.resolve(response);
-    })
-    .catch(function(error) {
-      return Promise.reject(error);
+  return new Promise((resolve, reject) => {
+    const dataSources = Config.get("dataSources");
+    let nbErrors = 0;
+
+    dispatch({
+      type: types.SET_START_LOADING_ENTERPRISE
     });
+
+    dataSources.forEach(({ id }) => {
+      Http.get("/entity", {
+        params: {
+          q: term,
+          dataSource: id
+        }
+      })
+        .then(response => {
+          const enterprise = response?.data?.results?.[0];
+          if (enterprise) {
+            dispatch(setCurrentEnterprise(enterprise));
+          }
+          dispatch({
+            type: types.SET_SOURCE_COMPLETED_ENTERPRISE
+          });
+          resolve(response);
+        })
+        .catch(e => {
+          nbErrors++;
+          dispatch({
+            type: types.SET_SOURCE_COMPLETED_ENTERPRISE
+          });
+          if (nbErrors === dataSources.length) {
+            reject(e);
+          }
+        });
+    });
+  });
 };

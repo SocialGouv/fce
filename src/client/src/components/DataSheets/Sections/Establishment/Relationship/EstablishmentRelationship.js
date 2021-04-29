@@ -1,20 +1,28 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
 import Data from "../../SharedComponents/Data";
+import Table from "../../SharedComponents/Table";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Value from "../../../../shared/Value";
-import { getEnterpriseName } from "../../../../../helpers/Enterprise";
+import { formatEstablishmentAgreements } from "../../../../../helpers/Relationships";
 import Config from "../../../../../services/Config";
+import Psi from "./Psi";
 
 const EstablishmentRelationship = ({
-  enterprise,
-  establishment: { idcc, accords }
+  establishment: { idcc, siret },
+  agreements
 }) => {
-  const nbAccords = _get(accords, "total.count");
-  const raisonSociale = getEnterpriseName(enterprise);
+  const establishmentAgreements = formatEstablishmentAgreements(
+    agreements,
+    siret
+  );
+
+  const nbAccords = establishmentAgreements.count;
+  const lastDate = establishmentAgreements.lastSignatureDate;
 
   return (
     <section id="relation" className="data-sheet__section">
@@ -29,12 +37,22 @@ const EstablishmentRelationship = ({
           subtitle="Convention(s) collective(s) appliquée(s)"
           sourceSi="DSN"
         >
-          <div className="single-value">
+          <div className="section-datas__list">
+            <div className="section-datas__list-description">
+              Cliquez sur la convention collective pour consulter son contenu
+              sur Legifrance
+            </div>
             <ul>
               {idcc
                 ? idcc.map(({ code, libelle }) => (
-                    <li className="m-2" key={code}>
-                      <Value value={`${code} - ${libelle}`} />
+                    <li className="section-datas__list-item" key={code}>
+                      <a
+                        href={Config.get("legifranceSearchUrl.idcc") + code}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        <Value value={`${code} - ${libelle}`} />
+                      </a>
                     </li>
                   ))
                 : "-"}
@@ -53,46 +71,51 @@ const EstablishmentRelationship = ({
             <>
               <Data
                 name="Date de signature du dernier accord d'entreprise déposé"
-                value={_get(accords, "total.lastDate")}
-                emptyValue="aucun accord connu"
+                value={lastDate}
+                emptyValue="-"
                 columnClasses={["is-7", "is-5"]}
               />
-              <table className="table is-hoverable">
-                <thead>
-                  <tr>
-                    <th>Thématique</th>
-                    <th className="has-text-right">Nombre d{"'"}accords</th>
-                    <th>Date de signature du dernier accord</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Config.get("accords").map(({ key, value }) => (
-                    <tr key={`accord-${key}`}>
-                      <td className="w-40">{value}</td>
-                      <td className="has-text-right">
-                        <Value
-                          value={_get(accords, `${key}.count`)}
-                          empty="-"
-                          nonEmptyValues={[0, "0"]}
-                          hasNumberFormat
-                        />
-                      </td>
-                      <td>
-                        <Value
-                          value={_get(accords, `${key}.lastDate`)}
-                          empty="-"
-                        />
-                      </td>
+              {lastDate && (
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>Thématique</th>
+                      <th className="has-text-right">Nombre d{"'"}accords</th>
+                      <th>Date de signature du dernier accord</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {Config.get("accords").map(({ key, value }) => (
+                      <tr key={`accord-${key}`}>
+                        <td className="col-width-40">{value}</td>
+                        <td className="has-text-right">
+                          <Value
+                            value={_get(
+                              establishmentAgreements.agreements,
+                              `${key}.count`
+                            )}
+                            empty="-"
+                            nonEmptyValues={[0, "0"]}
+                            hasNumberFormat
+                          />
+                        </td>
+                        <td>
+                          <Value
+                            value={_get(
+                              establishmentAgreements.agreements,
+                              `${key}.lastDate`
+                            )}
+                            empty="-"
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
 
               <a
-                href={
-                  Config.get("legifranceSearchUrl") +
-                  raisonSociale.toLowerCase()
-                }
+                href={Config.get("legifranceSearchUrl.accords") + siret}
                 target="_blank"
                 rel="noreferrer noopener"
               >
@@ -102,6 +125,8 @@ const EstablishmentRelationship = ({
             </>
           )}
         </Subcategory>
+
+        <Psi siret={siret} />
       </div>
     </section>
   );
@@ -109,7 +134,14 @@ const EstablishmentRelationship = ({
 
 EstablishmentRelationship.propTypes = {
   establishment: PropTypes.object.isRequired,
-  enterprise: PropTypes.object.isRequired
+  enterprise: PropTypes.object.isRequired,
+  agreements: PropTypes.object.isRequired
 };
 
-export default EstablishmentRelationship;
+const mapStateToProps = state => {
+  return {
+    agreements: state.agreements
+  };
+};
+
+export default connect(mapStateToProps, null)(EstablishmentRelationship);

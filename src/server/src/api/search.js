@@ -2,8 +2,10 @@ import Communes from "../models/Communes";
 import Naf from "../models/Naf";
 import Departements from "../models/Departements";
 import withAuth from "../middlewares/auth";
+import NotFoundException from "../Exceptions/NotFoundException";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
+import Establishment from "../models/Establishment";
 
 const express = require("express");
 const xlsx = require("xlsx");
@@ -28,81 +30,78 @@ const getAppSearchClient = () => {
   return new AppSearchClient(undefined, apiKey, baseUrlFn);
 };
 
-router.get("/entity", withAuth, function(req, res) {
+const isSuccessEnterprise = (data) => {
+  return !!data.results?.[0]._success;
+};
+
+const isSuccessEstablishment = (data, siret) => {
+  const establishments = data?.results?.[0]?.etablissements;
+  if (!Array.isArray(establishments)) {
+    return false;
+  }
+
+  const establishment = establishments.find(
+    (establishment) => establishment?.siret === siret
+  );
+
+  return !!establishment?._success;
+};
+
+router.get("/entity", withAuth, function (req, res) {
   const query = (req.query["q"] || "").trim();
+  const dataSource = (req.query["dataSource"] || "").trim();
 
   const data = {
     query: {
       format: "json",
       terms: {
-        q: query
+        q: query,
       },
       isSIRET: isSIRET(query),
-      isSIREN: isSIREN(query)
-    }
+      isSIREN: isSIREN(query),
+      dataSource,
+    },
   };
 
   const freCall = frentreprise
-    .getEntreprise(data.query.terms.q)
-    .then(entreprise => {
+    .getEntreprise(query, dataSource)
+    .then((entreprise) => {
       data.results = [entreprise.export()];
-      data.pagination = {};
+      const success = isSIREN(query)
+        ? isSuccessEnterprise(data)
+        : isSuccessEstablishment(data, query);
+
+      if (!success) {
+        data.code = 404;
+        throw new NotFoundException(`${query} in ${dataSource}`);
+      }
     }, logError.bind(this, data));
 
-  freCall.then(() => {
-    data.size = (data.results && data.results.length) || 0;
-    sendResult(data, res);
-  });
+  freCall
+    .then(() => {
+      data.size = (data.results && data.results.length) || 0;
+      sendResult(data, res);
+    })
+    .catch((e) => {
+      logError(data, e);
+      sendResult(data, res);
+    });
 });
 
-router.get("/search", withAuth, function(req, res) {
-  const query = (req.query["q"] || "").trim();
-  const format = req.params["format"] || "json";
-  const page = format === "xlsx" ? null : +req.query["page"] || 1;
-
-  const data = {
-    query: {
-      format,
-      terms: {
-        q: query,
-        commune: (req.query["commune"] || "").trim(),
-        codePostal: (req.query["codePostal"] || "").trim(),
-        departement: (req.query["departement"] || "").trim(),
-        naf: Array.isArray(req.query["naf"]) ? req.query["naf"] : [],
-        siegeSocial:
-          req.query["siegeSocial"] === "1" ||
-          req.query["siegeSocial"] === "true" ||
-          req.query["siegeSocial"] === true
-      },
-      isSIRET: isSIRET(query),
-      isSIREN: isSIREN(query)
-    }
-  };
-
-  const freCall = frentreprise.search(data.query.terms, page).then(results => {
-    data.results = results.items.map(ent => ent.export());
-    data.pagination = results.pagination;
-  }, logError.bind(this, data));
-
-  freCall.then(() => {
-    data.size = (data.results && data.results.length) || 0;
-    sendResult(data, res);
-  });
-});
-
-router.post("/downloadXlsx", withAuth, async function(req, res) {
+router.post("/downloadXlsx", withAuth, async function (req, res) {
   const payload = req.body.payload;
 
   if (!payload || !payload.totalItems) {
-    return res.send({
-      code: 500,
-      error: "Export impossible, cette recherche n'a donné aucun résultat."
-    });
+    return res
+      .status(404)
+      .send("Export impossible, cette recherche n'a donné aucun résultat.");
   }
 
   const searchTerm = payload.searchTerm;
   const totalItems = payload.totalItems;
+
   const client = getAppSearchClient();
+  const establishmentModel = new Establishment();
   const engineName = config.get("elasticIndexer.appsearch_engineName");
   const pageLimit = config.get("elasticIndexer.appsearch_pageLimit");
   const pages = Math.ceil(totalItems / pageLimit);
@@ -117,80 +116,97 @@ router.post("/downloadXlsx", withAuth, async function(req, res) {
         searchTerm === "" ? searchTerm : `"${searchTerm}"`,
         {
           filters: payload.filters,
-          page: { current: page, size: pageLimit }
+          page: { current: page, size: pageLimit },
         }
       );
 
       establishments = [...establishments, ...response.results];
+
+      if (!establishments.length) {
+        return res
+          .status(404)
+          .send("Export impossible, cette recherche n'a donné aucun résultat.");
+      }
+
+      try {
+        const dataJson = await Promise.all(
+          establishments.map(async (establishment) => {
+            const cleanedData = Object.entries(establishment).reduce(
+              (acc, [key, value]) => ({ ...acc, [key]: value.raw }),
+              {}
+            );
+
+            const addressInformations = await establishmentModel.getAddress(
+              cleanedData.siret
+            );
+
+            return {
+              Siret: cleanedData.siret,
+              Etat:
+                xlsxConfig.establishmentState[
+                  cleanedData.etatadministratifetablissement
+                ],
+              "Raison sociale": cleanedData.establishment_name
+                ? cleanedData.establishment_name
+                : cleanedData.enterprise_name,
+              "Categorie établissement": cleanedData.etablissementsiege
+                ? "Siège social"
+                : "Établissement",
+              Adresse: addressInformations && addressInformations.adresse,
+              "Complément d'adresse":
+                addressInformations && addressInformations.complement_adresse,
+              "Code postal": cleanedData.codepostaletablissement,
+              Ville: cleanedData.libellecommuneetablissement,
+              "Dernier effectif DSN connu":
+                xlsxConfig.inseeSizeRanges[
+                  cleanedData.lastdsntrancheeffectifsetablissement
+                ],
+              Activité:
+                cleanedData.activiteprincipaleetablissement +
+                " - " +
+                cleanedData.activiteprincipaleetablissement_libelle,
+            };
+          })
+        );
+        if (pages === page) {
+          const wb = { SheetNames: [], Sheets: {} };
+          const ws = xlsx.utils.json_to_sheet(dataJson);
+          const wsName = "FceExport";
+          xlsx.utils.book_append_sheet(wb, ws, wsName);
+
+          const wbout = Buffer.from(
+            xlsx.write(wb, { bookType: "xlsx", type: "buffer" })
+          );
+          res.set({
+            "Content-type": "application/octet-stream",
+          });
+
+          res.send(wbout);
+        }
+      } catch (error) {
+        console.error(error);
+        return res
+          .status(500)
+          .send("Une erreur est survenue, l'export a échoué.");
+      }
     } catch (error) {
       console.error(error);
-      res.send({
-        code: 500,
-        message: error.message
-      });
+      return res
+        .status(400)
+        .send("Une erreur est survenue, l'export a échoué.");
     }
   }
-
-  if (!establishments.length) {
-    return res.send({
-      code: 500,
-      error: "Export impossible, cette recherche n'a donné aucun résultat."
-    });
-  }
-
-  const wb = { SheetNames: [], Sheets: {} };
-  const dataJson = Object.values(establishments).map(tmpData => {
-    const cleanTmpData = [];
-    delete tmpData._meta;
-
-    Object.entries(tmpData).forEach(([key, value]) => {
-      cleanTmpData[key] = value.raw;
-    });
-
-    const formatedData = {
-      siret: cleanTmpData.siret,
-      etat:
-        xlsxConfig.establishmentState[
-          cleanTmpData.etatadministratifetablissement
-        ],
-      raison_sociale: cleanTmpData.establishment_name
-        ? cleanTmpData.establishment_name
-        : cleanTmpData.enterprise_name,
-      categorie_etablissement: cleanTmpData.etablissementsiege
-        ? "Siège social"
-        : "Établissement",
-      code_postal: cleanTmpData.codepostaletablissement,
-      effectif:
-        xlsxConfig.inseeSizeRanges[cleanTmpData.trancheeffectifsetablissement],
-      activite:
-        cleanTmpData.activiteprincipaleetablissement +
-        " - " +
-        cleanTmpData.activiteprincipaleetablissement_libelle
-    };
-
-    return formatedData;
-  });
-
-  const ws = xlsx.utils.json_to_sheet(dataJson);
-  const wsName = "FceExport";
-  xlsx.utils.book_append_sheet(wb, ws, wsName);
-
-  const wbout = Buffer.from(
-    xlsx.write(wb, { bookType: "xlsx", type: "buffer" })
-  );
-
-  res.set({
-    "Content-type": "application/octet-stream"
-  });
-
-  res.send(wbout);
 });
 
 const sendResult = (data, response) => {
-  response.send(data);
+  if (data?.error) {
+    return response.status(data.code || 400).send(data);
+  }
+
+  return response.send(data);
 };
 
-router.get("/communes", withAuth, function(req, res) {
+router.get("/communes", withAuth, function (req, res) {
   const query = (req.query["q"] || "").trim();
 
   if (query.length < 2) {
@@ -199,16 +215,16 @@ router.get("/communes", withAuth, function(req, res) {
 
   const communes = new Communes();
 
-  communes.search(query).then(communes => {
+  communes.search(query).then((communes) => {
     const success = Array.isArray(communes);
     return res.send({ success, results: communes });
   });
 });
 
-router.get("/naf", withAuth, function(req, res) {
+router.get("/naf", withAuth, function (req, res) {
   const naf = new Naf();
 
-  naf.findAll().then(nafs => {
+  naf.findAll().then((nafs) => {
     const success = Array.isArray(nafs);
     if (success) {
       return res.send({ success, results: nafs });
@@ -216,17 +232,17 @@ router.get("/naf", withAuth, function(req, res) {
     return res.send({
       success,
       results: [],
-      message: "Une erreur est survenue lors de la recherche d'un code NAF"
+      message: "Une erreur est survenue lors de la recherche d'un code NAF",
     });
   });
 });
 
-router.get("/departements", withAuth, function(req, res) {
+router.get("/departements", withAuth, function (req, res) {
   const query = (req.query["q"] || "").trim();
 
   const departements = new Departements();
 
-  departements.search(query).then(departements => {
+  departements.search(query).then((departements) => {
     const success = Array.isArray(departements);
     return res.send({ success, results: departements });
   });

@@ -6,7 +6,10 @@ import Particles from "react-particles-js";
 import { NounExcelIcon, NounPeopleIcon, NounPlatformIcon } from "./Icons";
 
 const LoginLink = () => (
-  <div className="home-page__link">
+  <div
+    className="home-page__link"
+    title="Les agents des DDETS(PP), merci d'utiliser votre adresse au format @direccte.gouv.fr"
+  >
     <Link to="/login">Je me connecte</Link>
   </div>
 );

@@ -16,7 +16,7 @@ const HomePage = () => {
 
       return Http.get(`/matomo/getTotalUsers`)
         .then(res => {
-          setUsers(res.users?.length || defaultUsers);
+          setUsers(res?.data.users?.length || defaultUsers);
         })
         .catch(error => {
           setUsers(defaultUsers);

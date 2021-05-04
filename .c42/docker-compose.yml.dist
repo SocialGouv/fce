@@ -61,7 +61,7 @@ services:
     build: .c42/docker/builder
     privileged: true
     volumes:
-      - ./:/project
+      - ${PWD}:/project
       - $SSH_AUTH_SOCK:/ssh-agent
 
   db:

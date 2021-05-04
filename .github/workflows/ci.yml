@@ -1,0 +1,68 @@
+name: CI
+on:
+  - pull_request
+
+jobs:
+  SetupNode:
+    strategy:
+      # Don't fast-fail on tag and master
+      fail-fast: ${{ github.event_name == 'pull_request' || (github.ref !=
+        'refs/heads/master' && !startsWith(github.ref, 'refs/tags/')) }}
+
+    name: Setting up Node
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Node.js 14.x
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14.x
+
+      - uses: actions/checkout@v2
+
+      - name: Setup SSH AGENT
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+          eval $(ssh-agent)
+          ssh-add ~/.ssh/id_rsa
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> $GITHUB_ENV
+
+      - name: Install
+        run: .c42/scripts/install.sh
+
+      - name: Create traefik
+        run: docker network create traefik
+
+      - name: Build
+        run: .c42/scripts/build.sh master
+
+      - name: Lint
+        run: |
+          docker-compose config
+          docker-compose run --rm server yarn lint
+          docker-compose run --rm frentreprise yarn lint
+          docker-compose run --rm front yarn lint
+
+      - name: Test
+        run: docker-compose run --rm front yarn testci
+
+      - name: Setup Hosts
+        env:
+          PREPROD_SSH_HOST: ${{ secrets.PREPROD_SSH_HOST }}
+          PREPROD_SSH_USER: ${{ secrets.PREPROD_SSH_USER }}
+        run: echo "$PREPROD_SSH_HOST ansible_connection=ssh ansible_user=$PREPROD_SSH_USER" > .c42/deployment/config/hosts
+
+      - name: Setup preprod env file
+        env:
+          PREPROD_ENV: ${{ secrets.PREPROD_ENV }}
+        run: echo "$PREPROD_ENV" > ./.c42/deployment/config/db.env
+
+      - name: Deploy to preprod
+        run: |
+          cd .c42/deployment
+          docker-compose run --rm deployment ansible-playbook /root/fce-ppd.yml -i /root/hosts

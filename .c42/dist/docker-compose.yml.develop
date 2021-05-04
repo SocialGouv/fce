@@ -13,7 +13,7 @@ services:
         max-file: "3"
     volumes:
       - /mnt/data/export:/tmp/data
-      - .:/usr/src/app
+      - ${PWD}:/usr/src/app
       - /home/factory/deployment/shared/node_modules:/usr/src/app/node_modules
       - /home/factory/deployment/shared/.env:/usr/src/app/.env
     tty: true

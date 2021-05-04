@@ -8,7 +8,8 @@ services:
       - ./config/hosts:/root/hosts
       - ./config/fce-ppd.yml:/root/fce-ppd.yml
       - ./config/fce-prod.yml:/root/fce-prod.yml
-      - $JENKINS_HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
-      - $JENKINS_HOME/.ssh/id_rsa:/root/.ssh/id_rsa
+      - ./config/db.env:/root/db.env
+      - $HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+      - $HOME/.ssh/id_rsa:/root/.ssh/id_rsa
       - ../../dist:/app/dist
     tty: true

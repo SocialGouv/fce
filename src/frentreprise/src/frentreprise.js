@@ -3,7 +3,7 @@ import InvalidIdentifierError from "./Errors/InvalidIdentifierError";
 import NotFoundSourceError from "./Errors/NotFoundSourceError";
 import * as Validator from "./Utils/Validator";
 import ApiGouv from "./DataSources/ApiGouv";
-import ApiGouvAssociations from "./DataSources/ApiGouvAssociations";
+/* import ApiGouvAssociations from "./DataSources/ApiGouvAssociations"; */
 import PG from "./DataSources/PG";
 import DataSource from "./DataSources/DataSource";
 import { Entreprise } from "./Entreprise";

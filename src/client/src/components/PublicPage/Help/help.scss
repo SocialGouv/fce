@@ -1,0 +1,39 @@
+@import "../../App/variables";
+
+.page {
+    .help {
+        margin-top: 0;
+
+        &__videos {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -$spacing-4;
+
+            & li + li {
+                margin: 0;
+            }
+        }
+
+        &-video__item {
+            display: flex;
+            flex-direction: column;
+            padding: $spacing-4;
+            font-size: $spacing-4;
+            list-style: none;
+            width: 100%;
+
+            @media (min-width: 768px) {
+                width: 50%;
+            }
+        }
+
+        &-video__title {
+            flex-grow: 1;
+            margin: 0 0 $spacing-1;
+        }
+
+        &-video__video {
+            border: $border-grey-light;
+        }
+    }
+}

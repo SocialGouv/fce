@@ -58,7 +58,13 @@
         }
 
         &__links {
-            margin-bottom: $spacing-2;
+            &-row {
+                display: flex;
+            }
+
+            &-link {
+            }
+            /* margin-bottom: $spacing-2;
             font-size: $font-size-base;
             font-family: $segoe;
             text-align: center;
@@ -67,10 +73,10 @@
                 display: flex;
                 margin-top: 0;
                 margin-bottom: $spacing-4;
-            }
+            } */
         }
 
-        &__link-item {
+        /*&__link-item {
             @include from($tablet) {
                 padding: 0 $spacing-1;
                 border-right: solid 1px;
@@ -79,7 +85,7 @@
                     border-right: none;
                 }
             }
-        }
+        } */
 
         &__link {
             color: $footer-link;

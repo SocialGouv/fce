@@ -5,11 +5,11 @@ const getSettlement = async (siret) => {
   const includes = [
     { model: models.Naf },
     { model: models.Entreprise },
-    /* { association: models.Etablissement.Successeur, as: "successeur" },
-    { association: models.Etablissement.Predecesseur, as: "predecesseur" },
+    /*{ association: models.Etablissement.Successeur, as: "successeur" },
+    { association: models.Etablissement.Predecesseur, as: "predecesseur" },*/
     ...models.Etablissement.associatedSources.map(({ model }) => ({
       model: models[model],
-    })), */
+    })),
     {
       model: models.RupcoEtablissement,
       include: [models.RupcoProcedure],

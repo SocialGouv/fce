@@ -28,7 +28,8 @@ function init() {
     frentreprise.initSentry(sentryUrlKey);
   }
 
-  ["ApiGouv", "ApiGouvAssociations"].forEach((sourceName) => {
+  // remove "ApiGouvAssociations"
+  ["ApiGouv"].forEach((sourceName) => {
     const source = frentreprise.getDataSource(sourceName).source;
     source.token = config.get("APIGouv.token");
     source.axiosConfig = {

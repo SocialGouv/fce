@@ -13,8 +13,8 @@ const globalConfig = {
   },
   dataSources: [
     { id: "PG", priority: 100 },
-    { id: "ApiGouv", priority: 80 },
-    { id: "ApiGouvAssociations", priority: 80 }
+    { id: "ApiGouv", priority: 80 }
+    //{ id: "ApiGouvAssociations", priority: 80 }
   ],
   pgApi: {
     timeout: 10000

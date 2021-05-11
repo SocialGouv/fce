@@ -19,15 +19,22 @@ const Psi = ({ psi, establishments, sources }) => {
   const establishmentsWithPsi = psi.establishments.length
     ? psi.establishments
         .map(psiEstablishment => {
-          const { etat_etablissement, adresse_composant } = establishments.find(
+          const establishmentInfos = establishments.find(
             enterpriseEstablishment =>
               enterpriseEstablishment.siret === psiEstablishment.siret
           );
 
           return {
             ...psiEstablishment,
-            etat: etat_etablissement,
-            commune: `${adresse_composant.code_postal} ${adresse_composant.localite}`
+            ...(establishmentInfos
+              ? {
+                  etat: establishmentInfos.etat_etablissement,
+                  commune: `${establishmentInfos.adresse_composant.code_postal} ${establishmentInfos.adresse_composant.localite}`
+                }
+              : {
+                  etat: "-",
+                  commune: "-"
+                })
           };
         })
         // closed establishments last

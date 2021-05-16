@@ -38,54 +38,54 @@ const Footer = () => {
 
         <div className="footer__links">
           <ul className="footer__links-row">
-            <li className="footer__link-item">
+            <li className="footer__links-item">
               <Link className="footer__link" to="/a-propos">
                 A propos
               </Link>
             </li>
-            <li className="footer__link-item">
+            <li className="footer__links-item">
               <Link className="footer__link" to="/faq">
                 FAQ
               </Link>
             </li>
-            <li className="footer__link-item">
+            <li className="footer__links-item">
               <Link className="footer__link" to="/aide">
                 Aide
               </Link>
             </li>
           </ul>
           <ul className="footer__links-row">
-            <li className="footer__link-item">
+            <li className="footer__links-item">
               <Link className="footer__link" to="/sources-des-donnees">
                 Sources des données
               </Link>
             </li>
-            <li className="footer__link-item">
+            <li className="footer__links-item">
               <Link className="footer__link" to="/statistics">
                 Statistiques
               </Link>
             </li>
           </ul>
           <ul className="footer__links-row">
-            <li className="footer__link-item">
+            <li className="footer__links-item">
               <Link className="footer__link" to="/mentions-legales">
                 Mentions légales
               </Link>
             </li>
-            <li className="footer__link-item">
+            <li className="footer__links-item">
               <Link className="footer__link" to="/politique-de-confidentialite">
                 Politique de confidentialité
               </Link>
             </li>
           </ul>
           <ul className="footer__links-row">
-            <li className="footer__link-item">
+            <li className="footer__links-item">
               Contact :{" "}
               <a href={`mailto:${Config.get("contact.mailto")}`}>
                 {Config.get("contact.mailto")}
               </a>
             </li>
-            <li className="footer__link-item">
+            <li className="footer__links-item">
               {communicationKitLink?.lien ? (
                 <a
                   href={communicationKitLink.lien}

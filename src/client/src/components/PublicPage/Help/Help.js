@@ -28,8 +28,8 @@ const Help = ({ pageData = null, isLoading, hasError }) => {
 
             <p>
               <strong>
-                Si vous avez d'autres interrogations sur FCE pensez à consulter
-                notre <Link to="/faq">Foire aux questions</Link>
+                Si vous avez d&apos;autres interrogations sur FCE pensez à
+                consulter notre <Link to="/faq">Foire aux questions</Link>
               </strong>
             </p>
             <h2>Nos tutoriels</h2>

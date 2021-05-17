@@ -1,9 +1,15 @@
 import React, { useEffect, useReducer } from "react";
 import PublicPageDefault from "../../components/PublicPage";
 import Faq from "../../components/PublicPage/Faq";
+import Help from "../../components/PublicPage/Help";
 import Config from "../../services/Config";
 import { handleError } from "../../helpers/utils";
 import { useLocation } from "react-router-dom";
+
+const components = new Map([
+  ["/faq", Faq],
+  ["/aide", Help]
+]);
 
 const initialState = {
   isLoading: false,
@@ -43,7 +49,7 @@ const PublicPage = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const location = useLocation();
 
-  const ViewComponent = location.pathname === "/faq" ? Faq : PublicPageDefault;
+  const ViewComponent = components.get(location.pathname) || PublicPageDefault;
 
   const path =
     location.pathname in Config.get("strapi.path")

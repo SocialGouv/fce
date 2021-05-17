@@ -3,18 +3,12 @@
 
 .app {
     .footer {
-        display: flex;
-        align-items: center;
         padding: 0;
         background-color: $footer-bg;
 
-        @include from($tablet) {
-            height: 200px;
-        }
-
         .container {
             display: flex;
-            flex-direction: column-reverse;
+            flex-direction: column;
             justify-content: space-between;
             padding: $spacing-4 $padding-app-x;
 
@@ -33,17 +27,16 @@
         }
 
         &__gouv-text {
-            font-family: $segoe;
-            font-size: $font-size-small;
-            max-width: 13rem;
-            font-style: italic;
-            text-align: center;
+            margin-top: $spacing-4;
             padding-bottom: $spacing-2;
+            font-family: $segoe;
+            font-style: italic;
+            text-align: left;
 
             @include from($tablet) {
-                font-size: $font-size-base;
                 max-width: 16rem;
-                text-align: left;
+                margin-top: 0;
+                text-align: right;
             }
         }
 
@@ -52,7 +45,8 @@
             background: #fff;
 
             @include from($tablet) {
-                width: 150px;
+                width: 100px;
+                margin-left: auto;
                 padding: $spacing-1;
             }
         }

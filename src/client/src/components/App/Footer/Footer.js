@@ -24,17 +24,6 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="container is-fullhd">
-        <div className="footer__gouv">
-          <div className="footer__gouv-text">
-            Un service fourni par l{"'"}incubateur des ministères sociaux
-          </div>
-          <img
-            src={mariane}
-            alt="Logo des institutions du gouvernement français"
-            className="footer__gouv-logo"
-          />
-        </div>
-
         <div className="footer__links">
           <ul className="footer__links-row">
             <li className="footer__links-item">
@@ -98,6 +87,17 @@ const Footer = () => {
               )}
             </li>
           </ul>
+        </div>
+
+        <div className="footer__gouv">
+          <div className="footer__gouv-text">
+            Un service fourni par l{"'"}incubateur des ministères sociaux
+          </div>
+          <img
+            src={mariane}
+            alt="Logo des institutions du gouvernement français"
+            className="footer__gouv-logo"
+          />
         </div>
       </div>
     </footer>

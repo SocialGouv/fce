@@ -47,7 +47,10 @@ const EstablishmentRelationship = ({
                 ? idcc.map(({ code, libelle }) => (
                     <li className="section-datas__list-item" key={code}>
                       <a
-                        href={Config.get("legifranceSearchUrl.idcc") + code}
+                        href={
+                          Config.get("legifranceSearchUrl.idcc") +
+                          code.replace(/^0+/, "")
+                        }
                         target="_blank"
                         rel="noreferrer noopener"
                       >

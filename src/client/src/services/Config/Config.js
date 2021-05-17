@@ -31,7 +31,7 @@ const globalConfig = {
     occitanie: 76
   },
   contact: {
-    mailto: "chloe.mandelblat@direccte.gouv.fr"
+    mailto: "chloe.mandelblat@dreets.gouv.fr"
   },
   emailInformation: {
     to: "oc.documentation@direccte.gouv.fr",

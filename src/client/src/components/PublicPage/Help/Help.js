@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import UsersFeedback from "../../../containers/UsersFeedback";
 import LoadSpinner from "../../shared/LoadSpinner";
 import Config from "../../../services/Config";
@@ -24,6 +25,13 @@ const Help = ({ pageData = null, isLoading, hasError }) => {
         ) : (
           <>
             <h1>Aide</h1>
+
+            <p>
+              <strong>
+                Si vous avez d'autres interrogations sur FCE pensez à consulter
+                notre <Link to="/faq">Foire aux questions</Link>
+              </strong>
+            </p>
             <h2>Nos tutoriels</h2>
 
             <ul className="help__videos">

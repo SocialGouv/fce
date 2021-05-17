@@ -13,7 +13,6 @@ const Footer = () => {
         .then(res => res.json())
         .then(data => {
           setCommunicationKitLink(data);
-          console.log(data);
         })
         .catch(error => {
           console.error(error);

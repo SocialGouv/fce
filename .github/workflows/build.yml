@@ -1,0 +1,66 @@
+name: Build
+
+on:
+  - pull_request
+
+jobs:
+  BuildServer:
+    strategy:
+      # Don't fast-fail on tag and master
+      fail-fast: ${{ github.event_name == 'pull_request' || (github.ref !=
+        'refs/heads/master' && !startsWith(github.ref, 'refs/tags/')) }}
+
+    name: Building server image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Node.js 14.x
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14.x
+
+      - uses: actions/checkout@v2
+
+      - name: Install and Build
+        run: |
+          cd ./src/frentreprise
+          npm install && npm run build
+          cd - && cd ./src/server
+          yarn --frozen-lockfile && yarn build
+
+      - name: Build docker image
+        run: |
+          cd ./src
+          docker build -t fce-server -f ./server/Dockerfile .
+
+  BuildFront:
+    strategy:
+      # Don't fast-fail on tag and master
+      fail-fast: ${{ github.event_name == 'pull_request' || (github.ref !=
+        'refs/heads/master' && !startsWith(github.ref, 'refs/tags/')) }}
+
+    name: Building front image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Node.js 14.x
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14.x
+
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: |
+          cd ./src/client
+          npm ci
+
+      - name: Build
+        run: |
+          cd ./src/client
+          CI=false npm run build
+
+      - name: Build docker image
+        run: |
+          cd ./src/client
+          docker build -t fce-client .

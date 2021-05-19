@@ -1,6 +1,11 @@
 @import "../../App/variables";
 
 .page {
+    a:hover {
+        color: $primary;
+        text-decoration: underline;
+    }
+
     .faq {
         &__section {
             margin-bottom: $spacing-6;

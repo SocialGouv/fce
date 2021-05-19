@@ -118,6 +118,15 @@ const App = () => {
                           />
                           <Route
                             exact
+                            path="/aide"
+                            render={() => (
+                              <Layout>
+                                <PublicPage />
+                              </Layout>
+                            )}
+                          />
+                          <Route
+                            exact
                             path="/a-propos"
                             render={() => (
                               <Layout>

@@ -16,6 +16,4 @@ RUN yarn install --frozen-lockfile
 
 COPY --chown=node:node ./server/build ./
 
-EXPOSE 7000
-
 CMD node ./server.js

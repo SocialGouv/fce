@@ -28,10 +28,58 @@ jobs:
           cd - && cd ./src/server
           yarn --frozen-lockfile && yarn build
 
-      - name: Build docker image
+      - id: docker_meta
+        uses: "crazy-max/ghaction-docker-meta@2e1a5c7fa42123697f82d479b551a1bbdb1bef88"
+        with:
+          images: ghcr.io/socialgouv/fce-server
+          labels: |
+            org.opencontainers.image.title=fce-server
+            org.opencontainers.image.documentation=https://github.com/SocialGouv/fce/tree/${{ github.sha }}/fce-server
+          tags: |
+            type=sha
+            type=raw,value=sha-${{ github.sha }}
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      - id: docker_buildx
+        name: Set up Docker Buildx
+        uses: "docker/setup-buildx-action@2a4b53665e15ce7d7049afb11ff1f70ff1610609"
+        with: { }
+
+      #- if: "${{ github.event_name != 'pull_request' }}"
+      - name: Login to ghcr.io/socialgouv Registry
+        uses: "docker/login-action@f3364599c6aa293cdc2b8391b1b56d0c30e45c8a"
+        with:
+          password: "${{ secrets.GITHUB_TOKEN }}"
+          registry: ghcr.io
+          username: "${{ github.repository_owner }}"
+
+      - name: /tmp/.buildx-cache cache
+        uses: "actions/cache@v2"
+        with:
+          key: "${{ runner.os }}-fce-server-buildx-${{ hashFiles('src/server/Dockerfile') }}"
+          path: /tmp/.buildx-cache
+          restore-keys: |
+            ${{ runner.os }}-fce-server-buildx
+
+      - id: docker_push
+        name: Push
+        uses: "docker/build-push-action@e1b7f96249f2e4c8e4ac1519b9608c0d48944a1f"
+        with:
+          builder: "${{ steps.docker_buildx.outputs.name }}"
+          cache-from: "type=local,src=/tmp/.buildx-cache"
+          cache-to: "type=local,dest=/tmp/.buildx-cache"
+          context: "./src"
+          file: "./src/server/Dockerfile"
+          labels: "${{ steps.docker_meta.outputs.labels }}"
+          push: 'true'
+          tags: "${{ steps.docker_meta.outputs.tags }}"
+
+      - name: Image digest
         run: |
-          cd ./src
-          docker build -t fce-server -f ./server/Dockerfile .
+          echo "${{ steps.docker_push.outputs.digest }}"
 
   BuildFront:
     strategy:
@@ -64,3 +112,54 @@ jobs:
         run: |
           cd ./src/client
           docker build -t fce-client .
+
+      - id: docker_meta
+        uses: "crazy-max/ghaction-docker-meta@2e1a5c7fa42123697f82d479b551a1bbdb1bef88"
+        with:
+          images: ghcr.io/socialgouv/fce-client
+          labels: |
+            org.opencontainers.image.title=fce-client
+            org.opencontainers.image.documentation=https://github.com/SocialGouv/fce/tree/${{ github.sha }}/fce-client
+          tags: |
+            type=sha
+            type=raw,value=sha-${{ github.sha }}
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      - id: docker_buildx
+        name: Set up Docker Buildx
+        uses: "docker/setup-buildx-action@2a4b53665e15ce7d7049afb11ff1f70ff1610609"
+        with: { }
+
+      #- if: "${{ github.event_name != 'pull_request' }}"
+      - name: Login to ghcr.io/socialgouv Registry
+        uses: "docker/login-action@f3364599c6aa293cdc2b8391b1b56d0c30e45c8a"
+        with:
+          password: "${{ secrets.GITHUB_TOKEN }}"
+          registry: ghcr.io
+          username: "${{ github.repository_owner }}"
+
+      - name: /tmp/.buildx-cache cache
+        uses: "actions/cache@v2"
+        with:
+          key: "${{ runner.os }}-fce-client-buildx-${{ hashFiles('./src/client/Dockerfile') }}"
+          path: /tmp/.buildx-cache
+          restore-keys: |
+            ${{ runner.os }}-fce-client-buildx
+
+      - id: docker_push
+        name: Push
+        uses: "docker/build-push-action@e1b7f96249f2e4c8e4ac1519b9608c0d48944a1f"
+        with:
+          builder: "${{ steps.docker_buildx.outputs.name }}"
+          cache-from: "type=local,src=/tmp/.buildx-cache"
+          cache-to: "type=local,dest=/tmp/.buildx-cache"
+          context: "./src/client"
+          labels: "${{ steps.docker_meta.outputs.labels }}"
+          push: 'true'
+          tags: "${{ steps.docker_meta.outputs.tags }}"
+      - name: Image digest
+        run: |
+          echo "${{ steps.docker_push.outputs.digest }}"

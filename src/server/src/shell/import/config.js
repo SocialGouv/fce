@@ -334,6 +334,7 @@ const config = {
       className: "RupcoProceduresIngestor",
       table: "rupco_procedures",
       filename: `${FILES_FOLDER}/rupco_procedures.csv`,
+      replaceHtmlChars: true,
       cols: [
         "numero",
         "type",

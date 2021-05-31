@@ -5,6 +5,8 @@ const fs = require("fs");
 const { execSync } = require("child_process");
 const _get = require("lodash.get");
 const lineReplace = require("line-replace");
+const replaceStream = require("replacestream");
+const { decode } = require("html-entities");
 
 const TMP_DIR = "/tmp";
 const PSQL_BASE_CMD = `psql -h ${process.env.PG_HOST} -d ${process.env.PG_DB} -U ${process.env.PG_USER} -c `;
@@ -22,12 +24,29 @@ class Ingestor {
     return _get(this._config, key);
   }
 
+  async _replaceHtmlChars() {
+    const tempFile = `${TMP_DIR}/sanitizes-${this.getConfig("table")}.csv`;
+    const htmlEntitiesRegex = /&(?:[a-z]+|#x?\d+);/gi
+    await new Promise(resolve => fs.createReadStream(this.tmpFile)
+      .pipe(replaceStream(htmlEntitiesRegex, (entity) => decode(entity)))
+      .pipe(fs.createWriteStream(tempFile))
+      .on("finish", () => resolve()));
+
+    await fs.promises.unlink(this.tmpFile);
+
+    await fs.promises.rename(tempFile, this.tmpFile);
+  }
+
   async execute() {
     console.log("Execute Injestor");
 
-    const { truncate, history, generateSiren } = this._config;
+    const { truncate, history, generateSiren, replaceHtmlChars } = this._config;
 
     await this._createTmpFileWithNewHeader();
+
+    if (replaceHtmlChars) {
+      await this._replaceHtmlChars();
+    }
 
     await this.beforeTruncate();
     if (truncate) {

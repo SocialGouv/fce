@@ -4,6 +4,7 @@ import emailValidator from "email-validator";
 import util from "util";
 import AuthRequestsModel from "../models/AuthRequests";
 import AuthTempModel from "../models/AuthTemp";
+import ValidEmail from "../models/ValidEmail";
 
 export default class Auth {
   static generateToken(user) {
@@ -48,7 +49,7 @@ export default class Auth {
     return user.clients.find((client) => client.slug === clientSlug);
   }
 
-  static isEmailAllowed(email) {
+  static async isEmailAllowed(email) {
     const { allowedEmails } = config.get("authCode");
 
     if (!emailValidator.validate(email)) {
@@ -63,7 +64,13 @@ export default class Auth {
       return false;
     }
 
-    return !!allowedEmails.find((regex) => !!email.match(regex));
+    if (allowedEmails.find((regex) => !!email.match(regex))) {
+      return true;
+    }
+
+    const validEmails = new ValidEmail();
+
+    return validEmails.exists(email);
   }
 
   static async validateCode(email, code) {

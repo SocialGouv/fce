@@ -14,7 +14,7 @@ router.post("/requestAuthCode", async (req, res) => {
   const { email } = req.body;
 
   try {
-    const isEmailAllowed = Auth.isEmailAllowed(email);
+    const isEmailAllowed = await Auth.isEmailAllowed(email);
 
     if (!isEmailAllowed) {
       throw new Error("Connexion refusée");

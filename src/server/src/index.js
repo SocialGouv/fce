@@ -12,7 +12,6 @@ require("dotenv").config();
 const config = require("config");
 const app = express();
 const port = (config.has("port") && +config.get("port")) || 80;
-const host = (config.has("host") && config.get("host")) || undefined;
 const sentryUrlKey = config.get("sentryUrlKey");
 
 if (!isDev()) {
@@ -77,7 +76,7 @@ function run() {
   app.listen(
     port,
     () => {
-      console.log(`Listening on ${host || ""}:${port}`);
+      console.log(`Listening on ${port}`);
     }
   );
 

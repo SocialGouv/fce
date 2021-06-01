@@ -1,8 +1,10 @@
 import parse  from "csv-parse";
 import stringify from "csv-stringify";
-import {Transform} from "stream";
+import { Duplex, Transform } from "stream";
 import { decode } from "html-entities";
 import replaceStream from "replacestream";
+import { formatDate } from "./date";
+import pipe from "multipipe";
 
 export const sanitizeHtmlChars = (): Transform => {
   const htmlEntitiesRegex = /&(?:[a-z]+|#x?\d+);/gi
@@ -11,7 +13,8 @@ export const sanitizeHtmlChars = (): Transform => {
 }
 
 type MapCsvConfig = {
-  columns: Record<string, string>
+  columns: Record<string, string>;
+  delimiter?: string;
 };
 
 export const filterRows = (predicate: (params: any) => boolean) => new Transform(
@@ -53,8 +56,8 @@ export const deduplicate = (field: string | undefined) => {
   });
 }
 
-export const parseCsv = ({ columns }: MapCsvConfig) => parse({
-  delimiter: ";",
+export const parseCsv = ({ columns, delimiter = ";" }: MapCsvConfig) => parse({
+  delimiter,
   columns: (header: string[]) =>
     header.map((column) => columns[column] || column),
 });
@@ -68,3 +71,39 @@ export const stringifyCsv = ({ columns }: StringifyCsvOptions) => stringify({
   delimiter: ";",
   columns,
 });
+
+type DateParam = {
+  field: string;
+  format: string;
+};
+
+type DateStreamReturn = {
+  transform: Duplex,
+  getMaxDate: () => string | undefined
+};
+
+export const dateStream = (date: DateParam): DateStreamReturn => {
+  let maxDate: string | undefined;
+
+  const transform = pipe(
+    mapRow(
+      (row: Record<string, string>) => ({
+        ...row,
+        [date.field]: formatDate(row[date.field]),
+      })
+    ),
+    mapRow((row: Record<string, string>) => {
+      if (!maxDate || maxDate < row[date.field]) {
+        maxDate = row[date.field];
+      }
+      return row;
+    })
+  );
+
+  const getMaxDate = (): string | undefined => maxDate;
+
+  return {
+    transform,
+    getMaxDate,
+  }
+}

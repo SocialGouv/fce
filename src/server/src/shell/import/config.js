@@ -558,6 +558,15 @@ const config = {
       generateSiren: false,
     },
   },
+  valid_emails: {
+    ingest: {
+      filename: `${FILES_FOLDER}/emails.csv`,
+      table: "valid_email",
+      cols: ["email"],
+      delimiter: ";",
+      doNotSaveDate: true
+    }
+  }
 };
 
 module.exports = config;

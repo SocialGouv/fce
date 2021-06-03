@@ -40,7 +40,7 @@ class Ingestor {
   async execute() {
     console.log("Execute Injestor");
 
-    const { truncate, history, generateSiren, replaceHtmlChars } = this._config;
+    const { truncate, history, generateSiren, replaceHtmlChars, doNotSaveDate } = this._config;
 
     await this._createTmpFileWithNewHeader();
 
@@ -68,7 +68,9 @@ class Ingestor {
     await this.afterBuildHistory();
 
     await this.beforeSaveProcessDate();
-    await this._saveProcessDate();
+    if (!doNotSaveDate) {
+      await this._saveProcessDate();
+    }
     await this.afterSaveProcessDate();
 
     console.log("Injestor finished");

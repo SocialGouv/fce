@@ -13,7 +13,6 @@ require("dotenv").config();
 const config = require("config");
 const app = express();
 const port = (config.has("port") && +config.get("port")) || 80;
-const host = (config.has("port") && config.get("host")) || undefined;
 const sentryUrlKey = config.get("sentryUrlKey");
 
 if (!isDev()) {
@@ -68,13 +67,10 @@ function run() {
   app.use(Sentry.Handlers.errorHandler());
 
   app.listen(
-    {
-      host,
-      port,
-    },
+    port,
     () => {
+      console.log(`Listening on ${port}`);
       console.log(`Serving files from: ${htdocs_path}`);
-      console.log(`Listening on ${host || ""}:${port}`);
     }
   );
 

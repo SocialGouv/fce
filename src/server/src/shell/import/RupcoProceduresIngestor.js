@@ -3,6 +3,12 @@ const Ingestor = require("./Ingestor");
 const { execSync } = require("child_process");
 
 class RupcoProceduresIngestor extends Ingestor {
+  beforePsqlCopy() {
+    // We deduplicate rows
+    execSync(`awk '{if (!($0 in x)) {print $0; x[$0]=1} }' ${this.tmpFile} > ${this.tmpFile}-dedup`);
+    execSync(`mv ${this.tmpFile}-dedup ${this.tmpFile}`);
+  }
+
   /**
    * Truncate only entries from December 2019 (keep legacy SI)
    */

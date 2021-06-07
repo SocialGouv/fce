@@ -1,0 +1,22 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: server-env
+data:
+  CLIENT_BASE_URL: client-url
+  PORT: 80
+  MAGIC_KEY_EXPIRE:
+  #Appsearch
+  JWT_APPSEARCH_ADDRRESS: http://52.143.135.133:3002/api/as/v1/
+  JWT_APPSEARCH_ENGINE_NAME: fce
+  JWT_ELASTIC_CLIENT_ADDRESS: http://elasticsearch:9200/
+
+  #Minio
+  MINIO_ENDPOINT: fce.minio.fabrique.social.gouv.fr
+  MINIO_PORT: 443
+  MINIO_USE_SSL: 1
+  MINIO_ARCHIVE_FILES:
+
+  #MATOMO
+  MATOMO_ID_SITE:
+  MATOMO_URL:

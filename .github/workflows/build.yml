@@ -188,14 +188,18 @@ jobs:
       - name: Load review environment variables
         run: |
           cat ".github/preprod.env" >> $GITHUB_ENV
+
+      - name: Install k8s deps
+        run: yarn k8s
+
       - name: Generate k8s manifests
-        run: npx @socialgouv/k8s@1.9.0-alpha.20 --env dev > manifests.yml
+        run: yarn k8s generate:dev > manifests.yml
         env:
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
           SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
 
       - name: Generate k8s manifests
-        run: npx @socialgouv/k8s@1.9.0-alpha.20 --env dev --namespace > namespace.yml
+        run: yarn k8s generate:dev namespace > namespace.yml
         env:
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
           SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
@@ -223,7 +227,7 @@ jobs:
 
       - name: Get project and namespace names
         run: |
-          cat ".github/review.env" >> $GITHUB_ENV
+          cat ".github/preprod.env" >> $GITHUB_ENV
           echo "project=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
           echo "namespace=${GITHUB_REPOSITORY#*/}-${GITHUB_REF##*/}" >> $GITHUB_ENV
       - name: Download k8s manifests

@@ -193,13 +193,13 @@ jobs:
         run: yarn k8s
 
       - name: Generate k8s manifests
-        run: yarn k8s generate:dev > manifests.yml
+        run: yarn -s k8s generate:dev > manifests.yml
         env:
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
           SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
 
-      - name: Generate k8s manifests
-        run: yarn k8s generate:dev _namespace > namespace.yml
+      - name: Generate k8s namespace
+        run: yarn -s k8s generate:dev _namespace > namespace.yml
         env:
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
           SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
@@ -262,7 +262,7 @@ jobs:
           echo ${{ secrets.SOCIALGOUV_KUBE_CONFIG_DEV }} | base64 -d > ~/.kube/config
 
       - name: Create k8s namespace and annotations
-        run: kubectl create ns -f namespace.yml
+        run: kubectl create -f namespace.yml
 
       - name: Deploy application
         run: kapp --dangerous-override-ownership-of-existing-resources -y deploy -a ${{ env.project }} --namespace ${{ env.namespace }} -f manifests.yml

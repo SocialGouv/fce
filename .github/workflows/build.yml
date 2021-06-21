@@ -194,11 +194,23 @@ jobs:
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
           SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
 
+      - name: Generate k8s manifests
+        run: npx @socialgouv/k8s@1.9.0-alpha.20 --env dev --namespace > namespace.yml
+        env:
+          SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
+          SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
+
       - name: Archive k8s manifests
         uses: actions/upload-artifact@v2
         with:
           name: manifests.yml
           path: manifests.yml
+
+      - name: Archive k8s namespace
+        uses: actions/upload-artifact@v2
+        with:
+          name: namespace.yml
+          path: namespace.yml
 
   deploy:
     name: Deploy application
@@ -218,6 +230,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: manifests.yml
+
+      - name: Download k8s namespace
+        uses: actions/download-artifact@v2
+        with:
+          name: namespace.yml
 
       - name: Notify deployment start
         uses: bobheadxi/deployments@v0.4.3
@@ -239,12 +256,14 @@ jobs:
           mkdir ~/.kube
           touch ~/.kube/config
           echo ${{ secrets.SOCIALGOUV_KUBE_CONFIG_DEV }} | base64 -d > ~/.kube/config
+
       - name: Create k8s namespace and annotations
-        run: |
-          kubectl create ns ${{ env.namespace }} || true
-          kubectl annotate ns ${{ env.namespace }} azure-pg-admin-user=${{ env.project }} || true
+        run: kubectl create ns -f namespace.yml
+
       - name: Deploy application
         run: kapp --dangerous-override-ownership-of-existing-resources -y deploy -a ${{ env.project }} --namespace ${{ env.namespace }} -f manifests.yml
+        env:
+          RANCHER_PROJECT_ID: c-gjtkk:p-8j5hf
 
       - name: Notify deployment end
         uses: bobheadxi/deployments@v0.4.3

@@ -199,7 +199,7 @@ jobs:
           SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
 
       - name: Generate k8s manifests
-        run: yarn k8s generate:dev namespace > namespace.yml
+        run: yarn k8s generate:dev _namespace > namespace.yml
         env:
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
           SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}

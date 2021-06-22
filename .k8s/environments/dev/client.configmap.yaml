@@ -6,5 +6,5 @@ data:
   REACT_APP_SEARCH_KEY: search-o4473eqn2fnyazad7wcxuve9
   REACT_APP_SEARCH_ENGINE_NAME: fce
   REACT_APP_SEARCH_ENDPOINT_BASE: https://appsearch.fce.fabrique.social.gouv.fr
-  REACT_APP_MAINTENANCE: false
+  REACT_APP_MAINTENANCE: "false"
 

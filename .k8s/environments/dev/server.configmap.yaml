@@ -5,7 +5,7 @@ metadata:
 data:
   CLIENT_BASE_URL: client-url
   PORT: 80
-  MAGIC_KEY_EXPIRE:
+  MAGIC_KEY_EXPIRE: ""
   #Appsearch
   JWT_APPSEARCH_ADDRRESS: http://52.143.135.133:3002/api/as/v1/
   JWT_APPSEARCH_ENGINE_NAME: fce
@@ -18,5 +18,5 @@ data:
   MINIO_ARCHIVE_FILES: 0
 
   #MATOMO
-  MATOMO_ID_SITE:
-  MATOMO_URL:
+  MATOMO_ID_SITE: ""
+  MATOMO_URL: ""

@@ -6,7 +6,7 @@ const tag = process.env.CI_COMMIT_TAG
   ? process.env.CI_COMMIT_TAG.slice(1)
   : process.env.CI_COMMIT_SHA;
 
-const manifests = create("app", {
+const manifests = create("server", {
   env,
   config: {
     containerPort: 80,

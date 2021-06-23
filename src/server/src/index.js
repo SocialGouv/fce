@@ -69,6 +69,11 @@ function run() {
 
   app.use(Sentry.Handlers.errorHandler());
 
+  app.get("/healthz", (req, res) => {
+    res.status(200)
+      .send("ok")
+  });
+
   app.listen(
     port,
     () => {

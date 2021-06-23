@@ -10,7 +10,7 @@ const manifests = create("server", {
     containerPort: 80,
   },
   deployment: {
-    image: `ghcr.io/socialgouv/fce-server:sha-${tag}`,
+    image: `ghcr.io/socialgouv/fabrique/fce-server:sha-${tag}`,
     container: {
       resources: {
         requests: {

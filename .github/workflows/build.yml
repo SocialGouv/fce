@@ -41,7 +41,7 @@ jobs:
       - id: docker_meta
         uses: "crazy-max/ghaction-docker-meta@2e1a5c7fa42123697f82d479b551a1bbdb1bef88"
         with:
-          images: ghcr.io/socialgouv/fabrique/${{ env.project }}
+          images: ghcr.io/socialgouv/fabrique/fce-server
           labels: |
             org.opencontainers.image.title=fce-server
             org.opencontainers.image.documentation=https://github.com/SocialGouv/${{ env.project }}/tree/${{ github.sha }}/fce-server
@@ -130,7 +130,7 @@ jobs:
       - id: docker_meta
         uses: "crazy-max/ghaction-docker-meta@2e1a5c7fa42123697f82d479b551a1bbdb1bef88"
         with:
-          images: ghcr.io/socialgouv/fabrique/${{ env.project }}
+          images: ghcr.io/socialgouv/fabrique/fce-client
           labels: |
             org.opencontainers.image.title=fce-client
             org.opencontainers.image.documentation=https://github.com/SocialGouv/${{ env.project }}/tree/${{ github.sha }}/fce-client

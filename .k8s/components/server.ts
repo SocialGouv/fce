@@ -7,7 +7,7 @@ const tag = process.env.SHA;
 const manifests = create("server", {
   env,
   config: {
-    containerPort: 80,
+    containerPort: 3000,
   },
   deployment: {
     image: `ghcr.io/socialgouv/fabrique/fce-server:sha-${tag}`,

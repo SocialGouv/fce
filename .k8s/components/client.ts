@@ -2,9 +2,7 @@ import env from "@kosko/env";
 
 import { create } from "@socialgouv/kosko-charts/components/app";
 
-const tag = process.env.CI_COMMIT_TAG
-  ? process.env.CI_COMMIT_TAG.slice(1)
-  : process.env.CI_COMMIT_SHA;
+const tag = process.env.SHA;
 
 const manifests = create("client", {
   env,

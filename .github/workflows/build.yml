@@ -195,6 +195,7 @@ jobs:
       - name: Generate k8s manifests
         run: yarn -s k8s generate:dev > manifests.yml
         env:
+          SHA: ${{ github.sha }}
           RANCHER_PROJECT_ID: c-gjtkk:p-8j5hf
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
           SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
@@ -202,6 +203,7 @@ jobs:
       - name: Generate k8s namespace
         run: yarn -s k8s generate:dev _namespace > namespace.yml
         env:
+          SHA: ${{ github.sha }}
           RANCHER_PROJECT_ID: c-gjtkk:p-8j5hf
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
           SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}

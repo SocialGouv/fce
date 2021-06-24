@@ -35,11 +35,9 @@ ingress.spec?.rules[0].http.paths.push({
   path: "/api",
   pathType: "Prefix",
   backend: {
-    service: {
-      //@ts-expect-error
-      serviceName: "server",
-      servicePort: 80,
-    }
+    //@ts-expect-error
+    serviceName: "server",
+    servicePort: 80,
   }
 })
 

@@ -8,7 +8,7 @@ const manifests = create("server", {
   env,
   config: {
     containerPort: 3000,
-    subDomainPrefix: "api-",
+    ingress: false
   },
   deployment: {
     image: `ghcr.io/socialgouv/fabrique/fce-server:sha-${tag}`,

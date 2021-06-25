@@ -16,12 +16,14 @@ export default class AuthRequests extends Model {
   }
 
   create({ email, code }) {
+    console.log("Creating auth request", email, code);
     return this.db
       .query(
         'INSERT INTO "authentification_requests" (email, code) VALUES ($1, $2)',
         [email, code]
       )
       .then((res) => {
+        console.log("Created auth request", res.rows);
         return res && res.rowCount;
       })
       .catch((e) => {

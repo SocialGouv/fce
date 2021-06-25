@@ -26,6 +26,7 @@ router.post("/requestAuthCode", async (req, res) => {
       throw new Error("La génération du code a échouée");
     }
 
+    console.log(code);
     const mail = new Mail();
 
     try {

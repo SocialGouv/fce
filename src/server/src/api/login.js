@@ -47,7 +47,6 @@ router.post("/requestAuthCode", async (req, res) => {
 
     const mailingList = new MailingList();
     const isSubscribedResponse = await mailingList.isSubscribed(email);
-    console.log("isSubscribed", isSubscribedResponse);
 
     return res.send({
       success: true,

@@ -113,11 +113,11 @@ export default class Auth {
     return { isValidCredential: true };
   }
 
-  static generateCode(email) {
+   static async generateCode(email) {
     const authRequests = new AuthRequestsModel();
     const code = generateRandomCode();
 
-    authRequests.delete(email);
+    await authRequests.delete(email);
 
     if (!authRequests.create({ email, code })) {
       return false;

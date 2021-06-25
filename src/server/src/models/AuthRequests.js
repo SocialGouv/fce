@@ -7,7 +7,6 @@ export default class AuthRequests extends Model {
         email,
       ])
       .then((res) => {
-        console.log(res.rows);
         return res.rows && res.rows.length ? res.rows[0] : null;
       })
       .catch((e) => {
@@ -17,14 +16,12 @@ export default class AuthRequests extends Model {
   }
 
   create({ email, code }) {
-    console.log("Creating auth request", email, code);
     return this.db
       .query(
         'INSERT INTO "authentification_requests" (email, code) VALUES ($1, $2)',
         [email, code]
       )
       .then((res) => {
-        console.log("Created auth request", res.rows);
         return res && res.rowCount;
       })
       .catch((e) => {

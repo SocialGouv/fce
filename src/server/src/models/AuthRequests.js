@@ -7,6 +7,7 @@ export default class AuthRequests extends Model {
         email,
       ])
       .then((res) => {
+        console.log(res.rows);
         return res.rows && res.rows.length ? res.rows[0] : null;
       })
       .catch((e) => {

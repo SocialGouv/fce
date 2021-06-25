@@ -52,7 +52,7 @@
     "nodemailer": "^6.4.5",
     "nthline": "^1.0.2",
     "p-limit": "^2.2.2",
-    "pg": "^7.18.2",
+    "pg": "8.6.0",
     "pg-cursor": "^2.1.6",
     "promise-queue": "^2.2.5",
     "query-string": "^6.13.8",

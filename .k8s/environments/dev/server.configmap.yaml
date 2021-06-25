@@ -5,7 +5,7 @@ metadata:
 data:
   CLIENT_BASE_URL: client-url
   PORT: "3000"
-  MAGIC_KEY_EXPIRE: ""
+  MAGIC_KEY_EXPIRE: "3600"
   #Appsearch
   JWT_APPSEARCH_ADDRRESS: http://52.143.135.133:3002/api/as/v1/
   JWT_APPSEARCH_ENGINE_NAME: fce

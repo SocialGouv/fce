@@ -126,7 +126,7 @@ const isIndividualEnterprise =
       entreprise_categoriejuridiqueunitelegale === config.elasticIndexer.appSearchConst.physicPersonJuridicCode
 
 const computedKeys = {
-  id: ({ siret }) => siret,
+  id: ({ siret }) => siret.padStart(14, "0"),
   departement: ({ codepostaletablissement }) => codepostaletablissement.slice(0, 2),
   enterprise_name: ({
       denominationunitelegale,

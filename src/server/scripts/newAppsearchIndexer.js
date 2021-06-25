@@ -3,7 +3,7 @@ const fs = require("fs");
 const config = require("config");
 const { Transform, Writable } = require("stream");
 const AppSearchClient = require("@elastic/app-search-node");
-const { compose, mapKeys, pick, toLower, mapValues, reverse, chunk, map, split, join } = require("lodash/fp");
+const { compose, mapKeys, pick, toLower, mapValues } = require("lodash/fp");
 const pLimit = require("p-limit");
 
 const CONCURRENCY = 10;
@@ -186,18 +186,6 @@ const bufferStream = new Transform({
 });
 
 let written = 0;
-
-const splitDisplay = compose(
-  join(" "),
-  map(join("")),
-  reverse,
-  map(reverse),
-  chunk(3),
-  reverse,
-  split(""),
-);
-
-const v = 1000000;
 
 const writable = new Writable({
   objectMode: true,

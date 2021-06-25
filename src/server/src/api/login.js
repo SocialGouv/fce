@@ -20,7 +20,7 @@ router.post("/requestAuthCode", async (req, res) => {
       throw new Error("Connexion refusée");
     }
 
-    const code = Auth.generateCode(email);
+    const code = await Auth.generateCode(email);
 
     if (!code) {
       throw new Error("La génération du code a échouée");

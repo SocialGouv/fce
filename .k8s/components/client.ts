@@ -2,16 +2,18 @@ import env from "@kosko/env";
 import { create } from "@socialgouv/kosko-charts/components/app";
 import {getManifestByKind} from "@socialgouv/kosko-charts/utils";
 import { Ingress } from "kubernetes-models/networking.k8s.io/v1/Ingress";
+import {getGithubRegistryImagePath} from "@socialgouv/kosko-charts/utils/getGithubRegistryImagePath";
 
-const tag = process.env.SHA;
+const project = "fce";
+const name = "client";
 
-const manifests = create("client", {
+const manifests = create(name, {
   env,
   config: {
     containerPort: 80,
   },
   deployment: {
-    image: `ghcr.io/socialgouv/fabrique/fce-client:sha-${tag}`,
+    image: getGithubRegistryImagePath({ name, project }),
     container: {
       resources: {
         requests: {
@@ -40,5 +42,17 @@ ingress.spec?.rules[0].http.paths.push({
     servicePort: 80,
   }
 })
+
+ingress.spec?.rules?.forEach(rule => {
+  if (process.env.IS_PROD === "true") {
+    rule.host = `new-${rule.host}`
+  }
+});
+
+ingress.spec?.tls?.forEach((tls => {
+  if (process.env.IS_PROD === "true") {
+    tls.hosts = tls.hosts?.map((host) => `new-${host}`)
+  }
+}))
 
 export default manifests;

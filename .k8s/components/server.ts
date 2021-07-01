@@ -1,17 +1,19 @@
 import env from "@kosko/env";
 
 import { create } from "@socialgouv/kosko-charts/components/app";
+import {getGithubRegistryImagePath} from "@socialgouv/kosko-charts/utils/getGithubRegistryImagePath";
 
-const tag = process.env.SHA;
+const project = "fce";
+const name = "server";
 
-const manifests = create("server", {
+const manifests = create(name, {
   env,
   config: {
     containerPort: 3000,
     ingress: false
   },
   deployment: {
-    image: `ghcr.io/socialgouv/fabrique/fce-server:sha-${tag}`,
+    image: getGithubRegistryImagePath(({ project, name })),
     container: {
       resources: {
         requests: {

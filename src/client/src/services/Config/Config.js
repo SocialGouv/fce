@@ -6,6 +6,7 @@ let config = null;
 const log = console.warning || console.error || console.log;
 
 const globalConfig = {
+  api_endpoint: "/api",
   maintenanceMode: process.env.REACT_APP_MAINTENANCE === "true",
   auth: {
     expire: 86400, // 1j,
@@ -174,7 +175,9 @@ function initConfig() {
   } else {
     log("Cannot get value of : window.location.hostname");
   }
-  config = {};
+  config = {
+    ...globalConfig
+  };
 }
 
 initConfig();

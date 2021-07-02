@@ -12,6 +12,8 @@ test("kosko generate --prod", async () => {
       CI_COMMIT_SHA: "",
       GITHUB_REF: "v1.2.3",
       GITHUB_SHA: "0123456789abcdefghijklmnopqrstuvwxyz0123",
+      PRODUCTION: "true",
+      PRODUCTION_NAMESPACE: "fce",
       RANCHER_PROJECT_ID: "c-gjtkk:p-8j5hf",
   })).toMatchSnapshot();
 });

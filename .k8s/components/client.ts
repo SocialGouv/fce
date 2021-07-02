@@ -45,13 +45,13 @@ const createManifests = async () => {
   })
 
   ingress.spec?.rules?.forEach(rule => {
-    if (process.env.IS_PROD === "true") {
+    if (process.env.PRODUCTION === "true") {
       rule.host = `new-${rule.host}`
     }
   });
 
   ingress.spec?.tls?.forEach((tls => {
-    if (process.env.IS_PROD === "true") {
+    if (process.env.PRODUCTION === "true") {
       tls.hosts = tls.hosts?.map((host) => `new-${host}`)
     }
   }))

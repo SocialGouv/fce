@@ -10,7 +10,6 @@ test("kosko generate --dev", async () => {
       ...project("fce").dev,
       CI_COMMIT_TAG: "",
       CI_COMMIT_SHA: "",
-      GITHUB_REF: "v1.3.2",
       GITHUB_SHA: "0123456789abcdefghijklmnopqrstuvwxyz0123",
       RANCHER_PROJECT_ID: "c-gjtkk:p-8j5hf",
     })

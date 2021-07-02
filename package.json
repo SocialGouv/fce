@@ -21,5 +21,9 @@
   "scripts": {
     "commit": "git-cz",
     "k8s": "yarn --silent --cwd .k8s"
+  },
+  "dependencies": {
+    "k8s": "^0.4.15",
+    "kubernetes-models": "^1.7.1"
   }
 }

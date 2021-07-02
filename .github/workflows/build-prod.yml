@@ -201,14 +201,12 @@ jobs:
         env:
           SHA: ${{ github.sha }}
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
-          SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
 
       - name: Generate k8s namespace
         run: yarn -s k8s generate:prod _namespace > namespace.yml
         env:
           SHA: ${{ github.sha }}
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
-          SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
 
       - name: Archive k8s manifests
         uses: actions/upload-artifact@v2
@@ -235,7 +233,7 @@ jobs:
         run: |
           cat ".github/prod.env" >> $GITHUB_ENV
           echo "project=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
-          echo "namespace=${GITHUB_REPOSITORY#*/}-${GITHUB_REF##*/}" >> $GITHUB_ENV
+          echo "namespace=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
       - name: Download k8s manifests
         uses: actions/download-artifact@v2
         with:

@@ -4,6 +4,8 @@ const config = require("config");
 
 const pool = new Pool(config.get("db"));
 
+console.log(config.get("db"));
+
 pool.on("error", (err, client) => {
   console.error("Unexpected error on idle client", err);
 });

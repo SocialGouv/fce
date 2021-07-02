@@ -82,7 +82,7 @@ export default class Auth {
           "Votre demande de connexion a expirée, veuillez demander un nouveau code.",
       };
     }
-
+    console.log(code, authRequest.code);
     if (code !== authRequest.code) {
       authRequestsModel.incrementFailure(email);
       return {
@@ -91,7 +91,7 @@ export default class Auth {
       };
     }
 
-    authRequestsModel.delete(email);
+    await authRequestsModel.delete(email);
 
     return {
       isValidCode: true,
@@ -113,11 +113,11 @@ export default class Auth {
     return { isValidCredential: true };
   }
 
-  static generateCode(email) {
+   static async generateCode(email) {
     const authRequests = new AuthRequestsModel();
     const code = generateRandomCode();
 
-    authRequests.delete(email);
+    await authRequests.delete(email);
 
     if (!authRequests.create({ email, code })) {
       return false;

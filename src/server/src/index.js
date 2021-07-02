@@ -1,4 +1,3 @@
-import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
 import * as Sentry from "@sentry/node";
@@ -53,24 +52,31 @@ function init() {
 
   app.use(bodyParser.json()); // support json encoded bodies
   app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+  app.get("/", (req, res) => {
+    console.log("getting");
+    res.status(200)
+      .json({
+        status: "ok",
+        message: "server running"
+      });
+  });
 }
 
 function run() {
-  const htdocs_path = path.resolve(__dirname, "./htdocs");
   app.use(Sentry.Handlers.requestHandler());
-  app.use(express.static(htdocs_path));
   app.use("/api", apiRouter);
 
-  app.get("*", function (req, res) {
-    res.sendFile("index.html", { root: htdocs_path });
-  });
-
   app.use(Sentry.Handlers.errorHandler());
+
+  app.get("/healthz", (req, res) => {
+    res.status(200)
+      .send("ok")
+  });
 
   app.listen(
     port,
     () => {
-      console.log(`Serving files from: ${htdocs_path}`);
       console.log(`Listening on ${host || ""}:${port}`);
     }
   );

@@ -8,21 +8,24 @@ import mailingListSignup from "../templates/email/mailingListSignup";
 export default class MailingList extends Model {
   async isSubscribed(email) {
     try {
+      console.log("Sending is subscribed");
       const selectEmailResponse = await this.db.query(
         "SELECT * FROM mailing_list WHERE email = $1",
         [email]
       );
 
+      console.log("IsSubscribed reponse received")
       if (!selectEmailResponse) {
         throw new HttpError(
           "Postgres query error (MailingList::isSubscribed)",
           500
         );
       }
-
+      console.log("isSubscribedSuccess");
       return { isSubscribed: !!selectEmailResponse.rowCount };
     } catch (e) {
-      return e;
+      console.error(e);
+      return { isSubscribed: false };
     }
   }
 

@@ -22,12 +22,6 @@ const config = {
     password: process.env.PG_PASSWORD,
     database: process.env.PG_DB,
     ssl: process.env.PG_SSL === "true",
-    /* ssl: {
-      rejectUnauthorized: false,
-      ca: fs.readFileSync("/var/certs/root.crt").toString(),
-      key: fs.readFileSync("/var/certs/postgresql.key").toString(),
-      cert: fs.readFileSync("/var/certs/postgresql.crt").toString()
-    } */
   },
   sentryUrlKey:
     "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",

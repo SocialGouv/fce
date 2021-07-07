@@ -15,9 +15,9 @@ export default class Effectif extends Model {
         return null;
       });
   }
-  fileUploadedFormMonth() {
+  fileUploadedFormMonth(siret) {
     return this.db
-      .query("SELECT DISTINCT(mois) FROM etablissements_dsn_effectif")
+      .query("SELECT DISTINCT(mois) FROM etablissements_dsn_effectif where siret = $1", [siret])
       .then((res) => {
         return res.rows;
       })

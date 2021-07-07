@@ -191,6 +191,11 @@ spec:
             backend:
               serviceName: server
               servicePort: 80
+          - path: /strapi
+            pathType: Prefix
+            backend:
+              serviceName: strapi
+              servicePort: 1337
   tls:
     - hosts:
         - fce-mybranch.dev2.fabrique.social.gouv.fr
@@ -414,6 +419,186 @@ spec:
       targetPort: 3000
   selector:
     app: server
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: strapi
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: strapi
+  namespace: fce-mybranch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: strapi
+        application: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/strapi:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+          name: strapi
+          ports:
+            - containerPort: 1337
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1280Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          startupProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+          envFrom:
+            - secretRef:
+                name: strapi-env
+            - configMapRef:
+                name: strapi-env
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: strapi-env
+  namespace: fce-mybranch
+  labels:
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+spec:
+  encryptedData:
+    DATABASE_HOST: >-
+      AgAp3qv3c5FUqf+Sv5A/1wm2h+rB/GNg1aeliFNyrXKgNikJMZ6DzAWdtKTOxpLKnQtc3oEjAc2mFlZvAiA4e3sqrOY8cVFH4kp665S0I0cd/NA1paTNNLy0GgQ/bEEmdR0Qc/UqGo6j4FATn0oNhTIaX+YwkAQv+ebvKLZSxYIHmyavl3ODvumkNOjUzujhKioVoAVVBMT9CaSiLH6B1uDVI6subrlftKlWmv5Y4BmV+6DNeikyYXRSp5qTVEXzElqEcT5fMLNnJDcXOSgVG9g0GKBx9wUanClvjhPQi0M4Cg6U0z0/n3Khn0KlO17IGQwnn2e1p/p3Zf0GG2bOwV79TU24nj0hdPWcO7UCaJDQfi0u1tedrXZ0P0g7fZbzszyKmMM2PDwlcCbmJ+EI/oWqvVo+WB4tYKVrefwvnZ6wpfgOKpB3W3hiZr+32Jcm7uYBr9IR1BK149VrV5iOE9G0HgyJM6n6o/gNbmpdcN52EF8LsevswPT4zyFeVq1ssdLp8cFi0hPqg++Yc4+pR5HZRaalTCBZxEYmF03/hjGa6zniYWFUw2Ikg4xtHrH27E2DKVa7nEIxjjbi+wmmgReWbIZP02Fe5FE+bPrLUOtjpi9hKo1l54Zn67c6386UYUZAdyv3t1QH3M3OhIuhIqcRqF09LfHsG6ZWG2QySqcXRVJOtDDsanm/5L0IlrrJca4AcnD5sOP5xqNFa7VFa/omQMHV52hPaJ1RegJEFMQUSB+wrQ==
+    DATABASE_NAME: >-
+      AgAOFeRyhnnpla5dLcfPo3G7+40O1PAJngS8u8ueBMml82zo0e2/HT6lieTdhtT6SaBKzinrjVbeCanVE7KrLTXqzFjru2jOsX0UiYkCS2YViqWVLfrBKahWEcCjC7/qwiz8Tb99us6191yR9m7mRWM/RdI60TnaL24eYN9TtMYQrTZxESmoISx/uaVaDCJO8D1FkuheCOTxazv3KpWgc7aHzi0pRfJN2iSehKw50WD8gUR4l8M9uQBJHtcbD4o1OT5DrDMeZxuKnQkMxrWmRXo8YJ87rXJ+DwWgpsMDH6KFWlT94dtchGF0EvigW0PAq4gXzYSzG4Ho7glEB0anQY6zJ1JWTaXUtAf3IzboEIcyGXVzFNWYrZe8XIsauLFSLlUWcgRfdS4d2KHS6Lbncst1vbutEhVcpv1H/8Zn0CcLgfjdj9m1fYVm7k1Rvx8D4ko/NXN8BeBvyx8ugtm2N+2KZryaAGj+Txqnk9tM9Xt/Y5iO0UvvG6CYvf6O4k+5Ue2lkB3sR9jaPedb9sniox45o+CVaAH0mgMKqfoWrM4A6WzS/w/bwjOstni+ZZkAUpeFH6gBfY4tZ0hxspFr3/gzawrxPxG5ASlR5lEH8fkrZPfI9LmqLYHZ/mls/tyk9TtuA+WbL1vaC2HYP0ytAh+LB/vIslNy80sTZaGHY0Ftz6PjSKzxUwdsCnpFWzaLKED3HMQPSFQ=
+    DATABASE_USERNAME: >-
+      AgDXmEFMx75AKtwRh0x68wIjbIT//mTk5SwJucjT10s/zqiUbwfoeX6BkJKjgVQP5MbuB/3RIMHo6Ti9NfssdRqRHCZdgwH9DzAU8feVPE94KSTaUKj12CI1laUJL/uZ/QJ0JCru/QOpjzgurZqMKBWll2+DXyotCQcDKh6/ymKevaqnzY3DpyiXQ3HA8uaev3ahhn/INbc6bY8FJZz1HSoTBv3kYmb5WzO0D48MK6vFttCaW0Y1OACEBbicZwcw+Tf39lntjUKIbY2MQKgm740PtvTw78wWjXTbYEZ2KfrNKR7dzDTq0PLhTUYp2h2umuMfeyElY6h7BLde1lfAhnsX8e7t4rK23xm89Gupuc5WXfK5qFvHv+e6z2wp38rS9fr72EgOtwr0a3D8vQRhh7JESg11H/WcgTbyhaI0TZNQcDwNGO+2/3+yv6XoA86EAStDq2J7bzBEbiFpASt4KUqGg3kNs0K4QvC3FC4kUzIOUhrdD+pjiGkESlZ+JV02xLe1+vCstO0uA7J/14+rQivf0wXmUN6a6455yJsTqV1SXMXXDqLCHVDF90aybpWbGU6IFhCYDdFjIR6rxHVBZVR+/ySFnXV5gq1DpqnK5yPmBd1QNhGnWnN5ScuaGGnCtO4QJyYPJGPLSdGFvO3FUtlqaNybzvhM8RPowjtlTCH/BRKYcI9bSGwP+2MeTdp+O//2Fq1nKQ==
+    DATABASE_PASSWORD: >-
+      AgAJSatblsF5fyteEXkM0uVon2HnGdo/puZca3YFuQHkw+e/K4QA8vOms1W62pA5U99yVhnRqa7RUJbhvcP1uZExnKREFkMNGaHh/FzWNmj/tLFCOC/VHpEH2DtRGe7jMMQxdo5+5kVyXwFAT2SLmCxiwCSm7LPdCtVntD4zxpvfPjwEMZTvmrQgcPNq9IrSYpfpKXSzO9uZr4ilcDaweeiiFvGMG3mlPJLiG1Z2KRXegAiCuaqS7bcPYWwLJmW5rL5aFkN/q/qsBJFJYczXzYgL9ZhAWLwE2c1ilzyoYjE2RZocA925p3XWoYf6zeqwy5hrC7g5YxDquMMVkn0MczwDGfNe/EBD0Dx3rfx4/ALiyYm+xTv2Q6F/hOp+xsfYCuuaoplA8B+OQuKd8nUS91kBnXr3OIPD44LeSi3OHM7jQfO1nGyREY3syYSoc9YtheA70qADyVNmb4IEIm7zCnnz6Kal/Zn0hk/LJVdWbSfL4IoZ8qQx1JFj1F1Yli3xTQIOx6xkwsefal1AbMoc/eiYlUQORZ6CIauUXgfpllPfXQxFf81r2KohRF2lSCbjOy5gTMMT6gDhkaDbWIOiW4od9aUz71f9HOyovoEq8zFHACTBJB/iAYQ1bE5qyCmXviMNN6tcfBXzGpfXEzZj6q23rAw1IQA+0cD3d60KLFHIuj/JkK5X4ArxOAN9HXvwMo2GQhxPRbhRHYOke9Hn
+    STORAGE_ACCOUNT: >-
+      AgBNnXFWmiojImfGi5+uien27zYUTHDH97rbJf/OruVZBNlGM2VPL7uqMGLVjnXYSo+7tJnZ355jZVcwiMoSFCjSGZOp7czIAGPjiyWHL7R8NbrSCBuVN+yiuf8PZRvbUIt/gPgUuTeAn81aWaJLdfe/opKDya/2azuFIpECUYpEKM56B1aMHX3oru2K8p5VpBgwrDjMfk7f2SwhJQFtyBKk5XhfrIZq8ss++mypVs+VNbc37P3QxY1NJa0t7YV7wGkGbozlAbAh5wO3DizlNA0tNtxTLJ/D1kwo1VpA4fbyUiAiqNPuwmEEYO/uhi3rQ0qFqqkAarQ6zRlBXrKVoHIpKeKfYYuP187N3MKR6X3F6beGKVMFTWAc5AA7UAfkAn5LAUjyZ4Injem9KzDjT3swpJtZgc7Q05yD5SOeDSUDBZM2kPV7SVJMUGKfT1OnqHFdWKq8ejkM2IcM530zLXyNEa9dfksbAkcUZvrtdBva6r+tdJBvzCvHB5WfFUJSre1cALQqqTHEj/8DeP+wAXvQ5YIVjzPSjKbs6rcZpt4xTvJUQ55Z1A/pkOrCvOAVYAG76y9seKkLdSsryCup/P7C/dscHW4MufRT4uIsNUn4RLToeaEjxJkwkSnGiDovURWVTebEvoagK3RLBSP9bheaxEvHnFyIVXq7UU9iSO44GBTCCfmx11G7N/sBSfup8C7fU6L7uhU=
+    STORAGE_ACCOUNT_KEY: >-
+      AgDVERVQx4p+cXOPLFpEKjESFHFiT6euDR5w0XtXxgM7cDsCxuZs6d5AOGbecWSOnC/xpOyf90h+I6ORSKwjxWmdpKO5RlW1+22+2B+c0Vq0gQClrj9P/3fC+nNCagfHXrschHQt9C78LIKMat1SYG5z85g5HWGN94D7j5yu1ZL2vffeRm0CE8bQB8tsXyjvvEEJdZqYkVnO6IBIweNEgA+Wyn1Qtu/Mnz0BYLXu1KBMl+fBSimch3bME5pko3eKMKQD4DRLcKSBCiJAggAmARqeWrINgjm0zhwO9RZbc9DEkSeZmgzFNvQqF2YaQ6lkFi9mMD45vsL2iPxTHFp3Bz10Us/nJcUj34bCtFaD8qo0X2qS2+wveOECJxdrToessEMR9zZPPbXasYJdDBm+x4r7jq2sryBuvF0hy2mWXbJdCgGOB0QsKCwexjjJeOhFYft1av8r50D0ZDCkhdc38wjKHIIGWaF1vMKe2EsUSOurKzaMeYoM6tLxdGTyfwFYVoGHqWFit+YNDdWUn3YmjT2Z+u4UdmCL8pyoo5UhLK79laXUfaOU1Ss+evyA1rZGOBXIafa6XnpAYKbFZnhzjO/t6GtfRMWpR5nCfOVjXP45xwI6TMU07BP0MFusNJqIr7taCiFz0QvIv4xllz8i3t1qrPkiK/v3X/kJDyfgA6s4CEaZjeb2m3qT80EMSrkS8Ldh/vUu+XCCAw93tmxYgILELkk88e0FL10Bvmc5VN/smGtrzOu4/4Bjvthjzy7+KXz85lpr8arVGkawhEyRVANNmLi21xzaKOIeotHhyG2l0ebZgZs1p3BD
+    STORAGE_CONTAINER_NAME: >-
+      AgC00oHWlzqelg7DzDSl8Sg3+fw7/mdw0CuT3WNDoVdstlvom56yVeiuRoaldf6K+BTEgsreSfKntjjlIbRQ7Gm4aB0+V3URqd6On1bB92OlcnTFED50ct1j/0yF1Ma70zJsigZOP6N1yZQA4rYzLQ7etPSSBFHJVwzAHLpbGOJS7jo+fAFEIUM36/Ra6BDLMFkZP3ZG9NWcEQUlc2XmzGE4t1SP8YeCXI38kEkMihEIMU+vOgqoaGOKdSA7qIt9sJLIoaYVrO6DTSLRVe6ULoYV5Pab36qlMJifhCr8wEsIuE5NkqkTFUQb9aZGHFNYroS1Hn+EWVtQQEoAs8wM+LJeW4sDEcTMqgVUeKfdwn599yJT6VdXZ3eIPpCMqKcPxl0Ep0I3W/wABJu2kPPryNXTVL6/ziEeZPsX7WUypbTMCk60XE3XbhJDSZj7y74VXs0CdrMRt87Yi1dJ9wK0r48cldsRcWHqr9yPVKFORTUCLyODLFbs+YuqPJaUKSxka6BiWZT8GM120scAsULYnqHKLjaEi5rh8Uiasq1iVMXran3kL8hZi13tvhJndPtKIcoOebAE17bkL+ukW7Z+9UsRqsxxl1IuKSVwhhW4pVspryzzcYjlLiUPJqycOG/6gkn68RFPcN+XsuS9QjDw38Lly1xjNdBdlX2dF90Tvuhwg92UlW+eIsnmVveo6zfQPp5gwo3I90A=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: strapi-env
+      labels:
+        application: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: strapi-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  namespace: fce-mybranch
+data:
+  STORAGE_URL: https://fcedev.blob.core.windows.net
+  DATABASE_SSL: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: strapi
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: strapi
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce-mybranch
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 1337
+  selector:
+    app: strapi
   type: ClusterIP
 "
 `;

@@ -2,19 +2,31 @@ import env from "@kosko/env";
 
 import { create } from "@socialgouv/kosko-charts/components/app";
 import { getGithubRegistryImagePath } from "../utils/getGithubRegistryImagePath";
+import { Probe } from "kubernetes-models/v1";
 
 const project = "fce";
-const name = "server";
+const name = "strapi";
+
+const probe = new Probe({
+  httpGet: {
+    path: "/_health",
+    port: "http",
+  },
+  initialDelaySeconds: 30,
+});
 
 const manifests = create(name, {
   env,
   config: {
-    containerPort: 3000,
+    containerPort: 1337,
     ingress: false
   },
   deployment: {
     image: getGithubRegistryImagePath(({ project, name })),
     container: {
+      livenessProbe: probe,
+      readinessProbe: probe,
+      startupProbe: probe,
       resources: {
         requests: {
           cpu: "100m",

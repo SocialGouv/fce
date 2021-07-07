@@ -42,6 +42,13 @@ const createManifests = async () => {
       serviceName: "server",
       servicePort: 80,
     }
+  }, {
+    path: "/strapi",
+    pathType: "Prefix",
+    backend: {
+      serviceName: "strapi",
+      servicePort: 80,
+    }
   })
 
   ingress.spec?.rules?.forEach(rule => {

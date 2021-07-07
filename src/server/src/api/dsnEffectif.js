@@ -40,7 +40,7 @@ router.get("/dsn-effectif/:type/:identifier", withAuth, async (req, res) => {
 
   try {
     const allYearEffectif = await effectifs.search(identifier);
-    const allMonthToShow = await effectifs.fileUploadedFormMonth();
+    const allMonthToShow = await effectifs.fileUploadedFormMonth(identifier);
 
     const monthWithFile = allMonthToShow.map((row) => row.mois);
     const lastTwelveMonthsToFetch = eachMonthOfInterval({

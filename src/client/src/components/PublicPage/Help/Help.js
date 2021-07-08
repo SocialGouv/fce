@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import UsersFeedback from "../../../containers/UsersFeedback";
 import LoadSpinner from "../../shared/LoadSpinner";
-import Config from "../../../services/Config";
 
 import "./help.scss";
 
@@ -40,18 +39,11 @@ const Help = ({ pageData = null, isLoading, hasError }) => {
                   <li className="help-video__item" key={item.titre}>
                     <div className="help-video__title">{item.titre}</div>
                     <video className="help-video__video" controls>
-                      <source
-                        src={`${Config.get("strapi.domain")}${item.video.url}`}
-                        type="video/mp4"
-                      />
+                      <source src={item.video.url} type="video/mp4" />
                       <p>
                         Votre navigateur ne prend pas en charge les vidéos
                         HTML5. Voici{" "}
-                        <a
-                          href={`${Config.get("strapi.domain")}${
-                            item.video.url
-                          }`}
-                        >
+                        <a href={item.video.url}>
                           un lien pour télécharger la vidéo
                         </a>
                         .

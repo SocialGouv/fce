@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "faq_sections",
+  "info": {
+    "name": "FAQ Section",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Titre": {
+      "type": "string",
+      "required": true
+    },
+    "questions": {
+      "type": "dynamiczone",
+      "components": [
+        "faq.question-faq"
+      ]
+    }
+  }
+}

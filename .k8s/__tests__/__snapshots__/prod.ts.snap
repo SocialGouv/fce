@@ -477,7 +477,7 @@ metadata:
   namespace: fce
 spec:
   rules:
-    - host: strapi.fce.fabrique.social.gouv.fr
+    - host: strapi-fce.fabrique.social.gouv.fr
       http:
         paths:
           - backend:
@@ -486,7 +486,7 @@ spec:
             path: /
   tls:
     - hosts:
-        - strapi.fce.fabrique.social.gouv.fr
+        - strapi-fce.fabrique.social.gouv.fr
       secretName: strapi-crt
 "
 `;

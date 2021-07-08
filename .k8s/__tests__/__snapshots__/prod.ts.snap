@@ -157,11 +157,6 @@ spec:
             backend:
               serviceName: server
               servicePort: 80
-          - path: /strapi
-            pathType: Prefix
-            backend:
-              serviceName: strapi
-              servicePort: 1337
   tls:
     - hosts:
         - fce.fabrique.social.gouv.fr
@@ -460,5 +455,38 @@ spec:
   selector:
     app: strapi
   type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-fce
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  labels:
+    app: strapi
+    application: fce
+    owner: fce
+    team: fce
+  name: strapi
+  namespace: fce
+spec:
+  rules:
+    - host: strapi.fce.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: strapi
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - strapi.fce.fabrique.social.gouv.fr
+      secretName: strapi-crt
 "
 `;

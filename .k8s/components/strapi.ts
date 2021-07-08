@@ -19,7 +19,7 @@ const manifests = create(name, {
   env,
   config: {
     containerPort: 1337,
-    subDomainPrefix: "strapi.",
+    subDomainPrefix: "strapi-",
   },
   deployment: {
     image: getGithubRegistryImagePath(({ project, name })),

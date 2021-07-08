@@ -191,11 +191,6 @@ spec:
             backend:
               serviceName: server
               servicePort: 80
-          - path: /strapi
-            pathType: Prefix
-            backend:
-              serviceName: strapi
-              servicePort: 1337
   tls:
     - hosts:
         - fce-mybranch.dev2.fabrique.social.gouv.fr
@@ -600,5 +595,39 @@ spec:
   selector:
     app: strapi
   type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: strapi
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: strapi
+  namespace: fce-mybranch
+spec:
+  rules:
+    - host: strapi.fce-mybranch.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: strapi
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - strapi.fce-mybranch.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
 "
 `;

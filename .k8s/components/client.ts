@@ -2,7 +2,7 @@ import env from "@kosko/env";
 import { create } from "@socialgouv/kosko-charts/components/app";
 import { getManifestByKind } from "@socialgouv/kosko-charts/utils";
 import { Ingress } from "kubernetes-models/networking.k8s.io/v1/Ingress";
-import {getGithubRegistryImagePath} from "../utils/getGithubRegistryImagePath";
+import { getGithubRegistryImagePath } from "../utils/getGithubRegistryImagePath";
 
 const project = "fce";
 const name = "client";

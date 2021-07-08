@@ -144,7 +144,7 @@ const globalConfig = {
     idcc: "https://www.legifrance.gouv.fr/liste/idcc?idcc_suggest="
   },
   strapi: {
-    domain: "https://fce.strapi.fabrique.social.gouv.fr",
+    domain: `//strapi-${window.location.hostname}`,
     path: {
       "/a-propos": "/pages/1",
       "/politique-de-confidentialite": "/pages/6",

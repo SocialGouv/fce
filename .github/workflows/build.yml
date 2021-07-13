@@ -126,11 +126,6 @@ jobs:
           cd ./src/client
           CI=false npm run build
 
-      - name: Build docker image
-        run: |
-          cd ./src/client
-          docker build -t fce-client .
-
       - id: docker_meta
         uses: "crazy-max/ghaction-docker-meta@2e1a5c7fa42123697f82d479b551a1bbdb1bef88"
         with:
@@ -255,6 +250,92 @@ jobs:
         run: |
           echo "${{ steps.docker_push.outputs.digest }}"
 
+  BuildN8N:
+    strategy:
+      # Don't fast-fail on tag and master
+      fail-fast: ${{ github.event_name == 'pull_request' || (github.ref !=
+        'refs/heads/master' && !startsWith(github.ref, 'refs/tags/')) }}
+
+    name: Building N8N image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get project name
+        run: |
+          echo "project=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+
+      - name: Set up Node.js 14.x
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14.x
+
+      - uses: actions/checkout@v2
+
+      - name: Load environment variables
+        run: |
+          cat ".github/preprod.env" >> $GITHUB_ENV
+
+      - name: Install
+        run: |
+          cd ./src/n8n
+          npm install
+
+      - name: Build
+        run: |
+          cd ./src/n8n
+          CI=true npm run build
+
+      - id: docker_meta
+        uses: "crazy-max/ghaction-docker-meta@2e1a5c7fa42123697f82d479b551a1bbdb1bef88"
+        with:
+          images: ghcr.io/socialgouv/fce/n8n
+          labels: |
+            org.opencontainers.image.title=fce-n8n
+            org.opencontainers.image.documentation=https://github.com/SocialGouv/${{ env.project }}/tree/${{ github.sha }}/fce-n8n
+          tags: |
+            type=sha
+            type=raw,value=sha-${{ github.sha }}
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      - id: docker_buildx
+        name: Set up Docker Buildx
+        uses: "docker/setup-buildx-action@2a4b53665e15ce7d7049afb11ff1f70ff1610609"
+        with: { }
+
+      #- if: "${{ github.event_name != 'pull_request' }}"
+      - name: Login to ghcr.io/socialgouv Registry
+        uses: "docker/login-action@f3364599c6aa293cdc2b8391b1b56d0c30e45c8a"
+        with:
+          password: "${{ secrets.GITHUB_TOKEN }}"
+          registry: ghcr.io
+          username: "${{ github.repository_owner }}"
+
+      - name: /tmp/.buildx-cache cache
+        uses: "actions/cache@v2"
+        with:
+          key: "${{ runner.os }}-fce-client-buildx-${{ hashFiles('./src/client/Dockerfile') }}"
+          path: /tmp/.buildx-cache
+          restore-keys: |
+            ${{ runner.os }}-fce-client-buildx
+
+      - id: docker_push
+        name: Push
+        uses: "docker/build-push-action@e1b7f96249f2e4c8e4ac1519b9608c0d48944a1f"
+        with:
+          builder: "${{ steps.docker_buildx.outputs.name }}"
+          cache-from: "type=local,src=/tmp/.buildx-cache"
+          cache-to: "type=local,dest=/tmp/.buildx-cache"
+          context: "./src/n8n"
+          labels: "${{ steps.docker_meta.outputs.labels }}"
+          push: 'true'
+          tags: "${{ steps.docker_meta.outputs.tags }}"
+      - name: Image digest
+        run: |
+          echo "${{ steps.docker_push.outputs.digest }}"
+
   Manifests:
     name: Generate k8s manifests for server
     runs-on: ubuntu-latest
@@ -283,6 +364,9 @@ jobs:
           SOCIALGOUV_CONFIG_PATH: ${{ github.workspace }}/.socialgouv/config.json
           SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN: ${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
 
+      - name: Control manifests
+        run: cat manifests.yml
+
       - name: Archive k8s manifests
         uses: actions/upload-artifact@v2
         with:
@@ -298,7 +382,7 @@ jobs:
   deploy:
     name: Deploy application
     runs-on: ubuntu-latest
-    needs: [ BuildServer, BuildFront, BuildStrapi ]
+    needs: [ BuildServer, BuildFront, BuildStrapi, BuildN8N, Manifests ]
     steps:
 
       - name: Checkout repository

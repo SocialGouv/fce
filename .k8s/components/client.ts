@@ -15,18 +15,6 @@ const createManifests = async () => {
     },
     deployment: {
       image: getGithubRegistryImagePath({ name, project }),
-      container: {
-        resources: {
-          requests: {
-            cpu: "100m",
-            memory: "128Mi",
-          },
-          limits: {
-            cpu: "500m",
-            memory: "1280Mi",
-          },
-        },
-      },
     },
   });
 

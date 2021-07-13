@@ -91,10 +91,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 1280Mi
-            requests:
-              cpu: 100m
               memory: 128Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
           startupProbe:
             failureThreshold: 12
             httpGet:
@@ -195,6 +195,293 @@ spec:
     - hosts:
         - fce-mybranch.dev2.fabrique.social.gouv.fr
       secretName: wildcard-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: n8n
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: n8n
+  namespace: fce-mybranch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n8n
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: n8n
+        application: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/n8n:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: n8n
+          ports:
+            - containerPort: 5678
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1280Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          volumeMounts:
+            - name: downloads
+              mountPath: /tmp/download
+            - mountPath: /home/node/.n8n
+              name: n8n-db
+          envFrom:
+            - secretRef:
+                name: n8n-env
+            - configMapRef:
+                name: n8n-env
+      volumes:
+        - name: downloads
+        - name: n8n-db
+          persistentVolumeClaim:
+            claimName: n8n-db
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: n8n-env
+  namespace: fce-mybranch
+  labels:
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+spec:
+  encryptedData:
+    DB_POSTGRESDB_HOST: >-
+      AgAD3FbL08cgTLZonKLteWaeoFVpQYnL8PGD11NkFISheB0kgWN8/avm4POR6Ycn9Ar4veP5y28EG+vIsxSWAEEjJEdb8ctaKh1fn3cbA71dk1oN5kS7Ej0FZk0X8Ue0KkXP/9KRXar1YYrw4asHqdeD6a9SWjOY3vJKqkq73tHFlWN7+6YmwUkmdlKVGX81bmpErT/3lQBK3b/5jZZjWdd6qEn+ZD4VmBIWvQ01maGDWD/K66NsiDPPVwETMO9PPDDDChEhjNkUpBv0EoYhRsN6QEA3hL4crBrEziL/5hXZe/YvatxCJ1t2/lDT8eV9o9eD9Ba4PYRQr4911mxYmrWkBtYN9E5kMHGXhw3MRou2Zk9vo+PiRQW2xWEzg3TW8TwfsRpz7gdyP78HP+xc37l5vX7miiGI/GJNE04isFWUirkcwhdv+cWG3gjwabfDnO+pOAJBWPrUquu2eO4jOLBzg7i8iN+vXsm3r23SDGr3IwzZIrd++vkMRJn5dbx4lJYFE4IKQ1vSkN+uu9zNDKawgO0u7y0fpBRAAU2ZkpTm6FCd6nVyMoy4Z3PmWUXB6syVpIgHgU0wQelCpVmASYqzi6vj87HmNrohZZvVdKDshiX05FW8h1leC/knQUkt9HSkV34Yhjv9DT6eov9MpDVU2yEI5dS+h6w4Yl+JUQ0F63If58sEiINhqvQXYYW2yehYJHXMlFUnXW1dUksKKXnZiFNxDWzVQOiM+NJHdYS1avup1w==
+    DB_POSTGRESDB_USER: >-
+      AgAhc4rf1hXqG+rxq2zL3Cn9MQvhZJPfZvVubUn93nX7r1EXYfJiI2zZiL6MSkkPbuDtFfLRQFw7p9G7+LHl9y9gJy5DpQva5Qeq5/6gcWkR41FakTgne4Pm6B+1U8AN9z9QzMSIQ49z/rIt1REFnXtLaRzVRqs8jT9LzBtbEK9r85G165qEy/rriqabmCSfVNZAWXHQ90oMoyPTfPqo/oiqcqYknxkrid2QciFocEJCyE2hPaitD7lNJo1YAExPLm2w/v2wtsUoLzyvVcc8+upusafrek29O5MhH/dqwnW70X2vXjbPrR2NMJeJuqHzafaGkPb3ZXZSGulaV4rhmgEVzi9CvZd5g3MkkmMklaQP+MX1AB4faqm61p9Q+GQ/ZtK6jBSc/NYwQf3SHr0eDwNVQkuzlgNC04hUcWpK0rfMs7QqdUjEp2kgdKwt6wzYtFUsd4rIFGtythKPgTtWw44i6pBtA0hjAcnAiUhzDUPN8mknt1WK90GRqaXknaNwpAHdTMXyGQH8L32Fo+rV5RAsyoalESipBPw8aiXJn6ZJuUa3AcWJ1zL4v46yMcRlNQBdAbrhFelrKNRSk21R6X4ut++ckuHQkng9AEwKHBzEMwYe1pv9vCLKQGS2CxsNQWhSKQKfMmcN19+3iqbuXdw3K2SbAjp9/EF6h233hjSdfd+0rNzo8B65+5+PcTrK+eAaOQVmI2ogpsd/+9g=
+    DB_POSTGRESDB_PASSWORD: >-
+      AgB2DlPlTj8/M8wri27yueeLkKdkEX0iVm7mFp8JHTexRLe8J7Dg89vCkk6k5RiKAG/e1XzqAZaWBFywtD8C/W6LGIW4VZbDzm/1oKU21ZRJS6u765pmPE07iWY8SBWNt4gQJJ8qNvWAJi2lKrw5JLqKbnTLfIypk/+y7N9NAWMN/n6nH1ykifAM7daITsCNaBVss8o23B4ICEyTkbQ1jMdyR83a2YesdLqCBuIkn6Q+bGDqYrW3cx3DXMK17etXxoVxBsZYBD4coJC/Aw+KNmWig6QYSMdCIw1zrzxWrKy3MaSJ+IRLyNJRYA0rIzzxS838aGa3iPCW8XcMabt1xY+dq67hggeXrmWGirTWnlDIejB9r1sU0xWpN9kXjRYPWTtMsQe3qFlNJLXBVNBALGdqMyI8Ia0ENzW/3UDZ5TtUBOup+Cg+wGWYly2DSr2p9ocInQGZ6Z7+ABP1mLqGbkRW/iVvrQZ4m0TPWZGmPsOQ/RjnJNtYq7t6T7ON+edOjETn9TOIKlk0zQtC1RZcrBpWBQtsK6oyTL9udObWVMxk2eygApikmj3fxpTuoiYkPs8U11bk9cbB4ZA6K3Z8eCDYVR2asIrkwrUMoskWpMrF+4ll0pTb93uql6IhXYUWk49syrHx1CGovG+A1v12agggF+3yzrhKlhY/Mi9TGDDinC0Zlw9R//paNxU+30aXwGGaZjT5+Xs1Wzl2hhGhle8=
+    DB_POSTGRESDB_DATABASE: >-
+      AgBrTvxpEayp2dpQIQPP7zSs7XkXeLdZToRxG8srOo238scV52rMaWp+zZRDZQjQh7e2jHUCDAbO2j2tlTMdpSlwsBnx3B+yzs+VMM0/1Cn8ruCLVULxKr2ZFSsRm0NdOPZ6ZJE9L/cX8UxQin/RNpsLONZpvuFyDZXtmC7u90uBg/rG9QhcLwdEzow5FuDXRrpgr78rH0ELVmsULHOXPrPUakAiQeQ+IHwttu3symX9dY5Ev3UAOqg5/7Ycku8s9D060bquvnjgKQALkIiBFLsxdJPM0TwmRhZQhxuWkE9e+uN3wPwCnFpLcY0Q4CtWYSyr/bQESltcllE2YFhosJIsBZhGr5QmL/Sxpp4ms4EsxtE0fHzIVJYiMQq+u4oN6EGyfOuPJAhvmtOJ9v5DYd+Dtp1fsw9aRi7IIqeiW7t/1mO4CyMdCnnu+OBu4ndEWWkFthLXFhTPh4nIlh8aI1eRUBQ19LfNQ9uCI+r4M3AozTz6I8MujrMf+EYE7Kfm+pISrNf0bktxn3auDz67mm4OK+dcJQ7qJUovqVsvuzplUe0+EGfTfvQleiy4TFWHKoheWIi9QO6EAtU2qlUWn9XYavLmyGhwZvnCOagwa1pRvNE9vRVeO1OK4nrHSCEdEe64QtAi4T0H6SaynW0GU93pT4nXpxKN+ybPkxXrYjxVAd+O1QAHiIsOkta09sEGo8h6544=
+    N8N_BASIC_AUTH_USER: >-
+      AgA5yfdvG0fGNmiFmzeFtRwLEJ8c2QPGT/04TWyNanjKOHedOk/yQpnJ/s3r14iYYzHTkeNtvjYaBsB8xwPIKX5bn+vHsM4i2poqnP2UrmIDspOdkbYnwpamkOZpD5f6Y8tCpJukym4F0D6XYmaimtbnUUepz9ipAgp/iPtBi2aU1bYL9zqW3fzkV51O0U11xbeiVaTD+ClClnt+Ehpwxu05454uIRuAkW3EqRi4DAH8CRWPAvAUHNUKYTYj4mhR+kiCwc4sR44jtCMTT2STlbu4bgW/Kj/aTrQYcL8AakVzWl/fyA+drrrGYdPTGnl1nNEPHmdG9neigN6Bkn500gA5tNA4clpKWiJoTWKv0YElsPwpDA5lsNGqP/bZtP71WngwyFwsQHrkbjNhPJ6bEeT+deSNCtKgA/Rtpxi6J8D7/uIpCCU/BhgMeBCg1NTfd2K9x5/zFU83MZ74+4E02WMFBHYGgBJO9tP7ex8qNWevpO9GXNyH09cpR9QWcpCfdRAZcgCcQmMkYcrWHzd6kVoEl1yr3Agh2RFDdSYcSz1XKUV8VJzhg/Vq28Jsx3Ci9jXExrQm5cDF4YmRu/Ox+E+5DFcCHLIjqLteZqWLx9x2TMkgK32o/q2WnU6T5Bi5Si0lGb/zLn7/Gf4QrW477ePDrkRyOCH4Rxxw+y8M3A19/vfkEj3E/w7v8bJefLTxobpKQAE=
+    N8N_BASIC_AUTH_PASSWORD: >-
+      AgBeEMikMnCob0Kq4cLsnZcrbVgO5P5nB2eW2LGsDEcffna94VEKvpo1Q9J/peixlpeSI6r647HfVKqC+Po0FzGCy5un1sQ7pEX7NfYAk/+zLRo+cuaf6sY6nKdcYC9Jp2CTf6YZlBR5RLY8uEJ4tuYuXuBbabNh1HEZPvPMzvTg371JRVUgBvF8ZUedDAxl1LF3Iqf5YLgvlIi1IYtuajg8YArZNkr57fuNr4OeaEWojE5MTQQJ1QI4CsECGN295PmjLHntW83u0bksJfejrP0CobxeLFXS5GjcRtd7UQGF+7oQYWNohLByS1TSkWCasb4OLl3fQMwwdfZKF/gfqT5jwQ1EVtgrmXXvOVIMuuTqx5qg85Cr4aeDYuEK4+THQaRpBlzMBBP3kSorb4+5bS7NadsiLULu+XtNkbt2ecKpwT9GTWxgZZXnB+C1SPy55IY1XXHLfXT0O/DZvF2CQrGv37fW9QDlkRpZAdRlphN+sCmSyu6H9Nqa5CN+U4yFc9cmrQQNpL5saDhK4kU0bmeIO3cxU490z+saWxlnhhlZU89qqgBm7X99togdAZRgMZt3YRn0ZViYwlAo7FSLVcytJbj7eSa1ifFAIuy2fYW52nmJPhsRQUfIqZ0pCrz/Ho4aMAP4/btRuR1XKhQMOtJVz+2VOPdRxIal3luBtQTFnjUjFECNVQgFcRYxJEOtWlFFLzgm0J1nSaEDA8f03A4CzR832Xm3QMO7gvOLpFPsPA==
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: n8n-env
+      labels:
+        application: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: n8n-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  namespace: fce-mybranch
+data:
+  DB_TYPE: postgresdb
+  N8N_PORT: '5678'
+  N8N_BASIC_AUTH_ACTIVE: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: n8n
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: n8n
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce-mybranch
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5678
+  selector:
+    app: n8n
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: n8n
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: n8n
+  namespace: fce-mybranch
+spec:
+  rules:
+    - host: n8n-fce-mybranch.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: n8n
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - n8n-fce-mybranch.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: n8n-db
+  annotations:
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  namespace: fce-mybranch
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  selector:
+    matchLabels:
+      usage: fce-n8n-db
+  storageClassName: ''
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    usage: fce-n8n-db
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: fce-n8n-db
+  annotations:
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce-mybranch
+spec:
+  accessModes:
+    - ReadWriteMany
+  azureFile:
+    secretName: azure-fce-volume
+    secretNamespace: fce-mybranch
+    shareName: n8n-db
+  capacity:
+    storage: 1Gi
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: ''
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -416,6 +703,46 @@ spec:
     app: server
   type: ClusterIP
 ---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: azure-fce-volume
+  labels:
+    application: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  namespace: fce-mybranch
+spec:
+  encryptedData:
+    azurestorageaccountname: >-
+      AgCDKbl6Aon8etQpc+1lXi2pefHBkAUv3mWNgyofwpcDLT+L5REHvMj+XwO/CAJb+8E2WbeQbRPBo9G4RQo8ZUzWT3+Xi7YzB+XD6ckPL0ccly5oCgM7ishON6C+ybdSMwEF2c06Nv7K+2b3SZ36I9mnTilOQU4NVkFmCGivKj3nVAMBxkCz88WVUTMwtd6bKkExkGTL14yK8CHk/bWlg72c25ujGvklg5ffZddcokxEgUfLdJXYQ4/oosXI7HnpKCy6NH/YAU6jE3fYeXo/7MCsBN2tHdWEdqVu4wMs3ymuYPkSGkLHJfMkbvTrcYvGxjMB0yU8bC3lFFarcJRIqYS1AuS3dTRUbxkJo472OUHIAZOIVMA4wpdI/WOOwCBGXTKz7rgxdKRUALJBhN+atYSa7oynh29se0U+9q1HMjTO3Dr6JFm2D9txulxddbwXZf/HLoCZdyG0K1/IoV3ImXJhMULKhiOPpghhNTHRu/6upCVhEtkn0VlVI9bAbEOUIemHDLBZP3TQQKM8zYI9FsWcJC2zLNLftJ5YHQl9+5hWXyRDGMDJau9EfPG7hXEO7kyhABpaIMhjyqhLCoUAP6dc03yjA1loO6MJA/Z82Rb20RMuqvYh/8WFi4feqqJHMBkzUJwj3fugGUc6lDrY9ieikNJEOY9vW4xvZ0pUF11XVM2ekvQLGNMUDDHecjVybKY3c4bszFA=
+    azurestorageaccountkey: >-
+      AgAVSbINE67jQ7Ubw4lHfxpN7PTIHtLEfp2MxUTl5DOtRbggN8yNPt8ChCGU/6lNAja+TV5BbNFZp78joFDoXbxvGpAssFEDUXHsmNUX03OL1oj0Z7rQMeF7EnjakelTBtsFAL3aN1AsB/cDNl9gbDAIQCcwCmswhndo3hCsOjJzuVxK1jOf53ZN5EvLFXEuGspDSxURBysoVzl57R7ahA6BsZ2wEskbsF4R9eYlb8oaya/a1wcNLzl1Ee11nT4yFll5V8OlRYQOqnseKGGkzFazQ0WkxljAR3ROWSl335yuWfnmwJdL2U+xjXj/8CQf77z31w5kNgvhBT7mUWPrfYtAfgfULIFtlRArIPo050rZx3l8LkfP6ASW3wxGE3T1recKr0cKmrULOYHGKqnub3/RuJKyjz5VVBbfli83BOhv+fty8cZxBWDNKDY4Asrp7V6uSC8zyGQeNrrVIR8WjaqXMatQUmnhg4bcGrI3zj2wEONv/+knh/Akooe8vDU/gtgMT6IM7NiRQqL8JKdjH1Mi5wDIPUHMks2ZuFa+DdYd7aqBk668VfBnR2auS26Ek7VjLNGMCmDrb2orjNzLiBMXBEZcKUH4MI+96yh4PxOEuKswgmQOXdhIaJB7LudVlRIfma+05vSDUMJznpbHYfuJ9rTm9uxnu7oGsMIxyDnVfhaH3Ke56QQgWJAOhwpdLqnZJ+rCZGZ4JLroGPO4/uSEajp7JSjtSPvRKRLSRO2tigeK+hhXa7Hhp3aEmcSek+AUyNZJEFwqvAJQFGTOZHFO6sCzKItfafvItPczIHlbURxEozgpKHuN
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: azure-fce-volume
+      labels:
+        application: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    type: Opaque
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -477,10 +804,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 1280Mi
-            requests:
-              cpu: 100m
               memory: 128Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
           startupProbe:
             httpGet:
               path: /_health

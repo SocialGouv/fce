@@ -1,0 +1,75 @@
+{
+  "id": 1,
+  "name": "My workflow",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^(.)*export_procedure(.)*.csv$",
+        "bucket": "dgefp",
+        "outputName": "rupco_procedures.csv"
+      },
+      "name": "Example Node",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        450,
+        290
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {},
+      "name": "Rupco Procedure Ingest",
+      "type": "CUSTOM.rupcoProcedureIngest",
+      "typeVersion": 1,
+      "position": [
+        650,
+        270
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Example Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Example Node": {
+      "main": [
+        [
+          {
+            "node": "Rupco Procedure Ingest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-07-13T10:51:59.623Z",
+  "updatedAt": "2021-07-13T11:32:01.721Z",
+  "settings": {},
+  "staticData": null
+}

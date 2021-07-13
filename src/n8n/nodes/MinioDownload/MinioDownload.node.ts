@@ -4,54 +4,80 @@ import {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
+import {Client, ClientOptions} from "minio";
+import {downloadOldestFile} from "../../utils/minio";
 
-
-export default class MinioDownloadNode implements INodeType {
+export class MinioDownload implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Example Node',
+		displayName: 'Minio Download',
 		name: 'minioDownload',
 		group: ['transform'],
 		version: 1,
-		description: 'Basic Example Node',
+		description: 'Download a file from minio',
 		defaults: {
-			name: 'Example Node',
+			name: 'Download',
 			color: '#772244',
 		},
+    credentials: [{
+		  name: "minio",
+      required: true
+    }],
 		inputs: ['main'],
 		outputs: ['main'],
 		properties: [
 			// Node properties which the user gets displayed and
 			// can change on the node.
 			{
-				displayName: 'My String',
-				name: 'myString',
+				displayName: 'Download Regex',
+				name: 'downloadRegex',
 				type: 'string',
 				default: '',
-				placeholder: 'Placeholder value',
-				description: 'The description text',
-			}
+				placeholder: 'Download Regex',
+				description: 'A regex that will match the file name',
+        required: true
+			},
+      {
+        displayName: 'Bucket Name',
+        name: 'bucket',
+        type: 'string',
+        default: '',
+        placeholder: 'Bucket',
+        description: 'The fetched bucket',
+        required: true
+      },
+      {
+        displayName: 'Output file name',
+        name: 'outputName',
+        type: 'string',
+        default: '',
+        placeholder: 'Output name',
+        description: 'The name of the output file',
+        required: true
+      }
 		]
 	};
 
-
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
+	  const minioCredentials = this.getCredentials("minio") as unknown as ClientOptions;
 
-		const items = this.getInputData();
+	  const sanitizedCredentials = {
+	    ...minioCredentials,
+      port: Number(minioCredentials.port),
+      useSSL: Boolean(minioCredentials.useSSL)
+    };
 
-		let item: INodeExecutionData;
-		let myString: string;
+		const downloadRegex = this.getNodeParameter('downloadRegex', 0) as string;
+		const bucket = this.getNodeParameter('bucket', 0) as string;
+		const outputName = this.getNodeParameter('outputName', 0) as string;
 
-		// Itterates over all input items and add the key "myString" with the
-		// value the parameter "myString" resolves to.
-		// (This could be a different value for each item in case it contains an expression)
-		for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
-			myString = this.getNodeParameter('myString', itemIndex, '') as string;
-			item = items[itemIndex];
+		const client = new Client(sanitizedCredentials);
 
-			item.json['myString'] = myString;
-		}
+		const fileOutput = await downloadOldestFile(client, bucket, new RegExp(downloadRegex), outputName);
 
-		return this.prepareOutputData(items);
-
+		return [
+		  this.helpers.returnJsonArray({
+        fileName: fileOutput
+      })
+    ];
 	}
 }

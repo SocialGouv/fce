@@ -64,10 +64,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 1280Mi
-            requests:
-              cpu: 100m
               memory: 128Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
           startupProbe:
             failureThreshold: 12
             httpGet:
@@ -161,6 +161,197 @@ spec:
     - hosts:
         - fce.fabrique.social.gouv.fr
       secretName: client-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-fce
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  labels:
+    app: n8n
+    application: fce
+    owner: fce
+    team: fce
+  name: n8n
+  namespace: fce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n8n
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.gitlab.com/app: socialgouv-fce
+        app.gitlab.com/env: prod
+        app.gitlab.com/env.name: prod
+      labels:
+        app: n8n
+        application: fce
+        owner: fce
+        team: fce
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/n8n:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: n8n
+          ports:
+            - containerPort: 5678
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1280Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          volumeMounts:
+            - name: downloads
+              mountPath: /tmp/download
+            - mountPath: /home/node/.n8n
+              name: n8n-db
+      volumes:
+        - name: downloads
+        - name: n8n-db
+          persistentVolumeClaim:
+            claimName: n8n-db
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: n8n
+    application: fce
+    owner: fce
+    team: fce
+  name: n8n
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-fce
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  namespace: fce
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5678
+  selector:
+    app: n8n
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.gitlab.com/app: socialgouv-fce
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  labels:
+    app: n8n
+    application: fce
+    owner: fce
+    team: fce
+  name: n8n
+  namespace: fce
+spec:
+  rules:
+    - host: n8n-fce.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              serviceName: n8n
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - n8n-fce.fabrique.social.gouv.fr
+      secretName: n8n-crt
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: n8n-db
+  annotations:
+    app.gitlab.com/app: socialgouv-fce
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  labels:
+    application: fce
+    owner: fce
+    team: fce
+  namespace: fce
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  selector:
+    matchLabels:
+      usage: prod-n8n-db
+  storageClassName: ''
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    usage: prod-n8n-db
+    application: fce
+    owner: fce
+    team: fce
+  name: prod-n8n-db
+  annotations:
+    app.gitlab.com/app: socialgouv-fce
+    app.gitlab.com/env: prod
+    app.gitlab.com/env.name: prod
+  namespace: fce
+spec:
+  accessModes:
+    - ReadWriteMany
+  azureFile:
+    secretName: azure-fce-volume
+    secretNamespace: fce
+    shareName: n8n-db
+  capacity:
+    storage: 1Gi
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: ''
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -421,10 +612,10 @@ spec:
           resources:
             limits:
               cpu: 500m
-              memory: 1280Mi
-            requests:
-              cpu: 100m
               memory: 128Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
           startupProbe:
             httpGet:
               path: /_health

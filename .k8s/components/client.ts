@@ -42,19 +42,7 @@ const createManifests = async () => {
       serviceName: "server",
       servicePort: 80,
     }
-  })
-
-  ingress.spec?.rules?.forEach(rule => {
-    if (process.env.SOCIALGOUV_PRODUCTION === "true") {
-      rule.host = `new-${rule.host}`
-    }
   });
-
-  ingress.spec?.tls?.forEach((tls => {
-    if (process.env.SOCIALGOUV_PRODUCTION === "true") {
-      tls.hosts = tls.hosts?.map((host) => `new-${host}`)
-    }
-  }))
 
   return manifests;
 }

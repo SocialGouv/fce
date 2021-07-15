@@ -20,7 +20,7 @@ const createManifests = async () => {
     env,
     config: {
       containerPort: 1337,
-      subDomainPrefix: process.env.SOCIALGOUV_PRODUCTION ? "strapi-new-" : "strapi-",
+      subDomainPrefix: "strapi-",
     },
     deployment: {
       image: getGithubRegistryImagePath(({ project, name })),

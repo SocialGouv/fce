@@ -10,8 +10,12 @@ export interface GithubRegistryImageProps {
  * Extracts raw version from "vX.X.X" and "v.X.X.X"
  * @param versionTag
  */
-const extractVersion = (versionTag: string) =>
-  /^v\.?([0-9]+\.[0-9]+\.[0-9])$/.exec(versionTag);
+const extractVersion = (versionTag: string) => {
+  const match = /^v\.?([0-9]+\.[0-9]+\.[0-9])$/.exec(versionTag);
+
+  return match ? match[1] : null;
+};
+
 
 /**
  *

@@ -26,7 +26,7 @@ export const getGithubRegistryImagePath = ({
  name,
  project,
 }: GithubRegistryImageProps): string => {
-  const githubTag = process.env.GITHUB_REF && process.env.GITHUB_REF.split("/")[1] === "tag" ?
+  const githubTag = process.env.GITHUB_REF && process.env.GITHUB_REF.split("/")[1] === "tags" ?
     process.env.GITHUB_REF.split("/")[2] :
     process.env.GITHUB_SHA;
 

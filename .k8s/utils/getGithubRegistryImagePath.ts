@@ -11,8 +11,9 @@ export interface GithubRegistryImageProps {
  * @param versionTag
  */
 const extractVersion = (versionTag: string) => {
+  console.error(versionTag);
   const match = /^v\.?([0-9]+\.[0-9]+\.[0-9])$/.exec(versionTag);
-
+  console.error(match);
   return match ? match[1] : null;
 };
 
@@ -37,8 +38,9 @@ export const getGithubRegistryImagePath = ({
  name,
  project,
 }: GithubRegistryImageProps): string => {
+  console.error(process.env.GITHUB_REF);
   const githubTag = process.env.GITHUB_REF && process.env.GITHUB_REF.split("/")[1] === "tags" ?
-    extractVersion(process.env.GITHUB_REF.split("/")[2]) :
+    extractVersion(process.env.GITHUB_REF.split("/")[2].trim()) :
     `sha-${process.env.GITHUB_SHA}`;
 
   return `ghcr.io/socialgouv/${project}/${name}:${githubTag}`;

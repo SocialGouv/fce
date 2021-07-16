@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "faq_tutos_videos",
+  "info": {
+    "name": "FAQ Tutos vidéo"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "titre": {
+      "type": "string",
+      "required": true
+    },
+    "video": {
+      "type": "dynamiczone",
+      "components": [
+        "faq.tuto-video"
+      ],
+      "required": true
+    }
+  }
+}

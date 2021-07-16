@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  strapi:
+    container_name: strapi
+    image: strapi/strapi
+    environment:
+      - NODE_ENV=production
+      - DATABASE_CLIENT=postgres
+      - DATABASE_HOST=127.0.0.1
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=strapi
+      - DATABASE_USERNAME=${POSTGRES_NON_ROOT_USER}
+      - DATABASE_PASSWORD=${POSTGRES_NON_ROOT_PASSWORD}
+    network_mode: host
+    ports:
+      - 3002:1337
+    volumes:
+      - ./app:/srv/app
+    command: 'strapi start'
+    #command: 'strapi develop'

@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/faq-tutos-videos",
+      "handler": "faq-tutos-video.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/faq-tutos-videos/count",
+      "handler": "faq-tutos-video.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/faq-tutos-videos/:id",
+      "handler": "faq-tutos-video.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/faq-tutos-videos",
+      "handler": "faq-tutos-video.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/faq-tutos-videos/:id",
+      "handler": "faq-tutos-video.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/faq-tutos-videos/:id",
+      "handler": "faq-tutos-video.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

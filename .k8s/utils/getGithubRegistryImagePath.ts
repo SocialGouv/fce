@@ -7,6 +7,13 @@ export interface GithubRegistryImageProps {
 }
 
 /**
+ * Extracts raw version from "vX.X.X" and "v.X.X.X"
+ * @param versionTag
+ */
+const extractVersion = (versionTag: string) =>
+  /^v\.?([0-9]+\.[0-9]+\.[0-9])$/.exec(versionTag);
+
+/**
  *
  * This function will return the full path for a given docker image based on `CI_COMMIT_TAG` or `CI_COMMIT_SHA`
  *
@@ -27,7 +34,7 @@ export const getGithubRegistryImagePath = ({
  project,
 }: GithubRegistryImageProps): string => {
   const githubTag = process.env.GITHUB_REF && process.env.GITHUB_REF.split("/")[1] === "tags" ?
-    process.env.GITHUB_REF.split("/")[2] :
+    extractVersion(process.env.GITHUB_REF.split("/")[2]) :
     `sha-${process.env.GITHUB_SHA}`;
 
   return `ghcr.io/socialgouv/${project}/${name}:${githubTag}`;

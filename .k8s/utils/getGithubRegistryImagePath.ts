@@ -28,7 +28,7 @@ export const getGithubRegistryImagePath = ({
 }: GithubRegistryImageProps): string => {
   const githubTag = process.env.GITHUB_REF && process.env.GITHUB_REF.split("/")[1] === "tags" ?
     process.env.GITHUB_REF.split("/")[2] :
-    process.env.GITHUB_SHA;
+    `sha-${process.env.GITHUB_SHA}`;
 
-  return `ghcr.io/socialgouv/${project}/${name}:sha-${githubTag}`;
+  return `ghcr.io/socialgouv/${project}/${name}:${githubTag}`;
 };

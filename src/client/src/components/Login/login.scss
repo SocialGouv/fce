@@ -158,6 +158,19 @@
             @extend %success;
         }
 
+        &--info {
+            @extend %info;
+            & strong {
+                font-weight: bold;
+                color: inherit;
+            }
+
+            & h5 {
+                font-weight: bold;
+                color: inherit;
+            }
+        }
+
         &--error {
             @extend %error;
         }

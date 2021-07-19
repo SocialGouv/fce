@@ -1,0 +1,51 @@
+{
+  "id": 3,
+  "name": "Rupco Etablissement",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^(.)*export_etablissement(.)*.csv$",
+        "bucket": "dgefp",
+        "outputName": "rupco_etablissements.csv"
+      },
+      "name": "Download",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-07-19T09:01:42.570Z",
+  "updatedAt": "2021-07-19T09:01:42.570Z",
+  "settings": {},
+  "staticData": null
+}

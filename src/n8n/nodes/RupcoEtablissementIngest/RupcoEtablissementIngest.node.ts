@@ -7,16 +7,17 @@ const config: IngestDbConfig = {
     "NUMERO DE DOSSIER": "numero",
     "TYPE DE DOSSIER": "type",
     "DATE ENREGISTREMENT": "date_enregistrement",
-    "ETAT DU DOSSIER":"etat",
     "SIREN ENTREPRISE": "siren",
-    "EFFECTIF ENTREPRISE": "effectif_entreprise",
-    "EFFECTIF GROUPE": "effectif_groupe",
-    "NOM GROUPE": "nom_groupe",
     "DATE JUGEMENT": "date_jugement",
-    "SITUATION JURIDIQUE": "situation_juridique"
+    "SITUATION JURIDIQUE": "situation_juridique",
+    "SIREN ETABLISSEMENT": "siren_etablissement",
+    "EFFECTIF ETABLISSEMENT": "effectif_etablissement",
+    "SIRET ETABLISSEMENT": "siret",
+    "Nombre de Ruptures de Contrats en début de procédure Etab": "nombre_de_ruptures_de_contrats_en_debut_de_procedure",
+    "Nombre de Ruptures de Contrats en fin de procédure Etab": "nombre_de_ruptures_de_contrats_en_fin_de_procedure"
   },
-  filename: "rupco_procedures.csv",
-  table: "rupco_procedures",
+  filename: "rupco_etablissements.csv",
+  table: "rupco_etablissements",
   truncate: true,
   replaceHtmlChars: true,
   date: {
@@ -24,20 +25,19 @@ const config: IngestDbConfig = {
     format: "YYYY-MM-DD",
   },
   padSiren: true,
-  truncateRequest: "DELETE FROM rupco_procedures WHERE historique_si = FALSE OR date_enregistrement IS NULL",
-  deduplicateField: "numero",
-  nonEmptyFields: ["numero"]
+  truncateRequest: "DELETE FROM rupco_etablissements WHERE historique_si = FALSE OR date_enregistrement IS NULL",
+  nonEmptyFields: ["numero"],
 };
 
-export class RupcoProcedureIngest implements INodeType {
+export class RupcoEtablissementIngest implements INodeType {
   description: INodeTypeDescription = {
-    displayName: "Rupco Procedure Ingest",
-    name: "rupcoProcedureIngest",
+    displayName: "Rupco Etablissement Ingest",
+    name: "rupcoEtablissementIngest",
     group: ['transform'],
     version: 1,
-    description: "Rupco Procedure Ingest",
+    description: "Rupco Etablissement Ingest",
     defaults: {
-      name: 'Rupco Procedure Ingest',
+      name: 'Rupco Etablissement Ingest',
       color: '#772244',
     },
     credentials: [{

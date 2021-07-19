@@ -3,7 +3,7 @@ import {Pool} from "pg";
 import {createReadStream} from "fs";
 import * as path from "path";
 import copy from "pg-copy-streams";
-import {deduplicate, mapRow, parseCsv, sanitizeHtmlChars, stringifyCsv} from "./postgre";
+import {deduplicate, filterRows, mapRow, parseCsv, sanitizeHtmlChars, stringifyCsv} from "./postgre";
 import {DOWNLOAD_STORAGE_PATH} from "./constants";
 import { format, parseISO } from "date-fns";
 import {promisifyStream} from "./stream";
@@ -21,6 +21,7 @@ export type IngestDbConfig = {
   padSiren: boolean;
   deduplicateField?: string;
   truncateRequest?: string;
+  nonEmptyFields?: string[];
 }
 
 const identity = <T>(value: T) => value;
@@ -41,10 +42,13 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     }
   }
 
+  const nonEmptyFields = params.nonEmptyFields || [];
+
   let maxDate: string;
   const readStream = createReadStream(path.join(DOWNLOAD_STORAGE_PATH, params.filename))
     .pipe(sanitizeHtmlChars())
     .pipe(parseCsv({ columns: params.fieldsMapping }))
+    .pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))
     .pipe(deduplicate(params.deduplicateField))
     .pipe(mapRow((row: Record<string, string>) => ({
       ...row,

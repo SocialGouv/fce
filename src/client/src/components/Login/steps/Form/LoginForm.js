@@ -43,7 +43,7 @@ const LoginForm = ({
             errorMessage={errorMessage}
             loading={loading}
           >
-            <div>
+            <div className="login__message">
               <InfoMessage>
                 <h5>Connection pour les agents des DDETS (PP)</h5>
                 En attendant la fin de la migration des boites aux lettre

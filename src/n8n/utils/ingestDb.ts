@@ -18,7 +18,8 @@ export type IngestDbConfig = {
     field: string;
     format: string;
   };
-  padSiren: boolean;
+  padSiren?: boolean;
+  generateSiren?: boolean;
   deduplicateField?: string;
   truncateRequest?: string;
   nonEmptyFields?: string[];
@@ -45,6 +46,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
   const nonEmptyFields = params.nonEmptyFields || [];
 
   let maxDate: string;
+  console.log(params.padSiren);
   const readStream = createReadStream(path.join(DOWNLOAD_STORAGE_PATH, params.filename))
     .pipe(sanitizeHtmlChars())
     .pipe(parseCsv({ columns: params.fieldsMapping }))
@@ -69,6 +71,15 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
           }):
           identity
       ))
+    .pipe(mapRow((row: Record<string, string>) => {
+      if (!params.generateSiren) {
+        return row;
+      }
+      return {
+        ...row,
+        siren: row.siret.substring(0, 9),
+      }
+    }))
     .pipe(stringifyCsv({ columns: params.fieldsMapping }));
 
   const truncateRequest = params.truncateRequest || `TRUNCATE TABLE ${params.table};`;

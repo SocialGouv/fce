@@ -8,6 +8,7 @@ import HeadForm from "./HeadForm";
 import Button from "../../../shared/Button";
 import Config from "../../../../services/Config";
 import SuccessMessage from "./SuccessMessage";
+import InfoMessage from "./InfoMessage";
 
 const LoginForm = ({
   login,
@@ -42,6 +43,18 @@ const LoginForm = ({
             errorMessage={errorMessage}
             loading={loading}
           >
+            <div>
+              <InfoMessage>
+                <h5>Connection pour les agents des DDETS (PP)</h5>
+                En attendant la fin de la migration des boites aux lettre
+                (mails) sur Mélanie en département, merci de vous connecter avec
+                votre adresse mail au format <strong>
+                  @direccte.gouv.fr
+                </strong>{" "}
+                sur laquelle une redirection sera maintenue pendant les
+                prochains mois
+              </InfoMessage>
+            </div>
             <div>
               <label htmlFor="email" className="label">
                 Adresse électronique (e-mail)

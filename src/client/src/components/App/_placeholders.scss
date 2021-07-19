@@ -27,3 +27,9 @@
     border: 1px solid $info-error;
     background-color: $info-error-bg;
 }
+
+%info {
+    color: $info-neutral;
+    border: 1px solid $info-neutral;
+    background-color: $info-neutral-bg;
+}

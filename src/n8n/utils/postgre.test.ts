@@ -25,12 +25,12 @@ describe("postgre", () => {
       const output = input.pipe(
         parseCsv({ columns })
       ).pipe(
-        stringifyCsv({ columns })
+        stringifyCsv({ columns: Object.values(columns) })
       );
 
       let outputData = "";
 
-      await new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         output.on("readable", () => {
           let data = output.read();
           while (data) {

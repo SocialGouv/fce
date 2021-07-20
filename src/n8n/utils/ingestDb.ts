@@ -46,7 +46,12 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
   const nonEmptyFields = params.nonEmptyFields || [];
 
   let maxDate: string;
-  console.log(params.padSiren);
+
+  const columns = [
+    ...Object.values(params.fieldsMapping),
+    ...(params.generateSiren ? [ "siren" ] : []),
+  ];
+
   const readStream = createReadStream(path.join(DOWNLOAD_STORAGE_PATH, params.filename))
     .pipe(sanitizeHtmlChars())
     .pipe(parseCsv({ columns: params.fieldsMapping }))
@@ -75,12 +80,13 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
       if (!params.generateSiren) {
         return row;
       }
+
       return {
         ...row,
         siren: row.siret.substring(0, 9),
       }
     }))
-    .pipe(stringifyCsv({ columns: params.fieldsMapping }));
+    .pipe(stringifyCsv({ columns }));
 
   const truncateRequest = params.truncateRequest || `TRUNCATE TABLE ${params.table};`;
 
@@ -94,10 +100,9 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
         if (params.truncate) {
           await client.query(truncateRequest);
         }
-        const columns = Object.values(params.fieldsMapping).join(",");
         await promisifyStream(readStream
           .pipe(
-            client.query(copy.from(`COPY ${params.table}(${columns}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+            client.query(copy.from(`COPY ${params.table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
           )
         );
 

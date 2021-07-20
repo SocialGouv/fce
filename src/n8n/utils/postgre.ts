@@ -59,8 +59,12 @@ export const parseCsv = ({ columns }: MapCsvConfig) => parse({
     header.map((column) => columns[column] || column),
 });
 
-export const stringifyCsv = ({ columns }: MapCsvConfig) => stringify({
+type StringifyCsvOptions = {
+  columns: string[]
+};
+
+export const stringifyCsv = ({ columns }: StringifyCsvOptions) => stringify({
   header: true,
   delimiter: ";",
-  columns: Object.values(columns)
+  columns,
 });

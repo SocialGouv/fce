@@ -5,12 +5,34 @@ import { decode } from "html-entities";
 import replaceStream from "replacestream";
 import { formatDate } from "./date";
 import pipe from "multipipe";
+import { IExecuteFunctions } from "n8n-core";
+import { Pool, PoolClient } from "pg";
+import {parse as parseDate} from "date-fns";
 
 export const sanitizeHtmlChars = (): Transform => {
   const htmlEntitiesRegex = /&(?:[a-z]+|#x?\d+);/gi
 
   return replaceStream(htmlEntitiesRegex, (entity) => decode(entity));
 }
+
+export const createPool = (context: IExecuteFunctions) => {
+  const pgCreds = context.getCredentials("postgres");
+
+  return new Pool({
+    ...pgCreds,
+    ssl: pgCreds && pgCreds.ssl !== "disable"
+  });
+}
+
+export const connect = (pool: Pool) => new Promise<PoolClient>((resolve, reject) => {
+  pool.connect((err, client) => {
+    if (err) {
+      reject(err);
+      return;
+    }
+    resolve(client);
+  });
+});
 
 type MapCsvConfig = {
   columns: Record<string, string>;
@@ -59,7 +81,7 @@ export const deduplicate = (field: string | undefined) => {
 export const parseCsv = ({ columns, delimiter = ";" }: MapCsvConfig) => parse({
   delimiter,
   columns: (header: string[]) =>
-    header.map((column) => columns[column] || column),
+    header.map((column) => columns[column.trim()] || column),
 });
 
 type StringifyCsvOptions = {
@@ -74,36 +96,47 @@ export const stringifyCsv = ({ columns }: StringifyCsvOptions) => stringify({
 
 type DateParam = {
   field: string;
-  format: string;
+  inputFormat?: string;
+  outputFormat: string;
 };
 
 type DateStreamReturn = {
   transform: Duplex,
-  getMaxDate: () => string | undefined
+  getMaxDate: () => Date | undefined
 };
 
 export const dateStream = (date: DateParam): DateStreamReturn => {
-  let maxDate: string | undefined;
+  let maxDate: Date | undefined;
 
   const transform = pipe(
     mapRow(
       (row: Record<string, string>) => ({
         ...row,
-        [date.field]: formatDate(row[date.field]),
+        [date.field]: formatDate(row[date.field], date),
       })
     ),
     mapRow((row: Record<string, string>) => {
-      if (!maxDate || maxDate < row[date.field]) {
-        maxDate = row[date.field];
+      const rowDate = parseDate(row[date.field], date.outputFormat, new Date());
+      if (!maxDate || maxDate < rowDate) {
+        maxDate = rowDate;
       }
       return row;
     })
   );
 
-  const getMaxDate = (): string | undefined => maxDate;
+  const getMaxDate = (): Date | undefined => maxDate;
 
   return {
     transform,
     getMaxDate,
   }
 }
+
+const padStream = (field: string, length: number) => mapRow((row: Record<string, string>) => ({
+  ...row,
+  [field]: row[field].padStart(length, '0')
+}));
+
+export const padSiren = padStream("siren", 9);
+
+export const padSiret = padStream("siret", 14);

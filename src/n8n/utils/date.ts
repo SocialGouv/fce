@@ -1,8 +1,16 @@
-import { format, parseISO } from "date-fns";
+import { format, parse, parseISO } from "date-fns";
 
-export const formatDate = (date: string) => {
+type FormatDateOptions = {
+  inputFormat?: string;
+  outputFormat: string;
+};
+
+export const formatDate = (date: string, options: FormatDateOptions) => {
   try {
-    return format(parseISO(date), "yyyy-MM-dd");
+    const parsedDate = options.inputFormat ?
+      parse(date, options.inputFormat, new Date()) :
+      parseISO(date);
+    return format(parsedDate, options.outputFormat);
   } catch (err) {
     return date;
   }

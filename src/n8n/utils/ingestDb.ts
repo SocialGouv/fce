@@ -3,9 +3,20 @@ import {Pool} from "pg";
 import {createReadStream} from "fs";
 import * as path from "path";
 import copy from "pg-copy-streams";
-import {dateStream, deduplicate, filterRows, mapRow, parseCsv, sanitizeHtmlChars, stringifyCsv} from "./postgre";
 import {DOWNLOAD_STORAGE_PATH} from "./constants";
 import {identityTransform, promisifyStream} from "./stream";
+import {
+  connect,
+  createPool, dateStream,
+  deduplicate,
+  filterRows,
+  mapRow, padSiren, padSiret,
+  parseCsv,
+  sanitizeHtmlChars,
+  stringifyCsv
+} from "./postgre";
+import {Transform} from "stream";
+import {format} from "date-fns";
 
 export type IngestDbConfig = {
   fieldsMapping: Record<string, string>;
@@ -15,25 +26,23 @@ export type IngestDbConfig = {
   filename: string;
   date?: {
     field: string;
-    format: string;
+    inputFormat?: string;
+    outputFormat: string;
   };
   padSiren?: boolean;
+  padSiret?: boolean;
   generateSiren?: boolean;
   deduplicateField?: string;
   truncateRequest?: string;
   nonEmptyFields?: string[];
   separator?: string;
+  transform?: Transform;
 }
 
-const identity = <T>(value: T) => value;
-
-export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig) => {
+export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
   const pgCreds = context.getCredentials("postgres");
 
-  const pool = new Pool({
-    ...pgCreds,
-    ssl: pgCreds && pgCreds.ssl !== "disable"
-  });
+  const pool = postgrePool || createPool(context)
 
   const nonEmptyFields = params.nonEmptyFields || [];
 
@@ -53,15 +62,8 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     .pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))
     .pipe(deduplicate(params.deduplicateField))
     .pipe(dateTransform)
-    .pipe(
-      mapRow<Record<string, string>, Record<string, string>>(
-        params.padSiren ?
-          (row: Record<string, string>) => ({
-            ...row,
-            siren: row.siren.padStart(9, '0'),
-          }):
-          identity
-      ))
+    .pipe(params.padSiren ? padSiren : identityTransform())
+    .pipe(params.padSiret ? padSiret : identityTransform())
     .pipe(mapRow((row: Record<string, string>) => {
       if (!params.generateSiren) {
         return row;
@@ -72,47 +74,29 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
         siren: row.siret.substring(0, 9),
       }
     }))
+    .pipe(params.transform || identityTransform())
     .pipe(stringifyCsv({ columns }));
 
   const truncateRequest = params.truncateRequest || `TRUNCATE TABLE ${params.table};`;
 
-  await new Promise<void>((resolve, reject) => {
-      pool.connect(async (err, client) => {
-        if (err) {
-          console.error(err);
-          reject(err);
-          return;
-        }
-        if (params.truncate) {
-          await client.query(truncateRequest);
-        }
-        try {
-          await promisifyStream(readStream
-            .pipe(
-              client.query(copy.from(`COPY ${params.table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
-            )
-          );
-        } catch (err) {
-          reject(err);
-          return;
-        }
+  const client = await connect(pool);
 
+  if (params.truncate) {
+    await client.query(truncateRequest);
+  }
 
-        if (params.date) {
-          const query = `UPDATE import_updates SET date = '${getMaxDate()}',
+  await promisifyStream(readStream
+    .pipe(
+      client.query(copy.from(`COPY ${params.table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+    )
+  );
+
+  if (params.date) {
+    const query = `UPDATE import_updates SET date = '${format(getMaxDate() || new Date(), params.date.outputFormat)}',
                           date_import = CURRENT_TIMESTAMP WHERE "table" = '${params.table}';`;
 
-          try {
-            await client.query(query);
-          } catch(err) {
-            reject(err);
-            return;
-          }
-        }
-
-        resolve();
-      });
-    })
+    await client.query(query);
+  }
 
   return [context.helpers.returnJsonArray({
     ...pgCreds,

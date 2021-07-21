@@ -1,0 +1,183 @@
+{
+  "id": 6,
+  "name": "InteractionsPoleT",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^EtablissementActifsControlés_(.)*.csv$",
+        "bucket": "dgt",
+        "outputName": "interactions_pole_t.csv"
+      },
+      "name": "Download CSV",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        0,
+        250
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^(.)*_WIKIT_UC.json$",
+        "bucket": "dgt",
+        "outputName": "wikit_uc.json"
+      },
+      "name": "Download UC JSON",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        170,
+        250
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download CSV\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            },
+            {
+              "value1": "={{$node[\"Download UC JSON\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        310,
+        250
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Interactions Pole T Ingest",
+      "type": "CUSTOM.interactionsPoleT",
+      "typeVersion": 1,
+      "position": [
+        510,
+        240
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    },
+    {
+      "parameters": {
+        "filename": "interactions_pole_t.csv"
+      },
+      "name": "Delete interactions CSV",
+      "type": "CUSTOM.deleteFile",
+      "typeVersion": 1,
+      "position": [
+        710,
+        230
+      ]
+    },
+    {
+      "parameters": {
+        "filename": "wikit_uc.json"
+      },
+      "name": "Delete UC json",
+      "type": "CUSTOM.deleteFile",
+      "typeVersion": 1,
+      "position": [
+        880,
+        220
+      ]
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download CSV": {
+      "main": [
+        [
+          {
+            "node": "Download UC JSON",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download UC JSON": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Interactions Pole T Ingest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interactions Pole T Ingest": {
+      "main": [
+        [
+          {
+            "node": "Delete interactions CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete interactions CSV": {
+      "main": [
+        [
+          {
+            "node": "Delete UC json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-07-26T09:54:47.117Z",
+  "updatedAt": "2021-07-26T15:48:58.377Z",
+  "settings": {},
+  "staticData": null
+}

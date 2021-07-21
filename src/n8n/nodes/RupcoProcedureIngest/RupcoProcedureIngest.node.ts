@@ -21,7 +21,7 @@ const config: IngestDbConfig = {
   replaceHtmlChars: true,
   date: {
     field: "date_enregistrement",
-    format: "YYYY-MM-DD",
+    outputFormat: "yyyy-MM-dd",
   },
   padSiren: true,
   truncateRequest: "DELETE FROM rupco_procedures WHERE historique_si = FALSE OR date_enregistrement IS NULL",

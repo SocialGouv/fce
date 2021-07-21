@@ -9,7 +9,7 @@
       "type": "n8n-nodes-base.start",
       "typeVersion": 1,
       "position": [
-        250,
+        90,
         300
       ]
     },
@@ -23,7 +23,7 @@
       "type": "CUSTOM.minioDownload",
       "typeVersion": 1,
       "position": [
-        450,
+        250,
         290
       ],
       "credentials": {
@@ -54,6 +54,25 @@
         900,
         280
       ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ]
     }
   ],
   "connections": {
@@ -72,7 +91,7 @@
       "main": [
         [
           {
-            "node": "Import Login Email",
+            "node": "IF",
             "type": "main",
             "index": 0
           }
@@ -89,10 +108,21 @@
           }
         ]
       ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Import Login Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2021-07-21T10:04:43.336Z",
-  "updatedAt": "2021-07-21T10:04:43.336Z",
+  "updatedAt": "2021-07-21T12:57:43.802Z",
   "settings": {},
   "staticData": null
 }

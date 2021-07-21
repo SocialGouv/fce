@@ -20,7 +20,7 @@ const config: IngestDbConfig = {
   replaceHtmlChars: true,
   date: {
     field: "date_decision",
-    format: "YYYY-MM-DD",
+    outputFormat: "yyyy-MM-dd",
   },
   generateSiren: true,
   nonEmptyFields: ["siret"],

@@ -38,11 +38,12 @@ export class DeleteFile implements INodeType {
   };
 
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-
     const filename = this.getNodeParameter('filename', 0) as string;
 
     await fs.promises.unlink(path.join(DOWNLOAD_STORAGE_PATH, filename));
 
-    return [[]];
+    return [this.helpers.returnJsonArray({
+      filename,
+    })];
   }
 }

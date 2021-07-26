@@ -27,7 +27,7 @@ class frentreprise {
     this.addDataSource({
       name: "ApiGouv",
       priority: 80, // higher prevail
-      source: new ApiGouv("https://apientreprise.fabrique.social.gouv.fr/v2/"),
+      source: new ApiGouv("https://entreprise.api.gouv.fr:443/v2/"),
     });
     this.addDataSource({
       name: "PG",

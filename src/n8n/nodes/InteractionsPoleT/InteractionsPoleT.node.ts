@@ -53,8 +53,8 @@ export class InteractionsPoleT implements INodeType {
         const wikitUc = findWikitUcByCode(wikitUcData.UC, chunk.realise_pour)
         this.push({
           ...chunk,
-          intervenant: wikitUc ? wikitUc.email : "",
-          realise_pour: wikitUc ? wikitUc.libelle : chunk.realise_pour
+          intervenant: wikitUc ? wikitUc.LIB_UC : "",
+          realise_pour: wikitUc ? wikitUc["Courrier électronique"] : chunk.realise_pour
         });
         callback();
       }

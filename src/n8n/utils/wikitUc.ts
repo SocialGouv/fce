@@ -1,8 +1,8 @@
 export type WikitUc = {
-  code: string;
-  libelle: string;
-  email: string;
+  CODE_UC: string;
+  LIB_UC: string;
+  "Courrier électronique": string;
 }
 
 export const findWikitUcByCode = (wikitUc: WikitUc[], searchedCode: string) =>
-    wikitUc.find(({ code }) => code === searchedCode);
+    wikitUc.find(({ CODE_UC }) => CODE_UC === searchedCode);

@@ -92,7 +92,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
   );
 
   if (params.date) {
-    const query = `UPDATE import_updates SET date = '${format(getMaxDate() || new Date(), params.date.outputFormat)}',
+    const query = `UPDATE import_updates SET date = '${format(getMaxDate() || new Date(), "yyyy-MM-dd")}',
                           date_import = CURRENT_TIMESTAMP WHERE "table" = '${params.table}';`;
 
     await client.query(query);

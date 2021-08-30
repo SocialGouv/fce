@@ -143,5 +143,5 @@ Secrets can be encrypted using webseal :
 
 Dev/preprod : https://socialgouv.github.io/sre-tools/
 
-Prod : https://socialgouv.github.io/sre-tools/?cluster=prod2&name=server-env&namespace=fce&scope=strict
+Prod : https://socialgouv.github.io/sre-tools/?cluster=prod&name=server-env&namespace=fce&scope=strict
 

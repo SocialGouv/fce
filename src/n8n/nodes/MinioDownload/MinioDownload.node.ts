@@ -6,6 +6,7 @@ import {
 } from 'n8n-workflow';
 import {Client, ClientOptions} from "minio";
 import {downloadOldestFile} from "../../utils/minio";
+import {createMinioClient} from "../../clients/minio";
 
 export class MinioDownload implements INodeType {
 	description: INodeTypeDescription = {
@@ -58,25 +59,18 @@ export class MinioDownload implements INodeType {
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-	  const minioCredentials = this.getCredentials("minio") as unknown as ClientOptions;
-
-	  const sanitizedCredentials = {
-	    ...minioCredentials,
-      port: Number(minioCredentials.port),
-      useSSL: Boolean(minioCredentials.useSSL)
-    };
-
 		const downloadRegex = this.getNodeParameter('downloadRegex', 0) as string;
 		const bucket = this.getNodeParameter('bucket', 0) as string;
 		const outputName = this.getNodeParameter('outputName', 0) as string;
 
-		const client = new Client(sanitizedCredentials);
+		const client = createMinioClient(this);
 
-		const fileOutput = await downloadOldestFile(client, bucket, new RegExp(downloadRegex), outputName);
+		const { outputFile, remoteFile } = await downloadOldestFile(client, bucket, new RegExp(downloadRegex), outputName);
 
 		return [
 		  this.helpers.returnJsonArray({
-        fileName: fileOutput
+        fileName: outputFile,
+        remoteFile
       })
     ];
 	}

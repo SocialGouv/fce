@@ -1,4 +1,4 @@
-import { BucketItem, Client } from "minio";
+import {BucketItem, Client, CopyConditions} from "minio";
 import { promises as fs } from "fs";
 import * as path from "path";
 import { DOWNLOAD_STORAGE_PATH } from "./constants";
@@ -56,11 +56,19 @@ export const downloadFile = async (client: Client, bucket: string, file: BucketI
   }
 }
 
-export const downloadOldestFile = async (client: Client, bucket: string, regex: RegExp, outputFileName: string) => {
+type DownloadFileOutput = {
+  outputFile: string;
+  remoteFile: string;
+}
+
+export const downloadOldestFile = async (client: Client, bucket: string, regex: RegExp, outputFileName: string): Promise<DownloadFileOutput> => {
   const files = await getFiles(client, bucket, regex);
 
   if (files.length === 0) {
-    return "";
+    return {
+      outputFile: "",
+      remoteFile: ""
+    };
   }
   const oldestFile = filterOldestFile(files);
 
@@ -68,6 +76,16 @@ export const downloadOldestFile = async (client: Client, bucket: string, regex: 
 
   await downloadFile(client, bucket, oldestFile, outputFile);
 
-  return outputFile;
+  return {
+    outputFile,
+    remoteFile: oldestFile.name
+  };
+}
+
+export const archiveFile = async (client: Client, bucket: string, filename: string) => {
+  const conditions = new CopyConditions();
+  await client.copyObject(bucket, `archives/${filename}`, `/${bucket}/${filename}`, conditions);
+
+  return client.removeObject(bucket, filename);
 }
 

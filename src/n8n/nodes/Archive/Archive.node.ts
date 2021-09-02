@@ -55,7 +55,7 @@ export class Archive implements INodeType {
     const filename = this.getNodeParameter('filename', 0) as string;
     const bucket = this.getNodeParameter('bucket', 0) as string;
 
-    const client = createMinioClient(this);
+    const client = await createMinioClient(this);
 
     await archiveFile(client, bucket, filename);
 

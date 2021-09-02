@@ -63,7 +63,7 @@ export class MinioDownload implements INodeType {
 		const bucket = this.getNodeParameter('bucket', 0) as string;
 		const outputName = this.getNodeParameter('outputName', 0) as string;
 
-		const client = createMinioClient(this);
+		const client = await createMinioClient(this);
 
 		const { outputFile, remoteFile } = await downloadOldestFile(client, bucket, new RegExp(downloadRegex), outputName);
 

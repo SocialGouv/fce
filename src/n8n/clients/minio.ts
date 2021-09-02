@@ -1,8 +1,8 @@
 import { IExecuteFunctions } from "n8n-core";
 import { Client, ClientOptions } from "minio";
 
-export const createMinioClient = (context: IExecuteFunctions) => {
-  const minioCredentials = context.getCredentials("minio") as unknown as ClientOptions;
+export const createMinioClient = async (context: IExecuteFunctions) => {
+  const minioCredentials = await context.getCredentials("minio") as unknown as ClientOptions;
 
   console.log(minioCredentials);
 

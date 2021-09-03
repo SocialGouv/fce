@@ -50,11 +50,11 @@
         "@types/request-promise-native": "^1.0.17",
         "gulp": "^4.0.0",
         "jest": "^24.9.0",
-        "n8n": "^0.129.0",
-        "n8n-workflow": "^0.11.0",
+        "n8n": "^0.136.0",
+        "n8n-workflow": "^0.66.0",
         "ts-jest": "^24.0.2",
         "tslint": "^5.17.0",
-        "typescript": "~3.5.2"
+        "typescript": "~4.4.2"
     },
     "dependencies": {
         "csv-parse": "^4.16.0",
@@ -63,7 +63,7 @@
         "html-entities": "^2.3.2",
         "minio": "^7.0.18",
         "multipipe": "^4.0.0",
-        "n8n-core": "^0.10.0",
+        "n8n-core": "^0.81.0",
         "pg": "^8.6.0",
         "pg-copy-streams": "^5.1.1",
         "replacestream": "^4.0.3"

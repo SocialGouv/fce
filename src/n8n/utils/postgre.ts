@@ -15,8 +15,8 @@ export const sanitizeHtmlChars = (): Transform => {
   return replaceStream(htmlEntitiesRegex, (entity) => decode(entity));
 }
 
-export const createPool = (context: IExecuteFunctions) => {
-  const pgCreds = context.getCredentials("postgres");
+export const createPool = async (context: IExecuteFunctions) => {
+  const pgCreds = await context.getCredentials("postgres");
 
   return new Pool({
     ...pgCreds,

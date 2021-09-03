@@ -4,8 +4,6 @@ import { Client, ClientOptions } from "minio";
 export const createMinioClient = async (context: IExecuteFunctions) => {
   const minioCredentials = await context.getCredentials("minio") as unknown as ClientOptions;
 
-  console.log(minioCredentials);
-
   const sanitizedCredentials = {
     ...minioCredentials,
     port: Number(minioCredentials.port),

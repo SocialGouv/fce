@@ -42,7 +42,7 @@ export type IngestDbConfig = {
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
   const pgCreds = context.getCredentials("postgres");
 
-  const pool = postgrePool || createPool(context)
+  const pool = postgrePool || await createPool(context)
 
   const nonEmptyFields = params.nonEmptyFields || [];
 

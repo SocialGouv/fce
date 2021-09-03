@@ -36,7 +36,7 @@ const probe = new Probe({
     path: "/healthz",
     port: "http",
   },
-  initialDelaySeconds: 30,
+  initialDelaySeconds: 60,
 });
 
 const createManifests = async () => {

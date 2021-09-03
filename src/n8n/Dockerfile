@@ -10,6 +10,7 @@ COPY ./certs/dev-db.cert /home/node/postgre.crt
 ENV DB_POSTGRESDB_SSL_CA="/home/node/postgre.crt"
 ENV DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false
 ENV N8N_CUSTOM_EXTENSIONS="/home/node/custom"
+ENV N8N_LOG_LEVEL="debug"
 
 
 COPY package.json /home/node/custom/package.json

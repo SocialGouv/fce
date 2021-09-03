@@ -1,4 +1,4 @@
-FROM n8nio/n8n
+FROM n8nio/n8n:0.136.0
 
 RUN mkdir /home/node/.n8n
 RUN mkdir /home/node/custom

@@ -9,7 +9,7 @@ test("kosko generate --prod", async () => {
     await getEnvManifests("prod", "", {
       ...project("fce").prod,
       CI_COMMIT_TAG: "",
-      CI_COMMIT_SHA: "",
+      CI_COMMIT_SHA: "xxx",
       GITHUB_REF: "v1.2.3",
       GITHUB_SHA: "0123456789abcdefghijklmnopqrstuvwxyz0123",
       PRODUCTION: "true",

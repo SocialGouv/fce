@@ -560,7 +560,7 @@
     tslib "^2.1.0"
     type-fest "^0.20.2"
 
-"@kosko/env@2":
+"@kosko/env@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@kosko/env/-/env-2.0.1.tgz#b6b4ca0278a6b5633346afa13f9c58f8146e2da5"
   integrity sha512-4XsKXKppgyrM35HwD1nAUWbb3wxCc89Aec6s+onSbiL4B7jesDI8n/pSQZEBbn5MePJh5O0DTEjCnIBEjzdCaQ==
@@ -611,33 +611,33 @@
     node-fetch "^2.6.1"
     tslib "^2.1.0"
 
-"@kubernetes-models/base@^1.5.5":
-  version "1.5.5"
-  resolved "https://registry.yarnpkg.com/@kubernetes-models/base/-/base-1.5.5.tgz#6bff274f32e081d15f084853be1322380d2a41b2"
-  integrity sha512-0XoupDEOE+qOy3BpAprcqGuI8CmRW1KwVDfXPsfUkU1uxo6fwv5VeNVzTJ0MHESLUNybgQdbdnm+iysbyFBuug==
+"@kubernetes-models/base@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@kubernetes-models/base/-/base-2.0.1.tgz#162a0d4e68d97e70a1b8cc3df4ac64697d97ed9f"
+  integrity sha512-vaQgb8n4a/yrsVbuxc1M0X3revKkn9apJcgcjtn13mgmaA/P2SNtWrOOeRjE+U8LpYjGREDf24VLL5fl55AGRw==
   dependencies:
-    "@kubernetes-models/validate" "^1.6.0"
+    "@kubernetes-models/validate" "2.0.1"
     is-plain-object "^5.0.0"
-    tslib "^2.2.0"
+    tslib "^2.3.0"
 
-"@kubernetes-models/sealed-secrets@^1.5.4":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@kubernetes-models/sealed-secrets/-/sealed-secrets-1.6.3.tgz#21aea46a2a8e91ccc3b3eb6310df7bd086fbdf80"
-  integrity sha512-n/QT4Yxtfooo+xthZaO4ewIRP+UXbdh6h+CI6gGmYVsjR0pGSai9eI9D+KDYrexlVOM0FqoZgIm1+DAVsrv5VA==
+"@kubernetes-models/sealed-secrets@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@kubernetes-models/sealed-secrets/-/sealed-secrets-2.0.2.tgz#76fda974c52abc6cf3414b32ab4243819889c005"
+  integrity sha512-Nsxc7Hj7hUydp6NYbmpDlr3nhBLCQtrisZ05QF3g8gL9ctKrRh7Djz0QaJlcN+rueDfR0fBdfqM8Nz/EE7RezA==
   dependencies:
-    "@kubernetes-models/base" "^1.5.5"
-    "@kubernetes-models/validate" "^1.6.0"
-    kubernetes-models "^1.7.1"
-    tslib "^2.2.0"
+    "@kubernetes-models/base" "2.0.1"
+    "@kubernetes-models/validate" "2.0.1"
+    kubernetes-models "2.0.2"
+    tslib "^2.3.0"
 
-"@kubernetes-models/validate@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@kubernetes-models/validate/-/validate-1.6.0.tgz#d8189ff268bd73a13d717d83fde1ff0ef64207f0"
-  integrity sha512-OIZ7X42s9UDr9scSuqzlHMAfHq7g2ZQ5XeivJN9Ozy5L7QkaT13Um4bbLrbGFeUJlhQMWfUbBxXbEBIB4ggQ6A==
+"@kubernetes-models/validate@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@kubernetes-models/validate/-/validate-2.0.1.tgz#fe421a08733ff7018f882c1e58a3b7a337964379"
+  integrity sha512-jAXVwj1MJ3T2kEF3l0TYWDvzjVm4z9C7hWxgHKPoNu6zW5/BPxeYhxbCKtXrYRY4WaGWqVUF/6ogwK/vfuisVA==
   dependencies:
-    ajv "^8.5.0"
+    ajv "^8.6.2"
     ajv-formats "^2.1.0"
-    tslib "^2.2.0"
+    tslib "^2.3.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -702,14 +702,16 @@
     eslint-import-resolver-typescript "~2.4.0"
     eslint-plugin-import "~2.23.3"
 
-"@socialgouv/kosko-charts@7.0.5":
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/@socialgouv/kosko-charts/-/kosko-charts-7.0.5.tgz#0b26bfe75087bd60924ff4fde504a350d76d6dac"
-  integrity sha512-z96+osyRTlkUQrYyE8R9w1kfDocEhjM5AXW3/fgufF8HJ4cRPz2Q0E81CRFHr2XWc4LZlHD3UtV3W4Qkqu102A==
+"@socialgouv/kosko-charts@^9.5.4":
+  version "9.5.4"
+  resolved "https://registry.yarnpkg.com/@socialgouv/kosko-charts/-/kosko-charts-9.5.4.tgz#923ee66df66d976656524563994d1bd97c85e59c"
+  integrity sha512-3xpXEkJPFpdegWK45NMwjvmKb/TEvmVs269U18oZluyLYhHuIq951sadWGtzssk0mYW+52mXvmEmglo1eDkVyg==
   dependencies:
+    "@kubernetes-models/sealed-secrets" "^2.0.2"
     "@sindresorhus/is" "^4.0.1"
     fs-extra "^10.0.0"
-    slugify "^1.5.3"
+    kubernetes-models "^2.0.2"
+    slugify "^1.6.0"
 
 "@tootallnate/once@1":
   version "1.1.2"
@@ -1016,10 +1018,20 @@ ajv@^6.10.0, ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ajv@^8.0.0, ajv@^8.0.1, ajv@^8.5.0:
+ajv@^8.0.0, ajv@^8.0.1:
   version "8.6.0"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.6.0.tgz#60cc45d9c46a477d80d92c48076d972c342e5720"
   integrity sha512-cnUG4NSBiM4YFBxgZIj/In3/6KX+rQ2l2YPRVcvAMQGWEPKuXoPIhxzwqh31jA3IPbI4qEOp/5ILI4ynioXsGQ==
+  dependencies:
+    fast-deep-equal "^3.1.1"
+    json-schema-traverse "^1.0.0"
+    require-from-string "^2.0.2"
+    uri-js "^4.2.2"
+
+ajv@^8.6.2:
+  version "8.6.2"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-8.6.2.tgz#2fb45e0e5fcbc0813326c1c3da535d1881bb0571"
+  integrity sha512-9807RlWAgT564wT+DjeyU5OFMPjmzxVobvDFmNAhY+5zD6A2ly3jDp6sgnfyDtlIQ+7H97oc/DGCzzfu9rjw9w==
   dependencies:
     fast-deep-equal "^3.1.1"
     json-schema-traverse "^1.0.0"
@@ -3360,7 +3372,7 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-kosko@^1.0.3:
+kosko@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/kosko/-/kosko-1.1.5.tgz#2787d678c81a1bd1a59572025f951d76a3b8e1fc"
   integrity sha512-IWI7ljurPUEISqy1snge701womXlo1J8LxykPDifYpmL7KXOhT+cvMmcg1LeD0VV1KAzK/rbGGlpZ+I6Idfqjw==
@@ -3368,14 +3380,14 @@ kosko@^1.0.3:
     "@kosko/cli" "1.2.5"
     import-local "^3.0.2"
 
-kubernetes-models@^1.0.3, kubernetes-models@^1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/kubernetes-models/-/kubernetes-models-1.7.1.tgz#e699a3b9454e219ff08d30fc2edaa81c9d3fd127"
-  integrity sha512-x9lI7ravBEDDhKp71H2MSznSWoQFlzWNCQ3WAtYhRROUTCXOQjS6qpqtLnXWtV8mGoHsJR/JNlNPJ0eyliv5VQ==
+kubernetes-models@2.0.2, kubernetes-models@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/kubernetes-models/-/kubernetes-models-2.0.2.tgz#d294d31f00a688a1fd205ee59ff680dbf06efa7b"
+  integrity sha512-4tonAim5mF6UFw07wnuEmQSDQ9AaNv54cwsTN32sEVBjrHtItC6RvOUJk36xn3IiFAPLIzwXHpRsjNpnLmbIKw==
   dependencies:
-    "@kubernetes-models/base" "^1.5.5"
-    "@kubernetes-models/validate" "^1.6.0"
-    tslib "^2.2.0"
+    "@kubernetes-models/base" "2.0.1"
+    "@kubernetes-models/validate" "2.0.1"
+    tslib "^2.3.0"
 
 leven@^3.1.0:
   version "3.1.0"
@@ -4385,10 +4397,10 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-slugify@^1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.5.3.tgz#36e009864f5476bfd5db681222643d92339c890d"
-  integrity sha512-/HkjRdwPY3yHJReXu38NiusZw2+LLE2SrhkWJtmlPDB1fqFSvioYj62NkPcrKiNCgRLeGcGK7QBvr1iQwybeXw==
+slugify@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/slugify/-/slugify-1.6.0.tgz#6bdf8ed01dabfdc46425b67e3320b698832ff893"
+  integrity sha512-FkMq+MQc5hzYgM86nLuHI98Acwi3p4wX+a5BO9Hhw4JdK4L7WueIiZ4tXEobImPqBz2sVcV0+Mu3GRB30IGang==
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
@@ -4759,10 +4771,15 @@ tslib@^1.8.1, tslib@^1.9.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
-tslib@^2.1.0, tslib@^2.2.0:
+tslib@^2.1.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
   integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
+
+tslib@^2.3.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
+  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tsutils@^3.17.1, tsutils@^3.21.0:
   version "3.21.0"

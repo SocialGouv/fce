@@ -6,6 +6,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   annotations:
+    socialgouv/creator: autodevops
+    janitor/ttl: 15d
     field.cattle.io/creatorId: gitlab
     field.cattle.io/projectId: c-gjtkk:p-8j5hf
     git/branch: refs/heads/mybranch
@@ -18,6 +20,7 @@ metadata:
   labels:
     azure-pg-admin-user: fce
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -37,6 +40,7 @@ metadata:
   labels:
     app: client
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -60,6 +64,7 @@ spec:
       labels:
         app: client
         application: fce
+        component: fce
         owner: fce
         team: fce
         cert: wildcard
@@ -119,6 +124,7 @@ metadata:
     app.github.com/sha: '0123456'
   labels:
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -135,6 +141,7 @@ metadata:
   labels:
     app: client
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -157,7 +164,7 @@ spec:
     app: client
   type: ClusterIP
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -172,6 +179,7 @@ metadata:
   labels:
     app: client
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -183,9 +191,12 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: client
-              servicePort: 80
+              service:
+                name: client
+                port:
+                  name: http
             path: /
+            pathType: Prefix
           - path: /api
             pathType: Prefix
             backend:
@@ -210,6 +221,7 @@ metadata:
   labels:
     app: n8n
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -233,6 +245,7 @@ spec:
       labels:
         app: n8n
         application: fce
+        component: fce
         owner: fce
         team: fce
         cert: wildcard
@@ -241,26 +254,19 @@ spec:
         - image: >-
             ghcr.io/socialgouv/fce/n8n:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
           livenessProbe:
-            failureThreshold: 6
             httpGet:
               path: /healthz
               port: http
-            initialDelaySeconds: 30
-            periodSeconds: 5
-            timeoutSeconds: 5
+            initialDelaySeconds: 60
           name: n8n
           ports:
             - containerPort: 5678
               name: http
           readinessProbe:
-            failureThreshold: 15
             httpGet:
               path: /healthz
               port: http
-            initialDelaySeconds: 0
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 1
+            initialDelaySeconds: 60
           resources:
             limits:
               cpu: 500m
@@ -269,11 +275,10 @@ spec:
               cpu: 50m
               memory: 128Mi
           startupProbe:
-            failureThreshold: 12
             httpGet:
               path: /healthz
               port: http
-            periodSeconds: 5
+            initialDelaySeconds: 60
           volumeMounts:
             - name: downloads
               mountPath: /tmp/download
@@ -306,6 +311,7 @@ metadata:
   namespace: fce-mybranch
   labels:
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -323,6 +329,20 @@ spec:
       AgA5yfdvG0fGNmiFmzeFtRwLEJ8c2QPGT/04TWyNanjKOHedOk/yQpnJ/s3r14iYYzHTkeNtvjYaBsB8xwPIKX5bn+vHsM4i2poqnP2UrmIDspOdkbYnwpamkOZpD5f6Y8tCpJukym4F0D6XYmaimtbnUUepz9ipAgp/iPtBi2aU1bYL9zqW3fzkV51O0U11xbeiVaTD+ClClnt+Ehpwxu05454uIRuAkW3EqRi4DAH8CRWPAvAUHNUKYTYj4mhR+kiCwc4sR44jtCMTT2STlbu4bgW/Kj/aTrQYcL8AakVzWl/fyA+drrrGYdPTGnl1nNEPHmdG9neigN6Bkn500gA5tNA4clpKWiJoTWKv0YElsPwpDA5lsNGqP/bZtP71WngwyFwsQHrkbjNhPJ6bEeT+deSNCtKgA/Rtpxi6J8D7/uIpCCU/BhgMeBCg1NTfd2K9x5/zFU83MZ74+4E02WMFBHYGgBJO9tP7ex8qNWevpO9GXNyH09cpR9QWcpCfdRAZcgCcQmMkYcrWHzd6kVoEl1yr3Agh2RFDdSYcSz1XKUV8VJzhg/Vq28Jsx3Ci9jXExrQm5cDF4YmRu/Ox+E+5DFcCHLIjqLteZqWLx9x2TMkgK32o/q2WnU6T5Bi5Si0lGb/zLn7/Gf4QrW477ePDrkRyOCH4Rxxw+y8M3A19/vfkEj3E/w7v8bJefLTxobpKQAE=
     N8N_BASIC_AUTH_PASSWORD: >-
       AgBeEMikMnCob0Kq4cLsnZcrbVgO5P5nB2eW2LGsDEcffna94VEKvpo1Q9J/peixlpeSI6r647HfVKqC+Po0FzGCy5un1sQ7pEX7NfYAk/+zLRo+cuaf6sY6nKdcYC9Jp2CTf6YZlBR5RLY8uEJ4tuYuXuBbabNh1HEZPvPMzvTg371JRVUgBvF8ZUedDAxl1LF3Iqf5YLgvlIi1IYtuajg8YArZNkr57fuNr4OeaEWojE5MTQQJ1QI4CsECGN295PmjLHntW83u0bksJfejrP0CobxeLFXS5GjcRtd7UQGF+7oQYWNohLByS1TSkWCasb4OLl3fQMwwdfZKF/gfqT5jwQ1EVtgrmXXvOVIMuuTqx5qg85Cr4aeDYuEK4+THQaRpBlzMBBP3kSorb4+5bS7NadsiLULu+XtNkbt2ecKpwT9GTWxgZZXnB+C1SPy55IY1XXHLfXT0O/DZvF2CQrGv37fW9QDlkRpZAdRlphN+sCmSyu6H9Nqa5CN+U4yFc9cmrQQNpL5saDhK4kU0bmeIO3cxU490z+saWxlnhhlZU89qqgBm7X99togdAZRgMZt3YRn0ZViYwlAo7FSLVcytJbj7eSa1ifFAIuy2fYW52nmJPhsRQUfIqZ0pCrz/Ho4aMAP4/btRuR1XKhQMOtJVz+2VOPdRxIal3luBtQTFnjUjFECNVQgFcRYxJEOtWlFFLzgm0J1nSaEDA8f03A4CzR832Xm3QMO7gvOLpFPsPA==
+    PG_HOST: >-
+      AgAyNnKPmupks15ubh8d3T3vD/fy6v91CbDVpocmYls+ddoMZH81Nn/y7AN06R693yn/0gz3JfdbIfoDasVnd5L34G8chN8wqMTWL1aKluHtF5YCpGZNSCX+xM1vbwBwuOJ4rXqUgISHTv/A6COGNcWYWgrUSDw+uFx/NW30yS7dsJRFdwE8OuE9cBq0B1zLaBfhJYK/cPUXUoM1vny+DAknTXJ8PQrLPhIHrJUkPpBoLp+NbaKAwHaEYTLVGlT5oD5wIoscWmTId4dcuwTPZSMkNOHVZ9S00HEcQzEyCABPxlwhFg9lnVOXCu6KhF19U1pd4frHgKBFM9SVyWIf99rXMF8K96k2iEZZxP5i4ppMbABMzAgZkpTj+DoGq02lcNozzzHmuLj7iub6d4GvxVQngAMrMI5eXw1vl0us0uDX17a7Ai7wZfrtD2+Vj3fs3Dpl0tB0iNvDy9k6PgLxIT3F6VidFLra1L/VrQa6FxqiPWunoHGbAJMNYVP0FmOMEccjMriuE5vb6M0ItwKOuQPv8wgp6pvrHVZ4fMnEdaqi6mDvkFhBTFF4aWQZ4xy33DLjveiTj1wpm5qo2i7J55RLXjvMSuygdAN3KsI3j73ds0PSysW/smZSojEFN8xTS/erwNwOrT6Z2Vx4hp2JgfMG6kJbiFtzW3Irekihy7llEDHRfUzr5DB/WLKKH6qzSiNro6egb1oljIczpG6ohnVSn+TJw77PHKS+6R3//zstPw7WAg==
+    PG_DATABASE: >-
+      AgAIj//mZ0CF9f95lIlaNN5/ldcy8xJr+zwX4P3hpRXyjE0ib1d/jKkXZ2ILQT6MVgv1mEzdxndk73iPC1M+TA2nmAbRFRCoYZOi+l2AQItv9jJmxpFi6HAge3+s6PGiWrcVF5d1PTShUry6MADCyTng3XfdAVUpCcAurgeSu2ryoRw5al0WUGfXBjY4oW5xMVYydxPSXE2N8Ws/xpjWRLHSgLPFtp59zf1Kj/SMTvP/bD8YJ/RFFq6hdmkrt4n+wHo9DpLoQCPf9H2MW1O8o4lEtSSEyTELS9S+tU9/iEpaSGNN5w/fNz7jIKbtNAgkZz+Gq7xBiw+y2lvW7hf5xIUJ8bNhGExVfC1indFUoA/duOvrXiXaw7RVN6A2EMf1NyXpwoM0s96K9rj2rClwlEzC+WzI4he3/H8n7YY7Wzr6JBRTZ6GK2em0X6qEDKCReDRmET2YVIQf48OV2M2aHWo3/4/OzhQ6/NkPR6fw+09h6aD8gVlkCPa2K9jReNHzj89SipSRRFo1OV5QZ+iRAoEbp3kPy4DFGoJbQpMxqhFmgGUvk+rRCL/bz/bFvXwfePAG460RQp+aNLuAeQfapUPD5vVsNC4MIoTWSei4ECZdl5PTl2/1eink76SDiCJ8fEam1RXoCG7JIfeisN0599+4tr0eRCj8L19dNIrrhE6TMW5lTa/TjFc+kzW39QdtqFp58OM5IQ==
+    PG_USERNAME: >-
+      AgB1yptJOgdyXN12ZORybPqPIoe1yY9rAA5XARtjAK4Jq+hq8Le3H7ltZfB6NdU/jzU1aJjRlfFkW6aUg9f5XCGoQHo3E9xmS3U+KKvPRTVwNB3UMgWHGvIwf4Y7DhA8ekTPSz5Vp2aMdO0mbPbXJBhcTVtQu5SGWUhLnItteKmI+05XoEZBnkO7F3eYTUh3H04OT/e5iV5xPLrbR4+FU5rTyFYG5p8RZq54bb51YD3I7RFPlo9+XbJtr0It7zpoVIunswJ7Se3CMDWJHs7RuNokuCkKa22zkTQuputoEefy0OIjzA1IJJz2LOIahKD0Z6dqzLKMLBf6twA/D9leWloUtgyd0MHqKtRtrgWeD2cRA6wp9+wydvrLvNXUKkrjFD/A+t1iO3A+JR0lXzpnodryl/CcRD9SUGfkQ3nSZWLQOQOYr6NMmD4hil3oqW2JWVrtZHuUtuIbvIWzAjVVmpkw0lwQoTHaQTsOU5eKZ3cHuLJaP90J1U1V4S+3Wiva0255imklNHKJjx9QFawBf6vNKWNaQk6f5WM6tZP0v2o3ktsjzXfIXxVr8j67L7aV8EZhtyaommK2NRYjoLuijASd5yyGGkaFIWMhWuMtY9RtnbgBFiAlt/yZpYSSRBPXAdh0X2nHH5xt7Gn1Ewqarhoe84pp3jWnhv5ZeZXceXr8vraNmYpHP4PvGi4uqswsWr2czH01oPxDa/spv3s=
+    PG_PASSWORD: >-
+      AgC6Z6p766k+k2Xx4DBUj9f6LaZAJIRczgegm9PWfbssif6jlWKU3tg+24Q0zPav1A+T9eU+CUPDNgzmv+mRSvLME+MKnnn6xMvlqvl3g4+/lxMc7Y8DpiiAv/TYrxcDCnA8UEoNpNeXrbtEZvXdUnCJKgrl9/qefJ7dORBsS8Vl9S/4mzAA8j8yF0qAPBvfy+oGOlSvMiRkRF94rUMGw1wZJfL/F4VEZorPq2L5qBSlEqznJW75XrkE7q8sa6NuzZqaEgNICNvL4RdGSHSZfLt8BF3qnw3rCwCtOMBgV8dCF2GzcCCIsACnVQA1APcGDswba6hGGGo0gSCG6OvD7bMlkuUwdQZXreW7BPT3Ax5GUtw0u3lxLB7y50RwBNU94UZ27/5I+Umcsj+rJiuVZ0NTMb0E0snHK9vNr8E89442dy9NGNgS8UlNlb0Gf+NY1/d/Iah+24qemoBuwpbHewh2BO5tp9sUURx2fRKEyivUdhu3wySjiOjAMiYcNfEW6hkXFZz1yZ6/0sEdMHAd3Fdur7fujgSpVBSDkl+QzGc0gvIHrhvcPanLNY47FDT016uq/936PvPcFaY7nqpI6S5I9NbOdfEPVfuSGhduKqxqmjzU8NANeQ1NAc1d4yDaSgA6yeoHYcAC7iREHxP22Wjz7BSNlpwoNrF1nQw1SfvoSj9umYtunIClqqWABDupo0+FWsmEaRRQ7QzI9CPxwTg=
+    MINIO_ENDPOINT: >-
+      AgAfnRLD67EDf9uet3ft92x7fZacT5i1xLTfYTdoM+GGAv+yPnZnYErOgjDWUQqs83ZFs8PvSYKP7yCPNZbNrk97j98rZ5+PjH6SJLhpNp1cWFbahiW7u2ZsRQ/jDpqC6h1NFh4StEVmeGrWaOFgptYnLmrLgA0+KZO96UEAxB9+VBExOV9EQRZPNhLE5msEQvNUybzU2kfOJAdTv7tsZ4yqS4RrkpORSmQFWebx1kYeFj+W6yaGz3hgRqKiKWmpMhr/rQRzQCjHnOmQ7gRblJrbkgdOhgNZQd5PkaKJtKKc2p4hVsqFhBaXD3C0WwxXu7AzRBqyirKKTMslV6I6vW3pJ9APSpaBSWbCRrLzaOF5PZXdC8t40oLuGSQ3IMx2wO7jwVwnO1vhVyF1Xi+khrQMQCJojU3YoQYgVlpDjIkYy9Su9uikEKJjfHzZlnM6WIOoQJvzycb999j6ab1d+pVmbbfFtZgqufCYJStRGyqIDBTIH9PqZBYylGi+JuAl0QvTQvI0tSlbf/Il0t8qLUOM7wBrq4JrkOzkOuWTSthJKjSqFqmgh1nwRBpY6tjO4wMoe/ROA6r7nuagfYDPgy8CEFaey4NZPr809Tz2fSc5wuIFR9lps7sS/I7q4qlRJZ91/GqG0/IRpNDvv4CtjTB3iv4V09+zBqBX8Q5h/mE33/1etY0bFuQ9gQ46QsOD6rlXyzsoL5Cf1R6SMhlo0e1k8JgH2zKAOuNYmUVF/rev5ig=
+    MINIO_USERNAME: >-
+      AgCZIyWmRdOh0PtkPtVE/eiw91+/Rgv4OfYmH7xBBiESCJBaPAHdmvMgNsjTEnhMrjzhAgUBD+ucyqMuZdOvzb0+ybFowPJ/ZG69LitYIiL99+B8xvgxZaoFCIc2we624WJSOYzzW5i9ITICNgvhrddX8J1sbvV8ZuMlgLaVBjdL0BUkR/zJhRhmKjC1zlh9Z/NinCTC/Afmkoc7CykMsstPwfKCjgjMlBnIZEel9fERcjzHPPxlzkQEsxm8ZCV+IbwK9D0AmYdrjQg082NMtIpTsDlcvd+7iJ8/sGmlK6TXDHVMKu+TmfPicXZoP2HC+LpNKjfn98/SnJGnpLZOcgxfMLXSznl6xvIA5UaCD7ZyBE0LoMOs98RhDkC8ioyTvGeV83jkKV7ZXOcwplpVOByrBDC6AiQgevWyGyBUVY0rl4ecAlKjXOVkgn+2zettMSilwTV3HIuI4Kj4h2fnaaZ/VvkNSHGA2ZhCPIDfZ1RoOUDIH5fNP0i5NPUmoOLstGfqlNBmlORvgtTxOQK3K8C3bHWUG4gnoSzpu0IYZnLxhFTmQJNw7r9ryjBNiyPRBfCwgUNRW37E3x+cTta66bXhlYlXlUXuohJ4N3PRRQFCiq7ZsnqEW9KSaQ/c/Sdgsl1x+hmLiP7ER4SxV0KfcN5y6TyyCDST/ZpDJ78LsH9wjrNMGbvKafoFa1zd2ElYnjFrkLxJPStlwA==
+    MINIO_PASSWORD: >-
+      AgAubcdluAX8mXcsd9SnLgs2aSe7021YXhUKnXyQruBN9OtK+We/ju8824XTwrvDDWNmpepiZGjJLr5UcdLu8xe2kj/YuSUhTr2HRdVXM55vfQyirIVwqq2t7jI/aIh0dn7geViKTjAZoEj4WgTzLowt9xu2eCYd2Lek1Vuu0xlUPoVoCQY72ZFmzRb5Nuhti8Hvvkixw4rOnfDIzMMc+DjVzS5XhtEFZBqoM6jHYxlSJjZ/Mco0bSVcmcz6nNU+YWBqc0AcQP2Q34rwI0ukkq4lTEnZXsJiyerodF9prj/oSvLeZxVkzMa1vApcTNV79GIaFjQcl9TACTg2HSVXqTec9hVGX8s5795oUsj3RtKNNS2JhBwv804BlJS3yMOkQS+hewrduRedtdDnYagNnFkkJTHJPODEctmU4B1Y/IYed9R4/ho+MIBdCh7LcNMcPs1TqMq2H2b0HsRoAEOz3B0npb1xKD8nB6KQexrfG9ZXYHpY5Rl6GZkrsKiMjgL+ySIymuq+xAQXTufDrYFFXlGCHGY4//Q3jlFk6cVJ4X4F4Mu8i5glnh1n0h65Fd1mFYCmAz34FPqXwmRm0GN/F7rdSr8vvOxygTqb6Ggxde7s4nVIEGyP0okTNCIOSmLIWJHyaijwdfmfUxrz6ZaaI91FMDK6TIUTyqyL79C0v6HYjC248jQPcN6iDVvLIzad16w6QnTyur5X7IntDoc3Y3ev5zeWLg==
   template:
     metadata:
       annotations:
@@ -337,6 +357,7 @@ spec:
       name: n8n-env
       labels:
         application: fce
+        component: fce
         owner: fce
         team: fce
         cert: wildcard
@@ -356,6 +377,7 @@ metadata:
     app.github.com/sha: '0123456'
   labels:
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -364,6 +386,10 @@ data:
   DB_TYPE: postgresdb
   N8N_PORT: '5678'
   N8N_BASIC_AUTH_ACTIVE: 'true'
+  PG_PORT: '5432'
+  PG_SSL: 'true'
+  MINIO_PORT: '443'
+  MINIO_SSL: 'true'
 ---
 apiVersion: v1
 kind: Service
@@ -371,6 +397,7 @@ metadata:
   labels:
     app: n8n
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -393,7 +420,7 @@ spec:
     app: n8n
   type: ClusterIP
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -408,6 +435,7 @@ metadata:
   labels:
     app: n8n
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -419,9 +447,12 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: n8n
-              servicePort: 80
+              service:
+                name: n8n
+                port:
+                  name: http
             path: /
+            pathType: Prefix
   tls:
     - hosts:
         - n8n-fce-mybranch.dev2.fabrique.social.gouv.fr
@@ -439,6 +470,7 @@ metadata:
     app.github.com/sha: '0123456'
   labels:
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -460,6 +492,7 @@ metadata:
   labels:
     usage: fce-n8n-db
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -497,6 +530,7 @@ metadata:
   labels:
     app: server
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -520,6 +554,7 @@ spec:
       labels:
         app: server
         application: fce
+        component: fce
         owner: fce
         team: fce
         cert: wildcard
@@ -583,6 +618,7 @@ metadata:
   namespace: fce-mybranch
   labels:
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -638,6 +674,7 @@ spec:
       name: server-env
       labels:
         application: fce
+        component: fce
         owner: fce
         team: fce
         cert: wildcard
@@ -657,6 +694,7 @@ metadata:
     app.github.com/sha: '0123456'
   labels:
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -681,6 +719,7 @@ metadata:
   labels:
     app: server
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -716,6 +755,7 @@ metadata:
   name: azure-fce-volume
   labels:
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -738,6 +778,7 @@ spec:
       name: azure-fce-volume
       labels:
         application: fce
+        component: fce
         owner: fce
         team: fce
         cert: wildcard
@@ -757,6 +798,7 @@ metadata:
   labels:
     app: strapi
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -780,6 +822,7 @@ spec:
       labels:
         app: strapi
         application: fce
+        component: fce
         owner: fce
         team: fce
         cert: wildcard
@@ -835,6 +878,7 @@ metadata:
   namespace: fce-mybranch
   labels:
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -872,6 +916,7 @@ spec:
       name: strapi-env
       labels:
         application: fce
+        component: fce
         owner: fce
         team: fce
         cert: wildcard
@@ -891,6 +936,7 @@ metadata:
     app.github.com/sha: '0123456'
   labels:
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -905,6 +951,7 @@ metadata:
   labels:
     app: strapi
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -927,7 +974,7 @@ spec:
     app: strapi
   type: ClusterIP
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -942,6 +989,7 @@ metadata:
   labels:
     app: strapi
     application: fce
+    component: fce
     owner: fce
     team: fce
     cert: wildcard
@@ -953,9 +1001,12 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: strapi
-              servicePort: 80
+              service:
+                name: strapi
+                port:
+                  name: http
             path: /
+            pathType: Prefix
   tls:
     - hosts:
         - strapi-fce-mybranch.dev2.fabrique.social.gouv.fr

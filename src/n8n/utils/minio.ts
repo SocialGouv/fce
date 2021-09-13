@@ -61,7 +61,7 @@ type DownloadFileOutput = {
   remoteFile: string;
 }
 
-export const downloadOldestFile = async (client: Client, bucket: string, regex: RegExp, outputFileName: string): Promise<DownloadFileOutput> => {
+export const downloadOldestFile = async (client: Client, bucket: string, regex: RegExp, outputFileName?: string): Promise<DownloadFileOutput> => {
   const files = await getFiles(client, bucket, regex);
 
   if (files.length === 0) {
@@ -72,7 +72,7 @@ export const downloadOldestFile = async (client: Client, bucket: string, regex: 
   }
   const oldestFile = filterOldestFile(files);
 
-  const outputFile = path.join(DOWNLOAD_STORAGE_PATH, outputFileName);
+  const outputFile = path.join(DOWNLOAD_STORAGE_PATH, outputFileName || oldestFile.name);
 
   await downloadFile(client, bucket, oldestFile, outputFile);
 
@@ -88,4 +88,3 @@ export const archiveFile = async (client: Client, bucket: string, filename: stri
 
   return client.removeObject(bucket, filename);
 }
-

@@ -26,6 +26,7 @@
 		"test/**/*"
 	],
 	"exclude": [
-		"**/*.spec.ts"
+		"**/*.spec.ts",
+    "node_modules/danfojs-node/types"
 	]
 }

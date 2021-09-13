@@ -32,15 +32,25 @@ export class DeleteFile implements INodeType {
         default: '',
         placeholder: 'name',
         description: 'The name of the file to delete',
-        required: true
       },
+      {
+        displayName: 'File Path',
+        name: 'filepath',
+        type: 'string',
+        default: '',
+        placeholder: 'name',
+        description: 'The path of the file to delete',
+      }
     ]
   };
 
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
     const filename = this.getNodeParameter('filename', 0) as string;
+    const filepath = this.getNodeParameter('filepath', 0) as string;
 
-    await fs.promises.unlink(path.join(DOWNLOAD_STORAGE_PATH, filename));
+    const resolvedPath = filepath || path.join(DOWNLOAD_STORAGE_PATH, filename);
+
+    await fs.promises.unlink(resolvedPath);
 
     return [this.helpers.returnJsonArray({
       filename,

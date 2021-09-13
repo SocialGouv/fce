@@ -37,6 +37,7 @@ export type IngestDbConfig = {
   nonEmptyFields?: string[];
   separator?: string;
   transform?: () => Transform;
+  updateHistoryQuery?: string;
 }
 
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
@@ -104,10 +105,9 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
                           date_import = CURRENT_TIMESTAMP WHERE "table" = '${params.table}';`;
 
     await client.query(query);
+  } else if (params.updateHistoryQuery) {
+    await client.query(params.updateHistoryQuery);
   }
 
-  return [context.helpers.returnJsonArray({
-    ...pgCreds,
-    ...params
-  })];
+  return [context.helpers.returnJsonArray({})];
 }

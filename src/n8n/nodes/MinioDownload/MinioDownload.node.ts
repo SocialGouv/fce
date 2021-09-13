@@ -4,9 +4,8 @@ import {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import {Client, ClientOptions} from "minio";
-import {downloadOldestFile} from "../../utils/minio";
-import {createMinioClient} from "../../clients/minio";
+import { downloadOldestFile } from "../../utils/minio";
+import { createMinioClient } from "../../clients/minio";
 
 export class MinioDownload implements INodeType {
 	description: INodeTypeDescription = {
@@ -53,7 +52,6 @@ export class MinioDownload implements INodeType {
         default: '',
         placeholder: 'Output name',
         description: 'The name of the output file',
-        required: true
       }
 		]
 	};

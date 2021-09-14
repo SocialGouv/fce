@@ -14,8 +14,12 @@ ENV N8N_LOG_LEVEL="debug"
 
 RUN chown -R node /home/node
 
+USER node
+
 COPY package.json /home/node/custom/package.json
 RUN npm install --production --prefix --silent /home/node/custom
+
+USER root
 
 RUN apk del make gcc g++ python
 

@@ -17,9 +17,11 @@ RUN apk del make gcc g++ python
 RUN chown -R node /home/node
 
 USER node
-COPY package.json /home/node/custom/package.json
+COPY --chown=node:node package.json /home/node/custom/package.json
 RUN npm install --production --prefix /home/node/custom --silent
 
-COPY ./dist /home/node/custom
+COPY --chown=node:node ./dist /home/node/custom
 
 USER root
+
+ENTRYPOINT ["tini", "--", "su-exec", "node", "n8n"]

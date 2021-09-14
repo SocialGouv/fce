@@ -12,6 +12,7 @@ ENV DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false
 ENV N8N_CUSTOM_EXTENSIONS="/home/node/custom"
 ENV N8N_LOG_LEVEL="debug"
 
+RUN chown -R node /home/node
 
 COPY package.json /home/node/custom/package.json
 RUN npm install --production --prefix --silent /home/node/custom

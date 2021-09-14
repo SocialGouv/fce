@@ -47,7 +47,7 @@ export class InteractionsPoleT implements INodeType {
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
     const wikitUcData = require(path.join(DOWNLOAD_STORAGE_PATH, "wikit_uc.json"));
 
-    const transform = new Transform({
+    const transform = () => new Transform({
       objectMode: true,
       transform(chunk, encoding, callback) {
         const wikitUc = findWikitUcByCode(wikitUcData.UC, chunk.realise_pour)

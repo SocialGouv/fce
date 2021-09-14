@@ -1,10 +1,10 @@
 import {IExecuteFunctions} from "n8n-core";
 import {Pool} from "pg";
-import {createReadStream} from "fs";
+import { createReadStream } from "fs";
 import * as path from "path";
 import copy from "pg-copy-streams";
-import {DOWNLOAD_STORAGE_PATH} from "./constants";
-import {identityTransform, promisifyStream} from "./stream";
+import { DOWNLOAD_STORAGE_PATH } from "./constants";
+import { identityTransform, promisifyStream } from "./stream";
 import {
   connect,
   createPool, dateStream,
@@ -36,7 +36,7 @@ export type IngestDbConfig = {
   truncateRequest?: string;
   nonEmptyFields?: string[];
   separator?: string;
-  transform?: Transform;
+  transform?: () => Transform;
 }
 
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
@@ -74,7 +74,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
         siren: row.siret.substring(0, 9),
       }
     }))
-    .pipe(params.transform || identityTransform())
+    .pipe(params.transform ? params.transform() : identityTransform())
     .pipe(stringifyCsv({ columns }));
 
   const truncateRequest = params.truncateRequest || `TRUNCATE TABLE ${params.table};`;

@@ -18,7 +18,7 @@ const config: IngestDbConfig = {
   truncate: false,
   nonEmptyFields: ["email"],
   separator: ",",
-  transform: mapRow<UserData, UserData>(
+  transform: () => mapRow<UserData, UserData>(
     ({ structure, ...rest }) => ({
       ...rest,
       structure: structure.substr(0, 9)

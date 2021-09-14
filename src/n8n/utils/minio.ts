@@ -82,7 +82,7 @@ export const downloadOldestFile = async (client: Client, bucket: string, regex: 
   };
 }
 
-export const archiveFile = async (client: Client, bucket: string, filename: string) => {
+export const archiveFile = async (client: Client, bucket: string, filename: string): Promise<void> => {
   const conditions = new CopyConditions();
   await client.copyObject(bucket, `archives/${filename}`, `/${bucket}/${filename}`, conditions);
 

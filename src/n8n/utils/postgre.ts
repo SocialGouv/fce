@@ -59,7 +59,7 @@ export const mapRow = <T, U>(transform: (input: T) => U) => new Transform({
   }
 });
 
-export const logRow = mapRow<any, any>((val) => {
+export const logRow = () => mapRow<any, any>((val) => {
   console.log(val);
   return val;
 })

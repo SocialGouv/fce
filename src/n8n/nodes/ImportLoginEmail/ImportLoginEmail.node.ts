@@ -1,6 +1,12 @@
 import { INodeExecutionData, INodeType, INodeTypeDescription } from "n8n-workflow";
 import { IExecuteFunctions } from "n8n-core";
 import { ingestDb, IngestDbConfig } from "../../utils/ingestDb";
+import { mapRow } from "../../utils/postgre";
+
+type UserData = {
+  email: string;
+  structure: string;
+}
 
 const config: IngestDbConfig = {
   fieldsMapping: {
@@ -9,9 +15,15 @@ const config: IngestDbConfig = {
   },
   filename: "valid_emails.csv",
   table: "valid_email",
-  truncate: true,
+  truncate: false,
   nonEmptyFields: ["email"],
-  separator: ","
+  separator: ",",
+  transform: mapRow<UserData, UserData>(
+    ({ structure, ...rest }) => ({
+      ...rest,
+      structure: structure.substr(0, 9)
+    })
+  )
 };
 
 export class ImportLoginEmail implements INodeType {

@@ -85,11 +85,19 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     await client.query(truncateRequest);
   }
 
+  const tempTableName = `temp_${params.table}_${Date.now()}`;
+
+  await client.query(`CREATE TABLE ${tempTableName} (LIKE ${params.table});`);
+
   await promisifyStream(readStream
     .pipe(
-      client.query(copy.from(`COPY ${params.table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+      client.query(copy.from(`COPY ${tempTableName}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
     )
   );
+
+  await client.query(`INSERT INTO ${params.table} SELECT * from ${tempTableName} ON CONFLICT DO NOTHING;`);
+
+  await client.query(`DROP TABLE ${tempTableName};`);
 
   if (params.date) {
     const query = `UPDATE import_updates SET date = '${format(getMaxDate() || new Date(), "yyyy-MM-dd")}',

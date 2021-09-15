@@ -46,13 +46,8 @@ const LoginForm = ({
             <div className="login__message">
               <InfoMessage>
                 <h5>Connection pour les agents des DDETS (PP)</h5>
-                En attendant la fin de la migration des boites aux lettre
-                (mails) sur Mélanie en département, merci de vous connecter avec
-                votre adresse mail au format <strong>
-                  @direccte.gouv.fr
-                </strong>{" "}
-                sur laquelle une redirection sera maintenue pendant les
-                prochains mois
+                Vous pouvez désormais vous connecter en utilsant votre adresse
+                mail au format : <strong>prenom.nom@departement.gouv.fr</strong>
               </InfoMessage>
             </div>
             <div>

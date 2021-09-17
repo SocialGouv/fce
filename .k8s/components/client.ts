@@ -26,9 +26,12 @@ const createManifests = async () => {
     path: "/api",
     pathType: "Prefix",
     backend: {
-      //@ts-expect-error
-      serviceName: "server",
-      servicePort: 80,
+      service: {
+        name: "server",
+        port: { name: "http" }
+      }
+      // serviceName: "server",
+      // servicePort: 80,
     }
   });
 

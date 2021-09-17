@@ -30,8 +30,6 @@ const createManifests = async () => {
         name: "server",
         port: { name: "http" }
       }
-      // serviceName: "server",
-      // servicePort: 80,
     }
   });
 

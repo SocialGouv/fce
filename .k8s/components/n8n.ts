@@ -51,12 +51,12 @@ const createManifests = async () => {
       image: getGithubRegistryImagePath(({ project, name })),
       // volumes: [downloadsVolume, dbVolume],
       volumes: [{
-        name: "downloads",
-        azureFile: {
-          readOnly: false,
-          secretName: "azure-fce-volume",
-          shareName: "downloads",
-        },
+        name: "downloads"
+        // azureFile: {
+        //   readOnly: false,
+        //   secretName: "azure-fce-volume",
+        //   shareName: "downloads",
+        // },
       }, {
         name: "n8n-db",
         azureFile: {

@@ -33,11 +33,6 @@ export default {
       const request = await Axios.get(URL, params);
 
       if (request && request.data) {
-        const responseUrl =
-          request.request &&
-          request.request.res &&
-          request.request.res.responseUrl;
-        console.log(`Request successed for ${responseUrl}`);
         return request.data || {};
       }
     } catch (exception) {

@@ -1,3 +1,10 @@
+## [27.10.3](https://github.com/SocialGouv/fce/compare/v27.10.2...v27.10.3) (2021-09-21)
+
+
+### Bug Fixes
+
+* **n8n:** fix si psi import ([43b4550](https://github.com/SocialGouv/fce/commit/43b45505371b6f6010c363a737f26db87de52b59))
+
 ## [27.10.2](https://github.com/SocialGouv/fce/compare/v27.10.1...v27.10.2) (2021-09-21)
 
 

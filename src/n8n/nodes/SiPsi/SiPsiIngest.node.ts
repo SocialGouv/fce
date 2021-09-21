@@ -7,6 +7,7 @@ import {getFileType, getFileYear, getSiPsiFileDate, renameColumn, SiPsiKey} from
 import {DOWNLOAD_STORAGE_PATH} from "../../utils/constants";
 import {loadCsvDataframe, mergeCsvDataFrame} from "../../utils/csv";
 import { promises as fs } from "fs";
+import {mapRow} from "../../utils/postgre";
 
 type SiPsiParams = {
   key: SiPsiKey;
@@ -21,7 +22,8 @@ type FieldsMappingOptions = {
 const getFieldsMapping = ({ key }: FieldsMappingOptions): Record<string, string> => ({
   [key]: key,
   salaries_annee_courante: "salaries_annee_courante",
-  salaries_annee_precedente: "salaries_annee_precedente"
+  salaries_annee_precedente: "salaries_annee_precedente",
+  id: "id"
 });
 
 const makeConfig = ({
@@ -33,8 +35,19 @@ const makeConfig = ({
   filename,
   table: `psi_${key}`,
   truncate: true,
+  separator: ",",
   updateHistoryQuery: updateHistoryQuery(updateDate, key),
-  nonEmptyFields: [key]
+  nonEmptyFields: [key],
+  transform: () => {
+    let id = 1;
+
+    return mapRow((val: Record<string, string>) => {
+      return {
+        id: id++,
+        ...val
+      };
+    })
+  }
 });
 
 const updateHistoryQuery = (updateDate: string, key: SiPsiKey) =>

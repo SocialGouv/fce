@@ -1,6 +1,6 @@
 import Sequelize from "sequelize";
 
-const { PG_HOST, PG_USER, PG_PASSWORD, PG_DB, PG_SSL } = process.env;
+const { PG_HOST, PG_USER, PG_PASSWORD, PG_DB, PG_SSL, PROD } = process.env;
 
 const sequelize = new Sequelize(PG_DB, PG_USER, PG_PASSWORD, {
   host: PG_HOST,
@@ -11,7 +11,7 @@ const sequelize = new Sequelize(PG_DB, PG_USER, PG_PASSWORD, {
   define: {
     timestamps: false,
   },
-  logging: console.log,
+  logging: PROD === "true" ? false : console.log,
 });
 
 const models = {};

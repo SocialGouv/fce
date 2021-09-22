@@ -2,13 +2,13 @@ import {IExecuteFunctions} from "n8n-core";
 import {Pool} from "pg";
 import { createReadStream } from "fs";
 import * as path from "path";
-import copy from "pg-copy-streams";
 import { DOWNLOAD_STORAGE_PATH } from "./constants";
-import { identityTransform, promisifyStream } from "./stream";
+import { identityTransform } from "./stream";
 import {
+  conflictSafeInsert,
   connect,
   createPool, dateStream,
-  deduplicate,
+  deduplicate, fastInsert,
   filterRows,
   mapRow, padSiren, padSiret,
   parseCsv,
@@ -38,6 +38,7 @@ export type IngestDbConfig = {
   separator?: string;
   transform?: () => Transform;
   updateHistoryQuery?: string;
+  bypassConflictSafeInsert?: boolean;
 }
 
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
@@ -60,13 +61,12 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     .pipe(parseCsv({ columns: params.fieldsMapping, delimiter: params.separator }))
     .pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))
     .pipe(deduplicate(params.deduplicateField))
-    .pipe(params.padSiren ? padSiren : identityTransform())
-    .pipe(params.padSiret ? padSiret : identityTransform())
+    .pipe(params.padSiren ? padSiren() : identityTransform())
+    .pipe(params.padSiret ? padSiret() : identityTransform())
     .pipe(mapRow((row: Record<string, string>) => {
       if (!params.generateSiren) {
         return row;
       }
-
       return {
         ...row,
         siren: row.siret.substring(0, 9),
@@ -76,6 +76,8 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     .pipe(dateTransform)
     .pipe(stringifyCsv({ columns }));
 
+  readStream.setMaxListeners(20);
+
   const truncateRequest = params.truncateRequest || `TRUNCATE TABLE ${params.table};`;
 
   const client = await connect(pool);
@@ -84,19 +86,12 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     await client.query(truncateRequest);
   }
 
-  const tempTableName = `temp_${params.table}_${Date.now()}`;
+  const insertMethod = params.bypassConflictSafeInsert ? fastInsert : conflictSafeInsert;
 
-  await client.query(`CREATE TABLE ${tempTableName} (LIKE ${params.table} INCLUDING ALL);`);
-
-  await promisifyStream(readStream
-    .pipe(
-      client.query(copy.from(`COPY ${tempTableName}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
-    )
-  );
-
-  await client.query(`INSERT INTO ${params.table} SELECT * from ${tempTableName} ON CONFLICT DO NOTHING;`);
-
-  await client.query(`DROP TABLE ${tempTableName};`);
+  await insertMethod(client, readStream, {
+    table: params.table,
+    columns
+  });
 
   if (params.date) {
     const query = `UPDATE import_updates SET date = '${format(getMaxDate() || new Date(), "yyyy-MM-dd")}',

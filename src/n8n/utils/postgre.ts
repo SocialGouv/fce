@@ -1,13 +1,15 @@
 import parse  from "csv-parse";
 import stringify from "csv-stringify";
-import { Duplex, Transform } from "stream";
+import {Duplex, Readable, Transform} from "stream";
 import { decode } from "html-entities";
 import replaceStream from "replacestream";
 import { formatDate } from "./date";
 import pipe from "multipipe";
 import { IExecuteFunctions } from "n8n-core";
-import { Pool, PoolClient } from "pg";
+import {Client, ClientBase, Pool, PoolClient} from "pg";
 import {parse as parseDate} from "date-fns";
+import {promisifyStream} from "./stream";
+import copy from "pg-copy-streams";
 
 export const sanitizeHtmlChars = (): Transform => {
   const htmlEntitiesRegex = /&(?:[a-z]+|#x?\d+);/gi
@@ -142,6 +144,60 @@ const padStream = (field: string, length: number) => mapRow((row: Record<string,
   [field]: row[field].padStart(length, '0')
 }));
 
-export const padSiren = padStream("siren", 9);
+export const padSiren = () => padStream("siren", 9);
 
-export const padSiret = padStream("siret", 14);
+export const padSiret = () => padStream("siret", 14);
+
+export const truncateTable = (client: ClientBase, tableName: string) =>
+  client.query(`TRUNCATE TABLE ${tableName};`);
+
+type ConflictSafeInsertOptions = {
+  table: string;
+  columns: string[];
+}
+
+/**
+ * Insertion that avoids conflicts by creating a temporary table
+ * @param client
+ * @param stream
+ * @param table
+ * @param columns
+ */
+export const conflictSafeInsert = async (client: ClientBase, stream: Readable, {
+  table,
+  columns
+}: ConflictSafeInsertOptions) => {
+  const tempTableName = `temp_${table}_${Date.now()}`;
+
+  await client.query(`CREATE TABLE ${tempTableName} (LIKE ${table} INCLUDING ALL);`);
+
+  await promisifyStream(stream
+    .pipe(
+      client.query(copy.from(`COPY ${tempTableName}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+    )
+  );
+
+  await client.query(`INSERT INTO ${table} SELECT * from ${tempTableName} ON CONFLICT DO NOTHING;`);
+
+  await client.query(`DROP TABLE ${tempTableName};`);
+}
+
+/**
+ * Fast insertion that bypasses conflict resolutions. May fail in case of unicity conflicts.
+ * @param client
+ * @param stream
+ * @param table
+ * @param columns
+ */
+export const fastInsert = async (client: ClientBase, stream: Readable, {
+  table,
+  columns
+}: ConflictSafeInsertOptions) => {
+  await promisifyStream(stream
+    .pipe(
+      client.query(copy.from(`COPY ${table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+    )
+  );
+}
+
+

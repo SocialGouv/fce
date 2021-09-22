@@ -1,3 +1,10 @@
+## [27.11.1](https://github.com/SocialGouv/fce/compare/v27.11.0...v27.11.1) (2021-09-22)
+
+
+### Bug Fixes
+
+* **deployment:** fixing server config map ([28dc7a0](https://github.com/SocialGouv/fce/commit/28dc7a014c50888103e5ac9304ee025e43bf2cfc))
+
 # [27.11.0](https://github.com/SocialGouv/fce/compare/v27.10.3...v27.11.0) (2021-09-22)
 
 

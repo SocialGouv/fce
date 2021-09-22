@@ -200,8 +200,10 @@ spec:
           - path: /api
             pathType: Prefix
             backend:
-              serviceName: server
-              servicePort: 80
+              service:
+                name: server
+                port:
+                  name: http
   tls:
     - hosts:
         - fce-mybranch.dev2.fabrique.social.gouv.fr

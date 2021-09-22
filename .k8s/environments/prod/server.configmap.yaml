@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: server-env
 data:
-  PROD: true
+  PROD: "true"
   CLIENT_BASE_URL: client-url
   PORT: "3000"
   MAGIC_KEY_EXPIRE: "3600"

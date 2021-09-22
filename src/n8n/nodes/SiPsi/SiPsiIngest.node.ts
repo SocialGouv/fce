@@ -22,8 +22,7 @@ type FieldsMappingOptions = {
 const getFieldsMapping = ({ key }: FieldsMappingOptions): Record<string, string> => ({
   [key]: key,
   salaries_annee_courante: "salaries_annee_courante",
-  salaries_annee_precedente: "salaries_annee_precedente",
-  id: "id"
+  salaries_annee_precedente: "salaries_annee_precedente"
 });
 
 const makeConfig = ({
@@ -38,16 +37,6 @@ const makeConfig = ({
   separator: ",",
   updateHistoryQuery: updateHistoryQuery(updateDate, key),
   nonEmptyFields: [key],
-  transform: () => {
-    let id = 1;
-
-    return mapRow((val: Record<string, string>) => {
-      return {
-        id: id++,
-        ...val
-      };
-    })
-  }
 });
 
 const updateHistoryQuery = (updateDate: string, key: SiPsiKey) =>

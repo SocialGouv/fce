@@ -86,7 +86,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
 
   const tempTableName = `temp_${params.table}_${Date.now()}`;
 
-  await client.query(`CREATE TABLE ${tempTableName} (LIKE ${params.table});`);
+  await client.query(`CREATE TABLE ${tempTableName} (LIKE ${params.table} INCLUDING ALL);`);
 
   await promisifyStream(readStream
     .pipe(

@@ -1,3 +1,10 @@
+# [27.11.0](https://github.com/SocialGouv/fce/compare/v27.10.3...v27.11.0) (2021-09-22)
+
+
+### Features
+
+* **n8n:** add interaction_3e ingest ([b56dfd6](https://github.com/SocialGouv/fce/commit/b56dfd6e79639f53fc5226b41056cac8fa79b51d))
+
 ## [27.10.3](https://github.com/SocialGouv/fce/compare/v27.10.2...v27.10.3) (2021-09-21)
 
 

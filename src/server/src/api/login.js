@@ -20,13 +20,20 @@ router.post("/requestAuthCode", async (req, res) => {
       throw new Error("Connexion refusée");
     }
 
+    if (await Auth.hasValidCode(email)) {
+      res.status(403).json({
+        code: "HAS_VALID_CODE",
+        success: false,
+      });
+      return;
+    }
+
     const code = await Auth.generateCode(email);
 
     if (!code) {
       throw new Error("La génération du code a échouée");
     }
 
-    console.log(code);
     const mail = new Mail();
 
     try {

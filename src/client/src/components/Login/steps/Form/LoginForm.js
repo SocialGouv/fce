@@ -14,6 +14,7 @@ const LoginForm = ({
   login,
   sendCode,
   errorMessage,
+  infoMessage,
   loading,
   step,
   setStep,
@@ -88,6 +89,7 @@ const LoginForm = ({
                 message={`Un code d'activation a été envoyé à ${email}. Veuillez l'entrer dans le champ ci-dessous.`}
               />
             )}
+            {infoMessage && <InfoMessage>{infoMessage}</InfoMessage>}
             <StepForm
               onSubmit={e => login(e, email, code, isCheckedSubscription)}
               errorMessage={errorMessage}
@@ -197,6 +199,7 @@ LoginForm.propTypes = {
   sendCode: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
+  infoMessage: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   step: PropTypes.string.isRequired,
   setStep: PropTypes.func.isRequired,

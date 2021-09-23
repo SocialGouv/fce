@@ -5,6 +5,7 @@ import util from "util";
 import AuthRequestsModel from "../models/AuthRequests";
 import AuthTempModel from "../models/AuthTemp";
 import ValidEmail from "../models/ValidEmail";
+import auth from "../middlewares/auth";
 
 export default class Auth {
   static generateToken(user) {
@@ -118,6 +119,15 @@ export default class Auth {
     }
     authTempModel.desactivate(credential);
     return { isValidCredential: true };
+  }
+
+  static async hasValidCode(email) {
+    const authRequests = new AuthRequestsModel();
+
+    const authRequest = await authRequests.getByEmail(email);
+
+    return !isExpired(authRequest.created_at, config.get("authCode.expire")) &&
+        !tooMuchFailures(authRequest.failures, config.get("authCode.maxFailures"));
   }
 
    static async generateCode(email) {

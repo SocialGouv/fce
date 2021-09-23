@@ -1,3 +1,10 @@
+## [27.11.2](https://github.com/SocialGouv/fce/compare/v27.11.1...v27.11.2) (2021-09-23)
+
+
+### Bug Fixes
+
+* **n8n:** remove future dates from interactions_3e ([01d9e36](https://github.com/SocialGouv/fce/commit/01d9e361b7eb7e5ffd16f086a9146c4fb19d115c))
+
 ## [27.11.1](https://github.com/SocialGouv/fce/compare/v27.11.0...v27.11.1) (2021-09-22)
 
 

@@ -1,3 +1,10 @@
+## [27.13.1](https://github.com/SocialGouv/fce/compare/v27.13.0...v27.13.1) (2021-09-23)
+
+
+### Bug Fixes
+
+* **auth:** fix auth code generation crashing ([ea5f649](https://github.com/SocialGouv/fce/commit/ea5f6495eaadf6ad3b212be21f4da76c9cb7a5a7))
+
 # [27.13.0](https://github.com/SocialGouv/fce/compare/v27.12.1...v27.13.0) (2021-09-23)
 
 

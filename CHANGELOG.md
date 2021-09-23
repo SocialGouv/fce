@@ -1,3 +1,10 @@
+## [27.12.1](https://github.com/SocialGouv/fce/compare/v27.12.0...v27.12.1) (2021-09-23)
+
+
+### Bug Fixes
+
+* **n8n:** add etablissement current state import ([2377900](https://github.com/SocialGouv/fce/commit/2377900d9ca3eb4ce198c77c93ebfc36fd7204b9))
+
 # [27.12.0](https://github.com/SocialGouv/fce/compare/v27.11.3...v27.12.0) (2021-09-23)
 
 

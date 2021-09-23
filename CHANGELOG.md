@@ -1,3 +1,10 @@
+## [27.11.3](https://github.com/SocialGouv/fce/compare/v27.11.2...v27.11.3) (2021-09-23)
+
+
+### Bug Fixes
+
+* **n8n:** fix SI PSI update date ([23d54c8](https://github.com/SocialGouv/fce/commit/23d54c85dc622b9ab91db9eecf1b24f4114caec3))
+
 ## [27.11.2](https://github.com/SocialGouv/fce/compare/v27.11.1...v27.11.2) (2021-09-23)
 
 

@@ -4,7 +4,10 @@ import { ingestDb, IngestDbConfig } from "../../utils/ingestDb";
 import { Transform } from "stream";
 import { filterRows, mapRow } from "../../utils/postgre";
 import pipe from "multipipe";
-import { getDate, getMonth, parse } from "date-fns";
+import {getDate, getMonth, isFuture, parse} from "date-fns";
+
+const is31December = (date: Date) =>
+  getDate(date) === 31 && getMonth(date) === 11;
 
 const config: IngestDbConfig = {
   fieldsMapping: {
@@ -30,10 +33,8 @@ const config: IngestDbConfig = {
     filterRows(
       (data: Record<string, string>) => {
         const date = parse(data.date_visite, "dd/MM/yyyy",new Date());
-        const day = getDate(date);
-        const month = getMonth(date);
 
-        return day < 31 || month < 11;
+        return !is31December(date) && !isFuture(date);
       }
     ),
     mapRow((data: Record<string, string>) => {

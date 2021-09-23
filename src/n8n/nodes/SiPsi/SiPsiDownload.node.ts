@@ -62,12 +62,9 @@ export class SiPsiDownload implements INodeType {
     const otherYearFileRegex = new RegExp(`^${otherYearFile}$`, "i");
     const { remoteFile: remoteFile2 } = await downloadOldestFile(client, bucket, otherYearFileRegex);
 
-    const date = getSiPsiFileDate(remoteFile1);
-
     return [
       this.helpers.returnJsonArray({
         files: JSON.stringify([remoteFile1, remoteFile2]),
-        updateDate: date
       })
     ];
   }

@@ -12,7 +12,7 @@ const downloadRegex = new RegExp(`^ClientsPSI-([A-z]*)-([0-9]*)-([0-9]*)\\.csv$`
 
 const getDateFromFilename = (filename: string) => downloadRegex.exec(filename);
 
-const normalizeDate = (match: string[] | null) => match && match[3] ? format(parse(match[3], "ddMMyyyy", new Date()), "dd-MM-yyyy") : "";
+const normalizeDate = (match: string[] | null) => match && match[3] ? format(parse(match[3], "ddMMyyyy", new Date()), "yyyy-MM-dd") : "";
 
 export const getSiPsiFileDate =
   pipe(

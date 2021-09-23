@@ -1,3 +1,10 @@
+# [27.12.0](https://github.com/SocialGouv/fce/compare/v27.11.3...v27.12.0) (2021-09-23)
+
+
+### Features
+
+* **n8n:** add effectifs ingests ([3ef7601](https://github.com/SocialGouv/fce/commit/3ef7601980d43c315c1076f5b4a9ced516514729))
+
 ## [27.11.3](https://github.com/SocialGouv/fce/compare/v27.11.2...v27.11.3) (2021-09-23)
 
 

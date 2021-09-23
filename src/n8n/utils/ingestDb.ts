@@ -60,7 +60,6 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     .pipe(parseCsv({ columns: params.fieldsMapping, delimiter: params.separator }))
     .pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))
     .pipe(deduplicate(params.deduplicateField))
-    .pipe(dateTransform)
     .pipe(params.padSiren ? padSiren : identityTransform())
     .pipe(params.padSiret ? padSiret : identityTransform())
     .pipe(mapRow((row: Record<string, string>) => {
@@ -74,6 +73,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
       }
     }))
     .pipe(params.transform ? params.transform() : identityTransform())
+    .pipe(dateTransform)
     .pipe(stringifyCsv({ columns }));
 
   const truncateRequest = params.truncateRequest || `TRUNCATE TABLE ${params.table};`;

@@ -126,8 +126,11 @@ export default class Auth {
 
     const authRequest = await authRequests.getByEmail(email);
 
-    return !isExpired(authRequest.created_at, config.get("authCode.expire")) &&
-        !tooMuchFailures(authRequest.failures, config.get("authCode.maxFailures"));
+    return authRequest && (
+        !isExpired(authRequest.created_at, config.get("authCode.expire")) &&
+        !tooMuchFailures(authRequest.failures, config.get("authCode.maxFailures")
+        )
+    );
   }
 
    static async generateCode(email) {

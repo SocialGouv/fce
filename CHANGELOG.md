@@ -1,3 +1,10 @@
+# [27.14.0](https://github.com/SocialGouv/fce/compare/v27.13.1...v27.14.0) (2021-09-24)
+
+
+### Features
+
+* **n8n:** add apprentissage ingest script ([f100a9d](https://github.com/SocialGouv/fce/commit/f100a9dd1d0d20e4f7ef597fe1c3db55f21c8b68))
+
 ## [27.13.1](https://github.com/SocialGouv/fce/compare/v27.13.0...v27.13.1) (2021-09-23)
 
 

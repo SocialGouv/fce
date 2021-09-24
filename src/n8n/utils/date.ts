@@ -16,5 +16,8 @@ export const formatDate = (date: string, options: FormatDateOptions) => {
   }
 }
 
+export const reformatDate = (date: string, inputFormat: string, outputFormat: string) =>
+  format(parse(date, inputFormat, new Date()), outputFormat);
+
 export const formatPlainTextDate = (date: string) =>
   format(parse(date, "ddMMyyyy", new Date()), "dd-MM-yyyy")

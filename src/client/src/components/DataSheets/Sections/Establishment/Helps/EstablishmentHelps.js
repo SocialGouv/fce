@@ -7,7 +7,7 @@ import Agrements from "./Subcategory/Agrements";
 import ContratsAides from "./Subcategory/ContratsAides";
 import Apprentissage from "./Subcategory/Apprentissage";
 
-const EstablishmentHelps = ({ establishment }) => {
+const EstablishmentHelps = ({ establishment, apprentissage }) => {
   return (
     <section id="helps" className="data-sheet__section">
       <div className="section-header">
@@ -19,14 +19,15 @@ const EstablishmentHelps = ({ establishment }) => {
       <div className="section-datas">
         <Agrements establishment={establishment} />
         <ContratsAides establishment={establishment} />
-        <Apprentissage apprentissage={establishment.apprentissage} />
+        <Apprentissage apprentissage={apprentissage} />
       </div>
     </section>
   );
 };
 
 EstablishmentHelps.propTypes = {
-  establishment: PropTypes.object.isRequired
+  establishment: PropTypes.object.isRequired,
+  apprentissage: PropTypes.object.isRequired
 };
 
 export default EstablishmentHelps;

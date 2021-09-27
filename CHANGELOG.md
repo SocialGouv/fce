@@ -1,3 +1,10 @@
+## [27.14.1](https://github.com/SocialGouv/fce/compare/v27.14.0...v27.14.1) (2021-09-27)
+
+
+### Bug Fixes
+
+* **apprentissage:** restore data loading for establishment page ([6ebc909](https://github.com/SocialGouv/fce/commit/6ebc909d82bad2a214b91b74f241d237a0205c8a))
+
 # [27.14.0](https://github.com/SocialGouv/fce/compare/v27.13.1...v27.14.0) (2021-09-24)
 
 

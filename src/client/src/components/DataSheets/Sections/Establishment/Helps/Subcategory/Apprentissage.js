@@ -13,49 +13,47 @@ const Apprentissage = ({ apprentissage }) => {
   return (
     <>
       <Subcategory subtitle="Apprentissage">
-        <Info>
-          <Data
-            name={`Embauche en contrat d'apprentissage depuis ${getCustomPastYear(
-              2
-            )}`}
-            value={hasApprentissage(apprentissage)}
-            columnClasses={["is-7", "is-5"]}
-            sourceSi="Ari@ne"
-          />
-          {hasApprentissage(apprentissage) && (
-            <Table isBordered>
-              <thead>
-                <tr>
-                  <th></th>
-                  {Object.keys(apprentissage).map(year => (
-                    <th className="has-text-right" key={year}>
-                      {year}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th>Nombre de contrats d{`'`}apprentissage signés</th>
-                  {Object.entries(apprentissage).map(([year, { signes }]) => (
-                    <td className="has-text-right" key={year}>
-                      {signes && formatNumber(signes)}
-                    </td>
-                  ))}
-                </tr>
+        <Data
+          name={`Embauche en contrat d'apprentissage depuis ${getCustomPastYear(
+            2
+          )}`}
+          value={hasApprentissage(apprentissage)}
+          columnClasses={["is-7", "is-5"]}
+          sourceSi="Ari@ne"
+        />
+        {hasApprentissage(apprentissage) && (
+          <Table isBordered>
+            <thead>
+              <tr>
+                <th></th>
+                {Object.keys(apprentissage).map(year => (
+                  <th className="has-text-right" key={year}>
+                    {year}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Nombre de contrats d{`'`}apprentissage signés</th>
+                {Object.entries(apprentissage).map(([year, { signes }]) => (
+                  <td className="has-text-right" key={year}>
+                    {signes && formatNumber(signes)}
+                  </td>
+                ))}
+              </tr>
 
-                <tr>
-                  <th>Nombre de contrats rompus </th>
-                  {Object.entries(apprentissage).map(([year, { rompus }]) => (
-                    <td className="has-text-right" key={year}>
-                      {rompus && formatNumber(rompus)}
-                    </td>
-                  ))}
-                </tr>
-              </tbody>
-            </Table>
-          )}
-        </Info>
+              <tr>
+                <th>Nombre de contrats rompus </th>
+                {Object.entries(apprentissage).map(([year, { rompus }]) => (
+                  <td className="has-text-right" key={year}>
+                    {rompus && formatNumber(rompus)}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </Table>
+        )}
       </Subcategory>
     </>
   );

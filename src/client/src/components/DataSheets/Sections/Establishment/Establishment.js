@@ -21,7 +21,8 @@ const Establishment = ({
   establishment,
   establishments,
   enterprise,
-  headOffice
+  headOffice,
+  apprentissage
 }) => {
   const location = useLocation();
   useScrollToLocationHash({ location });
@@ -59,7 +60,10 @@ const Establishment = ({
                 enterprise={enterprise}
               />
               <Muteco establishment={establishment} enterprise={enterprise} />
-              <Helps establishment={establishment} />
+              <Helps
+                establishment={establishment}
+                apprentissage={apprentissage}
+              />
             </div>
             <UsersFeedback fullWidth />
           </div>
@@ -73,6 +77,7 @@ const Establishment = ({
 Establishment.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
+  apprentissage: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
   headOffice: PropTypes.object.isRequired
 };

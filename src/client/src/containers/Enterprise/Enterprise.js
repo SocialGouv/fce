@@ -16,6 +16,7 @@ import {
   loadEstablishment,
   loadEntreprise
 } from "../../services/Store/actions";
+import { loadApprentissage } from "../../services/Store/actions/apprentissage";
 
 const Enterprise = ({
   match,
@@ -23,9 +24,11 @@ const Enterprise = ({
   currentEnterprise,
   agreements,
   psi,
+  apprentissage,
   loadEntreprise,
   loadEstablishment,
   loadAgreements,
+  loadApprentissage,
   loadPsi,
   loadSources
 }) => {
@@ -82,6 +85,7 @@ const Enterprise = ({
       loadEntity(loadMethod, identifier);
       setCurrentUrl(match.url);
     }
+    loadApprentissage(identifier);
   }, [
     identifier,
     match,
@@ -91,6 +95,7 @@ const Enterprise = ({
     currentEnterprise.siren,
     currentUrl,
     loadAgreements,
+    loadApprentissage,
     loadPsi,
     loadSources
   ]);
@@ -142,6 +147,7 @@ const Enterprise = ({
       headOffice={headOffice}
       establishment={establishment}
       establishments={establishments}
+      apprentissage={apprentissage}
       isLoaded={isLoadedEstablishment()}
       history={history}
     />
@@ -154,10 +160,12 @@ Enterprise.propTypes = {
   currentEnterprise: PropTypes.object.isRequired,
   hasSearchResults: PropTypes.bool,
   history: PropTypes.object.isRequired,
+  apprentissage: PropTypes.object.isRequired,
   isLoaded: PropTypes.bool,
   loadAgreements: PropTypes.func.isRequired,
   loadEntreprise: PropTypes.func.isRequired,
   loadEstablishment: PropTypes.func.isRequired,
+  loadApprentissage: PropTypes.func.isRequired,
   loadPsi: PropTypes.func,
   loadSources: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired
@@ -167,7 +175,8 @@ const mapStateToProps = state => {
   return {
     currentEnterprise: state.enterprise.current,
     agreements: state.agreements,
-    psi: state.psi
+    psi: state.psi,
+    apprentissage: state.apprentissage.apprentissage
   };
 };
 
@@ -181,6 +190,9 @@ const mapDispatchToProps = dispatch => {
     },
     loadAgreements: identifier => {
       return dispatch(loadAgreements(identifier));
+    },
+    loadApprentissage: identifier => {
+      return dispatch(loadApprentissage(identifier));
     },
     loadPsi: identifier => {
       return dispatch(loadPsi(identifier));

@@ -10,6 +10,7 @@ import dsnEffectif from "./dsnEffectif";
 import matomo from "./matomo";
 import agreements from "./agreements";
 import psi from "./psi";
+import apprentissage from "./apprentissage";
 
 const router = express.Router();
 
@@ -23,5 +24,6 @@ router.use("", dsnEffectif);
 router.use("", matomo);
 router.use("", agreements);
 router.use("", psi);
+router.use("", apprentissage);
 
 export default router;

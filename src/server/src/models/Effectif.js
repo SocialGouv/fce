@@ -37,4 +37,11 @@ export default class Effectif extends Model {
         return null;
       });
   }
+
+  async findLastUpdateDate() {
+    const result =  await this.db
+      .query(`SELECT date FROM import_updates WHERE "table" = 'etablissements_dsn_eff'`);
+
+    return result.rows[0].date;
+  }
 }

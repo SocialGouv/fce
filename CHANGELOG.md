@@ -1,3 +1,10 @@
+## [27.14.2](https://github.com/SocialGouv/fce/compare/v27.14.1...v27.14.2) (2021-09-27)
+
+
+### Bug Fixes
+
+* **effectifs:** make last 12 recorded month display in the effectif history ([790dbb1](https://github.com/SocialGouv/fce/commit/790dbb129756bd873ff7af7cc654f37fa3076aac))
+
 ## [27.14.1](https://github.com/SocialGouv/fce/compare/v27.14.0...v27.14.1) (2021-09-27)
 
 

@@ -138,7 +138,7 @@ const config = {
   ],
   emailSalt: process.env.EMAIL_SALT,
   effectif_dsn: {
-    exclude: ["2020-06"],
+    exclude: [],
   },
   host: process.env.HOST || "127.0.0.1",
   port: process.env.PORT || 80

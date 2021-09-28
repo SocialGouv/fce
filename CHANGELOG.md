@@ -1,3 +1,10 @@
+## [27.14.3](https://github.com/SocialGouv/fce/compare/v27.14.2...v27.14.3) (2021-09-28)
+
+
+### Bug Fixes
+
+* **effectifs:** remove excluded effectif for 06-2020 ([2e8db80](https://github.com/SocialGouv/fce/commit/2e8db80624e52beed5545c0877ed813dd9623deb))
+
 ## [27.14.2](https://github.com/SocialGouv/fce/compare/v27.14.1...v27.14.2) (2021-09-27)
 
 

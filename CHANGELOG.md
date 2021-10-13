@@ -1,3 +1,10 @@
+## [27.15.3](https://github.com/SocialGouv/fce/compare/v27.15.2...v27.15.3) (2021-10-13)
+
+
+### Bug Fixes
+
+* **server:** add limit rate on every server endpoint ([6cef6fb](https://github.com/SocialGouv/fce/commit/6cef6fbb5a554f3721dca265376ddcc93b8a5b53))
+
 ## [27.15.2](https://github.com/SocialGouv/fce/compare/v27.15.1...v27.15.2) (2021-10-13)
 
 

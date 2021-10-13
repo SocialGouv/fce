@@ -1,3 +1,10 @@
+## [27.15.5](https://github.com/SocialGouv/fce/compare/v27.15.4...v27.15.5) (2021-10-13)
+
+
+### Bug Fixes
+
+* fix limit rates errors ([c13ceb5](https://github.com/SocialGouv/fce/commit/c13ceb5a6ea31732a5d40478f331c603235414a6))
+
 ## [27.15.4](https://github.com/SocialGouv/fce/compare/v27.15.3...v27.15.4) (2021-10-13)
 
 

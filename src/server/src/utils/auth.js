@@ -5,7 +5,6 @@ import util from "util";
 import AuthRequestsModel from "../models/AuthRequests";
 import AuthTempModel from "../models/AuthTemp";
 import ValidEmail from "../models/ValidEmail";
-import auth from "../middlewares/auth";
 
 export default class Auth {
   static generateToken(user) {
@@ -38,6 +37,10 @@ export default class Auth {
     try {
       const verify = util.promisify(jwt.verify).bind(jwt);
       const user = await verify(token, config.jwt.secret);
+
+      if (user.iat < config.jwt.expireBefore) {
+        return false;
+      }
 
       return user;
     } catch (e) {

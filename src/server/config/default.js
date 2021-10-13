@@ -64,6 +64,7 @@ const config = {
     secret: process.env.JWT_SECRET,
     expire: process.env.JWT_EXPIRE,
     expireTemporary: process.env.JWT_TEMP_EXPIRE,
+    expireBefore: +process.env.JWT_EXPIRE_BEFORE,
   },
   elasticIndexer: {
     appsearch_address: process.env.JWT_APPSEARCH_ADDRRESS,

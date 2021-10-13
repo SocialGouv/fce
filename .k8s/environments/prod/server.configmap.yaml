@@ -21,3 +21,6 @@ data:
   #MATOMO
   MATOMO_ID_SITE: "8"
   MATOMO_URL: https://matomo.fabrique.social.gouv.fr
+
+  #LOGIN
+  JWT_EXPIRE_BEFORE: "1634130400"

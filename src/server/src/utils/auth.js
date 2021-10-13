@@ -173,3 +173,9 @@ const timestampInSecond = (timestampInMillisecond) =>
   timestampInMillisecond / 1000;
 
 const tooMuchFailures = (failures, maxFailures) => failures >= maxFailures;
+
+export const getTokenFromRequest = (req) => {
+  const authHeader = req.get("Authorization");
+
+  return authHeader ? authHeader.replace("Bearer ", "") : "";
+};

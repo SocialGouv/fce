@@ -2,13 +2,14 @@ import { Router } from "express";
 import withAuth from "../middlewares/auth";
 import Apprentissage from "../models/Apprentissage";
 import {getYear, parseISO} from "date-fns";
+import {limitRate} from "../middlewares/limit-rate";
 
 const apprentissage = Router();
 
 const isSiren = (str) => str.match(/^[0-9]{9}$/);
 const isSiret = (str) => str.match(/^[0-9]{14}$/);
 
-apprentissage.get("/apprentissage/:id", withAuth, async (req, res) => {
+apprentissage.get("/apprentissage/:id", withAuth, limitRate({ count: 3, period: 10000 }), async (req, res) => {
   const { id } = req.params;
 
   if (!isSiret(id) && !isSiren(id)) {

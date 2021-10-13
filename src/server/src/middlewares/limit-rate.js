@@ -8,7 +8,7 @@ export const limitRate = ({ count, period }) => {
 
   const cleanup = () => {
     cache.forEach(([key, value]) => {
-      const newCacheValue = removeExpired(value || []);
+      const newCacheValue = value && value.length ? removeExpired(value) : [];
 
       if (newCacheValue.length === 0) {
         cache.delete(key);

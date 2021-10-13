@@ -1,3 +1,10 @@
+## [27.15.1](https://github.com/SocialGouv/fce/compare/v27.15.0...v27.15.1) (2021-10-13)
+
+
+### Bug Fixes
+
+* **server:** mitigate too many api calls ([a181217](https://github.com/SocialGouv/fce/commit/a18121723da96d31ec4d667270c252c04bd235f0))
+
 # [27.15.0](https://github.com/SocialGouv/fce/compare/v27.14.3...v27.15.0) (2021-09-28)
 
 

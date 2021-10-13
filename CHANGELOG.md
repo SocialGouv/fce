@@ -1,3 +1,10 @@
+## [27.15.2](https://github.com/SocialGouv/fce/compare/v27.15.1...v27.15.2) (2021-10-13)
+
+
+### Bug Fixes
+
+* **cache:** fix limit rate cache cleanup ([e5e17e8](https://github.com/SocialGouv/fce/commit/e5e17e81d73acc7e6968fa366090645314a46783))
+
 ## [27.15.1](https://github.com/SocialGouv/fce/compare/v27.15.0...v27.15.1) (2021-10-13)
 
 

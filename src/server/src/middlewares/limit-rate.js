@@ -7,14 +7,13 @@ export const limitRate = ({ count, period }) => {
   const cache = new Map();
 
   const cleanup = () => {
-    cache.keys().forEach((key) => {
-      const cacheValue = cache.get(key);
-      const newCacheValue = removeExpired(cacheValue);
+    cache.forEach(([key, value]) => {
+      const newCacheValue = removeExpired(value);
 
       if (newCacheValue.length === 0) {
         cache.delete(key);
       } else {
-        cacheValue.set(key, newCacheValue);
+        cache.set(key, newCacheValue);
       }
     })
   };

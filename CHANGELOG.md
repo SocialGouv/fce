@@ -1,3 +1,10 @@
+## [27.15.4](https://github.com/SocialGouv/fce/compare/v27.15.3...v27.15.4) (2021-10-13)
+
+
+### Bug Fixes
+
+* **server:** expire older tokens ([c6ebe0e](https://github.com/SocialGouv/fce/commit/c6ebe0eee7521748c19020fb6bc9a4d295838474))
+
 ## [27.15.3](https://github.com/SocialGouv/fce/compare/v27.15.2...v27.15.3) (2021-10-13)
 
 

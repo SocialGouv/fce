@@ -1,3 +1,10 @@
+# [27.16.0](https://github.com/SocialGouv/fce/compare/v27.15.6...v27.16.0) (2021-10-14)
+
+
+### Features
+
+* **pgadmin:** add pgadmin in preprod ([e1c46e9](https://github.com/SocialGouv/fce/commit/e1c46e915176f659729c1d0054b93b9706afd283))
+
 ## [27.15.6](https://github.com/SocialGouv/fce/compare/v27.15.5...v27.15.6) (2021-10-14)
 
 

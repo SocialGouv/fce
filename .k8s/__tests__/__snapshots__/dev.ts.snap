@@ -469,6 +469,192 @@ metadata:
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
   labels:
+    app: pgadmin
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: pgadmin
+  namespace: fce-mybranch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: pgadmin
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    spec:
+      containers:
+        - image: dpage/pgadmin4
+          livenessProbe:
+            httpGet:
+              path: /misc/ping
+              port: http
+            initialDelaySeconds: 60
+          name: pgadmin
+          ports:
+            - containerPort: 80
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /misc/ping
+              port: http
+            initialDelaySeconds: 60
+          resources:
+            requests:
+              memory: 256Mi
+            limits:
+              memory: 512Mi
+          startupProbe:
+            httpGet:
+              path: /misc/ping
+              port: http
+            initialDelaySeconds: 60
+          envFrom:
+            - secretRef:
+                name: pgadmin-env
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: pgadmin-env
+  namespace: fce-mybranch
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+spec:
+  encryptedData:
+    PGADMIN_DEFAULT_EMAIL: >-
+      AgA9PzLJGrsW8qnZ2C5CRhWPstRx7LRjQFPsPcxl/I1HfCJ7itZ1a7m9P3XiAKnt5uB4nQhskbzLIeOa8Qk4J8OU3qCbSQP9wJut5G6TUbCeP1H7NJvkoiqQbTCoNatgZr9USyVE84Q27s1heNbYSIem/hDYg3BqKgXnoJXctNN5vfWLloMseowPwTr8ly4TNpiw6K1lAKpNyPmtk9T0MFGJ/Z9lBldtttUJaJd2kc594sP3GSfKeHMNx2fXL4gVq1Vjo3TiPdvBLPb2ELzKE4H+goxDXj0m4eibYaKbPYuxsT/enrdzZxU/tOPBK760qRsPQctIkEyME5+5VUyxq1rAYt2p9ZQGbooh06uHfa73/Lqxetui9MU44XMwGKQ6mVTkApXfgEj7AzbjXVrU2gjKgDDQEsvtfA7cAH1rxuplZr/nlKNiSbeBDWDNxg1AJ1o379SSJzmcM162ZRxyoosMcsoCdbuvlQEAhMS+PTRmyI/UxSfOVsMp3GHVFykVhc+NFvQNU/hZbSZT4LHujYqCL84kTupxxB6/6b4Xf3BX+Ra692wh+IZORS3lkQInnkOp7jVZhxv3HpZXlUxTFwMWbPSUuNXb6EdRTULFmBBdKtBkNb7J67ePZXdjgTeGiQJeBAfA5kmZxPoK2EIEge97ty30mzdz6bIE3iWKD0xfw6UeA5MPZgm1K7h1Aj1ze++SniPeKahDIZdYzn1hTV7qHRd9+HAlZu4Izxu6QUJdpK0=
+    PGADMIN_DEFAULT_PASSWORD: >-
+      AgBJqz/mf8ZBaF3RgCxSOQobM9yuG/o68bnuWC9UG7M/twO2+fE3wciT2WOUIXLXkjjLrAlYbVymmMWvqB7vjPPF5ys2n9qIAjAIYKxjKcOJvXIG2FG0+jAHb1qZFobTBzfROgwedtT2gQ0JiB0Xl7aKj6Gze90n5HBDBw4WyEA9Zn20MRiLmaeYd/VRhHlth5Dfi+3T2a+C30nGha7lqKIe1DfS2NjeqyVq+EGWw5FDdJSVZNumM3FBdqvpNRMfgonD21R5YLO8HIJEzEaSyz0TfldFyLt0rHuX5jE5ktBN/KZ1bOT/v4u9WtXQnQSiXeeDnVJVXOuEjSwcry5uS/GAAxk8WUtM5lk6ZJPHC0uMUYM+CLdDUg/0BnP/pT4NXkxlgwQHT+wVunupo+B+sb2eMem3xjuHcmc7ykAGmqKlHupUwRByPhDLRn64B8K0h3TQwnZ/Ak3YobGUVXOq7g2eie9KShc0tuWhZRrbgFsRaZ/k5lhPodaadAxgrHwKAULRSfeTnzfUbMjHUkiUQpFeYkukJzvhC/ooD7d2W5A8fZmX+5/QA4y+TCpGWj8MU++Jm0DbK1RxQpTrAr9LwiuJqYg1sYKd8jWJJWfcmnjbdYJKtiC1oKXNtggPsPGc4GWEXB1tZRPA5qZjfX3l9j3JZHRdR9TxxfeFeKKmw25e2t5rJ6ix91wL3ZcQNCbpVlPIdtF1H8qlPd9akUWF5IfHhhG45f7xALtjDcBtuu4vGQ==
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: pgadmin-env
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pgadmin
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: pgadmin
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce-mybranch
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: pgadmin
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: pgadmin
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: pgadmin
+  namespace: fce-mybranch
+spec:
+  rules:
+    - host: pgadmin-fce-mybranch.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              service:
+                name: pgadmin
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - pgadmin-fce-mybranch.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
     app: server
     application: fce
     component: fce

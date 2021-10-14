@@ -126,11 +126,6 @@ jobs:
           cd ./src/client
           CI=false npm run build
 
-      - name: Build docker image
-        run: |
-          cd ./src/client
-          docker build -t fce-client .
-
       - id: docker_meta
         uses: "crazy-max/ghaction-docker-meta@2e1a5c7fa42123697f82d479b551a1bbdb1bef88"
         with:

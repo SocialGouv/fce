@@ -255,8 +255,6 @@ spec:
           volumeMounts:
             - name: downloads
               mountPath: /tmp/download
-            - mountPath: /home/node/.n8n
-              name: n8n-db
           envFrom:
             - secretRef:
                 name: n8n-env
@@ -264,9 +262,6 @@ spec:
                 name: n8n-env
       volumes:
         - name: downloads
-        - name: n8n-db
-          persistentVolumeClaim:
-            claimName: n8n-db
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
@@ -300,6 +295,8 @@ spec:
       AgApHN965oBlfs9q45MKCllGjabtMcdrHf1W8BgH77GLW6m8Y1FluyCOB0ZwnZNn8GgKZJjRfLGAr3C49vUCORBy2AURmhky1NGOaTR8AQosr8tY7G9JAOSqG9SR81u+Mmc+jADka7BZ14Z6TD/BKmsPnTw8r/lW5dCvRnvk6OtsaoNRKbI8qg3P8IvpFKw9MPJptD/JFQYFbFJQpNhqbBY88c3ncYHwu3qqGsP8G0/Oz4rTUSKPVjXxYMwQfhqKzpEgGSsvW5gJVHjvKr7NZgVLAMMRSt074oTwAE/oxV9v7O/WDTcPgsp0I7ylX0rDl1Y+FjU+XMcy9tEZdaUGgTX8a3qTks609eKdPjJwniZDrksynEOUGy4TW5tNFt5J7FCpuYYF9H0YKMRMFNIqjqpM6SbxwZrENpXd6pXsu5TyNIbL/v3PFv+/LCjMIcnHs30vZ35nO2JWIpFQStwiyvPw0eksx7WtdrnkLn58oUnUI6fmYizwELFCLilOjE4lxXW8nYVlTcWFhOoj/QYpySBDOBXRP2nIuG6508jVcZb5LWfdQlENYi1b1JAjHeQdv0usy5q9lTFp9q0bPU9x3q4UsbQlWNKMxHDpRU4IxPVbw8bCGARWeMjZZh9XhhBLimCkEuiJclTE0II/7OBUi++iRSwfZXNHoCPjMlv40eQ8dKy6oI0k6V65sQnZ20VEPgEmvCQ=
     N8N_BASIC_AUTH_PASSWORD: >-
       AgAsWISWcmZ3e+BbRMuDuLhtcHG86W8c1p82nDMLXcZZbrQpCvbBtprqzbK+JU9ftHPBpPMeBPfQxbX7UvYHvecljvLrsMGFdQYCG2yFV/Hi/y5bAjtJfpyW8kfIM7Qq7btcSX5ZuD52IKCB8C6KJovDx0OpyRQL9m8+fC/1NvecT95bfvV5WnNPrn/saKeuINRIG4P7JH5ztI7E22NP/fFv4btSoRVWo7OdpwaH+/mU+/yQO9sg5RfbLSoFvwTY5OtSJnmP5Y2F/7iPWRqmsAeUh1uwQKrmC8jOqDlQhcIRC3dbVYYWfxvJuwu+47qpDPQHT5pL2pT+TCdNJDMGN+wTLYc2FrD6NJBn3BMM293wVxG/2UuC+yQkde5B834HKa1t+ofuZRyb2gF5rVzbaBb8R4rULFPcwjf4va2kctAVkxUD8iFIXKs1NWbeCXfMSkRx/YogjXthesOrAH5iZHs/U2DsacKDsPGU5IGINjXHaOwlK+j1v6U31LpFjCHfVHRM8qqMZvzbIOqzpI3ANsOzl2fwaT9CcBO6hj5ScbnmbgHvhCNemLVT67zsa1RNRervyLC2oEMpNeRH/Ou1w8dH6H6OmVg7J9ig+C547chVptuPbvc8zKo4IdPvGPwlQozzrls+MiBHt7+wXsHY1rbb4AuX3EnCwoSqB9UCHfNp/E5ujiEawZkuAkVVBJqLAdlvqHXq8dDThmIJkkvBsUpEKgd2ifJyXVid7efETmC2CA==
+    N8N_ENCRYPTION_KEY: >-
+      AgA3dnj9d4LMHq0whqVjcXsLZX34jHwiEHCjXRJ1wDS0dqWb4ANLVBIXRTqFRAPRrIxeIKs16rNSvpv3E/z9DQRdcuq0Z4uffNbaIBPNU0GU6at/dpQFaXYtBep98V6YB2CieF8xYfwcrX05AezJ33XrSCXF0h0Joym+oYhn1X77hk6PuoFXG/2xz3CmFJZbzDd6ysQ5PD7D1dozpLMKksKuRerPfLdLbKGxEqTmzI1IXe7v1Yt3ECTQRFjXfKXKnN7DslVXkVdkwJnF886eAZMKi0n6FcaDkP8HkVkXluKnR0sLhuXz8dhSM+6YSFoWxn7kad0qyAqOwhaimMes9NPgzGEOpm+rKDvqfufLO45mARzK/YTOruxlSClT0Kx9+fm+zlmpOFEHdE4K+cvAbjzuOqzn3ON+btO76vlyNm0X2pxF+OUGWsGWtp/RI5duJU+Q3+k+69rRwcFLNSVZaLuTlGdDi7KO2Olg6Xz0TGD/wyOyrGO999hKdiKc5Fxj71kIm5AkJQJzYR4RHQXaYB/O4VNU+mRJ4lKPoiatG/bJp9nZMsphkvWCWV55IH3j5gYT4WbL0hJY1Nav+CwFJURptFpRjNiKNwIsk1x/kqKJx6FqhBuYAhvn4orMIOVlbkRXsiV6q28De7lEeCHaMhJYU08y/fTyEm49D7BsT6+vBmbMNyCWblLVm74jR+2JSNtMBMgEecp0MOW6Gp/8oeVUqS76b4+hIa4GXHB+nUYUYw==
     PG_HOST: >-
       AgB/kRibDKhYUdHIbFW8N1nE3pQOvdbZfnix4FEfR0CkPqp0DkLtjWAhVUg+sZzckKjN88VcNX4Kc9YZEe2E0aiw80x9eaBgnaVgOceIDjGw6Hm8mifCRET9AdzvavbdBb6uRF/bWv1W5oGJB5tGe5WG5mRSh7Hx/TjpxrVMMB2O6GTjaPVzB0tM+aNfAv4+zuwbedQ5yw9I5J83g0XJxG4QyHDrgG3QvY6zUZJwx3VSJOAqF/nBSFqccvlavjLGvnMCRCjxJK69vPDNVznu6ILQLJrYlJzWD7Qf8HcRxu4Tb/ea+oiSOq9ayLumfdz0pJu8is7Z6t/CfTb3kD3mN09m4tgtbUISpPI8p96ufPweLnBBwC4UqKP0k6xh6T94ykqmJDIZBf0E3oW1XZD+el+Ametzz9HuTtz4mlq9MP9ebDZ0bgtrhHZbxSD1RYpw+TPk24Sa11zZjo6WD0HiRIz/bzlKxg04ebkV7XFca0AzhfyAlHtjLGQRfW9CvP2SAGfMSgHIZGXDlHzTeaB1ZVFi213ISgKW/ShgfXQR7EDAhgddVEVU2NPu5iFlOFxoAesl+u7sadckEQQ9z4w6C4efsY+sI2+EvA7svVToAmOB1BKMIF92iwjLO3Pu3IO4EATd6MvR2u81QxUt8/OE5fTKNdmHv7x33dEGnuRMaF+J4ktli7w8EljBcPh7vyxYqiMN85hRfFyW31eQD7K6xgdP2uc5Wx1WfaqJIaHtXoXzeI1wop3hhw==
     PG_DATABASE: >-
@@ -425,62 +422,6 @@ spec:
     - hosts:
         - n8n-fce.fabrique.social.gouv.fr
       secretName: n8n-crt
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: n8n-db
-  annotations:
-    app.github.com/job: '5678'
-    app.github.com/ref: v1.2.3
-    app.github.com/repo: socialgouv/fce
-    app.github.com/run: '1234'
-    app.github.com/sha: '0123456'
-  labels:
-    application: fce
-    component: fce
-    owner: fce
-    team: fce
-  namespace: fce
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
-  selector:
-    matchLabels:
-      usage: fce-n8n-db
-  storageClassName: ''
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  labels:
-    usage: fce-n8n-db
-    application: fce
-    component: fce
-    owner: fce
-    team: fce
-  name: fce-n8n-db
-  annotations:
-    app.github.com/job: '5678'
-    app.github.com/ref: v1.2.3
-    app.github.com/repo: socialgouv/fce
-    app.github.com/run: '1234'
-    app.github.com/sha: '0123456'
-  namespace: fce
-spec:
-  accessModes:
-    - ReadWriteMany
-  azureFile:
-    secretName: azure-fce-volume
-    secretNamespace: fce
-    shareName: n8n-db
-  capacity:
-    storage: 1Gi
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: ''
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -676,6 +617,7 @@ data:
   MINIO_ARCHIVE_FILES: '1'
   MATOMO_ID_SITE: '8'
   MATOMO_URL: https://matomo.fabrique.social.gouv.fr
+  JWT_EXPIRE_BEFORE: '1634130400'
 ---
 apiVersion: v1
 kind: Service

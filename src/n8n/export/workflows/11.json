@@ -1,0 +1,128 @@
+{
+  "id": 11,
+  "name": "Interactions pole 3e",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^(.)*_Tableau_donnees_API_EOS_(.)*.csv$",
+        "bucket": "dge",
+        "outputName": "interactions_pole_3e.csv"
+      },
+      "name": "Download",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Interactions Pole 3e Ingest",
+      "type": "CUSTOM.interactionsPole3e",
+      "typeVersion": 1,
+      "position": [
+        920,
+        280
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    },
+    {
+      "parameters": {
+        "filename": "interactions_pole_3e.csv"
+      },
+      "name": "Delete file",
+      "type": "CUSTOM.deleteFile",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        280
+      ]
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Interactions Pole 3e Ingest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interactions Pole 3e Ingest": {
+      "main": [
+        [
+          {
+            "node": "Delete file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-09-22T09:43:23.803Z",
+  "updatedAt": "2021-09-22T12:12:10.414Z",
+  "settings": {},
+  "staticData": null
+}

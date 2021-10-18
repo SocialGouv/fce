@@ -1,0 +1,272 @@
+{
+  "id": 13,
+  "name": "Trans Sissmo Effectifs",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download latest effectif\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        160,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "filename": "ts_effectifs.csv"
+      },
+      "name": "Delete file",
+      "type": "CUSTOM.deleteFile",
+      "typeVersion": 1,
+      "position": [
+        1250,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^(.)*effectif(.)*.csv$",
+        "bucket": "dares",
+        "outputName": "ts_effectifs.csv"
+      },
+      "name": "Download",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        670,
+        280
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF1",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        830,
+        280
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Trans sissmo Effectifs Ingest",
+      "type": "CUSTOM.tsEffectifsIngest",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        260
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    },
+    {
+      "parameters": {
+        "filename": "={{$node[\"Download\"].json[\"remoteFile\"]}}",
+        "bucket": "={{$node[\"Download\"].parameter[\"bucket\"]}}"
+      },
+      "name": "Archive file1",
+      "type": "CUSTOM.archiveMinio",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        80
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "table": "etablissements_dsn_effectif"
+      },
+      "name": "Truncate table",
+      "type": "CUSTOM.truncateTable",
+      "typeVersion": 1,
+      "position": [
+        500,
+        280
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    },
+    {
+      "parameters": {},
+      "name": "Download latest effectif",
+      "type": "CUSTOM.minioDownloadLatestEffectif",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "latestUpdate": true
+      },
+      "name": "Trans sissmo Effectifs Ingest1",
+      "type": "CUSTOM.tsEffectifsIngest",
+      "typeVersion": 1,
+      "position": [
+        320,
+        280
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download latest effectif",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Trans sissmo Effectifs Ingest1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download": {
+      "main": [
+        [
+          {
+            "node": "IF1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF1": {
+      "main": [
+        [
+          {
+            "node": "Trans sissmo Effectifs Ingest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trans sissmo Effectifs Ingest": {
+      "main": [
+        [
+          {
+            "node": "Delete file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete file": {
+      "main": [
+        [
+          {
+            "node": "Archive file1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Archive file1": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Truncate table": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download latest effectif": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trans sissmo Effectifs Ingest1": {
+      "main": [
+        [
+          {
+            "node": "Truncate table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-09-22T13:53:33.163Z",
+  "updatedAt": "2021-09-23T12:58:07.470Z",
+  "settings": {},
+  "staticData": null
+}

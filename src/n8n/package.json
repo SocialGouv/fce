@@ -20,7 +20,8 @@
         "watch": "tsc --watch",
         "test": "jest",
         "n8n": "export $(cat .env | xargs) && n8n",
-        "n8n:export": "n8n export:workflow --backup --output ./export/workflows/ && n8n export:credentials --backup --output ./export/credentials --decrypted"
+        "n8n:export": "n8n export:workflow --backup --output ./export/workflows/ && n8n export:credentials --backup --output ./export/credentials --decrypted",
+        "n8n:import": "n8n import:workflow --input ./export/workflows/ --separate && n8n import:credentials --input ./export/credentials/ --separate"
     },
     "files": [
         "dist"

@@ -1,6 +1,6 @@
 {
-  "id": 5,
-  "name": "Import Login Emails",
+  "id": 14,
+  "name": "Apprentissage",
   "active": false,
   "nodes": [
     {
@@ -9,53 +9,26 @@
       "type": "n8n-nodes-base.start",
       "typeVersion": 1,
       "position": [
-        90,
+        250,
         300
       ]
     },
     {
       "parameters": {
-        "downloadRegex": "^Annuaire.*$",
-        "bucket": "dgt",
-        "outputName": "valid_emails.csv"
+        "downloadRegex": "^ExtractFCE_App.*$",
+        "bucket": "dgefp",
+        "outputName": "apprentissage.csv"
       },
       "name": "Download",
       "type": "CUSTOM.minioDownload",
       "typeVersion": 1,
       "position": [
-        250,
-        290
+        470,
+        300
       ],
       "credentials": {
         "minio": "minio"
       }
-    },
-    {
-      "parameters": {
-        "remoteFile": "={{$node[\"Download\"].json[\"remoteFile\"]}}"
-      },
-      "name": "Import Login Email",
-      "type": "CUSTOM.importLoginEmail",
-      "typeVersion": 1,
-      "position": [
-        700,
-        280
-      ],
-      "credentials": {
-        "postgres": "PostgreDev"
-      }
-    },
-    {
-      "parameters": {
-        "filename": "valid_emails.csv"
-      },
-      "name": "Delete file",
-      "type": "CUSTOM.deleteFile",
-      "typeVersion": 1,
-      "position": [
-        900,
-        280
-      ]
     },
     {
       "parameters": {
@@ -72,24 +45,33 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
       "position": [
-        460,
+        680,
         300
       ]
     },
     {
       "parameters": {
-        "filename": "={{$node[\"Download\"].json[\"remoteFile\"]}}",
-        "bucket": "={{$node[\"Download\"].parameter[\"bucket\"]}}"
+        "filename": "apprentissage.csv"
       },
-      "name": "Archive file",
-      "type": "CUSTOM.archiveMinio",
+      "name": "Delete file",
+      "type": "CUSTOM.deleteFile",
       "typeVersion": 1,
       "position": [
-        1010,
-        430
+        1120,
+        280
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Ingest apprentissage",
+      "type": "CUSTOM.apprentissageIngest",
+      "typeVersion": 1,
+      "position": [
+        900,
+        280
       ],
       "credentials": {
-        "minio": "minio"
+        "postgres": "PostgreDev"
       }
     }
   ],
@@ -116,7 +98,18 @@
         ]
       ]
     },
-    "Import Login Email": {
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Ingest apprentissage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ingest apprentissage": {
       "main": [
         [
           {
@@ -126,43 +119,10 @@
           }
         ]
       ]
-    },
-    "IF": {
-      "main": [
-        [
-          {
-            "node": "Import Login Email",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Delete file": {
-      "main": [
-        [
-          {
-            "node": "Archive file",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Archive file": {
-      "main": [
-        [
-          {
-            "node": "Download",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
-  "createdAt": "2021-07-21T10:04:43.336Z",
-  "updatedAt": "2021-09-15T09:50:33.359Z",
+  "createdAt": "2021-09-24T08:28:43.711Z",
+  "updatedAt": "2021-09-24T08:37:31.331Z",
   "settings": {},
   "staticData": null
 }

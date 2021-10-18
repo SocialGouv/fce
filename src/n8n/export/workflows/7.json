@@ -1,0 +1,73 @@
+{
+  "id": 7,
+  "name": "SiPsiSiren",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        330
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Download SiPsi Current Year",
+      "type": "CUSTOM.siPsiDownload",
+      "typeVersion": 1,
+      "position": [
+        -10,
+        330
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "files": "={{$node[\"Download SiPsi Current Year\"].json[\"files\"]}}"
+      },
+      "name": "Si PSI Ingest",
+      "type": "CUSTOM.siPsi",
+      "typeVersion": 1,
+      "position": [
+        340,
+        330
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download SiPsi Current Year",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download SiPsi Current Year": {
+      "main": [
+        [
+          {
+            "node": "Si PSI Ingest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-07-30T09:14:29.694Z",
+  "updatedAt": "2021-09-16T14:36:23.578Z",
+  "settings": {},
+  "staticData": null
+}

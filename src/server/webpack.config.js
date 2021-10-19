@@ -16,20 +16,23 @@ module.exports = {
 
   output: {
     path: buildDir,
-    filename: buildFilename
+    filename: buildFilename,
   },
 
   context: __dirname,
   node: {
     __filename: false,
-    __dirname: false
+    __dirname: false,
   },
 
   resolve: {
     alias: {
-      frentreprise: path.resolve(__dirname, "../frentreprise/src/frentreprise")
+      frentreprise: path.resolve(
+        __dirname,
+        "../frentreprise/dist/frentreprise"
+      ),
     },
-    extensions: [".js"]
+    extensions: [".js"],
   },
 
   mode: PRODUCTION ? "production" : "development",
@@ -40,10 +43,10 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: "babel-loader"
-        }
-      }
-    ]
+          loader: "babel-loader",
+        },
+      },
+    ],
   },
 
   plugins: [
@@ -51,9 +54,9 @@ module.exports = {
       patterns: [
         {
           from: "./config",
-          to: "./config"
-        }
-      ]
-    })
-  ]
+          to: "./config",
+        },
+      ],
+    }),
+  ],
 };

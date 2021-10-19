@@ -433,4 +433,4 @@ jobs:
           status: ${{ job.status }}
           token: ${{ secrets.GITHUB_TOKEN }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env_url: https://${{ env.namespace }}.${{ env.SOCIALGOUV_KUBE_INGRESS_BASE_DOMAIN }}
+          env_url: https://${{ env.namespace }}.${{ env.SOCIALGOUV_BASE_DOMAIN }}

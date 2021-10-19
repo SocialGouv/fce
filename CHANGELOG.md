@@ -1,3 +1,10 @@
+## [27.16.1](https://github.com/SocialGouv/fce/compare/v27.16.0...v27.16.1) (2021-10-19)
+
+
+### Bug Fixes
+
+* **server:** rename MAIL env variable to MAIL_TRANSPORT_CONFIG ([05f7c8f](https://github.com/SocialGouv/fce/commit/05f7c8fe91e37c5c689060b97d71bfee72515b69))
+
 # [27.16.0](https://github.com/SocialGouv/fce/compare/v27.15.6...v27.16.0) (2021-10-14)
 
 

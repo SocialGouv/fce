@@ -6,51 +6,51 @@ let config = null;
 const log = console.warning || console.error || console.log;
 
 const globalConfig = {
-  api_endpoint: "/api",
+  api_endpoint: process.env.REACT_APP_API_URL || "/api",
   maintenanceMode: process.env.REACT_APP_MAINTENANCE === "true",
   auth: {
     expire: 86400, // 1j,
-    codeLength: 5
+    codeLength: 5,
   },
   dataSources: [
     { id: "PG", priority: 100 },
-    { id: "ApiGouv", priority: 80 }
+    { id: "ApiGouv", priority: 80 },
     //{ id: "ApiGouvAssociations", priority: 80 }
   ],
   pgApi: {
-    timeout: 10000
+    timeout: 10000,
   },
   sidebarEstablishmentsLimit: 20,
   interactions: {
     poles: ["C", "3E_SEER", "3E_SRC", "T"],
     types: {
       control: ["interactions_C", "interactions_T", "interactions_3E_SRC"],
-      visit: ["interactions_3E_SEER"]
-    }
+      visit: ["interactions_3E_SEER"],
+    },
   },
   region: {
-    occitanie: 76
+    occitanie: 76,
   },
   contact: {
-    mailto: "chloe.mandelblat@dreets.gouv.fr"
+    mailto: "chloe.mandelblat@dreets.gouv.fr",
   },
   emailInformation: {
     to: "oc.documentation@direccte.gouv.fr",
-    subject: "FCE - demande d’informations complémentaires"
+    subject: "FCE - demande d’informations complémentaires",
   },
   advancedSearch: {
     minTerms: 2,
-    debounce: 500
+    debounce: 500,
   },
   establishmentState: {
     actif: "A",
-    ferme: "F"
+    ferme: "F",
   },
   appSearch: {
     client: {
       searchKey: process.env.REACT_APP_SEARCH_KEY,
       engineName: process.env.REACT_APP_SEARCH_ENGINE_NAME,
-      endpointBase: process.env.REACT_APP_SEARCH_ENDPOINT_BASE
+      endpointBase: process.env.REACT_APP_SEARCH_ENDPOINT_BASE,
     },
     defaultOptions: {
       sort: { etatadministratifetablissement: "asc" },
@@ -66,18 +66,18 @@ const globalConfig = {
         activiteprincipaleetablissement: { raw: {} },
         activiteprincipaleetablissement_libelle: { raw: {} },
         enseigne1etablissement: { raw: {} },
-        lastdsntrancheeffectifsetablissement: { raw: {} }
+        lastdsntrancheeffectifsetablissement: { raw: {} },
       },
       page: {
-        size: 20
-      }
-    }
+        size: 20,
+      },
+    },
   },
   poleSrcControlType: {
     FPC: "Formation professionnelle continue",
     CSA: "Taxe apprentissage",
     "Apprentissage (hors CSA)": "Apprentissage (hors taxe)",
-    FSE: "FSE"
+    FSE: "FSE",
   },
   accords: [
     { key: "epargne", value: "Epargne salariale" },
@@ -88,38 +88,38 @@ const globalConfig = {
     { key: "conditions_travail", value: "Conditions de travail" },
     {
       key: "protection_sociale",
-      value: "Prévoyance / protection sociale complémentaire"
+      value: "Prévoyance / protection sociale complémentaire",
     },
     {
       key: "nouvelles_technologies",
-      value: "Nouvelles technologies numériques"
+      value: "Nouvelles technologies numériques",
     },
     { key: "classifications", value: "Classifications" },
     {
       key: "droit_syndical",
-      value: "Droit syndical, représentation du personnel"
+      value: "Droit syndical, représentation du personnel",
     },
     { key: "formation", value: "Formation professionnelle" },
-    { key: "autres", value: "Autres" }
+    { key: "autres", value: "Autres" },
   ],
   inseeSizeRanges: {
     "-": "-",
     NN: "Unité non employeuse",
     SP: "Secteur public",
     "0 salarié": "0 salarié (pas d'effectif au 31/12 )",
-    "0": "0 salarié",
+    0: "0 salarié",
     "01": "1 ou 2 salariés",
     "02": "3 à 5 salariés",
     "03": "6 à 9 salariés",
-    "11": "10 à 19 salariés",
-    "12": "20 à 49 salariés",
-    "21": "50 à 99 salariés",
-    "22": "100 à 249 salariés",
-    "31": "250 à 499 salariés",
-    "32": "500 à 999 salariés",
-    "41": `${formatNumber(1000)} à ${formatNumber(1999)} salariés`,
-    "42": `${formatNumber(2000)} à ${formatNumber(4999)} salariés`,
-    "51": `${formatNumber(5000)} salariés et plus`
+    11: "10 à 19 salariés",
+    12: "20 à 49 salariés",
+    21: "50 à 99 salariés",
+    22: "100 à 249 salariés",
+    31: "250 à 499 salariés",
+    32: "500 à 999 salariés",
+    41: `${formatNumber(1000)} à ${formatNumber(1999)} salariés`,
+    42: `${formatNumber(2000)} à ${formatNumber(4999)} salariés`,
+    51: `${formatNumber(5000)} salariés et plus`,
   },
   sources: {
     customDateFormats: {
@@ -130,18 +130,18 @@ const globalConfig = {
       "ASP Extranet IAE2.0": "MMM YY",
       "ASP Extranet CUI": "MMM YY",
       "Ari@ne": "MMM YY",
-      Extrapro: "MMM YY"
-    }
+      Extrapro: "MMM YY",
+    },
   },
   agrementsIae: {
     ei: "Entreprise d'insertion",
     ai: "Association intermédiaire",
     aci: "Atelier et chantier d'insertion",
-    etti: "Entreprise de travail temporaire d'insertion"
+    etti: "Entreprise de travail temporaire d'insertion",
   },
   legifranceSearchUrl: {
     accords: "https://www.legifrance.gouv.fr/liste/acco?siret=",
-    idcc: "https://www.legifrance.gouv.fr/liste/idcc?idcc_suggest="
+    idcc: "https://www.legifrance.gouv.fr/liste/idcc?idcc_suggest=",
   },
   strapi: {
     domain: `//strapi-${window.location.hostname}`,
@@ -149,8 +149,8 @@ const globalConfig = {
       "/a-propos": "/pages/1",
       "/politique-de-confidentialite": "/pages/6",
       "/sources-des-donnees": "/pages/3",
-      "/mentions-legales": "/pages/4"
-    }
+      "/mentions-legales": "/pages/4",
+    },
   },
   codeInseeLength: 5,
   state: {
@@ -158,8 +158,8 @@ const globalConfig = {
     success: "success",
     error: "error",
     finish: "finish",
-    unauthorize: "unauthorize"
-  }
+    unauthorize: "unauthorize",
+  },
 };
 
 function initConfig() {
@@ -167,7 +167,7 @@ function initConfig() {
     if (hosts2config[window.location.hostname]) {
       return (config = {
         ...globalConfig,
-        ...require(`./configs/${hosts2config[window.location.hostname]}.json`)
+        ...require(`./configs/${hosts2config[window.location.hostname]}.json`),
       });
     } else {
       log("No config file for hostname : " + window.location.hostname);
@@ -176,13 +176,13 @@ function initConfig() {
     log("Cannot get value of : window.location.hostname");
   }
   config = {
-    ...globalConfig
+    ...globalConfig,
   };
 }
 
 initConfig();
 
 export default {
-  get: key => config && _get(config, key),
-  reset: initConfig
+  get: (key) => config && _get(config, key),
+  reset: initConfig,
 };

@@ -1,9 +1,9 @@
 import { INodeExecutionData, INodeType, INodeTypeDescription } from "n8n-workflow";
 import { IExecuteFunctions } from "n8n-core";
 import { ingestDb, IngestDbConfig } from "../../utils/ingestDb";
-import {mapRow} from "../../utils/postgre";
-import {parse} from "date-fns";
-import {reformatDate} from "../../utils/date";
+import { mapRow } from "../../utils/postgre";
+import { parse } from "date-fns";
+import { reformatDate } from "../../utils/date";
 
 const INPUT_DATE_FORMAT = "dd/MM/yyyy";
 const OUTPUT_DATE_FORMAT = "yyyy-MM-dd";
@@ -41,7 +41,7 @@ export class IngestApprentissage implements INodeType {
     name: "apprentissageIngest",
     group: ['transform'],
     version: 1,
-    description: "Ingest apprentssage data",
+    description: "Ingest apprentissage data",
     defaults: {
       name: 'Ingest apprentissage',
       color: '#772244',

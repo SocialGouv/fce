@@ -1,9 +1,9 @@
-import {IExecuteFunctions} from "n8n-core";
-import {Pool} from "pg";
-import { createReadStream } from "fs";
+import { IExecuteFunctions } from "n8n-core";
+import { Pool } from "pg";
+import { createReadStream, createWriteStream } from "fs";
 import * as path from "path";
 import { DOWNLOAD_STORAGE_PATH } from "./constants";
-import { identityTransform } from "./stream";
+import { identityTransform, promisifyStream } from "./stream";
 import {
   conflictSafeInsert,
   connect,
@@ -15,8 +15,8 @@ import {
   sanitizeHtmlChars,
   stringifyCsv
 } from "./postgre";
-import {Transform} from "stream";
-import {format} from "date-fns";
+import { Transform } from "stream";
+import { format } from "date-fns";
 
 export type IngestDbConfig = {
   fieldsMapping: Record<string, string>;
@@ -39,6 +39,7 @@ export type IngestDbConfig = {
   transform?: () => Transform;
   updateHistoryQuery?: string;
   bypassConflictSafeInsert?: boolean;
+  sanitizeHtmlChars?: boolean;
 }
 
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
@@ -48,16 +49,16 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
 
   const columns = [
     ...Object.values(params.fieldsMapping),
-    ...(params.generateSiren ? [ "siren" ] : []),
+    ...(params.generateSiren ? ["siren"] : []),
   ];
 
   const { transform: dateTransform, getMaxDate } = params.date ? dateStream(params.date) : {
     transform: identityTransform(),
-    getMaxDate: (): void => {}
+    getMaxDate: (): void => { }
   };
 
   const readStream = createReadStream(path.join(DOWNLOAD_STORAGE_PATH, params.filename))
-    .pipe(sanitizeHtmlChars())
+    .pipe(params.sanitizeHtmlChars !== false ? sanitizeHtmlChars() : identityTransform())
     .pipe(parseCsv({ columns: params.fieldsMapping, delimiter: params.separator }))
     .pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))
     .pipe(deduplicate(params.deduplicateField))

@@ -64,6 +64,7 @@
         "data-forge-fs": "^0.0.9",
         "date-fns": "^2.22.1",
         "date-fns-tz": "^1.1.6",
+        "extract-zip": "^2.0.1",
         "html-entities": "^2.3.2",
         "minio": "^7.0.18",
         "multipipe": "^4.0.0",

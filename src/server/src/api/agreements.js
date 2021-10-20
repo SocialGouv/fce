@@ -1,12 +1,12 @@
 import withAuth from "../middlewares/auth";
 import Agreement from "../models/Agreement";
 import HttpError from "../utils/HttpError";
-import {limitRate} from "../middlewares/limit-rate";
+import { preconfiguredLimitRate } from "../middlewares/limit-rate";
 
 const express = require("express");
 const router = express.Router();
 
-router.get("/agreements/:siren", withAuth, limitRate({ count: 3, period: 10000 }), async (req, res) => {
+router.get("/agreements/:siren", withAuth, preconfiguredLimitRate(), async (req, res) => {
   const { siren } = req.params;
 
   if (!siren || siren.length !== 9) {

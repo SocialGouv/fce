@@ -3,6 +3,8 @@ import { getTokenFromRequest } from "../utils/auth";
 const removeExpired = (cache, now, period) =>
   cache.filter(time => now - time < period);
 
+export const preconfiguredLimitRate = () => limitRate({ count: 5, period: 10000 });
+
 export const limitRate = ({ count, period }) => {
   const cache = new Map();
 
@@ -34,7 +36,7 @@ export const limitRate = ({ count, period }) => {
 
     if (activeCache.length > count) {
       console.log("Calls mitigated");
-      res.status(403)
+      res.status(401)
         .json({
           message : "Request rate exceeded"
         });

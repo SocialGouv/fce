@@ -48,7 +48,7 @@ const isSuccessEstablishment = (data, siret) => {
   return !!establishment?._success;
 };
 
-router.get("/entity", withAuth, limitRate({ count: 6, period: 10000 }), function (req, res) {
+router.get("/entity", withAuth, limitRate({ count: 10, period: 10000 }), function (req, res) {
   const query = (req.query["q"] || "").trim();
   const dataSource = (req.query["dataSource"] || "").trim();
 

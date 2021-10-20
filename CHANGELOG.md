@@ -1,3 +1,10 @@
+## [27.16.2](https://github.com/SocialGouv/fce/compare/v27.16.1...v27.16.2) (2021-10-20)
+
+
+### Bug Fixes
+
+* **server:** disconnect user when doing too many requests ([6b24459](https://github.com/SocialGouv/fce/commit/6b244599b1024acc208eaa283d855148ff138e15))
+
 ## [27.16.1](https://github.com/SocialGouv/fce/compare/v27.16.0...v27.16.1) (2021-10-19)
 
 

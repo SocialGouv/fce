@@ -18,10 +18,10 @@ export class MinioDownload implements INodeType {
 			name: 'Download',
 			color: '#772244',
 		},
-    credentials: [{
-		  name: "minio",
-      required: true
-    }],
+		credentials: [{
+			name: "minio",
+			required: true
+		}],
 		inputs: ['main'],
 		outputs: ['main'],
 		properties: [
@@ -34,25 +34,25 @@ export class MinioDownload implements INodeType {
 				default: '',
 				placeholder: 'Download Regex',
 				description: 'A regex that will match the file name',
-        required: true
+				required: true
 			},
-      {
-        displayName: 'Bucket Name',
-        name: 'bucket',
-        type: 'string',
-        default: '',
-        placeholder: 'Bucket',
-        description: 'The fetched bucket',
-        required: true
-      },
-      {
-        displayName: 'Output file name',
-        name: 'outputName',
-        type: 'string',
-        default: '',
-        placeholder: 'Output name',
-        description: 'The name of the output file',
-      }
+			{
+				displayName: 'Bucket Name',
+				name: 'bucket',
+				type: 'string',
+				default: '',
+				placeholder: 'Bucket',
+				description: 'The fetched bucket',
+				required: true
+			},
+			{
+				displayName: 'Output file name',
+				name: 'outputName',
+				type: 'string',
+				default: '',
+				placeholder: 'Output name',
+				description: 'The name of the output file',
+			}
 		]
 	};
 
@@ -66,10 +66,10 @@ export class MinioDownload implements INodeType {
 		const { outputFile, remoteFile } = await downloadOldestFile(client, bucket, new RegExp(downloadRegex), outputName);
 
 		return [
-		  this.helpers.returnJsonArray({
-        fileName: outputFile,
-        remoteFile
-      })
-    ];
+			this.helpers.returnJsonArray({
+				fileName: outputFile,
+				remoteFile
+			})
+		];
 	}
 }

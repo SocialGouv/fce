@@ -1,0 +1,84 @@
+{
+  "id": 16,
+  "name": "Ingest Siren",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Ingest Siren",
+      "type": "CUSTOM.sirenIngest",
+      "typeVersion": 1,
+      "position": [
+        910,
+        300
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    },
+    {
+      "parameters": {
+        "downloadUrl": "https://files.data.gouv.fr/insee-sirene/StockUniteLegale_utf8.zip",
+        "fileName": "StockUniteLegale_utf8.zip"
+      },
+      "name": "Download File",
+      "type": "CUSTOM.downloadFile",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "fileName": "={{$node[\"Download File\"].parameter[\"fileName\"]}}",
+        "outputName": "StockUniteLegale_utf8"
+      },
+      "name": "Unzip File",
+      "type": "CUSTOM.unzipFile",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Unzip File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-10-20T13:47:34.976Z",
+  "updatedAt": "2021-10-20T14:24:34.234Z",
+  "settings": {},
+  "staticData": null
+}

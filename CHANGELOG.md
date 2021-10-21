@@ -1,3 +1,10 @@
+## [27.18.1](https://github.com/SocialGouv/fce/compare/v27.18.0...v27.18.1) (2021-10-21)
+
+
+### Bug Fixes
+
+* **client:** remove bad error management ([#92](https://github.com/SocialGouv/fce/issues/92)) ([83ead5d](https://github.com/SocialGouv/fce/commit/83ead5df3731481c447beafafd1e607ea94f6bb0))
+
 # [27.18.0](https://github.com/SocialGouv/fce/compare/v27.17.1...v27.18.0) (2021-10-21)
 
 

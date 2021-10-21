@@ -53,18 +53,18 @@ const fields = [
     "caractereEmployeurEtablissement",
 ];
 
-const config: IngestDbConfig = {
+const getConfig = (fileName: string): IngestDbConfig => ({
     fieldsMapping: fields.reduce((acc, value) => {
         acc[value] = value.toLowerCase();
         return acc;
     }, {} as Record<string, string>),
-    filename: "StockEtablissement_utf8/StockEtablissement_utf8.csv",
+    filename: fileName,
     table: "etablissements",
     truncate: true,
     separator: ",",
     bypassConflictSafeInsert: true,
     sanitizeHtmlChars: false
-};
+});
 
 export class IngestSiret implements INodeType {
     description: INodeTypeDescription = {
@@ -83,10 +83,24 @@ export class IngestSiret implements INodeType {
         }],
         inputs: ['main'],
         outputs: ['main'],
-        properties: []
+        properties: [
+            {
+                displayName: 'File name',
+                name: 'fileName',
+                type: 'string',
+                default: 'StockEtablissement_utf8/StockEtablissement_utf8.csv',
+                placeholder: 'File name',
+                description: 'The name of the csv file to ingest',
+                required: true
+            },
+        ]
     };
 
     async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
+        const fileName = this.getNodeParameter('fileName', 0) as string;
+
+        const config = getConfig(fileName);
+
         return ingestDb(this, config);
     }
 }

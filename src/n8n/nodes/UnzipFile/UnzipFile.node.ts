@@ -60,7 +60,7 @@ export class UnzipFile implements INodeType {
         }
 
         return [
-            this.helpers.returnJsonArray({})
+            this.helpers.returnJsonArray({ outputName })
         ];
     }
 }

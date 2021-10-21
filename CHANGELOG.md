@@ -1,3 +1,10 @@
+# [27.17.0](https://github.com/SocialGouv/fce/compare/v27.16.2...v27.17.0) (2021-10-21)
+
+
+### Features
+
+* **n8n:** add siren import job ([d9414a3](https://github.com/SocialGouv/fce/commit/d9414a3ec8a1c6163b283659039a9c3c8b3a141a))
+
 ## [27.16.2](https://github.com/SocialGouv/fce/compare/v27.16.1...v27.16.2) (2021-10-20)
 
 

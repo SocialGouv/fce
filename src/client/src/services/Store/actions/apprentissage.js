@@ -1,34 +1,34 @@
 import {
   FETCH_APPRENTISSAGE_START,
   FETCH_APPRENTISSAGE_SUCCESS,
-  FETCH_APPRENTISSAGE_ERROR
+  FETCH_APPRENTISSAGE_ERROR,
 } from "../constants/ActionTypes";
 import Http from "../../Http";
 
-export const loadApprentissage = identifier => (dispatch, getState) => {
+export const loadApprentissage = (identifier) => (dispatch, getState) => {
   const state = getState();
 
   if (state.apprentissage.identifier === identifier) {
-    return;
+    return null;
   }
 
   dispatch({
-    type: FETCH_APPRENTISSAGE_START
+    type: FETCH_APPRENTISSAGE_START,
   });
 
   return Http.get(`/apprentissage/${identifier}`)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: FETCH_APPRENTISSAGE_SUCCESS,
         apprentissage: res.data,
-        identifier: identifier
+        identifier: identifier,
       });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
       dispatch({
         type: FETCH_APPRENTISSAGE_ERROR,
-        payload: error
+        payload: error,
       });
     });
 };

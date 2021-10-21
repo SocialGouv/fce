@@ -37,7 +37,7 @@ export default class Agreement extends Model {
       if (!agreements || !agreementsBySiret) {
         throw new HttpError(
           "Postgres query error (Agreement::findAllBySIREN)",
-          500
+          404
         );
       }
 

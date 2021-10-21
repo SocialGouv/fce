@@ -1,5 +1,5 @@
 import Model from "./Model";
-import {getYear} from "date-fns";
+import { getYear } from "date-fns";
 
 export default class Apprentissage extends Model {
   async getBySiren(siren) {
@@ -24,6 +24,9 @@ export default class Apprentissage extends Model {
     const response = await this.db.query(
       `SELECT date FROM import_updates WHERE "table" = 'etablissements_apprentissage'`
     );
-    return getYear(response.rows[0].date)
+
+    if (!response.rows.length) return null;
+
+    return getYear(response.rows[0].date);
   }
 }

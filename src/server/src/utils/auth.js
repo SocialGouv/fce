@@ -142,7 +142,7 @@ export default class Auth {
 
     await authRequests.delete(email);
 
-    if (!authRequests.create({ email, code })) {
+    if (!await authRequests.create({ email, code })) {
       return false;
     }
 

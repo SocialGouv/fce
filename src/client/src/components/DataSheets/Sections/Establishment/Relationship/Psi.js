@@ -9,12 +9,14 @@ import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink/SeeDetailsLink
 import "./psi.scss";
 
 const Psi = ({ psi, siret, sources }) => {
+  if (!sources.SIPSI) return "";
+
   const siren = siret.slice(0, 9);
   const currentYear = Number(sources.SIPSI.date.split("/").pop());
   const lastYear = currentYear - 1;
 
   const establishmentPsi = psi.establishments?.find(
-    establishment => establishment.siret === siret
+    (establishment) => establishment.siret === siret
   );
 
   const hasPsi = Boolean(
@@ -84,13 +86,13 @@ const Psi = ({ psi, siret, sources }) => {
 Psi.propTypes = {
   psi: PropTypes.object.isRequired,
   siret: PropTypes.string.isRequired,
-  sources: PropTypes.object.isRequired
+  sources: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     psi: state.psi,
-    sources: state.sources
+    sources: state.sources,
   };
 };
 

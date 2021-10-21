@@ -9,6 +9,8 @@ import { PsiSiret } from "./PsiSiret";
 import "./psi.scss";
 
 const Psi = ({ psi, establishments, sources }) => {
+  if (!sources.SIPSI) return "";
+
   const currentYear = Number(sources.SIPSI.date.split("/").pop());
   const lastYear = currentYear - 1;
 
@@ -18,9 +20,9 @@ const Psi = ({ psi, establishments, sources }) => {
 
   const establishmentsWithPsi = psi.establishments.length
     ? psi.establishments
-        .map(psiEstablishment => {
+        .map((psiEstablishment) => {
           const establishmentInfos = establishments.find(
-            enterpriseEstablishment =>
+            (enterpriseEstablishment) =>
               enterpriseEstablishment.siret === psiEstablishment.siret
           );
 
@@ -29,12 +31,12 @@ const Psi = ({ psi, establishments, sources }) => {
             ...(establishmentInfos
               ? {
                   etat: establishmentInfos.etat_etablissement,
-                  commune: `${establishmentInfos.adresse_composant.code_postal} ${establishmentInfos.adresse_composant.localite}`
+                  commune: `${establishmentInfos.adresse_composant.code_postal} ${establishmentInfos.adresse_composant.localite}`,
                 }
               : {
                   etat: "-",
-                  commune: "-"
-                })
+                  commune: "-",
+                }),
           };
         })
         // closed establishments last
@@ -42,11 +44,11 @@ const Psi = ({ psi, establishments, sources }) => {
     : [];
 
   const establishmentsWithPsiCurrentYear = establishmentsWithPsi.filter(
-    establishment => establishment.current_year
+    (establishment) => establishment.current_year
   );
 
   const establishmentsWithPsiLastYear = establishmentsWithPsi.filter(
-    establishment => establishment.last_year
+    (establishment) => establishment.last_year
   );
 
   return (
@@ -120,7 +122,7 @@ const Psi = ({ psi, establishments, sources }) => {
             <PsiSiret
               establishments={{
                 currentYear: establishmentsWithPsiCurrentYear,
-                lastYear: establishmentsWithPsiLastYear
+                lastYear: establishmentsWithPsiLastYear,
               }}
               years={{ currentYear, lastYear }}
             />
@@ -134,14 +136,14 @@ const Psi = ({ psi, establishments, sources }) => {
 Psi.propTypes = {
   establishments: PropTypes.array.isRequired,
   psi: PropTypes.object.isRequired,
-  sources: PropTypes.object.isRequired
+  sources: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     psi: state.psi,
     establishments: state.enterprise.current.etablissements,
-    sources: state.sources
+    sources: state.sources,
   };
 };
 

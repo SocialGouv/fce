@@ -1,3 +1,10 @@
+# [27.18.0](https://github.com/SocialGouv/fce/compare/v27.17.1...v27.18.0) (2021-10-21)
+
+
+### Features
+
+* **n8n:** add Siret ingest ([#93](https://github.com/SocialGouv/fce/issues/93)) ([778bc37](https://github.com/SocialGouv/fce/commit/778bc377d5481aef46ca9c92d6da244746a82ee8))
+
 ## [27.17.1](https://github.com/SocialGouv/fce/compare/v27.17.0...v27.17.1) (2021-10-21)
 
 

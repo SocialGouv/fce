@@ -1,3 +1,15 @@
+# [27.19.0](https://github.com/SocialGouv/fce/compare/v27.18.1...v27.19.0) (2021-10-21)
+
+
+### Bug Fixes
+
+* typo ([#14](https://github.com/SocialGouv/fce/issues/14)) ([6173dba](https://github.com/SocialGouv/fce/commit/6173dbaaf5cf64355b7cb7079aff0e7840d94fd9))
+
+
+### Features
+
+* **n8n:** add a filter csv node ([#94](https://github.com/SocialGouv/fce/issues/94)) ([f30c4a9](https://github.com/SocialGouv/fce/commit/f30c4a9410317cb3350936c94c67d9a14d295d14))
+
 ## [27.18.1](https://github.com/SocialGouv/fce/compare/v27.18.0...v27.18.1) (2021-10-21)
 
 

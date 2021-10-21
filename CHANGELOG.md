@@ -1,3 +1,10 @@
+## [27.17.1](https://github.com/SocialGouv/fce/compare/v27.17.0...v27.17.1) (2021-10-21)
+
+
+### Bug Fixes
+
+* **server:** fix missing await on auth module ([a48ed43](https://github.com/SocialGouv/fce/commit/a48ed437957bf55d224b9c839c0908fb81d5332b))
+
 # [27.17.0](https://github.com/SocialGouv/fce/compare/v27.16.2...v27.17.0) (2021-10-21)
 
 

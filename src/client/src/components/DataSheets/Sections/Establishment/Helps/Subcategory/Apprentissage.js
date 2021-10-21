@@ -7,6 +7,7 @@ import Table from "../../../SharedComponents/Table";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
 import { hasApprentissage } from "../../../../../../helpers/Establishment";
 import { formatNumber } from "../../../../../../helpers/utils";
+import Info from "../../../../../Info";
 
 const Apprentissage = ({ apprentissage }) => {
   return (

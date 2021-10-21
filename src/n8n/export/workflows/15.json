@@ -1,0 +1,128 @@
+{
+  "id": 15,
+  "name": "Accords Entreprise",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^Daccord-Gestion-Extraction.*\\.(txt|csv)$",
+        "bucket": "dgt",
+        "outputName": "accords.csv"
+      },
+      "name": "Download",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "filename": "accords.csv"
+      },
+      "name": "Delete file",
+      "type": "CUSTOM.deleteFile",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        280
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Accords Ingest",
+      "type": "CUSTOM.accordsIngest",
+      "typeVersion": 1,
+      "position": [
+        900,
+        280
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Accords Ingest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Accords Ingest": {
+      "main": [
+        [
+          {
+            "node": "Delete file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-09-28T15:58:55.747Z",
+  "updatedAt": "2021-09-28T16:00:27.282Z",
+  "settings": {},
+  "staticData": null
+}

@@ -1,14 +1,12 @@
-import Auth from "../utils/auth";
+import Auth, {getTokenFromRequest} from "../utils/auth";
 
 export default async (req, res, next) => {
   try {
-    const authorizationHeader = req.get("Authorization");
-
-    if (!authorizationHeader) {
+    const token = getTokenFromRequest(req);
+    if (!token) {
       throw new Error("Missing Authorization header");
     }
 
-    const token = authorizationHeader.replace("Bearer ", "");
     const user = await Auth.checkToken(token);
 
     if (!user) {

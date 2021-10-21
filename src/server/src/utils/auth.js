@@ -4,6 +4,7 @@ import emailValidator from "email-validator";
 import util from "util";
 import AuthRequestsModel from "../models/AuthRequests";
 import AuthTempModel from "../models/AuthTemp";
+import ValidEmail from "../models/ValidEmail";
 
 export default class Auth {
   static generateToken(user) {
@@ -37,6 +38,10 @@ export default class Auth {
       const verify = util.promisify(jwt.verify).bind(jwt);
       const user = await verify(token, config.jwt.secret);
 
+      if (user.iat < config.jwt.expireBefore) {
+        return false;
+      }
+
       return user;
     } catch (e) {
       console.error("Auth.checkToken()", e);
@@ -48,7 +53,7 @@ export default class Auth {
     return user.clients.find((client) => client.slug === clientSlug);
   }
 
-  static isEmailAllowed(email) {
+  static async isEmailAllowed(email) {
     const { allowedEmails } = config.get("authCode");
 
     if (!emailValidator.validate(email)) {
@@ -63,7 +68,13 @@ export default class Auth {
       return false;
     }
 
-    return !!allowedEmails.find((regex) => !!email.match(regex));
+    if (allowedEmails.find((regex) => !!email.match(regex))) {
+      return true;
+    }
+
+    const validEmails = new ValidEmail();
+
+    return validEmails.exists(email);
   }
 
   static async validateCode(email, code) {
@@ -82,7 +93,7 @@ export default class Auth {
           "Votre demande de connexion a expirée, veuillez demander un nouveau code.",
       };
     }
-
+    console.log(code, authRequest.code);
     if (code !== authRequest.code) {
       authRequestsModel.incrementFailure(email);
       return {
@@ -91,7 +102,7 @@ export default class Auth {
       };
     }
 
-    authRequestsModel.delete(email);
+    await authRequestsModel.delete(email);
 
     return {
       isValidCode: true,
@@ -113,13 +124,25 @@ export default class Auth {
     return { isValidCredential: true };
   }
 
-  static generateCode(email) {
+  static async hasValidCode(email) {
+    const authRequests = new AuthRequestsModel();
+
+    const authRequest = await authRequests.getByEmail(email);
+
+    return authRequest && (
+        !isExpired(authRequest.created_at, config.get("authCode.expire")) &&
+        !tooMuchFailures(authRequest.failures, config.get("authCode.maxFailures")
+        )
+    );
+  }
+
+   static async generateCode(email) {
     const authRequests = new AuthRequestsModel();
     const code = generateRandomCode();
 
-    authRequests.delete(email);
+    await authRequests.delete(email);
 
-    if (!authRequests.create({ email, code })) {
+    if (!await authRequests.create({ email, code })) {
       return false;
     }
 
@@ -153,3 +176,9 @@ const timestampInSecond = (timestampInMillisecond) =>
   timestampInMillisecond / 1000;
 
 const tooMuchFailures = (failures, maxFailures) => failures >= maxFailures;
+
+export const getTokenFromRequest = (req) => {
+  const authHeader = req.get("Authorization");
+
+  return authHeader ? authHeader.replace("Bearer ", "") : "";
+};

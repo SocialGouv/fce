@@ -1,0 +1,17 @@
+{
+  "kind": "singleType",
+  "collectionName": "kit_de_communications",
+  "info": {
+    "name": "Kit de communication"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "lien": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "kind": "singleType",
+  "collectionName": "aides",
+  "info": {
+    "name": "Aide"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "videos": {
+      "type": "dynamiczone",
+      "components": [
+        "aide.tuto-video"
+      ]
+    }
+  }
+}

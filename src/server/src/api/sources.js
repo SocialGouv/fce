@@ -1,10 +1,11 @@
 import Sources from "../models/Sources";
 import withAuth from "../middlewares/auth";
+import { preconfiguredLimitRate } from "../middlewares/limit-rate";
 
 const express = require("express");
 const router = express.Router();
 
-router.get("/sources", withAuth, function(req, res) {
+router.get("/sources", withAuth, preconfiguredLimitRate(), function(req, res) {
   const sources = new Sources();
 
   sources.getAll().then(sources => {

@@ -1,0 +1,128 @@
+{
+  "id": 3,
+  "name": "Rupco Etablissement",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^(.)*export_etablissement(.)*.csv$",
+        "bucket": "dgefp",
+        "outputName": "rupco_etablissements.csv"
+      },
+      "name": "Download",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "filename": "rupco_etablissements.csv"
+      },
+      "name": "Delete",
+      "type": "CUSTOM.deleteFile",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        270
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        660,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Rupco Etablissement Ingest",
+      "type": "CUSTOM.rupcoEtablissementIngest",
+      "typeVersion": 1,
+      "position": [
+        880,
+        290
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Rupco Etablissement Ingest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rupco Etablissement Ingest": {
+      "main": [
+        [
+          {
+            "node": "Delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-07-19T09:01:42.570Z",
+  "updatedAt": "2021-07-19T12:59:18.533Z",
+  "settings": {},
+  "staticData": null
+}

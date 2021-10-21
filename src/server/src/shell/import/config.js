@@ -334,6 +334,7 @@ const config = {
       className: "RupcoProceduresIngestor",
       table: "rupco_procedures",
       filename: `${FILES_FOLDER}/rupco_procedures.csv`,
+      replaceHtmlChars: true,
       cols: [
         "numero",
         "type",
@@ -557,6 +558,15 @@ const config = {
       generateSiren: false,
     },
   },
+  valid_emails: {
+    ingest: {
+      filename: `${FILES_FOLDER}/emails.csv`,
+      table: "valid_email",
+      cols: ["email"],
+      delimiter: ";",
+      doNotSaveDate: true
+    }
+  }
 };
 
 module.exports = config;

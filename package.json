@@ -1,11 +1,7 @@
 {
   "name": "fce",
-  "version": "1.0.0",
+  "version": "27.18.1",
   "description": "",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/commit42/fce.git"
-  },
   "author": "commit42",
   "private": true,
   "homepage": "https://github.com/commit42/fce#readme",
@@ -19,6 +15,11 @@
     }
   },
   "scripts": {
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "k8s": "yarn --silent --cwd .k8s"
+  },
+  "dependencies": {
+    "k8s": "^0.4.15",
+    "kubernetes-models": "^1.7.1"
   }
 }

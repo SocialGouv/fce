@@ -3,10 +3,11 @@ import { eachMonthOfInterval, format } from "date-fns";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise from "frentreprise";
 import withAuth from "../middlewares/auth";
+import { preconfiguredLimitRate } from "../middlewares/limit-rate";
 
 const router = express.Router();
 
-router.get("/etp-staff/:type/:identifier", withAuth, (req, res) => {
+router.get("/etp-staff/:type/:identifier", withAuth, preconfiguredLimitRate(), (req, res) => {
   const { type, identifier } = req.params;
 
   if (!type || typeof type !== "string") {

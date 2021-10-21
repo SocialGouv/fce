@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/kit-de-communication",
+      "handler": "kit-de-communication.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/kit-de-communication",
+      "handler": "kit-de-communication.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/kit-de-communication",
+      "handler": "kit-de-communication.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

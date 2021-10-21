@@ -8,6 +8,7 @@ import _get from "lodash.get";
 const Login = ({ history }) => {
   const [step, setStep] = useState("login-form-email");
   const [errorMessage, setErrorMessage] = useState(null);
+  const [infoMessage, setInfoMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showSuccessNotif, setShowSuccessNotif] = useState(true);
   const [showMailingListSignup, setShowMailingListSignup] = useState(true);
@@ -30,6 +31,15 @@ const Login = ({ history }) => {
         setStep("login-form-code");
       })
       .catch(e => {
+        const errorCode = _get(e, "response.data.code", "");
+        if (errorCode === "HAS_VALID_CODE") {
+          setSuccess();
+          setShowSuccessNotif(false);
+          setInfoMessage(`Un code a déjà été envoyé à l'addresse ${email}. La réception peut \
+prendre plusieurs minutes dans certains services.`);
+          setStep("login-form-code");
+          return;
+        }
         const message = _get(e, "response.data.error", e.message);
         setError(message || "Le code n'a pas pu être envoyé");
       });
@@ -75,6 +85,7 @@ const Login = ({ history }) => {
       login={login}
       sendCode={sendCode}
       loading={loading}
+      infoMessage={infoMessage}
       errorMessage={errorMessage}
       step={step}
       setStep={setStep}

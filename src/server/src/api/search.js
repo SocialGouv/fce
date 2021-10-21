@@ -6,6 +6,7 @@ import NotFoundException from "../Exceptions/NotFoundException";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
 import Establishment from "../models/Establishment";
+import {limitRate} from "../middlewares/limit-rate";
 
 const express = require("express");
 const xlsx = require("xlsx");
@@ -47,7 +48,7 @@ const isSuccessEstablishment = (data, siret) => {
   return !!establishment?._success;
 };
 
-router.get("/entity", withAuth, function (req, res) {
+router.get("/entity", withAuth, limitRate({ count: 10, period: 10000 }), function (req, res) {
   const query = (req.query["q"] || "").trim();
   const dataSource = (req.query["dataSource"] || "").trim();
 

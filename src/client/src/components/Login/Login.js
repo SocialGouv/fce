@@ -7,6 +7,7 @@ const Login = ({
   login,
   sendCode,
   errorMessage,
+  infoMessage,
   loading,
   step,
   setStep,
@@ -21,6 +22,7 @@ const Login = ({
         sendCode={sendCode}
         loading={loading}
         errorMessage={errorMessage}
+        infoMessage={infoMessage}
         step={step}
         setStep={setStep}
         showSuccessNotif={showSuccessNotif}
@@ -35,6 +37,7 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
   sendCode: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
+  infoMessage: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   step: PropTypes.string.isRequired,
   setStep: PropTypes.func.isRequired,

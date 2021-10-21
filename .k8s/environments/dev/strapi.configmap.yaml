@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: strapi-env
+data:
+  STORAGE_URL: https://fcedev.blob.core.windows.net
+  DATABASE_SSL: "true"

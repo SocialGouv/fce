@@ -1,0 +1,128 @@
+{
+  "id": 12,
+  "name": "Effectifs TRANS SISSMO",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^APART_Extraction_FCE_S(.)*.csv$",
+        "bucket": "dgefp",
+        "outputName": "etablissements_activite_partielle.csv"
+      },
+      "name": "Download",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        430,
+        300
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "filename": "etablissements_activite_partielle.csv"
+      },
+      "name": "Delete",
+      "type": "CUSTOM.deleteFile",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        270
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        620,
+        300
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Activite Partielle Etablissement Ingest",
+      "type": "CUSTOM.activitePartielleEtablissementIngest",
+      "typeVersion": 1,
+      "position": [
+        830,
+        280
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    }
+  ],
+  "connections": {
+    "Download": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Activite Partielle Etablissement Ingest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Activite Partielle Etablissement Ingest": {
+      "main": [
+        [
+          {
+            "node": "Delete",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-09-22T13:36:25.243Z",
+  "updatedAt": "2021-09-22T13:36:25.243Z",
+  "settings": {},
+  "staticData": null
+}

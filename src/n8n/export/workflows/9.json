@@ -1,0 +1,108 @@
+{
+  "id": 9,
+  "name": "ArchiveTest",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^APART_Extraction_FCE_S(.)*.csv$",
+        "bucket": "dgefp",
+        "outputName": "etablissements_activite_partielle.csv"
+      },
+      "name": "Download",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        430,
+        300
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        620,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "filename": "={{$json[\"remoteFile\"]}}",
+        "bucket": "={{$node[\"Download\"].parameter[\"bucket\"]}}"
+      },
+      "name": "Archive file",
+      "type": "CUSTOM.archiveMinio",
+      "typeVersion": 1,
+      "position": [
+        860,
+        260
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    }
+  ],
+  "connections": {
+    "Download": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Archive file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-09-02T13:20:02.531Z",
+  "updatedAt": "2021-09-02T14:00:29.725Z",
+  "settings": {},
+  "staticData": null
+}

@@ -1,0 +1,168 @@
+{
+  "id": 5,
+  "name": "Import Login Emails",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        90,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^Annuaire.*$",
+        "bucket": "dgt",
+        "outputName": "valid_emails.csv"
+      },
+      "name": "Download",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        250,
+        290
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "remoteFile": "={{$node[\"Download\"].json[\"remoteFile\"]}}"
+      },
+      "name": "Import Login Email",
+      "type": "CUSTOM.importLoginEmail",
+      "typeVersion": 1,
+      "position": [
+        700,
+        280
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    },
+    {
+      "parameters": {
+        "filename": "valid_emails.csv"
+      },
+      "name": "Delete file",
+      "type": "CUSTOM.deleteFile",
+      "typeVersion": 1,
+      "position": [
+        900,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        460,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "filename": "={{$node[\"Download\"].json[\"remoteFile\"]}}",
+        "bucket": "={{$node[\"Download\"].parameter[\"bucket\"]}}"
+      },
+      "name": "Archive file",
+      "type": "CUSTOM.archiveMinio",
+      "typeVersion": 1,
+      "position": [
+        1010,
+        430
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Import Login Email": {
+      "main": [
+        [
+          {
+            "node": "Delete file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Import Login Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete file": {
+      "main": [
+        [
+          {
+            "node": "Archive file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Archive file": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-07-21T10:04:43.336Z",
+  "updatedAt": "2021-09-15T09:50:33.359Z",
+  "settings": {},
+  "staticData": null
+}

@@ -1,0 +1,26 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: server-env
+data:
+  PROD: "true"
+  CLIENT_BASE_URL: client-url
+  PORT: "3000"
+  MAGIC_KEY_EXPIRE: "3600"
+  #Appsearch
+  JWT_APPSEARCH_ADDRRESS: https://appsearch-fce-prod.fabrique.social.gouv.fr/api/as/v1/
+  JWT_APPSEARCH_ENGINE_NAME: fce
+  JWT_ELASTIC_CLIENT_ADDRESS: http://elasticsearch:9200/
+
+  #Minio
+  MINIO_ENDPOINT: fce.minio.fabrique.social.gouv.fr
+  MINIO_PORT: "443"
+  MINIO_USE_SSL: "1"
+  MINIO_ARCHIVE_FILES: "1"
+
+  #MATOMO
+  MATOMO_ID_SITE: "8"
+  MATOMO_URL: https://matomo.fabrique.social.gouv.fr
+
+  #LOGIN
+  JWT_EXPIRE_BEFORE: "1634130400"

@@ -1,0 +1,907 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`kosko generate --prod 1`] = `
+"---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: client
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: client
+  namespace: fce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: client
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/client:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: client
+          ports:
+            - containerPort: 80
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          envFrom:
+            - configMapRef:
+                name: client-env
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: client-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  namespace: fce
+data:
+  REACT_APP_SEARCH_KEY: search-o4473eqn2fnyazad7wcxuve9
+  REACT_APP_SEARCH_ENGINE_NAME: fce
+  REACT_APP_SEARCH_ENDPOINT_BASE: https://appsearch.fce.fabrique.social.gouv.fr
+  REACT_APP_MAINTENANCE: 'false'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: client
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: client
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: client
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: client
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: client
+  namespace: fce
+spec:
+  rules:
+    - host: fce.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              service:
+                name: client
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: server
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - fce.fabrique.social.gouv.fr
+      secretName: client-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: n8n
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: n8n
+  namespace: fce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n8n
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: n8n
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/n8n:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 60
+          name: n8n
+          ports:
+            - containerPort: 5678
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 60
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1280Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 60
+          volumeMounts:
+            - name: downloads
+              mountPath: /tmp/download
+          envFrom:
+            - secretRef:
+                name: n8n-env
+            - configMapRef:
+                name: n8n-env
+      volumes:
+        - name: downloads
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: n8n-env
+  namespace: fce
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+spec:
+  encryptedData:
+    DB_POSTGRESDB_HOST: >-
+      AgCq/maQiBymXkfrYlFh7GKYvR1z46RIfAHVooUtihxhmxpDjajmIOVH4JnKZ4wf//uJ0n5QoRdVCQl4N62qOCnJjZIK1l/GaROxmNLR96OzUInWKAyaXaUqoxvMK/Oi5ekMsPqi3yjm3CyWwAU3kxvCXr3hnQq4S4bfZuqtH+0yOolhnRqjsKLVsmM8bqxxv/iRz+KFeScQw59FqkaGhli8Zx675Vjj/o5a85gXay4U52bfBBmJW4TxKhqJf05CP4nkrlOsLqPrz0JgyyqVjHHpOQCJ5yInEhjNqNFam60GcilMrUuudOrYKI0gdlfygS9XR+3ODSUHAmbRnh/u3r2tI4lnMPYbzu/uudruwyXgqRGUxeWUSueVkJbjP79SOqg/bZlfYt1acJx0kUM/XMjsXLJ8s/yQ9Sukahrx7Ln+NKUiwvJI0/+XS3qmicaqfne2vA+F3WkR8dqpyT19UtzpkkG+WxHmViMWeLVoOjmHPVs90HPJYdjqOacBc/yDy1Hn8JBPuWUQVic925Rd88iN+y2212rgV9mvvxGHWuy0oWjm9xeLKugWeCLHDFvXvsLwAVUrOu+W6uyQatl5W6lBTjTYP+gffAnOp0Q1EOrSS8I6YrZIJYytCV76tv5+vWWonfgQtqPG6gLsoKtgO7ibLaCPqS++YzDla2aW6k/kSo1FxlERXmNn8CMGKODfIcg9W+mvmLFZUj5cBH7ilA7zW/Wqoo0p9pqARgqSer7kWzi/VmqgAw==
+    DB_POSTGRESDB_USER: >-
+      AgBz7LGvYtpM6MrxiGGJlKDsF2zcA9W85VD7piY2Xs96Qd55zrf5MVlJNno5lWspAUhbNPzvjeiNinkkdDS0APiUjcj9u9o1aCCwIxAUwvMlVatwck/ZfUxkooAhtD4TPfYHm8gUM/KFsqMkNzoVmaIbvaAOMDBEQBj0uswYI66rN4Uu3aWbXe3Jb+42uvM1MMyXjLemZGrlxcij9taoLaH8/0opHSwcvsSsxFWWF1hWnvHFasL8mPeCL34PXLIQpHjyEkyiJyTQ3MPjguBSMv34/JyKM1BElNAoJUhZ/zfeFGsr5bIqEWhhB/KUBL/0vMX4Nso5x1dyaMLoX9DKo41WH/xZ0UMk4iNHf9RCQvTP9t2kBxDClCOOcZ+x6CKpfxeEs6fl0qZU+YXekHipppohZXDYHrRVuyBI6Bgvi8dcqM6r1zi7Obtm8pp5NdknsTB9OCdY5i7xlQFQ1udavE0GlGP8MQqBH/w+5eCnU9Pvswoi0JYl2+E5caXdkyZElT8ePH8SzIbiXK9F+KUek2R29mzSZ7PQzsxu6lQYOAf+BoEIT+BHimQiuW3wAXYZgNrir2I8L5l2MwqUSgYOdKV/kczpWaJ7mHU7RfwuMjlow+qoKwHmjeIBP3VZX3rf6MD34Avm2oDZfVtAqiyBstT0ROFnFz+FI/KLWSnSxSu4oOKy+bNdBvHLgbn0BT4QsFqDjWt+/qFaknd+95zm3EqbldvQDXfj
+    DB_POSTGRESDB_PASSWORD: >-
+      AgBPBXDdabw66lRZ26bWdFl6Gz5Rog4tYjE2/mIhdTsZjJQa9TB8yRc+ovrQb3EJ7zGuZn8eo5zeymrIfSbGiCaWpjYxti9dAheE7VTKbGgyLUosT4tPhO6FP8girHZTtZqTK4z19nBEhQZ5TIRMGZhls7pGko+zrPNbvrpEegCLW9KsYVwFTdpSoCv+1sCvuh+V0m/qpBETuJEx1wXfVzgrOeAQ6XJEDlY5spiYCB0QAmKxPy/mVe6aG7wwSpw4dAQ828Dz2/YyA422w6N8RFoRC7SPoVGWtzH7Gy1D61WzxTf4LWg3++n9yQLSbtBs66+Y7YR1lEP2AcpcFguQ1A48cn3Cxmn7pEmI9Il1QurIUShwvzzkErlvIcKLERtWlgURqQBYQZQlbSpb0iWzSOYZEEsEjqta8RH8ppOgtDiq7Jz/QSNH3lx0T/4ulrcm8CJE14+eHDq8Lq5B4nvqGPf7LrmzBnvzb+BXZnNRWngxy48aN2wMjLna0ctHMApaJL/0ubeIJyL/2Kl0dXsIwKiHXIJGOB4HTaoNhxgA2YW8LcU380ARtJvAxR1USVeGeCCZAmfXkdfSYcgYOwbGP6XVG1d5TGY8lbAzAW1zP888LEOdaVX82OmKdIRv+cPtvZEd7D4B4nk7SwYHUxAKwjhMWakXEE/VXz/53BjWXxArjCXJzuQZcYk7J+33UXRgNsHuZyCWhkf9j3hHWUhew8c=
+    DB_POSTGRESDB_DATABASE: >-
+      AgCElLI9r2MEgMjda75Z7Xsqc8cBulyBi6nTlBwoeVwYu9asOBSCisKEr9ELMwYv0kqg+eahBzYks7fQFIfpboh4X5EUmd5RrIsRyVkUJxqZX+wsDtVY/RP2DDBEE7NiL4upMl9NarmtTFG7689XpdQdSw00TU8P2A0/nxXr0IyqM5aneKtOWMv0qQbhVxCMfLLabEaCjABQzNDkqagpoGNpFH5moQ+ESXPadCoWub+3ilTRyQMqRmMcjKA4TjhvmpHY1Yagh7ufC7dSXFk2LCLexonbKZ7bztbEvj/qYVmzeaPPH5mIQ83tuOb819SeTm4vL3oHGhdws4FeOaEejNKAb/029F8QBUqWfNMIEw1GG6IEt/HqUgjxDpczhBAF6p4YtCQwnTpM5XjXcdTinaSMi78YlTqwIFzK9mpd4GcisVsiXBZCoFzPWO0hNfJ/gKQss3Kl5HZzyR03inaIgAg/RSeSLo44Bbhk82Ms4vGqbWlmxENuVZ21f0kLXPZLktv7cQo0MMyjO7vkC0pcxVji47I8KH9anDGerdMJXqhMq4bB6wC4uKiyM3//l9IqNhZJCiF1fXqrKxmMnXj+hBkOr0CKHvfbT0DcgPJ06tVExa7nQ7e2e6LnvzQCCIxNHb096XNHQOK/zenukGO4swZpbPlDf2NKfdvGZa+NQuIeAcPvKw4q1na30jJqmWxpWrLIQMM=
+    N8N_BASIC_AUTH_USER: >-
+      AgApHN965oBlfs9q45MKCllGjabtMcdrHf1W8BgH77GLW6m8Y1FluyCOB0ZwnZNn8GgKZJjRfLGAr3C49vUCORBy2AURmhky1NGOaTR8AQosr8tY7G9JAOSqG9SR81u+Mmc+jADka7BZ14Z6TD/BKmsPnTw8r/lW5dCvRnvk6OtsaoNRKbI8qg3P8IvpFKw9MPJptD/JFQYFbFJQpNhqbBY88c3ncYHwu3qqGsP8G0/Oz4rTUSKPVjXxYMwQfhqKzpEgGSsvW5gJVHjvKr7NZgVLAMMRSt074oTwAE/oxV9v7O/WDTcPgsp0I7ylX0rDl1Y+FjU+XMcy9tEZdaUGgTX8a3qTks609eKdPjJwniZDrksynEOUGy4TW5tNFt5J7FCpuYYF9H0YKMRMFNIqjqpM6SbxwZrENpXd6pXsu5TyNIbL/v3PFv+/LCjMIcnHs30vZ35nO2JWIpFQStwiyvPw0eksx7WtdrnkLn58oUnUI6fmYizwELFCLilOjE4lxXW8nYVlTcWFhOoj/QYpySBDOBXRP2nIuG6508jVcZb5LWfdQlENYi1b1JAjHeQdv0usy5q9lTFp9q0bPU9x3q4UsbQlWNKMxHDpRU4IxPVbw8bCGARWeMjZZh9XhhBLimCkEuiJclTE0II/7OBUi++iRSwfZXNHoCPjMlv40eQ8dKy6oI0k6V65sQnZ20VEPgEmvCQ=
+    N8N_BASIC_AUTH_PASSWORD: >-
+      AgAsWISWcmZ3e+BbRMuDuLhtcHG86W8c1p82nDMLXcZZbrQpCvbBtprqzbK+JU9ftHPBpPMeBPfQxbX7UvYHvecljvLrsMGFdQYCG2yFV/Hi/y5bAjtJfpyW8kfIM7Qq7btcSX5ZuD52IKCB8C6KJovDx0OpyRQL9m8+fC/1NvecT95bfvV5WnNPrn/saKeuINRIG4P7JH5ztI7E22NP/fFv4btSoRVWo7OdpwaH+/mU+/yQO9sg5RfbLSoFvwTY5OtSJnmP5Y2F/7iPWRqmsAeUh1uwQKrmC8jOqDlQhcIRC3dbVYYWfxvJuwu+47qpDPQHT5pL2pT+TCdNJDMGN+wTLYc2FrD6NJBn3BMM293wVxG/2UuC+yQkde5B834HKa1t+ofuZRyb2gF5rVzbaBb8R4rULFPcwjf4va2kctAVkxUD8iFIXKs1NWbeCXfMSkRx/YogjXthesOrAH5iZHs/U2DsacKDsPGU5IGINjXHaOwlK+j1v6U31LpFjCHfVHRM8qqMZvzbIOqzpI3ANsOzl2fwaT9CcBO6hj5ScbnmbgHvhCNemLVT67zsa1RNRervyLC2oEMpNeRH/Ou1w8dH6H6OmVg7J9ig+C547chVptuPbvc8zKo4IdPvGPwlQozzrls+MiBHt7+wXsHY1rbb4AuX3EnCwoSqB9UCHfNp/E5ujiEawZkuAkVVBJqLAdlvqHXq8dDThmIJkkvBsUpEKgd2ifJyXVid7efETmC2CA==
+    N8N_ENCRYPTION_KEY: >-
+      AgA3dnj9d4LMHq0whqVjcXsLZX34jHwiEHCjXRJ1wDS0dqWb4ANLVBIXRTqFRAPRrIxeIKs16rNSvpv3E/z9DQRdcuq0Z4uffNbaIBPNU0GU6at/dpQFaXYtBep98V6YB2CieF8xYfwcrX05AezJ33XrSCXF0h0Joym+oYhn1X77hk6PuoFXG/2xz3CmFJZbzDd6ysQ5PD7D1dozpLMKksKuRerPfLdLbKGxEqTmzI1IXe7v1Yt3ECTQRFjXfKXKnN7DslVXkVdkwJnF886eAZMKi0n6FcaDkP8HkVkXluKnR0sLhuXz8dhSM+6YSFoWxn7kad0qyAqOwhaimMes9NPgzGEOpm+rKDvqfufLO45mARzK/YTOruxlSClT0Kx9+fm+zlmpOFEHdE4K+cvAbjzuOqzn3ON+btO76vlyNm0X2pxF+OUGWsGWtp/RI5duJU+Q3+k+69rRwcFLNSVZaLuTlGdDi7KO2Olg6Xz0TGD/wyOyrGO999hKdiKc5Fxj71kIm5AkJQJzYR4RHQXaYB/O4VNU+mRJ4lKPoiatG/bJp9nZMsphkvWCWV55IH3j5gYT4WbL0hJY1Nav+CwFJURptFpRjNiKNwIsk1x/kqKJx6FqhBuYAhvn4orMIOVlbkRXsiV6q28De7lEeCHaMhJYU08y/fTyEm49D7BsT6+vBmbMNyCWblLVm74jR+2JSNtMBMgEecp0MOW6Gp/8oeVUqS76b4+hIa4GXHB+nUYUYw==
+    PG_HOST: >-
+      AgB/kRibDKhYUdHIbFW8N1nE3pQOvdbZfnix4FEfR0CkPqp0DkLtjWAhVUg+sZzckKjN88VcNX4Kc9YZEe2E0aiw80x9eaBgnaVgOceIDjGw6Hm8mifCRET9AdzvavbdBb6uRF/bWv1W5oGJB5tGe5WG5mRSh7Hx/TjpxrVMMB2O6GTjaPVzB0tM+aNfAv4+zuwbedQ5yw9I5J83g0XJxG4QyHDrgG3QvY6zUZJwx3VSJOAqF/nBSFqccvlavjLGvnMCRCjxJK69vPDNVznu6ILQLJrYlJzWD7Qf8HcRxu4Tb/ea+oiSOq9ayLumfdz0pJu8is7Z6t/CfTb3kD3mN09m4tgtbUISpPI8p96ufPweLnBBwC4UqKP0k6xh6T94ykqmJDIZBf0E3oW1XZD+el+Ametzz9HuTtz4mlq9MP9ebDZ0bgtrhHZbxSD1RYpw+TPk24Sa11zZjo6WD0HiRIz/bzlKxg04ebkV7XFca0AzhfyAlHtjLGQRfW9CvP2SAGfMSgHIZGXDlHzTeaB1ZVFi213ISgKW/ShgfXQR7EDAhgddVEVU2NPu5iFlOFxoAesl+u7sadckEQQ9z4w6C4efsY+sI2+EvA7svVToAmOB1BKMIF92iwjLO3Pu3IO4EATd6MvR2u81QxUt8/OE5fTKNdmHv7x33dEGnuRMaF+J4ktli7w8EljBcPh7vyxYqiMN85hRfFyW31eQD7K6xgdP2uc5Wx1WfaqJIaHtXoXzeI1wop3hhw==
+    PG_DATABASE: >-
+      AgBOye9gL8gDApw7wVOjAQgraz6wUFXXrejLpJyQGNP5PIW39AKt0roIjh0jrGakNGLtKDY82LIEFAkztpNNE8z7SZoDqH4OdpEjk8budy/veTF7EwhtiFbmU6U05A3zsqm5tDIRWBQ+4UQWCLRul+C0Hz4pdsVByW2D/C2EpncRxdcc/QvAUxgGOFv/JXmKqbsfIRK+0SyuCZQMs5z1J3lKpBn2ei2fcY565KnHfjbTVUkeI9eO9mCZalNQp3leWBB7p71m97m4BG4G1IHAUTfHOg1Pktwq26Fp1UzIEv1NkRlyyXAcAHNMsHhDiKQSDofvgqDZbyM5rPEfNDxhEKlLM1DEEVfl/fzNmQ9nsSSm2rLnJoETL4tyhXSLKw+7q7JI9TlWephpE4lH6KJR46T0U6yqiwzW0MPOSPW8BsQlJrueJfG8mKMS4Nfk9u8rEleQH+p5pAnNaGqTffR4lYgabdcJdHEcLzErwYeft5SlfU8puhsPWEf64OxXnDkx31neCzKLmyf/89f/nJyE0aYe91L/QaFXE7RNdzus0mj/YAd2JGFz/9kuB76gU3D3gKbh1+ec3BLPyzJEqmtoiYAS9p4BxF6c7S7o9tv+vD5o8hs6I8w4peHjJjaOJbS2qbVoYtmmtthIXBPr87r/FKVSictXOlsYRCmXGK2sHQYF53nX7OS7sEUMSPcZE05xlZ3zB9w=
+    PG_USERNAME: >-
+      AgA8ye9k1SF5fhOCvvselUZcX4hKyzWNT72QBsRvDYNZxuBkH0R5xrIHcSKKo2Hh1T5ezusvLj9+FblE2LrlchOmRWEgE+EnKOEncJyqqs2r7ZNMgl2ETb4JGhN1XJqHrsBDJ6azVZmRKN/KSLNV0q4Z4kwP9vVNU4Zyr0uDPSrToMacGL6sbX+itrFp9H/S7QOjfH5jArXI207zNM8QjpDHvR1DRWdJm0LpUwz55fb0EAYbpGW4J4c5Kw3IKfAw+v6g24A5rnKwhD1gIGLa0nX85BAvCxJWS1T60hN09SiKDQgu1u498OZaG9aPpZwrwoGc5CsYPktloeTz+y3lDamoy8laf5b3pPQf0lw1t9Rnlx5rvXohkpoVWUZBOrt3rvd4DlcKlu+WfVKWACkJnAtKgcQeUko1gNBzlif/qQVgjMpB31+iTcooq+GxhdkuAUGtOIyUup2DINdK/7m+zZ4CIaEYCaw6tVNXqXeqfx8292uUq3TLXejBXKDSas2z5iMFoaGsS1x1xKAxB8QaQbzpMzU4CQ/n+zA7CtrW5qw3NkU7taQwnP9/MH3TnoLSS4+H4O3SotZ9iHewRep4PbXabHlAMKJWFPWBkqJB/dsu2EfxEhi9tF7dJHK8p2LNnT8OKXqnCa+knEq4+JR55/VE/uLIsjs1+/KGRNck4ZZZwtaTi0r2ZOwddLFfcU3e/ZV1Dkhtuyu8RkukxQJ33SWmqVEq6/wh
+    PG_PASSWORD: >-
+      AgAbiZuo+vpGNTGVc5/O19E0eXc5h8OY8rLl4ydUSAYaQ5c7cP8qhSu8kZQ5XhkKvmJj56igxNhGE6JrCS5uSUSJRcxT6WHH9cXSiw3Ood0vsSl2+Ik8T552nz4M2GR8dtiz4Ny/dt1TgNZtay1hPFHYAEdOR2ypaEKAXLtpEDhzwLtjOMIdiV9hgGC+kRYxSqpYtZbx0P/9WqkCEjX1b4XADzoBFhw5l/K7Mjscdu+8nK3g+KaC0Lf6ivY2nQsQ9eDX9FUrH8ca9Rv7D8V6pRbe0NZi459VDnCdBftM2Zob8SEQvjJ3WYoCu7guNWl81+JGjZADGva/HxzPiWO+yYiOjKT/GoyQ5DwxI2hR6bGbrYCofMx8RgPv2jQWw8LqMSXbytRxRYbInk+Q9viOs4A2DiA43wIV/S8/dSKierELKDQa4NWdqLK1HcnjzD2c2840it5g8FesQMkCLYVBXW1lhXkZG1ItFX1mB9wa+/CrdmGjdFEVJNRB4GJQUOGo4baobI4QB6MYzY2/CrC5Fc6oZzDJulK4UKoxddn0u6lSuIqcb7/CBxxMKs54OThWzLTZ66s17XcUSFZTJyX1Y0eyi1gt9LEMEdAtIRLozz6iDYk704zaH7Ge1lfMLAft4vtoLw4ha3WthCYMO+Yol2f1snmJ4t9EXvW7aTJYZz/W3qauzEK6bMnRx1i0d0+Me0c8lrUopQf8ZQmrMW1+J7E=
+    MINIO_ENDPOINT: >-
+      AgAygHinvR4IL/i0w2sIGZzDgo+Ho7MmoM6DUKW8wCKzx/5Tz/OrxlbqZ4q0JGx4bOr9icgTMkkcCV7wCaZbdAQQ9Awwz79mpEQem21U4uMv4cv9Zx8QbF4aM3+79hA1hzEtjt3auN+Va6TlQ0hSngAJz/91VoGZEu86W9G6UkFrMUhGFWqR9TtmIKJmVJ3+8f12yGXxtPp9QXyi2e8M4Mdo3WKaTOB/3aHQ0hjqyGbIV4zOcJ44YLfB4Z35uxlXa470DwKZm1T2JgSFpQ7ZbnT+2Snm19QGblWRYd4CfPI/bXSVBDSmGOOEsIqeQgNd7v3BbfCMKNcBzRJEoTRpc8/4tot0OG6PwtR4fTaYwXbcC0tbJ1fm9rzRPzFPW+7ldhUc5eyqVBZVyHiFJh7DbXu5MKymaUnz1IdXPEAuPYo40MDYA7WF5+r+7/bxyKFg12BVvZrTW57M3L5si61nFMau7ckxsLnQNDQLwoFPSAiKQuX4Rc9NnUG6zhqPKzxSDXPpPiyqQnj1xH5YNWccGr8tjv3ICcjSZK/XN/aWNiR+feflM8XmHcUMoI4IF1g0OXExgGDbK7+Tl0T3LgY5uw8URwYJYmXjY59yGBxrvg+hjgJ8N8UD5EeolxAkAUR+sYPHZX2vQI+Sbhkr8q/ahlPldI0TY7AZRWXHEy7qbEr34gaDCrKGLTH/gWaf+LTiatswPhnTpCaIWgOgcRoar9G3eSo47aropLmkKPWXPwxWgh4=
+    MINIO_USERNAME: >-
+      AgBqcAFkDStEl+/9lyjDaIba7dq0ANUa/4GvxHrbt9wHLgW+/XiqgUEP3WchhUN2KfhX+y4Mcr1eBApLwSQxXCD36yWE3MEsfwMzOONSsCgZYxM1KNIv4GhDzsW8cJcxlk3VBHrgOveZQdCNrlSxe3pbLBa6vFoglBzvCXkNDsTOI6n7PMPsW8Nakz7rdZ8frLnWc0c/IUw3fwBoSMnyIsbiZXOl/0tOeoao17ErtmY0TmQgEIpB8fOJacTnK6xNyYkTqHNLQ0PHE+b8Hwy/cY/MYdiuVlAvnWeIGzmMY0g0u+gkQjkCLOjUcl4pMVxIDl3uZCdGpMicVo/LyXtIcWOMUpfurfegatWIzIPAjDpnneaD+8meJijBMfxLHdX19w49Em+6IxCVYEJdR/fBww/iUlIVKfy9E63117hdowvwYIJfXauB5fLEI32KPymnCQPqcqI5Ba3ZHih7mCrBWR73vUa4OJSdiDCutKVExCo6SvqmZceHvtzW7NNNTGx+fXZTfPLs4I7LhrLLZDG1NQ8DgQi6kVft0uDFvmhQ/bmD8RMHo/o2b0Y9K/v38lIFZI3qyZJh0SrkTqaZZtqjGpI/IQ9Zi2nTSid/UXM+BY40Ip7H2QmWQwGZBtb3MymJ3VSmTgUyYKHV7zcCy10VPyZzoQPBYpddpkDwPLxPR2M/GPcSJE2uKsBjtDP54bCw46u/lNCHeiEQuQ==
+    MINIO_PASSWORD: >-
+      AgA1r94rKaO7Y7oaLNxXJ3G6bJnw8vQElGytgueZzUDiYE8kQFYi8aCky2FBDKyy3BNMgfpokIhIuegFcXEZVNP9zsabpVEA86fVWw3x5yaIWnvip3P6DUOe6+PJYL6Oos3Q0HW7Qse3gVX/zeo0Z4vBVztfQh7UTBWiD+aIWqe3gPwbXSsRCmM5kRBquJumUP1vAMXUohQKsQJdVEOfAaM5hMCBKCrN38R5WZghdstMZf6jTCLIReZv0KeS2+Z/7FCRk8UrSP20px95PjTpGdYeen8roHD9mw7X//H00WqPVTpg0t6RsTw4AOaueGFVDo/Wh0BeVse9aCcd4m+SWZPKkA5oeVRR6R72ns2H8LNPRwLwp7+v1QmCueG8aEFIOwUb+u1+UyVTK1woPl/dkbpevMKXpp0QeJcFBQdVrjgtIGxhp9rdFvKLYX5TfaeJbmSK4t3aW6BSeaTJXWloV+BRZO00In7YHLV6+tXHgCp4kBB/xRWpwXkLJfvifclieHeRh5KmuXgfkIixNzMSV5WrXwZVi4rHqVs/XcGxrqWsWzjxLl44pc+pLcfZj2MTFyovl5h6cTweILBatRskoPfXQQNHGKt8d2+xXOd8aFwAxpiBoM2m2UJsxOa2GtamtA3FnU51S/V2eB7EgBg1CKdGk+YD9WNPvSv7LD7LQBGX3PXZEnH8PB4AMi5/vj8JBpLk3QQ1QmALFCmUFjeqltYYOusORA==
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: n8n-env
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: n8n-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  namespace: fce
+data:
+  DB_TYPE: postgresdb
+  N8N_PORT: '5678'
+  N8N_BASIC_AUTH_ACTIVE: 'true'
+  PG_PORT: '5432'
+  PG_SSL: 'true'
+  MINIO_PORT: '443'
+  MINIO_SSL: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: n8n
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: n8n
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5678
+  selector:
+    app: n8n
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: n8n
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: n8n
+  namespace: fce
+spec:
+  rules:
+    - host: n8n-fce.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              service:
+                name: n8n
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - n8n-fce.fabrique.social.gouv.fr
+      secretName: n8n-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: server
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: server
+  namespace: fce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: server
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/server:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: server
+          ports:
+            - containerPort: 3000
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1280Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          envFrom:
+            - secretRef:
+                name: server-env
+            - configMapRef:
+                name: server-env
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: server-env
+  namespace: fce
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+spec:
+  encryptedData:
+    PG_HOST: >-
+      AgCitXD/YROLXBcaJ6ysc/Ovi7bnOxFrkQTn1cfoDkBo9XpH+ODe6atqK+faAPJBX7lFGwsssYWPenOxn3Do3ExlTC/SPH7CGYob2TYupF+TAmrskp9XTm14nrFogpTv0AdqcjmJDoRkeGH7MWox1hxSR+yX370XdIftAhloG1acGbGKH14m5iISRHt1jcNriB7LFzPC32OEEsO2tF2moneJnmb4ViVxC4wpf8WKJLSWmxHHXSZ5R5rkAxnDF6AS3Rk6QfqqLSzetBicxNEAr06l0HNM+JI+oK56YB5+eoZrF7nXEABuomKiJAI9NR2yw4asHN7+mgQ+isqtT60AbFV/2kdEMfCurzpJbMQiAAG8RolrO6ZzFEfTeHGl9M2X3m7mPeLe4tKqEKXj9ff5nrf4CnVrBJ0aXp/sRx8z8TfEtXVhutRjE3sjbmHVVgLwmBhWY+HemZwK7WNPqyDQO6a4AJ1pNy43KSJN8rmZIZoo7z9gKizr0XZ+r00SKjuPAzOVJhqSEB7DE+1E1OY6gHWJK4ptQKbvOierRIpo00j/5DY0+BJVNMZwhVVG2AS62BTcVh0QhzrghjM6vzjnKk4ccbCgs554jQtIsigI+B9ZHBwRglOgc+zCcddhYbs2kQ5/N7chaCPSdwLd1Q3E22lpKJkLNY/yLG51r5WboRXI+hJaf5DIA2dp1vntFMvA41nyplmPwzijY/LvgTCAOIE6bRwfGg8J2xdMeM9mJh9JbR7zKuBCtg==
+    PG_USER: >-
+      AgAZo7VAZKsPu69+KxXh4iuDelCt+WSFcXNBFcY5JRucPqbSrdYv4u1NR2rgiDDxIGC/XeiWeNtFZ6ovz3GUhMsoO0akfqIXCNrRGC0GcZLbUFepudv5X8M3iNBnOipSmH7tvH637uQRymLH7awCChzqSdepF/vF6TCFsbR66xrcfAjh6BhrRMNaMW+M3Ydw/V/Zn//WtOUEvg2iwCyoMKdO0jiu21lAkvAZd6yz8bHPYObauZtLV9dMzixmBjjtA2AKcJX8N9+N0YKrSgmFWmOwFZ/ZwZ7C3JjVaNwhosCSNig+oCopszF1LZFQQlb1GnNDlH9UQSguc64bASerPPE69M84JzMCy21QQVklMc89Lx4AqDfu1LZxK8VeKgh29tAfNhq1ap5XEjMXTfjH3vI1zgyhUIW/binWoN0s7K3JQprzJgfkmpfbC3sx4cKJUiJydAHYwhCbuPj1vD3W55xa2IcJDFWDQlDJPoGPVMuHuDsXincswrkBWDOpmJhUuhL22XaPT3ZPBulOCYHpW7N0IUdEzOx5YONXUECpjgxweD/x0OoKt9yBNHUMNzKtQiEA+0l2jdqvLaE4UaGpBXLBkayxVVtLBMWHaDqZJfuEBHciExKzhsTPNqaw2asZTwuZEwRWV8SwBxcZ4SyPQkejyXGdGHUK76VAkqhFWquQkMIVhcU29sU8+Cx+bvlAY8SWJMuOPluJBtcGeT1KGG4cMlaHNfgD
+    PG_PASSWORD: >-
+      AgCoc1zzx/yeGi0ij1DpjqkU4HwYD1HfpOuWh1AxM6gyxzbIAHXx/WudEGH6yOpypJR/lJMO7I+bSRT/8YBFuxgFPGUdhJulkOMj4uWO3UL5yQuWQQE1x2dqHZ0u0uoIEkbfyDJxH5XVooxhaD8/N3ltDg/uaN52U6ltKSUgYMLanpyllECc5goReafXJTrLkTUzPi6QiILvIYlHtOgC+STaKlFcxRhoERU7ZOtm99O62CSn9moGcEzMt5YyFKFJUzSZ6454TGYikOVF6O20zIQBiP0OfXUplTRhJskE/9siQajJccJg4XWiy+hrKhmo2DirKyT5LcGZaJPWEkxEcl/coesNJW93U1Tc3l9rlzPmt6LAljtX4v1ky6Rh/exKl02mFZCj4MNmeiQyPQ1CBVwbfRZd6ER6CpUIoAcFiVojOVcRIICLMm5r5cf8lyqw81DkgPIz248+6S+q21h/BKrT0GBjS+jLRBnxrFBzc/OzlgwCjZdBo1bdtpW7Q14w6/3BsVX9ApVqr2fylYvImP7E2eVj+ZIACOOpHFTlMJcWA+6oUN6tNG7fBZczjgeTuOtwD1C8qc/PVSFoTVThoBmptJeyaCTzUAapw6MXo4lVqMP9hGTs+St2C4yP1OPAfTFM/tCd6oDcG/TwKbiJjeOfxicisQGnZhLyTwY6wayvgoNO8KILO5sW37CMcOI18FuPjpVUbsmbp3bj//NJpkQ=
+    PG_DB: >-
+      AgCDjRkVwyQKJS6fvF7o+PC2xN8ta9XKeQW/27X0+b337WiGMyhVc1b5Og63Ge04OkFCrr2BiY+2rYVfp9FejkMYMqh8+orMVoGjF0SvkB8NfNxPk9tP0FChtTN1e88z27GYjVkGGDQKTBaFBr9M4/NVoCA58uf+ZLIFHjL00QSsjU+rO//IYh0RUifw1j+s+RqrHwheJGOXHDyF81oGIszgkcFy1E3OfJg4z4arL32CemKpOeeaDxwD6P23L4xd8kCnk0buPC6ldPSWM4NZxiHK0KHXodypBqz0oaVXgZ19ovHksA4DKvQLk6KTICgFPCRvIb2Xv7ISFEkWd0w2/qcVpcHOSeYPHjrgTtRqKeaapCnJl1EYI4iafyA6wuQf4hC9OIFrbvIPQX1ef4f9OHFu0yEVkxIgx6CLELF8zlHhSnKHDT7vWHI6URDOTNTFDfwAkVUAEFPGXb631w8wWKMubBvOQOPCdOdZ/ohdMFEE5ROLkCb6UMs1X22FwwYmS3IWY5G2n8fX1/D+FDxcwzC1LuUy3Lq2amuy1mFaJcmHGfY3ijRCvSK0jejGxdwoiH5xh8i8sWAqcBGpKv7tJA4gEgr8c0EP9RuxIR+KedEoS5P2ZwxD+z2YyTmoiyCMXv4v9dNuEOsSt+0idfh7IOFX1Ccbp7+H43/YY/NK5+4TuHLJVr/fhO7geuPDZGK+w2LI8sU=
+    PG_SSL: >-
+      AgAhXM+NXoEtgLplDUBqLiFW9WXwutkeZyqGVTuZpDz0JXawaJHyG7Xfr/jR2SBoTncNZbaazbM+2x2agneIuAuFO8Rsa7uXjPTmUI6o2R56TJWRzusgzmUHa+pcthoRsVaeW9iNCkm6aP9wgx/nxcLqZm1AF4msdeUE45Hh9gQJJvVTMUMqW4kr5qSmOCVMrTVkPv+7yQKjDGuboOlGnKFDJd8adaQKdfd2lWt+EMloi2VmTXiaYSXiA9BGReqsStaaIykYED/XiQy8Lc7u7nkwyG0QbvaD33UIpW7z1XIYmyePWJwOtX6+vEZQ5dM5Xo4pc8Dfz595GJjXEjXxaDHN/tnKnYFkhv0xEBcw4aTVZrhPz1JjEWc7OkV76yak/e/Ead10P+oRgJY7Hhj8EDnCMnjBf0/irP3fcONf45dzTGGx9LuxXw4bNk2szOS88zPgfBmMIoXD4xGPlap1iZIrExkHdhaoXAn9gzCVpL+sDgU/oOqlrRSZ7V73qiEnTMTXdXfGepisWsJGk8JsccouuKlBsu6NVz6OSf5FYIgNOte5ooJY5s035yyDZ4YvKw0/C7jXWc9mDB3d9HESNDbNQzypyyjr7GTCETxJujGZ7Jbqo1moi818fqXumWMxJULcZx2Z+ALoz3oy4/WlBjK6gHPTSxZ/KYD4w+8KOVyUbS4hjo6dUrUIazNRBXB75t2oEXPp
+    MAIL: >-
+      AgCdQMLs6G7O0HLCFtnvkHO9Kf7Xf9mDtj6KOnxPo9Zld0GSABzOpEUpqzAGDnKQH+66OkpW13z5kX8RovZGqidH2XCLW6/XYkuMWxuX08udlO70nckxJ2VkXpG7NDL+bhvDCm7bSmtqJeXwBLY5hsUMlWUg04d2r9oi4FQcsOnBsTlCrSt4Z5ePWZaJViiGOKNYmxZy3MhAMhRVaLZPM1WJTCbgXNSPkrR1YU808vVEzMLGleWYNu8MM729LJTnBtnVmi64N/gDajxjS/bilCaFBhUbKKyTSS0xglNYwHwQeMhV9CZaJnLylJ6FRt+Di5rCwgku8rGzEKgDvZLA1Zig+mzzm7BqKEh4hmXNBrrxEVbvmnaEyT4pABQ63IodNp+E7g2sG8cbUYDdMtjCCdYX1D/umsWp5lITan4yDsTUBPGLHxphsDGHn+ADUngiu0VF2ycKc/Lqhwr5SbJ+TffTQZ4rgd8HVh3jWKqAMRlj+14yRK5rU7UI74P50fK+8E44titV4edQhz4O9bU2wt2DEkE5pQzHDDFqfYKlNqjufxjDVegAYiPi0tjJS9h1yFPd5qWM+oaXW0pP/kn8aBD1U86+CI+GD02qeTZ7GsmzX41kp1IjMjx8L3KZ/DjozP3gdrJ58sX1Bux8xP4RW1RReh4nj2rEKER7urSlahoxDBtBxHiO4dXMqeUQjUzwU1qKseLrmHn2S8HHxgd19RM+H3/JAMBM50Vog5sULwXc8LrS/fjwRxSy5wkktgMO0rptfuS8SzV0UT6HLRyjIQpM8OQgodE5hl+9IKvCkDAhNy6ABQsmBh2IMqzb7aUhz4NNaJC/u5ufoJvscGksySGhGpmnEpC6uR41xyQnSRvx4i/7zK/Gnq/oq+taXZ5Kcc4qce9kMbhO5WYLpal19YcQTp797q8YS4Zr9oTHx+Z8qdJ3BqhKYN+k+bAVifVTu1ND/URBjmi9HNQ2gGDhlrGYbKiC/MoZGiuwIlgG5N7v0N0=
+    API_GOUV_TOKEN: >-
+      AgBnv8IAyED+wEcgn1DPo/3arwcIheap6CYFMyYYUnpw90NlNltAxc1F76cLwqsgAL53QPVQTJO0EcCdjLfyCNeoIz+IlVSPbyYCX174w0Z2gpE6P4CptoOiKYNC3PIZEIVmqocCPOdUZyDbIKxvh9PbEqGjUvJD8mbxW8yh9OtX5N1jthjy1vgMHhwPygZiAOIBQCRBZXNoywyowCVCza4DZuSbkjVu6L0yJh1Vj4h4fqs/yUqkLvYec6z+QbYaiZmImJWoWqpPnh/zHdc3fSMvGS3bHTBEfVe1q7N5dZ8iZFUBWsEs2uQC+LWBfPVQP2nGyg+QTNvPLpbxMH2xHFbn1vlI+xWkp+CB4jPvP14IfbcyaNa/v3IMlA2RVQKx2N1xbKDsgGr8igYNDNxYvCb+es3exorcvOsVG1sdzywu8zacrWmUapvW+oU7DxxfA9jf+8zNo+lFIZG6+XpyHr/gFDByahbvMxBRbi5atex5FjktfuMDMBoxKvqAt6juZbT4M1TfWICHB6gL+fQYWSBGV99vyJMCSwJW1WWfiUv39hOYyk4W9XJVmRDd+x2wd2aLncEPqeSKxpsVqDWEV6IcQ661T75jWEz4noHrYDVzXbcrqbUJlR2F34H3+sfUdgxSRkx3sW90jPwxvMZyPwiTPywiAwelv8QbpIl+w0RBmMWMCz1YPeOck7BdKs9U0aXsenyuOhO+kpPbyCqDhj4hgD8laVwWrAYut8p5eFDEh524Pv3h2YsDOXGzeCOgH+XeCgY6l9KyZam1T9aNYXgxOI2WbmzpcZJiBLcW+ZyUetlBbu0mseLP9iqdK4xRC9naoy9Rw1GPoLCV317DeXqe5kHctmRoleaaNRPoPh2Ha8xKA6TbHd1g+3gbNagzf8LLa1xUaMYkenH803/agezSGcgZnzI3aqo5JqVqoYrsJuKYrqdaEtA5WsiuZt5PHbY1lV2Uz/Swf61sJvlOtRn3tT3ZdW0JGdXIdDuzZY9RlZ+XXSg+tQkyvlA7rk78SfC/KhxbESJeeU3w4AkUQv55h+TUWIwIL7FAwApNVQ/+yxSFomz1ydZM5tEQXC5TrVl4GnYVY40UWqNh9rkFXZyPvB1f26Z4z0A1fQygQS0whWvooKQfYAwZQQkZSysSw6dQfpIO0gHuXGRzYfST/7e5w7YLylj9njDcj1NKeRQMVCO11b6DoUtpvdGmxQ6LQDXC9A44B4le0zp/m0DY0sBntB3sCdrhyGlVJYQEAEdr2JPDzzyDbqIQ2r/UU59PqWNTWkLScm/LmUt8xKgaSHv2fsHQR8CIaRXu27+Xtey9u4HJWQUArzk5TkLRKS6E5cwKGM1dQ5cpCn6fzE18WK/zSiKlba44ZJE6Uy1jo2Tgv6Gayc6exoRgrPVSrJEHUgVyJS1owP78v4tM9SOARL1Hq1naXiwZxezMc1Ah8JxsF1ZkPa3EoEEVv3zSt4X1YKFkiHaiwFtt+pYmzryGIOPn1Qm4zprayleYU23xh6TTIyK+BaOAl1UaaIf3Meel+Zhk
+    API_SIRENE_BASIC_AUTH: >-
+      AgAq+7WFXp5WwjGMRyfwZ22nQ3FeOFvVbCaRwM4mg3I1J5Zn1+5e4x3NRiB3vf8KGs8ZbrKSRbEs3Eji8fRR3+CXCbxOOR5eFtjnHK6/1CnTDIPHwvpNr4Mslgba+IprSQK5eCK2kCJkjzeASKNWe9np3xHJdrdoSxkX5vBD+kQk5phMyLJvN3ajEo0Vk+GQ9yGfS14q8ChUIaIj5c7RpXHkjeMYOjiKNimTEVjK9vE24EQTwvBLZdbzgQNoa5Jn3pQBsjkZb1cFt4BA4OzEZa6rZVf6t0WgG0CsTqRrX++MB00wfdeX0QIIrx8diERi80wwVYSgjcMTzC0qrsKDZFJSYm/uXnpojJZ4T3i6Yi0H6mdY9Frr74+mNmkTTMNSki/I6RCqhupwxGFyiK+SdmEkalhGpX87AYw+TENfK4iZf71/XEllNK4+qTd4akpzTYhYotPSSeqs/BkT+HE+ExwGPfsqfDqqEInduOTPOKriNHpM9CaXqplPhFzMRRzDx1sST9ki/5gcMm7FisvSGQ/IWgRpBSUQQy5awA2+IcQVMLTLNbbMQuTgp7nXy9/IWBXycjZ7YFnFHWZHpen6J8KWxzVEzvA8Jvlr7fTmux131poFziMHSmVOLHS7x13AUJiccBMkJVBNbfzovhQ2tnDVeKY9F24P6WrR96gPVPypk+yB58aYJ0YgiIU4Gafu82Xj9ClJggFPsOdlda0esM3pbYrx29XUbFe9TgpsHTOQBHXPkfD1wlutwDSn3MAbe+D3B/6FdblJQsjePCGJ+cAnzyZTybklOX6cQG7C
+    MAGIC_LINK_BCC: >-
+      AgCJhmMEHjItsGU0RVRnYsnjYx4KEfQZGhUZjeT59Z90gIaORhP3eJ6jjaLbEaVgrlpbtESriXuvi7GtsNR73BksZ8dEEWGh7/t9BbHg1izfzAkE2o1k02MXjJ0SVVptpj7LnaRDpmVOV/Ww7WAo2hOT3iLW4VoZR+pUQVpOdZOEiEuw1RkXmNiC1vNA7Ktbjc3EEAmQTuEp9DlsJzzr055xbB/HrtqhXwHBny5orRwww8lOB5JlzTUMc/uZiBabdU9YIIpsDFkjUebU+eBTuvB33S/9z0lrIx9pW13IVn3WaKH3pfkGGqbjgj4M/xyzXlZRrsrxuCjUiIp0e3FauVHsaIV0Kcq8S58cWZQlbOj48HIGTuPdV4aX+QS1HGlc5aJFbFfWqhpyO6wuGZckSsRhOEmjXQd10WoSJoXracVhy/2LlXR0vHoXnqVKnd/LPuqKv6dRvd/7/emtmCQDGxBFMtPT2DreOQNMQrfe1w3aamOwAR1opKhX8rUZfg5JpSxWx/m1UN2+zrxP64vhswymCw50dVQSgjPimllCzoCvBhaxg3/kXd+4TSrHtwITvD7HReW9Kfs32ggsUHjhc9sNSRppblP8kDcKu176tuu9nDgmju3j/3WOXJre4gC482QsZSaR2uukM+PcW75ROcpvqbftg2hxijFL3js2vCMk/mdOGYKFL5KCIJ6CsNK/Z27r
+    MAGIC_KEY_ALLOWED_EMAILS: >-
+      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
+    JWT_SECRET: >-
+      AgAO0h0QBIoNDZ1ke51IlLnmSFsOGykWk34gwBfYooHPnlnLSAS7JxvW7PQb1uC/spbtGefuof5VvkKVjc49R9ExX3LACpxyVYRpbWUSXa1+9AHGm2rAFUJGS+mwN503zboch+peAUUn2fEMQdl+jCtOOFLSAOy5QaeSl3pPs5RE2c0eMjtHPpeN/GALRL0lOH8J1gbaVJIv5KHqlrnCkOuj90wC6WzaLGU2CBRECz3ryXx8PtZjL3DkNHOJiFgJbEL2p1vCLD/tRgyaYnm9W5RNXeK4xj1DuIJPPlOv+vMy6Q0vUEJzf2M5i6rKUxEH/8TLbNN9XjggJj55jzmu8FPDhaiGz3YH4Zqp6Gy2LOSFV6X7bOZzVNL0BvdzZ3XAaXMcAT4Glb5dqnfM0oyW4OwfZn1hI6kBqD+2xn/e6GmpwfZM05V2CP3lGed07HTYp3XVj50MPpVr6yr3YeoIHmL0DN+RhL8qUhdOL4RZFRBRMASsholLbdrMiafEdUzxSxrufeVdikSXySZ1g25+iEv2s9zRsIP/NE+bBPDy1t1myiLUWkuqmA1TQmk2RQzqXLhogwdNyrMXmH6JGXi+i6cmLuHCWZDmniP4Td0yi6RaC5DyqMllyxbI0qYvx7OA5NYE34Il8inwHyRRKFsKTTPNthcyloKMnyhNi0imfmUKvSdJgGP/NGJwpHO51Ui4t5aV9dSNePZlF6iysroweWo9g2fwKveeQg/Vbf+fT4cH+VxkxLxAvf4EXCyqhGtHCMNbWnyjsTpsWcAMTc1JEvFviA3XQlAEafvjiHW0g/CgUxh9xxuRFGjLQ/k5Dp358A7ZR4eesCaQnZgpBabVYDwCmV49zWQvYGiL8o2iIV/q3cq+cj9rL8rQvV/stetBWFzjBipfXL7ISBWBzGm2lKI0lsjAPgoITuaaTqVl9QH02QRr9s8TnIMCi0EwRiUvt2Jm62OW+BQnC3LNFyAGaJ5Q9Q9SSU9b5lig4fQHxs2ZSGVJySTLt9kwRQlCk/iJwIF2JQVoo/rcKf61PWiXze+Vw5yML+mZZiw0ndQPJIV/E/rlFqUh3I/8dqoy37hEe3Cgvej2Nlb9CVI5pd7FCg3XnLe/jPnYXykWD/QHv07g3NnSKJ4zXEJICa4wO3Oiy3/8G66lT7k=
+    JWT_EXPIRE: >-
+      AgACpuzofiVWJOjEu0TTPfku4YtKWwVb7w+xFuF6zvW2pYbDwlu6Rx/L4XvFyyuyAs/l9NrnPDJX/+5M0SqJBVKjjZHXMIZ4KRDQgcebv3oLle/NYGbBbZ0kLu/VdbRaeIR39AfzXt1K7oyt5whL3fVu6FXeRlpaPrH8jvwEDSgSzog5Dux1Fs1ZVenQEVyDWhSM8M24cdMtemIz9f0rB4rOOqaiDIopW9rir39VgP65Cby40pcVBHpUG/3D8AgBA2i5kk+BI1oEcF2hxsYHQmnSGVr/TwDdRsExdCjOpUPA0NAeKzTt7zkbmmCMpToVdRyN8XrtjOrmfU3MtOFbyLmwV34qbOqVD5TVyIq6vWiUnr7jmZVebxTpCKRWR9H7l1rR3PKp9ADaKyLdILyCba8dChD192EyDbb/rFk0402TSosbKd53VVsU8vF+AZy+egxdQDuw4K/rFTDMMAQqSlx06SIB3oYjnRBn25I3Ru2JNJHlJXOkVi5PZTUYZwZZUQFR2z9Z5GVlvOpPI5o3/ct5J2+0khQTG3L24s3EO7gselNEQkdVf0ePs0+gnq96fJjVAmPwQhOb6MO9WubkCdnnX4et605BMeaUWYl/SOiGhIMxtdYAfg+bwAzXv1ru+mttG+kmzKWxT2WJOnXMGfgJXk3yqTC52nkOCh0iEpvs5/CPzrZIMsazoxz6/aL3k679G/I=
+    JWT_TEMP_EXPIRE: >-
+      AgCtx6Y8lvFecaNmieYjD4krcc/9b2dagLgy4H8ocw+NGpI8gl+ChskbWI8x/hkeLGTU+sIimZvD8Jvu4C9v8WYtrQR+ZKg2QDJM+8sQN8RBYDsATZj44rnwKS25ELsZGFAF2QxKufh3bSA/KjmNXjGIrz2gk1UWrg2CKh7P3xvbFH1gitDgmUBOoyVB8O01DLbZ6+miOsa5xwFXxt45fYLZlrAR0JGkwtze4JyHirHWubmJhs/HB0KIIsPlTldML92EMS6F+/OcfiORwRZg7el/XSyhP4gK7NjlAJnyX19g/+0EdvWM/KYEAM3C+j58XdZ+IrlEno4cwFMr48Xk2QU9c4tJpVX1U6WzH/Ax4WBJffM9zIfEK/tiuXV1/jec5Iu/GXS9f56ofaSpEAGGmtF6UzQM83xsl1Y3X9aTOgjC/6YAv0BlAqn+c++LYxnFHzFe4cXNJgdVL/PuRAa2BK8D7z0U6WNIp6JeHXbkdzI9EOSr6cXgzBeuTju08GFz3JL3MhIzquqHd9vX8hRXqUeifWZuFN1jYlXgwewwIWyeL30xSWXMv7wKowe5pYrwl4AZsWSID9HE8cyPtzPbN2DP//T8F7ZCJk2LULICqOhRU5DYSgW+VSAm+vTMhvO2z4wWaI/0v3Ivt08+zKNumP4m4COzYxJhw4W4RE0E+7CTq0Ji/xZLLH1ildmrPtYLNUmyUDLIlhId
+    CREDENTIAL_API_KEY: >-
+      AgBhl+1qmnR6cqchEgoblZsZDSStUfsI1q/0a6K9zdx/+4Q/FYiydl6YAO6ot8ec06fx47mN/yZaiB4o3RcHbNIAdOspYQNluMjBrMTq32P20ktBqMjMBe6d18bZJ5pysk+eI4sYfkCMVL4KaKedqJXudtcA7chh7EfHgZLSx0vk2e+sV8yWCTAiaRRzZitAHyhlksv/ONowFu5wAbQUwpRWT0UekKyklrNPS8Szxm/VpvwDBH79omebPZ6HNptrtbwdW3r+f115v/g98sMOwg0rDwvW8FVUc1DGWz7Qgr/rW4dU/TY/stNKHav9/xT2M/qFyJbFlt7PZTWIQZbCaoNDNYhvmTPwX5CRIelSTA9WAedh3+KCJ6KVjH/e6nhkiMb3uMtZ9NuycD7FOXh7IVhT8n5G9SNJSErS/a0JYeLVF2VJBU4mzfsqHQzl5HPE4vsa6M1JSAF/lOe733NZvgriDHr8J197zMfelhe29OexpWEFkiDAK3WcMuQjWOg7P9Ho7OxfYoDuhHmekwqYPGY4TD2aBKD4G4Ob/f8i1LF0RwNfMPjll5ksplmi9wt2gqADwT4sJgdEFvptgLeRphGdEnKS4YF8F2/6E18x2WPit6jpFSJbZEpDCQBtuk64Z1AnD6JMth7t6B957Ts4QVwYa9FiLR7o00e//PVO51PocUzvrjknpPmyekJ75LdViG8OtboVcrqhjtaiWakLPoQsyDjzPQFg
+    JWT_APPSEARCH_API_KEY: >-
+      AgAUODShV0akQf8/yOR0Sh4mW7ZSW75+mqsm6ZMbL2JCe2morMFavBkuxVUigxbWfnJWxxurhR3tjUM0K2PqXptMNCNM2lTQM8VL7p4aRX8Z7Foyjhm/1bozU82LH2fWzqglZHJ3wFHV1U996XBDNS+tnuqNwVeEvmPQGxo+LrsQEbdUxS7iOFsvqKMghfHIGoo200Nmje/dcyWGTCob/AFdUueuEwLVKUKwFYVFhKp00ZvimR1hUoxwupMlTLk1tzhwpWDP5M8ohGkHxfpZ2edQt3BqA0NxusZE5QnMWXPNxB3pVOB5hCuYXVFVaJ4oWPGC3x3/BfIUV9qwfCvKbcOw/+2xyyBFKXdwZgkRzcRuxtEENfImsCcjgvBzaWnGRB3FHe4d974uCBR7b3WJbAtaBovs7To/PYLEY2CExVXXLQjyuf3g7X9KbO/KKxIwV6FBNbQ7BgM7r/NsFVIBncavVvmIjP3siQyyepA2jWTimQbfT02F4f6L01ttRTScAM0H2XKdXcXOfKdqanZ3Ac5qyZOAyRKQmO+NEHVmENnxR1/ILHc4BW3yfa4WihOYL/mUdkNQTCXKPSZsCQgWqJD+GPlht0bDQ8GiZTdypsRxqdLsIrrJgwDrvhiyK1UJbAoZwpREXftelvoRzPongMV5P2jiBFNYnTFYBrqJeWPXppxlJEGGChoB8YWJ3YB/UdhY+cL1zD1mX5wN1RxTYjbtUb4GyzXihUN+rXRNEZZ02Q==
+    MAIL_TO: >-
+      AgBRdzvyl33Q1nJUHPcLFs4S86qmiLbXTzyRUb4kSHCW3YAqmzYvduWfpncQFcXUq3uiaUYmVDtcNcE79D7djSkKNlMJGi0P7gsBFv+PQohDIfwKUyDpGXXj2wntEZpHrnph+eLjPyxAPQRltBdGdZO8PHSwbbFjZmi97SFIjwlt6kRt/S7qm5dU2jnYWf+tPBvefQvKvT2gQEE03zAkYT0P6tOErZ0i9T0P/H5BqZU/U7124f8YEbcfkE8Hni+8ImqPptjAm01cd33H41XvyvLVQjsCjiSDUFrJUdU5P1uZcnQQHbN6ACsvmilkAq6VlRJFNNY4mURg7PVjnyh06QJQ4k3JdbhvocS6bob0ZeCA7iwaU3nmD9Y+fMJJd8DMhV2cjYravL9gM5w+ngDXQY0/5jseJQiQkKJ4mlYaWr9iP0Z5DDEg5nVnr21Lz3lSA1KAgg6uVMAAzdUwbI8kZK41+j4iLjrYX5eXSyCvGEI/PrOPz8XX48mcKSAvIZH4fwSWha7tfngaxF3rSUapug9FZxmgGHCIFgIgylI5ipSuSA6ar9sdeCK8HYB9bXxzdo4lW9U/9zLf1vu9phdlpHakVHAENCazaYVebTsQMGHWOyOSDdzFgw61tcWNq3QOLWfS06M6l7qUV5fi2D5RtkM8O6HkBxzTReh5FA3dEi9CW2jmlBb+l39iGhi7DoWx0Sv9Pf4Dq/UKgt6M9XpYsQeOObn4/9QkZm+3rgxoT4JkKXA=
+    MINIO_ACCESS_KEY: >-
+      AgCEbhwvMe07Sb6+uH4Bf05VkdRP7w46NGstY6/2botdOi3oxSNPCV398PSX3qqRJzg4hE3YmWZMbxJmfPbtscSWc3AGtgNdnuD2qsj354quFUTFgPOg9RDztYIRoStFj2IX6At2X9tKPHLQ6cE23WTHdeyJPVLOH98xm4z89n8VqgRads3oEyxJtrlJz4QdHTriy3xHpdYprtepAaYePzTjAtnCwYdC8vgwxuRxxuyC+G0GGdNxzPmIQ72sXrsUF9d8mwlStGgzdqMbS1D6GMpJR5qr6RGSnQK8YDGyFMHpJ7Aou01Ttj+dM4lDxzcVUE7LJIoMBOK69a4NvRv663Bt6jYWk/OU/QLuQ6R+vYKogiHkhGa6qn3I3kxNn8NHULwMpoVwWouonqEjb8lSr2qWCJtb5PztWc57DH9EmxBaqjjcOiM+0k49W+LRLGqiqcMKaVKFauDva3BtXZUSUkioM+IYW4nmkafVsrXa+yaV4C1p8ZAOqiQ/Kb1SDU5HWc9hmINdvswX5kkYpqcQq/JDmyMsv+yg2dq3HssLtyNOWiOypoV3JKvSj4keNAC8wZd66pnTjUPE4BQ3autpuhOTpbMuENBFCjARcufvBuFkG9oauC6gPV1D2SRSqGMgGWMctbg1u0boJ7eCtJP+ne+Y1A0XSLOluZwC5lJEAcH8SdS0G3UMZYQVmMYdAvF8h9L+QvEOxLnn0g==
+    MINIO_SECRET_KEY: >-
+      AgAwUY3PoUPTtb5vP80tSZrvYHa9K/2QmzAv2nT8FX9Tv5lwpjWeUEIclNfHXeZfh66Kwk6979TOjxDM56ZppulqaakVLJIBmQjJrzf/U4RUNc9vKBbbmGItvUwtpDijtFa5cE8IDm7zhGGQHWk79enOIbhLclvQkjery3hlw+nL7slCGefakMc3/AHAkv7mQ4C0w+jrpokG3SEf79AMsCKO4PJ/eD+vSXszQkxD3e2eGa9JjUZs0obxJFrnAFNWokCYQ0lubdTwylQV0IOef32Tx0PzIYzP0BQePhWs0nbrSf280xeCGhqrhmSTqxS4QQgAPzA4qC0bvMQJ11jDWOYMXPWN3C+O7jbxeOqZaBguKjxzPD300L6vD0nIMEkdtCZy6ir73ZI8B/uRJHCybSOc1VFVsRMEFyj1idGAlJ0AqCMXS0XgmlkUabKY60mFGFe9GVlOxA3qZ5v8/CpUqs7lzzVByf18wkyFi8MH8Ou169GQNHZMemst+rULOichjsVVZDa1LkctRNNEHTorsboXYve3kGzd75ywUqEVDDD21J6Bv5X7Y59EYVqnJl4nzj4VBNpKRdejodbdBzplUvk6tN89FKsaHTiEpNQeNZXcGvNUApV+9ol6CQhufU2bRMorGd8BrwqBqNE+fDE2xUv+vAJ5x0CbhOw+9D/+ON6uhNF1e7FpWEL+4wknzJOO6sPkSDP6WGIplATGjc31AI27ZJNLZA==
+    EMAIL_SALT: >-
+      AgAAPqlE+mQ4VCMXWJBmPt1iGCdbJFvOQYlearpaVprxTdUkFpe8aAixIg68+AZtvKGMhFGsyneYG2u6chm+cBaA5mLaYW3e+en5pEHPrtd69xlz0xJR2pDXqXtJbXPGyBnYlOXkVIKaZ+ayhlYzHAzXUWTtDyyOn2NYCK7WkI4Uzn24ej8+lGEcr1cLTYuZHmHh4QziL+hetjEvMHAjt/up142JY2O45IWLBlNaY6P2E4IGw4Qyf+Ybk8U/vD1J/6IRZkZI5TatPmin8peaoY8rI/zc+DjOTu3zeXqmCtTEuxwNUxMjiIB9QhXKOvaL+qkByJ4IfCBfBjjpsTt7v4O+IDvA4C79ksyOsewru+93uyfnH5BcSQ89VW+X8+51mqH5nw5C4CuipW/Ym+Bi2hETVSG8uU125FWn8N/JUlOE2+v3viDJhXKTm5ZDZY8NtmOKDEmFLjB5bceY4opkqerpEB6N3atZemr69wie1v5d2OZXt04CfrKtQGoUZYAVFK2H+t2lIn9tCfKj3VXqMY7Ilq0g1dBXrnHKDcQ8dlNIWuZ/AHzqGzJI+BaYLaLYHia438IAMKX+RgEFiqFrPrl3SOqrTuDAl9A3bHyK4We6zJH9uqSoAP0VrUYJkAvhHyoqlGAOicFfDy9PdZMILpbbTYcKRB2rdCR6sox8y1c32CTD5XOS1e/h9C2ldvP+V835nMD6sPoVdQDkqaeTc30SKEWe1wqwRpG2o4/6JGsLaEDJeEEdNyCDWSWlDinLBCPLPw==
+    MATOMO_TOKEN_AUTH: >-
+      AgCQIQBLQGJDWCz81PTbd9nAl/831TR4OdYFcqJtyfHM9DwEYARsl4zyeVjWrJMZNmdvkqA2D4IYI/t75CqOKo7iSMvLCWiT/AzX1tegLZ+7UNLwKJSGbvG6myAP6mixeFWgmVut/3C9MIqZByw0ErW4/538OpSVkBs9vm8UZ4sPI4iXO5t8E7xcHloVYwXqOlbJC1+LdzFCqXeM9Fv6Tq+86xSJAKmoDLWWHiP5cmN2V/wj/mjihnWavgfyegY1CRNjPygwwkXWd+uhPWWYdWEh5qAWn0fX4q6YNwyQuB1gogxhm/5OAqfVCfbW1WgjfBIw7Ldty7+pZZ1xHuMLUHQWe5EULTZmQv6I5ojIJayXIy/h0R5qN101h8uEuOy9J96oAiX6aZnQdTt/pPgIig2NuDi2UU+jNzsMmBXCV2j4I1+T7LT+7vmihzYUV6D2n1/ShgVHJcaIEq3aW0JkNjq0qeHlvTjNeCcOG2QfSSgfHbHHbxK+Vm6MT1cI0wICPXnn6InbtHseFkJ1uHjgCE4TliIaMP3Od1CijDqbXD9uBZCvYarN4wWj6otS67kXHs4COD1K4Hzuf4Xk/hJkPE1U1ZOZwdnS93+x+J2/4ts+TzBgexH0lh4RdXjTDRulWPb0tSJ0zE6gpWnZT3J7P22h75KrnzbI+CfSMZ5gz9AKvUjH9i7KYbVmXyyqoEAVocWN4mK/9RSqz07l2mkEeDJaqMV1cGC3cg+L4gvaZ8qUJA==
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: server-env
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  namespace: fce
+data:
+  PROD: 'true'
+  CLIENT_BASE_URL: client-url
+  PORT: '3000'
+  MAGIC_KEY_EXPIRE: '3600'
+  JWT_APPSEARCH_ADDRRESS: https://appsearch-fce-prod.fabrique.social.gouv.fr/api/as/v1/
+  JWT_APPSEARCH_ENGINE_NAME: fce
+  JWT_ELASTIC_CLIENT_ADDRESS: http://elasticsearch:9200/
+  MINIO_ENDPOINT: fce.minio.fabrique.social.gouv.fr
+  MINIO_PORT: '443'
+  MINIO_USE_SSL: '1'
+  MINIO_ARCHIVE_FILES: '1'
+  MATOMO_ID_SITE: '8'
+  MATOMO_URL: https://matomo.fabrique.social.gouv.fr
+  JWT_EXPIRE_BEFORE: '1634130400'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: server
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: server
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+  selector:
+    app: server
+  type: ClusterIP
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: azure-fce-volume
+  namespace: fce
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+spec:
+  encryptedData:
+    azurestorageaccountname: >-
+      AgCCbwpo4RYj+KYJfUArfcjxmVRuhUhciMTfXvpHs0ui37ivl1YDCmXmW3ylRqUx8qaw+DLL+PQPgyEzmdDVCNJ2hSky5x2yajfL0MmhHgkepoQSK1IELz3JHDKM+ShzSlRS0UiQnjDTysSf8xSFI/QUqcWQBOlJAEQCz8C1awiQz7aYdihL+bpyxH/uamgwRN3GWXMSMh05NjHo2zUZO6DfJ2qJYrzcy75s9+0wa8mwH6hA2kV89Aij9vrGm20DFj1iCe52FDUD6eqHcWe8vfz7vvWBPxC1lb6wp86jezxqdWWjieLn+imtVTTEhndInoyzzvWGtlU7ZIGcR7XqHhrwcxlkiT5LrG9RqGqyHIiJMGF9VpW3IlqdPJU1D/KFBDdOijB4U0aFsOBVaIxXFjtPhP8QO2huAtSgFcwNV1f1pRkhJzpMiY9mU257nDQyNRZInpGFAoV2FK4Nquuar8yGi3BsDk9LpqKejTNjYEHl/I1FitpwqIdttOYpx3JVKP29rZtjS9c9e5O2xgwDS3Q21GhOffKhHX+V+prDXA4I+BUpXkW+vNwB9NTt/WYyCG1hzDcPkHTuZyhNV0at7mfWec9zoZiUBw8m+Xrw64H88pIEJXM1E7BNoZfF/oqRdf46pAidcWMp2uPItVv6HEfa5JZGAL7Qtwm31vFZdGKdgWCF9PeMYIL5UdI2WAqsLj2np9eHXZPA
+    azurestorageaccountkey: >-
+      AgAlN7lsY17kIsFsYZ9CJ3wPb35eAM5s20oztZ+VTQNN3+ABCJT1PJozVZPo1btdElsGV3RAA6apU4A3L33fZZ6MTdhNY3cuTcHD9DZp7JjEWRtGRKImDb7HMDeoYSXfGjTSh6iThChDk9rvH+9M5SRZfGHIoVtKgr4d2FChOVylNmrwvX3hUBflhrvvKWHX+VIbvkRpr+1TeQtaPJn2JoaigDY9YzKviZ1nhER/oNqxRn3hpzAKFrwnLDKqzISwTfG8nTh6eUCfJgLxF6+4zVQtPBZCebWWPrxcqCar3zoLHvnZlkN3WkKk8BPeiAn/VX921fUdJdhecUIZCi6kTdv3vw8nLf5pMONpWvjsUYwqpr7spd/Pcua/vgAHUOw9V11pds837QPA5tcThfG5n4wiX/xeRw9N+jZqs3sFcuEqJQ0gqkmE1uisyMViOjn2z9UudtccAWL+Ll/KNbr8I6Fwy2SW0eUQh/aL0lafOyS/9fG6qAicg8nDI7C/bfKcS59y3S/p/kWFBz5GDCnjGJa8ezTkyUy8tIMe/gCs2RFvj6zaeOFTguFeRiSeFN9uOF9UooMcR+cPBSgtsAWGzmvZjYq0YYHTLacLTA1XqwOwVbDV4IgXAb/OeRuCEOPd+JunRpztjEqggD0U99qIB8egYLoQOBUxocr2ZM5xNDkMb8h4q5EpORxlpervPKPmcivx03qMpjPCsiBSQQB4Z0TK2fhmv1Kar94xMM6Aiy3svHzBi0Xo74fsu3pFbk85S1w4342wcoyAzWGVJwt4z1xRJPi6yewbHDDD1Pyu6Z4/CM6RqY5UhRKY
+  template:
+    metadata:
+      annotations:
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: azure-fce-volume
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+    type: Opaque
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: strapi
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: strapi
+  namespace: fce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: strapi
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/strapi:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+          name: strapi
+          ports:
+            - containerPort: 1337
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
+          startupProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+          envFrom:
+            - secretRef:
+                name: strapi-env
+            - configMapRef:
+                name: strapi-env
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: strapi-env
+  namespace: fce
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+spec:
+  encryptedData:
+    DATABASE_HOST: >-
+      AgAquyQQBwf5VDnRbLJ0AtukDAYVQTZO96YURb4GcS5sc08DdqL3eStCH9QmnWAePgyuN5BMsPK9dHsQkG5HjSoeonp5fpsBiXIoxR1cYMka4Sx1lGIWuywPcw6U8Zxd2KyBvL9op6qSjw5lR2aeRe5zAwkQj5CkmG2xFWJBLY3DwVPt/n1YrWKpunIzmCbFitllD2kS9DGTki3y6kjEcG3KniU/r5JVp1SPjKWFWfUvUFq7ra9Fjq+UYerTdxfc+HQiA3ZEQn4yo2Rmn4MMquZ/hJFsd7YFrsrjeJpLRH4k/kjZgFcFvCDkoI8d2O/CK4aaHlshpJO41BHueC4nvAtcfaxG+z9bkahb4XBwbmOODlW8FPBdAXdeaoRlP6YUZDoERIg/fMR0eiW7v04OSOYWt4kDibmLD6VaSApoJlyik4Dq2J9xf/c5sa4thFgSSyyeJTfVZGVjoNm/OybK49qYBOu43UJ84dcXLMXRHC7OfCwlkH7hFmgGrVP7SyHI5RI8lQSGpRPRFUlqDPBAD96pWK/1kZv88InTOOsuMzhv7slaAupJ9I32MEGAqLycs7h6gZu9qBXCxZo5SnVydQ8ELLtj6wxTOo075tb763adNlJGxwla0wGYpbHUyauS94rdQxlXf0lxktlEB856YVuGbRmle51DH3AXk7gE41oDWTOHdEj0hf6wklTc2Qk8uTgmbCExsYg1j2Q8vHrYacmwQSTPuXM/sKunfi/+KtMsPDNRNs94gQ==
+    DATABASE_NAME: >-
+      AgAlIElo9HwDQ/lWLrH25iLL7h+X3bB+xteWCmfavw6CLcKu1rDtqzIchpRNVRc4roC+maD29+EQrOUPeOduMYKFPPcEC69aSM4FgfkbFrwwRYL4QH5gLCaWbGVqbvyzS20YdBTQ7EjiFQE8ii+VhlV2LvTl7aaiGEpFhg8vFWdZCH9fcUaPQO5quz2AivssoONQCptGNUbXC0a2SeL4WelSwrEcWDTLx2XmuTOeH/ym1W9llt1DxKhQ/JJx7dl+q7mQv6ENSjnHzj3WCifFt/bEi+bVGChncBjLg+c3G/tneXtRbIttsXBj2gpEKeW2YZx7M5VHsD+EslaupExR62/fxDAb/cNoa6OPRGZ/KeKBc5FAIzQ1kKMaATUUItDn6u0SoY6vkJD2cqmeqD2BU7CAG0WklR9GcbsLKz6GcTXZoVMxsxADv6Ip0x3jUjf0EPwu0lZmZUwEpbxsrqM3KrZHzvM7fGLeZuAcizLR5fBujWRGZR7Dxo9IIxpCKc0nDG17HZe6FU10Ad1iohbNyLHGostXTta+C2LBYhscivBFey3uj/D+CFoU4KtZP232ti1DX3RVtEtEgvVvH7cMIPRgcYjeKY3lkwChWwdsx+KRWDEf+LMg6BEaEvbYE36wISRNZpBntIuA3GwweoAvZiRE3q6BVBcq2fkj8nUmF/SP8jptOXF6ZcV+8HI6aIBU3d3V5d6iggY=
+    DATABASE_USERNAME: >-
+      AgAjGZrDcWOtVlBYobam7QnccpbiyQLyPJtelFBo4k+m9wb5QMXXVIqWUwoH756Hp2kl6vAa8hosJT88pAHvG4VZ3dLSwO2t0SEp5pcifXP4vOQTlb3lzehoxSVHDLnJHzti4/8qIPDWvF6XRZZpD2/U+7kPKRxbk2TpYpm9bH1BeLJvVcoT7VndcNmH6smopAzXpQNshAbuz4Hogm4iJSYZDg3EagDcs6ldRzbPHqiUKTXBeJ+I9cL2+Oat40VoiZJvx53YX2JWRpbJXSl3+6jx50zMygCJ+nIsx5gdBDcOq7zIcAyZLYyPoJEXexjX00JU8kh1GN0+308lScTNefqM1ah1u6tzOWcV5QzZir8czBr5CX8wtC558oKU/gDr1n2P45ppl061/iRNGps4yuIfowh3DL5k8XcgOxYhHlyAEViFpLAhbC0K0mgmtpAkk6RlpZAjOSOfWYIoBbw1IvOCKh+OhnMpKSK3dfGlgBDvTyUVhVBmQyTcKL5G7n9rLTY6895l5mJ5RX4FpI5IDuj+/SiQ/RepKC9y2SSiYiN4pqPa6YDbMoK/RdkTK5eEJA9de0BjYw2FUUjvHneyMZVdk6SZ2hfS9tUSuEJp3EwmJzsan1tR7H3m/7RV/zpi54yFy9giW5KX+B9W/dxfux4vu5ZZ/67HCBIHcp+GinEjwalXOCn0jYV7FASodmDjVDFuNauH+EvQEWpSgdJLS8tU5myyEtFt
+    DATABASE_PASSWORD: >-
+      AgCXin0Nda2W3HFRGlQL2yohjJcU1yv5tFjGOQaz7+LPxlzJyzI4YznbJ4EErCZSYpxK2RysnHQJPA7bApQIlH7LyXGP8rISQPU1w280CimVDr77MQTnkaHNLkXmxIlxxJss+tiO9Y3Q7dXHhhwzJC2ngps8JcVm8fqNzfM8peIGa1xZeHyy9PsF4MmXTkwTXi5JUEs/CUH6UC10/p5pZPye3SIjYNWxnYs2k96v3vlDYs2MqSYVZ4dUgxHwZSm8BGi4Oi+VC0RCrK0PTR+mG2RETK+An+fmXhlteFo3U3/q1HtBTHgqUB+nwXCXaBgl9um9a5qUm3SPE18VXIvQ2NMZTgOsNHehsL5uheaISkoDoT9s3AoFMCVND+gV8BBUAlra/27IhHU0AkWCzkN7FAMPnNgmrBVHsKBzCU100QfscacR43RtSHlhHxzm10k6u/2Je5IOqQgzKEIOzpKEhNeQx62iT5gIAB1uaNc0aK6BkxhxBnpWpMdcc3F2ZPKpAnmXuQRXMSifvnhIyKhf5bhcl7z0VKblNyxOkqiRXI/CKcp8fhamwkUKVRdiGpjZK/UzkMl3fJRcL6SS8ffkUzQMiQYs9k70JxF7vsFVNjT+3/Fy5Cnq73smeB74cEwQgmQTFExNKsTG1PkvUQYPal0n1maxSEni8Fp7GZ8gy1HExjrKBs5fLWttoKZy3m2OhbZhcvGTwQbECePMmUtan98=
+    STORAGE_ACCOUNT: >-
+      AgAqVZ3/7ye6rQScSJ0+fRao9kmrCdfc6YZQvU8F0k+VNoJWIMbF/d/A9eHxH2ibpnr8ZthKH27APHhwOH7bOEgLy9KCTZoxgU/S/e+Djt3AsItCzlSFGpaBCHhOwKkYYg9lQY7CWUZH5Zyx05OB8Mo/iyCFUXy8pnNwb0OhH4BaaFMjZkh52Jefh20ijUsu04fS0gS8bcdLEVTE8rHbP8vektwrUKcvPrL8stTtBq2DJAEKwsMFe61g9ahvXVo6NilRocvGnYg2L8xOIrFgi93sgFQV9qcXrfod3AOq/xOaDySF9kR6986ixFXuAJCvWt9cfku9LvMf+iH8T7eRJd5n+oS/CYO6O+CS6g85wZ0C+SO/oYKDngp57kphWx/eok8GUVxK7jXilgoA2fcIZAqwdoma8RWo5VcKfuu3nWvLLlBVfqMa7/WwvoetZPZlZ3dw9U1huCLPmvIU5Pc+VdX0y2aRfCfB+NfPLAowEq4yykgswZoMC5K2TID/LBuSnmrkuKNwslWF15wtfoKgWArUExfO1m+nOuTsEczr5GKq/SwqlSgu8wwT3so4Fv3k/M/R8TCoCFtf2wsPHL5T+G0XVOFf2SJTEJ9MZdV2vYIa9lFLhXqTZGRGBZ7o9akt1XVKx5Ls3+uln7g0NMIEiNp5MRjBOrRlwjZrR1DCEBTwbRf0viwLg+B14ohyBc3mc3E8yt83MaC3
+    STORAGE_ACCOUNT_KEY: >-
+      AgAweF9Kr07hqtIP+bFjk2KfJ0kijCOPyRozsJQE+1/1LZDs2/RM54IdKULE45mZlita83kS5UY806VF8RvwaRq0o9p6eDPG1xF8OIBZr11SUP2KtW4Cag1+EoPSOsXiMsOjD1v7pCMsJ3sCzuSYtc6d0Gx6+goURNS+OOKMdE8+74eX/E33ISkPYPI0ZLqVxAz+dO9DqohGqqz3Heu8Q6ayjH4Ksbx6qvQhLYn/3wC8hx1rCphXxyN1Ykp7HfRHaI9MDrNWOM4y4ENVvREfFLapIt0MJ0ZCY4U0xgOIf4SggE/rFxlD9EEMaSKKsB41rROjph8vJ15v5Hw5zcOqE+F5k1Aq93GVRb0ImM+o+r/95sL7EnRbiXQ2jgnR/RdGAz4SWf5sMAQ+DHdASWBmzh0LnqgpBjbW1e4rcXk4B8R+1P/QZ7JYrvqkFfb55wWqQN1VWW2dPkMJgqj2wP56a6vH2VF2vgxpiJQwE52zhT2dkOYfLYNaoyP83jex00bFSCwX3RWLsalpV3w6CqE3Ku9ajWFHWO+ZEguRuwb9706IzhtTeYETekrl7qQJvZcLk1TGSeByewRH+j4KKT1WNmFRxCs8oxXK5/z7sOooUoQGhq8hKQxNkEcWbtwZcIV29vQL9wBxmBklojQgOVAbtDDjOYsUGp3yHv/gcBATUV1c4CwrRkzitiYEhj1X0B/01oraPjNypmUZFPJDPazWta9CRQou9O6+7thQdKInOZI5YieNgpJZQ48Wbk+ELH/8drfhZDI8/TGlXFqAt+36IN+2ze2PIJXhA4M1h8CdpmOJGHg/QHOMQrGn
+    STORAGE_CONTAINER_NAME: >-
+      AgB43x5RZtvWYQ2ZXnLiUh4xIXKPzRF2h3A1bm+S6PhR+Xq5THveP7FqiPGFSYoSeMgpP2X3+nIzm7pREPvc1Qb8Cw/WOCg8rZQNPkEX6ivDJBezDNdy7kytI06qS+zX0TU3Zr9yw33XdSqgWO1tOlS5fF05G67igVb9iZDSyXjVrK355gycWiuh3WBR1jj0CeSfFC72/AXO3w+ZgwfUp6SWksgjg9T07Rl13B4B//fky2mhwHHQfmQaMo/5D5an0sMVmywEmkGop3S8F4itdNp0YtqO3FgzHQXfcqOV7hAit3nvJzO4o6EGeNrkt7AifSA9UxCgVErQfCq1vvi1rjOvbyawqUlY0WiMWgU84OaFT/nBWsVjf/k5U90V/84PHavVlT9KS7PKRCoNXcZ5IjTu5vEeIH2O6HwnXhD0tY9kvfrRK0YqFTM8gF1H7DWdilRjlpZrv1TYJu62bLHyVJ/2Ju51oJW0B/EtwYt2cfWuLlvTIlKwivi7pCrABPxxVgGMYNDwhTZwO+AkqN+A0VbnS7Wu+F0sYEWE7c55qEHKpdcjDXhJlDYeX3G5ZAnzFBqTf0xcfVAKSnNCc89CV20ZR3SPM1KaYWYUiZ9m7BXze80Lm11xxMj9ASYpVp3gbtfrF9OwD7YcfeUi1RlO4zyDCD4H+0T2UEEo2kkWjPvspKwPsMz1mq/t9fqtaTmbcV2IDEki4gY=
+    ADMIN_JWT_SECRET: >-
+      AgAgcPMw8zi+q+fAtQeCTaZp21YhELHoiCQZXlI0cxe7piwvvrfZYlcXa/8QluIldFOSybMfALx8rR1eIddMIvVRyJZwx3OsB+N5uTACP5dmq2t+KAtNB8lWsme0wHf+uxzB+IeDbg8r33FEQyS1LHDBX3k/i8f3OEza7fqrvOzUns933mBr1BC3G4ItUSQi9l5a+yHAbo4/dKY5Ie7OUIdZDc2RInB8z58xtQiGrwg+ERoDXxVWYpf4X1YCccgu9jqEce4TLqm/i0dkOD1t7hosvj74oUxDvkw7FXr+M2301MrszS7++eWkXhu4LuLh2jcNfZbtyQftwleqyGOTNblRslVuKm9Xfu+3yF2fdYq98Nc11XPsz903PrzxZVs1HW86ysW0K2Plnv55UBBQNojUjefhJDetisvTIbfHG2CxsAKB3BHklg981ndPeNrpLdNeIY0dUqg/V5Fme2Q8qQcXeIguUU2Y1KRqGlfVZsW2uFUaVaRt4Rbfxagr3vRhM5xmgVmIKfseYm9Exbfo0HsEy5exRaVC1zKTFuAAn9v4L1YKLdutGfgy/qOBr7gSBroTLTdq40J4i4r+ioeJ3/Vzcon+CGB/r0SwGVptAOI14lC4vgNEEJjFn3dcr83sR4lc87zYSCmqqzCESZaiCSi2WxouaihFml+n2oItMtBe9DSIXXQggsLD32QNdFcFY8l3sOWcwRVnQAp4mkX+aoNwGY/1rlkIRuhK4bq3Po7a1Ti7o7vHehEIbA==
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: strapi-env
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: strapi-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  namespace: fce
+data:
+  STORAGE_URL: https://fceprod.blob.core.windows.net/strapi
+  DATABASE_SSL: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: strapi
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: strapi
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 1337
+  selector:
+    app: strapi
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: strapi
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: strapi
+  namespace: fce
+spec:
+  rules:
+    - host: strapi-fce.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              service:
+                name: strapi
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - strapi-fce.fabrique.social.gouv.fr
+      secretName: strapi-crt
+"
+`;

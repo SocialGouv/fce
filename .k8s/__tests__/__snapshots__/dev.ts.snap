@@ -1,0 +1,1142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`kosko generate --dev 1`] = `
+"---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    socialgouv/creator: autodevops
+    janitor/ttl: 15d
+    field.cattle.io/creatorId: gitlab
+    field.cattle.io/projectId: c-gjtkk:p-8j5hf
+    git/branch: refs/heads/mybranch
+    git/remote: socialgouv/fce
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    azure-pg-admin-user: fce
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: fce-mybranch
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: client
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: client
+  namespace: fce-mybranch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: client
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/client:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: client
+          ports:
+            - containerPort: 80
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          envFrom:
+            - configMapRef:
+                name: client-env
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: client-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  namespace: fce-mybranch
+data:
+  REACT_APP_SEARCH_KEY: search-o4473eqn2fnyazad7wcxuve9
+  REACT_APP_SEARCH_ENGINE_NAME: fce
+  REACT_APP_SEARCH_ENDPOINT_BASE: https://appsearch.fce.fabrique.social.gouv.fr
+  REACT_APP_MAINTENANCE: 'false'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: client
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: client
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce-mybranch
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: client
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: client
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: client
+  namespace: fce-mybranch
+spec:
+  rules:
+    - host: fce-mybranch.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              service:
+                name: client
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: server
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - fce-mybranch.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: n8n
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: n8n
+  namespace: fce-mybranch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: n8n
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: n8n
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/n8n:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 60
+          name: n8n
+          ports:
+            - containerPort: 5678
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 60
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1280Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 60
+          volumeMounts:
+            - name: downloads
+              mountPath: /tmp/download
+          envFrom:
+            - secretRef:
+                name: n8n-env
+            - configMapRef:
+                name: n8n-env
+      volumes:
+        - name: downloads
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: n8n-env
+  namespace: fce-mybranch
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+spec:
+  encryptedData:
+    DB_POSTGRESDB_HOST: >-
+      AgAD3FbL08cgTLZonKLteWaeoFVpQYnL8PGD11NkFISheB0kgWN8/avm4POR6Ycn9Ar4veP5y28EG+vIsxSWAEEjJEdb8ctaKh1fn3cbA71dk1oN5kS7Ej0FZk0X8Ue0KkXP/9KRXar1YYrw4asHqdeD6a9SWjOY3vJKqkq73tHFlWN7+6YmwUkmdlKVGX81bmpErT/3lQBK3b/5jZZjWdd6qEn+ZD4VmBIWvQ01maGDWD/K66NsiDPPVwETMO9PPDDDChEhjNkUpBv0EoYhRsN6QEA3hL4crBrEziL/5hXZe/YvatxCJ1t2/lDT8eV9o9eD9Ba4PYRQr4911mxYmrWkBtYN9E5kMHGXhw3MRou2Zk9vo+PiRQW2xWEzg3TW8TwfsRpz7gdyP78HP+xc37l5vX7miiGI/GJNE04isFWUirkcwhdv+cWG3gjwabfDnO+pOAJBWPrUquu2eO4jOLBzg7i8iN+vXsm3r23SDGr3IwzZIrd++vkMRJn5dbx4lJYFE4IKQ1vSkN+uu9zNDKawgO0u7y0fpBRAAU2ZkpTm6FCd6nVyMoy4Z3PmWUXB6syVpIgHgU0wQelCpVmASYqzi6vj87HmNrohZZvVdKDshiX05FW8h1leC/knQUkt9HSkV34Yhjv9DT6eov9MpDVU2yEI5dS+h6w4Yl+JUQ0F63If58sEiINhqvQXYYW2yehYJHXMlFUnXW1dUksKKXnZiFNxDWzVQOiM+NJHdYS1avup1w==
+    DB_POSTGRESDB_USER: >-
+      AgAhc4rf1hXqG+rxq2zL3Cn9MQvhZJPfZvVubUn93nX7r1EXYfJiI2zZiL6MSkkPbuDtFfLRQFw7p9G7+LHl9y9gJy5DpQva5Qeq5/6gcWkR41FakTgne4Pm6B+1U8AN9z9QzMSIQ49z/rIt1REFnXtLaRzVRqs8jT9LzBtbEK9r85G165qEy/rriqabmCSfVNZAWXHQ90oMoyPTfPqo/oiqcqYknxkrid2QciFocEJCyE2hPaitD7lNJo1YAExPLm2w/v2wtsUoLzyvVcc8+upusafrek29O5MhH/dqwnW70X2vXjbPrR2NMJeJuqHzafaGkPb3ZXZSGulaV4rhmgEVzi9CvZd5g3MkkmMklaQP+MX1AB4faqm61p9Q+GQ/ZtK6jBSc/NYwQf3SHr0eDwNVQkuzlgNC04hUcWpK0rfMs7QqdUjEp2kgdKwt6wzYtFUsd4rIFGtythKPgTtWw44i6pBtA0hjAcnAiUhzDUPN8mknt1WK90GRqaXknaNwpAHdTMXyGQH8L32Fo+rV5RAsyoalESipBPw8aiXJn6ZJuUa3AcWJ1zL4v46yMcRlNQBdAbrhFelrKNRSk21R6X4ut++ckuHQkng9AEwKHBzEMwYe1pv9vCLKQGS2CxsNQWhSKQKfMmcN19+3iqbuXdw3K2SbAjp9/EF6h233hjSdfd+0rNzo8B65+5+PcTrK+eAaOQVmI2ogpsd/+9g=
+    DB_POSTGRESDB_PASSWORD: >-
+      AgB2DlPlTj8/M8wri27yueeLkKdkEX0iVm7mFp8JHTexRLe8J7Dg89vCkk6k5RiKAG/e1XzqAZaWBFywtD8C/W6LGIW4VZbDzm/1oKU21ZRJS6u765pmPE07iWY8SBWNt4gQJJ8qNvWAJi2lKrw5JLqKbnTLfIypk/+y7N9NAWMN/n6nH1ykifAM7daITsCNaBVss8o23B4ICEyTkbQ1jMdyR83a2YesdLqCBuIkn6Q+bGDqYrW3cx3DXMK17etXxoVxBsZYBD4coJC/Aw+KNmWig6QYSMdCIw1zrzxWrKy3MaSJ+IRLyNJRYA0rIzzxS838aGa3iPCW8XcMabt1xY+dq67hggeXrmWGirTWnlDIejB9r1sU0xWpN9kXjRYPWTtMsQe3qFlNJLXBVNBALGdqMyI8Ia0ENzW/3UDZ5TtUBOup+Cg+wGWYly2DSr2p9ocInQGZ6Z7+ABP1mLqGbkRW/iVvrQZ4m0TPWZGmPsOQ/RjnJNtYq7t6T7ON+edOjETn9TOIKlk0zQtC1RZcrBpWBQtsK6oyTL9udObWVMxk2eygApikmj3fxpTuoiYkPs8U11bk9cbB4ZA6K3Z8eCDYVR2asIrkwrUMoskWpMrF+4ll0pTb93uql6IhXYUWk49syrHx1CGovG+A1v12agggF+3yzrhKlhY/Mi9TGDDinC0Zlw9R//paNxU+30aXwGGaZjT5+Xs1Wzl2hhGhle8=
+    DB_POSTGRESDB_DATABASE: >-
+      AgBrTvxpEayp2dpQIQPP7zSs7XkXeLdZToRxG8srOo238scV52rMaWp+zZRDZQjQh7e2jHUCDAbO2j2tlTMdpSlwsBnx3B+yzs+VMM0/1Cn8ruCLVULxKr2ZFSsRm0NdOPZ6ZJE9L/cX8UxQin/RNpsLONZpvuFyDZXtmC7u90uBg/rG9QhcLwdEzow5FuDXRrpgr78rH0ELVmsULHOXPrPUakAiQeQ+IHwttu3symX9dY5Ev3UAOqg5/7Ycku8s9D060bquvnjgKQALkIiBFLsxdJPM0TwmRhZQhxuWkE9e+uN3wPwCnFpLcY0Q4CtWYSyr/bQESltcllE2YFhosJIsBZhGr5QmL/Sxpp4ms4EsxtE0fHzIVJYiMQq+u4oN6EGyfOuPJAhvmtOJ9v5DYd+Dtp1fsw9aRi7IIqeiW7t/1mO4CyMdCnnu+OBu4ndEWWkFthLXFhTPh4nIlh8aI1eRUBQ19LfNQ9uCI+r4M3AozTz6I8MujrMf+EYE7Kfm+pISrNf0bktxn3auDz67mm4OK+dcJQ7qJUovqVsvuzplUe0+EGfTfvQleiy4TFWHKoheWIi9QO6EAtU2qlUWn9XYavLmyGhwZvnCOagwa1pRvNE9vRVeO1OK4nrHSCEdEe64QtAi4T0H6SaynW0GU93pT4nXpxKN+ybPkxXrYjxVAd+O1QAHiIsOkta09sEGo8h6544=
+    N8N_BASIC_AUTH_USER: >-
+      AgA5yfdvG0fGNmiFmzeFtRwLEJ8c2QPGT/04TWyNanjKOHedOk/yQpnJ/s3r14iYYzHTkeNtvjYaBsB8xwPIKX5bn+vHsM4i2poqnP2UrmIDspOdkbYnwpamkOZpD5f6Y8tCpJukym4F0D6XYmaimtbnUUepz9ipAgp/iPtBi2aU1bYL9zqW3fzkV51O0U11xbeiVaTD+ClClnt+Ehpwxu05454uIRuAkW3EqRi4DAH8CRWPAvAUHNUKYTYj4mhR+kiCwc4sR44jtCMTT2STlbu4bgW/Kj/aTrQYcL8AakVzWl/fyA+drrrGYdPTGnl1nNEPHmdG9neigN6Bkn500gA5tNA4clpKWiJoTWKv0YElsPwpDA5lsNGqP/bZtP71WngwyFwsQHrkbjNhPJ6bEeT+deSNCtKgA/Rtpxi6J8D7/uIpCCU/BhgMeBCg1NTfd2K9x5/zFU83MZ74+4E02WMFBHYGgBJO9tP7ex8qNWevpO9GXNyH09cpR9QWcpCfdRAZcgCcQmMkYcrWHzd6kVoEl1yr3Agh2RFDdSYcSz1XKUV8VJzhg/Vq28Jsx3Ci9jXExrQm5cDF4YmRu/Ox+E+5DFcCHLIjqLteZqWLx9x2TMkgK32o/q2WnU6T5Bi5Si0lGb/zLn7/Gf4QrW477ePDrkRyOCH4Rxxw+y8M3A19/vfkEj3E/w7v8bJefLTxobpKQAE=
+    N8N_BASIC_AUTH_PASSWORD: >-
+      AgBeEMikMnCob0Kq4cLsnZcrbVgO5P5nB2eW2LGsDEcffna94VEKvpo1Q9J/peixlpeSI6r647HfVKqC+Po0FzGCy5un1sQ7pEX7NfYAk/+zLRo+cuaf6sY6nKdcYC9Jp2CTf6YZlBR5RLY8uEJ4tuYuXuBbabNh1HEZPvPMzvTg371JRVUgBvF8ZUedDAxl1LF3Iqf5YLgvlIi1IYtuajg8YArZNkr57fuNr4OeaEWojE5MTQQJ1QI4CsECGN295PmjLHntW83u0bksJfejrP0CobxeLFXS5GjcRtd7UQGF+7oQYWNohLByS1TSkWCasb4OLl3fQMwwdfZKF/gfqT5jwQ1EVtgrmXXvOVIMuuTqx5qg85Cr4aeDYuEK4+THQaRpBlzMBBP3kSorb4+5bS7NadsiLULu+XtNkbt2ecKpwT9GTWxgZZXnB+C1SPy55IY1XXHLfXT0O/DZvF2CQrGv37fW9QDlkRpZAdRlphN+sCmSyu6H9Nqa5CN+U4yFc9cmrQQNpL5saDhK4kU0bmeIO3cxU490z+saWxlnhhlZU89qqgBm7X99togdAZRgMZt3YRn0ZViYwlAo7FSLVcytJbj7eSa1ifFAIuy2fYW52nmJPhsRQUfIqZ0pCrz/Ho4aMAP4/btRuR1XKhQMOtJVz+2VOPdRxIal3luBtQTFnjUjFECNVQgFcRYxJEOtWlFFLzgm0J1nSaEDA8f03A4CzR832Xm3QMO7gvOLpFPsPA==
+    N8N_ENCRYPTION_KEY: >-
+      AgB9rfioia0+foBJcvfAM8FQu8rO82peEQVgMB8r0M7lopeYKvrq7qIXr3kJ0GZtlZzqexeY3N2dJdwSsjWMq9TU5NtNSLjK34EXZC5nSXPExc6aAHLFNeDaNpo3xUQcEzWC0vSFsO1pdX/4cTX0eyH1h9LACO5NJQK7z6lQxhYfflA+OBaoRQYpefdNzhfXH6nrBB93h9vzdyXDqWoBDH1dK0Slo8OSXftVJzy2T6beaBFuu1lponiDrrEnw0aoE5z3RoPE2COu2HpWmKNme9icKsUMIrOFKamZDAO/718mMvVpn1rJVg+ydwmu/7fdrWR3oa9DNkNQ71LDp/cBllB+84zEmgaOqEpMBzCKNl/RQ2kP+pwRqTvS+TehRXhLFYxpGNH/pkudg43SIctCT4MWBEM52wXMNYGdmc4QgORY0aAJ8uHAFB6lZndvHSW0w9DHFtnYKPpGoYzObaRKM2q1mjymuOzV0dV75XFsMX3vrZVoY4etN0yinRdrsdd4c5Q1EXZjBRYBmY4xMStdwNibkA9PggJwbasAQtixpUmEKJxhnFAU5Osx1TLWACONsk/7BcGqR9Ih+VaSxshFlPLMF1sT86pWc+qBRC+GyL0wtMIyEwIizIMVFvGW31nqGSuyhQv1xB2HD5loS7jmGmwUBBFRiXjPcAxFBdDBduReQeObsiPZdKGVe3n2H9jJvXIbEwZ9ll4uePHTevAfuHBEKGDv55CeV0E/v7B+Q4G7lQ==
+    PG_HOST: >-
+      AgAyNnKPmupks15ubh8d3T3vD/fy6v91CbDVpocmYls+ddoMZH81Nn/y7AN06R693yn/0gz3JfdbIfoDasVnd5L34G8chN8wqMTWL1aKluHtF5YCpGZNSCX+xM1vbwBwuOJ4rXqUgISHTv/A6COGNcWYWgrUSDw+uFx/NW30yS7dsJRFdwE8OuE9cBq0B1zLaBfhJYK/cPUXUoM1vny+DAknTXJ8PQrLPhIHrJUkPpBoLp+NbaKAwHaEYTLVGlT5oD5wIoscWmTId4dcuwTPZSMkNOHVZ9S00HEcQzEyCABPxlwhFg9lnVOXCu6KhF19U1pd4frHgKBFM9SVyWIf99rXMF8K96k2iEZZxP5i4ppMbABMzAgZkpTj+DoGq02lcNozzzHmuLj7iub6d4GvxVQngAMrMI5eXw1vl0us0uDX17a7Ai7wZfrtD2+Vj3fs3Dpl0tB0iNvDy9k6PgLxIT3F6VidFLra1L/VrQa6FxqiPWunoHGbAJMNYVP0FmOMEccjMriuE5vb6M0ItwKOuQPv8wgp6pvrHVZ4fMnEdaqi6mDvkFhBTFF4aWQZ4xy33DLjveiTj1wpm5qo2i7J55RLXjvMSuygdAN3KsI3j73ds0PSysW/smZSojEFN8xTS/erwNwOrT6Z2Vx4hp2JgfMG6kJbiFtzW3Irekihy7llEDHRfUzr5DB/WLKKH6qzSiNro6egb1oljIczpG6ohnVSn+TJw77PHKS+6R3//zstPw7WAg==
+    PG_DATABASE: >-
+      AgAIj//mZ0CF9f95lIlaNN5/ldcy8xJr+zwX4P3hpRXyjE0ib1d/jKkXZ2ILQT6MVgv1mEzdxndk73iPC1M+TA2nmAbRFRCoYZOi+l2AQItv9jJmxpFi6HAge3+s6PGiWrcVF5d1PTShUry6MADCyTng3XfdAVUpCcAurgeSu2ryoRw5al0WUGfXBjY4oW5xMVYydxPSXE2N8Ws/xpjWRLHSgLPFtp59zf1Kj/SMTvP/bD8YJ/RFFq6hdmkrt4n+wHo9DpLoQCPf9H2MW1O8o4lEtSSEyTELS9S+tU9/iEpaSGNN5w/fNz7jIKbtNAgkZz+Gq7xBiw+y2lvW7hf5xIUJ8bNhGExVfC1indFUoA/duOvrXiXaw7RVN6A2EMf1NyXpwoM0s96K9rj2rClwlEzC+WzI4he3/H8n7YY7Wzr6JBRTZ6GK2em0X6qEDKCReDRmET2YVIQf48OV2M2aHWo3/4/OzhQ6/NkPR6fw+09h6aD8gVlkCPa2K9jReNHzj89SipSRRFo1OV5QZ+iRAoEbp3kPy4DFGoJbQpMxqhFmgGUvk+rRCL/bz/bFvXwfePAG460RQp+aNLuAeQfapUPD5vVsNC4MIoTWSei4ECZdl5PTl2/1eink76SDiCJ8fEam1RXoCG7JIfeisN0599+4tr0eRCj8L19dNIrrhE6TMW5lTa/TjFc+kzW39QdtqFp58OM5IQ==
+    PG_USERNAME: >-
+      AgB1yptJOgdyXN12ZORybPqPIoe1yY9rAA5XARtjAK4Jq+hq8Le3H7ltZfB6NdU/jzU1aJjRlfFkW6aUg9f5XCGoQHo3E9xmS3U+KKvPRTVwNB3UMgWHGvIwf4Y7DhA8ekTPSz5Vp2aMdO0mbPbXJBhcTVtQu5SGWUhLnItteKmI+05XoEZBnkO7F3eYTUh3H04OT/e5iV5xPLrbR4+FU5rTyFYG5p8RZq54bb51YD3I7RFPlo9+XbJtr0It7zpoVIunswJ7Se3CMDWJHs7RuNokuCkKa22zkTQuputoEefy0OIjzA1IJJz2LOIahKD0Z6dqzLKMLBf6twA/D9leWloUtgyd0MHqKtRtrgWeD2cRA6wp9+wydvrLvNXUKkrjFD/A+t1iO3A+JR0lXzpnodryl/CcRD9SUGfkQ3nSZWLQOQOYr6NMmD4hil3oqW2JWVrtZHuUtuIbvIWzAjVVmpkw0lwQoTHaQTsOU5eKZ3cHuLJaP90J1U1V4S+3Wiva0255imklNHKJjx9QFawBf6vNKWNaQk6f5WM6tZP0v2o3ktsjzXfIXxVr8j67L7aV8EZhtyaommK2NRYjoLuijASd5yyGGkaFIWMhWuMtY9RtnbgBFiAlt/yZpYSSRBPXAdh0X2nHH5xt7Gn1Ewqarhoe84pp3jWnhv5ZeZXceXr8vraNmYpHP4PvGi4uqswsWr2czH01oPxDa/spv3s=
+    PG_PASSWORD: >-
+      AgC6Z6p766k+k2Xx4DBUj9f6LaZAJIRczgegm9PWfbssif6jlWKU3tg+24Q0zPav1A+T9eU+CUPDNgzmv+mRSvLME+MKnnn6xMvlqvl3g4+/lxMc7Y8DpiiAv/TYrxcDCnA8UEoNpNeXrbtEZvXdUnCJKgrl9/qefJ7dORBsS8Vl9S/4mzAA8j8yF0qAPBvfy+oGOlSvMiRkRF94rUMGw1wZJfL/F4VEZorPq2L5qBSlEqznJW75XrkE7q8sa6NuzZqaEgNICNvL4RdGSHSZfLt8BF3qnw3rCwCtOMBgV8dCF2GzcCCIsACnVQA1APcGDswba6hGGGo0gSCG6OvD7bMlkuUwdQZXreW7BPT3Ax5GUtw0u3lxLB7y50RwBNU94UZ27/5I+Umcsj+rJiuVZ0NTMb0E0snHK9vNr8E89442dy9NGNgS8UlNlb0Gf+NY1/d/Iah+24qemoBuwpbHewh2BO5tp9sUURx2fRKEyivUdhu3wySjiOjAMiYcNfEW6hkXFZz1yZ6/0sEdMHAd3Fdur7fujgSpVBSDkl+QzGc0gvIHrhvcPanLNY47FDT016uq/936PvPcFaY7nqpI6S5I9NbOdfEPVfuSGhduKqxqmjzU8NANeQ1NAc1d4yDaSgA6yeoHYcAC7iREHxP22Wjz7BSNlpwoNrF1nQw1SfvoSj9umYtunIClqqWABDupo0+FWsmEaRRQ7QzI9CPxwTg=
+    MINIO_ENDPOINT: >-
+      AgAfnRLD67EDf9uet3ft92x7fZacT5i1xLTfYTdoM+GGAv+yPnZnYErOgjDWUQqs83ZFs8PvSYKP7yCPNZbNrk97j98rZ5+PjH6SJLhpNp1cWFbahiW7u2ZsRQ/jDpqC6h1NFh4StEVmeGrWaOFgptYnLmrLgA0+KZO96UEAxB9+VBExOV9EQRZPNhLE5msEQvNUybzU2kfOJAdTv7tsZ4yqS4RrkpORSmQFWebx1kYeFj+W6yaGz3hgRqKiKWmpMhr/rQRzQCjHnOmQ7gRblJrbkgdOhgNZQd5PkaKJtKKc2p4hVsqFhBaXD3C0WwxXu7AzRBqyirKKTMslV6I6vW3pJ9APSpaBSWbCRrLzaOF5PZXdC8t40oLuGSQ3IMx2wO7jwVwnO1vhVyF1Xi+khrQMQCJojU3YoQYgVlpDjIkYy9Su9uikEKJjfHzZlnM6WIOoQJvzycb999j6ab1d+pVmbbfFtZgqufCYJStRGyqIDBTIH9PqZBYylGi+JuAl0QvTQvI0tSlbf/Il0t8qLUOM7wBrq4JrkOzkOuWTSthJKjSqFqmgh1nwRBpY6tjO4wMoe/ROA6r7nuagfYDPgy8CEFaey4NZPr809Tz2fSc5wuIFR9lps7sS/I7q4qlRJZ91/GqG0/IRpNDvv4CtjTB3iv4V09+zBqBX8Q5h/mE33/1etY0bFuQ9gQ46QsOD6rlXyzsoL5Cf1R6SMhlo0e1k8JgH2zKAOuNYmUVF/rev5ig=
+    MINIO_USERNAME: >-
+      AgCZIyWmRdOh0PtkPtVE/eiw91+/Rgv4OfYmH7xBBiESCJBaPAHdmvMgNsjTEnhMrjzhAgUBD+ucyqMuZdOvzb0+ybFowPJ/ZG69LitYIiL99+B8xvgxZaoFCIc2we624WJSOYzzW5i9ITICNgvhrddX8J1sbvV8ZuMlgLaVBjdL0BUkR/zJhRhmKjC1zlh9Z/NinCTC/Afmkoc7CykMsstPwfKCjgjMlBnIZEel9fERcjzHPPxlzkQEsxm8ZCV+IbwK9D0AmYdrjQg082NMtIpTsDlcvd+7iJ8/sGmlK6TXDHVMKu+TmfPicXZoP2HC+LpNKjfn98/SnJGnpLZOcgxfMLXSznl6xvIA5UaCD7ZyBE0LoMOs98RhDkC8ioyTvGeV83jkKV7ZXOcwplpVOByrBDC6AiQgevWyGyBUVY0rl4ecAlKjXOVkgn+2zettMSilwTV3HIuI4Kj4h2fnaaZ/VvkNSHGA2ZhCPIDfZ1RoOUDIH5fNP0i5NPUmoOLstGfqlNBmlORvgtTxOQK3K8C3bHWUG4gnoSzpu0IYZnLxhFTmQJNw7r9ryjBNiyPRBfCwgUNRW37E3x+cTta66bXhlYlXlUXuohJ4N3PRRQFCiq7ZsnqEW9KSaQ/c/Sdgsl1x+hmLiP7ER4SxV0KfcN5y6TyyCDST/ZpDJ78LsH9wjrNMGbvKafoFa1zd2ElYnjFrkLxJPStlwA==
+    MINIO_PASSWORD: >-
+      AgAubcdluAX8mXcsd9SnLgs2aSe7021YXhUKnXyQruBN9OtK+We/ju8824XTwrvDDWNmpepiZGjJLr5UcdLu8xe2kj/YuSUhTr2HRdVXM55vfQyirIVwqq2t7jI/aIh0dn7geViKTjAZoEj4WgTzLowt9xu2eCYd2Lek1Vuu0xlUPoVoCQY72ZFmzRb5Nuhti8Hvvkixw4rOnfDIzMMc+DjVzS5XhtEFZBqoM6jHYxlSJjZ/Mco0bSVcmcz6nNU+YWBqc0AcQP2Q34rwI0ukkq4lTEnZXsJiyerodF9prj/oSvLeZxVkzMa1vApcTNV79GIaFjQcl9TACTg2HSVXqTec9hVGX8s5795oUsj3RtKNNS2JhBwv804BlJS3yMOkQS+hewrduRedtdDnYagNnFkkJTHJPODEctmU4B1Y/IYed9R4/ho+MIBdCh7LcNMcPs1TqMq2H2b0HsRoAEOz3B0npb1xKD8nB6KQexrfG9ZXYHpY5Rl6GZkrsKiMjgL+ySIymuq+xAQXTufDrYFFXlGCHGY4//Q3jlFk6cVJ4X4F4Mu8i5glnh1n0h65Fd1mFYCmAz34FPqXwmRm0GN/F7rdSr8vvOxygTqb6Ggxde7s4nVIEGyP0okTNCIOSmLIWJHyaijwdfmfUxrz6ZaaI91FMDK6TIUTyqyL79C0v6HYjC248jQPcN6iDVvLIzad16w6QnTyur5X7IntDoc3Y3ev5zeWLg==
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: n8n-env
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: n8n-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  namespace: fce-mybranch
+data:
+  DB_TYPE: postgresdb
+  N8N_PORT: '5678'
+  N8N_BASIC_AUTH_ACTIVE: 'true'
+  PG_PORT: '5432'
+  PG_SSL: 'true'
+  MINIO_PORT: '443'
+  MINIO_SSL: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: n8n
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: n8n
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce-mybranch
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5678
+  selector:
+    app: n8n
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: n8n
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: n8n
+  namespace: fce-mybranch
+spec:
+  rules:
+    - host: n8n-fce-mybranch.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              service:
+                name: n8n
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - n8n-fce-mybranch.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: pgadmin
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: pgadmin
+  namespace: fce-mybranch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: pgadmin
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    spec:
+      containers:
+        - image: dpage/pgadmin4
+          livenessProbe:
+            httpGet:
+              path: /misc/ping
+              port: http
+            initialDelaySeconds: 60
+          name: pgadmin
+          ports:
+            - containerPort: 80
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /misc/ping
+              port: http
+            initialDelaySeconds: 60
+          resources:
+            requests:
+              memory: 256Mi
+            limits:
+              memory: 512Mi
+          startupProbe:
+            httpGet:
+              path: /misc/ping
+              port: http
+            initialDelaySeconds: 60
+          envFrom:
+            - secretRef:
+                name: pgadmin-env
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: pgadmin-env
+  namespace: fce-mybranch
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+spec:
+  encryptedData:
+    PGADMIN_DEFAULT_EMAIL: >-
+      AgA9PzLJGrsW8qnZ2C5CRhWPstRx7LRjQFPsPcxl/I1HfCJ7itZ1a7m9P3XiAKnt5uB4nQhskbzLIeOa8Qk4J8OU3qCbSQP9wJut5G6TUbCeP1H7NJvkoiqQbTCoNatgZr9USyVE84Q27s1heNbYSIem/hDYg3BqKgXnoJXctNN5vfWLloMseowPwTr8ly4TNpiw6K1lAKpNyPmtk9T0MFGJ/Z9lBldtttUJaJd2kc594sP3GSfKeHMNx2fXL4gVq1Vjo3TiPdvBLPb2ELzKE4H+goxDXj0m4eibYaKbPYuxsT/enrdzZxU/tOPBK760qRsPQctIkEyME5+5VUyxq1rAYt2p9ZQGbooh06uHfa73/Lqxetui9MU44XMwGKQ6mVTkApXfgEj7AzbjXVrU2gjKgDDQEsvtfA7cAH1rxuplZr/nlKNiSbeBDWDNxg1AJ1o379SSJzmcM162ZRxyoosMcsoCdbuvlQEAhMS+PTRmyI/UxSfOVsMp3GHVFykVhc+NFvQNU/hZbSZT4LHujYqCL84kTupxxB6/6b4Xf3BX+Ra692wh+IZORS3lkQInnkOp7jVZhxv3HpZXlUxTFwMWbPSUuNXb6EdRTULFmBBdKtBkNb7J67ePZXdjgTeGiQJeBAfA5kmZxPoK2EIEge97ty30mzdz6bIE3iWKD0xfw6UeA5MPZgm1K7h1Aj1ze++SniPeKahDIZdYzn1hTV7qHRd9+HAlZu4Izxu6QUJdpK0=
+    PGADMIN_DEFAULT_PASSWORD: >-
+      AgBJqz/mf8ZBaF3RgCxSOQobM9yuG/o68bnuWC9UG7M/twO2+fE3wciT2WOUIXLXkjjLrAlYbVymmMWvqB7vjPPF5ys2n9qIAjAIYKxjKcOJvXIG2FG0+jAHb1qZFobTBzfROgwedtT2gQ0JiB0Xl7aKj6Gze90n5HBDBw4WyEA9Zn20MRiLmaeYd/VRhHlth5Dfi+3T2a+C30nGha7lqKIe1DfS2NjeqyVq+EGWw5FDdJSVZNumM3FBdqvpNRMfgonD21R5YLO8HIJEzEaSyz0TfldFyLt0rHuX5jE5ktBN/KZ1bOT/v4u9WtXQnQSiXeeDnVJVXOuEjSwcry5uS/GAAxk8WUtM5lk6ZJPHC0uMUYM+CLdDUg/0BnP/pT4NXkxlgwQHT+wVunupo+B+sb2eMem3xjuHcmc7ykAGmqKlHupUwRByPhDLRn64B8K0h3TQwnZ/Ak3YobGUVXOq7g2eie9KShc0tuWhZRrbgFsRaZ/k5lhPodaadAxgrHwKAULRSfeTnzfUbMjHUkiUQpFeYkukJzvhC/ooD7d2W5A8fZmX+5/QA4y+TCpGWj8MU++Jm0DbK1RxQpTrAr9LwiuJqYg1sYKd8jWJJWfcmnjbdYJKtiC1oKXNtggPsPGc4GWEXB1tZRPA5qZjfX3l9j3JZHRdR9TxxfeFeKKmw25e2t5rJ6ix91wL3ZcQNCbpVlPIdtF1H8qlPd9akUWF5IfHhhG45f7xALtjDcBtuu4vGQ==
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: pgadmin-env
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pgadmin
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: pgadmin
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce-mybranch
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: pgadmin
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: pgadmin
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: pgadmin
+  namespace: fce-mybranch
+spec:
+  rules:
+    - host: pgadmin-fce-mybranch.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              service:
+                name: pgadmin
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - pgadmin-fce-mybranch.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: server
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: server
+  namespace: fce-mybranch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: server
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/server:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: server
+          ports:
+            - containerPort: 3000
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1280Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          envFrom:
+            - secretRef:
+                name: server-env
+            - configMapRef:
+                name: server-env
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: server-env
+  namespace: fce-mybranch
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+spec:
+  encryptedData:
+    PG_HOST: >-
+      AgCxrlrMXky1hcePpZ3cvevtP6zszMbIDitlK1SYl2NFKWIt4tIT9SLeqMIbrhrxB6aEP5cAuaBs+M7CjUA48JLGp6Jo7jSi6nXXK/F+m5JxcpxAaRom+GzqNin21L+cbHnCrEOvHBDrEz1n8Lt5KylGilRTHJIsBNcDlzqkaZFLCf7a11C2tZIrX9zofvG9NJ75uPMoKUdrAmd78wDXss4oYaMEC2hobn6jNQ9EsdhgImnfYVBLohKhBJBGsnSKoWpJ1Z/lDyNjhCOVZ7yCLgzSZN6pu9kM411+rDjSzy1JziU5aALNla+taqnmlewI4G7UUiyOaavjeSbiKCBUvRMRfj8Y/yO6xjYux7/hSr3AUFPrA+6O1RTfKbEcbVfnQbk9QuIlqOWdVk5RDzWXjdI1kJNceKZZBntXio3+Y5RH0xklFx7vjS9HqfjI6DnfsIWYoNRWH9oqt3mFGejBfoOHYElf6vHNsujM+tbugKR90ur+yg9aFvxWTnZ4MmRB27iFq9DQ/T7QoXcfFiW6KqdLdYSBBNUpUu3ifKMOi8Lp5afk3BKS89Fmyg/cHZl8bDBxyKIf06AxK77QAAa2FjD/tNNlLKbVBu8fsmXTkshSBMCdZ1PBH0RTUSzjoI4bWXbnh4FoOpta6Tv2IW7b2LdcaRFt5L2aDYlE12qTLZm6aiTXzyaisH5N/WzSCLB509DLIgpDUHvsfwnsutX4qZuNjFPe1urtIckCijQT+WVoVoFLwg==
+    PG_USER: >-
+      AgCXViEMMt8xSnltXV9ZowWdL/Ic3dDt8kSRRaMSs0gfl+T1CxCkjn/32bcO+HpmS4GCWxReZMhyWNVBOeh2AM8tbCXsoQWcgrS926NDSe2s2lRzddGsM7bJk+BtzM12go2CyyqR4pwKvRP3vh3KHuo4/1akDyELSqxvv5fWMQT3KorGlAUyzMsGI7HEYskSvrnFfm/XbRmjBuMsluNPMC81tu6oSWhjfpYXwu+Qiq9nFXObf59TTI+2ufwMqUA3zoSaVJ9nU9fqyfGLw1WX9Q3XTvoo/UtgdsFux8mXsGYVrOWLlxcqWPjdAq8/D3kgcyEkKLR+lDm+e8mLO+6Dfk7wTPPPLZ/vTZBHdoqhFknp0ngSsTOOjNUE1hueeTpFTHXSsU13PVEU0CAWFX8/u7M5I+iuCkBHF/0kVgYGSRRgFgyho8YNVlxA0yBMVzvv+jY3fVvhOHftW5Z1N5oq/G0dI0USQaAzvp733BcuCSjfz1PbEImeOnBZ4QuwAjW/oMzN80aJnM1TEjXkdHN5Dt93MDfTnAsjO6OiskxTIqAodOaElxZdzmOCK+OVuWt4n0ox618Oed1JrVGPVSeNo3tCyfdZU2kheClYUewT3Ew+ZEJ2wBzrOzJRsIZjVXQrMRmq6W+bnmF2WTXIGC9b89GF++rEyzsPisGn70M0wBGLpY9UVFNxm6M69D2u5NJtuUdccdiSpQ==
+    PG_PASSWORD: >-
+      AgB+COYHv/eIDjVksVRSC4k76qU6/4eNdPXJzUGG06yiQhOGjn3FF9RHTP8LQd4j+ewgs+CGf4axx3MW5HGqEkN0jQoe530BUoT/4cKEHWtM50qjuFZRnnYAIEcnLvyClNZQ8Mdt/khNkEh1awj5MyLTx0dCQNJkEu35eEa3NA5rva7UEuPaNJPhlaTo78m5/rwp1AHKMvxW/2cNiPxOxywyiBM5o7sz6NLL30Xrfe0llHZRSvzD/7kmoqDJYPBZKuB7Ar1Ce4oGMR7h8r4JUU5ES+uB9UaWRs5NdgKS3VWp1e3zQfzf8wbbop/dxcWLpcjeduz7eBXP42fRIzJyHCua2tsN8pVgxEwBAmvQKkk8P9uw3EZ3pgvbDFRVFucScNnAALA7LiJQdmc/NqVgrsqWgEwz+bHQlK6S0AM/I8TpnRs/uq8SqDIZ1PQa+651UjeBDnOV+273q209AONz/Ymm6iU1HsFWLWZI/RzI3NbGIgVJLMnRiAhbJ+5uIeV+GsYbI+uf+84bntTYtPmqMnJDXTcN5ubevUXhhNVbbA6bQblDtkHbowS3gmyuWwfl37I0rOFoMPKa9GSSX0KcMyQaKW3dBYGLy78MOK5rKTot1yMhyMfeRdBTfT+2s1HP98g4jujv34ANa5N4eauVCJ+q77IV+XWjR3pZMhax+yC/5p1JltSXA+kbOIryWIfktLeXHGXIk7BcDYNHcN4T
+    PG_DB: >-
+      AgALbqdp5Ek1XD9hYTy/PGYz/3LFm4nA5+C/ueBddg61BZ5HJlf/X9TFLePvvT+/HiSsOjPufBohuWKWTohImAA6ZpyGUH6urHena4C3Whuunqqc6u35EO6FQ28IsMmm10xi9KCcXy1oLj090HnPYKOoH++9tL8CMungMQpNgZkMXwcqMOzfcqRSePXrAo/vWfiCts6VfP45DG6CY5wYO5/L6eIUx+L5U0jEjF2L06c2103Y+svHqv5Jq8aOJvRaOqDOlAJI//L34RlVJG2AR6xjGuN/DKu4xE29gkgxBekB9RwO7vg1QabAgpv3g1I4++Qwc0qHlYbk7AEPyLe068XM4TBoO73XXN9cT6AZj1Tm4ff0J+ZmgVmFvI8dE6UcIBFKvr51ocbUqN/Fz0DxX8kU9GZrNBSbXFnrVFWbt2uYc4l6MG3QkuadStDVGwohdGxiL/Y2UWVgeAAx2xI7U6aqpaTfJPpzOmVoDdSVHrQ8WKEJQv5hLTCniBxxrUKGw0GtTmQsuVtgBSP+PLmG+1floDyThPtPBFHQnsAC/jMp/Qrkgp0ghoyCg2xtDE6Pjk3pcZcuaZ46l2RM7nVXdYHty+eBw7Nq0g1S52zGvl6hEIC911YtF8g+fwqH5Jb1bH1dj2V0XWn0kpzaVTdJ5TgWXA/aZESYVoZLAi5k8Z/09fkQqbVP9DZ+elOeS9skOrKybSMZOA==
+    PG_SSL: >-
+      AgAp3g8s5OYd0kzHj7rVlTP6+R+CQypG37P2EJSQPJBG9VxQ7tZz9QCxuZv2pUeLInk+O54q0OgqpLrDCcJTrzW29xWUsUtfzSxWPXwyt4VB2jxCmq2TNLIeKfrrrE1/wj8bPnapBTj7FRpLTpSlnD8YyzFhxIs7xLC3X4mxrkobCGinSSnU2yE9rthPq0lgFMFDW8g7VQaHQmWP7RN4uPg2vyDqXOSUssPXI/8fx94TjWqUfpQ6bvA+MkSvABv8IoeJsFdBxrruibntLA43DNvBLiPcp5jq7IQ+KbW7j/SdGFDjcY0flDshhcbuuSIGEQkGpNhAj2ggCIgqC2KzRF0fxcKTuagl/hL1bTELCRlIgKh6xAjSFBLZsyNupxzq1B1fWI7GEz2HhZL+oiQlvTSmFwRDXSid9eusegXqmOjaVNew2LjKInHJq838H5ay4qWBFvXvycT3hkZOa/S+PrbD2oWGUNyhN1vVP8bPWPmzb1NYjruzn0VgiX4s64tR9W9baK2O7bgJ/ck6buBQ4tgDuJ/cn6F/dXtjgHPNQNJs+t/mN9B550JVlpqXEnaXLHHIXjQ6h0CbP7CpBpc04OBzK6H+fpmIZfE+Twj/fHKUz1xD+84wGfXOwNxgNtmHhQSap7R1KSbVKLOBqL/3xfFNPenyCS7svBYjehMqIBD0F9ro6PvHMfowxbiDMQpJvRhD+CJr
+    MAIL: >-
+      AgBpRu+GTcFyPA5u/IypvLXuedfAX+4BY7q7T1AqrOvJjgMEX+u2iCp01sJ3e7WJ76xPA1Otjw/SQVVckp4dUPS2UI/KfzUfyKO9fJHCgy2TexIFWgsy20s3l4x3eLWcYZVCSR9JqHG7UKpOFysAZUlNjxXAJpxNnZRa5QkffMyWlx9hVYqI1i1tXuJi8AAx/30RMsYyALSDcOhfwiIqVvBjPslFanWwscWhyiNLinzRLMv7xxvcdVcs4HYxoqKLG9la4DULYura9AB74F/SoKEnS5VyAziUSnHwS1Yb4aZ9ZIX+CnHAS6DZwnovhpmzijlkv8ECTTWMqxjIoQlwc0PVvb8UWPKV32aLmPznPh2Q8Duagi9SnyPDliRKwHyKFdYchbF8N0raj7hnUT/NKV7aPxDu0JN5mCZ3vpT3ckQNVZUvWWCEaTPSpXGSLBDgtSZ2E9cF/fd8xrDCZj4iIPLWmw4n6ulUKGIWRo59XTHCZmB6G8UDbPauB4FfXy3jT6nMJ/0IeczxrYAvI5bJ14qymQv+nMqzNbdhn41AftVqwiRktIvhgfoiFZXtT4otRygQ9aNXY7t6U0ZJSqMY6c3BbW2U17dEJNYttU06ZHIGQE2kOT+HpZfa0rOUfgje+gFuGuW8BFiGEP1ONsOyDJdyPwcpH1jL8EpD65M2wfbVVPZHNTw9/T5LsJ2BjEZzdmTsT2cmvrOFRjhlfssHiqH+XM4+sfEYWETpcvpNLe/ci30jop2A0HwppOxXdNqPnZZ+TBCpulWrY4RBwy2DDZL3pJkasgYyX5FevDApsrDwUgM+s/D4IxW+fcJsgVHRxpClgL5cRS2t+WhHf249L02UWNFWXaWZ8oMop/KGo3TarRk5M1ECswTU/WjbzcmoToFxvgcV1fjG2nCCnQlPdMYbSo0034aXraMLO+RU7AKBiNfDQcvbcxWFmorQRo122XNbEE2yL8RSzTY798Q8HITWYUdUyY9AVpNSv14QIyzT138MAi7I7Q==
+    API_GOUV_TOKEN: >-
+      AgAaD3zkxxlCOMg8DKexeRKIZe+Jmcoa/HE2BSRJIpIwuZghXZPPfgM+xVw4onZnkuBAatDuXk8hRRF/e/jSDmWUCA3zbuQZuuTL+KeNaAfTKucfnhemRKdkFhV6S47EC2TgZc/WktYUCfUoZRfmHFcieug2gdRjbD4FzmhwNfH/ypGdRRYYNdjO1pvSC9fJWnmKI1yv68oDakh6Cc4nZn2rS+jrFvZUfDCcF4rBXdMLeIdYZPn7HqnkU4S3w7aSZ4KYxnrM5C2HRwN+0xq2PwYrsu/dUfX7eJtHHfjaf8Cy6xXRvxiHIbDA83ljaSd15ateQtapd+sfa9vuBJgFhDGod5XbQa1voeAemItnkRE9lTYBHLckd7aQR9jSDtxTBUcb9ImlcfP15S2/8wCRvIM1TqKhBeMFdAR4SsmXCwLV3pHUd6bMWX0yGbSJE9/sxhkZ5VeSbJXpJ0obE006D0Yr6YQ7AAycATt+hLdYQB6O1SJ0BbK45R9m0kCAYWERMHxrTX8d6vihshXMeC3YUgFpjRmJVFUKWOiM5GeG4A+L0Ynv4A8talPeneIxVkRvaHfpcS0DLkO6oBUbfGoblJJHHaN7OVzY+mM6hs/VhBPvJC0WK75p+VuZzj29tM37xKMyhqXVyJTouZ6+Tis6V45Duas6mI4JkMPbohuq5jaCxQLn3iiEu8UkAvZHvMmy/+iSL+stY93c1n/bvTWhddO0tEqTFTeMyxByqSqtbU2EZAqYYVy3+cvARP3W9QZGrr0J0w63FGt9jya5QnTTsSR6K0ENGrFKJlYtoXsRDIaVZmqhj+2+pT1kFxzjjWUaciSiddnSevq7KjEy62fbl4K2gw/6X3Pc+JXKWcUpa5rNu/Zup5yNDnnjmEEOIVf+wYIlYGnNVDt+7rj4oKjPcxB/jr0nU9fL6dwpBF+VgXi8AX0vUAa8o1Q9KAuryrHxLeP3E1zjMRRPISkjiGXoqabYYIzdsVSPIL3xi7IJipeihvHMyMBm7XZstgbQBpj5zJdFoAxyvI4OWbD0yxY9qfaeYLjniHaHmCsci9GbZ/mIhE1fTlro2qy1Y2KDebcclYZfkDRFpghH1DaZuQw7i4EV1ppgAiHtLqC/kV06Bl8TemSzZHE4Lq9r/Xnre3Sa6VLASQtr1yICVvDtc8IAp8Q+3B69EOj4wX2eENiXjyolot5jXUBJtlrs9Op2zVwlnAdydeRavfOnaqU7cKs6VOH0tp2WrGXTLQfuCIKM7jh/9u9kayGPP7fZ30DW5cuQXxzfKwaUnw86bSGCDtx4IEIuabmHbUlvAoV87MAoI7tTp5ehWKyQb14gmcXz5Vsb4PW6p3+S4EvjdCSgz8ykbNKlQLVY9hx/Zjwdqx41wkIsfuHU4WySVft9r4nmvwEV42YEAuK7iL5x7147i+an3nMCzlMvX+DfTlguejEjcx4qbHx8eIpnPrL7+Ji+TqPsYRT0/IoFKpV9Wxdg724OLgmkgw+1i94TYBZGSkvV6QfJoOBo7eL4DONueGlTTLhMUDeN
+    API_SIRENE_BASIC_AUTH: >-
+      AgBapRR/dBXP0Mn/THirxybPVE7pVILQ1wSJbcTiRw+LPs6dbdxOqELaWGDfBK8yiR3GAfKzGXOaBJJzvYtB7SEmgoZtF7k54eSnLr1+7/7dri/wpBrmUSl3vprnNTX2qF6+Fj0Oe7h4j1ScaS8WebhW/IGQYpzOYgecky3Z1zUS6V73c/No9f60dgljLVwxWGJi3A+6VcZ2Ug/THi2Nzp8peOK9/WfEi9dw6uFppjQMOMG1dAX50BtNDTg9igvSUSLCKvCJJDGHl55wWnJsy17n4hHwWPZuhe8rCfajYEsICSf5YVH3DsbbqXnKZpecOhLzn0H+FAij14Y2WL/lA81A2WVm0Kz3hjAelF5B/1ifgWoBEeDB599IVR/LlIdV1J0FuKwQdRiIXHeDALE8k/mJySYmskHpuQ653TVI8g0FOwZ1LhDwY3DtSYoeusQHe7z+Z917PQVvgFOXk+QO3BQMOYwbWM2WSA6mxAeQWcFhXojPv4gJ+wUYcqcxt/zHc7AX5jR6LFQKvPxVee6La1vRxrZub/KPuGI889smY791qo/4KVE9IKD5oVj6ZvrqR8JuulsM3sVl8oGX5rGg3bVOuT0MwQJp1wW5PiNl9nPaC+5oPAbxXpxfLNL7xSbrME4UIXUbrNvPbqxTuzRayRlWLlAcdTusX85z6/Pb9URajFQCaj82f9xAzDnmGT/1u9cjrbs5OdB5gdobdgiquAyGoRzZ5BjRxEodT5DQBDOWB5xA0TIYC/EEs2VIJ4OOg0KKyyLAhCU6PTts45nxWwO2y+J642LgZZDJapA2
+    MAGIC_KEY_ALLOWED_EMAILS: >-
+      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
+    JWT_SECRET: >-
+      AgCDTMf/K15qYHtydaEL9qfKmst4z1NXmX+mC1zzNT867Eeq8fd2OCtu9G0ET4BGGUVsUbnORJ+YVZisntIaZNON35eivoync/ONsnxF/ifFVcCUGdwcxOCuPV0QYVgLoukEJsilB3fuJHNNgZtRGc4stv5o6mm2oSde/1ucekL+5t5Rz6nFaTEGDct5lDR2HSAoqx8UdEse+4jnsg5nv6NIXtO9E8FRxZ+SBqC3YOgG5/bwvOh1AQUdFAQu/fnFeqfXreVjG8pzE2tL3OJCuwZgt3jBccBXSIe2Tqhiq1QXEahulFLdRlj7jXdhYMDdWias64aQaHhZz21602s/1CRsDBW4mhm52LFAM23B/rN8fAtNb5NvSpHnHXMK/pTCB/olY48E9jihQqX28EReYrzcXEem3F6qLI7QW//c36dfbyRswVFo7q+UaAfC2Qx46tJTsEaxLyqjdAt/A3LUtjWjOqh3hDCYsdTTQPxAW95B9//RQh7rVaKZ0aewS1VSozV2OTCidTqTHsF9VNxcvC38btpUWLdmeItUWJ09HKlXpn5BteFel973QFwl+2CSQYVvgyFizfAP67ZAU25napa2OKozL8ZHdxim6A/zv8vnQm8KqpUOQIlCyAnkkl8bgVMiEqJaa1qv5ptrbxi7UdH+TkgKlJOgXDn7gBW0kJe5qliu5DAhwSunKxbkrgsyaoYwcXp/Z6cxGufdKK60/qOFDMHmcPZAkMRCMvXIp/Y9lQ==
+    JWT_EXPIRE: >-
+      AgDU89EI+WMfNraWE2NJziQqrZHNJXpyaWD1gS1qsW6XNQcnB+xwy+AnXvC9UurLg1nqlnnd6JS9yEcmmOThB1ea8Ic6GTstZbVvZwv1E+djIT8GMpkPdkfK8bnJUkOL/DawGHGFH6f1xAKrPIwG9rwGoaOqx5rM3D3qvUssd9+TCCV7FNSZQQoR0oxp9U152McFNAqOxGZlYJNkjEPnWsVFVcsebAAzLEYu5Ab/eG1MA1L6ZjPV41ti2KE/GSGwicWhusq4EagX7Xty5l7zg0NCTkaBkXZ0mVc05xM6Vob4xbuPMERiSaS3XPOYJEkpo3+HbA4nIlHAK6aWnRsRRacBTZtxnmo8bmwEVRZNxiMvYEhF7yeMFQTQffmxgD/RfPVkEWnAb69rpduMRRTIxeZtsTyygT9+Hr1aEC/Z3vlfSxMKl0uuyW30DponAUvR9GySVXsIWRCZEdsdA2sZJtZQLdilHLZdpwNX8Bs/PH69PrUgUGSbBacbJ1UO1TdxxtAGIHQfs8zmhKPxJ80JzwThmF4VALcjvpTkAcgZ0GY73JIb8R2b6KQ/+GUimnCgaMZUzQitJBUvMo9NwDycfg84+RXfeL9iqlMncpU3JSvMslU//BVkXXRGrf7JYQLUTKPhdwsOBIUxaRpqsWNMfgfOqXQysRRVvyoSxq2lWL/UGHp++KhhUn92UvOXU0/3WOLwpxs=
+    JWT_TEMP_EXPIRE: >-
+      AgDZOA63gL96c6kn2GsCpkm+hwCcufVZEP+O2mBILdwdX28mAP3sd+bHvb9yT1OucOhGgkwvYVYqPm7anrNUr5WaUZQqo8I9zlvSVapUBesJrgfJEJ9I1+O8+j9tqi0uRCeo6Bq936MwNAS0hGdrOUzePsHpWrjUnNl0jr6NANiUHf0dJSYWRaTwzkqIDCdteEuwJqBCBNiAZSP2rIMsZfWD5dR14dOdhCuxVrM/YLwTff4+Zo0OTFFopjSF1sstenfmFR0vILZkCSUGXIHEWo+tbF+rkrq07biGWrWHvDR8Zhn2qC59fyyB5A4a58mhIh7f4d/fAdjOnN4tKLosmbL5uvYlFZSXDzPzLftm+a7Gsln3RcrQOo8mYwa7DuQEn3F5yJx4zIgIDxWRgILnvyX0ZXMApjEyAUrGxVLqvdSTY3hq8AF3M7eTy8sRmoYj5Hnm7ylodM5NhDEHHWgPPy1rfXAXoWotmVCHO6/cMYMGGIrQWvLq+WU+Wq0mdJjYMX5g+N0JtSEYm7WuY+PL2njeWD1fY1hE+Wm+qURtrml57G1SgWXUXLPzn2NQpRQ0c9SjiuFDH5rUnheQCzkDZdNjl/4c1qHV8DKW+GWeOsjiSJBo6OrRIZNBcZ0ISgJ0ZcCPLe+mUl1ITzmzwEfJD0M9bipt/9LTfVc1XGYinp0dmnl3/9NiLIcVQntkMZsXsKiVJn/KPUgZ
+    CREDENTIAL_API_KEY: >-
+      AgB1+HUTMzr4qVttEYP9VLY9+19SlF7MdliI+okyeYDg0zZT/5mpIhOtW7lgLBHilzvuWFM/Ieclfa530jwqpKQ+4Df5AhAyQomly9qVLIp06LSG4NG4lMQWKFfIaJM9r+hf3EElRuSKCHtPr3knLLy6LFW0+v6ND59MMrCmV51CXedYxY9cVHq3esOzrPJOJrtnrH1HCu32/+mjhJ5JWygkhK/TXm6ErCnXgOBW2JprCIOAHKq45PWsG35xAjkGehi0/+21UqTP8MpKaCdLgFnlZj8kR3HvF9qhMhFac7Lg5+58Y7si/sWXQUJuYOy3QcU6ce7OS09b0m2U2bpmb65ICucseO4rrWX9uJc0kOAF0LczLDcJ1DLk449pXS/ff26hc4zuD5D83oosUiUzw4UKpc80Dlv/2T8sKX0KcsRfnSYCpIvlPt80VnMAYtCkyiVtPHR7LO2vkikgsdqtBrth8qtUv1LIda+W6SFcJAS2qMBMCBSDnGNuowFMQjstioKAwki2dWmOcZ5tmxHnOfi8InquG2bIaepK1uLjLzKWxYGjslh9/se7nQMKfA+DZ09rRmcZaQ3TjSVcZZ3P5o/Vl+UCxbndtGPrK/O8hHVBAgMHG6pgPTuo0vakANKAfl80qkqrOhFD48KP1+AJtpBoeasc0FUWE+KfVwqhoT7yZ3CHNr35cWym7J1QLmCWRkkJpYVcTcPai6w+LUxX9H+LCo5SRMLzPUGViPweorkyFA==
+    JWT_APPSEARCH_API_KEY: >-
+      AgCX6KvhWa2xuEdyjB41WrI1lKxQWZFdUnp/T/AFSGWR57L/eE01Oo1yZgP/PDjx3KkW0q3ZqKGbFvLYWTSzvgkP13nU4TH3lzyTcbdWumGJYK4+lSqkJTiSJbI57hVCFm+jeDtecNEPNJYku+H+CT8JpE0X9HanUXD/lBbH0n1p561UmuD4xeq1PSPlewDwdKE47k5m30xlsH0BeUaCEvVMefu03qztTrkzn/GcdKT+Lwe3X2RvjKh+RcqKILSM7Y7RvvqK/rGc4IwukRud/NFDkEuqH8she8rCtUPwpoar8UXXGhkLO04JWzFZdobJIpXeIS0DPwJP4g6ibJQ5vtqT/+ZHQzMSh2KVhq9i35TNeD0il4UGO6Yx+/a+IVMgDEiD2sr4UQomhfIo9KXrKhd4tVJkMIvI9ZVryrMkZVpQnVbT1EiaMNbPCyMzLhuUnLKkVn4zncaMEbOBzJ1RP5hK4I5lQf4jLU2zb+GD5fs5IQaAN9lpL7hwkn6I9uNIzZigpRlVltLRR9qwvrUcUjHLpQgA7wDIrTST5cXTDMRAtNAvSXm2siVLuSwj9dw0U4/dEv5OkOLtKSf3angTx9juVor9U/k8PJ68Q0bZxu5s9L9t+MZyrVw04lsYoErFZozipV+CjrVDwjEledzd/7Lz/AnENo72A0kBLUGNueHlH8+szERmZd06ZTaloaJFJnRn/rWAjWNdr3yHB6EpGxEIHH6NPiNH++BGZcHhv+TqrQ==
+    MAIL_TO: >-
+      AgAK5u24KUiCPPb6KXFXMGnant0gkFedn5Q2UlnNHfK4y7UPBE8pPTUgvCXKy4nu0kfGgSSIncDGGGdcmw3kqOe74GgGL/XFmtKb/7b4yxG8nPAC1IoD4Q0IRoAijN8RLd7MNVmeRTzG2ww65acy5aJipPLHfdh3z4Zjs8W8r29Sxiwj7f9eb6JTgSSBcdyDLjkxjgDZ+L7xXqmJStiau6gqtdLkQEr2ls2R6z09RxKwy7sGLGx6U9pALCpIFncguS4deWC13/P9EsWO/h2M0XACy9WxFfnH4FFARuPDp5tJ4RNL9JKdAu9Fxp2M1UmmyRp3gRh7BfODiiwfj2JJF0Jrf5IKdEmxKfP+6FgwCQA9W3W9u7IusumDPey+SJP8kBIT5X3qvLJmcnfRxRJTQLrHK93udiJbmvQU72ZZf+AESpJk6Lxi6FRgMWRehRBqj6B7/tOPsxeCM/i4HqTnTvwGHIUzoXPpBtqA3ORJ2xWMtDGwY2RkhxnUDYyJMxeAZ1Wec50uNdrDe3QNe6I3aR0snwQ9049hWEoWwBbWWq9z5IwFU+MqXZ0BOmz70mcKpUqy7yzQK7emnPfOmoEl/A/cG2cMjSnpKCBCnskXaER23Qn1IbfrDJl9tgTR+TFhCAYK+Uf/4kcuPehxbmQtg4tqW7MGtSMUJgHFoKVK1V8Rf4H99gRjVDHE57gyZfHrH5GLpOHitS5V8mh2+mejgbEoRsUboOdrBo2H5NrFx4TT22c=
+    MINIO_ACCESS_KEY: >-
+      AgCsx3IRJ/7VkyNoCNak19lMC5iquGrC6EjneQA3TxQgqwy/hh5E2rVBHj039IjsKw+5YyjyFCxcWkVVPuvB4FP61/qtm3nq29JfVD1Y4bSCoL/ALwY/kPFPw64iQtb+OnxznrxHa+U888kmtz558pyPXY8cy+Aw0s2W+O2AAxex8qCeHOOJ8WZvJA2RkvxFclwUyLkMUA1L1uqk2N7ijxsVRMkeMjWbDPhwtARlNTPqHPFmv2LvtXzqO8TSYTgLnY4KbgZcrLgWxDoLtQtS23lePRqp0skiQbu3Pwfzw/6PTUiQchp1edhuhW313IeWqHjiy5x6GlXh3xl4BjJnzk9xu2uD9JJOSeD1lN+H7VpZ1BhC5LytpPyotJqI8mS+4rS8fHG+RA/8jPy2GtGTy4vuSqq2Qgze6qSDadAucOiRjoerKoq4yCPg0uvs8kxjcl+a6v59oLpXGLKQncCphPV9vOzW4hLdU1Ti8EYNbQ8luhVXez2OBg6D4KywkjH77QyFv7DBlnkCP3Jw3gUknpvJkzBhiT6OMtBaAHaEoYNJJqutNdnv8vPEyiK9/GSx1B5Je/rmxWd65G0o5BmFxhRO0E/nHs+rU3M7+F49ydOR97kO0XBpHVg+UYrlr5UNnDFuP3o5urw+xCjssJzy2nV8LmyGNNXF1J913RERKyOvMxhnxWXaWCDGTjHZ19/0j9dgNOaDti2zMg==
+    MINIO_SECRET_KEY: >-
+      AgCG8s09Rkme0XQv8Ov5TozkDn/YUNTw1A7NWlqHP0oiiRQ+PPq3y0zN3DdErbNAGlEujpTEi3YBPAlrkxpJrreP21fNSQNyju965FSwihcAv6C7arisR63Pw91xq/5xAM2NWt4BOMIih45ovspejAV2Dvmve0ybHNi1H6sG7UNYBYhGW9WTjCnJW5S0p1h9ZKOJsEa0cNzmDS4OuUpODLepxyabVAXWiyZak4Ib9FxctZK17RyJrgdVsGaJs3VrUFls09YjAXc2tijlw7WLRYxsqB6KTmbVBhyFQv3FaRYOSuu8tNqAZEMXaWO/8AB/MadBIt7BK4Z9c+4LHbJaaY+cSEf1yjmkQm6syTcHHOtW9uUXRnWoAZEi3eCSkJMDxrnltFVUEKq+Fqko/vbrGTP0XBzdZ9b7liGdZ5eb8r/XXQocNs65WzYbdwfYZkGFbEuaWXzbmEudDmNB0aG+2QZMMGPe8r1BfMU7fVYmaoMYIwIQL1aeTQDjo93sE74GWbptFidBNw7gGD3W/PyQuwnFwz1W9uk4WwJTy93N+HREGp0vcr1E21GmQmcbKHziFk/sh2MziA0uQY/TVQVBwuW4NXhp2dzQyi8DTM1F/Z33uka/XozF6yiNMNczOQQeTUPv1TfmZX8tAGW0yxGd2KYV3xfh7hv7/yb4sBbvy6+uqhJRNia0keRHlQl0Z1Erhi5xVDLQDqpsyT7nFr2jna3aFEsdqg==
+    EMAIL_SALT: >-
+      AgCP8UrlcRg1KgpuByRCvn54/U07D11jfSkEW6CAHLVUP9bKNc1LTA3QKKP5pCiqUoPOi7sk5AZc+ONSloOU4giJpXXcbPWlPzTJs2Gt9Zsgfql6KCDu2NtUr0RPaTbiCtCe28B2P+lFNHmut5WQLQds/faA+AEJBrDf0QGr2nRHXc/TJL8OOPg3CtjBQhf6jbWUxKyHBfY/iUoB4wx3+M46wMiXL0OARpiBEVIKgfAWo5B/cnKnezG6bL0yvohmQdJ2VB4yt/4nHWGNS++REyP1vI8wry62n6au/xiR0Q/l1VNOh7wg9I3YZNBigjJqbF/LpujFk1lRue6LiWsfOtfNiQA/9eehus/zFkXFWpC333V1CV29bRkl7xBusaFWrNsZLsixc3BhzgaE1nocvTwDVoVnvxVxudbeuGSPuvCkeHt/ga8q9iTMunhfiWsnRvY7FkITZxfYtM+GhO/+vS7AOyMWteis5uUBi2DiPxfY0fjh/y8NDftqon+njwMgJRgY2trnjVqlb2YuKCddGZoyFGo4D4NDvWn55ymKw8WXP9VRrStjaRY/y66uN6VZavAqIaCBUGwlcXLovREP1W+kdjCPVOZo+NbBVNfOJSv18bgdMBV7lvdkUZm/rzM3KHP/vXt5XyHfMeBkS3i5dgnYJz58TFO3ZO+5rssxstKElVTLXJq3+E8skzyOkXfj+CaRjFa3RcdfBSBuSQpZZCiM9T3k6xSD5M9cKHs/seoMvw==
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: server-env
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  namespace: fce-mybranch
+data:
+  CLIENT_BASE_URL: client-url
+  PORT: '3000'
+  MAGIC_KEY_EXPIRE: '3600'
+  JWT_APPSEARCH_ADDRRESS: http://52.143.135.133:3002/api/as/v1/
+  JWT_APPSEARCH_ENGINE_NAME: fce
+  JWT_ELASTIC_CLIENT_ADDRESS: http://elasticsearch:9200/
+  MINIO_ENDPOINT: fce.minio.fabrique.social.gouv.fr
+  MINIO_PORT: '443'
+  MINIO_USE_SSL: '1'
+  MINIO_ARCHIVE_FILES: '0'
+  MATOMO_ID_SITE: ''
+  MATOMO_URL: ''
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: server
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: server
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce-mybranch
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+  selector:
+    app: server
+  type: ClusterIP
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: azure-fce-volume
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  namespace: fce-mybranch
+spec:
+  encryptedData:
+    azurestorageaccountname: >-
+      AgCDKbl6Aon8etQpc+1lXi2pefHBkAUv3mWNgyofwpcDLT+L5REHvMj+XwO/CAJb+8E2WbeQbRPBo9G4RQo8ZUzWT3+Xi7YzB+XD6ckPL0ccly5oCgM7ishON6C+ybdSMwEF2c06Nv7K+2b3SZ36I9mnTilOQU4NVkFmCGivKj3nVAMBxkCz88WVUTMwtd6bKkExkGTL14yK8CHk/bWlg72c25ujGvklg5ffZddcokxEgUfLdJXYQ4/oosXI7HnpKCy6NH/YAU6jE3fYeXo/7MCsBN2tHdWEdqVu4wMs3ymuYPkSGkLHJfMkbvTrcYvGxjMB0yU8bC3lFFarcJRIqYS1AuS3dTRUbxkJo472OUHIAZOIVMA4wpdI/WOOwCBGXTKz7rgxdKRUALJBhN+atYSa7oynh29se0U+9q1HMjTO3Dr6JFm2D9txulxddbwXZf/HLoCZdyG0K1/IoV3ImXJhMULKhiOPpghhNTHRu/6upCVhEtkn0VlVI9bAbEOUIemHDLBZP3TQQKM8zYI9FsWcJC2zLNLftJ5YHQl9+5hWXyRDGMDJau9EfPG7hXEO7kyhABpaIMhjyqhLCoUAP6dc03yjA1loO6MJA/Z82Rb20RMuqvYh/8WFi4feqqJHMBkzUJwj3fugGUc6lDrY9ieikNJEOY9vW4xvZ0pUF11XVM2ekvQLGNMUDDHecjVybKY3c4bszFA=
+    azurestorageaccountkey: >-
+      AgAVSbINE67jQ7Ubw4lHfxpN7PTIHtLEfp2MxUTl5DOtRbggN8yNPt8ChCGU/6lNAja+TV5BbNFZp78joFDoXbxvGpAssFEDUXHsmNUX03OL1oj0Z7rQMeF7EnjakelTBtsFAL3aN1AsB/cDNl9gbDAIQCcwCmswhndo3hCsOjJzuVxK1jOf53ZN5EvLFXEuGspDSxURBysoVzl57R7ahA6BsZ2wEskbsF4R9eYlb8oaya/a1wcNLzl1Ee11nT4yFll5V8OlRYQOqnseKGGkzFazQ0WkxljAR3ROWSl335yuWfnmwJdL2U+xjXj/8CQf77z31w5kNgvhBT7mUWPrfYtAfgfULIFtlRArIPo050rZx3l8LkfP6ASW3wxGE3T1recKr0cKmrULOYHGKqnub3/RuJKyjz5VVBbfli83BOhv+fty8cZxBWDNKDY4Asrp7V6uSC8zyGQeNrrVIR8WjaqXMatQUmnhg4bcGrI3zj2wEONv/+knh/Akooe8vDU/gtgMT6IM7NiRQqL8JKdjH1Mi5wDIPUHMks2ZuFa+DdYd7aqBk668VfBnR2auS26Ek7VjLNGMCmDrb2orjNzLiBMXBEZcKUH4MI+96yh4PxOEuKswgmQOXdhIaJB7LudVlRIfma+05vSDUMJznpbHYfuJ9rTm9uxnu7oGsMIxyDnVfhaH3Ke56QQgWJAOhwpdLqnZJ+rCZGZ4JLroGPO4/uSEajp7JSjtSPvRKRLSRO2tigeK+hhXa7Hhp3aEmcSek+AUyNZJEFwqvAJQFGTOZHFO6sCzKItfafvItPczIHlbURxEozgpKHuN
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: azure-fce-volume
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: strapi
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: strapi
+  namespace: fce-mybranch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: strapi
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/strapi:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+          name: strapi
+          ports:
+            - containerPort: 1337
+              name: http
+          readinessProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 5m
+              memory: 16Mi
+          startupProbe:
+            httpGet:
+              path: /_health
+              port: http
+            initialDelaySeconds: 30
+          envFrom:
+            - secretRef:
+                name: strapi-env
+            - configMapRef:
+                name: strapi-env
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: strapi-env
+  namespace: fce-mybranch
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+spec:
+  encryptedData:
+    DATABASE_HOST: >-
+      AgAp3qv3c5FUqf+Sv5A/1wm2h+rB/GNg1aeliFNyrXKgNikJMZ6DzAWdtKTOxpLKnQtc3oEjAc2mFlZvAiA4e3sqrOY8cVFH4kp665S0I0cd/NA1paTNNLy0GgQ/bEEmdR0Qc/UqGo6j4FATn0oNhTIaX+YwkAQv+ebvKLZSxYIHmyavl3ODvumkNOjUzujhKioVoAVVBMT9CaSiLH6B1uDVI6subrlftKlWmv5Y4BmV+6DNeikyYXRSp5qTVEXzElqEcT5fMLNnJDcXOSgVG9g0GKBx9wUanClvjhPQi0M4Cg6U0z0/n3Khn0KlO17IGQwnn2e1p/p3Zf0GG2bOwV79TU24nj0hdPWcO7UCaJDQfi0u1tedrXZ0P0g7fZbzszyKmMM2PDwlcCbmJ+EI/oWqvVo+WB4tYKVrefwvnZ6wpfgOKpB3W3hiZr+32Jcm7uYBr9IR1BK149VrV5iOE9G0HgyJM6n6o/gNbmpdcN52EF8LsevswPT4zyFeVq1ssdLp8cFi0hPqg++Yc4+pR5HZRaalTCBZxEYmF03/hjGa6zniYWFUw2Ikg4xtHrH27E2DKVa7nEIxjjbi+wmmgReWbIZP02Fe5FE+bPrLUOtjpi9hKo1l54Zn67c6386UYUZAdyv3t1QH3M3OhIuhIqcRqF09LfHsG6ZWG2QySqcXRVJOtDDsanm/5L0IlrrJca4AcnD5sOP5xqNFa7VFa/omQMHV52hPaJ1RegJEFMQUSB+wrQ==
+    DATABASE_NAME: >-
+      AgAOFeRyhnnpla5dLcfPo3G7+40O1PAJngS8u8ueBMml82zo0e2/HT6lieTdhtT6SaBKzinrjVbeCanVE7KrLTXqzFjru2jOsX0UiYkCS2YViqWVLfrBKahWEcCjC7/qwiz8Tb99us6191yR9m7mRWM/RdI60TnaL24eYN9TtMYQrTZxESmoISx/uaVaDCJO8D1FkuheCOTxazv3KpWgc7aHzi0pRfJN2iSehKw50WD8gUR4l8M9uQBJHtcbD4o1OT5DrDMeZxuKnQkMxrWmRXo8YJ87rXJ+DwWgpsMDH6KFWlT94dtchGF0EvigW0PAq4gXzYSzG4Ho7glEB0anQY6zJ1JWTaXUtAf3IzboEIcyGXVzFNWYrZe8XIsauLFSLlUWcgRfdS4d2KHS6Lbncst1vbutEhVcpv1H/8Zn0CcLgfjdj9m1fYVm7k1Rvx8D4ko/NXN8BeBvyx8ugtm2N+2KZryaAGj+Txqnk9tM9Xt/Y5iO0UvvG6CYvf6O4k+5Ue2lkB3sR9jaPedb9sniox45o+CVaAH0mgMKqfoWrM4A6WzS/w/bwjOstni+ZZkAUpeFH6gBfY4tZ0hxspFr3/gzawrxPxG5ASlR5lEH8fkrZPfI9LmqLYHZ/mls/tyk9TtuA+WbL1vaC2HYP0ytAh+LB/vIslNy80sTZaGHY0Ftz6PjSKzxUwdsCnpFWzaLKED3HMQPSFQ=
+    DATABASE_USERNAME: >-
+      AgBQSs0Y3fJ9S6yfgUdcdFURxUuuCQPYfLFqdeFNb4RXBZkGg5jrrd381TFPMQttNenSAwkotUJYOHyxcFgqDTtRrIY89qrollrwJ5+wO4sESnR6mF0n5MOeDZzHCCFM6mzHf1CpInGy2iqQmOm6rzlVpPx73gXUhOwUdErvtzsFQG7X32ctWGFS+luNZZvAQPOMVeoqSscrQgApau+50lUsRLqrWi5PC8lOLNQ2rvbWaPJJYi/8g0NSMiWlRUos5W60Q/LvL1K3/2Xt0jVE0kjxm/T6MTTgxdE6dAz7YZvULPsLwnEwYFF7ALAmXCPsRzigGMtWVDGxaMMumcgxJ8H64lZ/3n+ImnOYljjUDc6leDih+XCdK/POd9EpCHv5mdvU1pZGLg69byS7xkT4wVG2i3eLqaMw0gCQfhJPBBoF/4eRXU13oI24NulfSR+eNd2S0jSVnGdTHCQ9y+gS29nApAHXpLuuqscvQJrkgnzymtbEL3EoAOGyaLe9nJ8wL+n5NiDF4NKpPyzbzDYqiN+7rDngxnqwslJAeHSdzpUcePp9imu76yvdLhIjtNlxe56VzmfTH+mHCol69dlKrN2pDt3QZ4VxnqAHx3dVXkkjT38/SjC9zbFDSaxAfDN+C3yTj0jH/PPQloFV8WGIX/Nzigx+i1h+wdKTi10+aGg0xFMguVsyXqfkIlIocW0nGxrofa81492N9eObV38=
+    DATABASE_PASSWORD: >-
+      AgApsnjrYTM6BJrsQcqCIe5G/ypB0BvOmkRBVZRMRwzx4CoyHWBOJBgsFaoo5cj0EYDWRObwK7uT/5iw/nY3mlMuR0Bio/VZbpfdBP+iGr1JvSRGOqxkARJknu8tIS++KgfDMQfYenEhjA+fCXY6Ql7opp+F13z8Kh8+G6gBnk8b1HAwp3F1h42yfbOfWJ6md1O6wr2Ze+O8sHLtX3o2YBdKRQ4atdDBGZtzWJ8rRZH0AP4E4+PMaZeZJv2XeW7JeCCud/7YwAdbm9arF2j7QAqI7HOwEpEAHYlpWepHHTwz0yaamy2sOEK1p0cqFuOsRgBkUXh/dPY8/f1FkfNx3LaSdemvHhSz1AAL0lTVe1NHw56I3Z3FoqYjDmdTSUfD+RCG7IMHjM5VJ/4p/2b5b6efTWCSeE/wx9+ilbx5UaeGCE1pdKhfe3ye0bAzmcaA8ROlFdMXUTkA4sKtxEZFsOls5Z2NvXspyG9SONpfSMruZQgCJqL5CMNJPL5AS9LjD4Ay5KlBSoQnwbFMaZF0TosDSUmTKdvnH1KJiLQbbTIpqMEuPUPMa2Do5gbCnzC4xtuNnpTLVdyoROipGyYnoTAhNvXX31D0klFgj6qGPd1Q8eaeSdSitTTzrGYFJpPZvdF57i9xhiWlex7svryu62gqAs6YaKn05akipZt24xS8mMvpTFDWFM1B+693F0DnMkn06zRHNtjcZJo5LpKZzuE=
+    DATABASE_SSL: >-
+      AgAQK20XHdm7W4hzeVcoXMkGLwxe8EOcSwkRyoWCjeYWIBhCkNN1VzOqnJpkA0zfcU8CWi3NBIndsfGyhJlrkJ6WNzVA43XG6KRVCgXy/mBH4n8u9UdnBBhm6IINS6jhJqdk417vfFTLPdxWO+NU3cZ6lBy4T7XTukqMaP3DM6p+A97JWcKhBePLF27dgBSLe52ydNnrJ14ZkOciV3RBp0BlqXEhqlz5MNnVL4jXCU4sq/Rea6QtQrHivCdYq3K+GxubDuGE5ZC13mC3nNaQdQ9WTjIGy/DxQcjdmpKMS6XNVnxbrgIXQOBVFQejeBQP9s/j6oRoOzxhV3aZODnASSHC+Yr1ChJqLJ0lK2dezOCQljQGXoGZiDKkYoIzFYt2CN4ph8cqqAZXzb7DlBNLZQPhNThdx4UnlivdOhdctwrb50Q5pvMO2kR3XqQu8ZgDsqYCnfcwzYQAHOhhQqxKy5rNkty58wNCwxBbKDXBPpSatDyJe52Avv0bspA00+tNMAtbBxgvGibQUVGo49TR+3NxO6GTWlg+LqfO2nK/xkW9cELb3TJkIpDc0whyA62oj/IuNJmDEO60g0w93lq4t77VEH7vCQ4KzVdCaCRGgwjUj/rTD+L7IgAWO/EY4CbXWNL9ePFWMrOXk/mJ0H3RVf+a2QOOGtkqFc4tx2aCnZ3OhS1P+E0dOw0m6ATSB+oeD2rqmKsP
+    STORAGE_ACCOUNT: >-
+      AgBNnXFWmiojImfGi5+uien27zYUTHDH97rbJf/OruVZBNlGM2VPL7uqMGLVjnXYSo+7tJnZ355jZVcwiMoSFCjSGZOp7czIAGPjiyWHL7R8NbrSCBuVN+yiuf8PZRvbUIt/gPgUuTeAn81aWaJLdfe/opKDya/2azuFIpECUYpEKM56B1aMHX3oru2K8p5VpBgwrDjMfk7f2SwhJQFtyBKk5XhfrIZq8ss++mypVs+VNbc37P3QxY1NJa0t7YV7wGkGbozlAbAh5wO3DizlNA0tNtxTLJ/D1kwo1VpA4fbyUiAiqNPuwmEEYO/uhi3rQ0qFqqkAarQ6zRlBXrKVoHIpKeKfYYuP187N3MKR6X3F6beGKVMFTWAc5AA7UAfkAn5LAUjyZ4Injem9KzDjT3swpJtZgc7Q05yD5SOeDSUDBZM2kPV7SVJMUGKfT1OnqHFdWKq8ejkM2IcM530zLXyNEa9dfksbAkcUZvrtdBva6r+tdJBvzCvHB5WfFUJSre1cALQqqTHEj/8DeP+wAXvQ5YIVjzPSjKbs6rcZpt4xTvJUQ55Z1A/pkOrCvOAVYAG76y9seKkLdSsryCup/P7C/dscHW4MufRT4uIsNUn4RLToeaEjxJkwkSnGiDovURWVTebEvoagK3RLBSP9bheaxEvHnFyIVXq7UU9iSO44GBTCCfmx11G7N/sBSfup8C7fU6L7uhU=
+    STORAGE_ACCOUNT_KEY: >-
+      AgDVERVQx4p+cXOPLFpEKjESFHFiT6euDR5w0XtXxgM7cDsCxuZs6d5AOGbecWSOnC/xpOyf90h+I6ORSKwjxWmdpKO5RlW1+22+2B+c0Vq0gQClrj9P/3fC+nNCagfHXrschHQt9C78LIKMat1SYG5z85g5HWGN94D7j5yu1ZL2vffeRm0CE8bQB8tsXyjvvEEJdZqYkVnO6IBIweNEgA+Wyn1Qtu/Mnz0BYLXu1KBMl+fBSimch3bME5pko3eKMKQD4DRLcKSBCiJAggAmARqeWrINgjm0zhwO9RZbc9DEkSeZmgzFNvQqF2YaQ6lkFi9mMD45vsL2iPxTHFp3Bz10Us/nJcUj34bCtFaD8qo0X2qS2+wveOECJxdrToessEMR9zZPPbXasYJdDBm+x4r7jq2sryBuvF0hy2mWXbJdCgGOB0QsKCwexjjJeOhFYft1av8r50D0ZDCkhdc38wjKHIIGWaF1vMKe2EsUSOurKzaMeYoM6tLxdGTyfwFYVoGHqWFit+YNDdWUn3YmjT2Z+u4UdmCL8pyoo5UhLK79laXUfaOU1Ss+evyA1rZGOBXIafa6XnpAYKbFZnhzjO/t6GtfRMWpR5nCfOVjXP45xwI6TMU07BP0MFusNJqIr7taCiFz0QvIv4xllz8i3t1qrPkiK/v3X/kJDyfgA6s4CEaZjeb2m3qT80EMSrkS8Ldh/vUu+XCCAw93tmxYgILELkk88e0FL10Bvmc5VN/smGtrzOu4/4Bjvthjzy7+KXz85lpr8arVGkawhEyRVANNmLi21xzaKOIeotHhyG2l0ebZgZs1p3BD
+    STORAGE_CONTAINER_NAME: >-
+      AgC00oHWlzqelg7DzDSl8Sg3+fw7/mdw0CuT3WNDoVdstlvom56yVeiuRoaldf6K+BTEgsreSfKntjjlIbRQ7Gm4aB0+V3URqd6On1bB92OlcnTFED50ct1j/0yF1Ma70zJsigZOP6N1yZQA4rYzLQ7etPSSBFHJVwzAHLpbGOJS7jo+fAFEIUM36/Ra6BDLMFkZP3ZG9NWcEQUlc2XmzGE4t1SP8YeCXI38kEkMihEIMU+vOgqoaGOKdSA7qIt9sJLIoaYVrO6DTSLRVe6ULoYV5Pab36qlMJifhCr8wEsIuE5NkqkTFUQb9aZGHFNYroS1Hn+EWVtQQEoAs8wM+LJeW4sDEcTMqgVUeKfdwn599yJT6VdXZ3eIPpCMqKcPxl0Ep0I3W/wABJu2kPPryNXTVL6/ziEeZPsX7WUypbTMCk60XE3XbhJDSZj7y74VXs0CdrMRt87Yi1dJ9wK0r48cldsRcWHqr9yPVKFORTUCLyODLFbs+YuqPJaUKSxka6BiWZT8GM120scAsULYnqHKLjaEi5rh8Uiasq1iVMXran3kL8hZi13tvhJndPtKIcoOebAE17bkL+ukW7Z+9UsRqsxxl1IuKSVwhhW4pVspryzzcYjlLiUPJqycOG/6gkn68RFPcN+XsuS9QjDw38Lly1xjNdBdlX2dF90Tvuhwg92UlW+eIsnmVveo6zfQPp5gwo3I90A=
+    ADMIN_JWT_SECRET: >-
+      AgAURilLW3JRCZV5zuvEYoKPuRLlGAfxdzH/mpxzIXlEifkDKWekV108pSLxUBh4CwmWAew0rTWBQEktRCN7J3m+FY26BvynpZMFapulKua1GZEicmF+OWgV74LfDDpJ5bLusWa9NALqjzEvBvrF+WXDMFY2JEPw8uXzHh3L3pPR2E5LUU41o5s3Wh5YxZ08OLDkoxEcpPG4K8R5kSNsvncE2ANN8Xj81hafxUtTY86ZX1j50E37s39QeE7uDfX8f38P8H2CLLfhR6BmplSXDn3GbyNzN1NvtwBHk6KiaPixaq1Ndtes3IwbvWPUhb0MTgYo8Y99pNUspjRF/9zG8jrfZAKFd39nPZORHWRdQnOlTsb7rZlBQp7WbrjXCh2IvBw+iwUVXWFtEPmVM8kL75c3zryWWfI2yEimMNF9F9PeDjke0+lppdXbTmL0kN1qsOEfFkzbvj/Xt0nLAtQ87urLEr0EiG7mY5Vi3hRgti8ZFIIREi1z8Et6NtKnDg1LAS4snlFsXGXYGFVxfaQH6AjEXEdz/H3sNv2tNa6+GUOb+J2t0PGYgzeHKyXa6hwF6UX2T3lh//HIfhG53G/NkEZD/CP0zPZe08596ZJE09K31jIgtqSFuKjsuY1PxmXQugD939rCI0C2LQOF2WFfKSeUEoJ2JqTNW/ze6Dr5NnIr+tg7Mx2tk/MwAGrp8D7cMes7yji8KnSOturMR0HEjrSkL+uIDRo7DQrneVyCPNUCxdok7MzBxqtx0w==
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: refs/heads/mybranch
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: strapi-env
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+        cert: wildcard
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: strapi-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  namespace: fce-mybranch
+data:
+  STORAGE_URL: https://fcedev.blob.core.windows.net
+  DATABASE_SSL: 'true'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: strapi
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: strapi
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce-mybranch
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 1337
+  selector:
+    app: strapi
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: refs/heads/mybranch
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    app: strapi
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+    cert: wildcard
+  name: strapi
+  namespace: fce-mybranch
+spec:
+  rules:
+    - host: strapi-fce-mybranch.dev2.fabrique.social.gouv.fr
+      http:
+        paths:
+          - backend:
+              service:
+                name: strapi
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - strapi-fce-mybranch.dev2.fabrique.social.gouv.fr
+      secretName: wildcard-crt
+"
+`;

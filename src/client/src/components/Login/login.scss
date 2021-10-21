@@ -5,6 +5,10 @@
 .login {
     padding: $spacing-6 $padding-app-x;
 
+    &__message {
+        max-width: 608px;
+    }
+
     &__container {
         display: flex;
         flex-direction: column;
@@ -156,6 +160,19 @@
 
         &--success {
             @extend %success;
+        }
+
+        &--info {
+            @extend %info;
+            & strong {
+                font-weight: bold;
+                color: inherit;
+            }
+
+            & h5 {
+                font-weight: bold;
+                color: inherit;
+            }
         }
 
         &--error {

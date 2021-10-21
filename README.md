@@ -136,3 +136,12 @@ docker exec server ash -c "NODE_ENV=production node ./shell/run.js DownloadFile 
 
 docker exec server ash -c "NODE_ENV=production node ./shell/run.js IngestFile --id interactions_pole_t"
 ```
+
+### Encrypting secrets
+
+Secrets can be encrypted using webseal :
+
+Dev/preprod : https://socialgouv.github.io/sre-tools/
+
+Prod : https://socialgouv.github.io/sre-tools/?cluster=prod&name=server-env&namespace=fce&scope=strict
+

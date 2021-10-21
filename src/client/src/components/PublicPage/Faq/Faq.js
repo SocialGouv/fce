@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import UsersFeedback from "../../../containers/UsersFeedback";
 import LoadSpinner from "../../shared/LoadSpinner";
 import { Question } from "./Question";
@@ -28,8 +29,8 @@ const Faq = ({ pageData = null, isLoading, hasError }) => {
               <strong>
                 Vous rencontrez une difficulté dans l&apos;utilisation de FCE ?
                 Nous mettons à votre disposition cette foire aux questions et
-                des tutoriels vidéo afin de répondre à vos interrogations et de
-                vous accompagner au mieux.
+                des <Link to="/aide">tutoriels vidéo</Link> afin de répondre à
+                vos interrogations et de vous accompagner au mieux.
               </strong>
             </p>
 

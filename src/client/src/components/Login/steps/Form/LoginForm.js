@@ -8,11 +8,13 @@ import HeadForm from "./HeadForm";
 import Button from "../../../shared/Button";
 import Config from "../../../../services/Config";
 import SuccessMessage from "./SuccessMessage";
+import InfoMessage from "./InfoMessage";
 
 const LoginForm = ({
   login,
   sendCode,
   errorMessage,
+  infoMessage,
   loading,
   step,
   setStep,
@@ -42,6 +44,13 @@ const LoginForm = ({
             errorMessage={errorMessage}
             loading={loading}
           >
+            <div className="login__message">
+              <InfoMessage>
+                <h5>Connection pour les agents des DDETS (PP)</h5>
+                Vous pouvez désormais vous connecter en utilsant votre adresse
+                mail au format : <strong>prenom.nom@departement.gouv.fr</strong>
+              </InfoMessage>
+            </div>
             <div>
               <label htmlFor="email" className="label">
                 Adresse électronique (e-mail)
@@ -80,6 +89,7 @@ const LoginForm = ({
                 message={`Un code d'activation a été envoyé à ${email}. Veuillez l'entrer dans le champ ci-dessous.`}
               />
             )}
+            {infoMessage && <InfoMessage>{infoMessage}</InfoMessage>}
             <StepForm
               onSubmit={e => login(e, email, code, isCheckedSubscription)}
               errorMessage={errorMessage}
@@ -189,6 +199,7 @@ LoginForm.propTypes = {
   sendCode: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
+  infoMessage: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   step: PropTypes.string.isRequired,
   setStep: PropTypes.func.isRequired,

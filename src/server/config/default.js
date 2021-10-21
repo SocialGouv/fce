@@ -21,16 +21,11 @@ const config = {
     user: process.env.PG_USER,
     password: process.env.PG_PASSWORD,
     database: process.env.PG_DB,
-    /* ssl: {
-      rejectUnauthorized: false,
-      ca: fs.readFileSync("/var/certs/root.crt").toString(),
-      key: fs.readFileSync("/var/certs/postgresql.key").toString(),
-      cert: fs.readFileSync("/var/certs/postgresql.crt").toString()
-    } */
+    ssl: process.env.PG_SSL === "true",
   },
   sentryUrlKey:
     "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",
-  mail: JSON.parse(process.env.MAIL),
+  mail: JSON.parse(process.env.MAIL_TRANSPORT_CONFIG),
   proxy: false,
   apiTimeout: 25000,
   authCode: {
@@ -69,6 +64,7 @@ const config = {
     secret: process.env.JWT_SECRET,
     expire: process.env.JWT_EXPIRE,
     expireTemporary: process.env.JWT_TEMP_EXPIRE,
+    expireBefore: +process.env.JWT_EXPIRE_BEFORE,
   },
   elasticIndexer: {
     appsearch_address: process.env.JWT_APPSEARCH_ADDRRESS,
@@ -107,15 +103,15 @@ const config = {
       "01": "1 ou 2 salariés",
       "02": "3 à 5 salariés",
       "03": "6 à 9 salariés",
-      "11": "10 à 19 salariés",
-      "12": "20 à 49 salariés",
-      "21": "50 à 99 salariés",
-      "22": "100 à 249 salariés",
-      "31": "250 à 499 salariés",
-      "32": "500 à 999 salariés",
-      "41": "1 000 à 1 999 salariés",
-      "42": "2 000 à 4 999 salariés",
-      "51": "5 000 salariés et plus",
+      11: "10 à 19 salariés",
+      12: "20 à 49 salariés",
+      21: "50 à 99 salariés",
+      22: "100 à 249 salariés",
+      31: "250 à 499 salariés",
+      32: "500 à 999 salariés",
+      41: "1 000 à 1 999 salariés",
+      42: "2 000 à 4 999 salariés",
+      51: "5 000 salariés et plus",
     },
   },
   sanitizeTables: [
@@ -143,16 +139,10 @@ const config = {
   ],
   emailSalt: process.env.EMAIL_SALT,
   effectif_dsn: {
-    exclude: ["2020-06"],
+    exclude: [],
   },
+  host: process.env.HOST || "127.0.0.1",
+  port: process.env.PORT || 80,
 };
-
-if (process.env.HOST) {
-  config.host = process.env.HOST;
-}
-
-if (process.env.PORT) {
-  config.port = process.env.PORT;
-}
 
 module.exports = config;

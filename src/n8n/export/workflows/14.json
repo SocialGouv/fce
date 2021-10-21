@@ -1,0 +1,128 @@
+{
+  "id": 14,
+  "name": "Apprentissage",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "downloadRegex": "^ExtractFCE_App.*$",
+        "bucket": "dgefp",
+        "outputName": "apprentissage.csv"
+      },
+      "name": "Download",
+      "type": "CUSTOM.minioDownload",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "credentials": {
+        "minio": "minio"
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$node[\"Download\"].json[\"fileName\"]}}",
+              "operation": "notEqual"
+            }
+          ]
+        }
+      },
+      "name": "IF",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "filename": "apprentissage.csv"
+      },
+      "name": "Delete file",
+      "type": "CUSTOM.deleteFile",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        280
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Ingest apprentissage",
+      "type": "CUSTOM.apprentissageIngest",
+      "typeVersion": 1,
+      "position": [
+        900,
+        280
+      ],
+      "credentials": {
+        "postgres": "PostgreDev"
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Download",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download": {
+      "main": [
+        [
+          {
+            "node": "IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF": {
+      "main": [
+        [
+          {
+            "node": "Ingest apprentissage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ingest apprentissage": {
+      "main": [
+        [
+          {
+            "node": "Delete file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2021-09-24T08:28:43.711Z",
+  "updatedAt": "2021-09-24T08:37:31.331Z",
+  "settings": {},
+  "staticData": null
+}

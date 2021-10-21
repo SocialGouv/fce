@@ -91,7 +91,7 @@ const Footer = () => {
 
         <div className="footer__gouv">
           <div className="footer__gouv-text">
-            Un service fourni par l{"'"}incubateur des ministères sociaux
+            Un service fourni par la fabrique des ministères sociaux
           </div>
           <img
             src={mariane}

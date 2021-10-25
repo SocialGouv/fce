@@ -640,6 +640,7 @@ exports.up = (pgm) => {
   pgm.createIndex("interactions_pole_t", "siret");
   pgm.createIndex("interactions_pole_t", "siren");
 };
+
 exports.down = (pgm) => {
   pgm.dropTable("api_keys");
 

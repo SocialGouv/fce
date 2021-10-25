@@ -17,7 +17,7 @@ import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLo
 
 import "../../dataSheets.scss";
 
-const Enterprise = ({ enterprise, headOffice, establishments }) => {
+const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
   const location = useLocation();
   useScrollToLocationHash({ location });
 
@@ -50,7 +50,7 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
               />
               <Infos enterprise={enterprise} headOffice={headOffice} />
               <Direccte enterprise={enterprise} />
-              <EnterpriseRelationship enterprise={enterprise} />
+              <EnterpriseRelationship enterprise={enterprise} egapro={egapro} />
               <Muteco enterprise={enterprise} />
               <Helps enterprise={enterprise} />
             </div>
@@ -66,7 +66,8 @@ const Enterprise = ({ enterprise, headOffice, establishments }) => {
 Enterprise.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired
+  headOffice: PropTypes.object.isRequired,
+  egapro: PropTypes.object.isRequired
 };
 
 export default withLoading(Enterprise);

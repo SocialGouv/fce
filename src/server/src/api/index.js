@@ -11,6 +11,7 @@ import matomo from "./matomo";
 import agreements from "./agreements";
 import psi from "./psi";
 import apprentissage from "./apprentissage";
+import egapro from "./egapro";
 
 const router = express.Router();
 
@@ -25,5 +26,6 @@ router.use("", matomo);
 router.use("", agreements);
 router.use("", psi);
 router.use("", apprentissage);
+router.use("", egapro);
 
 export default router;

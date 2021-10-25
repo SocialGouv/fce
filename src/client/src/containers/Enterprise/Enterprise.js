@@ -17,6 +17,7 @@ import {
   loadEntreprise,
 } from "../../services/Store/actions";
 import { loadApprentissage } from "../../services/Store/actions/apprentissage";
+import { loadEgapro } from "../../services/Store/actions/egapro";
 
 const Enterprise = ({
   match,
@@ -25,12 +26,14 @@ const Enterprise = ({
   agreements,
   psi,
   apprentissage,
+  egapro,
   loadEntreprise,
   loadEstablishment,
   loadAgreements,
   loadApprentissage,
   loadPsi,
   loadSources,
+  loadEgapro
 }) => {
   const [state, setState] = useState(null);
   const [currentUrl, setCurrentUrl] = useState("");
@@ -86,6 +89,7 @@ const Enterprise = ({
     }
 
     loadApprentissage(identifier);
+    loadEgapro(currentEnterprise.siren);
   }, [
     identifier,
     match,
@@ -94,6 +98,7 @@ const Enterprise = ({
     currentUrl,
     loadAgreements,
     loadApprentissage,
+    loadEgapro,
     loadPsi,
     loadSources,
   ]);
@@ -138,6 +143,7 @@ const Enterprise = ({
       establishments={establishments}
       isLoaded={isLoadedEnterprise()}
       history={history}
+      egapro={egapro}
     />
   ) : (
     <EstablishmentView
@@ -154,6 +160,7 @@ const Enterprise = ({
 
 Enterprise.propTypes = {
   agreements: PropTypes.object.isRequired,
+  egapro: PropTypes.object.isRequired,
   psi: PropTypes.object.isRequired,
   currentEnterprise: PropTypes.object.isRequired,
   hasSearchResults: PropTypes.bool,
@@ -161,6 +168,7 @@ Enterprise.propTypes = {
   apprentissage: PropTypes.object.isRequired,
   isLoaded: PropTypes.bool,
   loadAgreements: PropTypes.func.isRequired,
+  loadEgapro: PropTypes.func.isRequired,
   loadEntreprise: PropTypes.func.isRequired,
   loadEstablishment: PropTypes.func.isRequired,
   loadApprentissage: PropTypes.func.isRequired,
@@ -175,6 +183,7 @@ const mapStateToProps = (state) => {
     agreements: state.agreements,
     psi: state.psi,
     apprentissage: state.apprentissage.apprentissage,
+    egapro: state.egapro
   };
 };
 
@@ -192,12 +201,15 @@ const mapDispatchToProps = (dispatch) => {
     loadApprentissage: (identifier) => {
       return dispatch(loadApprentissage(identifier));
     },
+    loadEgapro: (siren) => {
+      return dispatch(loadEgapro(siren))
+    },
     loadPsi: (identifier) => {
       return dispatch(loadPsi(identifier));
     },
     loadSources: () => {
       return dispatch(loadSources());
-    },
+    }
   };
 };
 

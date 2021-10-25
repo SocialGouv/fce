@@ -22,72 +22,74 @@ const Agreements = ({ enterprise, agreements }) => {
   const formatedAgreements = formatEnterpriseAgreements(agreements);
 
   return (
-    <Subcategory subtitle="Accords d'entreprise" sourceSi="D@cccord">
-      <Data
-        name="Nb total d'accords déposés par les différents établissements de l'entreprise"
-        value={nbAccords}
-        emptyValue="aucun accord connu"
-        columnClasses={["is-9", "is-3"]}
-      />
-      {nbAccords > 0 && (
-        <>
-          <Table className="enterprise-agreements">
-            <thead>
-              <tr>
-                <th className="th">SIRET</th>
-                <th className="th table-cell--center-cell">État</th>
-                <th className="th">Catégorie établissement</th>
-                <th className="th enterprise-agreements__count">
-                  Nb accords déposés
-                </th>
-                <th className="th enterprise-agreements__last">
-                  Date signature du dernier
-                </th>
-                <th className="th see-details"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {formatedAgreements.map(
-                ({ siret, category, state, count, lastSignatureDate }) => {
-                  return (
-                    <tr key={siret}>
-                      <td className="table-cell--nowrap">
-                        {formatSiret(siret)}
-                      </td>
-                      <td className="table-cell--center-cell">
-                        {state && <State state={state} />}
-                      </td>
-                      <td>{category}</td>
-                      <td className="has-text-right">
-                        {count && formatNumber(count)}
-                      </td>
-                      <td>{toI18nDate(lastSignatureDate)}</td>
-                      <td className="see-details">
-                        <SeeDetailsLink
-                          link={`/establishment/${siret}/#relation`}
-                        />
-                      </td>
-                    </tr>
-                  );
-                }
-              )}
-            </tbody>
-          </Table>
+    <div>
+      <Subcategory subtitle="Accords d'entreprise" sourceSi="D@cccord">
+        <Data
+          name="Nb total d'accords déposés par les différents établissements de l'entreprise"
+          value={nbAccords}
+          emptyValue="aucun accord connu"
+          columnClasses={["is-9", "is-3"]}
+        />
+        {nbAccords > 0 && (
+          <>
+            <Table className="enterprise-agreements">
+              <thead>
+                <tr>
+                  <th className="th">SIRET</th>
+                  <th className="th table-cell--center-cell">État</th>
+                  <th className="th">Catégorie établissement</th>
+                  <th className="th enterprise-agreements__count">
+                    Nb accords déposés
+                  </th>
+                  <th className="th enterprise-agreements__last">
+                    Date signature du dernier
+                  </th>
+                  <th className="th see-details"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {formatedAgreements.map(
+                  ({ siret, category, state, count, lastSignatureDate }) => {
+                    return (
+                      <tr key={siret}>
+                        <td className="table-cell--nowrap">
+                          {formatSiret(siret)}
+                        </td>
+                        <td className="table-cell--center-cell">
+                          {state && <State state={state} />}
+                        </td>
+                        <td>{category}</td>
+                        <td className="has-text-right">
+                          {count && formatNumber(count)}
+                        </td>
+                        <td>{toI18nDate(lastSignatureDate)}</td>
+                        <td className="see-details">
+                          <SeeDetailsLink
+                            link={`/establishment/${siret}/#relation`}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  }
+                )}
+              </tbody>
+            </Table>
 
-          <a
-            href={
-              Config.get("legifranceSearchUrl.accords") +
-              raisonSociale.toLowerCase()
-            }
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Rechercher ces accords sur Legifrance{" "}
-            <FontAwesomeIcon icon={faExternalLink} />
-          </a>
-        </>
-      )}
-    </Subcategory>
+            <a
+              href={
+                Config.get("legifranceSearchUrl.accords") +
+                raisonSociale.toLowerCase()
+              }
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Rechercher ces accords sur Legifrance{" "}
+              <FontAwesomeIcon icon={faExternalLink} />
+            </a>
+          </>
+        )}
+      </Subcategory>
+    </div>
   );
 };
 

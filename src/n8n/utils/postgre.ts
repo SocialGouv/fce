@@ -66,8 +66,11 @@ export const logRow = () => mapRow<any, any>((val) => {
     return val;
 })
 
-export const deduplicate = (field: string | undefined) => {
+const isString = <T>(value: string | T): value is string => typeof value === "string";
+
+export const deduplicate = (field: string | string[] | undefined) => {
     const keys: any[] = [];
+
     return new Transform({
         objectMode: true,
         transform(chunk: any, encoding: string, callback) {
@@ -76,10 +79,19 @@ export const deduplicate = (field: string | undefined) => {
                 callback();
                 return;
             }
-            if (chunk[field] && !keys.includes(chunk[field])) {
+
+            const arrayField = isString(field) ? [field] : field;
+
+            const key = arrayField.reduce((res, field) => {
+                res.push(chunk[field]);
+                return res;
+            }, [] as string[]).join("|");
+
+            if (key && !keys.includes(key)) {
                 this.push(chunk);
-                keys.push(chunk[field]);
+                keys.push(key);
             }
+
             callback();
         }
     });

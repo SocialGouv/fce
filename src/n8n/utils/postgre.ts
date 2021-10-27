@@ -37,7 +37,7 @@ export const connect = (pool: Pool) => new Promise<PoolClient>((resolve, reject)
 });
 
 type MapCsvConfig = {
-    columns: Record<string, string>;
+    columns: Record<string, string> | string[];
     delimiter?: string;
 };
 
@@ -99,8 +99,10 @@ export const deduplicate = (field: string | string[] | undefined) => {
 
 export const parseCsv = ({ columns, delimiter = ";" }: MapCsvConfig) => parse({
     delimiter,
-    columns: (header: string[]) =>
-        header.map((column) => columns[column.trim()] || column),
+    columns: Array.isArray(columns)
+        ? columns
+        : (header: string[]) =>
+            header.map((column) => columns[column.trim()] || column),
 });
 
 type StringifyCsvOptions = {
@@ -175,7 +177,7 @@ type ConflictSafeInsertOptions = {
  * @param table
  * @param columns
  */
-export const conflictSafeInsert = async (client: ClientBase, stream: Readable, {
+export const conflictSafeInsert = (conflictQuery = "DO NOTHING") => async (client: ClientBase, stream: Readable, {
     table,
     columns
 }: ConflictSafeInsertOptions) => {
@@ -189,7 +191,7 @@ export const conflictSafeInsert = async (client: ClientBase, stream: Readable, {
         )
     );
 
-    await client.query(`INSERT INTO ${table} SELECT * from ${tempTableName} ON CONFLICT DO NOTHING;`);
+    await client.query(`INSERT INTO ${table} SELECT * from ${tempTableName} ON CONFLICT ${conflictQuery};`);
 
     await client.query(`DROP TABLE ${tempTableName};`);
 }

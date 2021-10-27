@@ -1,46 +1,37 @@
 import { INodeExecutionData, INodeType, INodeTypeDescription } from "n8n-workflow";
 import { IExecuteFunctions } from "n8n-core";
 import { ingestDb, IngestDbConfig } from "../../utils/ingestDb";
-import { formatISO } from "date-fns";
-import * as path from "path";
-import {getFileType, getFileYear, getSiPsiFileDate, renameColumn, SiPsiKey} from "../../utils/siPsi";
-import {DOWNLOAD_STORAGE_PATH} from "../../utils/constants";
-import {loadCsvDataframe, mergeCsvDataFrame} from "../../utils/csv";
-import { promises as fs } from "fs";
-import {mapRow} from "../../utils/postgre";
+import { getFileType, getSiPsiFileDate, SiPsiKey } from "../../utils/siPsi";
 
 type SiPsiParams = {
-  key: SiPsiKey;
+  key: string;
+  columns: string[];
   filename: string;
   updateDate: string;
+  truncate?: boolean;
+  conflictQuery?: string;
 };
-
-type FieldsMappingOptions = {
-  key: SiPsiKey;
-};
-
-const getFieldsMapping = ({ key }: FieldsMappingOptions): Record<string, string> => ({
-  [key]: key,
-  salaries_annee_courante: "salaries_annee_courante",
-  salaries_annee_precedente: "salaries_annee_precedente"
-});
 
 const makeConfig = ({
   key,
+  columns,
   filename,
-  updateDate
+  updateDate,
+  truncate = false,
+  conflictQuery,
 }: SiPsiParams): IngestDbConfig => ({
-  fieldsMapping: getFieldsMapping({ key }),
+  fieldsMapping: columns,
   filename,
   table: `psi_${key}`,
-  truncate: true,
-  separator: ",",
-  updateHistoryQuery: updateHistoryQuery(updateDate, key),
+  truncate,
+  separator: "\t",
+  updateHistoryQuery: updateHistoryQuery(updateDate, `psi_${key}`),
   nonEmptyFields: [key],
+  conflictQuery,
 });
 
-const updateHistoryQuery = (updateDate: string, key: SiPsiKey) =>
-  `UPDATE import_updates SET date = '${updateDate}', date_import = CURRENT_TIMESTAMP WHERE "table"='psi_${key}'`;
+const updateHistoryQuery = (updateDate: string, table: string) =>
+  `UPDATE import_updates SET date = '${updateDate}', date_import = CURRENT_TIMESTAMP WHERE "table"='${table}'`;
 
 export class SiPsiIngest implements INodeType {
   description: INodeTypeDescription = {
@@ -76,38 +67,34 @@ export class SiPsiIngest implements INodeType {
       return [this.helpers.returnJsonArray({})];
     }
 
-    const years = files.map(getFileYear);
-
-    const filePaths = files.map(filename => path.join(DOWNLOAD_STORAGE_PATH, filename));
-
-    const df0 = await loadCsvDataframe(filePaths[0]);
-    const df1 = await loadCsvDataframe(filePaths[1]);
-
-    let sanitizedDf0 = renameColumn(df0, years, years[0])
-    let sanitizedDf1 = renameColumn(df1, years, years[1])
+    const [previousYearFile, currentYearFile] = files.sort();
 
     const fileType = getFileType(files[0]);
-    const updateDate = getSiPsiFileDate(filePaths[0]);
 
-    const isSiren = fileType === "siren";
+    const previousYearColumns = [fileType, "salaries_annee_precedente"];
 
-    sanitizedDf0 = isSiren ? sanitizedDf0.renameSeries({ client_siren: "siren" }) : sanitizedDf0;
-    sanitizedDf1 = isSiren ? sanitizedDf1.renameSeries({ client_siren: "siren" }) : sanitizedDf1;
+    const updateDate = getSiPsiFileDate(currentYearFile);
 
-    const mergedDataFrame = mergeCsvDataFrame(sanitizedDf0, sanitizedDf1, fileType);
-
-    const tmpCsvName = `tmp_${fileType}_${updateDate}.csv`;
-
-    const tempCsvPath = path.join(DOWNLOAD_STORAGE_PATH, tmpCsvName);
-
-    await mergedDataFrame.asCSV().writeFile(tempCsvPath);
-
-    const result = await ingestDb(this, {
-      ...makeConfig({ key: fileType, filename: tmpCsvName, updateDate }),
+    await ingestDb(this, {
+      ...makeConfig({
+        key: fileType,
+        columns: previousYearColumns,
+        filename: previousYearFile,
+        updateDate,
+        truncate: true
+      }),
     });
 
-    await fs.unlink(tempCsvPath);
+    const currentYearColumns = [fileType, "salaries_annee_courante"];
 
-    return result;
+    return ingestDb(this, {
+      ...makeConfig({
+        key: fileType,
+        columns: currentYearColumns,
+        filename: currentYearFile,
+        updateDate,
+        conflictQuery: `(${fileType}) DO UPDATE SET salaries_annee_courante = EXCLUDED.salaries_annee_courante`,
+      }),
+    });
   }
 }

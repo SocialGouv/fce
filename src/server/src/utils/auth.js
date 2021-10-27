@@ -5,6 +5,7 @@ import util from "util";
 import AuthRequestsModel from "../models/AuthRequests";
 import AuthTempModel from "../models/AuthTemp";
 import ValidEmail from "../models/ValidEmail";
+import { getUnixTime, parseISO } from "date-fns";
 
 export default class Auth {
   static generateToken(user) {
@@ -80,13 +81,12 @@ export default class Auth {
   static async validateCode(email, code) {
     const authRequestsModel = new AuthRequestsModel();
     const authRequest = await authRequestsModel.getByEmail(email);
-
     if (
       !authRequest ||
       isExpired(authRequest.created_at, config.get("authCode.expire")) ||
       tooMuchFailures(authRequest.failures, config.get("authCode.maxFailures"))
     ) {
-      authRequestsModel.delete(email);
+      await authRequestsModel.delete(email);
       return {
         isValidCode: false,
         failureMessage:
@@ -162,8 +162,8 @@ const isExpired = (date, expire) => {
     return false;
   }
 
-  const created = timestampInSecond(Date.parse(date));
-  const now = timestampInSecond(Date.now());
+  const created = getUnixTime(parseISO(date));
+  const now = getUnixTime(Date());
 
   return created + +expire < now;
 };
@@ -171,9 +171,6 @@ const isExpired = (date, expire) => {
 const isAlreadyActivated = (activated) => {
   return !activated;
 };
-
-const timestampInSecond = (timestampInMillisecond) =>
-  timestampInMillisecond / 1000;
 
 const tooMuchFailures = (failures, maxFailures) => failures >= maxFailures;
 

@@ -3,6 +3,7 @@ import search from "./search";
 import enterprise from "./enterprise";
 import sources from "./sources";
 import agreements from "./agreements";
+import egapro from "./egapro";
 import psi from "./psi";
 import apprentissage from "./apprentissage";
 
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   enterprise,
   sources,
   agreements,
+  egapro,
   psi,
   apprentissage
 });

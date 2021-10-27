@@ -14,6 +14,7 @@ const app = express();
 const port = (config.has("port") && +config.get("port")) || 80;
 const sentryUrlKey = config.get("sentryUrlKey");
 
+
 if (!isDev()) {
   Sentry.init({ dsn: sentryUrlKey });
 }

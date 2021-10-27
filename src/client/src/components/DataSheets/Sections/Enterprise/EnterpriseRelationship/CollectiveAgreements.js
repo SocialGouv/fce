@@ -4,8 +4,8 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import Value from "../../../../shared/Value";
 import Config from "../../../../../services/Config";
 
-export const CollectiveAgreements = ({ idccList = null }) => {
-  return (
+export const CollectiveAgreements = ({ idccList = null }) => (
+  <div>
     <Subcategory
       subtitle="Convention(s) collective(s) appliquée(s)"
       sourceSi="DSN"
@@ -18,25 +18,25 @@ export const CollectiveAgreements = ({ idccList = null }) => {
         <ul>
           {idccList
             ? idccList.map(({ code, libelle }) => (
-                <li className="section-datas__list-item" key={code}>
-                  <a
-                    href={
-                      Config.get("legifranceSearchUrl.idcc") +
-                      code.replace(/^0+/, "")
-                    }
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    <Value value={`${code} - ${libelle}`} />
-                  </a>
-                </li>
-              ))
+              <li className="section-datas__list-item" key={code}>
+                <a
+                  href={
+                    Config.get("legifranceSearchUrl.idcc") +
+                    code.replace(/^0+/, "")
+                  }
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Value value={`${code} - ${libelle}`} />
+                </a>
+              </li>
+            ))
             : "-"}
         </ul>
       </div>
     </Subcategory>
-  );
-};
+  </div>
+);
 
 CollectiveAgreements.propTypes = {
   idccList: PropTypes.array

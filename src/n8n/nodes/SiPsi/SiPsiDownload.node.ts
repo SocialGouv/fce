@@ -5,7 +5,7 @@ import {
   INodeTypeDescription,
 } from 'n8n-workflow';
 import { downloadOldestFile, getFiles } from "../../utils/minio";
-import { getSiPsiFileDate, SiPsiKey } from "../../utils/siPsi";
+import { SiPsiKey } from "../../utils/siPsi";
 import { createMinioClient } from "../../clients/minio";
 
 export class SiPsiDownload implements INodeType {

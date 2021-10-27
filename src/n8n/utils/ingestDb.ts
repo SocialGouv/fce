@@ -1,6 +1,6 @@
 import { IExecuteFunctions } from "n8n-core";
 import { Pool } from "pg";
-import { createReadStream, createWriteStream } from "fs";
+import { createReadStream, createWriteStream, fstat } from "fs";
 import * as path from "path";
 import { DOWNLOAD_STORAGE_PATH } from "./constants";
 import { identityTransform, promisifyStream } from "./stream";
@@ -19,7 +19,7 @@ import { Transform } from "stream";
 import { format } from "date-fns";
 
 export type IngestDbConfig = {
-  fieldsMapping: Record<string, string>;
+  fieldsMapping: Record<string, string> | string[];
   table: string;
   replaceHtmlChars?: boolean;
   truncate?: boolean;
@@ -40,6 +40,7 @@ export type IngestDbConfig = {
   updateHistoryQuery?: string;
   bypassConflictSafeInsert?: boolean;
   sanitizeHtmlChars?: boolean;
+  conflictQuery?: string;
 }
 
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
@@ -68,6 +69,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
       if (!params.generateSiren) {
         return row;
       }
+
       return {
         ...row,
         siren: row.siret.substring(0, 9),
@@ -87,7 +89,9 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     await client.query(truncateRequest);
   }
 
-  const insertMethod = params.bypassConflictSafeInsert ? fastInsert : conflictSafeInsert;
+  const insertMethod = params.bypassConflictSafeInsert
+    ? fastInsert
+    : conflictSafeInsert(params.conflictQuery);
 
   await insertMethod(client, readStream, {
     table: params.table,
@@ -96,7 +100,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
 
   if (params.date) {
     const query = `UPDATE import_updates SET date = '${format(getMaxDate() || new Date(), "yyyy-MM-dd")}',
-                          date_import = CURRENT_TIMESTAMP WHERE "table" = '${params.table}';`;
+                  date_import = CURRENT_TIMESTAMP WHERE "table" = '${params.table}';`;
 
     await client.query(query);
   } else if (params.updateHistoryQuery) {

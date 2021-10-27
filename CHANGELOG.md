@@ -1,3 +1,10 @@
+## [27.20.2](https://github.com/SocialGouv/fce/compare/v27.20.1...v27.20.2) (2021-10-27)
+
+
+### Bug Fixes
+
+* **SIPSI:** fix ingestion running out of memory ([#99](https://github.com/SocialGouv/fce/issues/99)) ([535d83e](https://github.com/SocialGouv/fce/commit/535d83ef2039e801940d6bd3d6677d4ab8a1458a))
+
 ## [27.20.1](https://github.com/SocialGouv/fce/compare/v27.20.0...v27.20.1) (2021-10-27)
 
 

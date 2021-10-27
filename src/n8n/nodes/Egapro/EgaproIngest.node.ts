@@ -14,7 +14,7 @@ const getConfig = (fileName: string): IngestDbConfig => ({
     table: "egapro_index",
     truncate: true,
     separator: ";",
-    nonEmptyFields: ["siren", "annee", "index"],
+    nonEmptyFields: ["siren", "annee"],
     deduplicateField: ["siren", "annee"],
     padSiren: true,
     sanitizeHtmlChars: false,

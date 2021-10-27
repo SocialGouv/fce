@@ -29,7 +29,7 @@ const Egapro = ({ egapro, sources }) => (
                     <Value value={annee} />
                   </td>
                   <td>
-                    <Value value={index} />/100
+                    <Value value={index ? `${index}/100` : ""} empty="L'index n'a pas pu être calculé par l'entreprise  par manque de données" />
                   </td>
                 </tr>
               ))}

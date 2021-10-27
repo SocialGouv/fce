@@ -1,3 +1,10 @@
+## [27.20.1](https://github.com/SocialGouv/fce/compare/v27.20.0...v27.20.1) (2021-10-27)
+
+
+### Bug Fixes
+
+* **egapro:** display info message for empty egapro index ([#98](https://github.com/SocialGouv/fce/issues/98)) ([134b1f2](https://github.com/SocialGouv/fce/commit/134b1f2284b7442d7a080ce1bbeb9509a3be7202))
+
 # [27.20.0](https://github.com/SocialGouv/fce/compare/v27.19.0...v27.20.0) (2021-10-27)
 
 

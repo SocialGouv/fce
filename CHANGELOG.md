@@ -1,3 +1,10 @@
+# [27.20.0](https://github.com/SocialGouv/fce/compare/v27.19.0...v27.20.0) (2021-10-27)
+
+
+### Features
+
+* **egapro:** add egapro index ([#96](https://github.com/SocialGouv/fce/issues/96)) ([e62e35f](https://github.com/SocialGouv/fce/commit/e62e35f1ed2a4821d079d620c9235546dd1e36b6))
+
 # [27.19.0](https://github.com/SocialGouv/fce/compare/v27.18.1...v27.19.0) (2021-10-21)
 
 

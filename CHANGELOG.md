@@ -1,3 +1,10 @@
+## [27.20.4](https://github.com/SocialGouv/fce/compare/v27.20.3...v27.20.4) (2021-10-28)
+
+
+### Bug Fixes
+
+* **server:** increase requests rate that leads to disconnection ([#101](https://github.com/SocialGouv/fce/issues/101)) ([034770b](https://github.com/SocialGouv/fce/commit/034770b63df9fb3903fb743b719d4e074f08376d))
+
 ## [27.20.3](https://github.com/SocialGouv/fce/compare/v27.20.2...v27.20.3) (2021-10-28)
 
 

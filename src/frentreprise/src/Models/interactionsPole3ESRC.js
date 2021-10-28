@@ -10,6 +10,8 @@ const interactionsPole3ESRC = (sequelize, DataTypes) => {
       nature_controle: DataTypes.STRING,
       cible_controle: DataTypes.STRING,
       date: DataTypes.STRING,
+      clos: DataTypes.STRING,
+      clos_automatiquement: DataTypes.STRING,
     },
     {
       tableName: "interactions_pole_3e_src",

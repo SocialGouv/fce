@@ -5,13 +5,13 @@ export default ({ interactionsPole3ESRCs }) => {
     return {
       date: getFormatedDate(interaction.date),
       pole: "3E_SRC",
-      unite: `SRC ${
-        interaction.libelle_region && interaction.libelle_region.trim()
-      }`,
+      unite: `SRC ${interaction.libelle_region && interaction.libelle_region.trim()
+        }`,
       type: interaction.type_controle && interaction.type_controle.trim(),
       nature: interaction.nature_controle && interaction.nature_controle.trim(),
       cible: interaction.cible_controle && interaction.cible_controle.trim(),
       agent: null,
+      clos: interaction.clos === "Oui" || interaction.clos_automatiquement === "Oui"
     };
   });
 

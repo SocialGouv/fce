@@ -1,3 +1,10 @@
+# [27.21.0](https://github.com/SocialGouv/fce/compare/v27.20.4...v27.21.0) (2021-10-28)
+
+
+### Features
+
+* **3e_src:** add import for pole 3E_SRC [#80](https://github.com/SocialGouv/fce/issues/80) ([#103](https://github.com/SocialGouv/fce/issues/103)) ([de9b248](https://github.com/SocialGouv/fce/commit/de9b2483f45958ba3b75cf00276288a7b8dd1179))
+
 ## [27.20.4](https://github.com/SocialGouv/fce/compare/v27.20.3...v27.20.4) (2021-10-28)
 
 

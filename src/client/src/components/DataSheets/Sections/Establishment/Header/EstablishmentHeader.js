@@ -14,7 +14,8 @@ import { formatSiret } from "../../../../../helpers/utils";
 const EstablishmentHeader = ({
   enterprise,
   establishment,
-  establishment: { adresse_composant }
+  establishment: { adresse_composant },
+  apprentissage,
 }) => {
   const address = adresse_composant && formatAddress(adresse_composant);
 
@@ -97,7 +98,7 @@ const EstablishmentHeader = ({
           </span>
         </div>
       </div>
-      <Dashboard establishment={establishment} />
+      <Dashboard establishment={establishment} apprentissage={apprentissage} />
     </section>
   );
 };
@@ -105,7 +106,8 @@ const EstablishmentHeader = ({
 EstablishmentHeader.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
-  adresse_composant: PropTypes.object
+  adresse_composant: PropTypes.object,
+  apprentissage: PropTypes.object.isRequired,
 };
 
 export default EstablishmentHeader;

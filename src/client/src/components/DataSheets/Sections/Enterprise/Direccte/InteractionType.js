@@ -11,13 +11,12 @@ const InteractionType = ({ type, interactions }) => {
   const numberOfEstablishments = interactions.length;
   const s = numberOfEstablishments > 1 ? "s" : "";
 
-  const subtitle = `${numberOfEstablishments} établissement${s} ${
-    isControl ? "contrôlé" : "visité"
-  }${s}${isControl ? "" : " par les Services économiques de l'État en région"}`;
+  const subtitle = `${numberOfEstablishments} établissement${s} ${isControl ? "contrôlé" : "visité"
+    }${s}${isControl ? "" : " par les Services économiques de l'État en région"}`;
 
   return (
     <Subcategory subtitle={subtitle}>
-      {interactions.length && (
+      {interactions.length ? (
         <Table>
           <thead>
             <tr>
@@ -50,7 +49,7 @@ const InteractionType = ({ type, interactions }) => {
             ))}
           </tbody>
         </Table>
-      )}
+      ) : ""}
     </Subcategory>
   );
 };

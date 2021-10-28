@@ -1,3 +1,10 @@
+## [27.20.3](https://github.com/SocialGouv/fce/compare/v27.20.2...v27.20.3) (2021-10-28)
+
+
+### Bug Fixes
+
+* **egapro:** fix display and info message ([#102](https://github.com/SocialGouv/fce/issues/102)) ([e6784bb](https://github.com/SocialGouv/fce/commit/e6784bb548ae8b9c6cf7f1d24c4a7f31980e31a0))
+
 ## [27.20.2](https://github.com/SocialGouv/fce/compare/v27.20.1...v27.20.2) (2021-10-27)
 
 

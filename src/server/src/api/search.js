@@ -6,7 +6,7 @@ import NotFoundException from "../Exceptions/NotFoundException";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
 import Establishment from "../models/Establishment";
-import {limitRate} from "../middlewares/limit-rate";
+import { limitRate } from "../middlewares/limit-rate";
 
 const express = require("express");
 const xlsx = require("xlsx");
@@ -48,7 +48,10 @@ const isSuccessEstablishment = (data, siret) => {
   return !!establishment?._success;
 };
 
-router.get("/entity", withAuth, limitRate({ count: 10, period: 10000 }), function (req, res) {
+router.get("/entity", withAuth, limitRate({
+  count: 2 * config.get("api.requestsPer10Seconds"),
+  period: 10000
+}), function (req, res) {
   const query = (req.query["q"] || "").trim();
   const dataSource = (req.query["dataSource"] || "").trim();
 
@@ -145,7 +148,7 @@ router.post("/downloadXlsx", withAuth, async function (req, res) {
               Siret: cleanedData.siret,
               Etat:
                 xlsxConfig.establishmentState[
-                  cleanedData.etatadministratifetablissement
+                cleanedData.etatadministratifetablissement
                 ],
               "Raison sociale": cleanedData.establishment_name
                 ? cleanedData.establishment_name
@@ -160,7 +163,7 @@ router.post("/downloadXlsx", withAuth, async function (req, res) {
               Ville: cleanedData.libellecommuneetablissement,
               "Dernier effectif DSN connu":
                 xlsxConfig.inseeSizeRanges[
-                  cleanedData.lastdsntrancheeffectifsetablissement
+                cleanedData.lastdsntrancheeffectifsetablissement
                 ],
               Activité:
                 cleanedData.activiteprincipaleetablissement +

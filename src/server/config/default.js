@@ -143,6 +143,9 @@ const config = {
   },
   host: process.env.HOST || "127.0.0.1",
   port: process.env.PORT || 80,
+  api: {
+    requestsPer10Seconds: 20
+  }
 };
 
 module.exports = config;

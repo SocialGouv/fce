@@ -21,6 +21,7 @@ import {
 } from "./postgre";
 import { Transform } from "stream";
 import { format } from "date-fns";
+import { decodeStream } from "iconv-lite";
 
 export type IngestDbConfig = {
   fieldsMapping: Record<string, string> | string[];
@@ -45,6 +46,8 @@ export type IngestDbConfig = {
   bypassConflictSafeInsert?: boolean;
   sanitizeHtmlChars?: boolean;
   conflictQuery?: string;
+  encoding?: "windows-1252" | "utf8",
+  addedColumns?: string[]
 }
 
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
@@ -55,6 +58,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
   const columns = [
     ...Object.values(params.fieldsMapping),
     ...(params.generateSiren ? ["siren"] : []),
+    ...params.addedColumns ?? []
   ];
 
   const { transform: dateTransform, getMaxDate } = params.date ? dateStream(params.date) : {
@@ -62,7 +66,10 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     getMaxDate: (): void => { }
   };
 
+  const encoder = params.encoding === "windows-1252" ? decodeStream("win1252") : identityTransform();
+
   const readStream = createReadStream(path.join(DOWNLOAD_STORAGE_PATH, params.filename))
+    .pipe(encoder)
     .pipe(params.sanitizeHtmlChars !== false ? sanitizeHtmlChars() : identityTransform())
     .pipe(parseCsv({ columns: params.fieldsMapping, delimiter: params.separator }))
     .pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))

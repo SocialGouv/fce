@@ -78,62 +78,71 @@ const Direccte = ({ establishment }) => {
           {!!(
             establishment.interactions && establishment.interactions.length
           ) && (
-            <Table
-              className="direccte-interactions-establishment__table"
-              isBordered
-            >
-              <thead>
-                <tr>
-                  <th className="has-text-right">Pôle</th>
-                  <th>Date</th>
-                  <th>Unité</th>
-                  <th>Type</th>
-                  <th>Agent</th>
-                  <th>Source</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Object.entries(lastInteractions).map(
-                  ([pole, lastInteraction]) => (
-                    <tr key={pole}>
-                      <td>
-                        <Value value={pole} />
-                      </td>
-                      <td>
-                        <Value value={lastInteraction.date} />
-                      </td>
-                      <td>
-                        <Value value={lastInteraction.unite} />
-                      </td>
-                      <td>
-                        <Value
-                          value={
-                            Config.get("poleSrcControlType")[
+              <Table
+                className="direccte-interactions-establishment__table"
+                isBordered
+              >
+                <thead>
+                  <tr>
+                    <th className="has-text-right">Pôle</th>
+                    <th>Date</th>
+                    <th>Unité</th>
+                    <th>Type</th>
+                    <th>Agent</th>
+                    <th>Source</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(lastInteractions).map(
+                    ([pole, lastInteraction]) => (
+                      <tr key={pole}>
+                        <td>
+                          <Value value={pole} />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.date} />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.unite} />
+                        </td>
+                        <td>
+                          <Value
+                            value={
+                              Config.get("poleSrcControlType")[
                               lastInteraction.type
-                            ]
-                          }
-                        />
-                        {lastInteraction.nature && lastInteraction.cible && (
-                          <div className="direccte-interactions-establishment__control-nature">
-                            <span>Nature du contrôle : </span>
-                            <Value
-                              value={`${lastInteraction.cible} - ${lastInteraction.nature}`}
-                            />
-                          </div>
-                        )}
-                      </td>
-                      <td>
-                        <Value value={lastInteraction.agent} />
-                      </td>
-                      <td>
-                        <Source si={lastInteraction.source} isTableCell />
-                      </td>
-                    </tr>
-                  )
-                )}
-              </tbody>
-            </Table>
-          )}
+                              ]
+                            }
+                          />
+                          {lastInteraction.nature && lastInteraction.cible && (
+                            <>
+                              <div className="direccte-interactions-establishment__control-nature">
+                                <span>Nature du contrôle : </span>
+                                <Value
+                                  value={`${lastInteraction.cible} - ${lastInteraction.nature}`}
+                                />
+                              </div>
+                              <div className="direccte-interactions-establishment__control-nature">
+                                <Value
+                                  value={lastInteraction.clos
+                                    ? "Contrôle Clos"
+                                    : "Contrôle en cours"}
+                                />
+                              </div>
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.agent} />
+                        </td>
+                        <td>
+                          <Source si={lastInteraction.source} isTableCell />
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </Table>
+            )}
         </Subcategory>
       </div>
     </section>

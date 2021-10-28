@@ -78,6 +78,7 @@ const globalConfig = {
     CSA: "Taxe apprentissage",
     "Apprentissage (hors CSA)": "Apprentissage (hors taxe)",
     FSE: "FSE",
+    "Refus d'enregistrement": "Refus d'enregistrement"
   },
   accords: [
     { key: "epargne", value: "Epargne salariale" },

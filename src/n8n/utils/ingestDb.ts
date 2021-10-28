@@ -1,16 +1,20 @@
 import { IExecuteFunctions } from "n8n-core";
 import { Pool } from "pg";
-import { createReadStream, createWriteStream, fstat } from "fs";
+import { createReadStream } from "fs";
 import * as path from "path";
 import { DOWNLOAD_STORAGE_PATH } from "./constants";
-import { identityTransform, promisifyStream } from "./stream";
+import { identityTransform } from "./stream";
 import {
   conflictSafeInsert,
   connect,
-  createPool, dateStream,
-  deduplicate, fastInsert,
+  createPool,
+  dateStream,
+  deduplicate,
+  fastInsert,
   filterRows,
-  mapRow, padSiren, padSiret,
+  mapRow,
+  padSiren,
+  padSiret,
   parseCsv,
   sanitizeHtmlChars,
   stringifyCsv

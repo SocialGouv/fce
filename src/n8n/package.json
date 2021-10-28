@@ -60,8 +60,6 @@
     "dependencies": {
         "csv-parse": "^4.16.0",
         "csv-stringify": "^5.6.2",
-        "data-forge": "^1.8.17",
-        "data-forge-fs": "^0.0.9",
         "date-fns": "^2.22.1",
         "date-fns-tz": "^1.1.6",
         "extract-zip": "^2.0.1",

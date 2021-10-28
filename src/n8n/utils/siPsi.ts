@@ -1,7 +1,6 @@
-import {format, getYear, parse, subYears} from "date-fns";
+import { format, getYear, parse, subYears } from "date-fns";
 import * as path from "path";
 import { pipe } from "lodash/fp";
-import {IDataFrame} from "data-forge";
 
 export type SiPsiKey = "siren" | "siret";
 
@@ -32,20 +31,3 @@ export const getFileType = (filename: string): SiPsiKey => {
 
   return (match ? match[1] : "").toLowerCase() as SiPsiKey;
 };
-
-export const getSiPsiColumnName = (year: string, years: string[]) =>
-    +year === Math.max(...years.map(y => +y)) ? "salaries_annee_courante" : "salaries_annee_precedente"
-
-export const getEffectifColumnName = (columnNames: string[]) =>
-    columnNames.find((column) => /salaries_distincts/.test(column)) || "";
-
-export const renameColumn = (df: IDataFrame, years: string[], currentYear: string) => {
-  const columns = df.getColumnNames();
-
-  const currentColumnName = getEffectifColumnName(columns);
-  const nextColumnName = getSiPsiColumnName(currentYear, years);
-
-  return df.renameSeries({
-    [currentColumnName]: nextColumnName
-  });
-}

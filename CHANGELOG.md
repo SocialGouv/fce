@@ -1,3 +1,10 @@
+## [27.21.1](https://github.com/SocialGouv/fce/compare/v27.21.0...v27.21.1) (2021-10-29)
+
+
+### Bug Fixes
+
+* **apprentissage:** add helps badge when apprentissage is used [#67](https://github.com/SocialGouv/fce/issues/67) ([#104](https://github.com/SocialGouv/fce/issues/104)) ([66e1e5e](https://github.com/SocialGouv/fce/commit/66e1e5e896343f80dd6002cc657ce3f4fce71d28))
+
 # [27.21.0](https://github.com/SocialGouv/fce/compare/v27.20.4...v27.21.0) (2021-10-28)
 
 

@@ -42,7 +42,7 @@ const Establishment = ({
           </div>
 
           <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
-            <Header establishment={establishment} enterprise={enterprise} />
+            <Header establishment={establishment} enterprise={enterprise} apprentissage={apprentissage} />
             <div className="data-sheet__main-container">
               <QuickAccess
                 anchors={[

@@ -32,6 +32,7 @@ const Dashboard = ({
     rcc,
     lice
   },
+  apprentissage,
   psi
 }) => {
   const hasInteractions = totalInteractions && totalInteractions.total > 0;
@@ -63,8 +64,8 @@ const Dashboard = ({
 
   const effectif = isActiveEstablishment(establishment)
     ? (dernier_effectif_physique && formatNumber(dernier_effectif_physique)) ||
-      dashboardSizeRanges[tranche_effectif_insee] ||
-      "-"
+    dashboardSizeRanges[tranche_effectif_insee] ||
+    "-"
     : "0 salarié";
 
   const establishmentPsiData = psi.establishments.find(
@@ -120,9 +121,9 @@ const Dashboard = ({
         {(establishment.agrements_iae ||
           establishment.ea ||
           establishment.contrat_aide ||
-          hasApprentissage(establishment.apprentissage)) && (
-          <Item icon={faMedkit} name="Aides" value="Oui" />
-        )}
+          hasApprentissage(apprentissage)) && (
+            <Item icon={faMedkit} name="Aides" value="Oui" />
+          )}
 
         {(isEnterprisePsiContractor || isEstablishmentWithPsi) && (
           <Item
@@ -144,7 +145,8 @@ const Dashboard = ({
 
 Dashboard.propTypes = {
   establishment: PropTypes.object.isRequired,
-  psi: PropTypes.object.isRequired
+  psi: PropTypes.object.isRequired,
+  apprentissage: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => {

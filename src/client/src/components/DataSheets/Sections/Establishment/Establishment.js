@@ -22,7 +22,8 @@ const Establishment = ({
   establishments,
   enterprise,
   headOffice,
-  apprentissage
+  apprentissage,
+  successions
 }) => {
   const location = useLocation();
   useScrollToLocationHash({ location });
@@ -53,7 +54,7 @@ const Establishment = ({
                   { label: "Aides et agréments", link: "helps" }
                 ]}
               />
-              <Activity establishment={establishment} enterprise={enterprise} />
+              <Activity establishment={establishment} enterprise={enterprise} successions={successions} />
               <Direccte establishment={establishment} enterprise={enterprise} />
               <Relationship
                 establishment={establishment}
@@ -79,7 +80,8 @@ Establishment.propTypes = {
   establishment: PropTypes.object.isRequired,
   apprentissage: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired
+  headOffice: PropTypes.object.isRequired,
+  successions: PropTypes.object.isRequired,
 };
 
 export default withLoading(Establishment);

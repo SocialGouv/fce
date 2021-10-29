@@ -6,6 +6,7 @@ import agreements from "./agreements";
 import egapro from "./egapro";
 import psi from "./psi";
 import apprentissage from "./apprentissage";
+import successions from "./succession";
 
 const reducers = combineReducers({
   search,
@@ -14,7 +15,8 @@ const reducers = combineReducers({
   agreements,
   egapro,
   psi,
-  apprentissage
+  apprentissage,
+  successions
 });
 
 export default reducers;

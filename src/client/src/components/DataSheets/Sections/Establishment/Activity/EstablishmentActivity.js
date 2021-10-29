@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { groupBy, map, mapValues, pipe, entries, spread } from "lodash/fp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory, faSpinner } from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../../../services/Config";
-import { getSuccession } from "../../../../../helpers/Establishment";
 import { getMonthName } from "../../../../../helpers/Date";
 import Subcategory from "../../SharedComponents/Subcategory";
 import AllEffectifsEtp from "../../../../../containers/AllEffectifsEtpButton";
@@ -11,16 +11,55 @@ import AllEffectifsDsn from "../../../../../containers/AllEffectifsDsnButton";
 import Table from "../../SharedComponents/Table";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
+import SuccessionData from "./SuccessionData";
 
 import "./establishmentActivity.scss";
 
-const EstablishmentActivity = ({ establishment }) => {
+const isSuccesseur = siret => succession => siret === succession.siretetablissementsuccesseur;
+
+const getSuccessionsValue = (successions, isSuccesseur) => successions.map(({
+  dateliensuccession,
+  siretetablissementpredecesseur,
+  siretetablissementsuccesseur
+}) => {
+  const otherEstablishementSiret = isSuccesseur
+    ? siretetablissementpredecesseur
+    : siretetablissementsuccesseur;
+
+  return {
+    siret: otherEstablishementSiret,
+    date: dateliensuccession,
+    link: `/establishment/${otherEstablishementSiret}`
+  }
+});
+
+const getSuccessionsData = (successions, siret) =>
+  successions.successions.length === 0 ? [
+    {
+      name: "SIRET prédecesseur ou successeur",
+      values: [{
+        siret: "pas de prédecesseur ou de successeur"
+      }]
+    }
+  ] : pipe(
+    groupBy(isSuccesseur(siret)),
+    entries,
+    map(([isSuccesseur, successions]) => ({
+      name: `${isSuccesseur === "true"
+        ? "SIRET prédecesseur"
+        : "SIRET successeur"}${successions.length > 1 ? "s" : ""}`,
+      values: getSuccessionsValue(successions, isSuccesseur === "true")
+    }))
+  )(successions.successions);
+
+
+const EstablishmentActivity = ({ establishment, successions }) => {
   const [allEffectifsEtp, setAllEffectifsEtp] = useState(null);
   const [allEffectifDsn, setAllEffectifsDsn] = useState(null);
 
-  const succession = getSuccession(
-    establishment.successeur,
-    establishment.predecesseur
+  const successionsData = getSuccessionsData(
+    successions,
+    establishment.siret,
   );
 
   const isLoadingEffectifMensuelEtp = !establishment.effectifMensuelEtp;
@@ -32,17 +71,17 @@ const EstablishmentActivity = ({ establishment }) => {
 
   const EffectifEtpDataComponents = !!effectifEtpData?.length
     ? effectifEtpData.map(({ annee, mois, effectifs_mensuels }) => ({
-        name: `Effectif ETP ${getMonthName(mois)}`,
-        value: effectifs_mensuels,
-        nonEmptyValue: "",
-        sourceCustom: `Acoss / DSN ${getMonthName(mois)} ${annee}`,
-        hasNumberFormat: true
-      }))
+      name: `Effectif ETP ${getMonthName(mois)}`,
+      value: effectifs_mensuels,
+      nonEmptyValue: "",
+      sourceCustom: `Acoss / DSN ${getMonthName(mois)} ${annee}`,
+      hasNumberFormat: true
+    }))
     : [
-        {
-          name: `Effectif ETP`
-        }
-      ];
+      {
+        name: `Effectif ETP`
+      }
+    ];
   return (
     <section id="activity" className="data-sheet__section">
       <div className="section-header">
@@ -54,42 +93,30 @@ const EstablishmentActivity = ({ establishment }) => {
       <div className="section-datas">
         <Subcategory
           subtitle="Lien de succession"
-          datas={[
-            {
-              name: succession && succession.label,
-              value: succession.datas && succession.datas.siret,
-              emptyValue: "pas de prédecesseur ou de successeur",
-              nonEmptyValue: "",
-              link: succession.datas
-                ? "/establishment/" + succession.datas.siret
-                : null
-            },
-            {
-              name: "Date du transfert",
-              value: succession.datas && succession.datas.date_transfert,
-              emptyValue: "-",
-              nonEmptyValue: ""
-            }
-          ]}
           sourceSi="Sirène"
-        />
+        >
+          {
+            successionsData.map(({ name, values }) =>
+              <SuccessionData key={name} name={name} values={values} />
+            )}
+        </Subcategory>
         <Subcategory
           className="effectifs-establishment"
           subtitle="Effectifs"
           datas={[
             ...(isLoadingEffectifMensuelEtp
               ? [
-                  {
-                    name: `Effectif ETP`,
+                {
+                  name: `Effectif ETP`,
 
-                    value: (
-                      <div>
-                        <span>Chargement en cours </span>
-                        <FontAwesomeIcon icon={faSpinner} spin />
-                      </div>
-                    )
-                  }
-                ]
+                  value: (
+                    <div>
+                      <span>Chargement en cours </span>
+                      <FontAwesomeIcon icon={faSpinner} spin />
+                    </div>
+                  )
+                }
+              ]
               : EffectifEtpDataComponents)
           ]}
         >
@@ -97,7 +124,7 @@ const EstablishmentActivity = ({ establishment }) => {
             name="Tranche Effectif INSEE"
             value={
               Config.get("inseeSizeRanges")[
-                establishment.tranche_effectif_insee
+              establishment.tranche_effectif_insee
               ]
             }
             nonEmptyValue=""
@@ -217,7 +244,8 @@ const EstablishmentActivity = ({ establishment }) => {
 };
 
 EstablishmentActivity.propTypes = {
-  establishment: PropTypes.object.isRequired
+  establishment: PropTypes.object.isRequired,
+  successions: PropTypes.array.isRequired,
 };
 
 export default EstablishmentActivity;

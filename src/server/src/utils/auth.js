@@ -5,7 +5,7 @@ import util from "util";
 import AuthRequestsModel from "../models/AuthRequests";
 import AuthTempModel from "../models/AuthTemp";
 import ValidEmail from "../models/ValidEmail";
-import { getUnixTime, parseISO } from "date-fns";
+import { getUnixTime, parseISO, subMinutes } from "date-fns";
 
 export default class Auth {
   static generateToken(user) {
@@ -162,8 +162,10 @@ const isExpired = (date, expire) => {
     return false;
   }
 
-  const created = getUnixTime(parseISO(date));
-  const now = getUnixTime(Date());
+  // We have to use this as dates are stored without timezone in the DB
+  const testedDate = subMinutes(date, new Date().getTimezoneOffset());
+  const created = getUnixTime(testedDate);
+  const now = getUnixTime(new Date());
 
   return created + +expire < now;
 };

@@ -1,3 +1,10 @@
+## [27.21.2](https://github.com/SocialGouv/fce/compare/v27.21.1...v27.21.2) (2021-11-05)
+
+
+### Bug Fixes
+
+* **login:** fix error with expired login codes ([#106](https://github.com/SocialGouv/fce/issues/106)) ([a6dbc6c](https://github.com/SocialGouv/fce/commit/a6dbc6ce9a58e5561eb154376cc4c0b78e55fefc))
+
 ## [27.21.1](https://github.com/SocialGouv/fce/compare/v27.21.0...v27.21.1) (2021-10-29)
 
 

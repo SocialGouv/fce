@@ -1,3 +1,10 @@
+## [27.21.3](https://github.com/SocialGouv/fce/compare/v27.21.2...v27.21.3) (2021-11-09)
+
+
+### Bug Fixes
+
+* **succession:** restore succession display ([#105](https://github.com/SocialGouv/fce/issues/105)) ([349b9a6](https://github.com/SocialGouv/fce/commit/349b9a653b501a241de3290bba80f68464fef139))
+
 ## [27.21.2](https://github.com/SocialGouv/fce/compare/v27.21.1...v27.21.2) (2021-11-05)
 
 

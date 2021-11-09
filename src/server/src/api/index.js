@@ -12,6 +12,7 @@ import agreements from "./agreements";
 import psi from "./psi";
 import apprentissage from "./apprentissage";
 import egapro from "./egapro";
+import succession from "./succession";
 
 const router = express.Router();
 
@@ -27,5 +28,6 @@ router.use("", agreements);
 router.use("", psi);
 router.use("", apprentissage);
 router.use("", egapro);
+router.use("", succession);
 
 export default router;

@@ -15,6 +15,7 @@ import {
   loadSources,
   loadEstablishment,
   loadEntreprise,
+  loadSuccessions,
 } from "../../services/Store/actions";
 import { loadApprentissage } from "../../services/Store/actions/apprentissage";
 import { loadEgapro } from "../../services/Store/actions/egapro";
@@ -26,6 +27,7 @@ const Enterprise = ({
   agreements,
   psi,
   apprentissage,
+  successions,
   egapro,
   loadEntreprise,
   loadEstablishment,
@@ -33,7 +35,8 @@ const Enterprise = ({
   loadApprentissage,
   loadPsi,
   loadSources,
-  loadEgapro
+  loadEgapro,
+  loadSuccessions
 }) => {
   const [state, setState] = useState(null);
   const [currentUrl, setCurrentUrl] = useState("");
@@ -90,7 +93,13 @@ const Enterprise = ({
 
     loadApprentissage(identifier);
     loadEgapro(currentEnterprise.siren);
+
+    // if establishment, load successions
+    if (!isEnterprise) {
+      loadSuccessions(identifier);
+    }
   }, [
+    isEnterprise,
     identifier,
     match,
     loadMethod,
@@ -101,6 +110,7 @@ const Enterprise = ({
     loadEgapro,
     loadPsi,
     loadSources,
+    loadSuccessions,
   ]);
 
   useEffect(() => {
@@ -154,6 +164,7 @@ const Enterprise = ({
       apprentissage={apprentissage}
       isLoaded={isLoadedEstablishment()}
       history={history}
+      successions={successions}
     />
   );
 };
@@ -174,6 +185,7 @@ Enterprise.propTypes = {
   loadApprentissage: PropTypes.func.isRequired,
   loadPsi: PropTypes.func,
   loadSources: PropTypes.func.isRequired,
+  loadSuccessions: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
 };
 
@@ -183,35 +195,21 @@ const mapStateToProps = (state) => {
     agreements: state.agreements,
     psi: state.psi,
     apprentissage: state.apprentissage.apprentissage,
-    egapro: state.egapro
+    egapro: state.egapro,
+    successions: state.successions
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadEstablishment: (siret) => {
-      return dispatch(loadEstablishment(siret));
-    },
-    loadEntreprise: (siren) => {
-      return dispatch(loadEntreprise(siren));
-    },
-    loadAgreements: (identifier) => {
-      return dispatch(loadAgreements(identifier));
-    },
-    loadApprentissage: (identifier) => {
-      return dispatch(loadApprentissage(identifier));
-    },
-    loadEgapro: (siren) => {
-      return dispatch(loadEgapro(siren))
-    },
-    loadPsi: (identifier) => {
-      return dispatch(loadPsi(identifier));
-    },
-    loadSources: () => {
-      return dispatch(loadSources());
-    }
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  loadEstablishment: (siret) => dispatch(loadEstablishment(siret)),
+  loadEntreprise: (siren) => dispatch(loadEntreprise(siren)),
+  loadAgreements: (identifier) => dispatch(loadAgreements(identifier)),
+  loadApprentissage: (identifier) => dispatch(loadApprentissage(identifier)),
+  loadEgapro: (siren) => dispatch(loadEgapro(siren)),
+  loadPsi: (identifier) => dispatch(loadPsi(identifier)),
+  loadSources: () => dispatch(loadSources()),
+  loadSuccessions: (siret) => dispatch(loadSuccessions(siret))
+});
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(Enterprise)

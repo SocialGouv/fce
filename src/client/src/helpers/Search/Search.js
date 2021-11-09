@@ -3,6 +3,9 @@ import Config from "../../services/Config";
 export const isActiveEstablishment = etat =>
   etat === Config.get("establishmentState").actif;
 
+export const isSiret = (value) => value.match(/^\s*(\d\s*){14}$/);
+export const isSiren = (value) => value.match(/^\s*(\d\s*){9}$/);
+
 export const formatSearchInput = query => {
   if (query === "") {
     return query;

@@ -75,20 +75,17 @@ const SearchResults = ({
                   sortKey: "siret",
                   importantHead: true,
                   accessor: fields => {
-                    let siret = fields?.siret?.raw;
-                    return Value({
-                      value: formatSiret(siret),
-                      link: `/establishment/${siret}`
-                    });
+                    let siret = fields?.siret;
+                    return <Value value={formatSiret(siret)} link={`/establishment/${siret}`} />
                   },
-                  link: ({ siret: { raw: siret } }) => `/establishment/${siret}`
+                  link: ({ siret }) => `/establishment/${siret}`
                 },
                 {
                   headName: "État",
                   sortKey: "etatadministratifetablissement",
                   accessor: fields => {
-                    let siret = fields?.siret?.raw;
-                    let etat = fields?.etatadministratifetablissement?.raw;
+                    let siret = fields?.siret;
+                    let etat = fields?.etatadministratifetablissement;
                     return TableCellState({ siret, etat });
                   }
                 },
@@ -97,8 +94,8 @@ const SearchResults = ({
                   sortKey: "enterprise_name",
                   html: true,
                   accessor: fields => {
-                    let enterpriseName = fields?.enterprise_name.raw;
-                    let enseigne = fields?.enseigne1etablissement.raw;
+                    let enterpriseName = fields?.enterprise_name;
+                    let enseigne = fields?.enseigne1etablissement;
 
                     let name = `<div>${enterpriseName}</div>`;
 
@@ -115,7 +112,7 @@ const SearchResults = ({
                   headName: "Catégorie établissement",
                   sortKey: "etablissementsiege",
                   accessor: fields => {
-                    const isSiege = fields?.etablissementsiege?.raw === "true";
+                    const isSiege = fields?.etablissementsiege === "true";
                     return Value({
                       value: isSiege ? "Siège social" : "Étab. secondaire"
                     });
@@ -125,8 +122,8 @@ const SearchResults = ({
                   headName: "Code postal",
                   sortKey: "codepostaletablissement",
                   accessor: fields => {
-                    let postalCode = fields?.codepostaletablissement?.raw;
-                    let town = fields?.libellecommuneetablissement?.raw;
+                    let postalCode = fields?.codepostaletablissement;
+                    let town = fields?.libellecommuneetablissement;
                     return Value({
                       value: joinNoFalsy([postalCode, town], " - ")
                     });
@@ -137,14 +134,14 @@ const SearchResults = ({
                   sortKey: "lastdsntrancheeffectifsetablissement",
                   accessor: fields => {
                     let trancheEffectif =
-                      fields?.lastdsntrancheeffectifsetablissement?.raw;
-                    let etat = fields?.etatadministratifetablissement?.raw;
+                      fields?.lastdsntrancheeffectifsetablissement;
+                    let etat = fields?.etatadministratifetablissement;
 
                     return Value({
                       value:
                         trancheEffectif !== "-" &&
-                        trancheEffectif !== "NN" &&
-                        trancheEffectif !== "SP"
+                          trancheEffectif !== "NN" &&
+                          trancheEffectif !== "SP"
                           ? isActiveEstablishment(etat)
                             ? staffSizeRanges[trancheEffectif]
                             : "0 salarié"
@@ -156,16 +153,15 @@ const SearchResults = ({
                   headName: "Activité",
                   sortKey: "activiteprincipaleetablissement",
                   accessor: fields => {
-                    let naf = fields?.activiteprincipaleetablissement?.raw;
+                    let naf = fields?.activiteprincipaleetablissement;
                     let libelle_naf =
-                      fields?.activiteprincipaleetablissement_libelle?.raw;
+                      fields?.activiteprincipaleetablissement_libelle;
 
                     return (
                       naf &&
                       Value({
-                        value: `${naf === undefined ? "" : naf} ${
-                          libelle_naf === undefined ? "" : " - " + libelle_naf
-                        }`
+                        value: `${naf === undefined ? "" : naf} ${libelle_naf === undefined ? "" : " - " + libelle_naf
+                          }`
                       })
                     );
                   }

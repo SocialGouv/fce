@@ -18,7 +18,11 @@ import SearchView from "../../components/Search";
 import divisionsNaf from "./divisions-naf.json";
 import trancheEffectif from "./tranche-effectif.json";
 import Config from "../../services/Config";
-import { formatSearchInput } from "../../helpers/Search";
+import { formatSearchInput, isSiret } from "../../helpers/Search";
+import {
+  formatAppSearchResults,
+  formatAppSearchPagination
+} from "../../helpers/AppSearch/AppSearch";
 
 const client = AppSearch.createClient(Config.get("appSearch").client);
 const defaultOptions = Config.get("appSearch").defaultOptions;
@@ -114,23 +118,40 @@ const Search = ({
     };
   }
 
-  const sendRequest = (query, options) => {
+  const sendRequest = async (query, options) => {
     setSearchIsLoading(true);
     setSearchError(null);
 
-    client
-      .search(formatSearchInput(query), options)
-      .then(resultList => {
-        setSearchResults(resultList, options.filters);
-        setSearchIsLoading(false);
-      })
-      .catch(error => {
+    if (isSiret(query)) {
+      // query is a siret, call ApiGouv endpoint to get establishment
+      const response = await Http.get(`/search/api-gouv/${query.replace(/\s/g, "")}`);
+
+      setSearchResults({
+        results: [response.data],
+        pagination: {
+          current: 1,
+          size: 1,
+          pages: 1,
+          items: 1
+        }
+      }, options.filters);
+    } else {
+      // query is not a siret, call AppSearch
+      try {
+        const resultList = await client.search(formatSearchInput(query), options);
+        setSearchResults({
+          results: formatAppSearchResults(resultList),
+          pagination: formatAppSearchPagination(resultList)
+        }, options.filters);
+      } catch (error) {
         setSearchError(
           `Une erreur est survenue lors de la communication avec l'API`
         );
-        setSearchIsLoading(false);
         console.error(`error: ${error}`);
-      });
+      }
+    }
+
+    setSearchIsLoading(false);
   };
 
   const handlePageChange = nextCurrentPage =>
@@ -179,7 +200,7 @@ const Search = ({
     });
   };
 
-  const loadLocations = term => {
+  const loadLocations = async term => {
     const minTermLength = Config.get("advancedSearch").minTerms;
     const debounceTime = Config.get("advancedSearch").debounce;
 
@@ -187,9 +208,7 @@ const Search = ({
     clearTimeout(loadLocationsTimer);
 
     if (term.length < minTermLength) {
-      return new Promise(resolve => {
-        resolve([]);
-      });
+      return [];
     }
 
     const communesPromise = Http.get("/communes", {
@@ -210,7 +229,7 @@ const Search = ({
         }
         return [];
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error(error);
         return [];
       });
@@ -231,7 +250,7 @@ const Search = ({
         }
         return [];
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error(error);
         return [];
       });
@@ -304,11 +323,14 @@ const Search = ({
     }
   }, [searchParamsOnLoad, sendRequestOnce]);
 
+  console.log(search.results);
+
   return (
     <SearchView
       isLoading={search.isLoading}
       error={search.error || downloadXlsxStatus.error}
-      resultList={search.results}
+      resultList={search?.results?.results || []}
+      pagination={search?.results?.pagination}
       sendRequest={sendRequest}
       searchTerm={search.term}
       setSearchTerm={setSearchTerm}

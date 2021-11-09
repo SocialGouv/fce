@@ -74,7 +74,7 @@ const SearchAwesomeTable = ({
           <tr
             key={index}
             className="at__body__tr"
-            onClick={() => history.push(`/establishment/${element.siret.raw}`)}
+            onClick={() => history.push(`/establishment/${element.siret}`)}
           >
             {fields.map((field, index) => (
               <td

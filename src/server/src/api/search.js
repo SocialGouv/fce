@@ -7,6 +7,7 @@ import NotFoundException from "../Exceptions/NotFoundException";
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
 import Establishment from "../models/Establishment";
 import { limitRate } from "../middlewares/limit-rate";
+import axios from "axios"
 
 const express = require("express");
 const xlsx = require("xlsx");
@@ -90,6 +91,61 @@ router.get("/entity", withAuth, limitRate({
       logError(data, e);
       sendResult(data, res);
     });
+});
+
+router.get("/search/api-gouv/:siret", async (req, res) => {
+  const siret = (req.params["siret"] || "").trim();
+
+  const params = {
+    token: config.get("APIGouv.token"),
+    context: "Tiers",
+    recipient: "Direccte Occitanie",
+    object: "FCEE - Direccte Occitanie",
+    non_diffusables: true
+  };
+
+  const requestSiret = axios.get(`https://entreprise.api.gouv.fr:443/v2/etablissements/${siret}`, {
+    params
+  });
+
+  const siren = siret.slice(0, 9);
+
+  const requestSiren = axios.get(`https://entreprise.api.gouv.fr:443/v2/entreprises/${siren}`, {
+    params
+  });
+
+  try {
+    const [etablissement, entreprise] = await Promise.all([requestSiret, requestSiren]);
+
+    const {
+      siege_social: etablissementsiege,
+      adresse: { code_postal: codepostaletablissement, localite: libellecommuneetablissement }
+    } = etablissement.data.etablissement;
+
+    const {
+      raison_sociale: enterprise_name,
+      tranche_effectif_salarie_entreprise: { code: lastdsntrancheeffectifsetablissement },
+      naf_entreprise: activiteprincipaleetablissement,
+      libelle_naf_entreprise: activiteprincipaleetablissement_libelle,
+      etat_administratif: { value: etatadministratifetablissement }
+    } = entreprise.data.entreprise;
+
+    const result = {
+      siret,
+      etablissementsiege,
+      enterprise_name,
+      codepostaletablissement,
+      libellecommuneetablissement,
+      lastdsntrancheeffectifsetablissement,
+      activiteprincipaleetablissement,
+      activiteprincipaleetablissement_libelle,
+      etatadministratifetablissement
+    };
+
+    return res.status(200).json(result);
+  } catch (e) {
+    return res.status(500).json({ message: e.message });
+  }
 });
 
 router.post("/downloadXlsx", withAuth, async function (req, res) {

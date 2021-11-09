@@ -24,6 +24,7 @@ const Search = ({
   isLoading,
   error,
   resultList,
+  pagination,
   sendRequest,
   searchTerm,
   setSearchTerm,
@@ -169,13 +170,10 @@ const Search = ({
 
       {resultList && (
         <SearchResults
-          results={resultList.rawResults}
+          results={resultList}
           pagination={{
-            current: resultList.info.meta.page.current,
+            ...pagination,
             handlePageChange,
-            itemsPerPage: resultList.info.meta.page.size,
-            pages: resultList.info.meta.page.total_pages,
-            items: resultList.info.meta.page.total_results,
             searchTerm,
             options
           }}

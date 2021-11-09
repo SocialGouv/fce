@@ -52,97 +52,70 @@ const Direccte = ({ establishment }) => {
             columnClasses={["is-6", "is-6"]}
             sourceSi="Siene"
           />
-
-          {_get(establishment, "totalInteractions.total") === 0 ? (
-            <Data
-              name={
-                <div>
-                  <div>
-                    Dernier contrôle ou visite au cours des 24 derniers mois
-                  </div>
-                  <div>(Pôle T, Pôle C et Pôle E - SEER)</div>
-                </div>
-              }
-              value="pas de contrôle connu"
-              columnClasses={["is-6", "is-6"]}
-            />
-          ) : (
-            <dl className="data dl columns direccte-interactions__title">
-              <dt className={`dt column`}>
-                Dernier contrôle ou visite au cours des 24 derniers mois (Pôle
-                T, Pôle C, Pôle E)
-              </dt>
-            </dl>
-          )}
-
-          {!!(
-            establishment.interactions && establishment.interactions.length
-          ) && (
-              <Table
-                className="direccte-interactions-establishment__table"
-                isBordered
-              >
-                <thead>
-                  <tr>
-                    <th className="has-text-right">Pôle</th>
-                    <th>Date</th>
-                    <th>Unité</th>
-                    <th>Type</th>
-                    <th>Agent</th>
-                    <th>Source</th>
+          <Table
+            className="direccte-interactions-establishment__table"
+            isBordered
+          >
+            <thead>
+              <tr>
+                <th className="has-text-right">Pôle</th>
+                <th>Date</th>
+                <th>Unité</th>
+                <th>Type</th>
+                <th>Agent</th>
+                <th>Source</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.entries(lastInteractions).map(
+                ([pole, lastInteraction]) => (
+                  <tr key={pole}>
+                    <td>
+                      <Value value={pole} />
+                    </td>
+                    <td>
+                      <Value value={lastInteraction.date} />
+                    </td>
+                    <td>
+                      <Value value={lastInteraction.unite} />
+                    </td>
+                    <td>
+                      <Value
+                        value={
+                          Config.get("poleSrcControlType")[
+                          lastInteraction.type
+                          ]
+                        }
+                      />
+                      {lastInteraction.nature && lastInteraction.cible && (
+                        <>
+                          <div className="direccte-interactions-establishment__control-nature">
+                            <span>Nature du contrôle : </span>
+                            <Value
+                              value={`${lastInteraction.cible} - ${lastInteraction.nature}`}
+                            />
+                          </div>
+                          <div className="direccte-interactions-establishment__control-nature">
+                            <Value
+                              value={lastInteraction.clos
+                                ? "Contrôle Clos"
+                                : "Contrôle en cours"}
+                            />
+                          </div>
+                        </>
+                      )}
+                    </td>
+                    <td>
+                      <Value value={lastInteraction.agent} />
+                    </td>
+                    <td>
+                      <Source si={lastInteraction.source} isTableCell />
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {Object.entries(lastInteractions).map(
-                    ([pole, lastInteraction]) => (
-                      <tr key={pole}>
-                        <td>
-                          <Value value={pole} />
-                        </td>
-                        <td>
-                          <Value value={lastInteraction.date} />
-                        </td>
-                        <td>
-                          <Value value={lastInteraction.unite} />
-                        </td>
-                        <td>
-                          <Value
-                            value={
-                              Config.get("poleSrcControlType")[
-                              lastInteraction.type
-                              ]
-                            }
-                          />
-                          {lastInteraction.nature && lastInteraction.cible && (
-                            <>
-                              <div className="direccte-interactions-establishment__control-nature">
-                                <span>Nature du contrôle : </span>
-                                <Value
-                                  value={`${lastInteraction.cible} - ${lastInteraction.nature}`}
-                                />
-                              </div>
-                              <div className="direccte-interactions-establishment__control-nature">
-                                <Value
-                                  value={lastInteraction.clos
-                                    ? "Contrôle Clos"
-                                    : "Contrôle en cours"}
-                                />
-                              </div>
-                            </>
-                          )}
-                        </td>
-                        <td>
-                          <Value value={lastInteraction.agent} />
-                        </td>
-                        <td>
-                          <Source si={lastInteraction.source} isTableCell />
-                        </td>
-                      </tr>
-                    )
-                  )}
-                </tbody>
-              </Table>
-            )}
+                )
+              )}
+            </tbody>
+          </Table>
         </Subcategory>
       </div>
     </section>

@@ -34,6 +34,10 @@ const getEntreprise = async (SIREN, Axios, params) => {
           out: "tranche_effectif",
         },
         {
+          in: "etat_administratif.value",
+          out: "etat_entreprise"
+        },
+        {
           in: "tranche_effectif_salarie_entreprise",
           out: "entreprise_employeur",
           callback: (trancheEffectif) =>

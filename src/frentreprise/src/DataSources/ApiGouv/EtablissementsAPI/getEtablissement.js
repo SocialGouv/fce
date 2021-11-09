@@ -15,8 +15,8 @@ const getEtablissement = async (SIRET, Axios, params) => {
             utils.isEmpty(siege_social)
               ? undefined
               : siege_social
-              ? "Siège social"
-              : "Établissement",
+                ? "Siège social"
+                : "Établissement",
         },
         "enseigne",
         "naf",
@@ -63,13 +63,17 @@ const getEtablissement = async (SIRET, Axios, params) => {
           out: "adresse_composant",
         },
         {
+          in: "etat_administratif.value",
+          out: "etat_etablissement"
+        },
+        {
           in: "adresse",
           out: "departement",
           callback: (adresse) =>
             typeof adresse === "object"
               ? typeof adresse.code_insee_localite === "string" &&
-                adresse.code_insee_localite.length > 1 &&
-                adresse.code_insee_localite.substr(0, 2)
+              adresse.code_insee_localite.length > 1 &&
+              adresse.code_insee_localite.substr(0, 2)
               : undefined,
         },
       ];

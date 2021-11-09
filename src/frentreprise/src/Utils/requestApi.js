@@ -14,6 +14,7 @@ export default async (
       context: "Tiers",
       recipient: "Direccte Occitanie",
       object: "FCEE - Direccte Occitanie",
+      non_diffusables: true
     },
   };
 
@@ -29,9 +30,8 @@ export default async (
     }
 
     if (config.proxy.auth) {
-      agentConfig.proxy.proxyAuth = `${config.proxy.auth.username || ""}:${
-        config.proxy.auth.password || ""
-      }`;
+      agentConfig.proxy.proxyAuth = `${config.proxy.auth.username || ""}:${config.proxy.auth.password || ""
+        }`;
     }
 
     config.proxy = false;
@@ -40,9 +40,7 @@ export default async (
 
   const requests = apiCalls
     .filter((fn) => typeof fn === "function")
-    .map((fn) => {
-      return fn(identifier, axios, config);
-    });
+    .map((fn) => fn(identifier, axios, config));
 
   await Promise.all(requests).then((results) => {
     Object.assign(out, ...results);

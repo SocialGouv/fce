@@ -66,6 +66,7 @@ const getEtablissement = async (SIRET, Axios, params) => {
           in: "etat_administratif.value",
           out: "etat_etablissement"
         },
+        "diffusable_commercialement",
         {
           in: "adresse",
           out: "departement",
@@ -77,7 +78,7 @@ const getEtablissement = async (SIRET, Axios, params) => {
               : undefined,
         },
       ];
-
+      getData(data.etablissement, fields).then(console.log);
       return data && data.etablissement
         ? getData(data.etablissement, fields)
         : {};

@@ -18,7 +18,7 @@ import SearchView from "../../components/Search";
 import divisionsNaf from "./divisions-naf.json";
 import trancheEffectif from "./tranche-effectif.json";
 import Config from "../../services/Config";
-import { formatSearchInput, isSiret } from "../../helpers/Search";
+import { formatSearchInput, isSiren, isSiret } from "../../helpers/Search";
 import {
   formatAppSearchResults,
   formatAppSearchPagination
@@ -122,9 +122,15 @@ const Search = ({
     setSearchIsLoading(true);
     setSearchError(null);
 
-    if (isSiret(query)) {
+    if (isSiret(query) || isSiren(query)) {
       // query is a siret, call ApiGouv endpoint to get establishment
-      const response = await Http.get(`/search/api-gouv/${query.replace(/\s/g, "")}`);
+      const searchKey = isSiren(query) ? "siren" : "siret";
+
+      const response = await Http.get(`/search`, {
+        params: {
+          [searchKey]: query.replace(/\s/g, ""),
+        }
+      });
 
       setSearchResults({
         results: [response.data],
@@ -322,8 +328,6 @@ const Search = ({
       sendRequest(searchTerm, options);
     }
   }, [searchParamsOnLoad, sendRequestOnce]);
-
-  console.log(search.results);
 
   return (
     <SearchView

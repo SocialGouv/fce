@@ -43,6 +43,7 @@ const getEntreprise = async (SIREN, Axios, params) => {
           callback: (trancheEffectif) =>
             trancheEffectif && +trancheEffectif.a > 0,
         },
+        "diffusable_commercialement",
         {
           in: "mandataires_sociaux",
           out: "mandataires_sociaux",
@@ -72,7 +73,6 @@ const getEntreprise = async (SIREN, Axios, params) => {
           callback: (date) => utils.convertDate(date),
         },
       ];
-
       return data && data.entreprise ? getData(data.entreprise, fields) : {};
     });
 };

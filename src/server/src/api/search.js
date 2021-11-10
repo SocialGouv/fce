@@ -7,7 +7,7 @@ import NotFoundException from "../Exceptions/NotFoundException";
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
 import Establishment from "../models/Establishment";
 import { limitRate } from "../middlewares/limit-rate";
-import axios from "axios"
+import { formatEntrepriseResponse, formatEtablissementResponse, searchSiren, searchSiret } from "../utils/api-gouv";
 
 const express = require("express");
 const xlsx = require("xlsx");
@@ -93,53 +93,29 @@ router.get("/entity", withAuth, limitRate({
     });
 });
 
-router.get("/search/api-gouv/:siret", async (req, res) => {
-  const siret = (req.params["siret"] || "").trim();
+router.get("/search", async (req, res) => {
+  const siret = (req.query["siret"] || "").trim();
+  const siren = siret
+    ? siret.slice(0, 9)
+    : (req.query["siren"] || "").trim();
 
-  const params = {
-    token: config.get("APIGouv.token"),
-    context: "Tiers",
-    recipient: "Direccte Occitanie",
-    object: "FCEE - Direccte Occitanie",
-    non_diffusables: true
-  };
+  if (!siret && !siren) {
+    return res.status(400).json({
+      message: "Paramètre manquant : numéro siret ou siren"
+    });
+  }
 
-  const requestSiret = axios.get(`https://entreprise.api.gouv.fr:443/v2/etablissements/${siret}`, {
-    params
-  });
-
-  const siren = siret.slice(0, 9);
-
-  const requestSiren = axios.get(`https://entreprise.api.gouv.fr:443/v2/entreprises/${siren}`, {
-    params
-  });
+  const requests = [
+    searchSiren(siren),
+    ...(siret ? [searchSiret(siret)] : []),
+  ];
 
   try {
-    const [etablissement, entreprise] = await Promise.all([requestSiret, requestSiren]);
-
-    const {
-      siege_social: etablissementsiege,
-      adresse: { code_postal: codepostaletablissement, localite: libellecommuneetablissement }
-    } = etablissement.data.etablissement;
-
-    const {
-      raison_sociale: enterprise_name,
-      tranche_effectif_salarie_entreprise: { code: lastdsntrancheeffectifsetablissement },
-      naf_entreprise: activiteprincipaleetablissement,
-      libelle_naf_entreprise: activiteprincipaleetablissement_libelle,
-      etat_administratif: { value: etatadministratifetablissement }
-    } = entreprise.data.entreprise;
+    const [entrepriseResponse, etablissementResponse] = await Promise.all(requests);
 
     const result = {
-      siret,
-      etablissementsiege,
-      enterprise_name,
-      codepostaletablissement,
-      libellecommuneetablissement,
-      lastdsntrancheeffectifsetablissement,
-      activiteprincipaleetablissement,
-      activiteprincipaleetablissement_libelle,
-      etatadministratifetablissement
+      ...formatEntrepriseResponse(entrepriseResponse.entreprise),
+      ...formatEtablissementResponse(etablissementResponse?.etablissement ?? entrepriseResponse.etablissement_siege),
     };
 
     return res.status(200).json(result);
@@ -289,6 +265,7 @@ router.get("/naf", withAuth, function (req, res) {
     if (success) {
       return res.send({ success, results: nafs });
     }
+
     return res.send({
       success,
       results: [],

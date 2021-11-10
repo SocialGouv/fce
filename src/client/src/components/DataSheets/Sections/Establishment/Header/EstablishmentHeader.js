@@ -10,6 +10,7 @@ import { isActiveEstablishment } from "../../../../../helpers/Establishment";
 import { formatAddress } from "../../../../../helpers/Address";
 import InfoBox from "../../../../shared/InfoBox";
 import { formatSiret } from "../../../../../helpers/utils";
+import NonDiffusableBadge from "../../../../shared/NonDiffusableBadge/NonDiffusableBadge";
 
 const EstablishmentHeader = ({
   enterprise,
@@ -21,7 +22,6 @@ const EstablishmentHeader = ({
 
   const isActive = isActiveEstablishment(establishment);
   const stateClass = isActive ? "icon--success" : "icon--danger";
-
   return (
     <section id="header" className="data-sheet-header">
       <Helmet>
@@ -31,11 +31,17 @@ const EstablishmentHeader = ({
       <h1 className="data-sheet-header__title">
         <Value value={getEnterpriseName(enterprise) || null} empty=" " />
       </h1>
-      <div className="columns">
-        <div className="column">
-          <InfoBox value={establishment.categorie_etablissement} />
+
+      <InfoBox value={establishment.categorie_etablissement} />
+
+      {establishment.diffusable_commercialement === false && (
+        <div className="columns">
+          <div className="column">
+            <NonDiffusableBadge />
+          </div>
         </div>
-      </div>
+      )}
+
       <div className="columns is-vcentered data-sheet-header__primary-infos">
         <div className="column is-4 data-sheet-header__siret">
           <span>SIRET : </span>
@@ -49,6 +55,7 @@ const EstablishmentHeader = ({
           </span>
         </div>
       </div>
+
       <div className="columns">
         <div className="column is-4">
           <div className="data-sheet-header__status">
@@ -85,6 +92,7 @@ const EstablishmentHeader = ({
             </div>
           </div>
         </div>
+
         <div className="column is-8">
           <span className="has-text-segoe data-sheet-header__naf">
             <Value value={establishment.naf} empty="-" />{" "}

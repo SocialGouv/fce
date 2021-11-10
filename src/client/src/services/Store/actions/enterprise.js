@@ -34,6 +34,7 @@ const getEnterprise = term => dispatch => {
         }
       })
         .then(response => {
+          console.log(response?.data?.results);
           const enterprise = response?.data?.results?.[0];
           if (enterprise) {
             dispatch(setCurrentEnterprise(enterprise));

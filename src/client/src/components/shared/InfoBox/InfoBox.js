@@ -10,20 +10,24 @@ const formatPrefix = value =>
 const formatPostfix = value =>
   value.toLowerCase() === "établissement" ? " secondaire" : "";
 
-const InfoBox = ({ value }) => {
-  return (
-    <div className="info-box">
-      <span className="info-box__pill has-text-primary">
+const getClasses = (type) => type === "warning" ? ["info-box__pill--warning"] : ["has-text-primary"];
+
+const InfoBox = ({ value, type, children }) => (
+  <div className="info-box">
+    <span className={["info-box__pill", ...getClasses(type)].join(" ")}>
+      {children || <>
         <span className="info-box__print">{formatPrefix(value)}</span>
         <Value value={value} empty="" />
         <span className="info-box__print">{formatPostfix(value)}</span>
-      </span>
-    </div>
-  );
-};
+      </>
+      }
+    </span>
+  </div>
+);
 
 InfoBox.propTypes = {
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
+  type: PropTypes.string
 };
 
 export default InfoBox;

@@ -22,6 +22,7 @@ export default class DireccteEntreprise extends Entreprise {
         "date_de_creation",
         "date_mise_a_jour",
         "date_de_radiation",
+        "diffusable_commercialement",
         "entreprise_employeur",
         "etat_entreprise",
         "idcc",

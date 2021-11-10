@@ -20,6 +20,7 @@ import Button from "../../../../shared/Button";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { formatSiren } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
+import NonDiffusableBadge from "../../../../shared/NonDiffusableBadge/NonDiffusableBadge";
 
 const EnterpriseHeader = ({
   enterprise,
@@ -51,7 +52,16 @@ const EnterpriseHeader = ({
         <h1 className="data-sheet-header__title">
           <Value value={getEnterpriseName(enterprise) || null} empty=" " />
         </h1>
+
         <InfoBox value="Entreprise" />
+
+        {enterprise.diffusable_commercialement === false && (
+          <div className="columns">
+            <div className="column">
+              <NonDiffusableBadge />
+            </div>
+          </div>
+        )}
 
         <div className="columns is-vcentered">
           <div className="column is-4 data-sheet-header__siren">

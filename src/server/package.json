@@ -22,8 +22,9 @@
   },
   "dependencies": {
     "@elastic/app-search-node": "^7.11.1",
-    "@elastic/elasticsearch": "^7.6.0",
+    "@elastic/elasticsearch": "^7.15.0",
     "@sentry/node": "^5.17.0",
+    "@socialgouv/codes-naf": "^1.0.5",
     "array.prototype.flatmap": "^1.2.3",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",

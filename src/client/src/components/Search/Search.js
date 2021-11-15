@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import SearchResults from "../SearchResults";
-import SiegeFilter from "./Filters/SiegeFilter";
+import CheckboxFilter from "./Filters/CheckboxFilter";
 import StateFilter from "./Filters/StateFilter";
-import NafFilter from "./Filters/NafFilter";
-import EffectifFilter from "./Filters/EffectifFilter";
+import AutoCompleteFilter from "./Filters/AutoCompleteFilter";
 import LocationFilter from "./Filters/LocationFilter";
 import {
   Accordion,
@@ -17,13 +16,30 @@ import {
 import SearchBar from "./SearchBar";
 import UsersFeedback from "../../containers/UsersFeedback";
 import Unsubscribe from "../../containers/Unsubscribe/Unsubscribe";
+import trancheEffectif from "../../containers/Search/tranche-effectif.json";
 
 import "./search.scss";
+
+const formatDivisionsNaf = divisionsNaf =>
+  divisionsNaf.map(({ code, libelle }) => ({
+    value: code,
+    label: `${code} - ${libelle}`
+  }));
+
+const formatTrancheEffectifs = trancheEffectifs =>
+  trancheEffectifs.map(({ code, libelle }) => ({
+    value: code,
+    label: libelle
+  }));
+
+const formattedTranchesEffectifs = formatTrancheEffectifs(trancheEffectif);
 
 const Search = ({
   isLoading,
   error,
-  resultList,
+  results,
+  page,
+  totalResults,
   sendRequest,
   searchTerm,
   setSearchTerm,
@@ -32,16 +48,16 @@ const Search = ({
   addFilter,
   removeFilter,
   filters,
-  currentSort,
   sort,
+  sortField,
+  sortDirection,
   options,
   divisionsNaf,
-  trancheEffectif,
-  loadLocations,
   generateXlsx,
-  downloadXlsxStatus
+  downloadLoading
 }) => {
   const [isOpenAdvancedSearch, setIsOpenAdvancedSearch] = useState(true);
+  console.log("comp", totalResults, results);
   return (
     <div className="app-search">
       <div className="app-search__wrapper">
@@ -68,10 +84,12 @@ const Search = ({
 
                 <div className="columns filters__checkboxes">
                   <div className="column is-4">
-                    <SiegeFilter
+                    <CheckboxFilter
                       filters={filters}
                       addFilter={addFilter}
                       removeFilter={removeFilter}
+                      id="siege"
+                      label="Siège Social"
                     />
                   </div>
                   <div className="column is-8">
@@ -79,6 +97,7 @@ const Search = ({
                       filters={filters}
                       addFilter={addFilter}
                       removeFilter={removeFilter}
+                      id="etats"
                     />
                   </div>
                 </div>
@@ -101,11 +120,13 @@ const Search = ({
                         <AccordionItemPanel>
                           <div className="columns filters__selects">
                             <div className="column is-half">
-                              <NafFilter
+                              <AutoCompleteFilter
                                 filters={filters}
                                 addFilter={addFilter}
                                 removeFilter={removeFilter}
-                                divisionsNaf={divisionsNaf}
+                                options={formatDivisionsNaf(divisionsNaf)}
+                                id="activites"
+                                label="Activité (NAF ou libellé)"
                               />
                             </div>
                             <div className="column is-half">
@@ -113,17 +134,18 @@ const Search = ({
                                 filters={filters}
                                 addFilter={addFilter}
                                 removeFilter={removeFilter}
-                                loadLocations={loadLocations}
                               />
                             </div>
                           </div>
                           <div className="columns filters__selects">
                             <div className="column is-half">
-                              <EffectifFilter
+                              <AutoCompleteFilter
                                 filters={filters}
                                 addFilter={addFilter}
                                 removeFilter={removeFilter}
-                                trancheEffectif={trancheEffectif}
+                                options={formattedTranchesEffectifs}
+                                id="tranchesEffectifs"
+                                label="Tranche effectif (DSN)"
                               />
                             </div>
                           </div>
@@ -167,25 +189,24 @@ const Search = ({
         </div>
       </div>
 
-      {resultList && (
-        <SearchResults
-          results={resultList.rawResults}
-          pagination={{
-            current: resultList.info.meta.page.current,
-            handlePageChange,
-            itemsPerPage: resultList.info.meta.page.size,
-            pages: resultList.info.meta.page.total_pages,
-            items: resultList.info.meta.page.total_results,
-            searchTerm,
-            options
-          }}
-          isLoading={isLoading}
-          sort={sort}
-          currentSort={currentSort}
-          generateXlsx={generateXlsx}
-          downloadXlsxStatus={downloadXlsxStatus}
-        />
-      )}
+      <SearchResults
+        results={results}
+        pagination={{
+          current: page,
+          handlePageChange,
+          itemsPerPage: 10,
+          pages: Math.ceil(totalResults / 10),
+          items: totalResults,
+          searchTerm,
+          options
+        }}
+        isLoading={isLoading}
+        sortField={sortField}
+        sortDirection={sortDirection}
+        sort={sort}
+        generateXlsx={generateXlsx}
+        downloadLoading={downloadLoading}
+      />
       <div>
         <UsersFeedback />
         <Unsubscribe />
@@ -197,7 +218,8 @@ const Search = ({
 Search.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.string,
-  resultList: PropTypes.object,
+  results: PropTypes.array.isRequired,
+  page: PropTypes.number,
   sendRequest: PropTypes.func.isRequired,
   searchTerm: PropTypes.string.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
@@ -206,14 +228,15 @@ Search.propTypes = {
   addFilter: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
-  currentSort: PropTypes.object,
+  sortField: PropTypes.string,
+  sortDirection: PropTypes.string,
   sort: PropTypes.func.isRequired,
   options: PropTypes.object.isRequired,
   divisionsNaf: PropTypes.array.isRequired,
   trancheEffectif: PropTypes.array.isRequired,
-  loadLocations: PropTypes.func.isRequired,
+  totalResults: PropTypes.number.isRequired,
   generateXlsx: PropTypes.func.isRequired,
-  downloadXlsxStatus: PropTypes.object.isRequired
+  downloadLoading: PropTypes.bool.isRequired
 };
 
 export default Search;

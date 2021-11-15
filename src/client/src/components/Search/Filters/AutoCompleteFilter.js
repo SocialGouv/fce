@@ -2,32 +2,31 @@ import React from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import { selectCustomStyles } from "./customStyles";
+import { prop } from "lodash/fp";
 
-const EffectifFilter = ({
+const AutoCompleteFilter = ({
   filters,
   addFilter,
   removeFilter,
-  trancheEffectif,
-  id
+  options,
+  id,
+  label
 }) => {
-  const options = trancheEffectif.map(({ code, libelle }) => ({
-    value: code,
-    label: `${libelle}`
-  }));
+  const value = options.filter(option => filters[id]?.includes(option.value));
 
   return (
     <div>
       <label htmlFor={id} className="label">
-        Tranche effectif (DSN)
+        {label}
       </label>
       <Select
         id={id}
         name={id}
         isMulti
         options={options}
-        value={filters.effectif}
-        onChange={effectif => {
-          effectif ? addFilter(id, effectif) : removeFilter(id);
+        value={value}
+        onChange={option => {
+          option ? addFilter(id, option.map(prop("value"))) : removeFilter(id);
         }}
         isClearable
         placeholder=""
@@ -37,11 +36,13 @@ const EffectifFilter = ({
   );
 };
 
-EffectifFilter.propTypes = {
+AutoCompleteFilter.propTypes = {
   filters: PropTypes.object,
   addFilter: PropTypes.func.isRequired,
   removeFilter: PropTypes.func.isRequired,
-  trancheEffectif: PropTypes.array.isRequired
+  options: PropTypes.array.isRequired,
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired
 };
 
-export default EffectifFilter;
+export default AutoCompleteFilter;

@@ -15,9 +15,9 @@ import Pager from "./Pager";
 
 import "./awesomeTable.scss";
 
-const getSortIcon = (field, currentSort) => {
-  if (currentSort && currentSort.field === field) {
-    return currentSort.ascDirection ? faSortDown : faSortUp;
+const getSortIcon = (field, sortField, sortDirection) => {
+  if (field === sortField) {
+    return sortDirection === "asc" ? faSortDown : faSortUp;
   }
   return faSort;
 };
@@ -33,7 +33,8 @@ const SearchAwesomeTable = ({
   history,
   isSortable = false,
   sortColumn,
-  currentSort
+  sortField,
+  sortDirection
 }) => (
   <table className="table at">
     <thead className="at__head">
@@ -54,7 +55,7 @@ const SearchAwesomeTable = ({
               {field.headName}
               {isSortableField && (
                 <FontAwesomeIcon
-                  icon={getSortIcon(field.sortKey, currentSort)}
+                  icon={getSortIcon(field.sortKey, sortField, sortDirection)}
                 />
               )}
             </th>
@@ -74,7 +75,7 @@ const SearchAwesomeTable = ({
           <tr
             key={index}
             className="at__body__tr"
-            onClick={() => history.push(`/establishment/${element.siret.raw}`)}
+            onClick={() => history.push(`/establishment/${element.siret}`)}
           >
             {fields.map((field, index) => (
               <td
@@ -151,7 +152,8 @@ SearchAwesomeTable.propTypes = {
   history: PropTypes.object.isRequired,
   isSortable: PropTypes.bool,
   sortColumn: PropTypes.func,
-  currentSort: PropTypes.object
+  sortField: PropTypes.string,
+  sortDirection: PropTypes.string
 };
 
 export default withRouter(SearchAwesomeTable);

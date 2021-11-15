@@ -21,7 +21,7 @@ const NafFilter = ({ filters, addFilter, removeFilter, divisionsNaf }) => {
         options={options}
         value={filters.naf}
         onChange={naf => {
-          naf ? addFilter("naf", naf) : removeFilter("naf");
+          naf ? addFilter("naf", naf.co) : removeFilter("naf");
         }}
         isClearable
         placeholder=""

@@ -17,14 +17,17 @@ const SearchResults = ({
   pagination,
   isLoading,
   sort,
-  currentSort,
+  sortField,
+  sortDirection,
   generateXlsx,
-  downloadXlsxStatus
+  downloadLoading
 }) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
     "0 salarié": "0 salarié"
   };
+
+  console.log(results);
 
   return (
     <div className="app-search-results container is-fullhd">
@@ -39,14 +42,10 @@ const SearchResults = ({
           </div>
           <div className="column is-2 app-search-results__export-section">
             <Button
-              value={
-                downloadXlsxStatus.isLoading
-                  ? "Export en cours"
-                  : "Export Excel"
-              }
+              value={downloadLoading ? "Export en cours" : "Export Excel"}
               buttonClasses={["app-search-results__export-button"]}
-              icon={downloadXlsxStatus.isLoading ? faSpinnerThird : faFileExcel}
-              faProps={{ spin: downloadXlsxStatus.isLoading }}
+              icon={downloadLoading ? faSpinnerThird : faFileExcel}
+              faProps={{ spin: downloadLoading }}
               callback={() => generateXlsx(pagination)}
             />
           </div>
@@ -65,9 +64,10 @@ const SearchResults = ({
               prevText="Précédent"
               nextText="Suivant"
               isLoading={isLoading}
-              isSortable={true}
+              isSortable={false}
               sortColumn={sort}
-              currentSort={currentSort}
+              sortField={sortField}
+              sortDirection={sortDirection}
               data={results}
               fields={[
                 {
@@ -75,36 +75,37 @@ const SearchResults = ({
                   sortKey: "siret",
                   importantHead: true,
                   accessor: fields => {
-                    let siret = fields?.siret?.raw;
+                    let siret = fields.siret;
                     return Value({
                       value: formatSiret(siret),
                       link: `/establishment/${siret}`
                     });
                   },
-                  link: ({ siret: { raw: siret } }) => `/establishment/${siret}`
+                  link: ({ siret }) => `/establishment/${siret}`
                 },
                 {
                   headName: "État",
                   sortKey: "etatadministratifetablissement",
-                  accessor: fields => {
-                    let siret = fields?.siret?.raw;
-                    let etat = fields?.etatadministratifetablissement?.raw;
-                    return TableCellState({ siret, etat });
+                  accessor: ({ etatAdministratifEtablissement, siret }) => {
+                    return TableCellState({
+                      siret,
+                      etat: etatAdministratifEtablissement
+                    });
                   }
                 },
                 {
                   headName: "Raison sociale / Nom",
                   sortKey: "enterprise_name",
                   html: true,
-                  accessor: fields => {
-                    let enterpriseName = fields?.enterprise_name.raw;
-                    let enseigne = fields?.enseigne1etablissement.raw;
-
-                    let name = `<div>${enterpriseName}</div>`;
-
-                    if (enseigne) {
-                      name += `<div>(Enseigne : ${enseigne})</div>`;
-                    }
+                  accessor: ({
+                    denominationUniteLegale,
+                    enseigneEtablissement
+                  }) => {
+                    let name =
+                      denominationUniteLegale +
+                      (enseigneEtablissement
+                        ? ` (Enseigne : ${enseigneEtablissement})`
+                        : "");
 
                     return Value({
                       value: name
@@ -114,58 +115,62 @@ const SearchResults = ({
                 {
                   headName: "Catégorie établissement",
                   sortKey: "etablissementsiege",
-                  accessor: fields => {
-                    const isSiege = fields?.etablissementsiege?.raw === "true";
+                  accessor: ({ etablissementSiege }) => {
                     return Value({
-                      value: isSiege ? "Siège social" : "Étab. secondaire"
+                      value: etablissementSiege
+                        ? "Siège social"
+                        : "Étab. secondaire"
                     });
                   }
                 },
                 {
                   headName: "Code postal",
                   sortKey: "codepostaletablissement",
-                  accessor: fields => {
-                    let postalCode = fields?.codepostaletablissement?.raw;
-                    let town = fields?.libellecommuneetablissement?.raw;
+                  accessor: ({
+                    codesPostalEtablissement,
+                    libelleCommuneEtablissement
+                  }) => {
                     return Value({
-                      value: joinNoFalsy([postalCode, town], " - ")
+                      value: joinNoFalsy(
+                        [codesPostalEtablissement, libelleCommuneEtablissement],
+                        " - "
+                      )
                     });
                   }
                 },
                 {
                   headName: "Effectif (DSN)",
                   sortKey: "lastdsntrancheeffectifsetablissement",
-                  accessor: fields => {
-                    let trancheEffectif =
-                      fields?.lastdsntrancheeffectifsetablissement?.raw;
-                    let etat = fields?.etatadministratifetablissement?.raw;
-
+                  accessor: ({
+                    trancheEffectifsEtablissement,
+                    etatAdministratifEtablissement
+                  }) => {
                     return Value({
                       value:
-                        trancheEffectif !== "-" &&
-                        trancheEffectif !== "NN" &&
-                        trancheEffectif !== "SP"
-                          ? isActiveEstablishment(etat)
-                            ? staffSizeRanges[trancheEffectif]
+                        trancheEffectifsEtablissement !== "-" &&
+                        trancheEffectifsEtablissement !== "NN" &&
+                        trancheEffectifsEtablissement !== "SP"
+                          ? isActiveEstablishment(
+                              etatAdministratifEtablissement
+                            )
+                            ? staffSizeRanges[trancheEffectifsEtablissement]
                             : "0 salarié"
-                          : staffSizeRanges[trancheEffectif]
+                          : staffSizeRanges[trancheEffectifsEtablissement]
                     });
                   }
                 },
                 {
                   headName: "Activité",
                   sortKey: "activiteprincipaleetablissement",
-                  accessor: fields => {
-                    let naf = fields?.activiteprincipaleetablissement?.raw;
-                    let libelle_naf =
-                      fields?.activiteprincipaleetablissement_libelle?.raw;
-
+                  accessor: ({
+                    codeActivitePrincipale,
+                    libelleActivitePrincipale
+                  }) => {
                     return (
-                      naf &&
+                      codeActivitePrincipale &&
                       Value({
-                        value: `${naf === undefined ? "" : naf} ${
-                          libelle_naf === undefined ? "" : " - " + libelle_naf
-                        }`
+                        value: `${codeActivitePrincipale ||
+                          ""} - ${libelleActivitePrincipale || ""}`
                       })
                     );
                   }
@@ -186,9 +191,10 @@ SearchResults.propTypes = {
   pagination: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   sort: PropTypes.func.isRequired,
-  currentSort: PropTypes.object.isRequired,
+  sortField: PropTypes.string,
+  sortDirection: PropTypes.string,
   generateXlsx: PropTypes.func.isRequired,
-  downloadXlsxStatus: PropTypes.object.isRequired
+  downloadLoading: PropTypes.bool.isRequired
 };
 
 export default withRouter(SearchResults);

@@ -17,20 +17,20 @@ const Direccte = ({ establishment }) => {
   const lastInteractions = {
     T: {
       ...getLastInteraction(establishment.interactions_T),
-      source: "Wiki'T"
+      source: "Wiki'T",
     },
     C: {
       ...getLastInteraction(establishment.interactions_C),
-      source: "SORA"
+      source: "SORA",
     },
     "3E_SEER": {
       ...getLastInteraction(establishment.interactions_3E_SEER),
-      source: "EOS"
+      source: "EOS",
     },
     "3E_SRC": {
       ...getLastInteraction(establishment.interactions_3E_SRC),
-      source: "MDF"
-    }
+      source: "MDF",
+    },
   };
 
   return (
@@ -55,7 +55,7 @@ const Direccte = ({ establishment }) => {
           <dl className="data dl columns direccte-interactions__title">
             <dt className={`dt column`}>
               Dernier contrôle ou visite au cours des 24 derniers mois (Pôle T,
-              Pôle C, Pôle E)
+              Pôle C, Pôle 3E)
             </dt>
           </dl>
           <Table
@@ -69,7 +69,11 @@ const Direccte = ({ establishment }) => {
                 <th>Unité</th>
                 <th>Type</th>
                 <th>Agent</th>
-                <th>Source</th>
+                <th>
+                  Source
+                  <br />
+                  Date de mise à jour
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -88,9 +92,7 @@ const Direccte = ({ establishment }) => {
                     <td>
                       <Value
                         value={
-                          Config.get("poleSrcControlType")[
-                          lastInteraction.type
-                          ]
+                          Config.get("poleSrcControlType")[lastInteraction.type]
                         }
                       />
                       {lastInteraction.nature && lastInteraction.cible && (
@@ -103,9 +105,11 @@ const Direccte = ({ establishment }) => {
                           </div>
                           <div className="direccte-interactions-establishment__control-nature">
                             <Value
-                              value={lastInteraction.clos
-                                ? "Contrôle Clos"
-                                : "Contrôle en cours"}
+                              value={
+                                lastInteraction.clos
+                                  ? "Contrôle Clos"
+                                  : "Contrôle en cours"
+                              }
                             />
                           </div>
                         </>
@@ -129,7 +133,7 @@ const Direccte = ({ establishment }) => {
 };
 
 Direccte.propTypes = {
-  establishment: PropTypes.object
+  establishment: PropTypes.object,
 };
 
 export default Direccte;

@@ -52,6 +52,12 @@ const Direccte = ({ establishment }) => {
             columnClasses={["is-6", "is-6"]}
             sourceSi="Siene"
           />
+          <dl className="data dl columns direccte-interactions__title">
+            <dt className={`dt column`}>
+              Dernier contrôle ou visite au cours des 24 derniers mois (Pôle T,
+              Pôle C, Pôle E)
+            </dt>
+          </dl>
           <Table
             className="direccte-interactions-establishment__table"
             isBordered

@@ -1,3 +1,10 @@
+# [27.22.0](https://github.com/SocialGouv/fce/compare/v27.21.3...v27.22.0) (2021-11-17)
+
+
+### Features
+
+* **control:** display source dates when no controls found ([#71](https://github.com/SocialGouv/fce/issues/71)) ([#111](https://github.com/SocialGouv/fce/issues/111)) ([0c770e7](https://github.com/SocialGouv/fce/commit/0c770e7dd30e342693b641b97100f032c5835a02))
+
 ## [27.21.3](https://github.com/SocialGouv/fce/compare/v27.21.2...v27.21.3) (2021-11-09)
 
 

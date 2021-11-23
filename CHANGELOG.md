@@ -1,3 +1,10 @@
+# [27.24.0](https://github.com/SocialGouv/fce/compare/v27.23.0...v27.24.0) (2021-11-23)
+
+
+### Features
+
+* **errors:** allow to configure login error message from strapi ([#116](https://github.com/SocialGouv/fce/issues/116)) ([f548dcb](https://github.com/SocialGouv/fce/commit/f548dcbb856bd5378befdff6c9a6458f263f1202))
+
 # [27.23.0](https://github.com/SocialGouv/fce/compare/v27.22.0...v27.23.0) (2021-11-23)
 
 

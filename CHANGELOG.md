@@ -1,3 +1,10 @@
+# [27.23.0](https://github.com/SocialGouv/fce/compare/v27.22.0...v27.23.0) (2021-11-23)
+
+
+### Features
+
+* **login:** add error message for sending login email ([#115](https://github.com/SocialGouv/fce/issues/115)) ([45a8216](https://github.com/SocialGouv/fce/commit/45a8216dd8bdf98b32a3959876afc9d8fcad5c1e))
+
 # [27.22.0](https://github.com/SocialGouv/fce/compare/v27.21.3...v27.22.0) (2021-11-17)
 
 

@@ -1,6 +1,5 @@
 {
-  "fce.test": "development",
+  "localhost": "development",
   "fce.prep.fabrique.social.gouv.fr": "staging",
-  "fce.fabrique.social.gouv.fr": "production",
-  "localhost": "test"
+  "fce.fabrique.social.gouv.fr": "production"
 }

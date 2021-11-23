@@ -177,6 +177,7 @@
 
         &--error {
             @extend %error;
+            white-space: break-spaces;
         }
 
         > .svg-inline--fa {

@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "messages_d_erreurs",
+  "info": {
+    "name": "Messages d'erreur",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "loginMessage": {
+      "type": "text"
+    }
+  }
+}

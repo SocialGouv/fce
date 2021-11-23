@@ -9,6 +9,7 @@ import Button from "../../../shared/Button";
 import Config from "../../../../services/Config";
 import SuccessMessage from "./SuccessMessage";
 import InfoMessage from "./InfoMessage";
+import ErrorMessage from "./ErrorMessage";
 
 const LoginForm = ({
   login,
@@ -46,10 +47,15 @@ const LoginForm = ({
           >
             <div className="login__message">
               <InfoMessage>
-                <h5>Connection pour les agents des DDETS (PP)</h5>
-                Vous pouvez désormais vous connecter en utilsant votre adresse
+                <h5>Connexion pour les agents des DDETS (PP)</h5>
+                Vous pouvez désormais vous connecter en utilisant votre adresse
                 mail au format : <strong>prenom.nom@departement.gouv.fr</strong>
               </InfoMessage>
+              <ErrorMessage>
+                Nous rencontrons actuellement des problèmes d'envoi d'e-mail vers les domaines @departement.gouv.fr, @dr(i)eets.gouv.fr et @travail.gouv.fr.
+                <br />
+                Nous nous excusons pour la gêne occasionnée.
+              </ErrorMessage>
             </div>
             <div>
               <label htmlFor="email" className="label">

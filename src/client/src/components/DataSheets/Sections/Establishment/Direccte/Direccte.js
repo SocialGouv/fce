@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
 import Value from "../../../../shared/Value";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { groupBy, map, mapValues, pipe, entries, spread } from "lodash/fp";
+import { groupBy, map, pipe, entries } from "lodash/fp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory, faSpinner } from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../../../services/Config";

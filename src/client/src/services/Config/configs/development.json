@@ -4,5 +4,14 @@
     "url": "//matomo.fce.test/",
     "serverTrackerName": "matomo.php",
     "siteId": "1"
+  },
+  "strapi": {
+    "domain": "//localhost:1337",
+    "path": {
+      "/a-propos": "/pages/1",
+      "/politique-de-confidentialite": "/pages/6",
+      "/sources-des-donnees": "/pages/3",
+      "/mentions-legales": "/pages/4"
+    }
   }
 }

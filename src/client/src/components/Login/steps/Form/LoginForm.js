@@ -10,6 +10,7 @@ import Config from "../../../../services/Config";
 import SuccessMessage from "./SuccessMessage";
 import InfoMessage from "./InfoMessage";
 import ErrorMessage from "./ErrorMessage";
+import { useStrapiData } from "../../../../helpers/hooks/useStrapiData";
 
 const LoginForm = ({
   login,
@@ -35,6 +36,8 @@ const LoginForm = ({
     setCode(cleanedValue.slice(0, Config.get("auth.codeLength")));
   };
 
+  const { pageData: errorData } = useStrapiData("/messages-d-erreur");
+
   return (
     <div className="login__container login__container--form container">
       <div>
@@ -51,11 +54,11 @@ const LoginForm = ({
                 Vous pouvez désormais vous connecter en utilisant votre adresse
                 mail au format : <strong>prenom.nom@departement.gouv.fr</strong>
               </InfoMessage>
-              <ErrorMessage>
-                Nous rencontrons actuellement des problèmes d'envoi d'e-mail vers les domaines @departement.gouv.fr, @dr(i)eets.gouv.fr et @travail.gouv.fr.
-                <br />
-                Nous nous excusons pour la gêne occasionnée.
-              </ErrorMessage>
+              {errorData?.loginMessage && (
+                <ErrorMessage>
+                  {errorData.loginMessage}
+                </ErrorMessage>
+              )}
             </div>
             <div>
               <label htmlFor="email" className="label">

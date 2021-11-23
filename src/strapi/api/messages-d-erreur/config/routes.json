@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/messages-d-erreur",
+      "handler": "messages-d-erreur.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/messages-d-erreur",
+      "handler": "messages-d-erreur.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/messages-d-erreur",
+      "handler": "messages-d-erreur.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

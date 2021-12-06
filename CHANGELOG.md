@@ -1,3 +1,10 @@
+## [27.24.1](https://github.com/SocialGouv/fce/compare/v27.24.0...v27.24.1) (2021-12-06)
+
+
+### Bug Fixes
+
+* **home:** change DIRRECTE into 'Dreets et Ddets(PP)' ([#119](https://github.com/SocialGouv/fce/issues/119)) ([5c99968](https://github.com/SocialGouv/fce/commit/5c999685483a789a749b10beb651c41b121bd1f5))
+
 # [27.24.0](https://github.com/SocialGouv/fce/compare/v27.23.0...v27.24.0) (2021-11-23)
 
 

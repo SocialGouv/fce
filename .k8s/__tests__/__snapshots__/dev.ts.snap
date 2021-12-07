@@ -7,7 +7,7 @@ kind: Namespace
 metadata:
   annotations:
     socialgouv/creator: autodevops
-    janitor/ttl: 15d
+    janitor/ttl: 7d
     field.cattle.io/creatorId: gitlab
     field.cattle.io/projectId: c-gjtkk:p-8j5hf
     git/branch: refs/heads/mybranch
@@ -457,6 +457,27 @@ spec:
         - n8n-fce-mybranch.dev2.fabrique.social.gouv.fr
       secretName: wildcard-crt
 ---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: netpol-fce-mybranch
+  namespace: fce-mybranch
+spec:
+  ingress:
+    - from:
+        - podSelector: {}
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              network-policy/source: ingress-controller
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              network-policy/source: monitoring
+  podSelector: {}
+  policyTypes:
+    - Ingress
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -761,7 +782,7 @@ spec:
       AgALbqdp5Ek1XD9hYTy/PGYz/3LFm4nA5+C/ueBddg61BZ5HJlf/X9TFLePvvT+/HiSsOjPufBohuWKWTohImAA6ZpyGUH6urHena4C3Whuunqqc6u35EO6FQ28IsMmm10xi9KCcXy1oLj090HnPYKOoH++9tL8CMungMQpNgZkMXwcqMOzfcqRSePXrAo/vWfiCts6VfP45DG6CY5wYO5/L6eIUx+L5U0jEjF2L06c2103Y+svHqv5Jq8aOJvRaOqDOlAJI//L34RlVJG2AR6xjGuN/DKu4xE29gkgxBekB9RwO7vg1QabAgpv3g1I4++Qwc0qHlYbk7AEPyLe068XM4TBoO73XXN9cT6AZj1Tm4ff0J+ZmgVmFvI8dE6UcIBFKvr51ocbUqN/Fz0DxX8kU9GZrNBSbXFnrVFWbt2uYc4l6MG3QkuadStDVGwohdGxiL/Y2UWVgeAAx2xI7U6aqpaTfJPpzOmVoDdSVHrQ8WKEJQv5hLTCniBxxrUKGw0GtTmQsuVtgBSP+PLmG+1floDyThPtPBFHQnsAC/jMp/Qrkgp0ghoyCg2xtDE6Pjk3pcZcuaZ46l2RM7nVXdYHty+eBw7Nq0g1S52zGvl6hEIC911YtF8g+fwqH5Jb1bH1dj2V0XWn0kpzaVTdJ5TgWXA/aZESYVoZLAi5k8Z/09fkQqbVP9DZ+elOeS9skOrKybSMZOA==
     PG_SSL: >-
       AgAp3g8s5OYd0kzHj7rVlTP6+R+CQypG37P2EJSQPJBG9VxQ7tZz9QCxuZv2pUeLInk+O54q0OgqpLrDCcJTrzW29xWUsUtfzSxWPXwyt4VB2jxCmq2TNLIeKfrrrE1/wj8bPnapBTj7FRpLTpSlnD8YyzFhxIs7xLC3X4mxrkobCGinSSnU2yE9rthPq0lgFMFDW8g7VQaHQmWP7RN4uPg2vyDqXOSUssPXI/8fx94TjWqUfpQ6bvA+MkSvABv8IoeJsFdBxrruibntLA43DNvBLiPcp5jq7IQ+KbW7j/SdGFDjcY0flDshhcbuuSIGEQkGpNhAj2ggCIgqC2KzRF0fxcKTuagl/hL1bTELCRlIgKh6xAjSFBLZsyNupxzq1B1fWI7GEz2HhZL+oiQlvTSmFwRDXSid9eusegXqmOjaVNew2LjKInHJq838H5ay4qWBFvXvycT3hkZOa/S+PrbD2oWGUNyhN1vVP8bPWPmzb1NYjruzn0VgiX4s64tR9W9baK2O7bgJ/ck6buBQ4tgDuJ/cn6F/dXtjgHPNQNJs+t/mN9B550JVlpqXEnaXLHHIXjQ6h0CbP7CpBpc04OBzK6H+fpmIZfE+Twj/fHKUz1xD+84wGfXOwNxgNtmHhQSap7R1KSbVKLOBqL/3xfFNPenyCS7svBYjehMqIBD0F9ro6PvHMfowxbiDMQpJvRhD+CJr
-    MAIL: >-
+    MAIL_TRANSPORT_CONFIG: >-
       AgBpRu+GTcFyPA5u/IypvLXuedfAX+4BY7q7T1AqrOvJjgMEX+u2iCp01sJ3e7WJ76xPA1Otjw/SQVVckp4dUPS2UI/KfzUfyKO9fJHCgy2TexIFWgsy20s3l4x3eLWcYZVCSR9JqHG7UKpOFysAZUlNjxXAJpxNnZRa5QkffMyWlx9hVYqI1i1tXuJi8AAx/30RMsYyALSDcOhfwiIqVvBjPslFanWwscWhyiNLinzRLMv7xxvcdVcs4HYxoqKLG9la4DULYura9AB74F/SoKEnS5VyAziUSnHwS1Yb4aZ9ZIX+CnHAS6DZwnovhpmzijlkv8ECTTWMqxjIoQlwc0PVvb8UWPKV32aLmPznPh2Q8Duagi9SnyPDliRKwHyKFdYchbF8N0raj7hnUT/NKV7aPxDu0JN5mCZ3vpT3ckQNVZUvWWCEaTPSpXGSLBDgtSZ2E9cF/fd8xrDCZj4iIPLWmw4n6ulUKGIWRo59XTHCZmB6G8UDbPauB4FfXy3jT6nMJ/0IeczxrYAvI5bJ14qymQv+nMqzNbdhn41AftVqwiRktIvhgfoiFZXtT4otRygQ9aNXY7t6U0ZJSqMY6c3BbW2U17dEJNYttU06ZHIGQE2kOT+HpZfa0rOUfgje+gFuGuW8BFiGEP1ONsOyDJdyPwcpH1jL8EpD65M2wfbVVPZHNTw9/T5LsJ2BjEZzdmTsT2cmvrOFRjhlfssHiqH+XM4+sfEYWETpcvpNLe/ci30jop2A0HwppOxXdNqPnZZ+TBCpulWrY4RBwy2DDZL3pJkasgYyX5FevDApsrDwUgM+s/D4IxW+fcJsgVHRxpClgL5cRS2t+WhHf249L02UWNFWXaWZ8oMop/KGo3TarRk5M1ECswTU/WjbzcmoToFxvgcV1fjG2nCCnQlPdMYbSo0034aXraMLO+RU7AKBiNfDQcvbcxWFmorQRo122XNbEE2yL8RSzTY798Q8HITWYUdUyY9AVpNSv14QIyzT138MAi7I7Q==
     API_GOUV_TOKEN: >-
       AgAaD3zkxxlCOMg8DKexeRKIZe+Jmcoa/HE2BSRJIpIwuZghXZPPfgM+xVw4onZnkuBAatDuXk8hRRF/e/jSDmWUCA3zbuQZuuTL+KeNaAfTKucfnhemRKdkFhV6S47EC2TgZc/WktYUCfUoZRfmHFcieug2gdRjbD4FzmhwNfH/ypGdRRYYNdjO1pvSC9fJWnmKI1yv68oDakh6Cc4nZn2rS+jrFvZUfDCcF4rBXdMLeIdYZPn7HqnkU4S3w7aSZ4KYxnrM5C2HRwN+0xq2PwYrsu/dUfX7eJtHHfjaf8Cy6xXRvxiHIbDA83ljaSd15ateQtapd+sfa9vuBJgFhDGod5XbQa1voeAemItnkRE9lTYBHLckd7aQR9jSDtxTBUcb9ImlcfP15S2/8wCRvIM1TqKhBeMFdAR4SsmXCwLV3pHUd6bMWX0yGbSJE9/sxhkZ5VeSbJXpJ0obE006D0Yr6YQ7AAycATt+hLdYQB6O1SJ0BbK45R9m0kCAYWERMHxrTX8d6vihshXMeC3YUgFpjRmJVFUKWOiM5GeG4A+L0Ynv4A8talPeneIxVkRvaHfpcS0DLkO6oBUbfGoblJJHHaN7OVzY+mM6hs/VhBPvJC0WK75p+VuZzj29tM37xKMyhqXVyJTouZ6+Tis6V45Duas6mI4JkMPbohuq5jaCxQLn3iiEu8UkAvZHvMmy/+iSL+stY93c1n/bvTWhddO0tEqTFTeMyxByqSqtbU2EZAqYYVy3+cvARP3W9QZGrr0J0w63FGt9jya5QnTTsSR6K0ENGrFKJlYtoXsRDIaVZmqhj+2+pT1kFxzjjWUaciSiddnSevq7KjEy62fbl4K2gw/6X3Pc+JXKWcUpa5rNu/Zup5yNDnnjmEEOIVf+wYIlYGnNVDt+7rj4oKjPcxB/jr0nU9fL6dwpBF+VgXi8AX0vUAa8o1Q9KAuryrHxLeP3E1zjMRRPISkjiGXoqabYYIzdsVSPIL3xi7IJipeihvHMyMBm7XZstgbQBpj5zJdFoAxyvI4OWbD0yxY9qfaeYLjniHaHmCsci9GbZ/mIhE1fTlro2qy1Y2KDebcclYZfkDRFpghH1DaZuQw7i4EV1ppgAiHtLqC/kV06Bl8TemSzZHE4Lq9r/Xnre3Sa6VLASQtr1yICVvDtc8IAp8Q+3B69EOj4wX2eENiXjyolot5jXUBJtlrs9Op2zVwlnAdydeRavfOnaqU7cKs6VOH0tp2WrGXTLQfuCIKM7jh/9u9kayGPP7fZ30DW5cuQXxzfKwaUnw86bSGCDtx4IEIuabmHbUlvAoV87MAoI7tTp5ehWKyQb14gmcXz5Vsb4PW6p3+S4EvjdCSgz8ykbNKlQLVY9hx/Zjwdqx41wkIsfuHU4WySVft9r4nmvwEV42YEAuK7iL5x7147i+an3nMCzlMvX+DfTlguejEjcx4qbHx8eIpnPrL7+Ji+TqPsYRT0/IoFKpV9Wxdg724OLgmkgw+1i94TYBZGSkvV6QfJoOBo7eL4DONueGlTTLhMUDeN

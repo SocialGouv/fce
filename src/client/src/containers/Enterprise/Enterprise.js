@@ -6,7 +6,7 @@ import { withRouter } from "react-router";
 import Config from "../../services/Config";
 import {
   Establishment as EstablishmentView,
-  Enterprise as EnterpriseView,
+  Enterprise as EnterpriseView
 } from "../../components/DataSheets";
 import { Error404 } from "../../components/Errors";
 import {
@@ -15,7 +15,7 @@ import {
   loadSources,
   loadEstablishment,
   loadEntreprise,
-  loadSuccessions,
+  loadSuccessions
 } from "../../services/Store/actions";
 import { loadApprentissage } from "../../services/Store/actions/apprentissage";
 import { loadEgapro } from "../../services/Store/actions/egapro";
@@ -24,8 +24,6 @@ const Enterprise = ({
   match,
   history,
   currentEnterprise,
-  agreements,
-  psi,
   apprentissage,
   successions,
   egapro,
@@ -49,7 +47,7 @@ const Enterprise = ({
   const loadMethod = isEnterprise ? loadEntreprise : loadEstablishment;
 
   useEffect(() => {
-    const mustLoadEntity = (identifier) => {
+    const mustLoadEntity = identifier => {
       const nextUrl = match.url;
 
       if (identifier !== currentEnterprise.siren && currentUrl !== nextUrl) {
@@ -59,7 +57,7 @@ const Enterprise = ({
       return state !== Config.get("state.success");
     };
 
-    const mustLoadPgApi = (identifier) => {
+    const mustLoadPgApi = identifier => {
       const isNewSiren = identifier.slice(0, 9) !== currentEnterprise.siren;
 
       return isNewSiren;
@@ -77,7 +75,7 @@ const Enterprise = ({
         .then(() => {
           setState(Config.get("state.success"));
         })
-        .catch((err) => {
+        .catch(err => {
           if (err.response?.status === 401) {
             setState(Config.get("state.unauthorize"));
           } else {
@@ -110,7 +108,7 @@ const Enterprise = ({
     loadEgapro,
     loadPsi,
     loadSources,
-    loadSuccessions,
+    loadSuccessions
   ]);
 
   useEffect(() => {
@@ -128,7 +126,7 @@ const Enterprise = ({
     enterprise.etablissements &&
     enterprise.etablissements.find(({ siret }) => siret === searchSiret);
 
-  const getHeadOffice = (enterprise) =>
+  const getHeadOffice = enterprise =>
     enterprise.etablissements &&
     enterprise.etablissements.find(
       ({ siege_social, siret }) =>
@@ -186,10 +184,10 @@ Enterprise.propTypes = {
   loadPsi: PropTypes.func,
   loadSources: PropTypes.func.isRequired,
   loadSuccessions: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     currentEnterprise: state.enterprise.current,
     agreements: state.agreements,
@@ -200,15 +198,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  loadEstablishment: (siret) => dispatch(loadEstablishment(siret)),
-  loadEntreprise: (siren) => dispatch(loadEntreprise(siren)),
-  loadAgreements: (identifier) => dispatch(loadAgreements(identifier)),
-  loadApprentissage: (identifier) => dispatch(loadApprentissage(identifier)),
-  loadEgapro: (siren) => dispatch(loadEgapro(siren)),
-  loadPsi: (identifier) => dispatch(loadPsi(identifier)),
+const mapDispatchToProps = dispatch => ({
+  loadEstablishment: siret => dispatch(loadEstablishment(siret)),
+  loadEntreprise: siren => dispatch(loadEntreprise(siren)),
+  loadAgreements: identifier => dispatch(loadAgreements(identifier)),
+  loadApprentissage: identifier => dispatch(loadApprentissage(identifier)),
+  loadEgapro: siren => dispatch(loadEgapro(siren)),
+  loadPsi: identifier => dispatch(loadPsi(identifier)),
   loadSources: () => dispatch(loadSources()),
-  loadSuccessions: (siret) => dispatch(loadSuccessions(siret))
+  loadSuccessions: siret => dispatch(loadSuccessions(siret))
 });
 
 export default withRouter(

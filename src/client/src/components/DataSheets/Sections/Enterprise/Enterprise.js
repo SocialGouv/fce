@@ -16,9 +16,13 @@ import Unsubscribe from "../../../../containers/Unsubscribe";
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 
 import "../../dataSheets.scss";
+import { useAccidentTravailBySiren } from "../../../../services/AccidentTravail/hooks";
 
 const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
   const location = useLocation();
+
+  const accidentsTravail = useAccidentTravailBySiren(enterprise.siren);
+
   useScrollToLocationHash({ location });
 
   return (

@@ -1,0 +1,64 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:13.2
+    ports:
+      - 5432:5432
+    volumes:
+      - .c42/tmp/pgdata:/var/lib/postgresql/data:delegated
+      - .c42/share/mntDataExport/:/mnt/data/export
+      - .c42/share/tmp/:/tmp:delegated
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c
+      pg_stat_statements.track=all
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: fce
+
+  mail:
+    image: occitech/alpine-mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+
+  hasura:
+    image: hasura/graphql-engine:v2.1.0-beta.3
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgresql://postgres:root@db:5432/fce
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      ## uncomment next line to set an admin secret
+      HASURA_GRAPHQL_ADMIN_SECRET: helloworld
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
+
+  storage:
+    image: mcr.microsoft.com/azure-storage/azurite
+    ports:
+      - 10000:10000
+      - 10001:10001
+    volumes:
+      - ./.c42/share/azure:/data
+
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: -Xms2g -Xmx2g
+    volumes:
+      - .c42/share/elastic:/usr/share/elasticsearch/data
+
+volumes:
+  dbmatomo: null
+  matomo: null

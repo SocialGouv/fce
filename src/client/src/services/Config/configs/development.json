@@ -1,5 +1,4 @@
 {
-  "api_endpoint": "//srv.fce.test/api",
   "matomo": {
     "url": "//matomo.fce.test/",
     "serverTrackerName": "matomo.php",

@@ -24,3 +24,6 @@ data:
 
   #LOGIN
   JWT_EXPIRE_BEFORE: "1634130400"
+
+  #HASURA
+  HASURA_URL: "http://hasura:80"

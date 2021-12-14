@@ -23,6 +23,10 @@ const config = {
     database: process.env.PG_DB,
     ssl: process.env.PG_SSL === "true",
   },
+  hasura: {
+    url: process.env.HASURA_URL,
+    adminSecret: process.env.HASURA_GRAPHQL_ADMIN_SECRET,
+  },
   sentryUrlKey:
     "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",
   mail: JSON.parse(process.env.MAIL_TRANSPORT_CONFIG),

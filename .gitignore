@@ -9,7 +9,6 @@ src/*/dist/
 /dist/
 
 # docker
-/docker-compose.yml
 /.c42/docker-compose.yml
 
 vendor/

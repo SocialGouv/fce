@@ -37,6 +37,7 @@
     "email-validator": "^2.0.4",
     "event-stream": "^4.0.1",
     "express": "^4.16.2",
+    "express-http-proxy": "^1.6.3",
     "fast-csv": "^3.4.0",
     "frentreprise": "../frentreprise",
     "html-entities": "^2.3.2",

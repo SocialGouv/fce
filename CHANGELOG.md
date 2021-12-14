@@ -1,3 +1,10 @@
+## [27.24.2](https://github.com/SocialGouv/fce/compare/v27.24.1...v27.24.2) (2021-12-14)
+
+
+### Bug Fixes
+
+* **secu:** add network policies ([#121](https://github.com/SocialGouv/fce/issues/121)) ([5bdbf08](https://github.com/SocialGouv/fce/commit/5bdbf08d07d2c10a7091e2b7adce5996b41cf045))
+
 ## [27.24.1](https://github.com/SocialGouv/fce/compare/v27.24.0...v27.24.1) (2021-12-06)
 
 

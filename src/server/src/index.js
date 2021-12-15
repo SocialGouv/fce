@@ -7,13 +7,13 @@ import frentreprise from "frentreprise";
 import EntrepriseModel from "./frentreprise/models/Entreprise";
 import EtablissementModel from "./frentreprise/models/Etablissement";
 import { isDev } from "./utils/isDev";
+import { registerHasuraProxy } from "./proxy/hasura";
 
 require("dotenv").config();
 const config = require("config");
 const app = express();
 const port = (config.has("port") && +config.get("port")) || 80;
 const sentryUrlKey = config.get("sentryUrlKey");
-
 
 if (!isDev()) {
   Sentry.init({ dsn: sentryUrlKey });
@@ -49,6 +49,8 @@ function init() {
     );
     next();
   });
+
+  registerHasuraProxy(app);
 
   app.use(bodyParser.json()); // support json encoded bodies
   app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies

@@ -20,3 +20,6 @@ data:
   #MATOMO
   MATOMO_ID_SITE: ""
   MATOMO_URL: ""
+
+  #HASURA
+  HASURA_URL: "http://hasura:80"

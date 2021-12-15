@@ -336,6 +336,25 @@ jobs:
         run: |
           echo "${{ steps.docker_push.outputs.digest }}"
 
+  BuildHasura:
+    name: Build and register Hasura image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get project name
+        run: |
+          echo "project=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+      - name: Use autodevops to register image
+        uses: SocialGouv/actions/autodevops-build-register@v1
+        with:
+          environment: dev
+          project: ${{ env.project }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          imageName: ${{ env.project }}/hasura
+          dockerfile: ./src/hasura/Dockerfile
+          dockercontext: ./src/hasura
+          rancherId: ${{ env.RANCHER_PROJECT_ID }}
+          socialgouvBaseDomain: ${{ env.SOCIALGOUV_BASE_DOMAIN }}
+
   Manifests:
     name: Generate k8s manifests for server
     runs-on: ubuntu-latest
@@ -377,7 +396,7 @@ jobs:
   deploy:
     name: Deploy application
     runs-on: ubuntu-latest
-    needs: [ BuildServer, BuildFront, BuildStrapi, BuildN8N, Manifests ]
+    needs: [ BuildServer, BuildFront, BuildStrapi, BuildN8N, BuildHasura, Manifests ]
     steps:
 
       - name: Checkout repository

@@ -194,6 +194,187 @@ metadata:
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
   labels:
+    app: hasura
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: hasura
+  namespace: fce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hasura
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: hasura
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+    spec:
+      containers:
+        - image: >-
+            ghcr.io/socialgouv/fce/hasura:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+          name: hasura
+          ports:
+            - containerPort: 80
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1280Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          startupProbe:
+            failureThreshold: 12
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+          envFrom:
+            - secretRef:
+                name: hasura-env
+            - configMapRef:
+                name: hasura-env
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  name: hasura-env
+  namespace: fce
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+spec:
+  encryptedData:
+    HASURA_GRAPHQL_ADMIN_SECRET: >-
+      AgA33lYF9V4DKEBgDyqKwxCygNXJnHYy6IDGx7KE8mSsbeFDzH6RPUEcM/NVe5xY7+CAnPyT4NHrqmym51LjJDUuFzYHtoC1EMJrQdxpfDCzXGPOUI50vStveAM5PvTS/ozS8TJo9tGjJDkJ1g9u3hi6CBK7dZj/1wOkphbAzGy0Il8V6sB5QCZmNQetytUIYa4L6JSJsuQKr2V1tH+W4SrjQXyjiEOHorWXzIOn8GTaBc3WZ/w7qvED5Nsn+aF9ULe1MBu/44Z5h57Cjc3Y4RQZmJ2FgXRQRcFHEoUhQTSmI3ut10yl+SiADReVDbdv1u7VI6UCZzJ/aYCmqBRFI2jrrQJgCCuCOjEw6Xjhf2s9LQbu/GrmLzFd3GYhlz5o7N/PClOgtAFGfcniZNa3ALVwueV1YZ/j2Si/jvHn58pfqD42eXSihrXozJq6MPnh8F46vNjbkSTXAZEnygVoI0Gdu+PLllVU5gTqYFWQyfzwlc9ttNWEsMn1WO6JizWq6CC7ET+UeXr5vp/VgBIz+aaDlrs/IonpXbSCfKbA903lpWNUjLAHleEI/uTySWfUcqwYwsEMiDxtzvoGOOQJzuzSz/pWbjxWyecCxpBFow6Ljxoy39wWOd0FtkXPLM+X7B2UrSgdYrCoYEYcuvBPa/pmlOzQGpwiOt139kDJ90Ho/muUDrCxONg3qs7dZZ45JOVh8/3lnp5Ql4SopKZDM7T/is0tDalUpiUQ1jnAuUKT3A==
+    HASURA_GRAPHQL_DATABASE_URL: >-
+      AgAo8t30EGnJszRJy1UxZdyyBWXq007bxTOChzG3nzoCwvmU+1JVo6JT4IMOlI2CCYebHNk6CZahTiIJisFNj0TlaXDChYqKWImBinPBZqr1sv1zXnACJHSW7G543kunRorPHfyn7ZVIusd8XgFlcK/69GajEtzFVka6qUnWtPEmjQhtIpnSYeJMyGJnE1Y4O2/yTYl11opPml1P7lbqk5wW77ed5ivZQP7UUp4Whbo4ZM61r/ZV1nOyGZ9PzKwSbaftTAhXi0sf1Dw2/UUT5sYohWwlM37qnPBsffuAg9x8XPhAD6fRGCrJ41Fk3Hu/9o7wcQr9xfiJm0Jx7nwYpsJJ0tk4x4NrI/Vt74yetEWdJXKare91hntQBRDNt/YTpGlRBBwbkU5VhTQmH644DCyBgb2ZKOgIOo4k1fFRSVGsKrioJW/VgRMWD1VaGO4eflvK8GR6QINMyjBZV9LdkIGpvnYW44+xaXv+CmFOpzwprBk+PbpMWpO/MSMrSKhxLxAHdNzcQXJIA2hUgf8KscbYow8KF7sQAyJV5Wg3Mo0C5XJKR7GHJXirRQVwbknDXu3/QwrEikkae1sprE8ZYiV/rmF4Yi2orWpSYCpfYURF8yrXE9bFM5M94XEcNMnKvfJE9ljrF1woEgTAzfUzMsV4dhHEr73TH+JEIlptNgJCWZTRRjSTEipRRhwgedPLe3QTkFHASvdWon8lUOVA6vDCnl+Pn2LGlXRNPfdooRBw2tTbYjHk+TiEFc2loAZ2wpeB2Hzmlncwhf0sckRQGY41s89Em0p/EatS8aOXkXpliwYFa6QSmYZF54XISuXJqUVoOjnn
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      name: hasura-env
+      labels:
+        application: fce
+        component: fce
+        owner: fce
+        team: fce
+    type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hasura-env
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  namespace: fce
+data:
+  HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'
+  HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+  HASURA_GRAPHQL_NO_OF_RETRIES: '5'
+  HASURA_GRAPHQL_SERVER_PORT: '80'
+  HASURA_GRAPHQL_LOG_LEVEL: info
+  HASURA_GRAPHQL_DEV_MODE: 'false'
+  HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hasura
+    application: fce
+    component: fce
+    owner: fce
+    team: fce
+  name: hasura
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  selector:
+    app: hasura
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
     app: n8n
     application: fce
     component: fce
@@ -588,6 +769,8 @@ spec:
       AgAAPqlE+mQ4VCMXWJBmPt1iGCdbJFvOQYlearpaVprxTdUkFpe8aAixIg68+AZtvKGMhFGsyneYG2u6chm+cBaA5mLaYW3e+en5pEHPrtd69xlz0xJR2pDXqXtJbXPGyBnYlOXkVIKaZ+ayhlYzHAzXUWTtDyyOn2NYCK7WkI4Uzn24ej8+lGEcr1cLTYuZHmHh4QziL+hetjEvMHAjt/up142JY2O45IWLBlNaY6P2E4IGw4Qyf+Ybk8U/vD1J/6IRZkZI5TatPmin8peaoY8rI/zc+DjOTu3zeXqmCtTEuxwNUxMjiIB9QhXKOvaL+qkByJ4IfCBfBjjpsTt7v4O+IDvA4C79ksyOsewru+93uyfnH5BcSQ89VW+X8+51mqH5nw5C4CuipW/Ym+Bi2hETVSG8uU125FWn8N/JUlOE2+v3viDJhXKTm5ZDZY8NtmOKDEmFLjB5bceY4opkqerpEB6N3atZemr69wie1v5d2OZXt04CfrKtQGoUZYAVFK2H+t2lIn9tCfKj3VXqMY7Ilq0g1dBXrnHKDcQ8dlNIWuZ/AHzqGzJI+BaYLaLYHia438IAMKX+RgEFiqFrPrl3SOqrTuDAl9A3bHyK4We6zJH9uqSoAP0VrUYJkAvhHyoqlGAOicFfDy9PdZMILpbbTYcKRB2rdCR6sox8y1c32CTD5XOS1e/h9C2ldvP+V835nMD6sPoVdQDkqaeTc30SKEWe1wqwRpG2o4/6JGsLaEDJeEEdNyCDWSWlDinLBCPLPw==
     MATOMO_TOKEN_AUTH: >-
       AgCQIQBLQGJDWCz81PTbd9nAl/831TR4OdYFcqJtyfHM9DwEYARsl4zyeVjWrJMZNmdvkqA2D4IYI/t75CqOKo7iSMvLCWiT/AzX1tegLZ+7UNLwKJSGbvG6myAP6mixeFWgmVut/3C9MIqZByw0ErW4/538OpSVkBs9vm8UZ4sPI4iXO5t8E7xcHloVYwXqOlbJC1+LdzFCqXeM9Fv6Tq+86xSJAKmoDLWWHiP5cmN2V/wj/mjihnWavgfyegY1CRNjPygwwkXWd+uhPWWYdWEh5qAWn0fX4q6YNwyQuB1gogxhm/5OAqfVCfbW1WgjfBIw7Ldty7+pZZ1xHuMLUHQWe5EULTZmQv6I5ojIJayXIy/h0R5qN101h8uEuOy9J96oAiX6aZnQdTt/pPgIig2NuDi2UU+jNzsMmBXCV2j4I1+T7LT+7vmihzYUV6D2n1/ShgVHJcaIEq3aW0JkNjq0qeHlvTjNeCcOG2QfSSgfHbHHbxK+Vm6MT1cI0wICPXnn6InbtHseFkJ1uHjgCE4TliIaMP3Od1CijDqbXD9uBZCvYarN4wWj6otS67kXHs4COD1K4Hzuf4Xk/hJkPE1U1ZOZwdnS93+x+J2/4ts+TzBgexH0lh4RdXjTDRulWPb0tSJ0zE6gpWnZT3J7P22h75KrnzbI+CfSMZ5gz9AKvUjH9i7KYbVmXyyqoEAVocWN4mK/9RSqz07l2mkEeDJaqMV1cGC3cg+L4gvaZ8qUJA==
+    HASURA_GRAPHQL_ADMIN_SECRET: >-
+      AgBso+eQ15GZv5qEycec1zmWsCa2wvgddsY9OMC5OeqFgYELe8IPrsT0MRLcMeUO6F25rwOe/HoQ4VYop/uATNur8F6hKKoIXN30ofhLdtC7IgzlzeVsL9MXllvZJ6wFeuqDE5HdNqvXh2kHRnROJq5jvm+SNDX1DQKbpr8zfG7i9nnVGGMSwE3zj+IiSg+UNS9L8OkgSCo7ZYcZ6FCovck3hmTsyDf6Ln1aNfHLfw0kN3mMPwteSh8n8dfb66OK5cbpDbwCdHDv11Ib44w/1uw68PR4bLZ0pRJ1Fll1e2pu+zac5Wl3Ds4t8VmOZ8JKfU0cxdNy1Vwaxj59YSym8Lv+kcKOaX3y0VbKl8gTIe2WSpGUQAZheu5t9jiIDOshIS+u9go4GzS1P6KcKPa8Avw7nGgIv9QEWIOlyo/qX2ccMtWYTth2Nu9a2GhQm+cdfh+yEs06CM0z22Vf5yQqd7XNyBnGP7Bn5zb2tt5KIQ5VRPQn/xU/woHXCWYpsAlxMca9sWltIGfmPo7Kn3X80MuGdsZI3qjCEOBA/8XRu3SPSxFfcaWS6yT7ON/BMpDprHprHjOWiVIFjZT66QAYGmiZrSjLt/qD6AyarVQ/RzTpvTT81A/a75Z9QsZpuELsUdBdAXlBBo6SaCWhmGHIF4+DKRlnPbwh1FZimV5JT1MNjhd1zafsV9MKNyi+z5wIzJpPk1LFHzNdrfaoYoz3mAs1sYV6Flg3faAc4KFnS1iVIw==
   template:
     metadata:
       annotations:
@@ -639,6 +822,7 @@ data:
   MATOMO_ID_SITE: '8'
   MATOMO_URL: https://matomo.fabrique.social.gouv.fr
   JWT_EXPIRE_BEFORE: '1634130400'
+  HASURA_URL: http://hasura:80
 ---
 apiVersion: v1
 kind: Service

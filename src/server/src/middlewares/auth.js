@@ -1,6 +1,6 @@
 import Auth, {getTokenFromRequest} from "../utils/auth";
 
-export default async (req, res, next) => {
+export default async function withAuth (req, res, next) {
   try {
     const token = getTokenFromRequest(req);
     if (!token) {
@@ -22,4 +22,4 @@ export default async (req, res, next) => {
       message: "Authentication failed",
     });
   }
-};
+}

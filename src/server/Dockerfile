@@ -15,5 +15,6 @@ COPY --chown=node:node ./frentreprise ../frentreprise
 RUN yarn install --frozen-lockfile
 
 COPY --chown=node:node ./server/build ./
+COPY --chown=node:node ./server/migrations ./migrations
 
 CMD node ./server.js

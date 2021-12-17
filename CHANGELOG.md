@@ -1,3 +1,10 @@
+# [27.25.0](https://github.com/SocialGouv/fce/compare/v27.24.2...v27.25.0) (2021-12-17)
+
+
+### Features
+
+* **at:** add import for Accidents du travail, refs [#120](https://github.com/SocialGouv/fce/issues/120) ([#122](https://github.com/SocialGouv/fce/issues/122)) ([e8415e1](https://github.com/SocialGouv/fce/commit/e8415e14738d57d914e740a08de0e5fd4493358d))
+
 ## [27.24.2](https://github.com/SocialGouv/fce/compare/v27.24.1...v27.24.2) (2021-12-14)
 
 

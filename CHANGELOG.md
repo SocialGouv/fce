@@ -1,3 +1,10 @@
+## [27.25.1](https://github.com/SocialGouv/fce/compare/v27.25.0...v27.25.1) (2021-12-17)
+
+
+### Bug Fixes
+
+* **hasura:** add hasura image build job ([#125](https://github.com/SocialGouv/fce/issues/125)) ([1c6b977](https://github.com/SocialGouv/fce/commit/1c6b9778f42a7d786b1fc0b148ee0040c0cce2a3))
+
 # [27.25.0](https://github.com/SocialGouv/fce/compare/v27.24.2...v27.25.0) (2021-12-17)
 
 

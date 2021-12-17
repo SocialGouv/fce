@@ -12,150 +12,150 @@ import { promisifyStream } from "./stream";
 import copy from "pg-copy-streams";
 
 export const sanitizeHtmlChars = (): Transform => {
-    const htmlEntitiesRegex = /&(?:[a-z]+|#x?\d+);/gi
+  const htmlEntitiesRegex = /&(?:[a-z]+|#x?\d+);/gi
 
-    return replaceStream(htmlEntitiesRegex, (entity) => decode(entity));
+  return replaceStream(htmlEntitiesRegex, (entity) => decode(entity));
 }
 
 export const createPool = async (context: IExecuteFunctions) => {
-    const pgCreds = await context.getCredentials("postgres");
+  const pgCreds = await context.getCredentials("postgres");
 
-    return new Pool({
-        ...pgCreds,
-        ssl: pgCreds && pgCreds.ssl !== "disable"
-    });
+  return new Pool({
+    ...pgCreds,
+    ssl: pgCreds && pgCreds.ssl !== "disable"
+  });
 }
 
 export const connect = (pool: Pool) => new Promise<PoolClient>((resolve, reject) => {
-    pool.connect((err, client) => {
-        if (err) {
-            reject(err);
-            return;
-        }
-        resolve(client);
-    });
+  pool.connect((err, client) => {
+    if (err) {
+      reject(err);
+      return;
+    }
+    resolve(client);
+  });
 });
 
 type MapCsvConfig = {
-    columns: Record<string, string> | string[];
-    delimiter?: string;
+  columns: Record<string, string> | string[];
+  delimiter?: string;
 };
 
 export const filterRows = (predicate: (params: any) => boolean) => new Transform(
-    {
-        objectMode: true,
-        transform(chunk, encoding, callback) {
-            if (predicate(chunk)) {
-                this.push(chunk);
-            }
-            callback();
-        }
+  {
+    objectMode: true,
+    transform(chunk, encoding, callback) {
+      if (predicate(chunk)) {
+        this.push(chunk);
+      }
+      callback();
     }
+  }
 )
 
 export const mapRow = <T, U>(transform: (input: T) => U) => new Transform({
-    objectMode: true,
-    transform(chunk: any, encoding: string, callback) {
-        this.push(transform(chunk));
-        callback();
-    }
+  objectMode: true,
+  transform(chunk: any, encoding: string, callback) {
+    this.push(transform(chunk));
+    callback();
+  }
 });
 
 export const logRow = () => mapRow<any, any>((val) => {
-    console.log(val);
-    return val;
+  console.log(val);
+  return val;
 })
 
 const isString = <T>(value: string | T): value is string => typeof value === "string";
 
 export const deduplicate = (field: string | string[] | undefined) => {
-    const keys: any[] = [];
+  const keys: any[] = [];
 
-    return new Transform({
-        objectMode: true,
-        transform(chunk: any, encoding: string, callback) {
-            if (!field) {
-                this.push(chunk);
-                callback();
-                return;
-            }
+  return new Transform({
+    objectMode: true,
+    transform(chunk: any, encoding: string, callback) {
+      if (!field) {
+        this.push(chunk);
+        callback();
+        return;
+      }
 
-            const arrayField = isString(field) ? [field] : field;
+      const arrayField = isString(field) ? [field] : field;
 
-            const key = arrayField.reduce((res, field) => {
-                res.push(chunk[field]);
-                return res;
-            }, [] as string[]).join("|");
+      const key = arrayField.reduce((res, field) => {
+        res.push(chunk[field]);
+        return res;
+      }, [] as string[]).join("|");
 
-            if (key && !keys.includes(key)) {
-                this.push(chunk);
-                keys.push(key);
-            }
+      if (key && !keys.includes(key)) {
+        this.push(chunk);
+        keys.push(key);
+      }
 
-            callback();
-        }
-    });
+      callback();
+    }
+  });
 }
 
 export const parseCsv = ({ columns, delimiter = ";" }: MapCsvConfig) => parse({
-    delimiter,
-    columns: Array.isArray(columns)
-        ? columns
-        : (header: string[]) =>
-            header.map((column) => columns[column.trim()] || column),
+  delimiter,
+  columns: Array.isArray(columns)
+    ? columns
+    : (header: string[]) =>
+      header.map((column) => columns[column.trim()] || column),
 });
 
 type StringifyCsvOptions = {
-    columns: string[]
+  columns: string[]
 };
 
 export const stringifyCsv = ({ columns }: StringifyCsvOptions) => stringify({
-    header: true,
-    delimiter: ";",
-    columns,
+  header: true,
+  delimiter: ";",
+  columns,
 });
 
 type DateParam = {
-    field: string;
-    inputFormat?: string;
-    outputFormat: string;
+  field: string;
+  inputFormat?: string;
+  outputFormat: string;
 };
 
 type DateStreamReturn = {
-    transform: Duplex,
-    getMaxDate: () => Date | undefined
+  transform: Duplex,
+  getMaxDate: () => Date | undefined
 };
 
 export const dateStream = (date: DateParam): DateStreamReturn => {
-    let maxDate: Date | undefined;
+  let maxDate: Date | undefined;
 
-    const transform = pipe(
-        mapRow(
-            (row: Record<string, string>) => ({
-                ...row,
-                [date.field]: formatDate(row[date.field], date),
-            })
-        ),
-        mapRow((row: Record<string, string>) => {
-            const rowDate = parseDate(row[date.field], date.outputFormat, new Date());
-            if (!maxDate || maxDate < rowDate) {
-                maxDate = rowDate;
-            }
-            return row;
-        })
-    );
+  const transform = pipe(
+    mapRow(
+      (row: Record<string, string>) => ({
+        ...row,
+        [date.field]: formatDate(row[date.field], date),
+      })
+    ),
+    mapRow((row: Record<string, string>) => {
+      const rowDate = parseDate(row[date.field], date.outputFormat, new Date());
+      if (!maxDate || maxDate < rowDate) {
+        maxDate = rowDate;
+      }
+      return row;
+    })
+  );
 
-    const getMaxDate = (): Date | undefined => maxDate;
+  const getMaxDate = (): Date | undefined => maxDate;
 
-    return {
-        transform,
-        getMaxDate,
-    }
+  return {
+    transform,
+    getMaxDate,
+  }
 }
 
 const padStream = (field: string, length: number) => mapRow((row: Record<string, string>) => ({
-    ...row,
-    [field]: row[field].padStart(length, '0')
+  ...row,
+  [field]: row[field].padStart(length, '0')
 }));
 
 export const padSiren = () => padStream("siren", 9);
@@ -163,11 +163,11 @@ export const padSiren = () => padStream("siren", 9);
 export const padSiret = () => padStream("siret", 14);
 
 export const truncateTable = (client: ClientBase, tableName: string) =>
-    client.query(`TRUNCATE TABLE ${tableName};`);
+  client.query(`TRUNCATE TABLE ${tableName};`);
 
 type ConflictSafeInsertOptions = {
-    table: string;
-    columns: string[];
+  table: string;
+  columns: string[];
 }
 
 /**
@@ -178,22 +178,22 @@ type ConflictSafeInsertOptions = {
  * @param columns
  */
 export const conflictSafeInsert = (conflictQuery = "DO NOTHING") => async (client: ClientBase, stream: Readable, {
-    table,
-    columns
+  table,
+  columns
 }: ConflictSafeInsertOptions) => {
-    const tempTableName = `temp_${table}_${Date.now()}`;
+  const tempTableName = `temp_${table}_${Date.now()}`;
 
-    await client.query(`CREATE TABLE ${tempTableName} (LIKE ${table} INCLUDING ALL);`);
+  await client.query(`CREATE TABLE ${tempTableName} (LIKE ${table} INCLUDING ALL);`);
 
-    await promisifyStream(stream
-        .pipe(
-            client.query(copy.from(`COPY ${tempTableName}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
-        )
-    );
+  await promisifyStream(stream
+    .pipe(
+      client.query(copy.from(`COPY ${tempTableName}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+    )
+  );
 
-    await client.query(`INSERT INTO ${table} SELECT * from ${tempTableName} ON CONFLICT ${conflictQuery};`);
+  await client.query(`INSERT INTO ${table} SELECT * from ${tempTableName} ON CONFLICT ${conflictQuery};`);
 
-    await client.query(`DROP TABLE ${tempTableName};`);
+  await client.query(`DROP TABLE ${tempTableName};`);
 }
 
 /**
@@ -204,12 +204,12 @@ export const conflictSafeInsert = (conflictQuery = "DO NOTHING") => async (clien
  * @param columns
  */
 export const fastInsert = async (client: ClientBase, stream: Readable, {
-    table,
-    columns
+  table,
+  columns
 }: ConflictSafeInsertOptions) => {
-    await promisifyStream(stream
-        .pipe(
-            client.query(copy.from(`COPY ${table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
-        )
-    );
+  await promisifyStream(stream
+    .pipe(
+      client.query(copy.from(`COPY ${table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+    )
+  );
 }

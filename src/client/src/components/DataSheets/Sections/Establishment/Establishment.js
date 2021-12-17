@@ -16,6 +16,7 @@ import PrintSection from "../SharedComponents/PrintSection";
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 
 import "../../dataSheets.scss";
+import { useAccidentTravailBySiret } from "../../../../services/AccidentTravail/hooks";
 
 const Establishment = ({
   establishment,
@@ -25,6 +26,11 @@ const Establishment = ({
   apprentissage,
   successions
 }) => {
+  const { loading, error, data } = useAccidentTravailBySiret(
+    establishment.siret
+  );
+  console.log(loading, error, data);
+
   const location = useLocation();
   useScrollToLocationHash({ location });
 
@@ -43,7 +49,11 @@ const Establishment = ({
           </div>
 
           <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
-            <Header establishment={establishment} enterprise={enterprise} apprentissage={apprentissage} />
+            <Header
+              establishment={establishment}
+              enterprise={enterprise}
+              apprentissage={apprentissage}
+            />
             <div className="data-sheet__main-container">
               <QuickAccess
                 anchors={[
@@ -54,7 +64,11 @@ const Establishment = ({
                   { label: "Aides et agréments", link: "helps" }
                 ]}
               />
-              <Activity establishment={establishment} enterprise={enterprise} successions={successions} />
+              <Activity
+                establishment={establishment}
+                enterprise={enterprise}
+                successions={successions}
+              />
               <Direccte establishment={establishment} enterprise={enterprise} />
               <Relationship
                 establishment={establishment}
@@ -81,7 +95,7 @@ Establishment.propTypes = {
   apprentissage: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
   headOffice: PropTypes.object.isRequired,
-  successions: PropTypes.object.isRequired,
+  successions: PropTypes.object.isRequired
 };
 
 export default withLoading(Establishment);

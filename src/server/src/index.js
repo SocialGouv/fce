@@ -1,6 +1,8 @@
 import express from "express";
 import bodyParser from "body-parser";
 import * as Sentry from "@sentry/node";
+import cors from "cors";
+
 import apiRouter from "./api";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise from "frentreprise";
@@ -39,16 +41,7 @@ function init() {
       source.axiosConfig.timeout = config.get("apiTimeout");
     }
   });
-
-  app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, POST, DELETE");
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-    );
-    next();
-  });
+  app.use(cors());
 
   registerHasuraProxy(app);
 

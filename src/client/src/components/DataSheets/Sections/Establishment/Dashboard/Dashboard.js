@@ -6,7 +6,8 @@ import {
   faCalendarCheck,
   faExclamationTriangle,
   faMedkit,
-  faGlobeAmericas
+  faGlobeAmericas,
+  faUserInjured
 } from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
@@ -18,6 +19,7 @@ import {
 import Item from "./Item";
 
 import "./dashboard.scss";
+import { useAccidentTravailBySiret } from "../../../../../services/AccidentTravail/hooks";
 
 const Dashboard = ({
   establishment,
@@ -36,6 +38,8 @@ const Dashboard = ({
   psi
 }) => {
   const hasInteractions = totalInteractions && totalInteractions.total > 0;
+
+  const { data: accidentTravailData } = useAccidentTravailBySiret(siret);
 
   const activity = {
     hasPse: !!(pse && pse.length),
@@ -64,8 +68,8 @@ const Dashboard = ({
 
   const effectif = isActiveEstablishment(establishment)
     ? (dernier_effectif_physique && formatNumber(dernier_effectif_physique)) ||
-    dashboardSizeRanges[tranche_effectif_insee] ||
-    "-"
+      dashboardSizeRanges[tranche_effectif_insee] ||
+      "-"
     : "0 salarié";
 
   const establishmentPsiData = psi.establishments.find(
@@ -122,8 +126,8 @@ const Dashboard = ({
           establishment.ea ||
           establishment.contrat_aide ||
           hasApprentissage(apprentissage)) && (
-            <Item icon={faMedkit} name="Aides" value="Oui" />
-          )}
+          <Item icon={faMedkit} name="Aides" value="Oui" />
+        )}
 
         {(isEnterprisePsiContractor || isEstablishmentWithPsi) && (
           <Item
@@ -138,6 +142,16 @@ const Dashboard = ({
             }
           />
         )}
+        {accidentTravailData &&
+          accidentTravailData.accidents_travail &&
+          accidentTravailData.accidents_travail.length > 0 &&
+          accidentTravailData.accidents_travail[0].total > 0 && (
+            <Item
+              icon={faUserInjured}
+              name="Accident Travail"
+              value={accidentTravailData.accidents_travail[0].total}
+            />
+          )}
       </div>
     </div>
   );
@@ -146,7 +160,7 @@ const Dashboard = ({
 Dashboard.propTypes = {
   establishment: PropTypes.object.isRequired,
   psi: PropTypes.object.isRequired,
-  apprentissage: PropTypes.object.isRequired,
+  apprentissage: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => {

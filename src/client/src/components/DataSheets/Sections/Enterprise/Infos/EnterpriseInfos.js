@@ -19,7 +19,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
   const dashboardSizeRanges = {
     ...Config.get("inseeSizeRanges"),
-    "0 salarié": "0 salarié"
+    "0 salarié": "0 salarié",
   };
 
   const isLoadingEffectifMensuelEtp = !enterprise.effectifMensuelEtp;
@@ -76,10 +76,10 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             name="Etablissements"
             value={
               enterprise.nombre_etablissements_actifs &&
-              `${
+              `${enterprise.nombre_etablissements_actifs} actif(s) et ${
+                enterprise.etablissements.length -
                 enterprise.nombre_etablissements_actifs
-              } actif(s) et ${enterprise.etablissements.length -
-                enterprise.nombre_etablissements_actifs} fermé(s)`
+              } fermé(s)`
             }
           />
 
@@ -129,6 +129,24 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
           subtitle="Informations juridiques"
           sourceCustom="Infogreffe - RCS et DGFIP"
         >
+          <div>
+            <span>
+              Informations d'immatriculation (contenues dans un extrait Kbis/D1)
+            </span>{" "}
+            : consulter le(s) justificatif(s) sur{" "}
+            <a
+              href={`https://annuaire-entreprises.data.gouv.fr/justificatif/${enterprise.siren}`}
+            >
+              annuaire entreprise
+            </a>
+          </div>
+          <div className="section-datas__list-description">
+            À partir de novembre 2021, les entreprises immatriculées au RCS ou
+            au RNM n'ont plus à fournir leur extrait Kbis/D1 dans leurs
+            démarches administratives
+            <br /> Décrets du 21 mai 2021 n°2021-631 et 2021-632
+          </div>
+
           <Data
             name="Date immatriculation RCS"
             value={enterprise.rcs_date_immatriculation}
@@ -168,7 +186,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
 EnterpriseInfos.propTypes = {
   enterprise: PropTypes.object.isRequired,
-  headOffice: PropTypes.object
+  headOffice: PropTypes.object,
 };
 
 export default EnterpriseInfos;

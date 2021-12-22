@@ -8,82 +8,130 @@ import xlsx from "xlsx";
 const client = new Client({
   node: config.elastic.url,
   auth: {
-    apiKey: config.elastic.apiKey
-  }
+    apiKey: config.elastic.apiKey,
+  },
 });
 
 const express = require("express");
 const router = express.Router();
 
-const getCodeNafLibelle = (code) => codesNafLabelIndex.get(
-  code.replace(/[A-z]+$/, '').padEnd(5, "0").slice(0, 5)
-);
+const getCodeNafLibelle = (code) =>
+  codesNafLabelIndex.get(
+    code
+      .replace(/[A-z]+$/, "")
+      .padEnd(5, "0")
+      .slice(0, 5)
+  );
 
-const codesNafLabelIndex = codesNaf.reduce((map, { id, label }) =>
-  map.set(id, label), new Map);
+const codesNafLabelIndex = codesNaf.reduce(
+  (map, { id, label }) => map.set(id, label),
+  new Map()
+);
 
 const formatElasticResult = (hit) => {
   const result = hit?._source;
-  result.libelleActivitePrincipale = getCodeNafLibelle(result.codeActivitePrincipale);
+
+  result.libelleActivitePrincipale = getCodeNafLibelle(
+    result.codeActivitePrincipale
+  );
 
   return result;
 };
 
 const rank_feature = { boost: 10, field: "trancheEffectifsUniteLegaleRank" };
 
-const makeQuery = ({
-  query, siege, etats, activites, codesCommunes,
-  departements, codesPostaux, tranchesEffectifs,
-}) => {
+const filtersFieldMap = {
+  etats: "etatAdministratifEtablissement",
+  activites: "domaineActivite",
+  codesCommunes: "codeCommuneEtablissement",
+  departements: "departementEtablissement",
+  codesPostaux: "codesPostalEtablissement",
+  tranchesEffectifs: "trancheEffectifsEtablissement",
+};
+
+const makeQuery = ({ query, siege, ...filters }) => {
   const siretOrSirenQuery = query.replace(/\s/g, "");
 
-  return ({
-    ...query ? { min_score: 20 } : {},
+  return {
+    ...(query ? { min_score: 20 } : {}),
     query: {
       bool: {
         filter: [
-          ...(siege !== "" ? [{
-            term: { etablissementSiege: siege === "true" }
-          }] : []),
+          ...(siege !== ""
+            ? [
+                {
+                  term: { etablissementSiege: siege === "true" },
+                },
+              ]
+            : []),
         ],
         must: [
-          ...(etats.length > 0 ? [{
-            terms: { etatAdministratifEtablissement: etats }
-          }] : []),
-          ...(activites.length > 0 ? [{
-            terms: { domaineActivite: activites }
-          }] : []),
-          ...(codesPostaux.length > 0 ? [{
-            terms: { codesPostalEtablissement: codesPostaux }
-          }] : []),
-          ...(codesCommunes.length > 0 ? [{
-            terms: { codeCommuneEtablissement: codesCommunes }
-          }] : []),
-          ...(departements.length > 0 ? [{
-            terms: { departementEtablissement: departements }
-          }] : []),
-          ...(tranchesEffectifs.length > 0 ? [{
-            terms: { trancheEffectifsEtablissement: tranchesEffectifs }
-          }] : []),
-          ...(query ? [{
-            bool: {
-              should: [
-                { fuzzy: { naming: { boost: 0.6, value: query } } },
-                { match: { naming: query } },
-                { match: { denominationUniteLegale: { query, boost: 10 } } },
-                ...siretOrSirenQuery ? [{ term: { siret: { value: query.replace(/\s/g, ""), boost: 100 } } }] : [],
-                ...siretOrSirenQuery ? [{ term: { siren: { value: query.replace(/\s/g, ""), boost: 100 } } }] : [],
-              ],
-            },
-          }]: []),
+          ...Object.keys(filtersFieldMap).flatMap((key) =>
+            filters[key]?.length > 0
+              ? [
+                  {
+                    terms: { [filtersFieldMap[key]]: filters[key] },
+                  },
+                ]
+              : []
+          ),
+          ...(query
+            ? [
+                {
+                  bool: {
+                    should: [
+                      { fuzzy: { naming: { boost: 0.6, value: query } } },
+                      { match: { naming: query } },
+                      {
+                        match: {
+                          denominationUniteLegale: { query, boost: 5 },
+                        },
+                      },
+                      {
+                        match: {
+                          denominationUsuelleUniteLegale: { query, boost: 7 },
+                        },
+                      },
+                      {
+                        match: {
+                          nomUniteLegale: { query, boost: 7 },
+                        },
+                      },
+                      {
+                        match: {
+                          enseigneEtablissement: { query, boost: 10 },
+                        },
+                      },
+                      ...(siretOrSirenQuery
+                        ? [
+                            {
+                              term: {
+                                siret: {
+                                  value: query.replace(/\s/g, ""),
+                                  boost: 100,
+                                },
+                              },
+                            },
+                            {
+                              term: {
+                                siren: {
+                                  value: query.replace(/\s/g, ""),
+                                  boost: 100,
+                                },
+                              },
+                            },
+                          ]
+                        : []),
+                    ],
+                  },
+                },
+              ]
+            : []),
         ],
-        should: [
-          { rank_feature },
-          { match: { etablissementSiege: "true" } }
-        ],
+        should: [{ rank_feature }, { match: { etablissementSiege: "true" } }],
       },
     },
-  })
+  };
 };
 
 const getElasticQueryParams = (req) => {
@@ -106,24 +154,26 @@ const getElasticQueryParams = (req) => {
     codesPostaux,
     tranchesEffectifs,
   };
-}
+};
 
 const requestElastic = async (params, { from, size }) => {
-  const body = makeQuery(
-    params
-  );
+  const body = makeQuery(params);
 
-  const { body: { hits: { total, hits } } } = await client.search({
+  const {
+    body: {
+      hits: { total, hits },
+    },
+  } = await client.search({
     index: config.elastic.index,
     body,
     from,
     size,
   });
-    return {
-      results: hits?.map(formatElasticResult),
-      total
-    };
-}
+  return {
+    results: hits?.map(formatElasticResult),
+    total,
+  };
+};
 
 router.get("/elastic", withAuth, async (req, res) => {
   const params = getElasticQueryParams(req);
@@ -132,7 +182,7 @@ router.get("/elastic", withAuth, async (req, res) => {
   const size = req.query["size"] || 10;
 
   try {
-    const { results, total } = await requestElastic(params, { from, size })
+    const { results, total } = await requestElastic(params, { from, size });
 
     res.json({
       total,
@@ -140,7 +190,7 @@ router.get("/elastic", withAuth, async (req, res) => {
     });
   } catch (e) {
     console.log(e);
-    res.status(500).json(e)
+    res.status(500).json(e);
   }
 });
 
@@ -156,10 +206,10 @@ const fetchAllResults = async (params) => {
     resultsList = resultsList.concat(results);
 
     from += size;
-  } while(from < total);
+  } while (from < total);
 
   return resultsList;
-}
+};
 
 const xlsxConfig = config.xlsxExport;
 
@@ -174,7 +224,7 @@ const exportToXlsx = (data) => {
   );
 
   return wbout;
-}
+};
 
 router.get("/downloadXlsx", async (req, res) => {
   const params = getElasticQueryParams(req);

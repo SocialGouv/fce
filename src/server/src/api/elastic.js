@@ -182,18 +182,36 @@ router.get("/downloadXlsx", async (req, res) => {
   try {
     const results = await fetchAllResults(params);
 
-    const formattedResults = results.map(({ siret, etatAdministratifEtablissement, denominationUniteLegale, enseigneEtablissement, etablissementSiege, codePostalEtablissement, libelleCommuneEtablissement, trancheEffectifsEtablissement, codeActivitePrincipale }) => ({
-      Siret: siret,
-      Etat: xlsxConfig.establishmentState[etatAdministratifEtablissement],
-      "Raison sociale": enseigneEtablissement || denominationUniteLegale,
-      "Categorie établissement": etablissementSiege ? "Siège Social" : "Établissement",
-      // Adresse
-      // "Complément d'adresse"
-      "Code postal": codePostalEtablissement,
-      "Ville": libelleCommuneEtablissement,
-      "Dernier effectif DSN connu": trancheEffectifsEtablissement,
-      "Activité": `${codeActivitePrincipale} - ${getCodeNafLibelle(codeActivitePrincipale)}`
-    }));
+    const formattedResults = results.map(
+      ({
+        siret,
+        etatAdministratifEtablissement,
+        denominationUniteLegale,
+        enseigneEtablissement,
+        etablissementSiege,
+        codePostalEtablissement,
+        libelleCommuneEtablissement,
+        trancheEffectifsEtablissement,
+        codeActivitePrincipale,
+        adresseEtablissement,
+        complementAdresseEtablissement,
+      }) => ({
+        Siret: siret,
+        Etat: xlsxConfig.establishmentState[etatAdministratifEtablissement],
+        "Raison sociale": enseigneEtablissement || denominationUniteLegale,
+        "Categorie établissement": etablissementSiege
+          ? "Siège Social"
+          : "Établissement",
+        Adresse: adresseEtablissement,
+        "Complément d'adresse": complementAdresseEtablissement,
+        "Code postal": codePostalEtablissement,
+        Ville: libelleCommuneEtablissement,
+        "Dernier effectif DSN connu": trancheEffectifsEtablissement,
+        Activité: `${codeActivitePrincipale} - ${getCodeNafLibelle(
+          codeActivitePrincipale
+        )}`,
+      })
+    );
 
     const outputBuffer = exportToXlsx(formattedResults);
 
@@ -202,11 +220,10 @@ router.get("/downloadXlsx", async (req, res) => {
     });
     res.send(outputBuffer);
   } catch (error) {
-    res.status(500)
-      .json({
-        error
-      })
+    res.status(500).json({
+      error,
+    });
   }
-})
+});
 
 export default router;

@@ -20,11 +20,11 @@ const SearchResults = ({
   sortField,
   sortDirection,
   generateXlsx,
-  downloadLoading
+  downloadLoading,
 }) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
-    "0 salarié": "0 salarié"
+    "0 salarié": "0 salarié",
   };
 
   console.log(results);
@@ -74,14 +74,14 @@ const SearchResults = ({
                   headName: "SIRET",
                   sortKey: "siret",
                   importantHead: true,
-                  accessor: fields => {
+                  accessor: (fields) => {
                     let siret = fields.siret;
                     return Value({
                       value: formatSiret(siret),
-                      link: `/establishment/${siret}`
+                      link: `/establishment/${siret}`,
                     });
                   },
-                  link: ({ siret }) => `/establishment/${siret}`
+                  link: ({ siret }) => `/establishment/${siret}`,
                 },
                 {
                   headName: "État",
@@ -89,9 +89,9 @@ const SearchResults = ({
                   accessor: ({ etatAdministratifEtablissement, siret }) => {
                     return TableCellState({
                       siret,
-                      etat: etatAdministratifEtablissement
+                      etat: etatAdministratifEtablissement,
                     });
-                  }
+                  },
                 },
                 {
                   headName: "Raison sociale / Nom",
@@ -99,18 +99,23 @@ const SearchResults = ({
                   html: true,
                   accessor: ({
                     denominationUniteLegale,
-                    enseigneEtablissement
+                    denominationUsuelleUniteLegale,
+                    prenomUniteLegale,
+                    nomUniteLegale,
+                    enseigneEtablissement,
                   }) => {
                     let name =
-                      denominationUniteLegale +
+                      (denominationUniteLegale ||
+                        denominationUsuelleUniteLegale ||
+                        `${nomUniteLegale} ${prenomUniteLegale}`.trim()) +
                       (enseigneEtablissement
                         ? ` (Enseigne : ${enseigneEtablissement})`
                         : "");
 
                     return Value({
-                      value: name
+                      value: name,
                     });
-                  }
+                  },
                 },
                 {
                   headName: "Catégorie établissement",
@@ -119,31 +124,31 @@ const SearchResults = ({
                     return Value({
                       value: etablissementSiege
                         ? "Siège social"
-                        : "Étab. secondaire"
+                        : "Étab. secondaire",
                     });
-                  }
+                  },
                 },
                 {
                   headName: "Code postal",
                   sortKey: "codepostaletablissement",
                   accessor: ({
                     codesPostalEtablissement,
-                    libelleCommuneEtablissement
+                    libelleCommuneEtablissement,
                   }) => {
                     return Value({
                       value: joinNoFalsy(
                         [codesPostalEtablissement, libelleCommuneEtablissement],
                         " - "
-                      )
+                      ),
                     });
-                  }
+                  },
                 },
                 {
                   headName: "Effectif (DSN)",
                   sortKey: "lastdsntrancheeffectifsetablissement",
                   accessor: ({
                     trancheEffectifsEtablissement,
-                    etatAdministratifEtablissement
+                    etatAdministratifEtablissement,
                   }) => {
                     return Value({
                       value:
@@ -155,26 +160,27 @@ const SearchResults = ({
                             )
                             ? staffSizeRanges[trancheEffectifsEtablissement]
                             : "0 salarié"
-                          : staffSizeRanges[trancheEffectifsEtablissement]
+                          : staffSizeRanges[trancheEffectifsEtablissement],
                     });
-                  }
+                  },
                 },
                 {
                   headName: "Activité",
                   sortKey: "activiteprincipaleetablissement",
                   accessor: ({
                     codeActivitePrincipale,
-                    libelleActivitePrincipale
+                    libelleActivitePrincipale,
                   }) => {
                     return (
                       codeActivitePrincipale &&
                       Value({
-                        value: `${codeActivitePrincipale ||
-                          ""} - ${libelleActivitePrincipale || ""}`
+                        value: `${codeActivitePrincipale || ""} - ${
+                          libelleActivitePrincipale || ""
+                        }`,
                       })
                     );
-                  }
-                }
+                  },
+                },
               ]}
             />
           </div>
@@ -194,7 +200,7 @@ SearchResults.propTypes = {
   sortField: PropTypes.string,
   sortDirection: PropTypes.string,
   generateXlsx: PropTypes.func.isRequired,
-  downloadLoading: PropTypes.bool.isRequired
+  downloadLoading: PropTypes.bool.isRequired,
 };
 
 export default withRouter(SearchResults);

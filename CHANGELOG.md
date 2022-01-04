@@ -1,3 +1,10 @@
+# [27.26.0](https://github.com/SocialGouv/fce/compare/v27.25.2...v27.26.0) (2022-01-04)
+
+
+### Features
+
+* **entreprise:** add link to Annuaire entreprise, closes [#109](https://github.com/SocialGouv/fce/issues/109) ([#128](https://github.com/SocialGouv/fce/issues/128)) ([9b36bbd](https://github.com/SocialGouv/fce/commit/9b36bbd9b9151b2915305cc210c798c01db27a90))
+
 ## [27.25.2](https://github.com/SocialGouv/fce/compare/v27.25.1...v27.25.2) (2022-01-04)
 
 

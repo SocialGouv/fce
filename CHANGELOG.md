@@ -1,3 +1,10 @@
+## [27.25.2](https://github.com/SocialGouv/fce/compare/v27.25.1...v27.25.2) (2022-01-04)
+
+
+### Bug Fixes
+
+* **n8n:** set n8n timezone to Europe/Paris (default is New York) ([#129](https://github.com/SocialGouv/fce/issues/129)) ([12b0b7d](https://github.com/SocialGouv/fce/commit/12b0b7d0adf7ac4ef2b3ac53f5d55bc4fcb6fa5e))
+
 ## [27.25.1](https://github.com/SocialGouv/fce/compare/v27.25.0...v27.25.1) (2021-12-17)
 
 

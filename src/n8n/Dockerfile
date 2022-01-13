@@ -17,8 +17,9 @@ RUN apk del make gcc g++ python
 RUN chown -R node /home/node
 
 USER node
-COPY --chown=node:node package.json /home/node/custom/package.json
-RUN npm install --production --prefix /home/node/custom --silent
+COPY --chown=node:node package.json /home/node/package.json
+COPY --chown=node:node package-lock.json /home/node/package-lock.json
+RUN npm install --production --prefix /home/node --silent
 
 COPY --chown=node:node ./dist /home/node/custom
 

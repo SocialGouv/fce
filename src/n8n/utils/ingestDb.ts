@@ -3,7 +3,7 @@ import { Pool } from "pg";
 import { createReadStream } from "fs";
 import * as path from "path";
 import { DOWNLOAD_STORAGE_PATH } from "./constants";
-import { identityTransform } from "./stream";
+import {identityTransform } from "./stream";
 import {
   conflictSafeInsert,
   connect,
@@ -17,11 +17,12 @@ import {
   padSiret,
   parseCsv,
   sanitizeHtmlChars,
-  stringifyCsv
+  stringifyCsv, tapRow
 } from "./postgre";
 import { Transform } from "stream";
 import { format } from "date-fns";
 import { decodeStream } from "iconv-lite";
+import { makeTimeBlock } from "./time";
 
 export type IngestDbConfig = {
   fieldsMapping: Record<string, string> | string[];
@@ -47,7 +48,9 @@ export type IngestDbConfig = {
   sanitizeHtmlChars?: boolean;
   conflictQuery?: string;
   encoding?: "windows-1252" | "utf8",
-  addedColumns?: string[]
+  addedColumns?: string[],
+  inputStream?: (filename: string) => NodeJS.ReadableStream,
+  label?: string,
 }
 
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
@@ -66,31 +69,92 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     getMaxDate: (): void => { }
   };
 
-  const encoder = params.encoding === "windows-1252" ? decodeStream("win1252") : identityTransform();
+  const input = params.inputStream ? params.inputStream : (filename: string) => createReadStream(path.join(DOWNLOAD_STORAGE_PATH, filename));
+  let counter = 0;
+  let prevCounter = 0;
+  let time = Date.now();
+  console.log(`Starting ${params.label}`);
+  const startTimer = makeTimeBlock();
+  const secTimer = makeTimeBlock();
+  const thdTimer = makeTimeBlock();
+  const fouTimer = makeTimeBlock();
 
-  const readStream = createReadStream(path.join(DOWNLOAD_STORAGE_PATH, params.filename))
-    .pipe(encoder)
-    .pipe(params.sanitizeHtmlChars !== false ? sanitizeHtmlChars() : identityTransform())
-    .pipe(parseCsv({ columns: params.fieldsMapping, delimiter: params.separator }))
-    .pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))
-    .pipe(params.padSiren ? padSiren() : identityTransform())
-    .pipe(params.padSiret ? padSiret() : identityTransform())
-    .pipe(deduplicate(params.deduplicateField))
-    .pipe(mapRow((row: Record<string, string>) => {
-      if (!params.generateSiren) {
-        return row;
-      }
+  let stream: any = input(params.filename)
+    .pipe(tapRow(startTimer.start));
 
-      return {
-        ...row,
-        siren: row.siret.substring(0, 9),
+  if (params.encoding === "windows-1252") {
+    stream = stream.pipe(decodeStream("win1252"));
+  }
+
+  if (params.sanitizeHtmlChars !== false) {
+    stream = stream.pipe(sanitizeHtmlChars());
+  }
+
+  stream = stream.pipe(parseCsv({ columns: params.fieldsMapping, delimiter: params.separator }))
+    .pipe(tapRow(startTimer.end))
+    .pipe(tapRow(secTimer.start));
+
+  if (params.nonEmptyFields && params.nonEmptyFields.length > 0) {
+    stream = stream.pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))
+  }
+
+  if (params.padSiren) {
+    stream = stream.pipe(padSiren());
+  }
+
+  if (params.padSiret) {
+    stream = stream.pipe(padSiret());
+  }
+
+  if (params.deduplicateField) {
+    stream = stream.pipe(deduplicate(params.deduplicateField));
+  }
+
+  stream = stream.pipe(tapRow(secTimer.end))
+    .pipe(tapRow(thdTimer.start));
+
+  if (params.generateSiren) {
+    stream = stream.pipe(mapRow((row: Record<string, string>) => ({
+      ...row,
+      siren: row.siret.substring(0, 9),
+    })))
+  }
+  console.log("test");
+  if (params.transform) {
+    stream = stream.pipe(params.transform())
+  }
+
+  if (params.date) {
+    stream = stream.pipe(dateTransform)
+  }
+
+  stream = stream.pipe(tapRow(thdTimer.end))
+    .pipe(mapRow((row) => {
+      counter ++;
+      if (Date.now() - time > 5000) {
+        console.log(`First: ${startTimer.getTotal()} | ${startTimer.getPrevious()}`);
+        console.log(`Second: ${secTimer.getTotal()} | ${secTimer.getPrevious()}`);
+        console.log(`Third: ${thdTimer.getTotal()} | ${thdTimer.getPrevious()}`);
+        console.log(`Fourth: ${fouTimer.getTotal()} | ${fouTimer.getPrevious()}`);
+
+        startTimer.clearPrevious();
+        secTimer.clearPrevious();
+        thdTimer.clearPrevious();
+        fouTimer.clearPrevious();
+        console.log(`${params.label} | ${counter} | ${(counter - prevCounter)/(Date.now() - time)} bps`);
+        time = Date.now();
+        prevCounter = counter;
       }
+      return row;
     }))
-    .pipe(params.transform ? params.transform() : identityTransform())
-    .pipe(dateTransform)
-    .pipe(stringifyCsv({ columns }));
+    .pipe(tapRow(fouTimer.start))
+    .pipe(stringifyCsv({ columns }))
+    .pipe(tapRow(fouTimer.end));
 
-  readStream.setMaxListeners(20);
+  stream.on("error", (error: any) => {
+    console.error(error);
+  });
+  stream.setMaxListeners(20);
 
   const client = await connect(pool);
 
@@ -104,7 +168,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     ? fastInsert
     : conflictSafeInsert(params.conflictQuery);
 
-  await insertMethod(client, readStream, {
+  await insertMethod(client, stream, {
     table: params.table,
     columns
   });

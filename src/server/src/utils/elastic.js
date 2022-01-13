@@ -102,10 +102,10 @@ const makeQuery = ({ query, siege, ...filters }) => {
         ],
         should: [
           { rank_feature: { boost: 5, field: "trancheEffectifsUniteLegaleRank" } },
-          { rank_feature: { boost: 5, field: "etablissementsUniteLegale" } },
+          { rank_feature: { boost: 5, field: "etablissementsUniteLegaleRank" } },
+          { rank_feature: { boost: 5, field: "caractereEmployeurEtablissementRank" } },
           { match: { etablissementSiege: { boost: 10, query: "true" } } },
           { match: { etatAdministratifEtablissement: { boost: 10, query: "A" } } },
-          { match: { caractereEmployeurEtablissement: "O" } },
         ],
       },
     },

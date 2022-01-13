@@ -8,8 +8,9 @@ import pipe from "multipipe";
 import { IExecuteFunctions } from "n8n-core";
 import { Client, ClientBase, Pool, PoolClient } from "pg";
 import { parse as parseDate } from "date-fns";
-import { promisifyStream } from "./stream";
+import {promisifyStream, streamSwitcher} from "./stream";
 import copy from "pg-copy-streams";
+import {LargeSet} from "./large-set";
 
 export const sanitizeHtmlChars = (): Transform => {
     const htmlEntitiesRegex = /&(?:[a-z]+|#x?\d+);/gi
@@ -61,15 +62,20 @@ export const mapRow = <T, U>(transform: (input: T) => U) => new Transform({
     }
 });
 
+export const tapRow = (fn: (arg: any) => void) => mapRow<any, any>((val) => {
+  fn(val);
+  return val;
+})
+
 export const logRow = () => mapRow<any, any>((val) => {
-    console.log(val);
+    console.log(val.toString());
     return val;
 })
 
 const isString = <T>(value: string | T): value is string => typeof value === "string";
 
 export const deduplicate = (field: string | string[] | undefined) => {
-    const keys: any[] = [];
+    const keys = new LargeSet<any>();
 
     return new Transform({
         objectMode: true,
@@ -87,9 +93,9 @@ export const deduplicate = (field: string | string[] | undefined) => {
                 return res;
             }, [] as string[]).join("|");
 
-            if (key && !keys.includes(key)) {
+            if (key && !keys.has(key)) {
                 this.push(chunk);
-                keys.push(key);
+                keys.add(key);
             }
 
             callback();
@@ -196,6 +202,11 @@ export const conflictSafeInsert = (conflictQuery = "DO NOTHING") => async (clien
     await client.query(`DROP TABLE ${tempTableName};`);
 }
 
+const makePostgreCopyStreamGenerator = (client: ClientBase, {
+  table,
+  columns
+}: ConflictSafeInsertOptions) => () => client.query(copy.from(`COPY ${table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+
 /**
  * Fast insertion that bypasses conflict resolutions. May fail in case of unicity conflicts.
  * @param client
@@ -209,7 +220,7 @@ export const fastInsert = async (client: ClientBase, stream: Readable, {
 }: ConflictSafeInsertOptions) => {
     await promisifyStream(stream
         .pipe(
-            client.query(copy.from(`COPY ${table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+            streamSwitcher(makePostgreCopyStreamGenerator(client, { table, columns }), 1000000)
         )
     );
 }

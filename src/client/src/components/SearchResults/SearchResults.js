@@ -20,11 +20,11 @@ const SearchResults = ({
   sortField,
   sortDirection,
   generateXlsx,
-  downloadLoading,
+  downloadLoading
 }) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
-    "0 salarié": "0 salarié",
+    "0 salarié": "0 salarié"
   };
 
   console.log(results);
@@ -74,24 +74,31 @@ const SearchResults = ({
                   headName: "SIRET",
                   sortKey: "siret",
                   importantHead: true,
-                  accessor: (fields) => {
+                  accessor: fields => {
                     let siret = fields.siret;
                     return Value({
                       value: formatSiret(siret),
-                      link: `/establishment/${siret}`,
+                      link: `/establishment/${siret}`
                     });
                   },
-                  link: ({ siret }) => `/establishment/${siret}`,
+                  link: ({ siret }) => `/establishment/${siret}`
                 },
                 {
                   headName: "État",
                   sortKey: "etatadministratifetablissement",
-                  accessor: ({ etatAdministratifEtablissement, siret }) => {
+                  accessor: ({
+                    etatAdministratifEtablissement,
+                    siret,
+                    statutDiffusionEtablissement
+                  }) => {
+                    if (statutDiffusionEtablissement === "N") {
+                      return null;
+                    }
                     return TableCellState({
                       siret,
-                      etat: etatAdministratifEtablissement,
+                      etat: etatAdministratifEtablissement
                     });
-                  },
+                  }
                 },
                 {
                   headName: "Raison sociale / Nom",
@@ -103,7 +110,14 @@ const SearchResults = ({
                     prenomUniteLegale,
                     nomUniteLegale,
                     enseigneEtablissement,
+                    statutDiffusionEtablissement
                   }) => {
+                    if (statutDiffusionEtablissement === "N") {
+                      return Value({
+                        value:
+                          "Entreprise non-diffusible. Voir la fiche pour plus d'informations."
+                      });
+                    }
                     let name =
                       (denominationUniteLegale ||
                         denominationUsuelleUniteLegale ||
@@ -113,35 +127,41 @@ const SearchResults = ({
                         : "");
 
                     return Value({
-                      value: name,
+                      value: name
                     });
-                  },
+                  }
                 },
                 {
                   headName: "Catégorie établissement",
                   sortKey: "etablissementsiege",
-                  accessor: ({ etablissementSiege }) => {
+                  accessor: ({
+                    etablissementSiege,
+                    statutDiffusionEtablissement
+                  }) => {
+                    if (statutDiffusionEtablissement === "N") {
+                      return Value({ value: "-" });
+                    }
                     return Value({
                       value: etablissementSiege
                         ? "Siège social"
-                        : "Étab. secondaire",
+                        : "Étab. secondaire"
                     });
-                  },
+                  }
                 },
                 {
                   headName: "Code postal",
                   sortKey: "codepostaletablissement",
                   accessor: ({
                     codesPostalEtablissement,
-                    libelleCommuneEtablissement,
+                    libelleCommuneEtablissement
                   }) => {
                     return Value({
                       value: joinNoFalsy(
                         [codesPostalEtablissement, libelleCommuneEtablissement],
                         " - "
-                      ),
+                      )
                     });
-                  },
+                  }
                 },
                 {
                   headName: "Effectif (DSN)",
@@ -149,7 +169,11 @@ const SearchResults = ({
                   accessor: ({
                     trancheEffectifsEtablissement,
                     etatAdministratifEtablissement,
+                    statutDiffusionEtablissement
                   }) => {
+                    if (statutDiffusionEtablissement === "N") {
+                      return Value({ value: "-" });
+                    }
                     return Value({
                       value:
                         trancheEffectifsEtablissement !== "-" &&
@@ -160,9 +184,9 @@ const SearchResults = ({
                             )
                             ? staffSizeRanges[trancheEffectifsEtablissement]
                             : "0 salarié"
-                          : staffSizeRanges[trancheEffectifsEtablissement],
+                          : staffSizeRanges[trancheEffectifsEtablissement]
                     });
-                  },
+                  }
                 },
                 {
                   headName: "Activité",
@@ -170,17 +194,20 @@ const SearchResults = ({
                   accessor: ({
                     codeActivitePrincipale,
                     libelleActivitePrincipale,
+                    statutDiffusionEtablissement
                   }) => {
+                    if (statutDiffusionEtablissement === "N") {
+                      return Value({ value: "-" });
+                    }
                     return (
                       codeActivitePrincipale &&
                       Value({
-                        value: `${codeActivitePrincipale || ""} - ${
-                          libelleActivitePrincipale || ""
-                        }`,
+                        value: `${codeActivitePrincipale ||
+                          ""} - ${libelleActivitePrincipale || ""}`
                       })
                     );
-                  },
-                },
+                  }
+                }
               ]}
             />
           </div>
@@ -200,7 +227,7 @@ SearchResults.propTypes = {
   sortField: PropTypes.string,
   sortDirection: PropTypes.string,
   generateXlsx: PropTypes.func.isRequired,
-  downloadLoading: PropTypes.bool.isRequired,
+  downloadLoading: PropTypes.bool.isRequired
 };
 
 export default withRouter(SearchResults);

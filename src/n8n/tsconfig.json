@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"lib": [
-			"es2017"
+			"es2020"
 		],
 		"types": [
 			"node",
@@ -14,7 +14,7 @@
 		"strict": true,
 		"preserveConstEnums": true,
 		"outDir": "./dist/",
-		"target": "es2017",
+		"target": "es2020",
 		"sourceMap": true,
     "esModuleInterop": true
 	},

@@ -34,7 +34,7 @@ const codesNafLabelIndex = codesNaf.reduce(
 
 const makeQuery = ({ query, siege, ...filters }) => {
   const siretOrSirenQuery = query.replace(/\s/g, "");
-
+  console.log(query);
   return {
     ...(query ? { min_score: 20 } : {}),
     query: {
@@ -102,10 +102,10 @@ const makeQuery = ({ query, siege, ...filters }) => {
         ],
         should: [
           { rank_feature: { boost: 5, field: "trancheEffectifsUniteLegaleRank" } },
-          { rank_feature: { boost: 5, field: "etablissementsUniteLegale" } },
+          { rank_feature: { boost: 5, field: "etablissementsUniteLegaleRank" } },
+          { rank_feature: { boost: 5, field: "caractereEmployeurEtablissementRank" } },
           { match: { etablissementSiege: { boost: 10, query: "true" } } },
           { match: { etatAdministratifEtablissement: { boost: 10, query: "A" } } },
-          { match: { caractereEmployeurEtablissement: "O" } },
         ],
       },
     },
@@ -115,9 +115,11 @@ const makeQuery = ({ query, siege, ...filters }) => {
 const formatElasticResult = (hit) => {
   const result = hit?._source;
 
-  result.libelleActivitePrincipale = getCodeNafLibelle(
-    result.codeActivitePrincipale
-  );
+  if (result.libelleActivitePrincipale) {
+    result.libelleActivitePrincipale = getCodeNafLibelle(
+      result.codeActivitePrincipale
+    );
+  }
 
   result.score = hit?._score;
 
@@ -131,8 +133,12 @@ export const getElasticQueryParams = (req) => {
   const codesPostaux = req.query["codesPostaux"] || [];
   const departements = req.query["departements"] || [];
   const tranchesEffectifs = req.query["tranchesEffectifs"] || [];
-  const etats = req.query["etats"] || [];
+  let etats = req.query["etats"] || [];
   const siege = (req.query["siege"] || "").trim();
+
+  if (etats.includes("A") && etats.includes("F")) {
+    etats = null;
+  }
 
   return {
     query,
@@ -148,7 +154,7 @@ export const getElasticQueryParams = (req) => {
 
 export const requestElastic = async (params, { from, size }) => {
   const body = makeQuery(params);
-
+  console.log(JSON.stringify(body, null, 2));
   const {
     body: {
       hits: { total, hits },
@@ -159,6 +165,8 @@ export const requestElastic = async (params, { from, size }) => {
     from,
     size,
   });
+  console.log(hits);
+
   return {
     results: hits?.map(formatElasticResult),
     total,

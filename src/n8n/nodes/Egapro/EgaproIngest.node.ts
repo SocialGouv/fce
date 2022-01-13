@@ -20,7 +20,6 @@ const getConfig = (fileName: string): IngestDbConfig => ({
     sanitizeHtmlChars: false,
     updateHistoryQuery: `UPDATE import_updates SET date = CURRENT_TIMESTAMP,
                         date_import = CURRENT_TIMESTAMP WHERE "table" = 'egapro_index';`
-
 });
 
 export class EgaproIngest implements INodeType {

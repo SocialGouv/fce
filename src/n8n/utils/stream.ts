@@ -6,6 +6,8 @@ export const promisifyStream = (stream: Stream) => {
       reject(error);
     }).on("finish", () => {
       resolve();
+    }).on("end", () => {
+      resolve();
     })
   })
 }

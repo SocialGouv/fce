@@ -1,23 +1,29 @@
 import { IExecuteFunctions } from "n8n-core";
 import { Pool } from "pg";
-import { createReadStream } from "fs";
+import {createReadStream, createWriteStream} from "fs";
 import * as path from "path";
 import { DOWNLOAD_STORAGE_PATH } from "./constants";
-import { identityTransform } from "./stream";
+import {identityTransform, promisifyStream} from "./stream";
 import {
   conflictSafeInsert,
   connect,
+  createConstraints,
+  createIndexes,
   createPool,
   dateStream,
   deduplicate,
+  deleteIndexes,
+  dropConstraints,
   fastInsert,
   filterRows,
+  getAllConstraints,
+  getAllIndexes, InsertMethod,
   mapRow,
   padSiren,
   padSiret,
   parseCsv,
   sanitizeHtmlChars,
-  stringifyCsv
+  stringifyCsv, tapRow,
 } from "./postgre";
 import { Transform } from "stream";
 import { format } from "date-fns";
@@ -47,7 +53,10 @@ export type IngestDbConfig = {
   sanitizeHtmlChars?: boolean;
   conflictQuery?: string;
   encoding?: "windows-1252" | "utf8",
-  addedColumns?: string[]
+  addedColumns?: string[],
+  inputStream?: (filename: string) => NodeJS.ReadableStream,
+  label?: string,
+  createTemporaryFile?: boolean
 }
 
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
@@ -66,31 +75,76 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     getMaxDate: (): void => { }
   };
 
-  const encoder = params.encoding === "windows-1252" ? decodeStream("win1252") : identityTransform();
+  const input = params.inputStream ? params.inputStream : (filename: string) => createReadStream(path.join(DOWNLOAD_STORAGE_PATH, filename));
+  let counter = 0;
+  let prevCounter = 0;
+  let time = Date.now();
 
-  const readStream = createReadStream(path.join(DOWNLOAD_STORAGE_PATH, params.filename))
-    .pipe(encoder)
-    .pipe(params.sanitizeHtmlChars !== false ? sanitizeHtmlChars() : identityTransform())
-    .pipe(parseCsv({ columns: params.fieldsMapping, delimiter: params.separator }))
-    .pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))
-    .pipe(params.padSiren ? padSiren() : identityTransform())
-    .pipe(params.padSiret ? padSiret() : identityTransform())
-    .pipe(deduplicate(params.deduplicateField))
-    .pipe(mapRow((row: Record<string, string>) => {
-      if (!params.generateSiren) {
-        return row;
+  if (params.label) {
+    console.log(`Starting ${params.label}`);
+  }
+
+  let stream: any = input(params.filename);
+
+  if (params.encoding === "windows-1252") {
+    stream = stream.pipe(decodeStream("win1252"));
+  }
+
+  if (params.sanitizeHtmlChars !== false) {
+    stream = stream.pipe(sanitizeHtmlChars());
+  }
+
+  stream = stream.pipe(parseCsv({ columns: params.fieldsMapping, delimiter: params.separator }));
+
+  if (params.nonEmptyFields && params.nonEmptyFields.length > 0) {
+    stream = stream.pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))
+  }
+
+  if (params.padSiren) {
+    stream = stream.pipe(padSiren());
+  }
+
+  if (params.padSiret) {
+    stream = stream.pipe(padSiret());
+  }
+
+  if (params.deduplicateField) {
+    stream = stream.pipe(deduplicate(params.deduplicateField));
+  }
+
+  if (params.generateSiren) {
+    stream = stream.pipe(mapRow((row: Record<string, string>) => ({
+      ...row,
+      siren: row.siret.substring(0, 9),
+    })))
+  }
+
+  if (params.transform) {
+    stream = stream.pipe(params.transform())
+  }
+
+  if (params.date) {
+    stream = stream.pipe(dateTransform)
+  }
+
+  stream = stream.pipe(mapRow((row) => {
+      counter ++;
+      if (Date.now() - time > 5000) {
+        console.log(`${params.label} | ${counter} | ${(counter - prevCounter)/(Date.now() - time)} bps`);
+        time = Date.now();
+        prevCounter = counter;
       }
 
-      return {
-        ...row,
-        siren: row.siret.substring(0, 9),
-      }
+      return row;
     }))
-    .pipe(params.transform ? params.transform() : identityTransform())
-    .pipe(dateTransform)
-    .pipe(stringifyCsv({ columns }));
+    .pipe(stringifyCsv({
+      columns
+    }))
 
-  readStream.setMaxListeners(20);
+  stream.on("error", (error: any) => {
+    console.error(error);
+  });
+  stream.setMaxListeners(20);
 
   const client = await connect(pool);
 
@@ -100,22 +154,58 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     await client.query(truncateRequest);
   }
 
+  // We remove indexes and constraints to optimize ingests
+  const constraints = await getAllConstraints(client, params.table);
+  await dropConstraints(client, constraints);
+
+  const indexes = await getAllIndexes(client, params.table);
+  await deleteIndexes(client, indexes);
+
+
   const insertMethod = params.bypassConflictSafeInsert
     ? fastInsert
     : conflictSafeInsert(params.conflictQuery);
 
-  await insertMethod(client, readStream, {
-    table: params.table,
-    columns
-  });
+  const extendedInsertMethod: InsertMethod = !params.createTemporaryFile
+    ? insertMethod
+    : async (client, inputStream, options) => {
 
-  if (params.date) {
-    const query = `UPDATE import_updates SET date = '${format(getMaxDate() || new Date(), "yyyy-MM-dd")}',
+      const tempFilePath = path.join(DOWNLOAD_STORAGE_PATH,`tmp-${Date.now()}`);
+      await promisifyStream(inputStream.pipe(createWriteStream(tempFilePath)));
+
+      const outputStream = createReadStream(tempFilePath);
+
+      return insertMethod(client, outputStream, options);
+    };
+
+  let error: Error | null = null;
+
+  try {
+    await extendedInsertMethod(client, stream, {
+      table: params.table,
+      columns
+    });
+
+    if (params.date) {
+      const query = `UPDATE import_updates SET date = '${format(getMaxDate() || new Date(), "yyyy-MM-dd")}',
                   date_import = CURRENT_TIMESTAMP WHERE "table" = '${params.table}';`;
 
-    await client.query(query);
-  } else if (params.updateHistoryQuery) {
-    await client.query(params.updateHistoryQuery);
+      await client.query(query);
+    } else if (params.updateHistoryQuery) {
+      await client.query(params.updateHistoryQuery);
+    }
+  } catch(err) {
+    error = err as Error;
+  }
+
+  // We restore indexes and constraints
+  console.log(`Recreating indexes`);
+  await createIndexes(client, indexes);
+  console.log(`Recreating constraints`);
+  await createConstraints(client, constraints);
+
+  if (error) {
+    throw error;
   }
 
   return [context.helpers.returnJsonArray({})];

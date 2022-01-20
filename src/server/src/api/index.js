@@ -1,6 +1,7 @@
 import express from "express";
 
 import searchRouter from "./search";
+import elasticRouter from "./elastic";
 import loginRouter from "./login";
 import usersFeedbackRouter from "./usersFeedback";
 import sourcesRouter from "./sources";
@@ -13,10 +14,13 @@ import psi from "./psi";
 import apprentissage from "./apprentissage";
 import egapro from "./egapro";
 import succession from "./succession";
+import exportRouter from "./export";
 
 const router = express.Router();
 
 router.use("", searchRouter);
+router.use("", elasticRouter);
+router.use("", exportRouter);
 router.use("", loginRouter);
 router.use("", usersFeedbackRouter);
 router.use("", sourcesRouter);

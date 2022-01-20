@@ -45,7 +45,7 @@ const createManifests = async () => {
             memory: "128Mi",
           },
           limits: {
-            cpu: "500m",
+            cpu: "4",
             memory: "1280Mi",
           },
         },

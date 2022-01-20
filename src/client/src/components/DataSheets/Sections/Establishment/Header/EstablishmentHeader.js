@@ -15,7 +15,7 @@ const EstablishmentHeader = ({
   enterprise,
   establishment,
   establishment: { adresse_composant },
-  apprentissage,
+  apprentissage
 }) => {
   const address = adresse_composant && formatAddress(adresse_composant);
 
@@ -107,7 +107,7 @@ EstablishmentHeader.propTypes = {
   enterprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
   adresse_composant: PropTypes.object,
-  apprentissage: PropTypes.object.isRequired,
+  apprentissage: PropTypes.object.isRequired
 };
 
 export default EstablishmentHeader;

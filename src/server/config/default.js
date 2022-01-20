@@ -3,6 +3,11 @@ require("dotenv").config();
 const process = require("process");
 
 const config = {
+  elastic: {
+    url: process.env.ELASTIC_URL,
+    apiKey: process.env.ELASTIC_API_KEY,
+    index: process.env.ELASTIC_INDEX,
+  },
   client: {
     baseUrl: process.env.CLIENT_BASE_URL,
   },
@@ -148,8 +153,8 @@ const config = {
   host: process.env.HOST || "127.0.0.1",
   port: process.env.PORT || 80,
   api: {
-    requestsPer10Seconds: 20
-  }
+    requestsPer10Seconds: 20,
+  },
 };
 
 module.exports = config;

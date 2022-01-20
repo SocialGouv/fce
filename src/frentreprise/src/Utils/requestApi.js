@@ -14,6 +14,7 @@ export default async (
       context: "Tiers",
       recipient: "Direccte Occitanie",
       object: "FCEE - Direccte Occitanie",
+      non_diffusables: true
     },
   };
 

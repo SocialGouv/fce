@@ -5,6 +5,7 @@ const getEtablissement = async (SIRET, Axios, params) => {
   return await utils
     .requestAPI(Axios, `etablissements/${SIRET}`, params)
     .then((data) => {
+      console.log(JSON.stringify(data, null, 2));
       const fields = [
         "siret",
         "siege_social",
@@ -13,7 +14,7 @@ const getEtablissement = async (SIRET, Axios, params) => {
           out: "categorie_etablissement",
           callback: (siege_social) =>
             utils.isEmpty(siege_social)
-              ? undefined
+              ? "Établissement"
               : siege_social
               ? "Siège social"
               : "Établissement",
@@ -72,6 +73,30 @@ const getEtablissement = async (SIRET, Axios, params) => {
                 adresse.code_insee_localite.substr(0, 2)
               : undefined,
         },
+        {
+          in: "etat_administratif.value",
+          out: "etat_etablissement"
+        },
+        {
+          in: "etat_administratif.value",
+          out: "etat_etablissement_libelle",
+          callback: (etat) => {
+            switch (etat) {
+              case "A":
+                return "Actif";
+              case "F":
+                return "Fermé";
+              case "C":
+                return "Cessé";
+              default:
+                return undefined;
+            }
+          },
+        },
+        {
+          in: "etat_administratif.date_fermeture",
+          out: "date_fin"
+        }
       ];
 
       return data && data.etablissement

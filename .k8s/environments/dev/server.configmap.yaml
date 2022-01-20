@@ -23,3 +23,7 @@ data:
 
   #HASURA
   HASURA_URL: "http://hasura:80"
+
+  #ELASTIC SEARCH
+  ELASTIC_URL: "https://recherche-entreprises-prod.es.francecentral.azure.elastic-cloud.com"
+  ELASTIC_INDEX: "fce-search"

@@ -6,10 +6,86 @@ import replaceStream from "replacestream";
 import { formatDate } from "./date";
 import pipe from "multipipe";
 import { IExecuteFunctions } from "n8n-core";
-import { Client, ClientBase, Pool, PoolClient } from "pg";
+import { ClientBase, Pool, PoolClient } from "pg";
 import { parse as parseDate } from "date-fns";
 import { promisifyStream } from "./stream";
 import copy from "pg-copy-streams";
+import {LargeSet} from "./large-set";
+
+type Constraint = {
+  nspname: string;
+  relname: string;
+  conname: string;
+  constraintdef: string;
+}
+
+export const getAllConstraints = async (client: ClientBase, tablename: string) => {
+  const response = await client.query(`
+    SELECT nspname, relname, conname, pg_get_constraintdef(con.oid) as constraintdef
+       FROM pg_catalog.pg_constraint con
+          INNER JOIN pg_catalog.pg_class rel
+              ON rel.oid = con.conrelid
+          INNER JOIN pg_catalog.pg_namespace nsp
+              ON nsp.oid = connamespace
+          WHERE nsp.nspname = 'public'
+            AND rel.relname = '${tablename}';
+  `);
+
+  return response.rows;
+}
+
+const dropConstraint = async (client: ClientBase, {nspname, relname, conname}: Constraint) =>
+  client.query(`ALTER TABLE ${nspname}."${relname}" DROP CONSTRAINT "${conname}"`)
+
+export const dropConstraints = async (client: ClientBase, constraints: Constraint[]) => {
+  await Promise.all(constraints.map((constraint) => dropConstraint(client, constraint)));
+}
+
+export const createConstraint = async (client: ClientBase, {nspname, relname, conname, constraintdef}: Constraint) =>
+  client.query(`ALTER TABLE ${nspname}."${relname}" ADD CONSTRAINT "${conname}" ${constraintdef}`)
+
+export const createConstraints = async (client: ClientBase, constraints: Constraint[]) => {
+  await Promise.all(constraints.map((constraint) => createConstraint(client, constraint)));
+}
+
+export type Index = {
+  tablename: string;
+  indexname: string;
+  indexdef: string;
+  unique: boolean
+};
+
+export const getAllIndexes = async (client: ClientBase, tablename: string) => {
+  const response = await client.query(`
+    SELECT pgc.relname as indexname,
+           pgi.indisunique as "unique",
+           pgidx.indexdef as indexdef,
+           pgt.relname as tablename
+    FROM pg_index AS pgi
+        JOIN pg_class pgc ON pgc.oid = pgi.indexrelid
+        JOIN pg_class pgt ON pgt.oid = pgi.indrelid
+        JOIN pg_indexes pgidx ON pgc.relname = pgidx.indexname
+    WHERE pgt.relname like '${tablename}'
+  `);
+
+  return response.rows;
+}
+
+export const deleteIndex = async (client: ClientBase, index: Index) => {
+    await client.query(`DROP INDEX ${index.indexname}`);
+}
+
+export const deleteIndexes = async (client: ClientBase, indexes: Index[]) => {
+  await Promise.all(indexes.map(index => deleteIndex(client, index)));
+}
+
+export const createIndex = async (client: ClientBase, index: Index) => {
+  await client.query(index.indexdef);
+}
+
+export const createIndexes = async (client: ClientBase, indexes: Index[]) => {
+  await Promise.all(indexes.map((index) => createIndex(client, index)));
+}
 
 export const sanitizeHtmlChars = (): Transform => {
     const htmlEntitiesRegex = /&(?:[a-z]+|#x?\d+);/gi
@@ -61,15 +137,20 @@ export const mapRow = <T, U>(transform: (input: T) => U) => new Transform({
     }
 });
 
+export const tapRow = (fn: (arg: any) => void) => mapRow<any, any>((val) => {
+  fn(val);
+  return val;
+})
+
 export const logRow = () => mapRow<any, any>((val) => {
-    console.log(val);
+    console.log(JSON.stringify(val));
     return val;
 })
 
 const isString = <T>(value: string | T): value is string => typeof value === "string";
 
 export const deduplicate = (field: string | string[] | undefined) => {
-    const keys: any[] = [];
+    const keys = new LargeSet<any>();
 
     return new Transform({
         objectMode: true,
@@ -87,9 +168,9 @@ export const deduplicate = (field: string | string[] | undefined) => {
                 return res;
             }, [] as string[]).join("|");
 
-            if (key && !keys.includes(key)) {
+            if (key && !keys.has(key)) {
                 this.push(chunk);
-                keys.push(key);
+                keys.add(key);
             }
 
             callback();
@@ -170,6 +251,8 @@ type ConflictSafeInsertOptions = {
     columns: string[];
 }
 
+export type InsertMethod = (client: ClientBase, stream: Readable, options: ConflictSafeInsertOptions) => Promise<void>;
+
 /**
  * Insertion that avoids conflicts by creating a temporary table
  * @param client
@@ -177,7 +260,7 @@ type ConflictSafeInsertOptions = {
  * @param table
  * @param columns
  */
-export const conflictSafeInsert = (conflictQuery = "DO NOTHING") => async (client: ClientBase, stream: Readable, {
+export const conflictSafeInsert = (conflictQuery = "DO NOTHING"): InsertMethod => async (client: ClientBase, stream: Readable, {
     table,
     columns
 }: ConflictSafeInsertOptions) => {
@@ -196,6 +279,11 @@ export const conflictSafeInsert = (conflictQuery = "DO NOTHING") => async (clien
     await client.query(`DROP TABLE ${tempTableName};`);
 }
 
+const makePostgreCopyStreamGenerator = (client: ClientBase, {
+  table,
+  columns
+}: ConflictSafeInsertOptions) => client.query(copy.from(`COPY ${table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+
 /**
  * Fast insertion that bypasses conflict resolutions. May fail in case of unicity conflicts.
  * @param client
@@ -203,13 +291,13 @@ export const conflictSafeInsert = (conflictQuery = "DO NOTHING") => async (clien
  * @param table
  * @param columns
  */
-export const fastInsert = async (client: ClientBase, stream: Readable, {
+export const fastInsert: InsertMethod= async (client: ClientBase, stream: Readable, {
     table,
     columns
 }: ConflictSafeInsertOptions) => {
     await promisifyStream(stream
         .pipe(
-            client.query(copy.from(`COPY ${table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+            makePostgreCopyStreamGenerator(client, { table, columns })
         )
     );
 }

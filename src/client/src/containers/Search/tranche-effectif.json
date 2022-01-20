@@ -8,10 +8,6 @@
       "libelle": "Unités non employeuse"
     },
     {
-      "code": "SP",
-      "libelle": "Secteur public"
-    },
-    {
         "code": "01",
         "libelle": "1 ou 2 salarié"
     },

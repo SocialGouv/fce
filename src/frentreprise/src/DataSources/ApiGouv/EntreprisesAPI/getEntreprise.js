@@ -67,6 +67,14 @@ const getEntreprise = async (SIREN, Axios, params) => {
           out: "date_de_radiation",
           callback: (date) => utils.convertDate(date),
         },
+        {
+          in: "etat_administratif.value",
+          out: "etat_entreprise",
+        },
+        {
+          in: "etat_administratif.date_fermeture",
+          out: "date_de_radiation",
+        },
       ];
 
       return data && data.entreprise ? getData(data.entreprise, fields) : {};

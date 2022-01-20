@@ -94,7 +94,7 @@ const Sidebar = ({
 
           <div>
             <EstablishmentsItems
-              establishments={[headOffice]}
+              establishments={headOffice ? [headOffice] : []}
               establishmentType="Siège social"
               headOffice
             />
@@ -106,7 +106,7 @@ const Sidebar = ({
             <>
               <EstablishmentsItems
                 establishments={establishments.filter(
-                  establishment => establishment.siret !== headOffice.siret
+                  establishment => establishment.siret !== headOffice?.siret
                 )}
                 establishmentType="Autres établissements"
                 limit={limitItems}

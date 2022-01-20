@@ -5,10 +5,10 @@ import Value from "../Value";
 import "./infoBox.scss";
 
 const formatPrefix = value =>
-  `Données ${value.toLowerCase() === "siège social" ? "du " : "de l'"}`;
+  `Données ${(value || "").toLowerCase() === "siège social" ? "du " : "de l'"}`;
 
 const formatPostfix = value =>
-  value.toLowerCase() === "établissement" ? " secondaire" : "";
+  (value || "").toLowerCase() === "établissement" ? " secondaire" : "";
 
 const InfoBox = ({ value }) => {
   return (

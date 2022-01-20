@@ -11,3 +11,4 @@ data:
   MINIO_PORT: "443"
   MINIO_SSL: "true"
   GENERIC_TIMEZONE: "Europe/Paris"
+  AZURE_SHARE_NAME: "bce"

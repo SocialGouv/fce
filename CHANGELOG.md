@@ -1,3 +1,10 @@
+# [27.27.0](https://github.com/SocialGouv/fce/compare/v27.26.0...v27.27.0) (2022-01-20)
+
+
+### Features
+
+* **search:** add elastic search index ([#130](https://github.com/SocialGouv/fce/issues/130)) ([b656e04](https://github.com/SocialGouv/fce/commit/b656e04e903d5d9605fb2e572278753986e84f63))
+
 # [27.26.0](https://github.com/SocialGouv/fce/compare/v27.25.2...v27.26.0) (2022-01-04)
 
 

@@ -1,3 +1,15 @@
+# [27.28.0](https://github.com/SocialGouv/fce/compare/v27.27.1...v27.28.0) (2022-01-21)
+
+
+### Bug Fixes
+
+* **search:** restore search persistence ([#139](https://github.com/SocialGouv/fce/issues/139)) ([4de5b11](https://github.com/SocialGouv/fce/commit/4de5b112640472565e0b1327e2d6e01b18e8788b))
+
+
+### Features
+
+* **search:** display additional name data ([#138](https://github.com/SocialGouv/fce/issues/138)) ([941f261](https://github.com/SocialGouv/fce/commit/941f26127c807d3e4d2cb39acfe80337af93d195))
+
 ## [27.27.1](https://github.com/SocialGouv/fce/compare/v27.27.0...v27.27.1) (2022-01-21)
 
 

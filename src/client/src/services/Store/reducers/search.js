@@ -8,7 +8,7 @@ import {
 } from "../constants/ActionTypes";
 
 const initialState = {
-  term: "",
+  term: null,
   page: 1,
   filters: {
     etats: ["A", "F"]

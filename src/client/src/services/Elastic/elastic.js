@@ -17,21 +17,19 @@ export const queryElastic = (query, { page: { size, current }, params }) =>
   });
 
 export const useElasticQuery = (query, { page: { size, current }, params }) => {
-  const trimmedQuery = query.trim();
+  const trimmedQuery = query?.trim() || null;
 
   const [data, setData] = useState(defaultData);
   const [loading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    setError(null);
-
-    if (Object.keys(params).length === 0 && !trimmedQuery) {
+    if (trimmedQuery === null) {
       setData(defaultData);
-      setIsLoading(false);
       return;
     }
+    setIsLoading(true);
+    setError(null);
 
     queryElastic(query, { page: { size, current }, params })
       .then(response => {

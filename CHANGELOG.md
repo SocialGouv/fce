@@ -1,3 +1,10 @@
+## [27.27.1](https://github.com/SocialGouv/fce/compare/v27.27.0...v27.27.1) (2022-01-21)
+
+
+### Bug Fixes
+
+* **n8n:** update azure connection string ([#135](https://github.com/SocialGouv/fce/issues/135)) ([c6a87b0](https://github.com/SocialGouv/fce/commit/c6a87b0c2fdfab02994ee81abc67a2f44553ec1d))
+
 # [27.27.0](https://github.com/SocialGouv/fce/compare/v27.26.0...v27.27.0) (2022-01-20)
 
 

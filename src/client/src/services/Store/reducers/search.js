@@ -3,35 +3,24 @@ import {
   SET_SEARCH_FILTERS,
   SET_SEARCH_SORT,
   SET_SEARCH_RESULTS,
-  SET_SEARCH_IS_LOADING,
-  SET_SEARCH_ERROR,
-  RESET_SEARCH
+  RESET_SEARCH,
+  SET_SEARCH_PAGE
 } from "../constants/ActionTypes";
-import Config from "../../Config";
 
 const initialState = {
   term: "",
+  page: 1,
   filters: {
-    naf: [],
-    location: [],
-    effectif: [],
-    siege: null,
-    state: Object.values(Config.get("establishmentState"))
+    etats: ["A", "F"]
   },
   sort: {
     field: null,
     ascDirection: false
   },
-  results: null,
-  resultsFilters: {
-    naf: [],
-    location: [],
-    effectif: [],
-    siege: null,
-    state: Object.values(Config.get("establishmentState"))
-  },
-  isLoading: false,
-  error: null
+  results: {
+    results: null,
+    total: 0
+  }
 };
 
 const search = (state = initialState, action) => {
@@ -40,6 +29,12 @@ const search = (state = initialState, action) => {
       return {
         ...state,
         term: action.term
+      };
+
+    case SET_SEARCH_PAGE:
+      return {
+        ...state,
+        page: action.page
       };
 
     case SET_SEARCH_FILTERS:
@@ -58,18 +53,6 @@ const search = (state = initialState, action) => {
       return {
         ...state,
         results: action.results
-      };
-
-    case SET_SEARCH_IS_LOADING:
-      return {
-        ...state,
-        isLoading: action.isLoading
-      };
-
-    case SET_SEARCH_ERROR:
-      return {
-        ...state,
-        error: action.error
       };
 
     case RESET_SEARCH:

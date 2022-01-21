@@ -7,6 +7,13 @@ export const setSearchTerm = term => dispatch => {
   });
 };
 
+export const setSearchPage = page => dispatch => {
+  dispatch({
+    type: types.SET_SEARCH_PAGE,
+    page
+  });
+};
+
 export const setSearchFilters = filters => dispatch => {
   dispatch({
     type: types.SET_SEARCH_FILTERS,
@@ -14,31 +21,10 @@ export const setSearchFilters = filters => dispatch => {
   });
 };
 
-export const setSearchSort = sort => dispatch => {
-  return dispatch({
-    type: types.SET_SEARCH_SORT,
-    sort
-  });
-};
-
-export const setSearchResults = (results, resultsFilters) => dispatch => {
+export const setSearchResults = results => dispatch => {
   dispatch({
     type: types.SET_SEARCH_RESULTS,
-    results: { ...results, resultsFilters }
-  });
-};
-
-export const setSearchIsLoading = isLoading => dispatch => {
-  dispatch({
-    type: types.SET_SEARCH_IS_LOADING,
-    isLoading
-  });
-};
-
-export const setSearchError = error => dispatch => {
-  dispatch({
-    type: types.SET_SEARCH_ERROR,
-    error
+    results
   });
 };
 

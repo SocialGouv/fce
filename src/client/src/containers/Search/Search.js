@@ -37,7 +37,7 @@ const Search = () => {
   const { filters, addFilter, removeFilter } = useSearchFilters();
   const { sortField, sortDirection, toggleSortField } = useSort();
 
-  const [elasticQuery, setElasticQuery] = useState("");
+  const [elasticQuery, setElasticQuery] = useState(searchQuery);
   const [elasticQueryParams, setElasticQueryParams] = useState({});
 
   const { data, loading, error } = useSearchResults(elasticQuery, {
@@ -48,6 +48,9 @@ const Search = () => {
   const resetSearch = useResetSearch();
 
   const downloadQuery = async () => {
+    if (elasticQuery === null) {
+      return;
+    }
     const trimmedQuery = elasticQuery.trim();
 
     const response = await Http.get("/downloadXlsx", {
@@ -93,7 +96,7 @@ const Search = () => {
       pageSize={PAGE_SIZE}
       totalResults={data?.total || 0}
       sendRequest={onSearch}
-      searchTerm={searchQuery}
+      searchTerm={searchQuery || ""}
       setSearchTerm={setSearchQuery}
       resetSearch={resetSearch}
       handlePageChange={handlePageChange}

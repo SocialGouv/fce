@@ -57,7 +57,7 @@ const Search = ({
   downloadLoading
 }) => {
   const [isOpenAdvancedSearch, setIsOpenAdvancedSearch] = useState(true);
-  console.log("comp", totalResults, results);
+
   return (
     <div className="app-search">
       <div className="app-search__wrapper">
@@ -218,7 +218,7 @@ const Search = ({
 Search.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.string,
-  results: PropTypes.array.isRequired,
+  results: PropTypes.array,
   page: PropTypes.number,
   sendRequest: PropTypes.func.isRequired,
   searchTerm: PropTypes.string.isRequired,

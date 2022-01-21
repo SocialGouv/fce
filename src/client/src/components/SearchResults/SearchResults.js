@@ -12,6 +12,31 @@ import { faFileExcel, faSpinnerThird } from "@fortawesome/pro-solid-svg-icons";
 
 import "./searchResults.scss";
 
+const formatNameData = ({
+  denominationUniteLegale,
+  denominationUsuelleUniteLegale,
+  enseigneEtablissement,
+  prenomUniteLegale,
+  nomUniteLegale
+}) => {
+  const personneUniteLegale = [prenomUniteLegale, nomUniteLegale]
+    .join(" ")
+    .trim();
+  const data = [
+    denominationUniteLegale,
+    denominationUsuelleUniteLegale,
+    enseigneEtablissement,
+    personneUniteLegale
+  ].filter(value => !!value);
+
+  const additionalNameData = data.slice(1);
+
+  const additionalNameDataString =
+    additionalNameData.length > 0 ? `(${additionalNameData.join(" - ")})` : "";
+
+  return [data[0], additionalNameDataString].join(" ");
+};
+
 const SearchResults = ({
   results,
   pagination,
@@ -104,30 +129,16 @@ const SearchResults = ({
                   headName: "Raison sociale / Nom",
                   sortKey: "enterprise_name",
                   html: true,
-                  accessor: ({
-                    denominationUniteLegale,
-                    denominationUsuelleUniteLegale,
-                    prenomUniteLegale,
-                    nomUniteLegale,
-                    enseigneEtablissement,
-                    statutDiffusionEtablissement
-                  }) => {
-                    if (statutDiffusionEtablissement === "N") {
+                  accessor: etablissement => {
+                    if (etablissement.statutDiffusionEtablissement === "N") {
                       return Value({
                         value:
                           "Entreprise non-diffusible. Voir la fiche pour plus d'informations."
                       });
                     }
-                    let name =
-                      (denominationUniteLegale ||
-                        denominationUsuelleUniteLegale ||
-                        `${nomUniteLegale} ${prenomUniteLegale}`.trim()) +
-                      (enseigneEtablissement
-                        ? ` (Enseigne : ${enseigneEtablissement})`
-                        : "");
 
                     return Value({
-                      value: name
+                      value: formatNameData(etablissement)
                     });
                   }
                 },

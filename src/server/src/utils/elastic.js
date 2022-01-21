@@ -115,7 +115,7 @@ const makeQuery = ({ query, siege, ...filters }) => {
 const formatElasticResult = (hit) => {
   const result = hit?._source;
 
-  if (result.libelleActivitePrincipale) {
+  if (result.codeActivitePrincipale) {
     result.libelleActivitePrincipale = getCodeNafLibelle(
       result.codeActivitePrincipale
     );

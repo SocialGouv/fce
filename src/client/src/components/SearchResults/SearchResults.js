@@ -53,10 +53,10 @@ const SearchResults = ({
       )}
 
       <div className="result-row">
-        {results.length === 0 && (
+        {results?.length === 0 && (
           <div className="notification is-primary is-light">Aucun résultat</div>
         )}
-        {!!results.length ? (
+        {!!results?.length ? (
           <div>
             <SearchAwesomeTable
               showPagination={pagination && pagination.pages > 1}

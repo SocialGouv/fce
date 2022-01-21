@@ -1,25 +1,20 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import moment from "moment";
-import {
-  setSearchTerm,
-  setSearchFilters,
-  setSearchSort,
-  setSearchResults,
-  setSearchIsLoading,
-  setSearchError,
-  resetSearch
-} from "../../services/Store/actions";
 import Http from "../../services/Http";
 import SearchView from "../../components/Search";
 import divisionsNaf from "./divisions-naf.json";
 import trancheEffectif from "./tranche-effectif.json";
-import { useElasticQuery } from "../../services/Elastic/elastic";
-import { useFilters, useSort } from "../../utils/search-table/hooks";
+import { useSort } from "../../utils/search-table/hooks";
 import { groupBy, omit } from "lodash";
 import { prop } from "lodash/fp";
 import { useFileDownload } from "../../utils/file-download/hooks";
+import {
+  useResetSearch,
+  useSearchFilters,
+  useSearchPage,
+  useSearchResults,
+  useSearchTerms
+} from "../../services/Store/hooks/search";
 
 const PAGE_SIZE = 10;
 
@@ -36,25 +31,21 @@ const formatLocationFilter = filters => {
 };
 
 const Search = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchPage, setSearchPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useSearchTerms();
+  const [searchPage, setSearchPage] = useSearchPage();
 
-  const { filters, addFilter, removeFilter } = useFilters({
-    etats: ["A", "F"]
-  });
+  const { filters, addFilter, removeFilter } = useSearchFilters();
   const { sortField, sortDirection, toggleSortField } = useSort();
 
   const [elasticQuery, setElasticQuery] = useState("");
   const [elasticQueryParams, setElasticQueryParams] = useState({});
 
-  const {
-    data: { total, results },
-    loading,
-    error
-  } = useElasticQuery(elasticQuery, {
-    page: { current: searchPage - 1, size: 10 },
-    params: elasticQueryParams
+  const { data, loading, error } = useSearchResults(elasticQuery, {
+    searchPage,
+    elasticQueryParams
   });
+
+  const resetSearch = useResetSearch();
 
   const downloadQuery = async () => {
     const trimmedQuery = elasticQuery.trim();
@@ -90,16 +81,17 @@ const Search = () => {
   const onSearch = () => {
     setElasticQuery(searchQuery);
     setElasticQueryParams(formatLocationFilter(filters));
+    setSearchPage(1);
   };
 
   return (
     <SearchView
       isLoading={loading}
       error={error}
-      results={results}
+      results={data?.results}
       page={searchPage}
       pageSize={PAGE_SIZE}
-      totalResults={total}
+      totalResults={data?.total || 0}
       sendRequest={onSearch}
       searchTerm={searchQuery}
       setSearchTerm={setSearchQuery}
@@ -120,47 +112,4 @@ const Search = () => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    search: state.search
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setSearchTerm: term => {
-      dispatch(setSearchTerm(term));
-    },
-    setSearchFilters: filters => {
-      dispatch(setSearchFilters(filters));
-    },
-    setSearchSort: sort => {
-      return dispatch(setSearchSort(sort));
-    },
-    setSearchResults: (results, resultsFilters) => {
-      dispatch(setSearchResults(results, resultsFilters));
-    },
-    setSearchIsLoading: isLoading => {
-      dispatch(setSearchIsLoading(isLoading));
-    },
-    setSearchError: error => {
-      dispatch(setSearchError(error));
-    },
-    resetSearch: () => {
-      dispatch(resetSearch());
-    }
-  };
-};
-
-Search.propTypes = {
-  search: PropTypes.object.isRequired,
-  setSearchTerm: PropTypes.func.isRequired,
-  setSearchFilters: PropTypes.func.isRequired,
-  setSearchSort: PropTypes.func.isRequired,
-  setSearchResults: PropTypes.func.isRequired,
-  setSearchIsLoading: PropTypes.func.isRequired,
-  setSearchError: PropTypes.func.isRequired,
-  resetSearch: PropTypes.func.isRequired
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default Search;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Http from "../Http";
 
 const defaultData = {
-  results: [],
+  results: null,
   total: 0
 };
 
@@ -35,7 +35,6 @@ export const useElasticQuery = (query, { page: { size, current }, params }) => {
 
     queryElastic(query, { page: { size, current }, params })
       .then(response => {
-        console.log(response.data);
         setData({
           results: response.data.results,
           total: response.data.total.value

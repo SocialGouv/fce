@@ -1,3 +1,10 @@
+## [27.28.1](https://github.com/SocialGouv/fce/compare/v27.28.0...v27.28.1) (2022-01-21)
+
+
+### Bug Fixes
+
+* **search:** fix pagination after back to search ([#143](https://github.com/SocialGouv/fce/issues/143)) ([8d73196](https://github.com/SocialGouv/fce/commit/8d731960bba1e6c8fa52f735ebae34f7cad5185c))
+
 # [27.28.0](https://github.com/SocialGouv/fce/compare/v27.27.1...v27.28.0) (2022-01-21)
 
 

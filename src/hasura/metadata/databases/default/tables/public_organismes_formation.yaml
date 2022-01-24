@@ -1,0 +1,3 @@
+table:
+  name: organismes_formation
+  schema: public

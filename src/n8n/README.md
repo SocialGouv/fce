@@ -11,6 +11,8 @@ Install dependencies
 yarn
 ```
 
+Setup custom extensions by adding `N8N_CUSTOM_EXTENSIONS="/asolute/path/to/dist/folder"`
+
 Import project workflows
 
 ```
@@ -23,7 +25,7 @@ Start build
 yarn dev
 ```
 
-Start n8n front 
+Start n8n front
 
 ```
 yarn n8n

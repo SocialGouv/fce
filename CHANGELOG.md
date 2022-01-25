@@ -1,3 +1,10 @@
+## [27.28.2](https://github.com/SocialGouv/fce/compare/v27.28.1...v27.28.2) (2022-01-25)
+
+
+### Bug Fixes
+
+* **entreprise:** fix non-diffusible entreprise close date ([#150](https://github.com/SocialGouv/fce/issues/150)) ([af1c217](https://github.com/SocialGouv/fce/commit/af1c217c4e918369a25054a197e37b5c2bb461bf))
+
 ## [27.28.1](https://github.com/SocialGouv/fce/compare/v27.28.0...v27.28.1) (2022-01-21)
 
 

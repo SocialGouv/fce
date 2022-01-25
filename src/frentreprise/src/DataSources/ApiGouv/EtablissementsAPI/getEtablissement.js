@@ -95,7 +95,8 @@ const getEtablissement = async (SIRET, Axios, params) => {
         },
         {
           in: "etat_administratif.date_fermeture",
-          out: "date_fin"
+          out: "date_fin",
+          callback: utils.convertDate
         }
       ];
 

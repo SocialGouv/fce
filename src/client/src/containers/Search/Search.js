@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import moment from "moment";
 import Http from "../../services/Http";
 import SearchView from "../../components/Search";
@@ -12,9 +12,10 @@ import {
   useResetSearch,
   useSearchFilters,
   useSearchPage,
-  useSearchResults,
+  useSearchQuery,
   useSearchTerms
 } from "../../services/Store/hooks/search";
+import { normalizeCodeCommunes } from "../../utils/code-commune/code-commune";
 
 const PAGE_SIZE = 10;
 
@@ -25,7 +26,9 @@ const formatLocationFilter = filters => {
   const locationFilters = groupBy(filters.location, "type");
   return {
     ...omit(filters, "location"),
-    codesCommunes: locationFilters?.commune?.map(prop("value")) || [],
+    codesCommunes: normalizeCodeCommunes(
+      locationFilters?.commune?.map(prop("value")) || []
+    ),
     departements: locationFilters?.departement?.map(prop("value")) || []
   };
 };
@@ -35,28 +38,20 @@ const Search = () => {
   const [searchPage, setSearchPage] = useSearchPage();
 
   const { filters, addFilter, removeFilter } = useSearchFilters();
+
   const { sortField, sortDirection, toggleSortField } = useSort();
 
-  const [elasticQuery, setElasticQuery] = useState(searchQuery);
-  const [elasticQueryParams, setElasticQueryParams] = useState({});
-
-  const { data, loading, error } = useSearchResults(elasticQuery, {
-    searchPage,
-    elasticQueryParams
-  });
+  const { data, loading, error, makeQuery } = useSearchQuery();
 
   const resetSearch = useResetSearch();
 
   const downloadQuery = async () => {
-    if (elasticQuery === null) {
-      return;
-    }
-    const trimmedQuery = elasticQuery.trim();
+    const trimmedQuery = searchQuery?.trim();
 
     const response = await Http.get("/downloadXlsx", {
       params: {
         q: trimmedQuery,
-        ...elasticQueryParams
+        ...formatLocationFilter(filters)
       },
       responseType: "blob"
     });
@@ -79,12 +74,18 @@ const Search = () => {
 
   const handlePageChange = nextCurrentPage => {
     setSearchPage(nextCurrentPage);
+    makeQuery(searchQuery, {
+      page: { size: PAGE_SIZE, current: nextCurrentPage - 1 },
+      params: formatLocationFilter(filters)
+    });
   };
 
   const onSearch = () => {
-    setElasticQuery(searchQuery);
-    setElasticQueryParams(formatLocationFilter(filters));
     setSearchPage(1);
+    makeQuery(searchQuery, {
+      page: { size: PAGE_SIZE, current: 0 },
+      params: formatLocationFilter(filters)
+    });
   };
 
   return (

@@ -231,7 +231,7 @@ const SearchResults = ({
 };
 
 SearchResults.propTypes = {
-  results: PropTypes.array.isRequired,
+  results: PropTypes.array,
   pagination: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   sort: PropTypes.func.isRequired,

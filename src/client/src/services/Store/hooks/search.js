@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useFilters } from "../../../utils/search-table/hooks";
+import { useEffect } from "react";
 import { useElasticQuery } from "../../Elastic/elastic";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,6 +8,7 @@ import {
   setSearchResults,
   resetSearch
 } from "../actions";
+import { omit } from "lodash";
 
 const getSearchState = state => state.search;
 
@@ -45,27 +45,22 @@ export const useSearchFilters = () => {
         etats: ["A", "F"]
       };
 
-  const { filters, addFilter, removeFilter } = useFilters(validFilters);
+  const addFilter = (key, value) => {
+    dispatch(setSearchFilters({ ...validFilters, [key]: value }));
+  };
 
-  useEffect(() => {
-    dispatch(setSearchFilters(filters));
-  }, [filters]);
+  const removeFilter = key => {
+    dispatch(setSearchFilters(omit(validFilters, key)));
+  };
 
-  return { filters, addFilter, removeFilter };
+  return { filters: savedFilters, addFilter, removeFilter };
 };
 
-export const useSearchResults = (
-  elasticQuery,
-  { searchPage, elasticQueryParams }
-) => {
+export const useSearchQuery = () => {
   const dispatch = useDispatch();
   const results = useSelector(state => getSearchState(state).results);
 
-  const { data, loading, error } = useElasticQuery(elasticQuery, {
-    page: { current: searchPage - 1, size: 10 },
-    params: elasticQueryParams,
-    defaultValue: results
-  });
+  const { data, loading, error, makeQuery } = useElasticQuery();
 
   useEffect(() => {
     if (data.results !== null) {
@@ -76,7 +71,8 @@ export const useSearchResults = (
   return {
     data: results,
     loading,
-    error
+    error,
+    makeQuery
   };
 };
 

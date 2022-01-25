@@ -1,3 +1,10 @@
+## [27.28.3](https://github.com/SocialGouv/fce/compare/v27.28.2...v27.28.3) (2022-01-25)
+
+
+### Bug Fixes
+
+* **search:** fix location filter not resetting ([7705ef3](https://github.com/SocialGouv/fce/commit/7705ef3be71155799b3b6c23e0c25a3ce98df778))
+
 ## [27.28.2](https://github.com/SocialGouv/fce/compare/v27.28.1...v27.28.2) (2022-01-25)
 
 

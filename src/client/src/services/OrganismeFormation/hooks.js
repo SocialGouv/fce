@@ -2,7 +2,7 @@ import { useQuery, gql } from "@apollo/client";
 
 const organismeFormationBySiretQuery = gql`
   query GetOrganismeFormation($siret: String!) {
-    accidents_travail(where: { siret: { _eq: $siret } }) {
+    organismes_formation(where: { siret: { _eq: $siret } }) {
       siren
       numero_declaration_activite
       denomination
@@ -26,7 +26,7 @@ const organismeFormationBySiretQuery = gql`
 
 const organismeFormationBySirenQuery = gql`
   query GetOrganismeFormation($siren: String!) {
-    accidents_travail(where: { siren: { _eq: $siren } }) {
+    organismes_formation(where: { siren: { _eq: $siren } }) {
       siret
       numero_declaration_activite
       denomination
@@ -48,8 +48,8 @@ const organismeFormationBySirenQuery = gql`
   }
 `;
 
-export const useOrganismeFormationBySiren = (siren) =>
+export const useOrganismeFormationBySiren = siren =>
   useQuery(organismeFormationBySirenQuery, { variables: { siren } });
 
-export const useOrganismeFormationBySiret = (siret) =>
+export const useOrganismeFormationBySiret = siret =>
   useQuery(organismeFormationBySiretQuery, { variables: { siret } });

@@ -12,7 +12,7 @@ const Helps = ({ enterprise }) => {
         <span className="icon">
           <FontAwesomeIcon icon={faMedkit} />
         </span>
-        <h2 className="title">Aides et agréments</h2>
+        <h2 className="title">Aides</h2>
       </div>
       <div className="section-datas">
         <Apprentissage

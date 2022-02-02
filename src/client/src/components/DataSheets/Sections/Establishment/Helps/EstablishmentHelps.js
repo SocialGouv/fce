@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedkit } from "@fortawesome/pro-solid-svg-icons";
 
-import Agrements from "./Subcategory/Agrements";
 import ContratsAides from "./Subcategory/ContratsAides";
 import Apprentissage from "./Subcategory/Apprentissage";
 
@@ -14,10 +13,9 @@ const EstablishmentHelps = ({ establishment, apprentissage }) => {
         <span className="icon">
           <FontAwesomeIcon icon={faMedkit} />
         </span>
-        <h2 className="title">Aides et agréments</h2>
+        <h2 className="title">Aides</h2>
       </div>
       <div className="section-datas">
-        <Agrements establishment={establishment} />
         <ContratsAides establishment={establishment} />
         <Apprentissage apprentissage={apprentissage} />
       </div>

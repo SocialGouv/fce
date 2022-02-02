@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import _get from "lodash.get";
 
-import Value from "../../../../../shared/Value";
-import Table from "../../../SharedComponents/Table";
-import Subcategory from "../../../SharedComponents/Subcategory";
-import Config from "../../../../../../services/Config";
-import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
+import Value from "../../../../shared/Value";
+import Table from "../../SharedComponents/Table";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Config from "../../../../../services/Config";
+import { getCustomPastYear } from "../../../../../helpers/Date/Date";
 
-const Agrements = ({ establishment }) => {
+const AgrementsIAE = ({ establishment }) => {
   const hasAgrements = !!(
     establishment.agrements_iae &&
     Object.values(establishment.agrements_iae)
@@ -19,10 +19,10 @@ const Agrements = ({ establishment }) => {
   return (
     <>
       <Subcategory
-        subtitle="Agréments"
+        subtitle="Insertion par l’activité économique (IAE)"
         datas={[
           {
-            name: "Agrément(s) Insertion par l’activité économique (IAE)",
+            name: "Insertion par l’activité économique (IAE)",
             value: hasAgrements,
             columnClasses: ["is-7", "is-5"],
             source: "ASP Extranet IAE2.0"
@@ -73,6 +73,6 @@ const Agrements = ({ establishment }) => {
   );
 };
 
-Agrements.propTypes = { establishment: PropTypes.object.isRequired };
+AgrementsIAE.propTypes = { establishment: PropTypes.object.isRequired };
 
-export default Agrements;
+export default AgrementsIAE;

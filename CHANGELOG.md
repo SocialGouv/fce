@@ -1,3 +1,10 @@
+## [27.28.4](https://github.com/SocialGouv/fce/compare/v27.28.3...v27.28.4) (2022-02-03)
+
+
+### Bug Fixes
+
+* **export:** fix export only displaying first 100 results ([#159](https://github.com/SocialGouv/fce/issues/159)) ([91d909f](https://github.com/SocialGouv/fce/commit/91d909f8ae7f4aaa82e810630c472b830aa0bbaa))
+
 ## [27.28.3](https://github.com/SocialGouv/fce/compare/v27.28.2...v27.28.3) (2022-01-25)
 
 

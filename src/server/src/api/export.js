@@ -16,8 +16,7 @@ const fetchAllResults = async (params) => {
   const size = 100;
 
   do {
-    ({ results, total } = await requestElastic(params, { from, size }));
-
+    ({ results, total: { value: total } } = await requestElastic(params, { from, size }));
     resultsList = resultsList.concat(results);
 
     from += size;

@@ -1,3 +1,10 @@
+# [27.29.0](https://github.com/SocialGouv/fce/compare/v27.28.6...v27.29.0) (2022-02-04)
+
+
+### Features
+
+* **search:** display non-diffusible etablissements infos ([#162](https://github.com/SocialGouv/fce/issues/162)) ([f859912](https://github.com/SocialGouv/fce/commit/f8599120abf7f70f87f0eb64955d77e36d20bc63))
+
 ## [27.28.6](https://github.com/SocialGouv/fce/compare/v27.28.5...v27.28.6) (2022-02-04)
 
 

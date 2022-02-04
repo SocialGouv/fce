@@ -1,3 +1,10 @@
+## [27.28.5](https://github.com/SocialGouv/fce/compare/v27.28.4...v27.28.5) (2022-02-04)
+
+
+### Bug Fixes
+
+* **export:** display label instead of code in tranche effectif ([#160](https://github.com/SocialGouv/fce/issues/160)) ([2c5dd23](https://github.com/SocialGouv/fce/commit/2c5dd23efcf5190e4404087cb77edccbcef830c4))
+
 ## [27.28.4](https://github.com/SocialGouv/fce/compare/v27.28.3...v27.28.4) (2022-02-03)
 
 

@@ -34,7 +34,6 @@ const codesNafLabelIndex = codesNaf.reduce(
 
 const makeQuery = ({ query, siege, ...filters }) => {
   const siretOrSirenQuery = query.replace(/\s/g, "");
-  console.log(query);
   return {
     ...(query ? { min_score: 20 } : {}),
     query: {
@@ -154,7 +153,6 @@ export const getElasticQueryParams = (req) => {
 
 export const requestElastic = async (params, { from, size }) => {
   const body = makeQuery(params);
-  console.log(JSON.stringify(body, null, 2));
   const {
     body: {
       hits: { total, hits },
@@ -165,7 +163,6 @@ export const requestElastic = async (params, { from, size }) => {
     from,
     size,
   });
-  console.log(hits);
 
   return {
     results: hits?.map(formatElasticResult),

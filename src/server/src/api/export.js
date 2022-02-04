@@ -4,6 +4,7 @@ import config from "config";
 import { getElasticQueryParams, requestElastic } from "../utils/elastic";
 
 import xlsx from "xlsx";
+import {getTrancheLibelleFromCode} from "../utils/trancheEffectif";
 
 const express = require("express");
 const router = express.Router();
@@ -71,7 +72,7 @@ router.get("/downloadXlsx", withAuth, async (req, res) => {
         "Complément d'adresse": complementAdresseEtablissement,
         "Code postal": codePostalEtablissement,
         Ville: libelleCommuneEtablissement,
-        "Dernier effectif DSN connu": trancheEffectifsEtablissement,
+        "Dernier effectif DSN connu": getTrancheLibelleFromCode(trancheEffectifsEtablissement),
         Activité: `${codeActivitePrincipale} - ${libelleActivitePrincipale}`,
       })
     );

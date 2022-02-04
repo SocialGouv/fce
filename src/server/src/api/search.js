@@ -5,14 +5,11 @@ import withAuth from "../middlewares/auth";
 import NotFoundException from "../Exceptions/NotFoundException";
 // eslint-disable-next-line node/no-missing-import
 import frentreprise, { isSIRET, isSIREN } from "frentreprise";
-import Establishment from "../models/Establishment";
 import { limitRate } from "../middlewares/limit-rate";
 
 const express = require("express");
-const xlsx = require("xlsx");
 const router = express.Router();
 const config = require("config");
-const AppSearchClient = require("@elastic/app-search-node");
 
 const logError = (data, err) => {
   console.error({ logError: err });
@@ -23,12 +20,6 @@ const logError = (data, err) => {
     console.error({ logErrorCatch: Exception });
     data.message = "Unknown";
   }
-};
-
-const getAppSearchClient = () => {
-  const apiKey = config.elasticIndexer.appsearch_apiKey;
-  const baseUrlFn = () => config.elasticIndexer.appsearch_address;
-  return new AppSearchClient(undefined, apiKey, baseUrlFn);
 };
 
 const isSuccessEnterprise = (data) => {

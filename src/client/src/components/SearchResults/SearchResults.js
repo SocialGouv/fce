@@ -111,14 +111,7 @@ const SearchResults = ({
                 {
                   headName: "État",
                   sortKey: "etatadministratifetablissement",
-                  accessor: ({
-                    etatAdministratifEtablissement,
-                    siret,
-                    statutDiffusionEtablissement
-                  }) => {
-                    if (statutDiffusionEtablissement === "N") {
-                      return null;
-                    }
+                  accessor: ({ etatAdministratifEtablissement, siret }) => {
                     return TableCellState({
                       siret,
                       etat: etatAdministratifEtablissement
@@ -130,13 +123,6 @@ const SearchResults = ({
                   sortKey: "enterprise_name",
                   html: true,
                   accessor: etablissement => {
-                    if (etablissement.statutDiffusionEtablissement === "N") {
-                      return Value({
-                        value:
-                          "Entreprise non-diffusible. Voir la fiche pour plus d'informations."
-                      });
-                    }
-
                     return Value({
                       value: formatNameData(etablissement)
                     });
@@ -145,13 +131,7 @@ const SearchResults = ({
                 {
                   headName: "Catégorie établissement",
                   sortKey: "etablissementsiege",
-                  accessor: ({
-                    etablissementSiege,
-                    statutDiffusionEtablissement
-                  }) => {
-                    if (statutDiffusionEtablissement === "N") {
-                      return Value({ value: "-" });
-                    }
+                  accessor: ({ etablissementSiege }) => {
                     return Value({
                       value: etablissementSiege
                         ? "Siège social"
@@ -163,12 +143,12 @@ const SearchResults = ({
                   headName: "Code postal",
                   sortKey: "codepostaletablissement",
                   accessor: ({
-                    codesPostalEtablissement,
+                    codePostalEtablissement,
                     libelleCommuneEtablissement
                   }) => {
                     return Value({
                       value: joinNoFalsy(
-                        [codesPostalEtablissement, libelleCommuneEtablissement],
+                        [codePostalEtablissement, libelleCommuneEtablissement],
                         " - "
                       )
                     });
@@ -179,12 +159,8 @@ const SearchResults = ({
                   sortKey: "lastdsntrancheeffectifsetablissement",
                   accessor: ({
                     trancheEffectifsEtablissement,
-                    etatAdministratifEtablissement,
-                    statutDiffusionEtablissement
+                    etatAdministratifEtablissement
                   }) => {
-                    if (statutDiffusionEtablissement === "N") {
-                      return Value({ value: "-" });
-                    }
                     return Value({
                       value:
                         trancheEffectifsEtablissement !== "-" &&
@@ -204,12 +180,8 @@ const SearchResults = ({
                   sortKey: "activiteprincipaleetablissement",
                   accessor: ({
                     codeActivitePrincipale,
-                    libelleActivitePrincipale,
-                    statutDiffusionEtablissement
+                    libelleActivitePrincipale
                   }) => {
-                    if (statutDiffusionEtablissement === "N") {
-                      return Value({ value: "-" });
-                    }
                     return (
                       codeActivitePrincipale &&
                       Value({

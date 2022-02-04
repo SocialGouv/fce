@@ -41,6 +41,31 @@ const exportToXlsx = (data) => {
   return wbout;
 };
 
+const formatNameData = ({
+                          denominationUniteLegale,
+                          denominationUsuelleUniteLegale,
+                          enseigneEtablissement,
+                          prenomUniteLegale,
+                          nomUniteLegale
+                        }) => {
+  const personneUniteLegale = [prenomUniteLegale, nomUniteLegale]
+    .join(" ")
+    .trim();
+  const data = [
+    denominationUniteLegale,
+    denominationUsuelleUniteLegale,
+    enseigneEtablissement,
+    personneUniteLegale
+  ].filter(value => !!value);
+
+  const additionalNameData = data.slice(1);
+
+  const additionalNameDataString =
+    additionalNameData.length > 0 ? `(${additionalNameData.join(" - ")})` : "";
+
+  return [data[0], additionalNameDataString].join(" ");
+};
+
 router.get("/downloadXlsx", withAuth, async (req, res) => {
   const params = getElasticQueryParams(req);
 
@@ -52,7 +77,10 @@ router.get("/downloadXlsx", withAuth, async (req, res) => {
         siret,
         etatAdministratifEtablissement,
         denominationUniteLegale,
+        denominationUsuelleUniteLegale,
         enseigneEtablissement,
+        prenomUniteLegale,
+        nomUniteLegale,
         etablissementSiege,
         codePostalEtablissement,
         libelleCommuneEtablissement,
@@ -64,7 +92,13 @@ router.get("/downloadXlsx", withAuth, async (req, res) => {
       }) => ({
         Siret: siret,
         Etat: xlsxConfig.establishmentState[etatAdministratifEtablissement],
-        "Raison sociale": enseigneEtablissement || denominationUniteLegale,
+        "Raison sociale": formatNameData({
+          denominationUniteLegale,
+          denominationUsuelleUniteLegale,
+          enseigneEtablissement,
+          prenomUniteLegale,
+          nomUniteLegale
+        }),
         "Categorie établissement": etablissementSiege
           ? "Siège Social"
           : "Établissement",

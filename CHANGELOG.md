@@ -1,3 +1,10 @@
+## [27.28.6](https://github.com/SocialGouv/fce/compare/v27.28.5...v27.28.6) (2022-02-04)
+
+
+### Bug Fixes
+
+* **export:** display computed raison sociale ([#161](https://github.com/SocialGouv/fce/issues/161)) ([b90ac2b](https://github.com/SocialGouv/fce/commit/b90ac2b88b6d868f14a9b63b476feeb9c85e2d3c))
+
 ## [27.28.5](https://github.com/SocialGouv/fce/compare/v27.28.4...v27.28.5) (2022-02-04)
 
 

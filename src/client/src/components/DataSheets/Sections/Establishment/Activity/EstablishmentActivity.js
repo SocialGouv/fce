@@ -246,7 +246,7 @@ const EstablishmentActivity = ({ establishment, successions }) => {
 
 EstablishmentActivity.propTypes = {
   establishment: PropTypes.object.isRequired,
-  successions: PropTypes.array.isRequired,
+  successions: PropTypes.object.isRequired,
 };
 
 export default EstablishmentActivity;

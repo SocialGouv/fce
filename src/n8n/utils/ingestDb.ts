@@ -56,7 +56,8 @@ export type IngestDbConfig = {
   addedColumns?: string[],
   inputStream?: (filename: string) => NodeJS.ReadableStream,
   label?: string,
-  createTemporaryFile?: boolean
+  createTemporaryFile?: boolean,
+  keepConstraints?: boolean
 }
 
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
@@ -156,10 +157,14 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
 
   // We remove indexes and constraints to optimize ingests
   const constraints = await getAllConstraints(client, params.table);
-  await dropConstraints(client, constraints);
+  if (!params.keepConstraints) {
+    await dropConstraints(client, constraints);
+  }
 
   const indexes = await getAllIndexes(client, params.table);
-  await deleteIndexes(client, indexes);
+  if (!params.keepConstraints) {
+    await deleteIndexes(client, indexes);
+  }
 
 
   const insertMethod = params.bypassConflictSafeInsert
@@ -198,11 +203,15 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     error = err as Error;
   }
 
-  // We restore indexes and constraints
-  console.log(`Recreating indexes`);
-  await createIndexes(client, indexes);
-  console.log(`Recreating constraints`);
-  await createConstraints(client, constraints);
+
+
+  if (!params.keepConstraints) {
+    // We restore indexes and constraints
+    console.log(`Recreating indexes`);
+    await createIndexes(client, indexes);
+    console.log(`Recreating constraints`);
+    await createConstraints(client, constraints);
+  }
 
   if (error) {
     throw error;

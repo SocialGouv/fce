@@ -15,13 +15,13 @@ const SuccessionData = ({ name, values }) => (
           <div key={index}>
             {link ? (
               <>
-                <Link key={index} to={link}>
+                <Link to={link}>
                   <Value value={siret} />
                 </Link>{" "}
                 ({date ? <Value value={date} /> : ""})
               </>
             ) : (
-              <Value key={index} value={siret} />
+              <Value value={siret} />
             )}
           </div>
         ))}

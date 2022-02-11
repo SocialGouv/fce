@@ -498,6 +498,7 @@ data:
   HASURA_GRAPHQL_LOG_LEVEL: info
   HASURA_GRAPHQL_DEV_MODE: 'false'
   HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
+  FCE_SERVER_URL: http://server:80
 ---
 apiVersion: v1
 kind: Service
@@ -822,6 +823,121 @@ metadata:
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
   labels:
+    app: redis
+    application: fce
+    component: redis
+    owner: fce
+    team: fce
+  name: redis
+  namespace: fce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      annotations:
+        kapp.k14s.io/disable-default-ownership-label-rules: ''
+        kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
+        app.github.com/job: '5678'
+        app.github.com/ref: v1.2.3
+        app.github.com/repo: socialgouv/fce
+        app.github.com/run: '1234'
+        app.github.com/sha: '0123456'
+      labels:
+        app: redis
+        application: fce
+        component: redis
+        owner: fce
+        team: fce
+    spec:
+      containers:
+        - image: redis:6.2.5-alpine3.14
+          livenessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+            exec:
+              command:
+                - sh
+                - '-c'
+                - redis-cli ping
+          name: redis
+          ports:
+            - containerPort: 6379
+              name: http
+          readinessProbe:
+            failureThreshold: 15
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+            exec:
+              command:
+                - sh
+                - '-c'
+                - redis-cli ping
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 5m
+              memory: 128Mi
+          startupProbe:
+            failureThreshold: 12
+            periodSeconds: 5
+            exec:
+              command:
+                - sh
+                - '-c'
+                - redis-cli ping
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: redis
+    application: fce
+    component: redis
+    owner: fce
+    team: fce
+  name: redis
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  namespace: fce
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 6379
+  selector:
+    app: redis
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kapp.k14s.io/disable-default-ownership-label-rules: ''
+    kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
+    app.github.com/job: '5678'
+    app.github.com/ref: v1.2.3
+    app.github.com/repo: socialgouv/fce
+    app.github.com/run: '1234'
+    app.github.com/sha: '0123456'
+  labels:
     app: server
     application: fce
     component: fce
@@ -1023,6 +1139,9 @@ data:
   STRAPI_URL: http://strapi:80
   ELASTIC_URL: https://recherche-entreprises-prod.es.francecentral.azure.elastic-cloud.com
   ELASTIC_INDEX: fce-search
+  CACHE_TYPE: redis
+  REDIS_URL: redis://redis:80
+  TZ: UTC
 ---
 apiVersion: v1
 kind: Service

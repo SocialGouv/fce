@@ -2,15 +2,16 @@ import "./observationsRcs.scss";
 
 import { faChevronRight, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { reverse, sortBy } from "lodash";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
-import { sortByDate, toI18nDate } from "../../../../../../helpers/Date";
+import { toI18nDate } from "../../../../../../helpers/Date";
 import Data from "../../../SharedComponents/Data";
 
-const ObservationRCS = ({ enterprise }) => {
+const ObservationRCS = ({ observations }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const obs = sortByDate(enterprise.rcs_observations || []);
+  const obs = reverse(sortBy(observations, "date_timestamp"));
   const firstObs = obs[0];
 
   return (
@@ -53,7 +54,7 @@ const ObservationRCS = ({ enterprise }) => {
 };
 
 ObservationRCS.propTypes = {
-  enterprise: PropTypes.object.isRequired,
+  observations: PropTypes.array.isRequired,
 };
 
 export default ObservationRCS;

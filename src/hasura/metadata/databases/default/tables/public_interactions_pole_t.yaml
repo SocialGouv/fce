@@ -1,0 +1,16 @@
+table:
+  name: interactions_pole_t
+  schema: public
+select_permissions:
+- permission:
+    columns:
+    - action_sur
+    - date
+    - intervenant
+    - realise_pour
+    - siren
+    - siret
+    - type_intervention
+    - id
+    filter: {}
+  role: user

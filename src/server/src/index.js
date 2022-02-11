@@ -10,6 +10,7 @@ import EntrepriseModel from "./frentreprise/models/Entreprise";
 import EtablissementModel from "./frentreprise/models/Etablissement";
 import { isDev } from "./utils/isDev";
 import { registerHasuraProxy } from "./proxy/hasura";
+import {setupGraphql} from "./graphql/graphql";
 
 require("dotenv").config();
 const config = require("config");
@@ -21,7 +22,7 @@ if (!isDev()) {
   Sentry.init({ dsn: sentryUrlKey });
 }
 
-function init() {
+async function init() {
   frentreprise.EntrepriseModel = EntrepriseModel;
   frentreprise.EtablissementModel = EtablissementModel;
 
@@ -47,6 +48,8 @@ function init() {
 
   app.use(bodyParser.json()); // support json encoded bodies
   app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+
+  await setupGraphql(app); // must be setup after body parser or parser won't work on other routes
 
   app.get("/", (req, res) => {
     console.log("getting");

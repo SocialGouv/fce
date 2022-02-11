@@ -1,26 +1,39 @@
-import "./agreements.scss";
+import "./AccordsEntreprise.scss";
 
 import { faExternalLinkSquareAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
-import { connect } from "react-redux";
 
 import { toI18nDate } from "../../../../../helpers/Date";
-import { getEnterpriseName } from "../../../../../helpers/Enterprise";
-import { formatEnterpriseAgreements } from "../../../../../helpers/Relationships";
 import { formatNumber, formatSiret } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
+import { formatAccords } from "../../../../../utils/accords/accords";
+import { getName } from "../../../../../utils/entreprise/entreprise";
+import {
+  getCategoryLabel,
+  getState,
+} from "../../../../../utils/establishment/establishment";
 import Data from "../../SharedComponents/Data";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
+import { useAccordsEntrepriseBySiren } from "./AccordsEntreprise.gql";
 
-const Agreements = ({ enterprise, agreements }) => {
-  const nbAccords = agreements.totalCount;
-  const raisonSociale = getEnterpriseName(enterprise);
-  const formatedAgreements = formatEnterpriseAgreements(agreements);
+const AccordsEntreprise = ({ enterprise }) => {
+  const { data, loading, error } = useAccordsEntrepriseBySiren(
+    enterprise.siren
+  );
+
+  if (loading || error) {
+    return null;
+  }
+
+  const accords = data.etablissements_accords;
+  const nbAccords = accords.length;
+  const raisonSociale = getName(enterprise);
+  const formattedAgreements = formatAccords(accords);
 
   return (
     <div>
@@ -49,19 +62,19 @@ const Agreements = ({ enterprise, agreements }) => {
                 </tr>
               </thead>
               <tbody>
-                {formatedAgreements.map(
-                  ({ siret, category, state, count, lastSignatureDate }) => {
+                {formattedAgreements.map(
+                  ({ siret, etablissement, total, lastSignatureDate }) => {
                     return (
                       <tr key={siret}>
                         <td className="table-cell--nowrap">
                           {formatSiret(siret)}
                         </td>
                         <td className="table-cell--center-cell">
-                          {state && <State state={state} />}
+                          <State state={getState(etablissement)} />
                         </td>
-                        <td>{category}</td>
+                        <td>{getCategoryLabel(etablissement)}</td>
                         <td className="has-text-right">
-                          {count && formatNumber(count)}
+                          {formatNumber(total)}
                         </td>
                         <td>{toI18nDate(lastSignatureDate)}</td>
                         <td className="see-details">
@@ -94,15 +107,8 @@ const Agreements = ({ enterprise, agreements }) => {
   );
 };
 
-Agreements.propTypes = {
-  agreements: PropTypes.object.isRequired,
+AccordsEntreprise.propTypes = {
   enterprise: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    agreements: state.agreements,
-  };
-};
-
-export default connect(mapStateToProps, null)(Agreements);
+export default AccordsEntreprise;

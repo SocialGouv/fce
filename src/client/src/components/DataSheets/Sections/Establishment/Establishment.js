@@ -8,7 +8,8 @@ import Unsubscribe from "../../../../containers/Unsubscribe";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 import withLoading from "../../../../services/withLoading";
-import Sidebar from "../../Sidebar";
+import { getSiren } from "../../../../utils/entreprise/entreprise";
+import Sidebar from "../../Sidebar/Sidebar";
 import PrintSection from "../SharedComponents/PrintSection";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Activity from "./Activity";
@@ -20,10 +21,9 @@ import Muteco from "./Muteco";
 import Relationship from "./Relationship";
 
 const Establishment = ({
+  entreprise,
   establishment,
-  establishments,
-  enterprise,
-  headOffice,
+  legacyEntreprise,
   apprentissage,
   successions,
 }) => {
@@ -37,9 +37,7 @@ const Establishment = ({
         <div className="columns">
           <div className="column is-3 aside-box is-hidden-touch">
             <Sidebar
-              enterprise={enterprise}
-              headOffice={headOffice}
-              establishments={establishments}
+              siren={getSiren(entreprise)}
               isEstablishmentDisplayed={true}
             />
           </div>
@@ -47,7 +45,7 @@ const Establishment = ({
           <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
             <Header
               establishment={establishment}
-              enterprise={enterprise}
+              enterprise={legacyEntreprise}
               apprentissage={apprentissage}
             />
             <div className="data-sheet__main-container">
@@ -63,15 +61,21 @@ const Establishment = ({
               />
               <Activity
                 establishment={establishment}
-                enterprise={enterprise}
+                enterprise={legacyEntreprise}
                 successions={successions}
               />
-              <Direccte establishment={establishment} enterprise={enterprise} />
+              <Direccte
+                establishment={establishment}
+                enterprise={legacyEntreprise}
+              />
               <Relationship
                 establishment={establishment}
-                enterprise={enterprise}
+                enterprise={legacyEntreprise}
               />
-              <Muteco establishment={establishment} enterprise={enterprise} />
+              <Muteco
+                establishment={establishment}
+                enterprise={legacyEntreprise}
+              />
               <Helps
                 establishment={establishment}
                 apprentissage={apprentissage}
@@ -89,10 +93,11 @@ const Establishment = ({
 
 Establishment.propTypes = {
   apprentissage: PropTypes.object.isRequired,
-  enterprise: PropTypes.object.isRequired,
+  entreprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
   headOffice: PropTypes.object.isRequired,
+  legacyEntreprise: PropTypes.object.isRequired,
   successions: PropTypes.object.isRequired,
 };
 

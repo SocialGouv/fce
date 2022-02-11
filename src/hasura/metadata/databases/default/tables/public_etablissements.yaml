@@ -1,0 +1,186 @@
+table:
+  name: etablissements
+  schema: public
+array_relationships:
+- name: accords
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: etablissements_accords
+        schema: public
+- name: activite_partielle
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: etablissements_activite_partielle
+        schema: public
+- name: apprentissage
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: etablissements_apprentissage
+        schema: public
+- name: idcc
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: etablissements_idcc
+        schema: public
+- name: interactions_3E_SEER
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: interactions_pole_3e
+        schema: public
+- name: interactions_3E_SRC
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: interactions_pole_3e_src
+        schema: public
+- name: interactions_C
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: interactions_pole_c
+        schema: public
+- name: interactions_T
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: interactions_pole_t
+        schema: public
+- name: organismes_formation
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: organismes_formation
+        schema: public
+- name: predecesseurs
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siretetablissementsuccesseur
+      insertion_order: null
+      remote_table:
+        name: etablissements_successions
+        schema: public
+- name: psi
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: psi_siret
+        schema: public
+- name: rupco
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: rupco_etablissements
+        schema: public
+- name: successeurs
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siretetablissementpredecesseur
+      insertion_order: null
+      remote_table:
+        name: etablissements_successions
+        schema: public
+remote_relationships:
+- definition:
+    hasura_fields:
+    - siret
+    remote_field:
+      etablissement:
+        arguments:
+          siret: $siret
+    remote_schema: entreprise-api
+  name: api
+select_permissions:
+- permission:
+    allow_aggregations: true
+    columns:
+    - appsearch_indexed
+    - activiteprincipaleetablissement
+    - activiteprincipaleregistremetiersetablissement
+    - anneeeffectifsetablissement
+    - caractereemployeuretablissement
+    - codecedex2etablissement
+    - codecedexetablissement
+    - codecommune2etablissement
+    - codecommuneetablissement
+    - codepaysetranger2etablissement
+    - codepaysetrangeretablissement
+    - codepostal2etablissement
+    - codepostaletablissement
+    - complementadresse2etablissement
+    - complementadresseetablissement
+    - denominationusuelleetablissement
+    - distributionspeciale2etablissement
+    - distributionspecialeetablissement
+    - enseigne1etablissement
+    - enseigne2etablissement
+    - enseigne3etablissement
+    - etablissementsiege
+    - etatadministratifetablissement
+    - indicerepetition2etablissement
+    - indicerepetitionetablissement
+    - libellecedex2etablissement
+    - libellecedexetablissement
+    - libellecommune2etablissement
+    - libellecommuneetablissement
+    - libellecommuneetranger2etablissement
+    - libellecommuneetrangeretablissement
+    - libellepaysetranger2etablissement
+    - libellepaysetrangeretablissement
+    - libellevoie2etablissement
+    - libellevoieetablissement
+    - nic
+    - nomenclatureactiviteprincipaleetablissement
+    - numerovoie2etablissement
+    - numerovoieetablissement
+    - siren
+    - siret
+    - statutdiffusionetablissement
+    - trancheeffectifsetablissement
+    - typevoie2etablissement
+    - typevoieetablissement
+    - datecreationetablissement
+    - datedebut
+    - datederniertraitementetablissement
+    - nombreperiodesetablissement
+    filter: {}
+  role: user

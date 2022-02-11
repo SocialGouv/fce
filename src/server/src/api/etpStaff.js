@@ -56,6 +56,10 @@ router.get("/etp-staff/:type/:identifier", withAuth, preconfiguredLimitRate(), (
       }
     )
       .then((res) => res.data)
+      .then(val => {
+        console.log(val);
+        return val;
+      })
       .catch((error) => {
         console.error(
           `

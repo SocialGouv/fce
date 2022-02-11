@@ -35,6 +35,10 @@ const config = {
     url: process.env.HASURA_URL,
     token: process.env.HASURA_TOKEN
   },
+  cache: {
+    type: process.env.CACHE_TYPE,
+    redisUrl: process.env.REDIS_URL
+  },
   strapi: {
     url: process.env.STRAPI_URL,
     user: process.env.STRAPI_USERNAME,

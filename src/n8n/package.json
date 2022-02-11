@@ -73,7 +73,8 @@
         "pg": "^8.6.0",
         "pg-copy-streams": "^5.1.1",
         "replacestream": "^4.0.3",
-        "windows-1252": "^3.0.2"
+        "windows-1252": "^3.0.2",
+        "xlsx": "^0.18.0"
     },
     "jest": {
         "transform": {

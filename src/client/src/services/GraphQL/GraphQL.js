@@ -1,11 +1,20 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloLink,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
 import Auth from "../Auth";
 import config from "../Config";
 
-const httpLink = createHttpLink({
+const fceGraphqlLink = createHttpLink({
   uri: `${config.get("api_endpoint")}/graphql`,
+});
+
+const bceGraphqlLink = createHttpLink({
+  uri: `${config.get("api_endpoint")}/bce/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -20,7 +29,14 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+export const BCE_CLIENT = "BCE";
+export const FCE_CLIENT = "FCE";
+
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
-  link: authLink.concat(httpLink),
+  link: ApolloLink.split(
+    (operation) => operation.getContext().clientName === BCE_CLIENT,
+    authLink.concat(bceGraphqlLink),
+    authLink.concat(fceGraphqlLink)
+  ),
 });

@@ -1,0 +1,11 @@
+table:
+  name: idcc
+  schema: public
+select_permissions:
+- permission:
+    columns:
+    - code
+    - libelle
+    - id
+    filter: {}
+  role: user

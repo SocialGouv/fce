@@ -15,10 +15,7 @@ const Helps = ({ enterprise }) => {
         <h2 className="title">Aides</h2>
       </div>
       <div className="section-datas">
-        <Apprentissage
-          apprentissage={enterprise.apprentissage}
-          etablissements={enterprise.etablissements}
-        />
+        <Apprentissage entreprise={enterprise} />
       </div>
     </section>
   );

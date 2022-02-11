@@ -19,7 +19,9 @@ export const loadEntreprise = (siren) => (dispatch) => {
 
 const getEnterprise = (term) => (dispatch) => {
   return new Promise((resolve, reject) => {
-    const dataSources = Config.get("dataSources");
+    const dataSources = Config.get("dataSources").filter(
+      ({ id }) => id !== "PG" || term.length !== 9
+    );
     let nbErrors = 0;
 
     dispatch({

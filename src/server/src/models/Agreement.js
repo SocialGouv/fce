@@ -12,8 +12,6 @@ export default class Agreement extends Model {
       const agreementsBySiretQuery = this.db.query(
         `SELECT
           etab.siret,
-          etab.etablissementsiege,
-          etab.etatadministratifetablissement,
           ARRAY_AGG(ea.num_dos) agreements,
           MAX(ea.dt_sign) last_date_sign
         FROM
@@ -34,6 +32,7 @@ export default class Agreement extends Model {
 
       const [agreements, agreementsBySiret] = response;
 
+      console.log({ agreements, agreementsBySiret });
       if (!agreements || !agreementsBySiret) {
         throw new HttpError(
           "Postgres query error (Agreement::findAllBySIREN)",
@@ -55,18 +54,11 @@ export default class Agreement extends Model {
       const fileNumbersBySiret = (agreementsBySiret?.rows || []).map(
         ({
           siret,
-          etablissementsiege,
-          etatadministratifetablissement,
           agreements,
           last_date_sign,
         }) => {
           return {
             siret,
-            category:
-              etablissementsiege === "true"
-                ? "Siège social"
-                : "Établissement secondaire",
-            state: etatadministratifetablissement,
             fileNumbers: agreements,
             count: agreements.length,
             lastSignatureDate: last_date_sign,

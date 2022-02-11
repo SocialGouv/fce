@@ -4,11 +4,10 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import Value from "../../../../shared/Value";
-import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
 
-const Egapro = ({ egapro }) => (
+const Egapro = ({ enterprise }) => (
   <div>
     <Subcategory
       subtitle="Index de l'égalité professionnelle"
@@ -21,37 +20,33 @@ const Egapro = ({ egapro }) => (
           et les femmes, chaque année au 1er mars
         </div>
         <div className="section-datas__list-item">
-          <PgApiDataHandler isLoading={egapro.isLoading} error={egapro.error}>
-            {egapro.index?.length > 0 ? (
-              <Table className="enterprise-mandataires">
-                <thead>
-                  <tr>
-                    <th className="th">Année</th>
-                    <th className="th">Index</th>
+          {enterprise.egapro.length > 0 ? (
+            <Table className="enterprise-mandataires">
+              <thead>
+                <tr>
+                  <th className="th">Année</th>
+                  <th className="th">Index</th>
+                </tr>
+              </thead>
+              <tbody>
+                {enterprise.egapro.map(({ annee, index }) => (
+                  <tr key={annee}>
+                    <td>
+                      <Value value={annee} />
+                    </td>
+                    <td>
+                      <Value
+                        value={index ? `${index}/100` : ""}
+                        empty="L'index n'a pas pu être calculé par l'entreprise  par manque de données"
+                      />
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {egapro.index?.map(({ annee, index }) => (
-                    <tr key={annee}>
-                      <td>
-                        <Value value={annee} />
-                      </td>
-                      <td>
-                        <Value
-                          value={index ? `${index}/100` : ""}
-                          empty="L'index n'a pas pu être calculé par l'entreprise  par manque de données"
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            ) : (
-              <div className="dt">
-                Aucune déclaration pour cette entreprise.
-              </div>
-            )}
-          </PgApiDataHandler>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <div className="dt">Aucune déclaration pour cette entreprise.</div>
+          )}
         </div>
       </div>
     </Subcategory>
@@ -59,8 +54,7 @@ const Egapro = ({ egapro }) => (
 );
 
 Egapro.propTypes = {
-  egapro: PropTypes.object.isRequired,
-  sources: PropTypes.object.isRequired,
+  enterprise: PropTypes.object.isRequired,
 };
 
 export default Egapro;

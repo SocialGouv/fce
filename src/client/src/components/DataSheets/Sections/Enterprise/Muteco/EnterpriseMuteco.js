@@ -19,9 +19,9 @@ const EnterpriseMuteco = ({ enterprise }) => {
       </div>
       <div className="section-datas">
         <ActivitePartielle enterprise={enterprise} />
-        <Pse pseList={enterprise.pse} />
-        <Lice liceList={enterprise.lice} />
-        <Rcc rccList={enterprise.rcc} />
+        <Pse entreprise={enterprise} />
+        <Lice entreprise={enterprise} />
+        <Rcc entreprise={enterprise} />
       </div>
     </section>
   );

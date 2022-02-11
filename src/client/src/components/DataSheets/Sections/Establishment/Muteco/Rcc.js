@@ -5,7 +5,7 @@ import ConditionalData from "../../SharedComponents/ConditionalData";
 import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
 
-const Rcc = ({ rccList, siren, enterpriseRcc }) => {
+const Rcc = ({ rccList, siren, otherRupco }) => {
   const hasRcc = !!(rccList && rccList.length);
 
   return (
@@ -15,14 +15,14 @@ const Rcc = ({ rccList, siren, enterpriseRcc }) => {
         showTable={hasRcc}
       />
       {hasRcc && (
-        <RupcoTable list={rccList} siren={siren} rupcoFiles={enterpriseRcc} />
+        <RupcoTable list={rccList} siren={siren} otherRupco={otherRupco} />
       )}
     </Subcategory>
   );
 };
 
 Rcc.propTypes = {
-  enterpriseRcc: PropTypes.arrayOf(PropTypes.object),
+  otherRupco: PropTypes.arrayOf(PropTypes.object),
   rccList: PropTypes.arrayOf(PropTypes.object),
   siren: PropTypes.string.isRequired,
 };

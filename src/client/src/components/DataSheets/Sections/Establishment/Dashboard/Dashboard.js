@@ -9,73 +9,101 @@ import {
   faMedkit,
   faUserInjured,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  entries,
+  filter,
+  flatten,
+  map,
+  pick,
+  pipe,
+  some,
+  values,
+} from "lodash/fp";
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 
-import { getLastDateInteraction } from "../../../../../helpers/Date";
+import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import {
-  hasApprentissage,
-  isActiveEstablishment,
-} from "../../../../../helpers/Establishment";
-import { formatNumber } from "../../../../../helpers/utils";
-import { useAccidentTravailBySiret } from "../../../../../services/AccidentTravail/hooks";
-import Config from "../../../../../services/Config";
-import { useOrganismeFormationBySiret } from "../../../../../services/OrganismeFormation/hooks";
-import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
+  getLatestInteraction,
+  normalizeInteractions3E,
+  normalizeInteractions3ESRC,
+  normalizeInteractionsC,
+  normalizeInteractionsT,
+} from "../../../../../utils/interactions/interactions";
+import { useDashboardData, useEffectif } from "./Dashboard.gql";
 import Item from "./Item";
 
-const Dashboard = ({
-  establishment,
-  establishment: {
-    siret,
-    activite_partielle,
-    totalInteractions,
-    interactions,
-    dernier_effectif_physique,
-    tranche_effectif_insee,
-    pse,
-    rcc,
-    lice,
-  },
-  apprentissage,
-  psi,
-}) => {
-  const hasInteractions = totalInteractions && totalInteractions.total > 0;
+const interactionKeys = [
+  "interactions_pole_3e",
+  "interactions_pole_3e_src",
+  "interactions_pole_c",
+  "interactions_pole_t",
+];
 
-  const { data: accidentTravailData } = useAccidentTravailBySiret(siret);
-  const { data: organismeFormationData } = useOrganismeFormationBySiret(siret);
+const getInteractions = pipe(
+  pick(interactionKeys),
+  ({
+    interactions_pole_3e,
+    interactions_pole_3e_src,
+    interactions_pole_t,
+    interactions_pole_c,
+  }) => ({
+    interactions_pole_3e: normalizeInteractions3E(interactions_pole_3e),
+    interactions_pole_3e_src: normalizeInteractions3ESRC(
+      interactions_pole_3e_src
+    ),
+    interactions_pole_c: normalizeInteractionsC(interactions_pole_c),
+    interactions_pole_t: normalizeInteractionsT(interactions_pole_t),
+  }),
+  values,
+  flatten
+);
+
+const dataHasInteractions = pipe(
+  pick(interactionKeys),
+  values,
+  some((value) => value.length > 0)
+);
+
+const liceKeys = ["licePlus10", "liceMoins10", "pse", "rcc"];
+
+const getLiceTypes = pipe(
+  pick(liceKeys),
+  entries,
+  filter(([, value]) => value.length > 0),
+  map(([key]) => key)
+);
+
+const aideKeys = [
+  "etablissements_iae",
+  "etablissements_contrats_aides",
+  "etablissements_apprentissage",
+];
+
+const hasAide = pipe(
+  pick(aideKeys),
+  values,
+  some((list) => list.length > 0)
+);
+
+const isOrganismeFormation = (data) => data?.organismes_formation?.length > 0;
+
+const Dashboard = ({ siret, psi }) => {
+  const { data } = useDashboardData(siret);
+  const { data: effectif, loading: effectifLoading } = useEffectif(siret);
+
+  const hasInteractions = dataHasInteractions(data);
 
   const activity = {
-    hasLice: !!(lice && lice.length),
-    hasPse: !!(pse && pse.length),
-    hasRcc: !!(rcc && rcc.length),
-    liceTypes:
-      lice &&
-      lice.reduce(
-        (liceTypes, currentProcedure) =>
-          liceTypes.includes(currentProcedure.rawType)
-            ? liceTypes
-            : [...liceTypes, currentProcedure.rawType],
-        []
-      ),
-    partialActivity: activite_partielle && activite_partielle.length > 0,
+    hasLice: data?.licePlus10?.length > 0 || data?.liceMoins10?.length > 0,
+    hasPse: data?.pse?.length > 0,
+    hasRcc: data?.rcc?.length > 0,
+    liceTypes: getLiceTypes(data),
+    partialActivity: data?.activite_partielle.length > 0,
   };
 
-  const lastControl = hasInteractions
-    ? getLastDateInteraction(interactions)
-    : "";
-
-  const dashboardSizeRanges = {
-    ...Config.get("inseeSizeRanges"),
-    "0 salarié": "0 salarié",
-  };
-
-  const effectif = isActiveEstablishment(establishment)
-    ? (dernier_effectif_physique && formatNumber(dernier_effectif_physique)) ||
-      dashboardSizeRanges[tranche_effectif_insee] ||
-      "-"
-    : "0 salarié";
+  const lastControl = getLatestInteraction(getInteractions(data))?.date;
 
   const establishmentPsiData = psi.establishments.find(
     (establishment) => establishment.siret === siret
@@ -93,8 +121,7 @@ const Dashboard = ({
         <Item
           icon={faChild}
           name="Effectif"
-          smallText={tranche_effectif_insee === "00"}
-          value={effectif}
+          value={effectifLoading ? "Chargement ..." : effectif}
         />
 
         <Item
@@ -104,35 +131,29 @@ const Dashboard = ({
           value={hasInteractions ? lastControl : "Pas d'intervention connue"}
         />
 
-        {activity &&
-          (activity.hasPse ||
-            activity.hasRcc ||
-            activity.hasLice ||
-            activity.partialActivity) && (
-            <Item
-              icon={faExclamationTriangle}
-              name="Mut Eco"
-              smallText={true}
-              value={
-                <>
-                  {activity.hasPse && <div>PSE</div>}
-                  {activity.hasRcc && <div>RCC</div>}
-                  {activity.hasLice &&
-                    activity.liceTypes.map((type) => (
-                      <div key={type}>{type}</div>
-                    ))}
-                  {activity.partialActivity && <div>Activité partielle</div>}
-                </>
-              }
-            />
-          )}
-
-        {(establishment.agrements_iae ||
-          establishment.ea ||
-          establishment.contrat_aide ||
-          hasApprentissage(apprentissage)) && (
-          <Item icon={faMedkit} name="Aides" value="Oui" />
+        {(activity.hasPse ||
+          activity.hasRcc ||
+          activity.hasLice ||
+          activity.partialActivity) && (
+          <Item
+            icon={faExclamationTriangle}
+            name="Mut Eco"
+            smallText={true}
+            value={
+              <>
+                {activity.hasPse && <div>PSE</div>}
+                {activity.hasRcc && <div>RCC</div>}
+                {activity.hasLice &&
+                  activity.liceTypes.map((type) => (
+                    <div key={type}>{type}</div>
+                  ))}
+                {activity.partialActivity && <div>Activité partielle</div>}
+              </>
+            }
+          />
         )}
+
+        {hasAide(data) && <Item icon={faMedkit} name="Aides" value="Oui" />}
 
         {(isEnterprisePsiContractor || isEstablishmentWithPsi) && (
           <Item
@@ -147,35 +168,24 @@ const Dashboard = ({
             }
           />
         )}
-        {accidentTravailData &&
-          accidentTravailData.accidents_travail &&
-          accidentTravailData.accidents_travail.length > 0 &&
-          accidentTravailData.accidents_travail[0].total > 0 && (
-            <Item
-              icon={faUserInjured}
-              name="Accident Travail"
-              value={accidentTravailData.accidents_travail[0].total}
-            />
-          )}
-        {organismeFormationData?.organismes_formation &&
-          isOrganismeFormation(
-            organismeFormationData?.organismes_formation
-          ) && (
-            <Item
-              icon={faGraduationCap}
-              name="Organisme Formation"
-              value="Oui"
-            />
-          )}
+        {data?.accidents_travail?.[0]?.total > 0 && (
+          <Item
+            icon={faUserInjured}
+            name="Accident Travail"
+            value={data?.accidents_travail?.[0]?.total}
+          />
+        )}
+        {isOrganismeFormation(data) && (
+          <Item icon={faGraduationCap} name="Organisme Formation" value="Oui" />
+        )}
       </div>
     </div>
   );
 };
 
 Dashboard.propTypes = {
-  apprentissage: PropTypes.object.isRequired,
-  establishment: PropTypes.object.isRequired,
   psi: PropTypes.object.isRequired,
+  siret: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -184,4 +194,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Dashboard);
+export default renderIfSiret(connect(mapStateToProps, null)(Dashboard));

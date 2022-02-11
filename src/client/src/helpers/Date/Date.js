@@ -15,8 +15,9 @@ export const getMonthName = (month, shortName = false) => {
   if (!month) {
     return "";
   }
+  const twoDigitsMonth = `${month}`.padStart(2, "0");
   const format = shortName ? "MMM" : "MMMM";
-  return Moment(`2020-${month}-01`).format(format);
+  return Moment(`2020-${twoDigitsMonth}-01`).format(format);
 };
 
 export const getLastDateInteraction = (interactions, format = "DD/MM/YYYY") => {

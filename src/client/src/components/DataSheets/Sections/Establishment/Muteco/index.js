@@ -1,3 +1,3 @@
-import EstablishmentMuteco from "./EstablishmentMuteco";
+import EtablissementMuteco from "./EtablissementMuteco";
 
-export default EstablishmentMuteco;
+export default EtablissementMuteco;

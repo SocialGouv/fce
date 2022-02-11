@@ -1,0 +1,22 @@
+table:
+  name: psi_siret
+  schema: public
+object_relationships:
+- name: etablissement
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: etablissements
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - id
+    - salaries_annee_courante
+    - salaries_annee_precedente
+    - siret
+    filter: {}
+  role: user

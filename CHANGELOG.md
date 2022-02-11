@@ -1,3 +1,10 @@
+# [27.30.0](https://github.com/SocialGouv/fce/compare/v27.29.0...v27.30.0) (2022-02-11)
+
+
+### Features
+
+* **n8n:** add nodes to ingest categories juridiques ([#163](https://github.com/SocialGouv/fce/issues/163)) ([3e4a16d](https://github.com/SocialGouv/fce/commit/3e4a16d3546585e3cc0a97c71523fdad98dc73fe))
+
 # [27.29.0](https://github.com/SocialGouv/fce/compare/v27.28.6...v27.29.0) (2022-02-04)
 
 

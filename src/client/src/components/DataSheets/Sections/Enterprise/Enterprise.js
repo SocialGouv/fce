@@ -16,12 +16,10 @@ import Unsubscribe from "../../../../containers/Unsubscribe";
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 
 import "../../dataSheets.scss";
-import { useAccidentTravailBySiren } from "../../../../services/AccidentTravail/hooks";
+import Agrements from "./Agrements/Agrements";
 
 const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
   const location = useLocation();
-
-  const accidentsTravail = useAccidentTravailBySiren(enterprise.siren);
 
   useScrollToLocationHash({ location });
 
@@ -49,7 +47,8 @@ const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
                     label: "Mutations économiques",
                     link: "muteco"
                   },
-                  { label: "Aides et agréments", link: "helps" }
+                  { label: "Aides", link: "helps" },
+                  { label: "Agréments", link: "agrements" }
                 ]}
               />
               <Infos enterprise={enterprise} headOffice={headOffice} />
@@ -57,6 +56,7 @@ const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
               <EnterpriseRelationship enterprise={enterprise} egapro={egapro} />
               <Muteco enterprise={enterprise} />
               <Helps enterprise={enterprise} />
+              <Agrements enterprise={enterprise} />
             </div>
             <UsersFeedback fullWidth />
           </div>

@@ -16,7 +16,7 @@ import PrintSection from "../SharedComponents/PrintSection";
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 
 import "../../dataSheets.scss";
-import { useAccidentTravailBySiret } from "../../../../services/AccidentTravail/hooks";
+import Agrements from "./Agreements/Agrements";
 
 const Establishment = ({
   establishment,
@@ -26,11 +26,6 @@ const Establishment = ({
   apprentissage,
   successions
 }) => {
-  const { loading, error, data } = useAccidentTravailBySiret(
-    establishment.siret
-  );
-  console.log(loading, error, data);
-
   const location = useLocation();
   useScrollToLocationHash({ location });
 
@@ -61,7 +56,8 @@ const Establishment = ({
                   { label: "Visites et contrôles", link: "direccte" },
                   { label: "Relation travail", link: "relation" },
                   { label: "Mutations économiques", link: "muteco" },
-                  { label: "Aides et agréments", link: "helps" }
+                  { label: "Aides", link: "helps" },
+                  { label: "Agréments", link: "agrements" }
                 ]}
               />
               <Activity
@@ -79,6 +75,7 @@ const Establishment = ({
                 establishment={establishment}
                 apprentissage={apprentissage}
               />
+              <Agrements etablissement={establishment} />
             </div>
             <UsersFeedback fullWidth />
           </div>

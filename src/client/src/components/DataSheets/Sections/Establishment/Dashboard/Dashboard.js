@@ -7,7 +7,8 @@ import {
   faExclamationTriangle,
   faMedkit,
   faGlobeAmericas,
-  faUserInjured
+  faUserInjured,
+  faGraduationCap
 } from "@fortawesome/pro-solid-svg-icons";
 import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
@@ -20,6 +21,8 @@ import Item from "./Item";
 
 import "./dashboard.scss";
 import { useAccidentTravailBySiret } from "../../../../../services/AccidentTravail/hooks";
+import { useOrganismeFormationBySiret } from "../../../../../services/OrganismeFormation/hooks";
+import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
 
 const Dashboard = ({
   establishment,
@@ -40,6 +43,7 @@ const Dashboard = ({
   const hasInteractions = totalInteractions && totalInteractions.total > 0;
 
   const { data: accidentTravailData } = useAccidentTravailBySiret(siret);
+  const { data: organismeFormationData } = useOrganismeFormationBySiret(siret);
 
   const activity = {
     hasPse: !!(pse && pse.length),
@@ -150,6 +154,16 @@ const Dashboard = ({
               icon={faUserInjured}
               name="Accident Travail"
               value={accidentTravailData.accidents_travail[0].total}
+            />
+          )}
+        {organismeFormationData?.organismes_formation &&
+          isOrganismeFormation(
+            organismeFormationData?.organismes_formation
+          ) && (
+            <Item
+              icon={faGraduationCap}
+              name="Organisme Formation"
+              value="Oui"
             />
           )}
       </div>

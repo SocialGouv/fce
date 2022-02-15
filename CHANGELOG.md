@@ -1,3 +1,10 @@
+# [27.31.0](https://github.com/SocialGouv/fce/compare/v27.30.0...v27.31.0) (2022-02-15)
+
+
+### Features
+
+* **of:** add organismes formation [#134](https://github.com/SocialGouv/fce/issues/134) ([#144](https://github.com/SocialGouv/fce/issues/144)) ([37a20bd](https://github.com/SocialGouv/fce/commit/37a20bd45951d227ceafd84893144b80b5ff84a2))
+
 # [27.30.0](https://github.com/SocialGouv/fce/compare/v27.29.0...v27.30.0) (2022-02-11)
 
 

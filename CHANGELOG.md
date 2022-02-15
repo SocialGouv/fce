@@ -1,3 +1,10 @@
+# [27.32.0](https://github.com/SocialGouv/fce/compare/v27.31.0...v27.32.0) (2022-02-15)
+
+
+### Features
+
+* **n8n:** add nodes to ingest estalishments idcc and nomenclature ([#167](https://github.com/SocialGouv/fce/issues/167)) ([2bbfe6d](https://github.com/SocialGouv/fce/commit/2bbfe6d12f521cbbfb38dd030d13713289ded4ce))
+
 # [27.31.0](https://github.com/SocialGouv/fce/compare/v27.30.0...v27.31.0) (2022-02-15)
 
 

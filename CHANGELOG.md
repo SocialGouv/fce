@@ -1,3 +1,10 @@
+# [27.33.0](https://github.com/SocialGouv/fce/compare/v27.32.0...v27.33.0) (2022-02-18)
+
+
+### Features
+
+* **front:** change contact email ([#173](https://github.com/SocialGouv/fce/issues/173)) ([28fad78](https://github.com/SocialGouv/fce/commit/28fad78868f6706f3b713123a49c33a0a9a41bad))
+
 # [27.32.0](https://github.com/SocialGouv/fce/compare/v27.31.0...v27.32.0) (2022-02-15)
 
 

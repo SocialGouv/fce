@@ -30,7 +30,7 @@ const config = {
   },
   hasura: {
     url: process.env.HASURA_URL,
-    adminSecret: process.env.HASURA_GRAPHQL_ADMIN_SECRET,
+    token: process.env.HASURA_TOKEN
   },
   sentryUrlKey:
     "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",

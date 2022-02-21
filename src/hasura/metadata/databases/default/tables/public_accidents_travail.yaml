@@ -1,3 +1,18 @@
 table:
   name: accidents_travail
   schema: public
+select_permissions:
+- permission:
+    columns:
+    - code_naf_niv1
+    - siren
+    - siret
+    - pour_1000
+    - pour_1000_secteur_national
+    - pour_1000_secteur_regional
+    - avec_arret_travail
+    - mortels
+    - sans_arret_travail
+    - total
+    filter: {}
+  role: user

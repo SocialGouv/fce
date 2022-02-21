@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import classNames from "classnames";
 import Value from "../../../shared/Value";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faSquare } from "@fortawesome/pro-solid-svg-icons";
+import { faCircle, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { isActiveEstablishment } from "../../../../helpers/Establishment";
 import { formatSiret } from "../../../../helpers/utils";
 import _get from "lodash.get";

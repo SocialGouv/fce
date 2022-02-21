@@ -8,7 +8,7 @@ import Value from "../shared/Value";
 import SearchAwesomeTable from "../SearchAwesomeTable";
 import TableCellState from "../SearchAwesomeTable/TableCellState";
 import Button from "../shared/Button";
-import { faFileExcel, faSpinnerThird } from "@fortawesome/pro-solid-svg-icons";
+import { faFileExcel, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 import "./searchResults.scss";
 
@@ -69,7 +69,7 @@ const SearchResults = ({
             <Button
               value={downloadLoading ? "Export en cours" : "Export Excel"}
               buttonClasses={["app-search-results__export-button"]}
-              icon={downloadLoading ? faSpinnerThird : faFileExcel}
+              icon={downloadLoading ? faSpinner : faFileExcel}
               faProps={{ spin: downloadLoading }}
               callback={() => generateXlsx(pagination)}
             />

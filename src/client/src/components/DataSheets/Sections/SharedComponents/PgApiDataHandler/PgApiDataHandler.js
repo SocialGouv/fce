@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/pro-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./pgApiDataHandler.scss";
 
 const PgApiDataHandler = ({ isLoading, error, children }) => {

@@ -8,7 +8,7 @@ import {
   faArrowRight,
   faSquare,
   faCircle
-} from "@fortawesome/pro-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons";
 import Value from "../../../../shared/Value";
 import {
   setSearchTerm,

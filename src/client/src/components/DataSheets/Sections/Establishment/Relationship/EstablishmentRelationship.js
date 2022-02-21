@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import _get from "lodash.get";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers, faExternalLink } from "@fortawesome/pro-solid-svg-icons";
+import {
+  faUsers,
+  faExternalLinkSquareAlt
+} from "@fortawesome/free-solid-svg-icons";
 import Data from "../../SharedComponents/Data";
 import Table from "../../SharedComponents/Table";
 import Subcategory from "../../SharedComponents/Subcategory";
@@ -124,7 +127,7 @@ const EstablishmentRelationship = ({
                 rel="noreferrer noopener"
               >
                 Rechercher ces accords sur Legifrance{" "}
-                <FontAwesomeIcon icon={faExternalLink} />
+                <FontAwesomeIcon icon={faExternalLinkSquareAlt} />
               </a>
             </>
           )}

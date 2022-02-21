@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExternalLink } from "@fortawesome/pro-solid-svg-icons";
+import { faExternalLinkSquareAlt } from "@fortawesome/free-solid-svg-icons";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
@@ -84,7 +84,7 @@ const Agreements = ({ enterprise, agreements }) => {
               rel="noreferrer noopener"
             >
               Rechercher ces accords sur Legifrance{" "}
-              <FontAwesomeIcon icon={faExternalLink} />
+              <FontAwesomeIcon icon={faExternalLinkSquareAlt} />
             </a>
           </>
         )}

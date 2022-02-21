@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileSignature } from "@fortawesome/pro-solid-svg-icons";
+import { faFileSignature } from "@fortawesome/free-solid-svg-icons";
 
 import OrganismeFormation from "./OrganismeFormation";
 import AgrementsIAE from "./AgrementsIAE";

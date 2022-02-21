@@ -9,7 +9,7 @@ import _get from "lodash.get";
 import Data from "../../SharedComponents/Data";
 import Table from "../../SharedComponents/Table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUmbrella } from "@fortawesome/pro-solid-svg-icons";
+import { faUmbrella } from "@fortawesome/free-solid-svg-icons";
 import { formatNumber } from "../../../../../helpers/utils";
 
 const EstablishmentMuteco = ({ establishment, enterprise }) => {

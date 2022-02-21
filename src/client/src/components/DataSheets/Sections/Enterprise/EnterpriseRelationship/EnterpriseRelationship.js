@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers } from "@fortawesome/pro-solid-svg-icons";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import Agreements from "./Agreements";
 import Psi from "./Psi";
 import Egapro from "./Egapro";

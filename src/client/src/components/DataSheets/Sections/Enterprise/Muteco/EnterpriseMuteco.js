@@ -5,7 +5,7 @@ import Rcc from "./Rcc";
 import Lice from "./Lice";
 import ActivitePartielle from "./ActivitePartielle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUmbrella } from "@fortawesome/pro-solid-svg-icons";
+import { faUmbrella } from "@fortawesome/free-solid-svg-icons";
 
 const EnterpriseMuteco = ({ enterprise }) => {
   return (

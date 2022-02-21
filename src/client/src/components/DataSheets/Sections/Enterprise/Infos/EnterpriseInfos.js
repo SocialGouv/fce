@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory, faSpinner } from "@fortawesome/pro-solid-svg-icons";
+import { faHistory, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import _get from "lodash.get";
 
 import Config from "../../../../../services/Config";
@@ -19,7 +19,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
   const dashboardSizeRanges = {
     ...Config.get("inseeSizeRanges"),
-    "0 salarié": "0 salarié",
+    "0 salarié": "0 salarié"
   };
 
   const isLoadingEffectifMensuelEtp = !enterprise.effectifMensuelEtp;
@@ -76,10 +76,10 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             name="Etablissements"
             value={
               enterprise.nombre_etablissements_actifs &&
-              `${enterprise.nombre_etablissements_actifs} actif(s) et ${
-                enterprise.etablissements.length -
+              `${
                 enterprise.nombre_etablissements_actifs
-              } fermé(s)`
+              } actif(s) et ${enterprise.etablissements.length -
+                enterprise.nombre_etablissements_actifs} fermé(s)`
             }
           />
 
@@ -186,7 +186,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
 EnterpriseInfos.propTypes = {
   enterprise: PropTypes.object.isRequired,
-  headOffice: PropTypes.object,
+  headOffice: PropTypes.object
 };
 
 export default EnterpriseInfos;

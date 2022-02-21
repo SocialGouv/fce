@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedkit } from "@fortawesome/pro-solid-svg-icons";
+import { faMedkit } from "@fortawesome/free-solid-svg-icons";
 
 import ContratsAides from "./Subcategory/ContratsAides";
 import Apprentissage from "./Subcategory/Apprentissage";

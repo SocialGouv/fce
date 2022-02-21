@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { groupBy, map, pipe, entries } from "lodash/fp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory, faSpinner } from "@fortawesome/pro-solid-svg-icons";
+import { faHistory, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import Config from "../../../../../services/Config";
 import { getMonthName } from "../../../../../helpers/Date";
 import Subcategory from "../../SharedComponents/Subcategory";
@@ -15,52 +15,56 @@ import SuccessionData from "./SuccessionData";
 
 import "./establishmentActivity.scss";
 
-const isSuccesseur = siret => succession => siret === succession.siretetablissementsuccesseur;
+const isSuccesseur = siret => succession =>
+  siret === succession.siretetablissementsuccesseur;
 
-const getSuccessionsValue = (successions, isSuccesseur) => successions.map(({
-  dateliensuccession,
-  siretetablissementpredecesseur,
-  siretetablissementsuccesseur
-}) => {
-  const otherEstablishementSiret = isSuccesseur
-    ? siretetablissementpredecesseur
-    : siretetablissementsuccesseur;
+const getSuccessionsValue = (successions, isSuccesseur) =>
+  successions.map(
+    ({
+      dateliensuccession,
+      siretetablissementpredecesseur,
+      siretetablissementsuccesseur
+    }) => {
+      const otherEstablishementSiret = isSuccesseur
+        ? siretetablissementpredecesseur
+        : siretetablissementsuccesseur;
 
-  return {
-    siret: otherEstablishementSiret,
-    date: dateliensuccession,
-    link: `/establishment/${otherEstablishementSiret}`
-  }
-});
+      return {
+        siret: otherEstablishementSiret,
+        date: dateliensuccession,
+        link: `/establishment/${otherEstablishementSiret}`
+      };
+    }
+  );
 
 const getSuccessionsData = (successions, siret) =>
-  successions.successions.length === 0 ? [
-    {
-      name: "SIRET prédecesseur ou successeur",
-      values: [{
-        siret: "pas de prédecesseur ou de successeur"
-      }]
-    }
-  ] : pipe(
-    groupBy(isSuccesseur(siret)),
-    entries,
-    map(([isSuccesseur, successions]) => ({
-      name: `${isSuccesseur === "true"
-        ? "SIRET prédecesseur"
-        : "SIRET successeur"}${successions.length > 1 ? "s" : ""}`,
-      values: getSuccessionsValue(successions, isSuccesseur === "true")
-    }))
-  )(successions.successions);
-
+  successions.successions.length === 0
+    ? [
+        {
+          name: "SIRET prédecesseur ou successeur",
+          values: [
+            {
+              siret: "pas de prédecesseur ou de successeur"
+            }
+          ]
+        }
+      ]
+    : pipe(
+        groupBy(isSuccesseur(siret)),
+        entries,
+        map(([isSuccesseur, successions]) => ({
+          name: `${
+            isSuccesseur === "true" ? "SIRET prédecesseur" : "SIRET successeur"
+          }${successions.length > 1 ? "s" : ""}`,
+          values: getSuccessionsValue(successions, isSuccesseur === "true")
+        }))
+      )(successions.successions);
 
 const EstablishmentActivity = ({ establishment, successions }) => {
   const [allEffectifsEtp, setAllEffectifsEtp] = useState(null);
   const [allEffectifDsn, setAllEffectifsDsn] = useState(null);
 
-  const successionsData = getSuccessionsData(
-    successions,
-    establishment.siret,
-  );
+  const successionsData = getSuccessionsData(successions, establishment.siret);
 
   const isLoadingEffectifMensuelEtp = !establishment.effectifMensuelEtp;
   const effectifEtpData = allEffectifsEtp ?? establishment.effectifMensuelEtp;
@@ -71,17 +75,17 @@ const EstablishmentActivity = ({ establishment, successions }) => {
 
   const EffectifEtpDataComponents = !!effectifEtpData?.length
     ? effectifEtpData.map(({ annee, mois, effectifs_mensuels }) => ({
-      name: `Effectif ETP ${getMonthName(mois)}`,
-      value: effectifs_mensuels,
-      nonEmptyValue: "",
-      sourceCustom: `Acoss / DSN ${getMonthName(mois)} ${annee}`,
-      hasNumberFormat: true
-    }))
+        name: `Effectif ETP ${getMonthName(mois)}`,
+        value: effectifs_mensuels,
+        nonEmptyValue: "",
+        sourceCustom: `Acoss / DSN ${getMonthName(mois)} ${annee}`,
+        hasNumberFormat: true
+      }))
     : [
-      {
-        name: `Effectif ETP`
-      }
-    ];
+        {
+          name: `Effectif ETP`
+        }
+      ];
   return (
     <section id="activity" className="data-sheet__section">
       <div className="section-header">
@@ -91,14 +95,10 @@ const EstablishmentActivity = ({ establishment, successions }) => {
         <h2 className="title">Activité</h2>
       </div>
       <div className="section-datas">
-        <Subcategory
-          subtitle="Lien de succession"
-          sourceSi="Sirène"
-        >
-          {
-            successionsData.map(({ name, values }) =>
-              <SuccessionData key={name} name={name} values={values} />
-            )}
+        <Subcategory subtitle="Lien de succession" sourceSi="Sirène">
+          {successionsData.map(({ name, values }) => (
+            <SuccessionData key={name} name={name} values={values} />
+          ))}
         </Subcategory>
         <Subcategory
           className="effectifs-establishment"
@@ -106,17 +106,17 @@ const EstablishmentActivity = ({ establishment, successions }) => {
           datas={[
             ...(isLoadingEffectifMensuelEtp
               ? [
-                {
-                  name: `Effectif ETP`,
+                  {
+                    name: `Effectif ETP`,
 
-                  value: (
-                    <div>
-                      <span>Chargement en cours </span>
-                      <FontAwesomeIcon icon={faSpinner} spin />
-                    </div>
-                  )
-                }
-              ]
+                    value: (
+                      <div>
+                        <span>Chargement en cours </span>
+                        <FontAwesomeIcon icon={faSpinner} spin />
+                      </div>
+                    )
+                  }
+                ]
               : EffectifEtpDataComponents)
           ]}
         >
@@ -124,7 +124,7 @@ const EstablishmentActivity = ({ establishment, successions }) => {
             name="Tranche Effectif INSEE"
             value={
               Config.get("inseeSizeRanges")[
-              establishment.tranche_effectif_insee
+                establishment.tranche_effectif_insee
               ]
             }
             nonEmptyValue=""
@@ -245,7 +245,7 @@ const EstablishmentActivity = ({ establishment, successions }) => {
 
 EstablishmentActivity.propTypes = {
   establishment: PropTypes.object.isRequired,
-  successions: PropTypes.array.isRequired,
+  successions: PropTypes.array.isRequired
 };
 
 export default EstablishmentActivity;

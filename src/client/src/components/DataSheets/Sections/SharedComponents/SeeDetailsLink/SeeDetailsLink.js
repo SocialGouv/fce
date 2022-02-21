@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { HashLink as Link } from "react-router-hash-link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/pro-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 import "./seeDetailsLink.scss";
 

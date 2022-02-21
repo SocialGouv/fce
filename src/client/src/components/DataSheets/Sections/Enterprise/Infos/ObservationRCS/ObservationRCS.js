@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { faChevronRight, faChevronUp } from "@fortawesome/pro-solid-svg-icons";
+import { faChevronRight, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Data from "../../../SharedComponents/Data";
 import { toI18nDate, sortByDate } from "../../../../../../helpers/Date";

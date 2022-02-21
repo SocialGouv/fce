@@ -1,3 +1,10 @@
+# [27.34.0](https://github.com/SocialGouv/fce/compare/v27.33.1...v27.34.0) (2022-02-21)
+
+
+### Features
+
+* **hasura:** create hasura user role ([#179](https://github.com/SocialGouv/fce/issues/179)) ([69be96b](https://github.com/SocialGouv/fce/commit/69be96b83e253ef907db2170a62f57ad97a55d04))
+
 ## [27.33.1](https://github.com/SocialGouv/fce/compare/v27.33.0...v27.33.1) (2022-02-21)
 
 

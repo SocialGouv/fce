@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/pro-solid-svg-icons";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import StepForm from "./StepForm";
 import HeadForm from "./HeadForm";
 import Button from "../../../shared/Button";
@@ -55,9 +55,7 @@ const LoginForm = ({
                 mail au format : <strong>prenom.nom@departement.gouv.fr</strong>
               </InfoMessage>
               {errorData?.loginMessage && (
-                <ErrorMessage>
-                  {errorData.loginMessage}
-                </ErrorMessage>
+                <ErrorMessage>{errorData.loginMessage}</ErrorMessage>
               )}
             </div>
             <div>

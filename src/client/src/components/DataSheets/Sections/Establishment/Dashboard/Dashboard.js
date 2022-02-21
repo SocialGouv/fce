@@ -9,7 +9,7 @@ import {
   faGlobeAmericas,
   faUserInjured,
   faGraduationCap
-} from "@fortawesome/pro-solid-svg-icons";
+} from "@fortawesome/free-solid-svg-icons";
 import Config from "../../../../../services/Config";
 import { getLastDateInteraction } from "../../../../../helpers/Date";
 import { formatNumber } from "../../../../../helpers/utils";

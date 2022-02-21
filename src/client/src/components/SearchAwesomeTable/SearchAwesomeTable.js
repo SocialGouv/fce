@@ -2,12 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/pro-light-svg-icons";
 import {
+  faAngleLeft,
+  faAngleRight,
   faSort,
   faSortUp,
   faSortDown
-} from "@fortawesome/pro-duotone-svg-icons";
+} from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import Button from "../shared/Button";
 import LoadSpinner from "../shared/LoadSpinner";

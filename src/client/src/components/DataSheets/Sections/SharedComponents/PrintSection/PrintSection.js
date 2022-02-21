@@ -1,5 +1,5 @@
 import React from "react";
-import { faPrint } from "@fortawesome/pro-solid-svg-icons";
+import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../../../shared/Button";
 
 const PrintSection = () => {

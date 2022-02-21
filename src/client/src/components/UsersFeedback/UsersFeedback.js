@@ -1,14 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import {
-  faThumbsUp as faSolidThumbsUp,
-  faThumbsDown as faSolidThumbsDown
-} from "@fortawesome/pro-solid-svg-icons";
-import {
-  faThumbsUp as faLightThumbsUp,
-  faThumbsDown as faLightThumbsDown
-} from "@fortawesome/pro-light-svg-icons";
+import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Rating from "./Rating";
 import {
@@ -53,9 +46,9 @@ const UsersFeedback = ({
                 />
                 <label htmlFor="thumb-up" className="radio" title="Oui">
                   {useful === "thumbup" ? (
-                    <FontAwesomeIcon icon={faSolidThumbsUp} />
+                    <FontAwesomeIcon icon={faThumbsUp} className="selected" />
                   ) : (
-                    <FontAwesomeIcon icon={faLightThumbsUp} />
+                    <FontAwesomeIcon icon={faThumbsUp} />
                   )}
                 </label>
                 <input
@@ -68,9 +61,9 @@ const UsersFeedback = ({
                 />
                 <label htmlFor="thumb-down" className="radio" title="Non">
                   {useful === "thumbdown" ? (
-                    <FontAwesomeIcon icon={faSolidThumbsDown} />
+                    <FontAwesomeIcon icon={faThumbsDown} className="selected" />
                   ) : (
-                    <FontAwesomeIcon icon={faLightThumbsDown} />
+                    <FontAwesomeIcon icon={faThumbsDown} />
                   )}
                 </label>
               </div>

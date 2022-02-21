@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faSquare } from "@fortawesome/pro-solid-svg-icons";
+import { faCircle, faSquare } from "@fortawesome/free-solid-svg-icons";
 import Config from "../../../../../services/Config";
 
 const State = ({ state }) => {

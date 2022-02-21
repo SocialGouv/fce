@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/pro-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const SearchBar = ({ label, searchTerm, setSearchTerm }) => {
   return (

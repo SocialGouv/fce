@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarCheck } from "@fortawesome/pro-solid-svg-icons";
+import { faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
@@ -16,20 +16,20 @@ const Direccte = ({ establishment }) => {
   const lastInteractions = {
     T: {
       ...getLastInteraction(establishment.interactions_T),
-      source: "Wiki'T",
+      source: "Wiki'T"
     },
     C: {
       ...getLastInteraction(establishment.interactions_C),
-      source: "SORA",
+      source: "SORA"
     },
     "3E_SEER": {
       ...getLastInteraction(establishment.interactions_3E_SEER),
-      source: "EOS",
+      source: "EOS"
     },
     "3E_SRC": {
       ...getLastInteraction(establishment.interactions_3E_SRC),
-      source: "MDF",
-    },
+      source: "MDF"
+    }
   };
 
   return (
@@ -132,7 +132,7 @@ const Direccte = ({ establishment }) => {
 };
 
 Direccte.propTypes = {
-  establishment: PropTypes.object,
+  establishment: PropTypes.object
 };
 
 export default Direccte;

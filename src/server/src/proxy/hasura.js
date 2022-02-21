@@ -9,7 +9,7 @@ export const registerHasuraProxy = (app) => {
       return `/v1/graphql${req.url}`;
     },
     proxyReqOptDecorator(proxyReqOpts) {
-      proxyReqOpts.headers["x-hasura-admin-secret"] = config.get("hasura.adminSecret");
+      proxyReqOpts.headers["Authorization"] = `Bearer ${config.get("hasura.token")}`;
       return proxyReqOpts;
     }
   }));

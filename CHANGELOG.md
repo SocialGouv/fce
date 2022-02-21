@@ -1,3 +1,10 @@
+## [27.33.1](https://github.com/SocialGouv/fce/compare/v27.33.0...v27.33.1) (2022-02-21)
+
+
+### Bug Fixes
+
+* remove fortawesome paid dependencies ([#180](https://github.com/SocialGouv/fce/issues/180)) ([43204c2](https://github.com/SocialGouv/fce/commit/43204c21ec8ee0fb0b4b6a88b536b2b37a97337b))
+
 # [27.33.0](https://github.com/SocialGouv/fce/compare/v27.32.0...v27.33.0) (2022-02-18)
 
 

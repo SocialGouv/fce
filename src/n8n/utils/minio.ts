@@ -88,3 +88,12 @@ export const archiveFile = async (client: Client, bucket: string, filename: stri
 
   return client.removeObject(bucket, filename);
 }
+
+type ContentType = "text/csv";
+
+export const uploadFile = async (client: Client, bucket: string, filename: string, outputFileName: string, contentType: ContentType = "text/csv"): Promise<void> => {
+  const metadata = {
+    "Content-Type": contentType
+  };
+  await client.fPutObject(bucket, outputFileName, filename, metadata);
+}

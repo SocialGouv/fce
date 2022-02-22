@@ -72,6 +72,7 @@
         "n8n-workflow": "^0.66.0",
         "pg": "^8.6.0",
         "pg-copy-streams": "^5.1.1",
+        "pg-query-stream": "^4.2.3",
         "replacestream": "^4.0.3",
         "windows-1252": "^3.0.2",
         "xlsx": "^0.18.0"

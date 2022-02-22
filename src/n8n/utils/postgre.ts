@@ -6,7 +6,7 @@ import replaceStream from "replacestream";
 import { formatDate } from "./date";
 import pipe from "multipipe";
 import { IExecuteFunctions } from "n8n-core";
-import { ClientBase, Pool, PoolClient } from "pg";
+import {Client, ClientBase, Pool, PoolClient} from "pg";
 import { parse as parseDate } from "date-fns";
 import { promisifyStream } from "./stream";
 import copy from "pg-copy-streams";
@@ -100,6 +100,15 @@ export const createPool = async (context: IExecuteFunctions) => {
         ...pgCreds,
         ssl: pgCreds && pgCreds.ssl !== "disable"
     });
+}
+
+export const createClient = async (context: IExecuteFunctions) => {
+  const pgCreds = await context.getCredentials("postgres");
+
+  return new Client({
+    ...pgCreds,
+    ssl: pgCreds && pgCreds.ssl !== "disable"
+  });
 }
 
 export const connect = (pool: Pool) => new Promise<PoolClient>((resolve, reject) => {

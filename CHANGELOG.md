@@ -1,3 +1,10 @@
+# [27.35.0](https://github.com/SocialGouv/fce/compare/v27.34.0...v27.35.0) (2022-02-22)
+
+
+### Features
+
+* **n8n:** add upload file for signaux faibles ([#181](https://github.com/SocialGouv/fce/issues/181)) ([f267230](https://github.com/SocialGouv/fce/commit/f2672304874029e2f612982dfda66fddc4012fd2))
+
 # [27.34.0](https://github.com/SocialGouv/fce/compare/v27.33.1...v27.34.0) (2022-02-21)
 
 

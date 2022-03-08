@@ -32,6 +32,11 @@ const config = {
     url: process.env.HASURA_URL,
     token: process.env.HASURA_TOKEN
   },
+  strapi: {
+    url: process.env.STRAPI_URL,
+    user: process.env.STRAPI_USERNAME,
+    password: process.env.STRAPI_PASSWORD
+  },
   sentryUrlKey:
     "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",
   mail: JSON.parse(process.env.MAIL_TRANSPORT_CONFIG),

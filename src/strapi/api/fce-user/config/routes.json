@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/fce-users",
+      "handler": "fce-user.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/fce-users/count",
+      "handler": "fce-user.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/fce-users/:id",
+      "handler": "fce-user.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/fce-users",
+      "handler": "fce-user.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/fce-users/:id",
+      "handler": "fce-user.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/fce-users/:id",
+      "handler": "fce-user.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

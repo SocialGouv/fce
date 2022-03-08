@@ -5,7 +5,8 @@ import util from "util";
 import AuthRequestsModel from "../models/AuthRequests";
 import AuthTempModel from "../models/AuthTemp";
 import ValidEmail from "../models/ValidEmail";
-import { getUnixTime, parseISO, subMinutes } from "date-fns";
+import { getUnixTime, subMinutes } from "date-fns";
+import FceUser from "../models/FceUser";
 
 export default class Auth {
   static generateToken(user) {
@@ -75,7 +76,15 @@ export default class Auth {
 
     const validEmails = new ValidEmail();
 
-    return validEmails.exists(email);
+    const isInDb = await validEmails.exists(email);
+
+    if (isInDb) {
+      return true;
+    }
+
+    const fceUser = new FceUser();
+
+    return fceUser.findByEmail(email);
   }
 
   static async validateCode(email, code) {

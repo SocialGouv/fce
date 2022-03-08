@@ -1,3 +1,10 @@
+# [27.36.0](https://github.com/SocialGouv/fce/compare/v27.35.0...v27.36.0) (2022-03-08)
+
+
+### Features
+
+* **users:** move valid users management to strapi ([#183](https://github.com/SocialGouv/fce/issues/183)) ([bcf7e75](https://github.com/SocialGouv/fce/commit/bcf7e75ec0eaf5cd8a4008c7010173ba2926b9b8))
+
 # [27.35.0](https://github.com/SocialGouv/fce/compare/v27.34.0...v27.35.0) (2022-02-22)
 
 

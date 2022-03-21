@@ -6,9 +6,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - .c42/tmp/pgdata:/var/lib/postgresql/data:delegated
-      - .c42/share/mntDataExport/:/mnt/data/export
-      - .c42/share/tmp/:/tmp:delegated
+      - pgdata:/var/lib/postgresql/data:delegated
     command: postgres -c shared_preload_libraries=pg_stat_statements -c
       pg_stat_statements.track=all
     environment:
@@ -50,7 +48,7 @@ services:
       - 10000:10000
       - 10001:10001
     volumes:
-      - ./.c42/share/azure:/data
+      - azuritedata:/data
 
   elastic:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
@@ -62,8 +60,10 @@ services:
       xpack.security.enabled: "false"
       ES_JAVA_OPTS: -Xms2g -Xmx2g
     volumes:
-      - .c42/share/elastic:/usr/share/elasticsearch/data
+      - elasticdata:/usr/share/elasticsearch/data
 
 volumes:
-  dbmatomo: null
-  matomo: null
+  pgdata:
+  elasticdata:
+  azuritedata:
+

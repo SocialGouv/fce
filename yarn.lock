@@ -1535,6 +1535,29 @@
   dependencies:
     "safe-buffer" "^5.0.1"
 
+"turbo-darwin-arm64@1.1.9":
+  "integrity" "sha512-15WTOOngcUALX1Pso6tG/vot8ksi1l5/Sljv4sXjfpFup9Xkc2m6AE6QlKllextL10SD4x52K2z01ClV7YIKEQ=="
+  "resolved" "https://registry.npmjs.org/turbo-darwin-arm64/-/turbo-darwin-arm64-1.1.9.tgz"
+  "version" "1.1.9"
+
+"turbo@^1.1.9":
+  "integrity" "sha512-xFtKZ9EFEkENhRxn89RQWmgMKCnUvKWPwiOXz60ztp4HEKXAdOBgEmgCOhyn5osfgQYOiaOI6gBIjSf/UMorQQ=="
+  "resolved" "https://registry.npmjs.org/turbo/-/turbo-1.1.9.tgz"
+  "version" "1.1.9"
+  optionalDependencies:
+    "turbo-darwin-64" "1.1.9"
+    "turbo-darwin-arm64" "1.1.9"
+    "turbo-freebsd-64" "1.1.9"
+    "turbo-freebsd-arm64" "1.1.9"
+    "turbo-linux-32" "1.1.9"
+    "turbo-linux-64" "1.1.9"
+    "turbo-linux-arm" "1.1.9"
+    "turbo-linux-arm64" "1.1.9"
+    "turbo-linux-mips64le" "1.1.9"
+    "turbo-linux-ppc64le" "1.1.9"
+    "turbo-windows-32" "1.1.9"
+    "turbo-windows-64" "1.1.9"
+
 "tweetnacl@^0.14.3", "tweetnacl@~0.14.0":
   "integrity" "sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q="
   "resolved" "https://registry.npmjs.org/tweetnacl/-/tweetnacl-0.14.5.tgz"

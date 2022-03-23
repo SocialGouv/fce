@@ -8,16 +8,10 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "node build/server.js",
-    "watch": "webpack --color --watch & nodemon --expose-gc --inspect=0.0.0.0",
-    "nodemon": "nodemon build/server.js",
+    "start": "webpack --color --watch & nodemon --expose-gc --inspect=0.0.0.0",
     "build": "NODE_ENV=production webpack --color",
     "test": "jest",
-    "appsearch-indexer": "node scripts/appsearchIndexer.js",
-    "appsearch-updater": "node scripts/appsearchUpdater.js",
-    "ii": "node scripts/idx.js",
     "migrate": "node-pg-migrate",
-    "shell": "node ./src/shell/run.js",
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore src"
   },
   "dependencies": {

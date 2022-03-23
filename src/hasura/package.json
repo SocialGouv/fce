@@ -16,6 +16,6 @@
     "metadata:apply": "hasura metadata apply",
     "seeds:apply": "hasura seeds apply",
     "data:import": "yarn migration:apply && yarn metadata:apply && yarn seeds:apply",
-    "console": "hasura console --no-browser"
+    "start": "hasura console --no-browser"
   }
 }

@@ -5,6 +5,7 @@ import path from "path";
 import { DOWNLOAD_STORAGE_PATH } from "../../utils/constants";
 import { createClient, downloadFile, getCredentialsFromContext } from "../../utils/azure";
 import { promisifyStream } from "../../utils/stream";
+import {createIfNotExist} from "../../utils/filesystem";
 
 
 export class DownloadAzureFile implements INodeType {
@@ -45,6 +46,8 @@ export class DownloadAzureFile implements INodeType {
         const fileName = this.getNodeParameter("fileName", 0) as string;
 
         const { connectionString, shareName } = await getCredentialsFromContext(this);
+
+        await createIfNotExist(DOWNLOAD_STORAGE_PATH);
 
         const client = createClient(connectionString);
 

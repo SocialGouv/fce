@@ -8,7 +8,11 @@ const main = async () => {
 
   const containerClient = blobServiceClient.getContainerClient(containerName);
 
-  await containerClient.delete();
+  try {
+    await containerClient.delete();
+  } catch(err) {
+    console.log("No preexisting container");
+  }
   const createContainerResponse = await containerClient.create({
     access: "blob"
   });

@@ -5,3 +5,4 @@ metadata:
 data:
   STORAGE_URL: https://fcedev.blob.core.windows.net
   DATABASE_SSL: "true"
+  FCE_SERVER_URL: "http://server:80"

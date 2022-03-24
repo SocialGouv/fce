@@ -18,4 +18,6 @@ export default class Mail {
       ...options
     });
   }
+
+
 }

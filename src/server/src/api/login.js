@@ -7,6 +7,9 @@ import Auth from "../utils/auth";
 import MatomoUserId from "../models/MatomoUserId";
 import MailingList from "../models/MailingList";
 import ApiKeys from "../models/ApiKeys";
+import FceUser from "../models/FceUser";
+import accessRequestAccepted from "../templates/email/accessRequestAccepted";
+import { adminAuth } from "../middlewares/admin-auth";
 
 const router = express.Router();
 
@@ -193,6 +196,38 @@ router.get("/askCredential", async function (req, res) {
       error: e.message,
     });
   }
+});
+
+router.post("/createAccount", async (req, res) => {
+  const { email, structure } = req.body;
+
+  const fceUser = new FceUser();
+
+  const { success, error } = await fceUser.create(email, structure);
+  if (success) {
+    res.json({
+      success: true
+    });
+  } else {
+    res.json({
+      success,
+      error
+    });
+  }
+});
+
+router.post("/userActivated", adminAuth(), async (req, res) => {
+  const { email } = req.body;
+  const mail = new Mail();
+
+  await mail.send(
+    email,
+    "Votre accès à FCE a été accepté",
+    accessRequestAccepted(),
+    {}
+  );
+
+  res.sendStatus(204);
 });
 
 export default router;

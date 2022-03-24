@@ -54,7 +54,8 @@
     "redux-thunk": "^2.2.0",
     "sass": "^1.43.3",
     "smoothscroll-polyfill": "^0.4.3",
-    "ua-parser-js": "^0.7.21"
+    "ua-parser-js": "^0.7.21",
+    "zod": "^3.13.4"
   },
   "scripts": {
     "start": "react-scripts start",

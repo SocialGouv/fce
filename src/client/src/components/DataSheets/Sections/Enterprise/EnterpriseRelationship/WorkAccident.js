@@ -5,7 +5,6 @@ import { keyBy } from "lodash";
 import Subcategory from "../../SharedComponents/Subcategory";
 import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import "./psi.scss";
-import Value from "../../../../shared/Value";
 import Table from "../../SharedComponents/Table";
 import { useAccidentTravailBySiren } from "../../../../../services/AccidentTravail/hooks";
 import Data from "../../SharedComponents/Data";

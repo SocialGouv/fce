@@ -159,6 +159,7 @@ const config = {
   port: process.env.PORT || 80,
   api: {
     requestsPer10Seconds: 20,
+    token: process.env.API_TOKEN
   },
 };
 

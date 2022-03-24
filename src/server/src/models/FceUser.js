@@ -42,18 +42,53 @@ export default class FceUser {
     return this.token;
   }
 
-  async findByEmail(email) {
+  async getRequest() {
     const token = await this.getOrFetchToken();
 
-    const response = await axios.get(USERS_ENDPOINT, {
-      params: {
-        email_eq: email
-      },
+    return axios.create({
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
+  }
+
+  async findByEmail(email) {
+    const request = await this.getRequest();
+
+    const response = await request.get(USERS_ENDPOINT, {
+      params: {
+        email_eq: email
+      }
+    });
 
     return response?.data[0] || null;
+  }
+
+  async create(email, structure) {
+    const request = await this.getRequest();
+
+    try {
+      await request.post(USERS_ENDPOINT, {
+        email,
+        structure,
+        published_at: null
+      });
+      return {
+        success: true
+      };
+    } catch(err) {
+      if (err.response.data.statusCode === 500) {
+        return {
+          success: true,
+        }
+      } else {
+        return {
+          success: false,
+          error: {
+            structure: "Structure inconnue"
+          }
+        }
+      }
+    }
   }
 }

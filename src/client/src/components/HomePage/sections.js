@@ -13,6 +13,12 @@ const LoginLink = () => (
   </div>
 );
 
+const RequestAccessLink = () => (
+  <div className="home-page__link">
+    <Link to="/request-access">Je demande un accès</Link>
+  </div>
+);
+
 export const IconItems = ({ users, isLoading = false }) => {
   // I can't use anonymous function without a display name for icon.
   // That's make a lint error
@@ -88,7 +94,10 @@ export const Summary = () => (
       {`L'état civil, l'activité et les données de l'administration dans une seule
       fiche destinée aux agents publics`}
     </p>
-    <LoginLink />
+    <div className="home-page__action-links-container">
+      <LoginLink />
+      <RequestAccessLink />
+    </div>
   </div>
 );
 

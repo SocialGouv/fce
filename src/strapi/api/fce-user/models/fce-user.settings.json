@@ -8,12 +8,13 @@
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": false
+    "draftAndPublish": true
   },
   "attributes": {
     "email": {
       "type": "email",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "structure": {
       "type": "enumeration",
@@ -109,7 +110,8 @@
         "DDETS85",
         "DDETS86",
         "DDETS91",
-        "DDETS95"
+        "DDETS95",
+        "autre"
       ]
     }
   }

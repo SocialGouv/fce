@@ -24,6 +24,7 @@ import IEChecker from "../../components/IEChecker";
 import { Error403, Error404 } from "../../components/Errors";
 import SetMatomo from "../../helpers/Matomo/SetMatomo";
 import { apolloClient } from "../../services/GraphQL/GraphQL";
+import RequestAccess from "../RequestAccessForm/RequestAccess";
 
 let { store, persistor } = configureStore();
 let history = createBrowserHistory();
@@ -98,6 +99,15 @@ const App = () => {
                               render={() => (
                                 <Layout hasLandingHeader={true}>
                                   <Login />
+                                </Layout>
+                              )}
+                            />
+                            <Route
+                              exact
+                              path="/request-access"
+                              render={() => (
+                                <Layout hasLandingHeader={true}>
+                                  <RequestAccess />
                                 </Layout>
                               )}
                             />

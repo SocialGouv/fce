@@ -56,6 +56,11 @@
         background-color: $deep-blue;
     }
 
+    &__action-links-container {
+        display: flex;
+        justify-content: center;
+    }
+
     .icons {
         display: flex;
         justify-content: center;
@@ -215,7 +220,7 @@
     }
 
     &__link {
-        margin: 2rem 0;
+        margin: 2rem 1rem;
 
         a {
             padding: $spacing-4;

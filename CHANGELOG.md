@@ -1,3 +1,10 @@
+# [27.37.0](https://github.com/SocialGouv/fce/compare/v27.36.0...v27.37.0) (2022-03-24)
+
+
+### Features
+
+* **auth:** add access request process ([#184](https://github.com/SocialGouv/fce/issues/184)) ([ad464f1](https://github.com/SocialGouv/fce/commit/ad464f1afe065d022baa49361e13f676be62c6a7))
+
 # [27.36.0](https://github.com/SocialGouv/fce/compare/v27.35.0...v27.36.0) (2022-03-08)
 
 

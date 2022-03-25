@@ -1,3 +1,10 @@
+## [27.37.1](https://github.com/SocialGouv/fce/compare/v27.37.0...v27.37.1) (2022-03-25)
+
+
+### Bug Fixes
+
+* **account:** fix email subject for access allowed confirmation. ([#186](https://github.com/SocialGouv/fce/issues/186)) ([e536ff9](https://github.com/SocialGouv/fce/commit/e536ff965408fe428ee86dd0d3f734029752c0e9))
+
 # [27.37.0](https://github.com/SocialGouv/fce/compare/v27.36.0...v27.37.0) (2022-03-24)
 
 

@@ -222,7 +222,7 @@ router.post("/userActivated", adminAuth(), async (req, res) => {
 
   await mail.send(
     email,
-    "Votre accès à FCE a été accepté",
+    "Votre demande d'accès à FCE a été acceptée",
     accessRequestAccepted(),
     {}
   );

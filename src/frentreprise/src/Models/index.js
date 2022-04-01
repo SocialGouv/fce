@@ -1,12 +1,13 @@
 import Sequelize from "sequelize";
 
-const { PG_HOST, PG_USER, PG_PASSWORD, PG_DB, PG_SSL, PROD, SQL_LOGS } = process.env;
+const { PG_HOST, PG_USER, PG_PASSWORD, PG_DB, PG_SSL, PG_SSL_SELF_SIGNED, PG_PORT, PROD, SQL_LOGS } = process.env;
 
 const sequelize = new Sequelize(PG_DB, PG_USER, PG_PASSWORD, {
   host: PG_HOST,
+  port: PG_PORT,
   dialect: "postgres",
   dialectOptions: {
-    ssl: PG_SSL === "true"
+    ssl: PG_SSL_SELF_SIGNED === "true" ? { rejectUnauthorized: false } : PG_SSL === "true",
   },
   define: {
     timestamps: false,

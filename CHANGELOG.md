@@ -1,3 +1,10 @@
+## [27.37.2](https://github.com/SocialGouv/fce/compare/v27.37.1...v27.37.2) (2022-04-01)
+
+
+### Bug Fixes
+
+* **work-accident:** fix crash when loading work accident with no adress ([#187](https://github.com/SocialGouv/fce/issues/187)) ([5e69545](https://github.com/SocialGouv/fce/commit/5e69545bd88ec00a12f9ce3357102b4413a8c168))
+
 ## [27.37.1](https://github.com/SocialGouv/fce/compare/v27.37.0...v27.37.1) (2022-03-25)
 
 

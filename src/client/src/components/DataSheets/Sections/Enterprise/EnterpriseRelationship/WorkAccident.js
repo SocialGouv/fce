@@ -57,12 +57,6 @@ const WorkAccident = ({ siren, etablissements }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {console.log(
-                      getEtablissementsData(
-                        data.accidents_travail,
-                        etablissements
-                      )
-                    )}
                     {getEtablissementsData(
                       data.accidents_travail,
                       etablissements
@@ -74,7 +68,7 @@ const WorkAccident = ({ siren, etablissements }) => {
                             <State state={data.etat_etablissement} />
                           )}
                         </td>
-                        <td>{data.adresse_composant.localite}</td>
+                        <td>{data?.adresse_composant?.localite}</td>
                         <td>{data.total}</td>
                         <td className="see-details">
                           <SeeDetailsLink

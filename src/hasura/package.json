@@ -7,7 +7,7 @@
     "name": "Fabrique des ministères sociaux"
   },
   "devDependencies": {
-    "hasura-cli": "^2.0.9"
+    "hasura-cli": "^2.2.0"
   },
   "scripts": {
     "migration:create": "hasura migrate create 1000jours --from-server",

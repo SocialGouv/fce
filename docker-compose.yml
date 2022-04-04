@@ -20,7 +20,7 @@ services:
       - 8025:8025
 
   hasura:
-    image: hasura/graphql-engine:v2.1.0-beta.3
+    image: hasura/graphql-engine:v2.3.1
     ports:
       - 8080:8080
     depends_on:
@@ -28,6 +28,7 @@ services:
     restart: always
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgresql://postgres:root@db:5432/fce
+      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgresql://postgres:root@db:5432/hasura
       ## enable the console served by server
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       ## enable debugging mode. It is recommended to disable this in production

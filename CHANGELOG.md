@@ -1,3 +1,10 @@
+## [27.37.3](https://github.com/SocialGouv/fce/compare/v27.37.2...v27.37.3) (2022-04-04)
+
+
+### Bug Fixes
+
+* **hasura:** update hasura version ([#191](https://github.com/SocialGouv/fce/issues/191)) ([f672bf6](https://github.com/SocialGouv/fce/commit/f672bf63c2a0fcfd221cfc803f8790e376d95b2c))
+
 ## [27.37.2](https://github.com/SocialGouv/fce/compare/v27.37.1...v27.37.2) (2022-04-01)
 
 

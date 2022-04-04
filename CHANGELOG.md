@@ -1,3 +1,10 @@
+# [27.38.0](https://github.com/SocialGouv/fce/compare/v27.37.4...v27.38.0) (2022-04-04)
+
+
+### Features
+
+* **access-request:** specify request access button is for DDETS agents ([#190](https://github.com/SocialGouv/fce/issues/190)) ([aa8fb35](https://github.com/SocialGouv/fce/commit/aa8fb350498977aac5d04b39845b2267d0f95490))
+
 ## [27.37.4](https://github.com/SocialGouv/fce/compare/v27.37.3...v27.37.4) (2022-04-04)
 
 

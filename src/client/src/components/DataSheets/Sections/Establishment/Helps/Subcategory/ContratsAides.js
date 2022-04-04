@@ -1,11 +1,11 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 
+import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
 import Value from "../../../../../shared/Value";
 import Data from "../../../SharedComponents/Data";
-import Table from "../../../SharedComponents/Table";
 import Subcategory from "../../../SharedComponents/Subcategory";
-import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
+import Table from "../../../SharedComponents/Table";
 
 const ContratsAides = ({ establishment }) => {
   return (

@@ -1,9 +1,10 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
+
+import { formatSiret } from "../../../../../helpers/utils";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
 import Table from "../../SharedComponents/Table";
-import { formatSiret } from "../../../../../helpers/utils";
 
 export const PsiSiretTable = ({ establishments, year, isVisiblePsiTable }) => {
   return (
@@ -19,11 +20,11 @@ export const PsiSiretTable = ({ establishments, year, isVisiblePsiTable }) => {
               <th className="th">SIRET</th>
               <th className="th table-cell--center-cell">État</th>
               <th className="th">Commune</th>
-              <th className="th see-details"></th>
+              <th className="th see-details" />
             </tr>
           </thead>
           <tbody>
-            {establishments.map(etab => (
+            {establishments.map((etab) => (
               <tr key={etab.siret}>
                 <td className="table-cell--nowrap">
                   {formatSiret(etab.siret)}
@@ -47,5 +48,5 @@ export const PsiSiretTable = ({ establishments, year, isVisiblePsiTable }) => {
 PsiSiretTable.propTypes = {
   establishments: PropTypes.array.isRequired,
   isVisiblePsiTable: PropTypes.bool.isRequired,
-  year: PropTypes.number.isRequired
+  year: PropTypes.number.isRequired,
 };

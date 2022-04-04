@@ -3,16 +3,16 @@
  * - first by category ("Siège social" before "Etablissement secondaire")
  * - then by date
  */
-export const formatEnterpriseAgreements = agreements => {
+export const formatEnterpriseAgreements = (agreements) => {
   const formatAgreements = agreements.fileNumbersBySiret.map(
     ({ siret, category, state, fileNumbers, count, lastSignatureDate }) => {
       return {
-        siret,
         category,
-        state,
-        fileNumbers,
         count,
-        lastSignatureDate
+        fileNumbers,
+        lastSignatureDate,
+        siret,
+        state,
       };
     }
   );
@@ -35,13 +35,13 @@ export const formatEnterpriseAgreements = agreements => {
  */
 export const formatEstablishmentAgreements = (agreements, siret) => {
   const establishment = agreements.fileNumbersBySiret.find(
-    establishment => establishment.siret === siret
+    (establishment) => establishment.siret === siret
   );
 
   const establishmentAgreements = establishment?.fileNumbers
-    .map(fileNumber =>
+    .map((fileNumber) =>
       agreements.agreementsList.find(
-        agreement => agreement.num_dos === fileNumber
+        (agreement) => agreement.num_dos === fileNumber
       )
     )
     .reduce(
@@ -76,12 +76,12 @@ export const formatEstablishmentAgreements = (agreements, siret) => {
         nouvelles_technologies: { count: 0, lastDate: null },
         protection_sociale: { count: 0, lastDate: null },
         remuneration: { count: 0, lastDate: null },
-        temps_travail: { count: 0, lastDate: null }
+        temps_travail: { count: 0, lastDate: null },
       }
     );
 
   const lastSignatureDate = establishment?.lastSignatureDate;
   const count = establishment?.count;
 
-  return { count, lastSignatureDate, agreements: establishmentAgreements };
+  return { agreements: establishmentAgreements, count, lastSignatureDate };
 };

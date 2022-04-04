@@ -1,37 +1,38 @@
-import React from "react";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
-import { createBrowserHistory } from "history";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/lib/integration/react";
-import PiwikReactRouter from "piwik-react-router";
-import { ApolloProvider } from "@apollo/client";
-
 import "./app.scss";
-import configureStore from "../../services/Store";
-import Config from "../../services/Config";
-import PrivateRoute from "../../services/PrivateRoute";
-import HomePage from "../HomePage";
-import Maintenance from "../Maintenance";
-import Statistics from "../PublicPage/Statistics";
-import UnsubscribePage from "../../containers/UnsubscribePage";
+
+import { ApolloProvider } from "@apollo/client";
+import { createBrowserHistory } from "history";
+import PiwikReactRouter from "piwik-react-router";
+import React from "react";
+import { Provider } from "react-redux";
+import { Redirect, Route, Router, Switch } from "react-router-dom";
+import { PersistGate } from "redux-persist/lib/integration/react";
+
+import { Error403, Error404 } from "../../components/Errors";
+import IEChecker from "../../components/IEChecker";
 import Enterprise from "../../containers/Enterprise";
 import Login from "../../containers/Login";
 import PublicPage from "../../containers/PublicPage";
 import Search from "../../containers/Search";
+import UnsubscribePage from "../../containers/UnsubscribePage";
+import SetMatomo from "../../helpers/Matomo/SetMatomo";
+import Config from "../../services/Config";
+import { apolloClient } from "../../services/GraphQL/GraphQL";
+import PrivateRoute from "../../services/PrivateRoute";
+import configureStore from "../../services/Store";
+import HomePage from "../HomePage";
+import Maintenance from "../Maintenance";
+import Statistics from "../PublicPage/Statistics";
+import RequestAccess from "../RequestAccessForm/RequestAccess";
 import Layout from "./Layout";
 import ScrollToTop from "./ScrollToTop";
-import IEChecker from "../../components/IEChecker";
-import { Error403, Error404 } from "../../components/Errors";
-import SetMatomo from "../../helpers/Matomo/SetMatomo";
-import { apolloClient } from "../../services/GraphQL/GraphQL";
-import RequestAccess from "../RequestAccessForm/RequestAccess";
 
-let { store, persistor } = configureStore();
-let history = createBrowserHistory();
+const { store, persistor } = configureStore();
+const history = createBrowserHistory();
 const isActiveMaintenanceMode = Config.get("maintenanceMode");
 const matomoConfig = Config.get("matomo");
 
-const getHistory = matomoConfig => {
+const getHistory = (matomoConfig) => {
   if (!matomoConfig) {
     return createBrowserHistory();
   }
@@ -53,7 +54,7 @@ const App = () => {
                     <Route
                       exact
                       path="/unsubscribe/:hash"
-                      render={props => (
+                      render={(props) => (
                         <Layout>
                           <UnsubscribePage {...props} />
                         </Layout>

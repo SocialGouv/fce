@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import Auth from "../../services/Auth";
-import LoginView from "../../components/Login";
 import _get from "lodash.get";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
+
+import LoginView from "../../components/Login";
+import Auth from "../../services/Auth";
 
 const Login = ({ history }) => {
   const [step, setStep] = useState("login-form-email");
@@ -19,7 +20,7 @@ const Login = ({ history }) => {
     initStates();
 
     Auth.sendCode(email)
-      .then(response => {
+      .then((response) => {
         if (!_get(response, "data.success")) {
           throw new Error(_get(response, "data.message"));
         }
@@ -30,7 +31,7 @@ const Login = ({ history }) => {
         );
         setStep("login-form-code");
       })
-      .catch(e => {
+      .catch((e) => {
         const errorCode = _get(e, "response.data.code", "");
         if (errorCode === "HAS_VALID_CODE") {
           setSuccess();
@@ -50,14 +51,14 @@ prendre plusieurs minutes dans certains services.`);
     initStates();
 
     Auth.login(email, code, isCheckedSubscription)
-      .then(response => {
+      .then((response) => {
         if (!_get(response, "data.success")) {
           throw new Error(_get(response, "data.message"));
         }
 
         history.push(redirectLoginSuccess);
       })
-      .catch(e => {
+      .catch((e) => {
         const message = _get(e, "response.data.error", e.message);
         setError(message || "Le code n'a pas pu être envoyé");
       });
@@ -74,7 +75,7 @@ prendre plusieurs minutes dans certains services.`);
     setShowSuccessNotif(true);
   };
 
-  const setError = message => {
+  const setError = (message) => {
     setErrorMessage(message);
     setLoading(false);
     setShowSuccessNotif(false);
@@ -98,8 +99,8 @@ prendre plusieurs minutes dans certains services.`);
 
 Login.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func
-  })
+    push: PropTypes.func,
+  }),
 };
 
 export default withRouter(Login);

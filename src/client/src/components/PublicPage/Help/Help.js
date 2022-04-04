@@ -1,10 +1,11 @@
-import React from "react";
+import "./help.scss";
+
 import PropTypes from "prop-types";
+import React from "react";
 import { Link } from "react-router-dom";
+
 import UsersFeedback from "../../../containers/UsersFeedback";
 import LoadSpinner from "../../shared/LoadSpinner";
-
-import "./help.scss";
 
 const Help = ({ pageData = null, isLoading, hasError }) => {
   if (hasError) {
@@ -34,10 +35,11 @@ const Help = ({ pageData = null, isLoading, hasError }) => {
             <h2>Nos tutoriels</h2>
 
             <ul className="help__videos">
-              {pageData?.videos?.map(item => {
+              {pageData?.videos?.map((item) => {
                 return (
                   <li className="help-video__item" key={item.titre}>
                     <div className="help-video__title">{item.titre}</div>
+                    {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                     <video className="help-video__video" controls>
                       <source src={item.video.url} type="video/mp4" />
                       <p>
@@ -62,9 +64,9 @@ const Help = ({ pageData = null, isLoading, hasError }) => {
 };
 
 Help.propTypes = {
-  pageData: PropTypes.object,
+  hasError: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  hasError: PropTypes.bool.isRequired
+  pageData: PropTypes.object,
 };
 
 export default Help;

@@ -1,12 +1,12 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 
-import Data from "../../../SharedComponents/Data";
-import Subcategory from "../../../SharedComponents/Subcategory";
-import Table from "../../../SharedComponents/Table";
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
 import { hasApprentissage } from "../../../../../../helpers/Establishment";
 import { formatNumber } from "../../../../../../helpers/utils";
+import Data from "../../../SharedComponents/Data";
+import Subcategory from "../../../SharedComponents/Subcategory";
+import Table from "../../../SharedComponents/Table";
 
 const Apprentissage = ({ apprentissage }) => {
   return (
@@ -24,8 +24,8 @@ const Apprentissage = ({ apprentissage }) => {
           <Table isBordered>
             <thead>
               <tr>
-                <th></th>
-                {Object.keys(apprentissage).map(year => (
+                <th />
+                {Object.keys(apprentissage).map((year) => (
                   <th className="has-text-right" key={year}>
                     {year}
                   </th>

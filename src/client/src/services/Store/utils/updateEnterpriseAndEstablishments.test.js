@@ -7,31 +7,31 @@ const emptyInteractions = {
     "3E_SRC": 0,
     C: 0,
     T: 0,
-    total: 0
-  }
+    total: 0,
+  },
 };
 
 describe("updateEnterpriseAndEstablishment", () => {
   test("update only empty data", () => {
     const current = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
       capital_social: null,
-      date_de_creation: "2017-08-01"
+      date_de_creation: "2017-08-01",
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
     };
     const newData = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrique",
       capital_social: 666,
-      tranche_effectif: "02"
+      raison_sociale: "Phil Electrique",
+      siren: "123456789",
+      tranche_effectif: "02",
     };
     const expected = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
       capital_social: 666,
       date_de_creation: "2017-08-01",
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
       tranche_effectif: "02",
-      ...emptyInteractions
+      ...emptyInteractions,
     };
 
     expect(updateEnterpriseAndEstablishments(current, newData)).toEqual(
@@ -41,16 +41,16 @@ describe("updateEnterpriseAndEstablishment", () => {
 
   test("if is not the same enterprise return newData", () => {
     const current = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
       capital_social: null,
-      date_de_creation: "2017-08-01"
+      date_de_creation: "2017-08-01",
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
     };
     const newData = {
-      siren: "987654321",
-      raison_sociale: "Tif'Ene",
       capital_social: 123,
-      tranche_effectif: "01"
+      raison_sociale: "Tif'Ene",
+      siren: "987654321",
+      tranche_effectif: "01",
     };
     const expected = { ...newData, ...emptyInteractions };
 
@@ -61,97 +61,97 @@ describe("updateEnterpriseAndEstablishment", () => {
 
   test("update some establishments", () => {
     const current = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
       capital_social: null,
       date_de_creation: "2017-08-01",
       etablissements: [
         {
+          code_region: null,
+          etat_etablissement: "A",
           siege_social: true,
           siret: "12345678900001",
-          etat_etablissement: "A",
-          code_region: null
         },
         {
+          code_region: null,
+          etat_etablissement: "B",
           siege_social: false,
           siret: "12345678900002",
-          etat_etablissement: "B",
-          code_region: null
         },
         {
+          code_region: null,
+          etat_etablissement: "C",
           siege_social: false,
           siret: "12345678900003",
-          etat_etablissement: "C",
-          code_region: null
-        }
-      ]
+        },
+      ],
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
     };
     const newData = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
       capital_social: null,
       date_de_creation: "2017-08-01",
       etablissements: [
         {
+          code_region: 1,
+          etat_etablissement: "Z",
           siege_social: true,
           siret: "12345678900001",
-          etat_etablissement: "Z",
-          code_region: 1
         },
         {
+          code_region: 2,
+          etat_etablissement: "Z",
+          naf: "62.01Z",
           siege_social: false,
           siret: "12345678900002",
-          etat_etablissement: "Z",
-          code_region: 2,
-          naf: "62.01Z"
         },
         {
+          code_region: 2,
+          etat_etablissement: "K",
+          naf: "62.01Z",
           siege_social: false,
           siret: "12345678900004",
-          etat_etablissement: "K",
-          code_region: 2,
-          naf: "62.01Z"
-        }
-      ]
+        },
+      ],
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
     };
     const expected = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
       capital_social: null,
       date_de_creation: "2017-08-01",
       etablissements: [
         {
+          code_region: 1,
+          etat_etablissement: "A",
           siege_social: true,
           siret: "12345678900001",
-          etat_etablissement: "A",
-          code_region: 1,
-          ...emptyInteractions
+          ...emptyInteractions,
         },
         {
+          code_region: 2,
+          etat_etablissement: "B",
+          naf: "62.01Z",
           siege_social: false,
           siret: "12345678900002",
-          etat_etablissement: "B",
-          code_region: 2,
-          naf: "62.01Z",
-          ...emptyInteractions
+          ...emptyInteractions,
         },
         {
+          code_region: null,
+          etat_etablissement: "C",
           siege_social: false,
           siret: "12345678900003",
-          etat_etablissement: "C",
-          code_region: null,
-          ...emptyInteractions
+          ...emptyInteractions,
         },
         {
+          code_region: 2,
+          etat_etablissement: "K",
+          naf: "62.01Z",
           siege_social: false,
           siret: "12345678900004",
-          etat_etablissement: "K",
-          code_region: 2,
-          naf: "62.01Z",
-          ...emptyInteractions
-        }
+          ...emptyInteractions,
+        },
       ],
-      ...emptyInteractions
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
+      ...emptyInteractions,
     };
 
     expect(updateEnterpriseAndEstablishments(current, newData)).toEqual(
@@ -161,71 +161,71 @@ describe("updateEnterpriseAndEstablishment", () => {
 
   test("merge _dataSources", () => {
     const current = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
+      _dataSources: { CIA: true, DGSE: false },
       capital_social: null,
       date_de_creation: "2017-08-01",
-      _dataSources: { CIA: true, DGSE: false },
       etablissements: [
         {
+          _dataSources: { CIA: true, DGSE: false },
+          code_region: null,
+          etat_etablissement: "A",
           siege_social: true,
           siret: "12345678900001",
-          etat_etablissement: "A",
-          code_region: null,
-          _dataSources: { CIA: true, DGSE: false }
-        }
-      ]
+        },
+      ],
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
     };
     const newData = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
+      _dataSources: { KGB: true },
       capital_social: null,
       date_de_creation: "2017-08-01",
-      _dataSources: { KGB: true },
       etablissements: [
         {
+          _dataSources: { KGB: true },
+          code_region: null,
+          etat_etablissement: "A",
           siege_social: true,
           siret: "12345678900001",
-          etat_etablissement: "A",
-          code_region: null,
-          _dataSources: { KGB: true }
         },
         {
+          _dataSources: { KGB: true },
+          code_region: 2,
+          etat_etablissement: "B",
+          naf: "62.01Z",
           siege_social: false,
           siret: "12345678900002",
-          etat_etablissement: "B",
-          code_region: 2,
-          naf: "62.01Z",
-          _dataSources: { KGB: true }
-        }
-      ]
+        },
+      ],
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
     };
     const expected = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
+      _dataSources: { CIA: true, DGSE: false, KGB: true },
       capital_social: null,
       date_de_creation: "2017-08-01",
-      _dataSources: { CIA: true, DGSE: false, KGB: true },
       etablissements: [
         {
+          _dataSources: { CIA: true, DGSE: false, KGB: true },
+          code_region: null,
+          etat_etablissement: "A",
           siege_social: true,
           siret: "12345678900001",
-          etat_etablissement: "A",
-          code_region: null,
-          _dataSources: { CIA: true, DGSE: false, KGB: true },
-          ...emptyInteractions
+          ...emptyInteractions,
         },
         {
+          _dataSources: { KGB: true },
+          code_region: 2,
+          etat_etablissement: "B",
+          naf: "62.01Z",
           siege_social: false,
           siret: "12345678900002",
-          etat_etablissement: "B",
-          code_region: 2,
-          naf: "62.01Z",
-          _dataSources: { KGB: true },
-          ...emptyInteractions
-        }
+          ...emptyInteractions,
+        },
       ],
-      ...emptyInteractions
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
+      ...emptyInteractions,
     };
 
     expect(updateEnterpriseAndEstablishments(current, newData)).toEqual(
@@ -236,114 +236,114 @@ describe("updateEnterpriseAndEstablishment", () => {
   test("add interactions to enterprise", () => {
     const current = {};
     const newData = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
       interactions_3E_SEER: [
         {
-          siret: "12345678900001",
-          date: "2020-06-01",
-          pole: "3E_SEER",
-          unite: `Service Entreprise Yolo`,
-          type: "top",
           agent: "Maitre Grims",
+          date: "2020-06-01",
+          eti_pepite: "",
           filiere: "",
-          eti_pepite: ""
+          pole: "3E_SEER",
+          siret: "12345678900001",
+          type: "top",
+          unite: `Service Entreprise Yolo`,
         },
         {
-          siret: "12345678900002",
-          date: "2020-05-01",
-          pole: "3E_SEER",
-          unite: `Service Entreprise Polo`,
-          type: "top",
           agent: "Maitre Grims",
+          date: "2020-05-01",
+          eti_pepite: "",
           filiere: "",
-          eti_pepite: ""
-        }
+          pole: "3E_SEER",
+          siret: "12345678900002",
+          type: "top",
+          unite: `Service Entreprise Polo`,
+        },
       ],
       interactions_3E_SRC: [
         {
-          siret: "12345678900001",
+          agent: null,
           date: "2020-04-01",
           pole: "3E_SRC",
-          unite: `SRC c'est un dossier`,
+          siret: "12345678900001",
           type: "tap",
-          agent: null
-        }
-      ]
+          unite: `SRC c'est un dossier`,
+        },
+      ],
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
     };
 
     const expected = {
-      siren: "123456789",
-      raison_sociale: "Phil Electrik",
-      interactions_3E_SEER: [
+      interactions: [
         {
-          siret: "12345678900001",
-          date: "2020-06-01",
-          pole: "3E_SEER",
-          unite: `Service Entreprise Yolo`,
-          type: "top",
           agent: "Maitre Grims",
+          date: "2020-06-01",
+          eti_pepite: "",
           filiere: "",
-          eti_pepite: ""
+          pole: "3E_SEER",
+          siret: "12345678900001",
+          type: "top",
+          unite: `Service Entreprise Yolo`,
         },
         {
-          siret: "12345678900002",
-          date: "2020-05-01",
-          pole: "3E_SEER",
-          unite: `Service Entreprise Polo`,
-          type: "top",
           agent: "Maitre Grims",
+          date: "2020-05-01",
+          eti_pepite: "",
           filiere: "",
-          eti_pepite: ""
-        }
+          pole: "3E_SEER",
+          siret: "12345678900002",
+          type: "top",
+          unite: `Service Entreprise Polo`,
+        },
+        {
+          agent: null,
+          date: "2020-04-01",
+          pole: "3E_SRC",
+          siret: "12345678900001",
+          type: "tap",
+          unite: `SRC c'est un dossier`,
+        },
+      ],
+      interactions_3E_SEER: [
+        {
+          agent: "Maitre Grims",
+          date: "2020-06-01",
+          eti_pepite: "",
+          filiere: "",
+          pole: "3E_SEER",
+          siret: "12345678900001",
+          type: "top",
+          unite: `Service Entreprise Yolo`,
+        },
+        {
+          agent: "Maitre Grims",
+          date: "2020-05-01",
+          eti_pepite: "",
+          filiere: "",
+          pole: "3E_SEER",
+          siret: "12345678900002",
+          type: "top",
+          unite: `Service Entreprise Polo`,
+        },
       ],
       interactions_3E_SRC: [
         {
-          siret: "12345678900001",
+          agent: null,
           date: "2020-04-01",
           pole: "3E_SRC",
-          unite: `SRC c'est un dossier`,
-          type: "tap",
-          agent: null
-        }
-      ],
-      interactions: [
-        {
           siret: "12345678900001",
-          date: "2020-06-01",
-          pole: "3E_SEER",
-          unite: `Service Entreprise Yolo`,
-          type: "top",
-          agent: "Maitre Grims",
-          filiere: "",
-          eti_pepite: ""
-        },
-        {
-          siret: "12345678900002",
-          date: "2020-05-01",
-          pole: "3E_SEER",
-          unite: `Service Entreprise Polo`,
-          type: "top",
-          agent: "Maitre Grims",
-          filiere: "",
-          eti_pepite: ""
-        },
-        {
-          siret: "12345678900001",
-          date: "2020-04-01",
-          pole: "3E_SRC",
-          unite: `SRC c'est un dossier`,
           type: "tap",
-          agent: null
-        }
+          unite: `SRC c'est un dossier`,
+        },
       ],
+      raison_sociale: "Phil Electrik",
+      siren: "123456789",
       totalInteractions: {
-        C: 0,
         "3E_SEER": 2,
         "3E_SRC": 1,
+        C: 0,
         T: 0,
-        total: 3
-      }
+        total: 3,
+      },
     };
 
     expect(updateEnterpriseAndEstablishments(current, newData)).toEqual(

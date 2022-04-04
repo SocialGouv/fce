@@ -1,12 +1,13 @@
-import React from "react";
 import * as PropTypes from "prop-types";
-import Data from "../../SharedComponents/Data";
+import React from "react";
+
 import {
   getEffectifFormateur,
   getNombreStagiaires,
   getNombreStagiairesAutreOrganisme,
-  isOrganismeFormation
+  isOrganismeFormation,
 } from "../../../../../utils/organisme-formation/organisme-formation";
+import Data from "../../SharedComponents/Data";
 
 const AgrementSpecialty = ({ organismes_formation }) => {
   if (!isOrganismeFormation(organismes_formation)) {
@@ -34,7 +35,7 @@ const AgrementSpecialty = ({ organismes_formation }) => {
 };
 
 AgrementSpecialty.propTypes = {
-  organismes_formation: PropTypes.arrayOf(PropTypes.object)
+  organismes_formation: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default AgrementSpecialty;

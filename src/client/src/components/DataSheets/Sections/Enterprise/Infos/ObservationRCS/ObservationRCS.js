@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import "./observationsRcs.scss";
+
 import { faChevronRight, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Data from "../../../SharedComponents/Data";
-import { toI18nDate, sortByDate } from "../../../../../../helpers/Date";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
 
-import "./observationsRcs.scss";
+import { sortByDate, toI18nDate } from "../../../../../../helpers/Date";
+import Data from "../../../SharedComponents/Data";
 
 const ObservationRCS = ({ enterprise }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -52,7 +53,7 @@ const ObservationRCS = ({ enterprise }) => {
 };
 
 ObservationRCS.propTypes = {
-  enterprise: PropTypes.object.isRequired
+  enterprise: PropTypes.object.isRequired,
 };
 
 export default ObservationRCS;

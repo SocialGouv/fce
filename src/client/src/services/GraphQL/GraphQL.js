@@ -1,10 +1,11 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
-import config from "../Config";
-import Auth from "../Auth";
 import { setContext } from "@apollo/client/link/context";
 
+import Auth from "../Auth";
+import config from "../Config";
+
 const httpLink = createHttpLink({
-  uri: `${config.get("api_endpoint")}/graphql`
+  uri: `${config.get("api_endpoint")}/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -14,12 +15,12 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : ""
-    }
+      authorization: token ? `Bearer ${token}` : "",
+    },
   };
 });
 
 export const apolloClient = new ApolloClient({
+  cache: new InMemoryCache(),
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
 });

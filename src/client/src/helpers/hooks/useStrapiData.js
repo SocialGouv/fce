@@ -1,34 +1,35 @@
 import { useEffect, useReducer } from "react";
+
 import Config from "../../services/Config";
 import { handleError } from "../utils";
 
 const initialState = {
+  hasError: false,
   isLoading: false,
   pageData: null,
-  hasError: false
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case "fetchStart":
       return {
+        hasError: false,
         isLoading: true,
         pageData: null,
-        hasError: false
       };
 
     case "fetchSuccess":
       return {
+        hasError: false,
         isLoading: false,
         pageData: action.payload,
-        hasError: false
       };
 
     case "fetchError":
       return {
+        hasError: true,
         loading: false,
         pageData: null,
-        hasError: true
       };
 
     default:
@@ -36,7 +37,7 @@ const reducer = (state, action) => {
   }
 };
 
-export const useStrapiData = path => {
+export const useStrapiData = (path) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const endpoint = `${Config.get("strapi.domain")}${path}`;
@@ -44,11 +45,11 @@ export const useStrapiData = path => {
   useEffect(() => {
     dispatch({ type: "fetchStart" });
     fetch(endpoint)
-      .then(response => response.json())
-      .then(data => {
-        dispatch({ type: "fetchSuccess", payload: data });
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({ payload: data, type: "fetchSuccess" });
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch({ type: "fetchError" });
         handleError(error);
       });

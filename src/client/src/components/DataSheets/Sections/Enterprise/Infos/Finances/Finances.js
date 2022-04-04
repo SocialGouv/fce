@@ -1,9 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Table from "../../../SharedComponents/Table";
-import Value from "../../../../../shared/Value";
-
 import "./finances.scss";
+
+import PropTypes from "prop-types";
+import React from "react";
+
+import Value from "../../../../../shared/Value";
+import Table from "../../../SharedComponents/Table";
 
 const Finances = ({ establishment }) => {
   let dates = [];
@@ -20,9 +21,9 @@ const Finances = ({ establishment }) => {
     });
     caList = Object.values(establishment.donnees_ecofi).map((ca, index) => {
       ca = new Intl.NumberFormat("fr-FR", {
-        style: "currency",
         currency: "EUR",
-        minimumFractionDigits: 0
+        minimumFractionDigits: 0,
+        style: "currency",
       }).format(ca);
       return (
         <td className="has-text-right" key={index}>
@@ -71,7 +72,7 @@ const Finances = ({ establishment }) => {
 };
 
 Finances.propTypes = {
-  establishment: PropTypes.object.isRequired
+  establishment: PropTypes.object.isRequired,
 };
 
 export default Finances;

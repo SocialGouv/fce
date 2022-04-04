@@ -1,6 +1,6 @@
-import React from "react";
-
 import "./loadSpinner.scss";
+
+import React from "react";
 
 const LoadSpinner = () => {
   return (

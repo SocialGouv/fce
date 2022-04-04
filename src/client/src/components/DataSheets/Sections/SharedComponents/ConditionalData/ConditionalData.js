@@ -1,5 +1,6 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
+
 import Data from "../Data";
 
 const ConditionalData = ({ text, showTable = false }) =>
@@ -20,8 +21,8 @@ const ConditionalData = ({ text, showTable = false }) =>
   );
 
 ConditionalData.propTypes = {
+  showTable: PropTypes.bool,
   text: PropTypes.string.isRequired,
-  showTable: PropTypes.bool
 };
 
 export default ConditionalData;

@@ -1,21 +1,22 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { groupBy, map, pipe, entries } from "lodash/fp";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHistory, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import Config from "../../../../../services/Config";
-import { getMonthName } from "../../../../../helpers/Date";
-import Subcategory from "../../SharedComponents/Subcategory";
-import AllEffectifsEtp from "../../../../../containers/AllEffectifsEtpButton";
-import AllEffectifsDsn from "../../../../../containers/AllEffectifsDsnButton";
-import Table from "../../SharedComponents/Table";
-import Value from "../../../../shared/Value";
-import Data from "../../SharedComponents/Data";
-import SuccessionData from "./SuccessionData";
-
 import "./establishmentActivity.scss";
 
-const isSuccesseur = siret => succession =>
+import { faHistory, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { entries, groupBy, map, pipe } from "lodash/fp";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+
+import AllEffectifsDsn from "../../../../../containers/AllEffectifsDsnButton";
+import AllEffectifsEtp from "../../../../../containers/AllEffectifsEtpButton";
+import { getMonthName } from "../../../../../helpers/Date";
+import Config from "../../../../../services/Config";
+import Value from "../../../../shared/Value";
+import Data from "../../SharedComponents/Data";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Table from "../../SharedComponents/Table";
+import SuccessionData from "./SuccessionData";
+
+const isSuccesseur = (siret) => (succession) =>
   siret === succession.siretetablissementsuccesseur;
 
 const getSuccessionsValue = (successions, isSuccesseur) =>
@@ -23,16 +24,16 @@ const getSuccessionsValue = (successions, isSuccesseur) =>
     ({
       dateliensuccession,
       siretetablissementpredecesseur,
-      siretetablissementsuccesseur
+      siretetablissementsuccesseur,
     }) => {
       const otherEstablishementSiret = isSuccesseur
         ? siretetablissementpredecesseur
         : siretetablissementsuccesseur;
 
       return {
-        siret: otherEstablishementSiret,
         date: dateliensuccession,
-        link: `/establishment/${otherEstablishementSiret}`
+        link: `/establishment/${otherEstablishementSiret}`,
+        siret: otherEstablishementSiret,
       };
     }
   );
@@ -44,10 +45,10 @@ const getSuccessionsData = (successions, siret) =>
           name: "SIRET prédecesseur ou successeur",
           values: [
             {
-              siret: "pas de prédecesseur ou de successeur"
-            }
-          ]
-        }
+              siret: "pas de prédecesseur ou de successeur",
+            },
+          ],
+        },
       ]
     : pipe(
         groupBy(isSuccesseur(siret)),
@@ -56,7 +57,7 @@ const getSuccessionsData = (successions, siret) =>
           name: `${
             isSuccesseur === "true" ? "SIRET prédecesseur" : "SIRET successeur"
           }${successions.length > 1 ? "s" : ""}`,
-          values: getSuccessionsValue(successions, isSuccesseur === "true")
+          values: getSuccessionsValue(successions, isSuccesseur === "true"),
         }))
       )(successions.successions);
 
@@ -73,18 +74,18 @@ const EstablishmentActivity = ({ establishment, successions }) => {
     establishment.effectifMensuelEtp.length > 0 &&
     !allEffectifsEtp;
 
-  const EffectifEtpDataComponents = !!effectifEtpData?.length
+  const EffectifEtpDataComponents = effectifEtpData?.length
     ? effectifEtpData.map(({ annee, mois, effectifs_mensuels }) => ({
+        hasNumberFormat: true,
         name: `Effectif ETP ${getMonthName(mois)}`,
-        value: effectifs_mensuels,
         nonEmptyValue: "",
         sourceCustom: `Acoss / DSN ${getMonthName(mois)} ${annee}`,
-        hasNumberFormat: true
+        value: effectifs_mensuels,
       }))
     : [
         {
-          name: `Effectif ETP`
-        }
+          name: `Effectif ETP`,
+        },
       ];
   return (
     <section id="activity" className="data-sheet__section">
@@ -114,10 +115,10 @@ const EstablishmentActivity = ({ establishment, successions }) => {
                         <span>Chargement en cours </span>
                         <FontAwesomeIcon icon={faSpinner} spin />
                       </div>
-                    )
-                  }
+                    ),
+                  },
                 ]
-              : EffectifEtpDataComponents)
+              : EffectifEtpDataComponents),
           ]}
         >
           <Data
@@ -161,7 +162,7 @@ const EstablishmentActivity = ({ establishment, successions }) => {
                 </tr>
               </thead>
               <tbody>
-                {allEffectifDsn.map(effectif => (
+                {allEffectifDsn.map((effectif) => (
                   <tr key={`effectif-${effectif?.id}`}>
                     <td>{effectif?.mois}</td>
                     <td>
@@ -206,34 +207,34 @@ const EstablishmentActivity = ({ establishment, successions }) => {
           datas={[
             {
               name: "Filière stratégique",
+              nonEmptyValue: "",
               value:
                 Array.isArray(establishment.interactions_3E) &&
                 establishment.interactions_3E.length &&
                 establishment.interactions_3E[0].filiere,
-              nonEmptyValue: ""
             },
             {
               name: "ETI / PEPITE",
+              nonEmptyValue: "",
               value:
                 Array.isArray(establishment.interactions_3E) &&
                 establishment.interactions_3E.length &&
                 establishment.interactions_3E[0].eti_pepite,
-              nonEmptyValue: ""
             },
             {
               name: "Adhérent à un pole de compétitivité",
+              nonEmptyValue: "",
               value:
                 Array.isArray(establishment.pole_competitivite) &&
                 !!establishment.pole_competitivite.length,
-              nonEmptyValue: ""
-            }
+            },
           ]}
           sourceSi="EOS-monthYear"
         />
         {Array.isArray(establishment.pole_competitivite) &&
           !!establishment.pole_competitivite.length && (
             <ul>
-              {establishment.pole_competitivite.map(pole => (
+              {establishment.pole_competitivite.map((pole) => (
                 <li key={pole}>- {pole}</li>
               ))}
             </ul>
@@ -245,7 +246,7 @@ const EstablishmentActivity = ({ establishment, successions }) => {
 
 EstablishmentActivity.propTypes = {
   establishment: PropTypes.object.isRequired,
-  successions: PropTypes.array.isRequired
+  successions: PropTypes.array.isRequired,
 };
 
 export default EstablishmentActivity;

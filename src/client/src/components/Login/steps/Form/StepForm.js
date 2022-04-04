@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
 
-export const StepForm = ({ errorMessage, onSubmit, children }) => {
+const StepForm = ({ errorMessage, onSubmit, children }) => {
   return (
     <form onSubmit={onSubmit}>
       {errorMessage && (
@@ -20,7 +20,7 @@ export const StepForm = ({ errorMessage, onSubmit, children }) => {
 StepForm.propTypes = {
   children: PropTypes.node,
   errorMessage: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default StepForm;

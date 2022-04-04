@@ -1,14 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
 import _get from "lodash.get";
-import Data from "../../../SharedComponents/Data";
-import Subcategory from "../../../SharedComponents/Subcategory";
-import State from "../../../SharedComponents/State";
-import SeeDetailsLink from "../../../SharedComponents/SeeDetailsLink";
-import Table from "../../../SharedComponents/Table";
+import PropTypes from "prop-types";
+import React from "react";
+
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
 import { getEstablishment } from "../../../../../../helpers/Enterprise";
 import { arraySum, formatSiret } from "../../../../../../helpers/utils";
+import Data from "../../../SharedComponents/Data";
+import SeeDetailsLink from "../../../SharedComponents/SeeDetailsLink";
+import State from "../../../SharedComponents/State";
+import Subcategory from "../../../SharedComponents/Subcategory";
+import Table from "../../../SharedComponents/Table";
 
 const Apprentissage = ({ apprentissage, etablissements }) => {
   const total = apprentissage
@@ -41,7 +42,7 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
                 <th className="th table-cell--center-cell">État</th>
                 <th className="th">Commune</th>
                 <th className="th has-text-right">Nombre de contrats</th>
-                <th className="th see-details"></th>
+                <th className="th see-details" />
               </tr>
             </thead>
             <tbody>
@@ -84,8 +85,8 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
 };
 
 Apprentissage.propTypes = {
+  apprentissage: PropTypes.arrayOf(PropTypes.object),
   etablissements: PropTypes.arrayOf(PropTypes.object).isRequired,
-  apprentissage: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default Apprentissage;

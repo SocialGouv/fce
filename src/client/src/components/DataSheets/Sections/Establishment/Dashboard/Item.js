@@ -1,9 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
+import "./dashboard.scss";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
+
 import Value from "../../../../shared/Value";
-import "./dashboard.scss";
 
 const Item = ({ icon, name, value = "", smallText = false }) => {
   return (
@@ -16,7 +18,7 @@ const Item = ({ icon, name, value = "", smallText = false }) => {
       </div>
       <div
         className={classNames("dashboard-item__data", {
-          "dashboard-item__data--small-text": smallText
+          "dashboard-item__data--small-text": smallText,
         })}
       >
         <Value value={value} empty="-" />
@@ -28,13 +30,13 @@ const Item = ({ icon, name, value = "", smallText = false }) => {
 Item.propTypes = {
   icon: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
+  smallText: PropTypes.bool,
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.array,
     PropTypes.number,
-    PropTypes.element
+    PropTypes.element,
   ]),
-  smallText: PropTypes.bool
 };
 
 export default Item;

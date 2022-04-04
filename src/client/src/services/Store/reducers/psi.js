@@ -1,17 +1,17 @@
 import {
+  FETCH_PSI_ERROR,
   FETCH_PSI_START,
   FETCH_PSI_SUCCESS,
-  FETCH_PSI_ERROR
 } from "../constants/ActionTypes";
 
 const initialState = {
   enterprise: {
     current_year: 0,
-    last_year: 0
+    last_year: 0,
   },
+  error: null,
   establishments: [],
   isLoading: false,
-  error: null
 };
 
 const psi = (state = initialState, action) => {
@@ -21,15 +21,15 @@ const psi = (state = initialState, action) => {
 
     case FETCH_PSI_SUCCESS:
       return {
-        isLoading: false,
         error: null,
-        ...action.payload
+        isLoading: false,
+        ...action.payload,
       };
 
     case FETCH_PSI_ERROR:
       return {
         ...initialState,
-        error: action.payload
+        error: action.payload,
       };
 
     default:

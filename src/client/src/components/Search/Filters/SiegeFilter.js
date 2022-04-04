@@ -1,5 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 
 const SiegeFilter = ({ filters, addFilter, removeFilter }) => {
   return (
@@ -22,9 +22,9 @@ const SiegeFilter = ({ filters, addFilter, removeFilter }) => {
 };
 
 SiegeFilter.propTypes = {
-  filters: PropTypes.object.isRequired,
   addFilter: PropTypes.func.isRequired,
-  removeFilter: PropTypes.func.isRequired
+  filters: PropTypes.object.isRequired,
+  removeFilter: PropTypes.func.isRequired,
 };
 
 export default SiegeFilter;

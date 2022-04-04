@@ -1,21 +1,21 @@
-import { useState } from "react";
 import { omit } from "lodash";
+import { useState } from "react";
 
-export const useFilters = defaultValue => {
+export const useFilters = (defaultValue) => {
   const [filters, setFilters] = useState(defaultValue);
 
   const addFilter = (key, value) => {
     setFilters({ ...filters, [key]: value });
   };
 
-  const removeFilter = key => {
+  const removeFilter = (key) => {
     setFilters(omit(filters, key));
   };
 
   return {
-    filters,
     addFilter,
-    removeFilter
+    filters,
+    removeFilter,
   };
 };
 
@@ -23,7 +23,7 @@ export const useSort = () => {
   const [sortDirection, setSortDirection] = useState("desc");
   const [sortField, setSortField] = useState(null);
 
-  const toggleSortField = field => {
+  const toggleSortField = (field) => {
     if (field !== sortField) {
       setSortDirection("desc");
       setSortField(field);
@@ -41,6 +41,6 @@ export const useSort = () => {
   return {
     sortDirection,
     sortField,
-    toggleSortField
+    toggleSortField,
   };
 };

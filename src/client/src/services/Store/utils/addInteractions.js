@@ -1,12 +1,12 @@
 import Config from "../../Config";
 
-export default entity => {
+export default (entity) => {
   let interactions = [];
-  let totalInteractions = {
-    total: 0
+  const totalInteractions = {
+    total: 0,
   };
 
-  Config.get("interactions.poles").forEach(pole => {
+  Config.get("interactions.poles").forEach((pole) => {
     try {
       const interactionsPole = entity[`interactions_${pole}`] || [];
       interactions = [...interactions, ...interactionsPole];

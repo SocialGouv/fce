@@ -1,5 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 
 const HeadForm = ({ step }) => {
   return (
@@ -37,7 +37,7 @@ const HeadForm = ({ step }) => {
 };
 
 HeadForm.propTypes = {
-  step: PropTypes.string.isRequired
+  step: PropTypes.string.isRequired,
 };
 
 export default HeadForm;

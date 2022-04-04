@@ -1,19 +1,20 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
+
 import Http from "../Http";
 
 const defaultData = {
   results: null,
-  total: 0
+  total: 0,
 };
 
 export const queryElastic = (query, { page: { size, current }, params }) =>
   Http.get("/elastic", {
     params: {
-      q: query,
       from: current * size,
+      q: query,
       size,
-      ...params
-    }
+      ...params,
+    },
   });
 
 export const useElasticQuery = () => {
@@ -27,14 +28,14 @@ export const useElasticQuery = () => {
       setIsLoading(true);
       setError(null);
 
-      queryElastic(sentQuery, { page: { size, current }, params })
-        .then(response => {
+      queryElastic(sentQuery, { page: { current, size }, params })
+        .then((response) => {
           setData({
             results: response.data.results,
-            total: response.data.total.value
+            total: response.data.total.value,
           });
         })
-        .catch(err => {
+        .catch((err) => {
           setData(defaultData);
           setError(err);
         })
@@ -46,9 +47,9 @@ export const useElasticQuery = () => {
   );
 
   return {
-    loading,
     data,
     error,
-    makeQuery
+    loading,
+    makeQuery,
   };
 };

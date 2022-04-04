@@ -1,9 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import AccordionTable from "./AccordionTable";
-import Table from "../../SharedComponents/Table";
-
 import "./RupcoTable.scss";
+
+import PropTypes from "prop-types";
+import React from "react";
+
+import Table from "../../SharedComponents/Table";
+import AccordionTable from "./AccordionTable";
 
 const RupcoTable = ({ list, hasTypeColumn = false }) => (
   <Table className="rupco-table-enterprise">
@@ -33,7 +34,7 @@ const RupcoTable = ({ list, hasTypeColumn = false }) => (
         </th>
       </tr>
     </thead>
-    {list.map(procedure => (
+    {list.map((procedure) => (
       <AccordionTable
         procedure={procedure}
         key={`${procedure.numero}`}
@@ -44,8 +45,8 @@ const RupcoTable = ({ list, hasTypeColumn = false }) => (
 );
 
 RupcoTable.propTypes = {
+  hasTypeColumn: PropTypes.bool,
   list: PropTypes.array.isRequired,
-  hasTypeColumn: PropTypes.bool
 };
 
 export default RupcoTable;

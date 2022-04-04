@@ -1,14 +1,15 @@
-import React, { useEffect, useReducer } from "react";
+import React from "react";
+import { useLocation } from "react-router-dom";
+
 import PublicPageDefault from "../../components/PublicPage";
 import Faq from "../../components/PublicPage/Faq";
 import Help from "../../components/PublicPage/Help";
-import Config from "../../services/Config";
-import { useLocation } from "react-router-dom";
 import { useStrapiData } from "../../helpers/hooks/useStrapiData";
+import Config from "../../services/Config";
 
 const components = new Map([
   ["/faq", Faq],
-  ["/aide", Help]
+  ["/aide", Help],
 ]);
 
 const PublicPage = () => {

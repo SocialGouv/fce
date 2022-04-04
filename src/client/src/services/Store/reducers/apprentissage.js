@@ -1,14 +1,14 @@
 import {
   FETCH_APPRENTISSAGE_ERROR,
   FETCH_APPRENTISSAGE_START,
-  FETCH_APPRENTISSAGE_SUCCESS
+  FETCH_APPRENTISSAGE_SUCCESS,
 } from "../constants/ActionTypes";
 
 const initialState = {
   apprentissage: null,
-  isLoading: false,
   error: null,
-  identifier: null
+  identifier: null,
+  isLoading: false,
 };
 
 const agreements = (state = initialState, action) => {
@@ -18,17 +18,17 @@ const agreements = (state = initialState, action) => {
 
     case FETCH_APPRENTISSAGE_SUCCESS:
       return {
-        isLoading: false,
-        error: null,
         apprentissage: action.apprentissage,
-        identifier: action.identifier
+        error: null,
+        identifier: action.identifier,
+        isLoading: false,
       };
 
     case FETCH_APPRENTISSAGE_ERROR:
       return {
         ...initialState,
+        error: action.payload,
         isLoading: false,
-        error: action.payload
       };
 
     default:

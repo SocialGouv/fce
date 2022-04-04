@@ -1,12 +1,13 @@
-import React from "react";
+import "./psi.scss";
+
 import PropTypes from "prop-types";
+import React from "react";
 import { connect } from "react-redux";
-import Subcategory from "../../SharedComponents/Subcategory";
+
 import Data from "../../SharedComponents/Data";
 import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
+import Subcategory from "../../SharedComponents/Subcategory";
 import { PsiSiret } from "./PsiSiret";
-
-import "./psi.scss";
 
 const Psi = ({ psi, establishments, sources }) => {
   if (!sources.SIPSI) return "";
@@ -30,12 +31,12 @@ const Psi = ({ psi, establishments, sources }) => {
             ...psiEstablishment,
             ...(establishmentInfos
               ? {
-                  etat: establishmentInfos.etat_etablissement,
                   commune: `${establishmentInfos.adresse_composant.code_postal} ${establishmentInfos.adresse_composant.localite}`,
+                  etat: establishmentInfos.etat_etablissement,
                 }
               : {
-                  etat: "-",
                   commune: "-",
+                  etat: "-",
                 }),
           };
         })
@@ -141,8 +142,8 @@ Psi.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    psi: state.psi,
     establishments: state.enterprise.current.etablissements,
+    psi: state.psi,
     sources: state.sources,
   };
 };

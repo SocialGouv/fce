@@ -1,13 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Value from "../Value";
-
 import "./infoBox.scss";
 
-const formatPrefix = value =>
+import PropTypes from "prop-types";
+import React from "react";
+
+import Value from "../Value";
+
+const formatPrefix = (value) =>
   `Données ${(value || "").toLowerCase() === "siège social" ? "du " : "de l'"}`;
 
-const formatPostfix = value =>
+const formatPostfix = (value) =>
   (value || "").toLowerCase() === "établissement" ? " secondaire" : "";
 
 const InfoBox = ({ value }) => {
@@ -23,7 +24,7 @@ const InfoBox = ({ value }) => {
 };
 
 InfoBox.propTypes = {
-  value: PropTypes.string.isRequired
+  value: PropTypes.string.isRequired,
 };
 
 export default InfoBox;

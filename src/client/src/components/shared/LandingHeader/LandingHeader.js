@@ -1,8 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-
 import "./landingHeader.scss";
+
+import PropTypes from "prop-types";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const LandingHeader = ({ hasSharedButton = false }) => {
   const marianneLogo = "img/mariane.svg";
@@ -62,7 +62,7 @@ const LandingHeader = ({ hasSharedButton = false }) => {
 };
 
 LandingHeader.propTypes = {
-  hasSharedButton: PropTypes.bool
+  hasSharedButton: PropTypes.bool,
 };
 
 export default LandingHeader;

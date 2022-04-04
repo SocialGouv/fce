@@ -1,5 +1,6 @@
-import moment from "moment";
 import "moment/locale/fr";
+
+import moment from "moment";
 
 moment.locale("fr");
 

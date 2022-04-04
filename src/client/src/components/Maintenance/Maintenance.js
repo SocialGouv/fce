@@ -1,5 +1,6 @@
-import React from "react";
 import "./maintenance.scss";
+
+import React from "react";
 
 const Maintenance = () => {
   return (

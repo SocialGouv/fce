@@ -1,35 +1,36 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import "./search.scss";
+
 import classNames from "classnames";
-import SearchResults from "../SearchResults";
-import CheckboxFilter from "./Filters/CheckboxFilter";
-import StateFilter from "./Filters/StateFilter";
-import AutoCompleteFilter from "./Filters/AutoCompleteFilter";
-import LocationFilter from "./Filters/LocationFilter";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
 import {
   Accordion,
   AccordionItem,
-  AccordionItemHeading,
   AccordionItemButton,
-  AccordionItemPanel
+  AccordionItemHeading,
+  AccordionItemPanel,
 } from "react-accessible-accordion";
-import SearchBar from "./SearchBar";
-import UsersFeedback from "../../containers/UsersFeedback";
-import Unsubscribe from "../../containers/Unsubscribe/Unsubscribe";
+
 import trancheEffectif from "../../containers/Search/tranche-effectif.json";
+import Unsubscribe from "../../containers/Unsubscribe/Unsubscribe";
+import UsersFeedback from "../../containers/UsersFeedback";
+import SearchResults from "../SearchResults";
+import AutoCompleteFilter from "./Filters/AutoCompleteFilter";
+import CheckboxFilter from "./Filters/CheckboxFilter";
+import LocationFilter from "./Filters/LocationFilter";
+import StateFilter from "./Filters/StateFilter";
+import SearchBar from "./SearchBar";
 
-import "./search.scss";
-
-const formatDivisionsNaf = divisionsNaf =>
+const formatDivisionsNaf = (divisionsNaf) =>
   divisionsNaf.map(({ code, libelle }) => ({
+    label: `${code} - ${libelle}`,
     value: code,
-    label: `${code} - ${libelle}`
   }));
 
-const formatTrancheEffectifs = trancheEffectifs =>
+const formatTrancheEffectifs = (trancheEffectifs) =>
   trancheEffectifs.map(({ code, libelle }) => ({
+    label: libelle,
     value: code,
-    label: libelle
   }));
 
 const formattedTranchesEffectifs = formatTrancheEffectifs(trancheEffectif);
@@ -54,7 +55,7 @@ const Search = ({
   options,
   divisionsNaf,
   generateXlsx,
-  downloadLoading
+  downloadLoading,
 }) => {
   const [isOpenAdvancedSearch, setIsOpenAdvancedSearch] = useState(true);
 
@@ -65,7 +66,7 @@ const Search = ({
           {error && <div className="notification is-danger">{error}</div>}
           <form
             className="form search-form"
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault();
               sendRequest(searchTerm, options);
             }}
@@ -107,7 +108,7 @@ const Search = ({
                     <Accordion
                       allowZeroExpanded
                       preExpanded={["advancedSearch"]}
-                      onChange={e => {
+                      onChange={(e) => {
                         setIsOpenAdvancedSearch(!!e.length);
                       }}
                     >
@@ -158,7 +159,7 @@ const Search = ({
 
               <div
                 className={classNames("column is-2 search-form__buttons", {
-                  "search-form__buttons--align-top": !isOpenAdvancedSearch
+                  "search-form__buttons--align-top": !isOpenAdvancedSearch,
                 })}
               >
                 <div>
@@ -175,7 +176,7 @@ const Search = ({
                   </button>
                   <button
                     className="button is-text search-form__reset"
-                    onClick={e => {
+                    onClick={(e) => {
                       e.preventDefault();
                       resetSearch();
                     }}
@@ -194,11 +195,11 @@ const Search = ({
         pagination={{
           current: page,
           handlePageChange,
-          itemsPerPage: 10,
-          pages: Math.ceil(totalResults / 10),
           items: totalResults,
+          itemsPerPage: 10,
+          options,
+          pages: Math.ceil(totalResults / 10),
           searchTerm,
-          options
         }}
         isLoading={isLoading}
         sortField={sortField}
@@ -216,27 +217,27 @@ const Search = ({
 };
 
 Search.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
-  error: PropTypes.string,
-  results: PropTypes.array,
-  page: PropTypes.number,
-  sendRequest: PropTypes.func.isRequired,
-  searchTerm: PropTypes.string.isRequired,
-  setSearchTerm: PropTypes.func.isRequired,
-  resetSearch: PropTypes.func.isRequired,
-  handlePageChange: PropTypes.func.isRequired,
   addFilter: PropTypes.func.isRequired,
-  removeFilter: PropTypes.func.isRequired,
-  filters: PropTypes.object.isRequired,
-  sortField: PropTypes.string,
-  sortDirection: PropTypes.string,
-  sort: PropTypes.func.isRequired,
-  options: PropTypes.object.isRequired,
   divisionsNaf: PropTypes.array.isRequired,
-  trancheEffectif: PropTypes.array.isRequired,
-  totalResults: PropTypes.number.isRequired,
+  downloadLoading: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+  filters: PropTypes.object.isRequired,
   generateXlsx: PropTypes.func.isRequired,
-  downloadLoading: PropTypes.bool.isRequired
+  handlePageChange: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  options: PropTypes.object.isRequired,
+  page: PropTypes.number,
+  removeFilter: PropTypes.func.isRequired,
+  resetSearch: PropTypes.func.isRequired,
+  results: PropTypes.array,
+  searchTerm: PropTypes.string.isRequired,
+  sendRequest: PropTypes.func.isRequired,
+  setSearchTerm: PropTypes.func.isRequired,
+  sort: PropTypes.func.isRequired,
+  sortDirection: PropTypes.string,
+  sortField: PropTypes.string,
+  totalResults: PropTypes.number.isRequired,
+  trancheEffectif: PropTypes.array.isRequired,
 };
 
 export default Search;

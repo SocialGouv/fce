@@ -32,7 +32,7 @@ export const NounPeopleIcon = ({ height = 110 }) => (
 );
 
 NounPeopleIcon.propTypes = {
-  height: PropTypes.number
+  height: PropTypes.number,
 };
 
 export const NounPlatformIcon = ({ height = 110 }) => (
@@ -93,7 +93,7 @@ export const NounPlatformIcon = ({ height = 110 }) => (
 );
 
 NounPlatformIcon.propTypes = {
-  height: PropTypes.number
+  height: PropTypes.number,
 };
 
 export const NounExcelIcon = ({ height = 110 }) => (
@@ -138,5 +138,5 @@ export const NounExcelIcon = ({ height = 110 }) => (
 );
 
 NounExcelIcon.propTypes = {
-  height: PropTypes.number
+  height: PropTypes.number,
 };

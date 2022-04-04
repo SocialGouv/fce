@@ -1,6 +1,6 @@
 import Auth from "../../services/Auth";
 
-const SetMatomo = config => {
+const SetMatomo = (config) => {
   var _paq = window._paq || [];
 
   _paq.push(["setUserId", Auth.getUserId()]);

@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
-import StepForm from "./StepForm";
-import HeadForm from "./HeadForm";
-import Button from "../../../shared/Button";
-import Config from "../../../../services/Config";
-import SuccessMessage from "./SuccessMessage";
-import InfoMessage from "./InfoMessage";
-import ErrorMessage from "./ErrorMessage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+
 import { useStrapiData } from "../../../../helpers/hooks/useStrapiData";
+import Config from "../../../../services/Config";
+import Button from "../../../shared/Button";
+import ErrorMessage from "./ErrorMessage";
+import HeadForm from "./HeadForm";
+import InfoMessage from "./InfoMessage";
+import StepForm from "./StepForm";
+import SuccessMessage from "./SuccessMessage";
 
 const LoginForm = ({
   login,
@@ -22,7 +23,7 @@ const LoginForm = ({
   setStep,
   showSuccessNotif,
   setShowSuccessNotif,
-  showMailingListSignup
+  showMailingListSignup,
 }) => {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
@@ -31,7 +32,7 @@ const LoginForm = ({
   const isDisabledEmailSubmit = email === "";
   const isDisabledCodeSubmit = code.length < 5;
 
-  const handleCodeChange = value => {
+  const handleCodeChange = (value) => {
     const cleanedValue = value.replace(/[^\d]/g, "");
     setCode(cleanedValue.slice(0, Config.get("auth.codeLength")));
   };
@@ -44,7 +45,7 @@ const LoginForm = ({
         <HeadForm step={step} />
         {step === "login-form-email" && (
           <StepForm
-            onSubmit={evt => sendCode(evt, email)}
+            onSubmit={(evt) => sendCode(evt, email)}
             errorMessage={errorMessage}
             loading={loading}
           >
@@ -71,7 +72,7 @@ const LoginForm = ({
                     className="input"
                     required
                     value={email}
-                    onChange={e => setEmail(e.target.value.trim())}
+                    onChange={(e) => setEmail(e.target.value.trim())}
                   />
                 </div>
                 <div className="control">
@@ -80,7 +81,7 @@ const LoginForm = ({
                     value="Recevoir le code"
                     buttonClasses={classNames("login__button", {
                       "is-loading": loading,
-                      "is-tertiary": !isDisabledEmailSubmit
+                      "is-tertiary": !isDisabledEmailSubmit,
                     })}
                     isDisabled={isDisabledEmailSubmit}
                   />
@@ -98,7 +99,7 @@ const LoginForm = ({
             )}
             {infoMessage && <InfoMessage>{infoMessage}</InfoMessage>}
             <StepForm
-              onSubmit={e => login(e, email, code, isCheckedSubscription)}
+              onSubmit={(e) => login(e, email, code, isCheckedSubscription)}
               errorMessage={errorMessage}
             >
               <div>
@@ -139,7 +140,7 @@ const LoginForm = ({
                       className="input login__code-input"
                       required
                       value={code}
-                      onChange={e => handleCodeChange(e.target.value)}
+                      onChange={(e) => handleCodeChange(e.target.value)}
                     />
                   </div>
                   <div className="control">
@@ -151,7 +152,7 @@ const LoginForm = ({
 
                         {
                           "is-loading": loading,
-                          "is-secondary": !isDisabledCodeSubmit
+                          "is-secondary": !isDisabledCodeSubmit,
                         }
                       )}
                     />
@@ -166,9 +167,9 @@ const LoginForm = ({
                 buttonClasses={[
                   "login__button",
                   "login__button--as-link",
-                  "has-text-link"
+                  "has-text-link",
                 ]}
-                callback={evt => {
+                callback={(evt) => {
                   setShowSuccessNotif(false);
                   sendCode(evt, email);
                 }}
@@ -179,7 +180,7 @@ const LoginForm = ({
                 buttonClasses={[
                   "login__button",
                   "login__button--as-link",
-                  "has-text-link"
+                  "has-text-link",
                 ]}
                 callback={() => {
                   setStep("login-form-email");
@@ -203,16 +204,16 @@ const LoginForm = ({
 };
 
 LoginForm.propTypes = {
-  sendCode: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
   infoMessage: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  step: PropTypes.string.isRequired,
-  setStep: PropTypes.func.isRequired,
-  showSuccessNotif: PropTypes.bool.isRequired,
+  login: PropTypes.func.isRequired,
+  sendCode: PropTypes.func.isRequired,
   setShowSuccessNotif: PropTypes.func.isRequired,
-  showMailingListSignup: PropTypes.bool.isRequired
+  setStep: PropTypes.func.isRequired,
+  showMailingListSignup: PropTypes.bool.isRequired,
+  showSuccessNotif: PropTypes.bool.isRequired,
+  step: PropTypes.string.isRequired,
 };
 
 export default LoginForm;

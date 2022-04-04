@@ -1,6 +1,6 @@
 export const selectCustomStyles = {
-  option: provided => ({
+  option: (provided) => ({
     ...provided,
-    color: "#353535"
-  })
+    color: "#353535",
+  }),
 };

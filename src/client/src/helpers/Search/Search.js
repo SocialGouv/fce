@@ -1,9 +1,9 @@
 import Config from "../../services/Config";
 
-export const isActiveEstablishment = etat =>
+export const isActiveEstablishment = (etat) =>
   etat === Config.get("establishmentState").actif;
 
-export const formatSearchInput = query => {
+export const formatSearchInput = (query) => {
   if (query === "") {
     return query;
   }

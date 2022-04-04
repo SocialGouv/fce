@@ -1,8 +1,9 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import { persistStore, persistReducer } from "redux-persist";
-import storageSession from "redux-persist/lib/storage/session";
+import { applyMiddleware, compose, createStore } from "redux";
 import { createLogger } from "redux-logger";
+import { persistReducer, persistStore } from "redux-persist";
+import storageSession from "redux-persist/lib/storage/session";
 import thunk from "redux-thunk";
+
 import reducer from "./reducers";
 
 const middleware = [thunk];
@@ -12,7 +13,7 @@ if (process.env.NODE_ENV !== "production") {
 
 const persistConfig = {
   key: "direccte",
-  storage: storageSession
+  storage: storageSession,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -24,6 +25,6 @@ export default () => {
     persistedReducer,
     composeEnhancers(applyMiddleware(...middleware))
   );
-  let persistor = persistStore(store);
-  return { store, persistor };
+  const persistor = persistStore(store);
+  return { persistor, store };
 };

@@ -1,12 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
-import InteractionType from "./InteractionType";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
+
 import {
   getEnterpriseControls,
-  getEnterpriseVisits
+  getEnterpriseVisits,
 } from "../../../../../helpers/Interactions";
+import InteractionType from "./InteractionType";
 
 const Direccte = ({ enterprise }) => {
   const controlInteractions = getEnterpriseControls(enterprise);
@@ -32,7 +33,7 @@ const Direccte = ({ enterprise }) => {
 };
 
 Direccte.propTypes = {
-  enterprise: PropTypes.object.isRequired
+  enterprise: PropTypes.object.isRequired,
 };
 
 export default Direccte;

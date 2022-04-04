@@ -1,12 +1,13 @@
-import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
-import Data from "../../SharedComponents/Data";
-import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
-import Subcategory from "../../SharedComponents/Subcategory";
-import React from "react";
 import * as PropTypes from "prop-types";
+import React from "react";
+
 import { useOrganismeFormationBySiren } from "../../../../../services/OrganismeFormation/hooks";
-import Table from "../../SharedComponents/Table";
+import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
+import Data from "../../SharedComponents/Data";
+import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Table from "../../SharedComponents/Table";
 
 const OrganismeFormation = ({ siren }) => {
   const { data, loading, error } = useOrganismeFormationBySiren(siren);
@@ -51,7 +52,7 @@ const OrganismeFormation = ({ siren }) => {
 };
 
 OrganismeFormation.propTypes = {
-  siren: PropTypes.string
+  siren: PropTypes.string,
 };
 
 export default OrganismeFormation;

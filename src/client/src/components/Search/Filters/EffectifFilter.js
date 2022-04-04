@@ -1,6 +1,7 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 import Select from "react-select";
+
 import { selectCustomStyles } from "./customStyles";
 
 const EffectifFilter = ({
@@ -8,11 +9,11 @@ const EffectifFilter = ({
   addFilter,
   removeFilter,
   trancheEffectif,
-  id
+  id,
 }) => {
   const options = trancheEffectif.map(({ code, libelle }) => ({
+    label: `${libelle}`,
     value: code,
-    label: `${libelle}`
   }));
 
   return (
@@ -26,7 +27,7 @@ const EffectifFilter = ({
         isMulti
         options={options}
         value={filters.effectif}
-        onChange={effectif => {
+        onChange={(effectif) => {
           effectif ? addFilter(id, effectif) : removeFilter(id);
         }}
         isClearable
@@ -38,10 +39,11 @@ const EffectifFilter = ({
 };
 
 EffectifFilter.propTypes = {
-  filters: PropTypes.object,
   addFilter: PropTypes.func.isRequired,
+  filters: PropTypes.object,
+  id: PropTypes.string.isRequired,
   removeFilter: PropTypes.func.isRequired,
-  trancheEffectif: PropTypes.array.isRequired
+  trancheEffectif: PropTypes.array.isRequired,
 };
 
 export default EffectifFilter;

@@ -1,10 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import Data from "../Data";
-import Source from "../../../../../containers/Source";
-
 import "./subcategory.scss";
+
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
+
+import Source from "../../../../../containers/Source";
+import Data from "../Data";
 
 const Subcategory = ({
   subtitle = null,
@@ -13,7 +14,7 @@ const Subcategory = ({
   sourceSi = null,
   sourceCustom = null,
   sourceDate = null,
-  className = ""
+  className = "",
 }) => {
   return (
     <div className={classNames("subcategory", className)}>
@@ -31,7 +32,7 @@ const Subcategory = ({
       )}
       {children}
       {datas &&
-        datas.map(data => {
+        datas.map((data) => {
           return (
             <Data
               key={data.name}
@@ -54,13 +55,13 @@ const Subcategory = ({
 };
 
 Subcategory.propTypes = {
-  subtitle: PropTypes.string,
-  sourceSi: PropTypes.string,
+  children: PropTypes.node,
+  className: PropTypes.string,
+  datas: PropTypes.arrayOf(PropTypes.object),
   sourceCustom: PropTypes.string,
   sourceDate: PropTypes.string,
-  datas: PropTypes.arrayOf(PropTypes.object),
-  children: PropTypes.node,
-  className: PropTypes.string
+  sourceSi: PropTypes.string,
+  subtitle: PropTypes.string,
 };
 
 export default Subcategory;

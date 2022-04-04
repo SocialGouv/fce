@@ -1,11 +1,12 @@
-import React, { useReducer } from "react";
 import PropTypes from "prop-types";
-import Http from "../../services/Http";
-import UsersFeedbackView from "../../components/UsersFeedback";
-import { SET_USEFUL, SET_COMMENT, SET_RATE, RESET } from "./actionTypes";
-import { handleError } from "../../helpers/utils";
+import React, { useReducer } from "react";
 
-const initialState = { useful: "", comment: "", rate: null };
+import UsersFeedbackView from "../../components/UsersFeedback";
+import { handleError } from "../../helpers/utils";
+import Http from "../../services/Http";
+import { RESET, SET_COMMENT, SET_RATE, SET_USEFUL } from "./actionTypes";
+
+const initialState = { comment: "", rate: null, useful: "" };
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -25,17 +26,17 @@ const reducer = (state, action) => {
 const UsersFeedback = ({ fullWidth }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const sendFeedback = e => {
+  const sendFeedback = (e) => {
     e.preventDefault();
 
     Http.post("/feedback", {
       params: {
-        useful: state.useful === "thumbup",
         comment: state.comment,
-        rate: state.rate
-      }
+        rate: state.rate,
+        useful: state.useful === "thumbup",
+      },
     })
-      .catch(e => {
+      .catch((e) => {
         handleError(e);
       })
       .finally(() => {
@@ -54,7 +55,7 @@ const UsersFeedback = ({ fullWidth }) => {
 };
 
 UsersFeedback.propTypes = {
-  fullWidth: PropTypes.bool
+  fullWidth: PropTypes.bool,
 };
 
 export default UsersFeedback;

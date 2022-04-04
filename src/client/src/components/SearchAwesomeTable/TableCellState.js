@@ -1,7 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { faCircle, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquare, faCircle } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
+import React from "react";
+
 import { isActiveEstablishment } from "../../helpers/Search";
 
 const TableCellState = ({ siret, etat }) => (
@@ -17,8 +18,8 @@ const TableCellState = ({ siret, etat }) => (
 );
 
 TableCellState.propTypes = {
+  etat: PropTypes.string.isRequired,
   siret: PropTypes.string.isRequired,
-  etat: PropTypes.string.isRequired
 };
 
 export default TableCellState;

@@ -1,5 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 
 const FormInput = ({ name, label, type, input, required }) => (
   <div>
@@ -8,7 +8,7 @@ const FormInput = ({ name, label, type, input, required }) => (
     </label>
     <div className="field has-addons">
       {input ? (
-        input({ name, label })
+        input({ label, name })
       ) : (
         <input
           id={name}
@@ -23,11 +23,11 @@ const FormInput = ({ name, label, type, input, required }) => (
 );
 
 FormInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  type: PropTypes.string,
   input: PropTypes.func,
-  required: PropTypes.bool
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  required: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 export default FormInput;

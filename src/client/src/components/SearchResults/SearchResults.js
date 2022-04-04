@@ -1,23 +1,24 @@
-import React from "react";
+import "./searchResults.scss";
+
+import { faFileExcel, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
+import React from "react";
 import { withRouter } from "react-router-dom";
-import Config from "../../services/Config";
+
 import { isActiveEstablishment } from "../../helpers/Search";
 import { formatSiret, joinNoFalsy } from "../../helpers/utils";
-import Value from "../shared/Value";
+import Config from "../../services/Config";
 import SearchAwesomeTable from "../SearchAwesomeTable";
 import TableCellState from "../SearchAwesomeTable/TableCellState";
 import Button from "../shared/Button";
-import { faFileExcel, faSpinner } from "@fortawesome/free-solid-svg-icons";
-
-import "./searchResults.scss";
+import Value from "../shared/Value";
 
 const formatNameData = ({
   denominationUniteLegale,
   denominationUsuelleUniteLegale,
   enseigneEtablissement,
   prenomUniteLegale,
-  nomUniteLegale
+  nomUniteLegale,
 }) => {
   const personneUniteLegale = [prenomUniteLegale, nomUniteLegale]
     .join(" ")
@@ -26,8 +27,8 @@ const formatNameData = ({
     denominationUniteLegale,
     denominationUsuelleUniteLegale,
     enseigneEtablissement,
-    personneUniteLegale
-  ].filter(value => !!value);
+    personneUniteLegale,
+  ].filter((value) => !!value);
 
   const additionalNameData = data.slice(1);
 
@@ -45,11 +46,11 @@ const SearchResults = ({
   sortField,
   sortDirection,
   generateXlsx,
-  downloadLoading
+  downloadLoading,
 }) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
-    "0 salarié": "0 salarié"
+    "0 salarié": "0 salarié",
   };
 
   console.log(results);
@@ -81,7 +82,7 @@ const SearchResults = ({
         {results?.length === 0 && (
           <div className="notification is-primary is-light">Aucun résultat</div>
         )}
-        {!!results?.length ? (
+        {results?.length ? (
           <div>
             <SearchAwesomeTable
               showPagination={pagination && pagination.pages > 1}
@@ -96,70 +97,68 @@ const SearchResults = ({
               data={results}
               fields={[
                 {
-                  headName: "SIRET",
-                  sortKey: "siret",
-                  importantHead: true,
-                  accessor: fields => {
-                    let siret = fields.siret;
+                  accessor: (fields) => {
+                    const siret = fields.siret;
                     return Value({
+                      link: `/establishment/${siret}`,
                       value: formatSiret(siret),
-                      link: `/establishment/${siret}`
                     });
                   },
-                  link: ({ siret }) => `/establishment/${siret}`
+                  headName: "SIRET",
+                  importantHead: true,
+                  link: ({ siret }) => `/establishment/${siret}`,
+                  sortKey: "siret",
                 },
                 {
-                  headName: "État",
-                  sortKey: "etatadministratifetablissement",
                   accessor: ({ etatAdministratifEtablissement, siret }) => {
                     return TableCellState({
+                      etat: etatAdministratifEtablissement,
                       siret,
-                      etat: etatAdministratifEtablissement
                     });
-                  }
+                  },
+                  headName: "État",
+                  sortKey: "etatadministratifetablissement",
                 },
                 {
-                  headName: "Raison sociale / Nom",
-                  sortKey: "enterprise_name",
-                  html: true,
-                  accessor: etablissement => {
+                  accessor: (etablissement) => {
                     return Value({
-                      value: formatNameData(etablissement)
+                      value: formatNameData(etablissement),
                     });
-                  }
+                  },
+                  headName: "Raison sociale / Nom",
+                  html: true,
+                  sortKey: "enterprise_name",
                 },
                 {
-                  headName: "Catégorie établissement",
-                  sortKey: "etablissementsiege",
                   accessor: ({ etablissementSiege }) => {
                     return Value({
                       value: etablissementSiege
                         ? "Siège social"
-                        : "Étab. secondaire"
+                        : "Étab. secondaire",
                     });
-                  }
+                  },
+                  headName: "Catégorie établissement",
+                  sortKey: "etablissementsiege",
                 },
                 {
-                  headName: "Code postal",
-                  sortKey: "codepostaletablissement",
                   accessor: ({
                     codePostalEtablissement,
-                    libelleCommuneEtablissement
+                    libelleCommuneEtablissement,
                   }) => {
                     return Value({
                       value: joinNoFalsy(
                         [codePostalEtablissement, libelleCommuneEtablissement],
                         " - "
-                      )
+                      ),
                     });
-                  }
+                  },
+                  headName: "Code postal",
+                  sortKey: "codepostaletablissement",
                 },
                 {
-                  headName: "Effectif (DSN)",
-                  sortKey: "lastdsntrancheeffectifsetablissement",
                   accessor: ({
                     trancheEffectifsEtablissement,
-                    etatAdministratifEtablissement
+                    etatAdministratifEtablissement,
                   }) => {
                     return Value({
                       value:
@@ -171,26 +170,29 @@ const SearchResults = ({
                             )
                             ? staffSizeRanges[trancheEffectifsEtablissement]
                             : "0 salarié"
-                          : staffSizeRanges[trancheEffectifsEtablissement]
+                          : staffSizeRanges[trancheEffectifsEtablissement],
                     });
-                  }
+                  },
+                  headName: "Effectif (DSN)",
+                  sortKey: "lastdsntrancheeffectifsetablissement",
                 },
                 {
-                  headName: "Activité",
-                  sortKey: "activiteprincipaleetablissement",
                   accessor: ({
                     codeActivitePrincipale,
-                    libelleActivitePrincipale
+                    libelleActivitePrincipale,
                   }) => {
                     return (
                       codeActivitePrincipale &&
                       Value({
-                        value: `${codeActivitePrincipale ||
-                          ""} - ${libelleActivitePrincipale || ""}`
+                        value: `${codeActivitePrincipale || ""} - ${
+                          libelleActivitePrincipale || ""
+                        }`,
                       })
                     );
-                  }
-                }
+                  },
+                  headName: "Activité",
+                  sortKey: "activiteprincipaleetablissement",
+                },
               ]}
             />
           </div>
@@ -203,14 +205,14 @@ const SearchResults = ({
 };
 
 SearchResults.propTypes = {
-  results: PropTypes.array,
-  pagination: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  sort: PropTypes.func.isRequired,
-  sortField: PropTypes.string,
-  sortDirection: PropTypes.string,
+  downloadLoading: PropTypes.bool.isRequired,
   generateXlsx: PropTypes.func.isRequired,
-  downloadLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
+  pagination: PropTypes.object.isRequired,
+  results: PropTypes.array,
+  sort: PropTypes.func.isRequired,
+  sortDirection: PropTypes.string,
+  sortField: PropTypes.string,
 };
 
 export default withRouter(SearchResults);

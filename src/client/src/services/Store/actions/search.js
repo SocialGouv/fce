@@ -1,35 +1,35 @@
 import * as types from "../constants/ActionTypes";
 
-export const setSearchTerm = term => dispatch => {
+export const setSearchTerm = (term) => (dispatch) => {
   dispatch({
+    term,
     type: types.SET_SEARCH_TERM,
-    term
   });
 };
 
-export const setSearchPage = page => dispatch => {
+export const setSearchPage = (page) => (dispatch) => {
   dispatch({
+    page,
     type: types.SET_SEARCH_PAGE,
-    page
   });
 };
 
-export const setSearchFilters = filters => dispatch => {
+export const setSearchFilters = (filters) => (dispatch) => {
   dispatch({
+    filters,
     type: types.SET_SEARCH_FILTERS,
-    filters
   });
 };
 
-export const setSearchResults = results => dispatch => {
+export const setSearchResults = (results) => (dispatch) => {
   dispatch({
+    results,
     type: types.SET_SEARCH_RESULTS,
-    results
   });
 };
 
-export const resetSearch = () => dispatch => {
+export const resetSearch = () => (dispatch) => {
   dispatch({
-    type: types.RESET_SEARCH
+    type: types.RESET_SEARCH,
   });
 };

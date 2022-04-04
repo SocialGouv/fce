@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileSignature } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
 
-import OrganismeFormation from "./OrganismeFormation";
 import AgrementsIAE from "./AgrementsIAE";
+import OrganismeFormation from "./OrganismeFormation";
 
 const Agrements = ({ etablissement }) => {
   return (
@@ -24,7 +24,7 @@ const Agrements = ({ etablissement }) => {
 };
 
 Agrements.propTypes = {
-  etablissement: PropTypes.object.isRequired
+  etablissement: PropTypes.object.isRequired,
 };
 
 export default Agrements;

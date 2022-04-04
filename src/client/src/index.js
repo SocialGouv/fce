@@ -1,20 +1,22 @@
 import "./polyfills";
+import "./assets/stylesheets/styles.css";
+
+import * as Sentry from "@sentry/browser";
 import React from "react";
 import ReactDOM from "react-dom";
-import "./assets/stylesheets/styles.css";
-import App from "./components/App";
 import smoothscroll from "smoothscroll-polyfill";
-import * as Sentry from "@sentry/browser";
+
+import App from "./components/App";
 import Config from "./services/Config";
 
 smoothscroll.polyfill();
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.getRegistrations().then(workers => {
+  navigator.serviceWorker.getRegistrations().then((workers) => {
     Array.isArray(workers) &&
       (console.log(`Found ${workers.length} service workers...`) || true) &&
       workers.forEach(
-        worker =>
+        (worker) =>
           worker &&
           worker.unregister &&
           console.log(
@@ -35,7 +37,7 @@ const SENTRY_URL = Config.get("sentryUrl");
 
 if (SENTRY_URL) {
   Sentry.init({
-    dsn: SENTRY_URL
+    dsn: SENTRY_URL,
   });
 }
 

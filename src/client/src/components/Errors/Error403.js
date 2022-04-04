@@ -1,5 +1,6 @@
-import React from "react";
 import "./errors.scss";
+
+import React from "react";
 
 class Error403 extends React.Component {
   render() {

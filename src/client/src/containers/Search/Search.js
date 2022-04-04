@@ -1,35 +1,36 @@
-import React from "react";
-import moment from "moment";
-import Http from "../../services/Http";
-import SearchView from "../../components/Search";
-import divisionsNaf from "./divisions-naf.json";
-import trancheEffectif from "./tranche-effectif.json";
-import { useSort } from "../../utils/search-table/hooks";
 import { groupBy, omit } from "lodash";
 import { prop } from "lodash/fp";
-import { useFileDownload } from "../../utils/file-download/hooks";
+import moment from "moment";
+import React from "react";
+
+import SearchView from "../../components/Search";
+import Http from "../../services/Http";
 import {
   useResetSearch,
   useSearchFilters,
   useSearchPage,
   useSearchQuery,
-  useSearchTerms
+  useSearchTerms,
 } from "../../services/Store/hooks/search";
 import { normalizeCodeCommunes } from "../../utils/code-commune/code-commune";
+import { useFileDownload } from "../../utils/file-download/hooks";
+import { useSort } from "../../utils/search-table/hooks";
+import divisionsNaf from "./divisions-naf.json";
+import trancheEffectif from "./tranche-effectif.json";
 
 const PAGE_SIZE = 10;
 
 const XLSX_DOC_TYPE =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-const formatLocationFilter = filters => {
+const formatLocationFilter = (filters) => {
   const locationFilters = groupBy(filters.location, "type");
   return {
     ...omit(filters, "location"),
     codesCommunes: normalizeCodeCommunes(
       locationFilters?.commune?.map(prop("value")) || []
     ),
-    departements: locationFilters?.departement?.map(prop("value")) || []
+    departements: locationFilters?.departement?.map(prop("value")) || [],
   };
 };
 
@@ -51,14 +52,14 @@ const Search = () => {
     const response = await Http.get("/downloadXlsx", {
       params: {
         q: trimmedQuery,
-        ...formatLocationFilter(filters)
+        ...formatLocationFilter(filters),
       },
-      responseType: "blob"
+      responseType: "blob",
     });
 
     return {
       contentType: response.headers["content-type"],
-      data: response.data
+      data: response.data,
     };
   };
 
@@ -67,24 +68,24 @@ const Search = () => {
   const { download, loading: downloadLoading } = useFileDownload(
     downloadQuery,
     {
+      documentType: XLSX_DOC_TYPE,
       fileName: `FceExport-${exportDate}.xlsx`,
-      documentType: XLSX_DOC_TYPE
     }
   );
 
-  const handlePageChange = nextCurrentPage => {
+  const handlePageChange = (nextCurrentPage) => {
     setSearchPage(nextCurrentPage);
     makeQuery(searchQuery, {
-      page: { size: PAGE_SIZE, current: nextCurrentPage - 1 },
-      params: formatLocationFilter(filters)
+      page: { current: nextCurrentPage - 1, size: PAGE_SIZE },
+      params: formatLocationFilter(filters),
     });
   };
 
   const onSearch = () => {
     setSearchPage(1);
     makeQuery(searchQuery, {
-      page: { size: PAGE_SIZE, current: 0 },
-      params: formatLocationFilter(filters)
+      page: { current: 0, size: PAGE_SIZE },
+      params: formatLocationFilter(filters),
     });
   };
 

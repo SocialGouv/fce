@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import RequestAccessForm from "./RequestAccessForm";
 
 const formText =
@@ -14,7 +15,7 @@ const RequestAccess = () => {
     <section className="login">
       <div className="login__container login__container--form container">
         <section className="login__head-form">
-          <h1 className="login__title">Demande d'accès</h1>
+          <h1 className="login__title">Demande d&apos;accès</h1>
           <p>{isSuccess ? successText : formText}</p>
         </section>
         {!isSuccess && (

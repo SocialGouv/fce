@@ -1,24 +1,26 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { prop, sum } from "lodash/fp";
-import { keyBy } from "lodash";
-import Subcategory from "../../SharedComponents/Subcategory";
-import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import "./psi.scss";
-import Table from "../../SharedComponents/Table";
+
+import { keyBy } from "lodash";
+import { prop, sum } from "lodash/fp";
+import PropTypes from "prop-types";
+import React from "react";
+
 import { useAccidentTravailBySiren } from "../../../../../services/AccidentTravail/hooks";
 import Data from "../../SharedComponents/Data";
-import State from "../../SharedComponents/State";
+import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
+import State from "../../SharedComponents/State";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Table from "../../SharedComponents/Table";
 
-const getWorkAccidentsTotal = workAccidents =>
+const getWorkAccidentsTotal = (workAccidents) =>
   sum(workAccidents.map(prop("total")));
 
 const getEtablissementsData = (workAccidents, etablissements) => {
   const etablissementsMap = keyBy(etablissements, "siret");
-  return workAccidents.map(accident => ({
+  return workAccidents.map((accident) => ({
     ...accident,
-    ...etablissementsMap[accident.siret]
+    ...etablissementsMap[accident.siret],
   }));
 };
 
@@ -53,14 +55,14 @@ const WorkAccident = ({ siren, etablissements }) => {
                       <th>Etat</th>
                       <th>Commune</th>
                       <th>{"Nb d'accidents du travail"}</th>
-                      <th></th>
+                      <th />
                     </tr>
                   </thead>
                   <tbody>
                     {getEtablissementsData(
                       data.accidents_travail,
                       etablissements
-                    ).map(data => (
+                    ).map((data) => (
                       <tr key={data.siret}>
                         <td>{data.siret}</td>
                         <td className="table-cell--center-cell">
@@ -89,8 +91,8 @@ const WorkAccident = ({ siren, etablissements }) => {
 };
 
 WorkAccident.propTypes = {
+  etablissements: PropTypes.array.isRequired,
   siren: PropTypes.string.isRequired,
-  etablissements: PropTypes.array.isRequired
 };
 
 export default WorkAccident;

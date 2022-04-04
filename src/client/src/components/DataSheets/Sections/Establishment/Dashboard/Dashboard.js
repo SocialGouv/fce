@@ -1,28 +1,29 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import {
-  faChild,
-  faCalendarCheck,
-  faExclamationTriangle,
-  faMedkit,
-  faGlobeAmericas,
-  faUserInjured,
-  faGraduationCap
-} from "@fortawesome/free-solid-svg-icons";
-import Config from "../../../../../services/Config";
-import { getLastDateInteraction } from "../../../../../helpers/Date";
-import { formatNumber } from "../../../../../helpers/utils";
-import {
-  isActiveEstablishment,
-  hasApprentissage
-} from "../../../../../helpers/Establishment";
-import Item from "./Item";
-
 import "./dashboard.scss";
+
+import {
+  faCalendarCheck,
+  faChild,
+  faExclamationTriangle,
+  faGlobeAmericas,
+  faGraduationCap,
+  faMedkit,
+  faUserInjured,
+} from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
+import React from "react";
+import { connect } from "react-redux";
+
+import { getLastDateInteraction } from "../../../../../helpers/Date";
+import {
+  hasApprentissage,
+  isActiveEstablishment,
+} from "../../../../../helpers/Establishment";
+import { formatNumber } from "../../../../../helpers/utils";
 import { useAccidentTravailBySiret } from "../../../../../services/AccidentTravail/hooks";
+import Config from "../../../../../services/Config";
 import { useOrganismeFormationBySiret } from "../../../../../services/OrganismeFormation/hooks";
 import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
+import Item from "./Item";
 
 const Dashboard = ({
   establishment,
@@ -35,10 +36,10 @@ const Dashboard = ({
     tranche_effectif_insee,
     pse,
     rcc,
-    lice
+    lice,
   },
   apprentissage,
-  psi
+  psi,
 }) => {
   const hasInteractions = totalInteractions && totalInteractions.total > 0;
 
@@ -46,9 +47,9 @@ const Dashboard = ({
   const { data: organismeFormationData } = useOrganismeFormationBySiret(siret);
 
   const activity = {
+    hasLice: !!(lice && lice.length),
     hasPse: !!(pse && pse.length),
     hasRcc: !!(rcc && rcc.length),
-    hasLice: !!(lice && lice.length),
     liceTypes:
       lice &&
       lice.reduce(
@@ -58,7 +59,7 @@ const Dashboard = ({
             : [...liceTypes, currentProcedure.rawType],
         []
       ),
-    partialActivity: activite_partielle && activite_partielle.length > 0
+    partialActivity: activite_partielle && activite_partielle.length > 0,
   };
 
   const lastControl = hasInteractions
@@ -67,7 +68,7 @@ const Dashboard = ({
 
   const dashboardSizeRanges = {
     ...Config.get("inseeSizeRanges"),
-    "0 salarié": "0 salarié"
+    "0 salarié": "0 salarié",
   };
 
   const effectif = isActiveEstablishment(establishment)
@@ -77,7 +78,7 @@ const Dashboard = ({
     : "0 salarié";
 
   const establishmentPsiData = psi.establishments.find(
-    establishment => establishment.siret === siret
+    (establishment) => establishment.siret === siret
   );
 
   const isEnterprisePsiContractor = Boolean(
@@ -117,7 +118,7 @@ const Dashboard = ({
                   {activity.hasPse && <div>PSE</div>}
                   {activity.hasRcc && <div>RCC</div>}
                   {activity.hasLice &&
-                    activity.liceTypes.map(type => (
+                    activity.liceTypes.map((type) => (
                       <div key={type}>{type}</div>
                     ))}
                   {activity.partialActivity && <div>Activité partielle</div>}
@@ -172,14 +173,14 @@ const Dashboard = ({
 };
 
 Dashboard.propTypes = {
+  apprentissage: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
   psi: PropTypes.object.isRequired,
-  apprentissage: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    psi: state.psi
+    psi: state.psi,
   };
 };
 

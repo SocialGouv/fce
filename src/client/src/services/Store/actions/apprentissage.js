@@ -1,9 +1,9 @@
+import Http from "../../Http";
 import {
+  FETCH_APPRENTISSAGE_ERROR,
   FETCH_APPRENTISSAGE_START,
   FETCH_APPRENTISSAGE_SUCCESS,
-  FETCH_APPRENTISSAGE_ERROR,
 } from "../constants/ActionTypes";
-import Http from "../../Http";
 
 export const loadApprentissage = (identifier) => (dispatch, getState) => {
   const state = getState();
@@ -19,16 +19,16 @@ export const loadApprentissage = (identifier) => (dispatch, getState) => {
   return Http.get(`/apprentissage/${identifier}`)
     .then((res) => {
       dispatch({
-        type: FETCH_APPRENTISSAGE_SUCCESS,
         apprentissage: res.data,
         identifier: identifier,
+        type: FETCH_APPRENTISSAGE_SUCCESS,
       });
     })
     .catch((error) => {
       console.error(error);
       dispatch({
-        type: FETCH_APPRENTISSAGE_ERROR,
         payload: error,
+        type: FETCH_APPRENTISSAGE_ERROR,
       });
     });
 };

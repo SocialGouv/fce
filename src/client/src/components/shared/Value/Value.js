@@ -1,9 +1,11 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
+
 import { toI18nDate } from "../../../helpers/Date";
 import { formatNumber } from "../../../helpers/utils";
 
-export default ({
+const Value = ({
   value,
   empty = "-",
   no = "Non",
@@ -13,7 +15,7 @@ export default ({
   link = false,
   nonEmptyValues = [],
   hasNumberFormat = false,
-  numberFormatOptions = {}
+  numberFormatOptions = {},
 }) => {
   if (value && React.isValidElement(value)) {
     return value;
@@ -39,7 +41,8 @@ export default ({
     value = null;
   }
 
-  const iso_date = /^(\d{4})(?:-?W(\d+)(?:-?(\d+)D?)?|(?:-(\d+))?-(\d+))(?:[T ](\d+):(\d+)(?::(\d+)(?:\.(\d+))?)?)?(?:Z(-?\d*))?$/;
+  const iso_date =
+    /^(\d{4})(?:-?W(\d+)(?:-?(\d+)D?)?|(?:-(\d+))?-(\d+))(?:[T ](\d+):(\d+)(?::(\d+)(?:\.(\d+))?)?)?(?:Z(-?\d*))?$/;
 
   if (typeof value === "string" && iso_date.test(value)) {
     value = toI18nDate(value, dateFormat);
@@ -59,7 +62,7 @@ export default ({
 
   if (link) {
     return (
-      <Link to={link} onClick={e => e && e.stopPropagation()}>
+      <Link to={link} onClick={(e) => e && e.stopPropagation()}>
         {value}
       </Link>
     );
@@ -74,3 +77,18 @@ export default ({
 
   return value;
 };
+
+Value.propTypes = {
+  breakLines: PropTypes.bool,
+  dateFormat: PropTypes.string,
+  empty: PropTypes.string,
+  hasNumberFormat: PropTypes.bool,
+  link: PropTypes.string,
+  no: PropTypes.string,
+  nonEmptyValues: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+  numberFormatOptions: PropTypes.object,
+  value: PropTypes.any,
+  yes: PropTypes.string,
+};
+
+export default Value;

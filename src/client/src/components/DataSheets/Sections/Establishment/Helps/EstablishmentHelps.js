@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedkit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
 
-import ContratsAides from "./Subcategory/ContratsAides";
 import Apprentissage from "./Subcategory/Apprentissage";
+import ContratsAides from "./Subcategory/ContratsAides";
 
 const EstablishmentHelps = ({ establishment, apprentissage }) => {
   return (
@@ -24,8 +24,8 @@ const EstablishmentHelps = ({ establishment, apprentissage }) => {
 };
 
 EstablishmentHelps.propTypes = {
+  apprentissage: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
-  apprentissage: PropTypes.object.isRequired
 };
 
 export default EstablishmentHelps;

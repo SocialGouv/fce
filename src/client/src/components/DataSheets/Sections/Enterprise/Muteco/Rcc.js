@@ -1,7 +1,8 @@
-import React from "react";
 import PropTypes from "prop-types";
-import Subcategory from "../../SharedComponents/Subcategory";
+import React from "react";
+
 import ConditionalData from "../../SharedComponents/ConditionalData";
+import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
 
 const Rcc = ({ rccList }) => {
@@ -22,7 +23,7 @@ const Rcc = ({ rccList }) => {
 };
 
 Rcc.propTypes = {
-  rccList: PropTypes.arrayOf(PropTypes.object)
+  rccList: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Rcc;

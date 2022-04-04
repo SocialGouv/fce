@@ -1,6 +1,7 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 import { connect } from "react-redux";
+
 import SourceView from "../../components/Source";
 
 const Source = ({
@@ -8,7 +9,7 @@ const Source = ({
   si = null,
   isTableCell = false,
   sourceDate = null,
-  sourceCustom = null
+  sourceCustom = null,
 }) => {
   const name = sourceCustom ? sourceCustom : sources[si] && sources[si].name;
   const updated = sourceDate || (sources[si] && sources[si].date);
@@ -25,16 +26,16 @@ const Source = ({
 
 const mapStateToProps = ({ sources }) => {
   return {
-    sources
+    sources,
   };
 };
 
 Source.propTypes = {
-  sources: PropTypes.object.isRequired,
+  isTableCell: PropTypes.bool,
   si: PropTypes.string,
   sourceCustom: PropTypes.string,
-  isTableCell: PropTypes.bool,
-  sourceDate: PropTypes.string
+  sourceDate: PropTypes.string,
+  sources: PropTypes.object.isRequired,
 };
 
 export default connect(mapStateToProps)(Source);

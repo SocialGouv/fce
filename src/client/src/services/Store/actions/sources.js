@@ -1,11 +1,11 @@
-import { SET_SOURCES } from "../constants/ActionTypes";
-import Http from "../../Http";
-import Config from "../../Config";
 import { toI18nDate } from "../../../helpers/Date/Date";
+import Config from "../../Config";
+import Http from "../../Http";
+import { SET_SOURCES } from "../constants/ActionTypes";
 
-const getSources = () => dispatch => {
+const getSources = () => (dispatch) => {
   return Http.get("/sources")
-    .then(response => {
+    .then((response) => {
       const sources = response.data.results.reduce((acc, current) => {
         const customDateFormats = Config.get("sources.customDateFormats");
 
@@ -23,40 +23,40 @@ const getSources = () => dispatch => {
                 return {
                   ...customSources,
                   [sourceLabel]: {
+                    date: toI18nDate(current.date, dateFormat),
                     name: `${current.fournisseur} / ${current.si}`,
-                    date: toI18nDate(current.date, dateFormat)
-                  }
+                  },
                 };
               },
               {}
-            )
+            ),
           };
         }
 
         return {
           ...acc,
           [current.si]: {
-            name: `${current.fournisseur} / ${current.si}`,
             date: toI18nDate(
               current.date,
               typeof customDateFormats[current.si] === "string"
                 ? customDateFormats[current.si]
                 : "DD/MM/YYYY"
-            )
-          }
+            ),
+            name: `${current.fournisseur} / ${current.si}`,
+          },
         };
       }, {});
 
       dispatch({
+        payload: sources,
         type: SET_SOURCES,
-        payload: sources
       });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
     });
 };
 
-export const loadSources = () => dispatch => {
+export const loadSources = () => (dispatch) => {
   return dispatch(getSources());
 };

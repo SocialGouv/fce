@@ -1,35 +1,35 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { withRouter, Redirect } from "react-router-dom";
-import { Helmet } from "react-helmet";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
+  faCircle,
   faSquare,
-  faCircle
 } from "@fortawesome/free-solid-svg-icons";
-import Value from "../../../../shared/Value";
-import {
-  setSearchTerm,
-  setSearchFilters,
-  resetSearch
-} from "../../../../../services/Store/actions";
-import InfoBox from "../../../../shared/InfoBox";
-import Button from "../../../../shared/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { Helmet } from "react-helmet";
+import { connect } from "react-redux";
+import { Redirect, withRouter } from "react-router-dom";
+
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { formatSiren } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
+import {
+  resetSearch,
+  setSearchFilters,
+  setSearchTerm,
+} from "../../../../../services/Store/actions";
+import Button from "../../../../shared/Button";
+import InfoBox from "../../../../shared/InfoBox";
+import Value from "../../../../shared/Value";
 
 const EnterpriseHeader = ({
   enterprise,
   resetSearch,
   setSearchTerm,
-  history
+  history,
 }) => {
-  const [isRedirectedToHeadOffice, setIsRedirectedToHeadOffice] = useState(
-    null
-  );
+  const [isRedirectedToHeadOffice, setIsRedirectedToHeadOffice] =
+    useState(null);
 
   const slugSocieteCom = enterprise.raison_sociale
     ? enterprise.raison_sociale.toLowerCase().replace(" ", "-")
@@ -136,22 +136,22 @@ const EnterpriseHeader = ({
 EnterpriseHeader.propTypes = {
   enterprise: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  setSearchTerm: PropTypes.func.isRequired,
+  resetSearch: PropTypes.func.isRequired,
   setSearchFilters: PropTypes.func.isRequired,
-  resetSearch: PropTypes.func.isRequired
+  setSearchTerm: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    setSearchTerm: term => {
-      return dispatch(setSearchTerm(term));
-    },
-    setSearchFilters: filters => {
-      dispatch(setSearchFilters(filters));
-    },
     resetSearch: () => {
       dispatch(resetSearch());
-    }
+    },
+    setSearchFilters: (filters) => {
+      dispatch(setSearchFilters(filters));
+    },
+    setSearchTerm: (term) => {
+      return dispatch(setSearchTerm(term));
+    },
   };
 };
 

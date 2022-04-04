@@ -1,13 +1,14 @@
-import React from "react";
 import * as PropTypes from "prop-types";
-import Data from "../../SharedComponents/Data";
+import React from "react";
+
 import {
   hasActionFormationParApprentissage,
   hasActionsFormation,
   hasBilanCompetence,
   hasVae,
-  isOrganismeFormation
+  isOrganismeFormation,
 } from "../../../../../utils/organisme-formation/organisme-formation";
+import Data from "../../SharedComponents/Data";
 
 const OrganismeFormationTypes = ({ organismes_formation }) => {
   if (!isOrganismeFormation(organismes_formation)) {
@@ -16,13 +17,13 @@ const OrganismeFormationTypes = ({ organismes_formation }) => {
 
   const data = {
     "Actions de formations": hasActionsFormation(organismes_formation),
+    Apprentissage: hasActionFormationParApprentissage(organismes_formation),
     "Bilan de compétences": hasBilanCompetence(organismes_formation),
     VAE: hasVae(organismes_formation),
-    Apprentissage: hasActionFormationParApprentissage(organismes_formation)
   };
 
   const content = Object.entries(data)
-    .filter(([_, value]) => value)
+    .filter(([, value]) => value)
     .map(([key]) => key)
     .join(", ");
 
@@ -34,7 +35,7 @@ const OrganismeFormationTypes = ({ organismes_formation }) => {
 };
 
 OrganismeFormationTypes.propTypes = {
-  organismes_formation: PropTypes.arrayOf(PropTypes.object)
+  organismes_formation: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default OrganismeFormationTypes;

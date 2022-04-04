@@ -1,15 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { HashLink as Link } from "react-router-hash-link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
-
 import "./seeDetailsLink.scss";
 
-const scrollWithOffset = el => {
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
+import { HashLink as Link } from "react-router-hash-link";
+
+const scrollWithOffset = (el) => {
   const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
   const yOffset = -60;
-  window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
+  window.scrollTo({ behavior: "smooth", top: yCoordinate + yOffset });
 };
 
 const SeeDetailsLink = ({ link, text = "Voir la fiche établissement" }) => {
@@ -18,7 +18,7 @@ const SeeDetailsLink = ({ link, text = "Voir la fiche établissement" }) => {
       <Link
         to={link}
         className="see-details-link__link"
-        scroll={el => scrollWithOffset(el)}
+        scroll={(el) => scrollWithOffset(el)}
       >
         <FontAwesomeIcon icon={faEye} className="see-details-link__icon" />
         <span>{text}</span>
@@ -29,7 +29,7 @@ const SeeDetailsLink = ({ link, text = "Voir la fiche établissement" }) => {
 
 SeeDetailsLink.propTypes = {
   link: PropTypes.string.isRequired,
-  text: PropTypes.string
+  text: PropTypes.string,
 };
 
 export default SeeDetailsLink;

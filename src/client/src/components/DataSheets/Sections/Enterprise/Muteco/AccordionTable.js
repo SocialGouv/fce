@@ -1,17 +1,24 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import Value from "../../../../shared/Value";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronCircleLeft,
-  faChevronCircleDown
-} from "@fortawesome/free-solid-svg-icons";
-
 import "./AccordionTable.scss";
+
+import {
+  faChevronCircleDown,
+  faChevronCircleLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
+
 import { formatSiret } from "../../../../../helpers/utils";
+import Value from "../../../../shared/Value";
 
 const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
   const [isActiveAccordion, setIsActiveAccordion] = useState(false);
+
+  const onKeyDown = (e) => {
+    if (e.code === "Space") {
+      setIsActiveAccordion(!isActiveAccordion);
+    }
+  };
 
   return (
     <>
@@ -46,6 +53,9 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
           </td>
           <td className="has-text-link">
             <div
+              role="button"
+              tabIndex={0}
+              onKeyDown={onKeyDown}
               onClick={() => setIsActiveAccordion(!isActiveAccordion)}
               className="has-text-right accordion-table__header"
             >
@@ -61,7 +71,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
       </tbody>
       <tbody className="accordion-table__container">
         {isActiveAccordion &&
-          procedure.etablissements.map(etablissement => (
+          procedure.etablissements.map((etablissement) => (
             <tr key={etablissement.siret}>
               <td colSpan={hasTypeColumn ? 6 : 5} />
               <td className="has-text-right">
@@ -81,8 +91,8 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
 };
 
 AccordionTable.propTypes = {
+  hasTypeColumn: PropTypes.bool,
   procedure: PropTypes.object.isRequired,
-  hasTypeColumn: PropTypes.bool
 };
 
 export default AccordionTable;

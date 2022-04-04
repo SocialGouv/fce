@@ -4,5 +4,5 @@ metadata:
   name: strapi-env
 data:
   STORAGE_URL: https://fcedev.blob.core.windows.net
-  DATABASE_SSL: "true"
+  DATABASE_SSL_SELF: "true"
   FCE_SERVER_URL: "http://server:80"

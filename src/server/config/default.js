@@ -26,7 +26,10 @@ const config = {
     user: process.env.PG_USER,
     password: process.env.PG_PASSWORD,
     database: process.env.PG_DB,
-    ssl: process.env.PG_SSL === "true",
+    ssl: process.env.PG_SSL_SELF_SIGNED === "true" ?
+      { rejectUnauthorized: false } :
+      process.env.PG_SSL === "true",
+    port: process.env.PG_PORT,
   },
   hasura: {
     url: process.env.HASURA_URL,

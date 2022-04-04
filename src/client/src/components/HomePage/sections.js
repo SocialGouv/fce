@@ -15,7 +15,7 @@ const LoginLink = () => (
 
 const RequestAccessLink = () => (
   <div className="home-page__link">
-    <Link to="/request-access">Je demande un accès</Link>
+    <Link to="/request-access">Je demande un accès (agent DDETS)</Link>
   </div>
 );
 

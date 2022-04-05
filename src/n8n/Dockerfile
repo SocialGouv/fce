@@ -1,7 +1,20 @@
+FROM node:16-alpine AS deps
+WORKDIR /app
+COPY ./package.json ./yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+FROM node:16-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN yarn build
+
 FROM n8nio/n8n:0.136.0
 
-RUN mkdir /home/node/.n8n
-RUN mkdir /home/node/custom
+WORKDIR /home/node
+
+RUN mkdir ./.n8n
+RUN mkdir ./custom
 
 RUN apk add --no-cache make gcc g++ python
 
@@ -17,11 +30,11 @@ RUN apk del make gcc g++ python
 RUN chown -R node /home/node
 
 USER node
-COPY --chown=node:node package.json /home/node/package.json
-COPY --chown=node:node package-lock.json /home/node/package-lock.json
-RUN npm install --production --prefix /home/node --silent
+COPY --from=builder /app/package.json /app/yarn.lock ./
 
-COPY --chown=node:node ./dist /home/node/custom
+RUN yarn --frozen-lockfile --production --silent
+
+COPY --from=builder /app/dist /home/node/custom
 
 USER root
 

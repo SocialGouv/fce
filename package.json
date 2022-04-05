@@ -16,7 +16,7 @@
   },
   "scripts": {
     "commit": "git-cz",
-    "k8s": "yarn --silent --cwd .k8s"
+    "k8s": "yarn --silent --cwd .socialgouv"
   },
   "dependencies": {
     "k8s": "^0.4.15",

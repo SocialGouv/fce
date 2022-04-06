@@ -1,3 +1,10 @@
+## [27.39.1](https://github.com/SocialGouv/fce/compare/v27.39.0...v27.39.1) (2022-04-06)
+
+
+### Bug Fixes
+
+* **deploy:** fix release deploying on dev environment ([#196](https://github.com/SocialGouv/fce/issues/196)) ([1f35807](https://github.com/SocialGouv/fce/commit/1f358070afb859ec5ada9707e50fe09ed3be5408))
+
 # [27.39.0](https://github.com/SocialGouv/fce/compare/v27.38.0...v27.39.0) (2022-04-06)
 
 

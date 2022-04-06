@@ -1,3 +1,10 @@
+# [27.39.0](https://github.com/SocialGouv/fce/compare/v27.38.0...v27.39.0) (2022-04-06)
+
+
+### Features
+
+* **deploy:** use social gouv github actions for deployment ([#194](https://github.com/SocialGouv/fce/issues/194)) ([95a9608](https://github.com/SocialGouv/fce/commit/95a9608a1131903c941a49b799f91c95b63f0af5))
+
 # [27.38.0](https://github.com/SocialGouv/fce/compare/v27.37.4...v27.38.0) (2022-04-04)
 
 

@@ -3,7 +3,7 @@ import env from "@kosko/env";
 
 import { create } from "@socialgouv/kosko-charts/components/app";
 import { getGithubRegistryImagePath } from "../utils/getGithubRegistryImagePath";
-import {Probe, Volume, VolumeMount} from "kubernetes-models/v1";
+import { Volume, VolumeMount } from "kubernetes-models/v1";
 
 const project = "fce";
 const name = "n8n";
@@ -17,14 +17,6 @@ const downloadsVolumeMount = new VolumeMount({
   mountPath: "/tmp/download"
 });
 
-const probe = new Probe({
-  httpGet: {
-    path: "/healthz",
-    port: "http",
-  },
-  initialDelaySeconds: 60,
-});
-
 const createManifests = async () => {
   const manifests = await create(name, {
     env,
@@ -36,9 +28,6 @@ const createManifests = async () => {
       image: getGithubRegistryImagePath(({ project, name })),
       volumes: [downloadsVolume],
       container: {
-        livenessProbe: probe,
-        readinessProbe: probe,
-        startupProbe: probe,
         resources: {
           requests: {
             cpu: "50m",

@@ -32,6 +32,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -56,6 +57,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -117,6 +119,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -149,6 +152,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -171,6 +175,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -215,6 +220,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -239,6 +245,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -302,6 +309,7 @@ metadata:
     sealedsecrets.bitnami.com/cluster-wide: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -331,6 +339,7 @@ spec:
         sealedsecrets.bitnami.com/cluster-wide: 'true'
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -352,6 +361,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -387,6 +397,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -408,6 +419,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -432,6 +444,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -449,19 +462,26 @@ spec:
         - image: >-
             ghcr.io/socialgouv/fce/n8n:sha-0123456789abcdefghijklmnopqrstuvwxyz0123
           livenessProbe:
+            failureThreshold: 6
             httpGet:
               path: /healthz
               port: http
-            initialDelaySeconds: 60
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
           name: n8n
           ports:
             - containerPort: 5678
               name: http
           readinessProbe:
+            failureThreshold: 15
             httpGet:
               path: /healthz
               port: http
-            initialDelaySeconds: 60
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
           resources:
             limits:
               cpu: '4'
@@ -470,10 +490,11 @@ spec:
               cpu: 50m
               memory: 128Mi
           startupProbe:
+            failureThreshold: 12
             httpGet:
               path: /healthz
               port: http
-            initialDelaySeconds: 60
+            periodSeconds: 5
           volumeMounts:
             - name: downloads
               mountPath: /tmp/download
@@ -492,6 +513,7 @@ metadata:
     sealedsecrets.bitnami.com/cluster-wide: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -547,6 +569,7 @@ spec:
         sealedsecrets.bitnami.com/cluster-wide: 'true'
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -568,6 +591,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -604,6 +628,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -626,6 +651,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -684,6 +710,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -708,6 +735,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -758,6 +786,7 @@ metadata:
     sealedsecrets.bitnami.com/cluster-wide: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -783,6 +812,7 @@ spec:
         sealedsecrets.bitnami.com/cluster-wide: 'true'
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -811,6 +841,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -833,6 +864,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -870,6 +902,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -894,6 +927,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -957,6 +991,7 @@ metadata:
     sealedsecrets.bitnami.com/cluster-wide: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -1026,6 +1061,7 @@ spec:
         sealedsecrets.bitnami.com/cluster-wide: 'true'
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -1047,6 +1083,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -1091,6 +1128,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -1154,6 +1192,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -1178,6 +1217,7 @@ spec:
       annotations:
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -1233,6 +1273,7 @@ metadata:
     sealedsecrets.bitnami.com/cluster-wide: 'true'
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -1276,6 +1317,7 @@ spec:
         sealedsecrets.bitnami.com/cluster-wide: 'true'
         kapp.k14s.io/disable-default-ownership-label-rules: ''
         kapp.k14s.io/disable-default-label-scoping-rules: ''
+        kapp.k14s.io/delete-strategy: orphan
         app.github.com/job: '5678'
         app.github.com/ref: refs/heads/mybranch
         app.github.com/repo: socialgouv/fce
@@ -1297,6 +1339,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -1328,6 +1371,7 @@ metadata:
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce
@@ -1350,6 +1394,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
+    kapp.k14s.io/delete-strategy: orphan
     app.github.com/job: '5678'
     app.github.com/ref: refs/heads/mybranch
     app.github.com/repo: socialgouv/fce

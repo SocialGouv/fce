@@ -119,33 +119,24 @@ jobs:
   Manifests:
     name: Generate k8s manifests for server
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Load review environment variables
-        run: |
-          cat ".github/prod.env" >> $GITHUB_ENV
-
       - uses: SocialGouv/actions/autodevops-manifests@v1
         with:
           environment: prod
-          rancherId: ${{ env.RANCHER_PROJECT_ID }}
-          socialgouvBaseDomain: ${{ env.SOCIALGOUV_BASE_DOMAIN }}
+          rancherId: ${{ secrets.RANCHER_PROJECT_ID }}
+          socialgouvBaseDomain: ${{ secrets.SOCIALGOUV_BASE_DOMAIN }}
 
   deploy:
     name: Deploy application
     runs-on: ubuntu-latest
     needs: [ BuildServer, BuildFront, BuildStrapi, BuildN8N, BuildHasura, Manifests ]
+    environment: production
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Load environment variables
-        run: cat ".github/prod.env" >> $GITHUB_ENV
-
       - uses: SocialGouv/actions/autodevops-deploy@v1
         with:
           environment: prod
           token: ${{ secrets.GITHUB_TOKEN }}
           kubeconfig: ${{ secrets.KUBECONFIG }}
-          rancherId: ${{ env.RANCHER_PROJECT_ID }}
+          rancherId: ${{ secrets.RANCHER_PROJECT_ID }}

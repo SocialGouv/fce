@@ -1,12 +1,12 @@
 export const joinNoFalsy = (arr, delimiter = "") =>
-  arr.filter(element => !!element).join(delimiter);
+  arr.filter((element) => !!element).join(delimiter);
 
-export const capitalize = str =>
+export const capitalize = (str) =>
   str &&
   str
     .toLowerCase()
     .split(" ")
-    .map(str => `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`)
+    .map((str) => `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`)
     .join(" ");
 
 export const countValuesInArray = (array, fields) => {
@@ -15,8 +15,8 @@ export const countValuesInArray = (array, fields) => {
   }
 
   return array.reduce((acc, currentValue) => {
-    let currentTotalFieldsValues = fields
-      .map(field => currentValue[field])
+    const currentTotalFieldsValues = fields
+      .map((field) => currentValue[field])
       .reduce((accFields, currentValueField) => {
         return accFields + currentValueField;
       }, 0);
@@ -25,7 +25,7 @@ export const countValuesInArray = (array, fields) => {
   }, 0);
 };
 
-export const arraySum = array =>
+export const arraySum = (array) =>
   array.reduce((total, value) => total + value, 0);
 
 export const range = (min, max) =>

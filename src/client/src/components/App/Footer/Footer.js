@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Config from "../../../services/Config";
-import mariane from "../../../assets/img/logo_gouv.png";
 import "./footer.scss";
+
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+import mariane from "../../../assets/img/logo_gouv.png";
+import Config from "../../../services/Config";
 
 const Footer = () => {
   const [communicationKitLink, setCommunicationKitLink] = useState(null);
@@ -10,11 +12,11 @@ const Footer = () => {
   useEffect(() => {
     const fetchCommunicationKitUrl = () => {
       fetch(`${Config.get("strapi.domain")}/kit-de-communication`)
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           setCommunicationKitLink(data);
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     };

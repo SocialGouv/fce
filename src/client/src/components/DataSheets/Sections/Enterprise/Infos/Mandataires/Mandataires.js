@@ -1,9 +1,10 @@
-import React from "react";
+import "./enterprise-mandataires.scss";
+
 import PropTypes from "prop-types";
+import React from "react";
+
 import Value from "../../../../../shared/Value";
 import Table from "../../../SharedComponents/Table";
-
-import "./enterprise-mandataires.scss";
 
 const Mandataires = ({ mandataires }) => {
   return mandataires && mandataires.length ? (
@@ -40,7 +41,7 @@ const Mandataires = ({ mandataires }) => {
 };
 
 Mandataires.propTypes = {
-  mandataires: PropTypes.arrayOf(PropTypes.object).isRequired
+  mandataires: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default Mandataires;

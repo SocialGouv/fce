@@ -1,12 +1,13 @@
-import React from "react";
+import "./psi.scss";
+
 import PropTypes from "prop-types";
+import React from "react";
 import { connect } from "react-redux";
-import Subcategory from "../../SharedComponents/Subcategory";
+
 import Data from "../../SharedComponents/Data";
 import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink/SeeDetailsLink";
-
-import "./psi.scss";
+import Subcategory from "../../SharedComponents/Subcategory";
 
 const Psi = ({ psi, siret, sources }) => {
   if (!sources.SIPSI) return "";

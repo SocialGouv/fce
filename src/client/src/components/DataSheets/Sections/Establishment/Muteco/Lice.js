@@ -1,5 +1,6 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
+
 import ConditionalData from "../../SharedComponents/ConditionalData";
 import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
@@ -29,9 +30,9 @@ const Lice = ({ liceList, siren, enterpriseLice }) => {
 };
 
 Lice.propTypes = {
-  liceList: PropTypes.arrayOf(PropTypes.object),
   enterpriseLice: PropTypes.arrayOf(PropTypes.object),
-  siren: PropTypes.string.isRequired
+  liceList: PropTypes.arrayOf(PropTypes.object),
+  siren: PropTypes.string.isRequired,
 };
 
 export default Lice;

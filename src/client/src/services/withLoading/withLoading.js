@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-
 import "./loading-wrapper.scss";
 
-const withLoading = BaseComponent => {
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
+
+const withLoading = (BaseComponent) => {
   const WrappedComponent = ({ isLoaded, ...props }) =>
     isLoaded ? (
       <BaseComponent {...props} />
@@ -17,7 +17,7 @@ const withLoading = BaseComponent => {
     );
 
   WrappedComponent.propTypes = {
-    isLoaded: PropTypes.bool.isRequired
+    isLoaded: PropTypes.bool.isRequired,
   };
 
   return WrappedComponent;

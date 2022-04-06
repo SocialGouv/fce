@@ -1,17 +1,22 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
+
 import Config from "../../../services/Config";
+
 const actif = Config.get("establishmentState").actif;
 const ferme = Config.get("establishmentState").ferme;
 
 const StateFilter = ({ filters, addFilter, id }) => {
   const onCheckboxCheck = (value) => () => {
     if (filters[id]?.includes(value)) {
-      addFilter(id, filters[id]?.filter((filterValue) => filterValue !== value) || []);
+      addFilter(
+        id,
+        filters[id]?.filter((filterValue) => filterValue !== value) || []
+      );
       return;
     }
     addFilter(id, [...(filters[id] || []), value]);
-  }
+  };
   return (
     <div className="filter-state">
       <div className="label">État</div>
@@ -45,9 +50,9 @@ const StateFilter = ({ filters, addFilter, id }) => {
 };
 
 StateFilter.propTypes = {
-  filters: PropTypes.object.isRequired,
   addFilter: PropTypes.func.isRequired,
-  removeFilter: PropTypes.func.isRequired
+  filters: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default StateFilter;

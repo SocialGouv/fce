@@ -1,18 +1,20 @@
-import React from "react";
 import PropTypes from "prop-types";
-import Subcategory from "../../SharedComponents/Subcategory";
+import React from "react";
+
+import { formatSiret } from "../../../../../helpers/utils";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
+import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
-import { formatSiret } from "../../../../../helpers/utils";
 
 const InteractionType = ({ type, interactions }) => {
   const isControl = type === "control";
   const numberOfEstablishments = interactions.length;
   const s = numberOfEstablishments > 1 ? "s" : "";
 
-  const subtitle = `${numberOfEstablishments} établissement${s} ${isControl ? "contrôlé" : "visité"
-    }${s}${isControl ? "" : " par les Services économiques de l'État en région"}`;
+  const subtitle = `${numberOfEstablishments} établissement${s} ${
+    isControl ? "contrôlé" : "visité"
+  }${s}${isControl ? "" : " par les Services économiques de l'État en région"}`;
 
   return (
     <Subcategory subtitle={subtitle}>
@@ -25,11 +27,11 @@ const InteractionType = ({ type, interactions }) => {
               <th className="th">Commune</th>
               <th className="th">Date dernier contrôle connu</th>
               <th className="th">Pôle</th>
-              <th className="th see-details"></th>
+              <th className="th see-details" />
             </tr>
           </thead>
           <tbody>
-            {interactions.map(etab => (
+            {interactions.map((etab) => (
               <tr key={etab.siret + etab.pole}>
                 <td className="table-cell--nowrap">
                   {formatSiret(etab.siret)}
@@ -49,14 +51,16 @@ const InteractionType = ({ type, interactions }) => {
             ))}
           </tbody>
         </Table>
-      ) : ""}
+      ) : (
+        ""
+      )}
     </Subcategory>
   );
 };
 
 InteractionType.propTypes = {
+  interactions: PropTypes.array.isRequired,
   type: PropTypes.string.isRequired,
-  interactions: PropTypes.array.isRequired
 };
 
 export default InteractionType;

@@ -1,14 +1,9 @@
+import PropTypes from "prop-types";
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import htmlParser from "react-markdown/plugins/html-parser";
-import PropTypes from "prop-types";
+
 import UsersFeedback from "../../containers/UsersFeedback";
 import LoadSpinner from "../shared/LoadSpinner";
-
-// allow <br> tags to allow
-const parseHtml = htmlParser({
-  isValidNode: node => ["br"].includes(node.type)
-});
 
 const PublicPage = ({ pageData = null, isLoading, hasError }) => {
   if (hasError) {
@@ -31,7 +26,6 @@ const PublicPage = ({ pageData = null, isLoading, hasError }) => {
             <ReactMarkdown
               source={pageData && pageData.contenu}
               escapeHtml={false}
-              astPlugins={[parseHtml]}
             />
           </>
         )}
@@ -42,9 +36,9 @@ const PublicPage = ({ pageData = null, isLoading, hasError }) => {
 };
 
 PublicPage.propTypes = {
-  pageData: PropTypes.object,
+  hasError: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  hasError: PropTypes.bool.isRequired
+  pageData: PropTypes.object,
 };
 
 export default PublicPage;

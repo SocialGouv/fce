@@ -1,11 +1,12 @@
-import React from "react";
+import "./faq.scss";
+
 import PropTypes from "prop-types";
+import React from "react";
 import { Link } from "react-router-dom";
+
 import UsersFeedback from "../../../containers/UsersFeedback";
 import LoadSpinner from "../../shared/LoadSpinner";
 import { Question } from "./Question";
-
-import "./faq.scss";
 
 const Faq = ({ pageData = null, isLoading, hasError }) => {
   if (hasError) {
@@ -34,12 +35,12 @@ const Faq = ({ pageData = null, isLoading, hasError }) => {
               </strong>
             </p>
 
-            {pageData?.faq_sections?.map(section => {
+            {pageData?.faq_sections?.map((section) => {
               return (
                 <section className="faq__section" key={section.Titre}>
                   <h2 className="faq__title">{section.Titre}</h2>
                   <dl>
-                    {section.questions.map(question => {
+                    {section.questions.map((question) => {
                       return (
                         <Question
                           key={question.question}
@@ -61,9 +62,9 @@ const Faq = ({ pageData = null, isLoading, hasError }) => {
 };
 
 Faq.propTypes = {
-  pageData: PropTypes.object,
+  hasError: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  hasError: PropTypes.bool.isRequired
+  pageData: PropTypes.object,
 };
 
 export default Faq;

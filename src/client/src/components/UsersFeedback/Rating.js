@@ -1,8 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
 import classNames from "classnames";
-import { range } from "../../helpers/utils/utils";
+import PropTypes from "prop-types";
+import React from "react";
+
 import { SET_RATE } from "../../containers/UsersFeedback/actionTypes";
+import { range } from "../../helpers/utils/utils";
 
 const Rating = ({ min, max, rate = null, handleChange }) => {
   return (
@@ -10,11 +11,7 @@ const Rating = ({ min, max, rate = null, handleChange }) => {
       <p>Recommanderiez-vous ce site à un(e) collègue ?</p>
       <div className="user-feedback__rates">
         {range(min, max).map((number, index) => (
-          <label
-            className="user-feedback__rate"
-            key={`rating${number}`}
-            tabIndex="0"
-          >
+          <label className="user-feedback__rate" key={`rating${number}`}>
             <input
               className="user-feedback__rate-radio"
               type="radio"
@@ -26,7 +23,7 @@ const Rating = ({ min, max, rate = null, handleChange }) => {
             <span
               className={classNames("user-feedback__rate-span", {
                 [`user-feedback__rate-span--${index}`]:
-                  !rate || rate === `${index}`
+                  !rate || rate === `${index}`,
               })}
             >
               <strong>{number}</strong>
@@ -39,10 +36,10 @@ const Rating = ({ min, max, rate = null, handleChange }) => {
 };
 
 Rating.propTypes = {
-  min: PropTypes.number.isRequired,
+  handleChange: PropTypes.func.isRequired,
   max: PropTypes.number.isRequired,
+  min: PropTypes.number.isRequired,
   rate: PropTypes.string,
-  handleChange: PropTypes.func.isRequired
 };
 
 export default Rating;

@@ -1,5 +1,6 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
+
 import ConditionalData from "../../SharedComponents/ConditionalData";
 import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
@@ -21,9 +22,9 @@ const Pse = ({ pseList, siren, enterprisePse }) => {
 };
 
 Pse.propTypes = {
-  pseList: PropTypes.arrayOf(PropTypes.object),
   enterprisePse: PropTypes.arrayOf(PropTypes.object),
-  siren: PropTypes.string.isRequired
+  pseList: PropTypes.arrayOf(PropTypes.object),
+  siren: PropTypes.string.isRequired,
 };
 
 export default Pse;

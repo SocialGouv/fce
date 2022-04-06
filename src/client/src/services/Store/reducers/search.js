@@ -1,26 +1,26 @@
 import {
-  SET_SEARCH_TERM,
-  SET_SEARCH_FILTERS,
-  SET_SEARCH_SORT,
-  SET_SEARCH_RESULTS,
   RESET_SEARCH,
-  SET_SEARCH_PAGE
+  SET_SEARCH_FILTERS,
+  SET_SEARCH_PAGE,
+  SET_SEARCH_RESULTS,
+  SET_SEARCH_SORT,
+  SET_SEARCH_TERM,
 } from "../constants/ActionTypes";
 
 const initialState = {
-  term: null,
-  page: 1,
   filters: {
-    etats: ["A", "F"]
+    etats: ["A", "F"],
   },
-  sort: {
-    field: null,
-    ascDirection: false
-  },
+  page: 1,
   results: {
     results: null,
-    total: 0
-  }
+    total: 0,
+  },
+  sort: {
+    ascDirection: false,
+    field: null,
+  },
+  term: null,
 };
 
 const search = (state = initialState, action) => {
@@ -28,31 +28,31 @@ const search = (state = initialState, action) => {
     case SET_SEARCH_TERM:
       return {
         ...state,
-        term: action.term
+        term: action.term,
       };
 
     case SET_SEARCH_PAGE:
       return {
         ...state,
-        page: action.page
+        page: action.page,
       };
 
     case SET_SEARCH_FILTERS:
       return {
         ...state,
-        filters: action.filters
+        filters: action.filters,
       };
 
     case SET_SEARCH_SORT:
       return {
         ...state,
-        sort: action.sort
+        sort: action.sort,
       };
 
     case SET_SEARCH_RESULTS:
       return {
         ...state,
-        results: action.results
+        results: action.results,
       };
 
     case RESET_SEARCH:

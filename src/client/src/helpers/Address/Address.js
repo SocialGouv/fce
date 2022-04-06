@@ -1,6 +1,6 @@
-import { joinNoFalsy, capitalize } from "../utils";
+import { capitalize, joinNoFalsy } from "../utils";
 
-export const buildAddress = address => {
+export const buildAddress = (address) => {
   let finalAddress = "";
   let lineValue;
 
@@ -28,7 +28,7 @@ export const formatAddress = ({
   nom_voie,
   complement_adresse,
   code_postal,
-  localite
+  localite,
 }) => {
   const streetNumber = joinNoFalsy([numero_voie, indice_repetition]);
   const streetType = type_voie && type_voie.toLowerCase();

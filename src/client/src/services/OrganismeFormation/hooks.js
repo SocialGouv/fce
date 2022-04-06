@@ -1,4 +1,4 @@
-import { useQuery, gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
 const organismeFormationBySiretQuery = gql`
   query GetOrganismeFormation($siret: String!) {
@@ -48,8 +48,8 @@ const organismeFormationBySirenQuery = gql`
   }
 `;
 
-export const useOrganismeFormationBySiren = siren =>
+export const useOrganismeFormationBySiren = (siren) =>
   useQuery(organismeFormationBySirenQuery, { variables: { siren } });
 
-export const useOrganismeFormationBySiret = siret =>
+export const useOrganismeFormationBySiret = (siret) =>
   useQuery(organismeFormationBySiretQuery, { variables: { siret } });

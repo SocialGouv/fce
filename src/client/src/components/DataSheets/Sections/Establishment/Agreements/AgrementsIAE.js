@@ -1,18 +1,18 @@
-import React from "react";
-import PropTypes from "prop-types";
 import _get from "lodash.get";
+import PropTypes from "prop-types";
+import React from "react";
 
-import Value from "../../../../shared/Value";
-import Table from "../../SharedComponents/Table";
-import Subcategory from "../../SharedComponents/Subcategory";
-import Config from "../../../../../services/Config";
 import { getCustomPastYear } from "../../../../../helpers/Date/Date";
+import Config from "../../../../../services/Config";
+import Value from "../../../../shared/Value";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Table from "../../SharedComponents/Table";
 
 const AgrementsIAE = ({ establishment }) => {
   const hasAgrements = !!(
     establishment.agrements_iae &&
     Object.values(establishment.agrements_iae)
-      .map(agrementData => agrementData.agrement)
+      .map((agrementData) => agrementData.agrement)
       .includes(true)
   );
 
@@ -22,11 +22,11 @@ const AgrementsIAE = ({ establishment }) => {
         subtitle="Insertion par l’activité économique (IAE)"
         datas={[
           {
-            name: "Insertion par l’activité économique (IAE)",
-            value: hasAgrements,
             columnClasses: ["is-7", "is-5"],
-            source: "ASP Extranet IAE2.0"
-          }
+            name: "Insertion par l’activité économique (IAE)",
+            source: "ASP Extranet IAE2.0",
+            value: hasAgrements,
+          },
         ]}
       />
 

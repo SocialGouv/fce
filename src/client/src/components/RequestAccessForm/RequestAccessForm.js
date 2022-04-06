@@ -1,15 +1,16 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
+import React, { useState } from "react";
+import Select from "react-select";
+import { z } from "zod";
+
 import Http from "../../services/Http";
-import StepForm from "../Login/steps/Form/StepForm";
+import { getFormValues } from "../../utils/form/form";
+import FormError from "../Login/steps/Form/FormError";
 import FormInput from "../Login/steps/Form/FormInput";
 import FormSubmit from "../Login/steps/Form/FormSubmit";
-import { getFormValues } from "../../utils/form/form";
-import { z } from "zod";
-import Select from "react-select";
-import FormError from "../Login/steps/Form/FormError";
+import StepForm from "../Login/steps/Form/StepForm";
 
-const submitForm = async data => {
+const submitForm = async (data) => {
   const response = await Http.post("/createAccount", data);
 
   return response.data;
@@ -17,7 +18,7 @@ const submitForm = async data => {
 
 const schema = z.object({
   email: z.string().email(),
-  structure: z.string()
+  structure: z.string(),
 });
 
 const validStructures = [
@@ -112,43 +113,43 @@ const validStructures = [
   "DDETS85",
   "DDETS86",
   "DDETS91",
-  "DDETS95"
+  "DDETS95",
 ]
-  .map(value => ({
+  .map((value) => ({
     label: value,
-    value
+    value,
   }))
   .concat([
     {
       label: "Autre",
-      value: "autre"
-    }
+      value: "autre",
+    },
   ]);
 
-const hasErrors = errors => Object.keys(errors).length > 0;
+const hasErrors = (errors) => Object.keys(errors).length > 0;
 
 const errorsMessageMap = {
-  "Invalid email": "Email invalide"
+  "Invalid email": "Email invalide",
 };
 
-const translateErrorMessages = error =>
+const translateErrorMessages = (error) =>
   (error || []).reduce((acc, { path, message }) => {
     acc[path] = errorsMessageMap[message] || message;
     return acc;
   }, {});
 
-const validateFormData = data => schema.safeParse(data);
+const validateFormData = (data) => schema.safeParse(data);
 
 const RequestAccessForm = ({ onSuccess }) => {
   const [errors, setErrors] = useState({});
 
-  const validate = data => {
+  const validate = (data) => {
     const { error } = validateFormData(data);
 
     return translateErrorMessages(error);
   };
 
-  const onSubmit = async event => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     setErrors({});
     const data = getFormValues(event.target);
@@ -183,7 +184,7 @@ const RequestAccessForm = ({ onSuccess }) => {
             name={name}
             options={validStructures}
             styles={{
-              container: provided => ({ ...provided, width: "100%" })
+              container: (provided) => ({ ...provided, width: "100%" }),
             }}
           />
         )}
@@ -194,7 +195,7 @@ const RequestAccessForm = ({ onSuccess }) => {
 };
 
 RequestAccessForm.propTypes = {
-  onSuccess: PropTypes.func
+  onSuccess: PropTypes.func,
 };
 
 export default RequestAccessForm;

@@ -1,12 +1,13 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 import Select from "react-select";
+
 import { selectCustomStyles } from "./customStyles";
 
 const NafFilter = ({ filters, addFilter, removeFilter, divisionsNaf }) => {
   const options = divisionsNaf.map(({ code, libelle }) => ({
+    label: `${code} - ${libelle}`,
     value: code,
-    label: `${code} - ${libelle}`
   }));
 
   return (
@@ -20,7 +21,7 @@ const NafFilter = ({ filters, addFilter, removeFilter, divisionsNaf }) => {
         isMulti
         options={options}
         value={filters.naf}
-        onChange={naf => {
+        onChange={(naf) => {
           naf ? addFilter("naf", naf.co) : removeFilter("naf");
         }}
         isClearable
@@ -32,10 +33,10 @@ const NafFilter = ({ filters, addFilter, removeFilter, divisionsNaf }) => {
 };
 
 NafFilter.propTypes = {
-  filters: PropTypes.object,
   addFilter: PropTypes.func.isRequired,
+  divisionsNaf: PropTypes.array.isRequired,
+  filters: PropTypes.object,
   removeFilter: PropTypes.func.isRequired,
-  divisionsNaf: PropTypes.array.isRequired
 };
 
 export default NafFilter;

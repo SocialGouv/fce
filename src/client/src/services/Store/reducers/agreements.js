@@ -1,15 +1,15 @@
 import {
+  FETCH_AGREEMENTS_ERROR,
   FETCH_AGREEMENTS_START,
   FETCH_AGREEMENTS_SUCCESS,
-  FETCH_AGREEMENTS_ERROR
 } from "../constants/ActionTypes";
 
 const initialState = {
-  totalCount: 0,
   agreementsList: [],
+  error: null,
   fileNumbersBySiret: [],
   isLoading: false,
-  error: null
+  totalCount: 0,
 };
 
 const agreements = (state = initialState, action) => {
@@ -19,15 +19,15 @@ const agreements = (state = initialState, action) => {
 
     case FETCH_AGREEMENTS_SUCCESS:
       return {
-        isLoading: false,
         error: null,
-        ...action.payload
+        isLoading: false,
+        ...action.payload,
       };
 
     case FETCH_AGREEMENTS_ERROR:
       return {
         ...initialState,
-        error: action.payload
+        error: action.payload,
       };
 
     default:

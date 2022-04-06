@@ -1,22 +1,23 @@
-import React from "react";
+import "../../dataSheets.scss";
+
 import PropTypes from "prop-types";
+import React from "react";
 import { useLocation } from "react-router-dom";
+
+import Unsubscribe from "../../../../containers/Unsubscribe";
+import UsersFeedback from "../../../../containers/UsersFeedback";
+import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
-import Header from "./Header";
-import Activity from "./Activity";
-import Muteco from "./Muteco";
-import Helps from "./Helps";
-import Relationship from "./Relationship";
-import Direccte from "./Direccte";
-import QuickAccess from "../SharedComponents/QuickAccess";
-import UsersFeedback from "../../../../containers/UsersFeedback";
-import Unsubscribe from "../../../../containers/Unsubscribe";
 import PrintSection from "../SharedComponents/PrintSection";
-import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
-
-import "../../dataSheets.scss";
+import QuickAccess from "../SharedComponents/QuickAccess";
+import Activity from "./Activity";
 import Agrements from "./Agreements/Agrements";
+import Direccte from "./Direccte";
+import Header from "./Header";
+import Helps from "./Helps";
+import Muteco from "./Muteco";
+import Relationship from "./Relationship";
 
 const Establishment = ({
   establishment,
@@ -24,7 +25,7 @@ const Establishment = ({
   enterprise,
   headOffice,
   apprentissage,
-  successions
+  successions,
 }) => {
   const location = useLocation();
   useScrollToLocationHash({ location });
@@ -57,7 +58,7 @@ const Establishment = ({
                   { label: "Relation travail", link: "relation" },
                   { label: "Mutations économiques", link: "muteco" },
                   { label: "Aides", link: "helps" },
-                  { label: "Agréments", link: "agrements" }
+                  { label: "Agréments", link: "agrements" },
                 ]}
               />
               <Activity
@@ -87,12 +88,12 @@ const Establishment = ({
 };
 
 Establishment.propTypes = {
+  apprentissage: PropTypes.object.isRequired,
   enterprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
-  apprentissage: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
   headOffice: PropTypes.object.isRequired,
-  successions: PropTypes.object.isRequired
+  successions: PropTypes.object.isRequired,
 };
 
 export default withLoading(Establishment);

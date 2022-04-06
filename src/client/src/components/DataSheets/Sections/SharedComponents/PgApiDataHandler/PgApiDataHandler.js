@@ -1,8 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import "./pgApiDataHandler.scss";
+
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
 
 const PgApiDataHandler = ({ isLoading, error, children }) => {
   if (error) {
@@ -28,7 +29,7 @@ const PgApiDataHandler = ({ isLoading, error, children }) => {
 PgApiDataHandler.propTypes = {
   children: PropTypes.node.isRequired,
   error: PropTypes.object,
-  isLoading: PropTypes.bool.isRequired
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default PgApiDataHandler;

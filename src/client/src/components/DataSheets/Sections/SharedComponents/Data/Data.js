@@ -1,10 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import Value from "../../../../shared/Value";
-import Source from "../../../../../containers/Source";
-
 import "./data.scss";
+
+import PropTypes from "prop-types";
+import React from "react";
+import { Link } from "react-router-dom";
+
+import Source from "../../../../../containers/Source";
+import Value from "../../../../shared/Value";
 
 const Data = ({
   name,
@@ -19,7 +20,7 @@ const Data = ({
   sourceCustom = null,
   sourceDate = null,
   hasNumberFormat = false,
-  numberFormatOptions = null
+  numberFormatOptions = null,
 }) => {
   return (
     <>
@@ -70,29 +71,29 @@ const Data = ({
 };
 
 Data.propTypes = {
-  name: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.element]),
-  description: PropTypes.node,
   className: PropTypes.string,
   columnClasses: PropTypes.array,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool,
-    PropTypes.node
-  ]),
+  description: PropTypes.node,
   emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  hasNumberFormat: PropTypes.bool,
+  link: PropTypes.string,
+  name: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.element]),
   nonEmptyValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
     PropTypes.object,
-    PropTypes.array
+    PropTypes.array,
   ]),
-  link: PropTypes.string,
-  sourceSi: PropTypes.string,
+  numberFormatOptions: PropTypes.object,
   sourceCustom: PropTypes.string,
   sourceDate: PropTypes.string,
-  hasNumberFormat: PropTypes.bool,
-  numberFormatOptions: PropTypes.object
+  sourceSi: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+    PropTypes.node,
+  ]),
 };
 
 export default Data;

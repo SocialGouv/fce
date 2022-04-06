@@ -1,4 +1,4 @@
-import { useQuery, gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
 const accidentTravailBySiretQuery = gql`
   query GetAccidentTravail($siret: String!) {
@@ -32,8 +32,8 @@ const accidentTravailBySirenQuery = gql`
   }
 `;
 
-export const useAccidentTravailBySiren = siren =>
+export const useAccidentTravailBySiren = (siren) =>
   useQuery(accidentTravailBySirenQuery, { variables: { siren } });
 
-export const useAccidentTravailBySiret = siret =>
+export const useAccidentTravailBySiret = (siret) =>
   useQuery(accidentTravailBySiretQuery, { variables: { siret } });

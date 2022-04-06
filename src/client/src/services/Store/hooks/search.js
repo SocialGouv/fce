@@ -1,22 +1,23 @@
-import { useEffect } from "react";
-import { useElasticQuery } from "../../Elastic/elastic";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setSearchTerm as setSearchTermAction,
-  setSearchPage as setSearchPageAction,
-  setSearchFilters,
-  setSearchResults,
-  resetSearch
-} from "../actions";
 import { omit } from "lodash";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const getSearchState = state => state.search;
+import { useElasticQuery } from "../../Elastic/elastic";
+import {
+  resetSearch,
+  setSearchFilters,
+  setSearchPage as setSearchPageAction,
+  setSearchResults,
+  setSearchTerm as setSearchTermAction,
+} from "../actions";
+
+const getSearchState = (state) => state.search;
 
 export const useSearchTerms = () => {
   const dispatch = useDispatch();
 
-  const searchTerm = useSelector(state => getSearchState(state).term);
-  const setSearchTerm = term => {
+  const searchTerm = useSelector((state) => getSearchState(state).term);
+  const setSearchTerm = (term) => {
     dispatch(setSearchTermAction(term));
   };
 
@@ -26,8 +27,8 @@ export const useSearchTerms = () => {
 export const useSearchPage = () => {
   const dispatch = useDispatch();
 
-  const searchPage = useSelector(state => getSearchState(state).page);
-  const setSearchPage = page => {
+  const searchPage = useSelector((state) => getSearchState(state).page);
+  const setSearchPage = (page) => {
     dispatch(setSearchPageAction(page));
   };
 
@@ -36,29 +37,29 @@ export const useSearchPage = () => {
 
 export const useSearchFilters = () => {
   const dispatch = useDispatch();
-  const savedFilters = useSelector(state => getSearchState(state).filters);
+  const savedFilters = useSelector((state) => getSearchState(state).filters);
 
   // cache busting mechanism
   const validFilters = savedFilters.etats
     ? savedFilters
     : {
-        etats: ["A", "F"]
+        etats: ["A", "F"],
       };
 
   const addFilter = (key, value) => {
     dispatch(setSearchFilters({ ...validFilters, [key]: value }));
   };
 
-  const removeFilter = key => {
+  const removeFilter = (key) => {
     dispatch(setSearchFilters(omit(validFilters, key)));
   };
 
-  return { filters: savedFilters, addFilter, removeFilter };
+  return { addFilter, filters: savedFilters, removeFilter };
 };
 
 export const useSearchQuery = () => {
   const dispatch = useDispatch();
-  const results = useSelector(state => getSearchState(state).results);
+  const results = useSelector((state) => getSearchState(state).results);
 
   const { data, loading, error, makeQuery } = useElasticQuery();
 
@@ -66,13 +67,13 @@ export const useSearchQuery = () => {
     if (data.results !== null) {
       dispatch(setSearchResults(data));
     }
-  }, [data]);
+  }, [dispatch, data]);
 
   return {
     data: results,
-    loading,
     error,
-    makeQuery
+    loading,
+    makeQuery,
   };
 };
 

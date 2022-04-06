@@ -1,25 +1,25 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHistory, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import _get from "lodash.get";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
 
+import AllEffectifsEtpButton from "../../../../../containers/AllEffectifsEtpButton";
+import { getMonthName } from "../../../../../helpers/Date";
+import { formatSiret, formatTva } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Finances from "./Finances";
 import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
-import { getMonthName } from "../../../../../helpers/Date";
-import { formatSiret, formatTva } from "../../../../../helpers/utils";
-import AllEffectifsEtpButton from "../../../../../containers/AllEffectifsEtpButton";
 
 const EnterpriseInfos = ({ enterprise, headOffice }) => {
   const [allEffectifsEtp, setAllEffectifsEtp] = useState(null);
 
   const dashboardSizeRanges = {
     ...Config.get("inseeSizeRanges"),
-    "0 salarié": "0 salarié"
+    "0 salarié": "0 salarié",
   };
 
   const isLoadingEffectifMensuelEtp = !enterprise.effectifMensuelEtp;
@@ -29,7 +29,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
     enterprise.effectifMensuelEtp.length > 0 &&
     !allEffectifsEtp;
 
-  const EffectifEtpDataComponents = !!effectifEtpData?.length ? (
+  const EffectifEtpDataComponents = effectifEtpData?.length ? (
     effectifEtpData.map(({ annee, mois, effectifs_mensuels }) => (
       <Data
         key={`${annee}-${mois}`}
@@ -76,10 +76,10 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
             name="Etablissements"
             value={
               enterprise.nombre_etablissements_actifs &&
-              `${
+              `${enterprise.nombre_etablissements_actifs} actif(s) et ${
+                enterprise.etablissements.length -
                 enterprise.nombre_etablissements_actifs
-              } actif(s) et ${enterprise.etablissements.length -
-                enterprise.nombre_etablissements_actifs} fermé(s)`
+              } fermé(s)`
             }
           />
 
@@ -131,7 +131,8 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
         >
           <div>
             <span>
-              Informations d'immatriculation (contenues dans un extrait Kbis/D1)
+              Informations d&apos;immatriculation (contenues dans un extrait
+              Kbis/D1)
             </span>{" "}
             : consulter le(s) justificatif(s) sur{" "}
             <a
@@ -142,7 +143,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
           </div>
           <div className="section-datas__list-description">
             À partir de novembre 2021, les entreprises immatriculées au RCS ou
-            au RNM n'ont plus à fournir leur extrait Kbis/D1 dans leurs
+            au RNM n&apos;ont plus à fournir leur extrait Kbis/D1 dans leurs
             démarches administratives
             <br /> Décrets du 21 mai 2021 n°2021-631 et 2021-632
           </div>
@@ -186,7 +187,7 @@ const EnterpriseInfos = ({ enterprise, headOffice }) => {
 
 EnterpriseInfos.propTypes = {
   enterprise: PropTypes.object.isRequired,
-  headOffice: PropTypes.object
+  headOffice: PropTypes.object,
 };
 
 export default EnterpriseInfos;

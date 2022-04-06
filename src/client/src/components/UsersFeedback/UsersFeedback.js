@@ -1,31 +1,32 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Rating from "./Rating";
-import {
-  SET_USEFUL,
-  SET_COMMENT
-} from "../../containers/UsersFeedback/actionTypes";
-
 import "./usersFeedback.scss";
+
+import { faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
+
+import {
+  SET_COMMENT,
+  SET_USEFUL,
+} from "../../containers/UsersFeedback/actionTypes";
+import Rating from "./Rating";
 
 const UsersFeedback = ({
   state: { useful, comment, rate },
   dispatch,
   sendFeedback,
-  fullWidth
+  fullWidth,
 }) => {
-  const handleChange = action => e => {
-    dispatch({ type: action, payload: e.target.value });
+  const handleChange = (action) => (e) => {
+    dispatch({ payload: e.target.value, type: action });
   };
 
   return (
     <section
       className={classNames({
         "user-feedback": true,
-        "user-feedback--fullwidth": fullWidth
+        "user-feedback--fullwidth": fullWidth,
       })}
     >
       <div className="container">
@@ -107,10 +108,10 @@ const UsersFeedback = ({
 };
 
 UsersFeedback.propTypes = {
-  state: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
+  fullWidth: PropTypes.bool,
   sendFeedback: PropTypes.func.isRequired,
-  fullWidth: PropTypes.bool
+  state: PropTypes.object.isRequired,
 };
 
 export default UsersFeedback;

@@ -1,11 +1,11 @@
 import _omit from "lodash.omit";
 
-export const sum = array =>
+export const sum = (array) =>
   array.reduce((a, b) => {
     return parseFloat(a) + parseFloat(b);
   }, 0);
 
-export const extractStats = data =>
+export const extractStats = (data) =>
   _omit(data, "avg_satisfaction_rate", "users");
 
 /*
@@ -30,7 +30,7 @@ export const nbUsersReturningAverage = (nbUsersList, nbUsersReturningList) => {
   // Il faut exclure les moyennes à 0 de la division pour ne pas fausser le résultat
   const totalNbUsersReturningAverage = parseFloat(
     sum(nbUsersReturningAveragePerMonth) /
-      nbUsersReturningAveragePerMonth.filter(average => average !== 0).length
+      nbUsersReturningAveragePerMonth.filter((average) => average !== 0).length
   ).toFixed(1);
 
   return totalNbUsersReturningAverage;

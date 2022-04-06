@@ -1,6 +1,6 @@
 import _get from "lodash.get";
 
-export const getEnterpriseName = data => {
+export const getEnterpriseName = (data) => {
   return (
     _get(data, "raison_sociale") ||
     _get(data, "sigle") ||
@@ -11,5 +11,5 @@ export const getEnterpriseName = data => {
 
 export const getEstablishment = (siret, establishments) =>
   establishments.find(
-    establishment => establishment.siret.trim() === siret.trim()
+    (establishment) => establishment.siret.trim() === siret.trim()
   );

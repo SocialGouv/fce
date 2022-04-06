@@ -1,7 +1,8 @@
 import classNames from "classnames";
-import Button from "../../../shared/Button";
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
+
+import Button from "../../../shared/Button";
 
 const FormSubmit = ({ loading, isDisabled, label }) => (
   <Button
@@ -9,16 +10,16 @@ const FormSubmit = ({ loading, isDisabled, label }) => (
     value={label}
     buttonClasses={classNames("login__button", {
       "is-loading": loading,
-      "is-tertiary": !isDisabled
+      "is-tertiary": !isDisabled,
     })}
     isDisabled={isDisabled}
   />
 );
 
 FormSubmit.propTypes = {
-  loading: PropTypes.bool,
   isDisabled: PropTypes.bool,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  loading: PropTypes.bool,
 };
 
 export default FormSubmit;

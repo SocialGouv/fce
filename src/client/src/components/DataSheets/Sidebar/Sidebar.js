@@ -1,19 +1,20 @@
-import React from "react";
+import "./sidebar.scss";
+
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
+import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import EstablishmentsItems from "./EstablishmentsItems/EstablishmentsItems";
-import Value from "../../shared/Value";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+
 import Config from "../../../services/Config";
 import {
-  setSearchTerm,
+  resetSearch,
   setSearchFilters,
-  resetSearch
+  setSearchTerm,
 } from "../../../services/Store/actions";
 import Button from "../../shared/Button";
-
-import "./sidebar.scss";
+import Value from "../../shared/Value";
+import EstablishmentsItems from "./EstablishmentsItems/EstablishmentsItems";
 
 const Sidebar = ({
   establishments,
@@ -22,12 +23,12 @@ const Sidebar = ({
   isEstablishmentDisplayed,
   history,
   setSearchTerm,
-  resetSearch
+  resetSearch,
 }) => {
   const limitItems = Config.get("sidebarEstablishmentsLimit");
 
   const closedEstablishmentsCount = establishments.filter(
-    establishment =>
+    (establishment) =>
       establishment.etat_etablissement ===
       Config.get("establishmentState").ferme
   ).length;
@@ -106,7 +107,7 @@ const Sidebar = ({
             <>
               <EstablishmentsItems
                 establishments={establishments.filter(
-                  establishment => establishment.siret !== headOffice?.siret
+                  (establishment) => establishment.siret !== headOffice?.siret
                 )}
                 establishmentType="Autres établissements"
                 limit={limitItems}
@@ -131,29 +132,29 @@ const Sidebar = ({
   );
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    setSearchTerm: term => {
-      return dispatch(setSearchTerm(term));
-    },
-    setSearchFilters: filters => {
-      dispatch(setSearchFilters(filters));
-    },
     resetSearch: () => {
       dispatch(resetSearch());
-    }
+    },
+    setSearchFilters: (filters) => {
+      dispatch(setSearchFilters(filters));
+    },
+    setSearchTerm: (term) => {
+      return dispatch(setSearchTerm(term));
+    },
   };
 };
 
 Sidebar.propTypes = {
-  establishments: PropTypes.array.isRequired,
   enterprise: PropTypes.object.isRequired,
+  establishments: PropTypes.array.isRequired,
   headOffice: PropTypes.object.isRequired,
-  isEstablishmentDisplayed: PropTypes.bool,
   history: PropTypes.object.isRequired,
-  setSearchTerm: PropTypes.func.isRequired,
+  isEstablishmentDisplayed: PropTypes.bool,
+  resetSearch: PropTypes.func.isRequired,
   setSearchFilters: PropTypes.func.isRequired,
-  resetSearch: PropTypes.func.isRequired
+  setSearchTerm: PropTypes.func.isRequired,
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(Sidebar));

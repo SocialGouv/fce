@@ -1,16 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
 import _get from "lodash.get";
+import PropTypes from "prop-types";
+import React from "react";
+
+import { formatNumber, formatSiret } from "../../../../../helpers/utils";
 import Value from "../../../../shared/Value";
-import Subcategory from "../../SharedComponents/Subcategory";
 import Data from "../../SharedComponents/Data";
-import Table from "../../SharedComponents/Table";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
-import { formatNumber, formatSiret } from "../../../../../helpers/utils";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Table from "../../SharedComponents/Table";
 
 const ActivitePartielle = ({
-  enterprise: { activite_partielle, etablissements }
+  enterprise: { activite_partielle, etablissements },
 }) => {
   const hasActivitePartielle = !!activite_partielle;
 
@@ -23,7 +24,7 @@ const ActivitePartielle = ({
         totals.nbHeuresConsommees += parseFloat(nbHeuresConsommees);
         return {
           nbHeuresAutorisees: totals.nbHeuresAutorisees,
-          nbHeuresConsommees: totals.nbHeuresConsommees
+          nbHeuresConsommees: totals.nbHeuresConsommees,
         };
       },
       { nbHeuresAutorisees: 0, nbHeuresConsommees: 0 }
@@ -50,14 +51,14 @@ const ActivitePartielle = ({
                 <th className="th">
                   Date de décision de la dernière convention
                 </th>
-                <th className="th see-details"></th>
+                <th className="th see-details" />
               </tr>
             </thead>
             <tbody>
               {activite_partielle.map(
                 ({ siret, nbHeuresAutorisees, nbHeuresConsommees, date }) => {
                   const establishment = etablissements.find(
-                    etab => etab.siret.trim() === siret.trim()
+                    (etab) => etab.siret.trim() === siret.trim()
                   );
                   const etat = _get(establishment, "etat_etablissement");
                   const categorie = _get(
@@ -120,7 +121,7 @@ const ActivitePartielle = ({
 };
 
 ActivitePartielle.propTypes = {
-  enterprise: PropTypes.object.isRequired
+  enterprise: PropTypes.object.isRequired,
 };
 
 export default ActivitePartielle;

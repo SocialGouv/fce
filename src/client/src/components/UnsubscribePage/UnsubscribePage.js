@@ -1,10 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
 import "./unsubscribePage.scss";
 
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
+
 const UnsubscribePage = ({
-  unsubscriptionResponse: { isLoading, message, hasError }
+  unsubscriptionResponse: { isLoading, message, hasError },
 }) => {
   const unsubscribeMessage = isLoading ? "Désinscription en cours..." : message;
 
@@ -15,7 +16,7 @@ const UnsubscribePage = ({
         <div
           className={classNames("notification", {
             "is-danger": hasError,
-            "is-success": !hasError
+            "is-success": !hasError,
           })}
         >
           {unsubscribeMessage}
@@ -27,10 +28,10 @@ const UnsubscribePage = ({
 
 UnsubscribePage.propTypes = {
   unsubscriptionResponse: PropTypes.shape({
+    hasError: PropTypes.bool,
     isLoading: PropTypes.bool,
     message: PropTypes.string,
-    hasError: PropTypes.bool
-  })
+  }),
 };
 
 export default UnsubscribePage;

@@ -1,8 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Select from "react-select";
-import { selectCustomStyles } from "./customStyles";
 import { prop } from "lodash/fp";
+import PropTypes from "prop-types";
+import React from "react";
+import Select from "react-select";
+
+import { selectCustomStyles } from "./customStyles";
 
 const AutoCompleteFilter = ({
   filters,
@@ -10,9 +11,9 @@ const AutoCompleteFilter = ({
   removeFilter,
   options,
   id,
-  label
+  label,
 }) => {
-  const value = options.filter(option => filters[id]?.includes(option.value));
+  const value = options.filter((option) => filters[id]?.includes(option.value));
 
   return (
     <div>
@@ -25,7 +26,7 @@ const AutoCompleteFilter = ({
         isMulti
         options={options}
         value={value}
-        onChange={option => {
+        onChange={(option) => {
           option ? addFilter(id, option.map(prop("value"))) : removeFilter(id);
         }}
         isClearable
@@ -37,12 +38,12 @@ const AutoCompleteFilter = ({
 };
 
 AutoCompleteFilter.propTypes = {
-  filters: PropTypes.object,
   addFilter: PropTypes.func.isRequired,
-  removeFilter: PropTypes.func.isRequired,
-  options: PropTypes.array.isRequired,
+  filters: PropTypes.object,
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
+  options: PropTypes.array.isRequired,
+  removeFilter: PropTypes.func.isRequired,
 };
 
 export default AutoCompleteFilter;

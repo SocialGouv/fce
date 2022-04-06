@@ -1,9 +1,9 @@
-import React from "react";
+import "./button.scss";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-
-import "./button.scss";
+import React from "react";
 
 const Button = ({
   value = "Valider",
@@ -28,7 +28,7 @@ const Button = ({
         <span
           className={classNames([
             "button-icon",
-            `button-icon--${rowReverse ? "before" : "after"}-label`
+            `button-icon--${rowReverse ? "before" : "after"}-label`,
           ])}
         >
           <FontAwesomeIcon
@@ -44,14 +44,14 @@ const Button = ({
 };
 
 Button.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  icon: PropTypes.object,
-  faProps: PropTypes.object,
   buttonClasses: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   callback: PropTypes.func,
-  rowReverse: PropTypes.bool,
+  faProps: PropTypes.object,
+  icon: PropTypes.object,
   iconClasses: PropTypes.arrayOf(PropTypes.string),
-  isDisabled: PropTypes.bool
+  isDisabled: PropTypes.bool,
+  rowReverse: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default Button;

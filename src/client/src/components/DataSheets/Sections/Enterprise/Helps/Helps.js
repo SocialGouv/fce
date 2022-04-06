@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedkit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
 
 import Apprentissage from "./Subcategory/Apprentissage";
 
@@ -25,7 +25,7 @@ const Helps = ({ enterprise }) => {
 };
 
 Helps.propTypes = {
-  enterprise: PropTypes.object.isRequired
+  enterprise: PropTypes.object.isRequired,
 };
 
 export default Helps;

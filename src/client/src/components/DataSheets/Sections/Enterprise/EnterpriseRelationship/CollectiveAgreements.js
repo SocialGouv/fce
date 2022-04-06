@@ -1,8 +1,9 @@
-import React from "react";
 import PropTypes from "prop-types";
-import Subcategory from "../../SharedComponents/Subcategory";
-import Value from "../../../../shared/Value";
+import React from "react";
+
 import Config from "../../../../../services/Config";
+import Value from "../../../../shared/Value";
+import Subcategory from "../../SharedComponents/Subcategory";
 
 export const CollectiveAgreements = ({ idccList = null }) => (
   <div>
@@ -18,19 +19,19 @@ export const CollectiveAgreements = ({ idccList = null }) => (
         <ul>
           {idccList
             ? idccList.map(({ code, libelle }) => (
-              <li className="section-datas__list-item" key={code}>
-                <a
-                  href={
-                    Config.get("legifranceSearchUrl.idcc") +
-                    code.replace(/^0+/, "")
-                  }
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  <Value value={`${code} - ${libelle}`} />
-                </a>
-              </li>
-            ))
+                <li className="section-datas__list-item" key={code}>
+                  <a
+                    href={
+                      Config.get("legifranceSearchUrl.idcc") +
+                      code.replace(/^0+/, "")
+                    }
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <Value value={`${code} - ${libelle}`} />
+                  </a>
+                </li>
+              ))
             : "-"}
         </ul>
       </div>
@@ -39,5 +40,5 @@ export const CollectiveAgreements = ({ idccList = null }) => (
 );
 
 CollectiveAgreements.propTypes = {
-  idccList: PropTypes.array
+  idccList: PropTypes.array,
 };

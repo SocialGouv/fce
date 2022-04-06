@@ -1,5 +1,6 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
+import React, { useState } from "react";
+
 import Button from "../../../../shared/Button/Button";
 import { PsiSiretTable } from "./PsiSiretTable";
 
@@ -25,7 +26,7 @@ export const PsiSiret = ({ establishments, years }) => {
       {numberOfEstablishmentsWithPsi > 9 && (
         <div className="psi-siret__button-wrapper">
           <Button
-            onClick={() => setIsVisiblePsiTable(prevState => !prevState)}
+            onClick={() => setIsVisiblePsiTable((prevState) => !prevState)}
             value={
               isVisiblePsiTable
                 ? "Cacher la liste des établissements"
@@ -54,10 +55,10 @@ export const PsiSiret = ({ establishments, years }) => {
 PsiSiret.propTypes = {
   establishments: PropTypes.shape({
     currentYear: PropTypes.array.isRequired,
-    lastYear: PropTypes.array.isRequired
+    lastYear: PropTypes.array.isRequired,
   }).isRequired,
   years: PropTypes.shape({
     currentYear: PropTypes.number.isRequired,
-    lastYear: PropTypes.number.isRequired
-  }).isRequired
+    lastYear: PropTypes.number.isRequired,
+  }).isRequired,
 };

@@ -1,20 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./agreements.scss";
+
 import { faExternalLinkSquareAlt } from "@fortawesome/free-solid-svg-icons";
-import Subcategory from "../../SharedComponents/Subcategory";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
+import { connect } from "react-redux";
+
+import { toI18nDate } from "../../../../../helpers/Date";
+import { getEnterpriseName } from "../../../../../helpers/Enterprise";
+import { formatEnterpriseAgreements } from "../../../../../helpers/Relationships";
+import { formatNumber, formatSiret } from "../../../../../helpers/utils";
+import Config from "../../../../../services/Config";
 import Data from "../../SharedComponents/Data";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
+import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
-import { formatEnterpriseAgreements } from "../../../../../helpers/Relationships";
-import { getEnterpriseName } from "../../../../../helpers/Enterprise";
-import { toI18nDate } from "../../../../../helpers/Date";
-import { formatNumber, formatSiret } from "../../../../../helpers/utils";
-import Config from "../../../../../services/Config";
-
-import "./agreements.scss";
 
 const Agreements = ({ enterprise, agreements }) => {
   const nbAccords = agreements.totalCount;
@@ -44,7 +45,7 @@ const Agreements = ({ enterprise, agreements }) => {
                   <th className="th enterprise-agreements__last">
                     Date signature du dernier
                   </th>
-                  <th className="th see-details"></th>
+                  <th className="th see-details" />
                 </tr>
               </thead>
               <tbody>
@@ -94,13 +95,13 @@ const Agreements = ({ enterprise, agreements }) => {
 };
 
 Agreements.propTypes = {
+  agreements: PropTypes.object.isRequired,
   enterprise: PropTypes.object.isRequired,
-  agreements: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    agreements: state.agreements
+    agreements: state.agreements,
   };
 };
 

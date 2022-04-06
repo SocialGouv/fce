@@ -1,14 +1,16 @@
 import * as PropTypes from "prop-types";
-import { useOrganismeFormationBySiret } from "../../../../../services/OrganismeFormation/hooks";
-import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
-import Data from "../../SharedComponents/Data";
-import OrganismeFormationInfo from "./OrganismeFormationInfo";
-import OrganismeFormationTypes from "./OrganismeFormationTypes";
-import OrganismeFormationSpecialty from "./OrganismeFormationSpecialty";
-import OrganismeFormationEffectifs from "./OrganismeFormationEffectifs";
-import Subcategory from "../../SharedComponents/Subcategory";
 import React, { useState } from "react";
+
+import { useOrganismeFormationBySiret } from "../../../../../services/OrganismeFormation/hooks";
 import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
+import ButtonLink from "../../../../shared/Button/ButtonLink";
+import Data from "../../SharedComponents/Data";
+import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
+import Subcategory from "../../SharedComponents/Subcategory";
+import OrganismeFormationEffectifs from "./OrganismeFormationEffectifs";
+import OrganismeFormationInfo from "./OrganismeFormationInfo";
+import OrganismeFormationSpecialty from "./OrganismeFormationSpecialty";
+import OrganismeFormationTypes from "./OrganismeFormationTypes";
 
 const OrganismeFormation = ({ siret }) => {
   const { loading, error, data } = useOrganismeFormationBySiret(siret);
@@ -28,7 +30,9 @@ const OrganismeFormation = ({ siret }) => {
               organismes_formation={data.organismes_formation}
             />
             {!showMore ? (
-              <a onClick={() => setShowMore(true)}>&gt; Voir plus de détails</a>
+              <ButtonLink onClick={() => setShowMore(true)}>
+                &gt; Voir plus de détails
+              </ButtonLink>
             ) : (
               <>
                 <OrganismeFormationTypes
@@ -50,7 +54,7 @@ const OrganismeFormation = ({ siret }) => {
 };
 
 OrganismeFormation.propTypes = {
-  siret: PropTypes.string.isRequired
+  siret: PropTypes.string.isRequired,
 };
 
 export default OrganismeFormation;

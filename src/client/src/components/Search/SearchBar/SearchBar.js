@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
 
 const SearchBar = ({ label, searchTerm, setSearchTerm }) => {
   return (
@@ -16,7 +16,7 @@ const SearchBar = ({ label, searchTerm, setSearchTerm }) => {
             name="q"
             id="term"
             className="input is-medium"
-            onChange={e => {
+            onChange={(e) => {
               setSearchTerm(e.target.value);
             }}
             value={searchTerm}
@@ -41,7 +41,7 @@ const SearchBar = ({ label, searchTerm, setSearchTerm }) => {
 SearchBar.propTypes = {
   label: PropTypes.string.isRequired,
   searchTerm: PropTypes.string.isRequired,
-  setSearchTerm: PropTypes.func.isRequired
+  setSearchTerm: PropTypes.func.isRequired,
 };
 
 export default SearchBar;

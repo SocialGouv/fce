@@ -1,16 +1,17 @@
-import React from "react";
+import { faUmbrella } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import _get from "lodash.get";
 import PropTypes from "prop-types";
+import React from "react";
+
+import { formatNumber } from "../../../../../helpers/utils";
+import Value from "../../../../shared/Value";
+import Data from "../../SharedComponents/Data";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Table from "../../SharedComponents/Table";
+import Lice from "./Lice";
 import Pse from "./Pse";
 import Rcc from "./Rcc";
-import Lice from "./Lice";
-import Value from "../../../../shared/Value";
-import Subcategory from "../../SharedComponents/Subcategory";
-import _get from "lodash.get";
-import Data from "../../SharedComponents/Data";
-import Table from "../../SharedComponents/Table";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUmbrella } from "@fortawesome/free-solid-svg-icons";
-import { formatNumber } from "../../../../../helpers/utils";
 
 const EstablishmentMuteco = ({ establishment, enterprise }) => {
   const hasActivitePartielle = !!_get(establishment, `activite_partielle`);
@@ -62,7 +63,7 @@ const EstablishmentMuteco = ({ establishment, enterprise }) => {
                     date,
                     nbHeuresAutorisees,
                     nbHeuresConsommees,
-                    motif
+                    motif,
                   }) => (
                     <tr key={numConvention}>
                       <td>{numConvention}</td>
@@ -125,8 +126,8 @@ const EstablishmentMuteco = ({ establishment, enterprise }) => {
 };
 
 EstablishmentMuteco.propTypes = {
+  enterprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
-  enterprise: PropTypes.object.isRequired
 };
 
 export default EstablishmentMuteco;

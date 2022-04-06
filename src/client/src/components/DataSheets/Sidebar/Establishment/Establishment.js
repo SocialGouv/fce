@@ -1,15 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import classNames from "classnames";
-import Value from "../../../shared/Value";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./establishment.scss";
+
 import { faCircle, faSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
+import _get from "lodash.get";
+import PropTypes from "prop-types";
+import React from "react";
+import { Link } from "react-router-dom";
+
 import { isActiveEstablishment } from "../../../../helpers/Establishment";
 import { formatSiret } from "../../../../helpers/utils";
-import _get from "lodash.get";
-
-import "./establishment.scss";
+import Value from "../../../shared/Value";
 
 const Establishment = ({ establishment }) => {
   const isActive = isActiveEstablishment(establishment);
@@ -48,7 +49,7 @@ const Establishment = ({ establishment }) => {
 };
 
 Establishment.propTypes = {
-  establishment: PropTypes.object.isRequired
+  establishment: PropTypes.object.isRequired,
 };
 
 export default Establishment;

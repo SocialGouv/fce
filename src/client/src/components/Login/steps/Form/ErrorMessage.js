@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
 
 const ErrorMessage = ({ children }) => (
   <div className="login__notif login__notif--error swing-in-top-fwd">
@@ -11,7 +11,7 @@ const ErrorMessage = ({ children }) => (
 );
 
 ErrorMessage.propTypes = {
-  children: PropTypes.oneOfType(PropTypes.element, PropTypes.string)
+  children: PropTypes.oneOfType(PropTypes.element, PropTypes.string),
 };
 
 export default ErrorMessage;

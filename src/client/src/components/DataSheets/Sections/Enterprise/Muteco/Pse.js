@@ -1,8 +1,9 @@
-import React from "react";
 import PropTypes from "prop-types";
-import Subcategory from "../../SharedComponents/Subcategory";
-import ConditionalData from "../../SharedComponents/ConditionalData";
+import React from "react";
+
 import RupcoTable from "../../Enterprise/Muteco/RupcoTable";
+import ConditionalData from "../../SharedComponents/ConditionalData";
+import Subcategory from "../../SharedComponents/Subcategory";
 
 const Pse = ({ pseList }) => {
   const hasPse = !!(pseList && pseList.length);
@@ -19,7 +20,7 @@ const Pse = ({ pseList }) => {
 };
 
 Pse.propTypes = {
-  pseList: PropTypes.arrayOf(PropTypes.object)
+  pseList: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Pse;

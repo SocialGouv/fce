@@ -1,14 +1,15 @@
-import React from "react";
+import "./header.scss";
+
+import { faChevronLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { resetSearch } from "../../../services/Store/actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
-import logo from "../../../assets/img/logo_gouv-65w38h.png";
+import { Link } from "react-router-dom";
 
-import "./header.scss";
+import logo from "../../../assets/img/logo_gouv-65w38h.png";
+import { resetSearch } from "../../../services/Store/actions";
 
 const Header = ({ resetSearch, location, showBetaMessage }) => {
   return (
@@ -77,18 +78,18 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     resetSearch: () => {
       dispatch(resetSearch());
-    }
+    },
   };
 };
 
 Header.propTypes = {
-  resetSearch: PropTypes.func,
   location: PropTypes.object,
-  showBetaMessage: PropTypes.bool.isRequired
+  resetSearch: PropTypes.func,
+  showBetaMessage: PropTypes.bool.isRequired,
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(Header));

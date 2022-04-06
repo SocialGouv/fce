@@ -1,22 +1,23 @@
-import React from "react";
+import "../../dataSheets.scss";
+
 import PropTypes from "prop-types";
+import React from "react";
 import { useLocation } from "react-router-dom";
+
+import Unsubscribe from "../../../../containers/Unsubscribe";
+import UsersFeedback from "../../../../containers/UsersFeedback";
+import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 import withLoading from "../../../../services/withLoading";
 import Sidebar from "../../Sidebar";
-import Header from "./Header";
-import Infos from "./Infos";
-import EnterpriseRelationship from "./EnterpriseRelationship";
-import Muteco from "./Muteco";
-import Direccte from "./Direccte";
-import Helps from "./Helps";
-import QuickAccess from "../SharedComponents/QuickAccess";
 import PrintSection from "../SharedComponents/PrintSection";
-import UsersFeedback from "../../../../containers/UsersFeedback";
-import Unsubscribe from "../../../../containers/Unsubscribe";
-import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
-
-import "../../dataSheets.scss";
+import QuickAccess from "../SharedComponents/QuickAccess";
 import Agrements from "./Agrements/Agrements";
+import Direccte from "./Direccte";
+import EnterpriseRelationship from "./EnterpriseRelationship";
+import Header from "./Header";
+import Helps from "./Helps";
+import Infos from "./Infos";
+import Muteco from "./Muteco";
 
 const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
   const location = useLocation();
@@ -45,10 +46,10 @@ const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
                   { label: "Relation travail", link: "relationship" },
                   {
                     label: "Mutations économiques",
-                    link: "muteco"
+                    link: "muteco",
                   },
                   { label: "Aides", link: "helps" },
-                  { label: "Agréments", link: "agrements" }
+                  { label: "Agréments", link: "agrements" },
                 ]}
               />
               <Infos enterprise={enterprise} headOffice={headOffice} />
@@ -68,10 +69,10 @@ const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
 };
 
 Enterprise.propTypes = {
+  egapro: PropTypes.object.isRequired,
   enterprise: PropTypes.object.isRequired,
   establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
   headOffice: PropTypes.object.isRequired,
-  egapro: PropTypes.object.isRequired
 };
 
 export default withLoading(Enterprise);

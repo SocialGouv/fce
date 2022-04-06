@@ -1,7 +1,8 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
+
 import Config from "../../../../../services/Config";
 
 const State = ({ state }) => {
@@ -15,7 +16,7 @@ const State = ({ state }) => {
 };
 
 State.propTypes = {
-  state: PropTypes.string.isRequired
+  state: PropTypes.string.isRequired,
 };
 
 export default State;

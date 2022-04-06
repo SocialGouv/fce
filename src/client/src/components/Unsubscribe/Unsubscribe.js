@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Toggle from "react-toggle";
-import classNames from "classnames";
-import { CSSTransition } from "react-transition-group";
-
 import "react-toggle/style.css";
 import "./unsubscribe.scss";
+
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
+import Toggle from "react-toggle";
+import { CSSTransition } from "react-transition-group";
 
 const Unsubscribe = ({ isSubscribed, handleChange, message, hasError }) => {
   return (
@@ -20,8 +20,8 @@ const Unsubscribe = ({ isSubscribed, handleChange, message, hasError }) => {
           className={classNames(
             "notification mailing-list-subscription__notification",
             {
+              "is-danger": hasError,
               "is-success": !hasError,
-              "is-danger": hasError
             }
           )}
         >
@@ -47,10 +47,10 @@ const Unsubscribe = ({ isSubscribed, handleChange, message, hasError }) => {
 };
 
 Unsubscribe.propTypes = {
-  isSubscribed: PropTypes.bool.isRequired,
   handleChange: PropTypes.func.isRequired,
+  hasError: PropTypes.bool.isRequired,
+  isSubscribed: PropTypes.bool.isRequired,
   message: PropTypes.string,
-  hasError: PropTypes.bool.isRequired
 };
 
 export default Unsubscribe;

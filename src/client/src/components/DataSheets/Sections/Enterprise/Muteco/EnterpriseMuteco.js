@@ -1,11 +1,12 @@
-import React from "react";
+import { faUmbrella } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
+import React from "react";
+
+import ActivitePartielle from "./ActivitePartielle";
+import Lice from "./Lice";
 import Pse from "./Pse";
 import Rcc from "./Rcc";
-import Lice from "./Lice";
-import ActivitePartielle from "./ActivitePartielle";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUmbrella } from "@fortawesome/free-solid-svg-icons";
 
 const EnterpriseMuteco = ({ enterprise }) => {
   return (
@@ -27,7 +28,7 @@ const EnterpriseMuteco = ({ enterprise }) => {
 };
 
 EnterpriseMuteco.propTypes = {
-  enterprise: PropTypes.object.isRequired
+  enterprise: PropTypes.object.isRequired,
 };
 
 export default EnterpriseMuteco;

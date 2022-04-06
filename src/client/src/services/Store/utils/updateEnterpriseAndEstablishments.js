@@ -1,4 +1,5 @@
 import _clone from "lodash.clonedeep";
+
 import addInteractions from "./addInteractions";
 
 const ESTABLISHMENTS_KEY = "etablissements";
@@ -40,7 +41,7 @@ const updateEntity = (currentEntity, newData) => {
 const updateEstablishments = (currentEstablishments, newEstablishments) => {
   const finalEstablishments = _clone(currentEstablishments);
 
-  newEstablishments.forEach(newEstablishmentData => {
+  newEstablishments.forEach((newEstablishmentData) => {
     const indexToUpdate = currentEstablishments.findIndex(
       ({ siret }) => siret === newEstablishmentData.siret
     );
@@ -59,7 +60,7 @@ const updateEstablishments = (currentEstablishments, newEstablishments) => {
   return finalEstablishments;
 };
 
-const postProcess = entity => {
+const postProcess = (entity) => {
   const finalEntity = addInteractions(entity);
   if (Array.isArray(finalEntity.etablissements)) {
     finalEntity.etablissements.forEach((establishment, index) => {

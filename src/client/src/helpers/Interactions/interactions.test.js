@@ -1,120 +1,120 @@
 import {
-  getLastInteraction,
   getDistinctEstablishmentsSiret,
-  groupInteractionsBySiret,
+  getEnterpriseInteractions,
   getEstablishmentsLastInteractions,
-  getEnterpriseInteractions
+  getLastInteraction,
+  groupInteractionsBySiret,
 } from "./interactions";
 
 const sampleInteractions = [
   {
-    siret: "34326262205742",
-    pole: "T",
-    unite: "UC 00 - unité de contrôle 0 d'inspection des Hautes Pyrénées",
-    type: null,
+    agent: null,
     date: "2018-03-28",
-    agent: null,
-    note: null
-  },
-  {
+    note: null,
+    pole: "T",
     siret: "34326262205742",
-    pole: "T",
-    unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
     type: null,
-    date: "2019-03-28",
-    agent: null,
-    note: null
+    unite: "UC 00 - unité de contrôle 0 d'inspection des Hautes Pyrénées",
   },
   {
-    siret: "34326262206666",
-    pole: "T",
-    unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
-    type: null,
-    date: "2019-03-28",
     agent: null,
-    note: null
+    date: "2019-03-28",
+    note: null,
+    pole: "T",
+    siret: "34326262205742",
+    type: null,
+    unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
   },
   {
-    siret: "34326262206666",
+    agent: null,
+    date: "2019-03-28",
+    note: null,
     pole: "T",
-    unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
+    siret: "34326262206666",
     type: null,
+    unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
+  },
+  {
+    agent: null,
     date: "2020-03-28",
-    agent: null,
-    note: null
+    note: null,
+    pole: "T",
+    siret: "34326262206666",
+    type: null,
+    unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
   },
   {
-    siret: "34326262205742",
-    pole: "C",
-    unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-    type: null,
+    agent: null,
     date: "2020-03-30",
-    agent: null,
-    note: null
+    note: null,
+    pole: "C",
+    siret: "34326262205742",
+    type: null,
+    unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
   },
   {
-    siret: "34326262205742",
-    pole: "C",
-    unite: "Unité de contrôle des Pyrénées Orientales",
-    type: null,
+    agent: null,
     date: "2018-12-03",
-    agent: null,
-    note: null
+    note: null,
+    pole: "C",
+    siret: "34326262205742",
+    type: null,
+    unite: "Unité de contrôle des Pyrénées Orientales",
   },
   {
-    siret: "34326262207777",
-    pole: "C",
-    unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-    type: null,
+    agent: null,
     date: "2020-03-30",
-    agent: null,
-    note: null
-  },
-  {
-    siret: "34326262207777",
+    note: null,
     pole: "C",
+    siret: "34326262207777",
+    type: null,
     unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-    type: null,
+  },
+  {
+    agent: null,
     date: "2020-01-30",
-    agent: null,
-    note: null
+    note: null,
+    pole: "C",
+    siret: "34326262207777",
+    type: null,
+    unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
   },
   {
-    siret: "34326262205742",
-    pole: "3E_SRC",
-    unite: "DDPP DE L'EURE",
-    type: null,
+    agent: null,
     date: "2019-11-15",
-    agent: null,
-    note: null
+    note: null,
+    pole: "3E_SRC",
+    siret: "34326262205742",
+    type: null,
+    unite: "DDPP DE L'EURE",
   },
   {
-    siret: "34326262205742",
-    pole: "3E_SRC",
-    unite: "DDPP DES BOUCHES DU RHONE",
-    type: null,
+    agent: null,
     date: "2020-02-01",
-    agent: null,
-    note: null
-  },
-  {
-    siret: "34326262208888",
+    note: null,
     pole: "3E_SRC",
-    unite: "DDPP DE L'EURE",
+    siret: "34326262205742",
     type: null,
-    date: "2019-11-15",
-    agent: null,
-    note: null
-  },
-  {
-    siret: "34326262208888",
-    pole: "3E_SRC",
     unite: "DDPP DES BOUCHES DU RHONE",
-    type: null,
-    date: "2019-03-04",
+  },
+  {
     agent: null,
-    note: null
-  }
+    date: "2019-11-15",
+    note: null,
+    pole: "3E_SRC",
+    siret: "34326262208888",
+    type: null,
+    unite: "DDPP DE L'EURE",
+  },
+  {
+    agent: null,
+    date: "2019-03-04",
+    note: null,
+    pole: "3E_SRC",
+    siret: "34326262208888",
+    type: null,
+    unite: "DDPP DES BOUCHES DU RHONE",
+  },
 ];
 
 test("get last interaction by date for one establishment", () => {
@@ -123,13 +123,13 @@ test("get last interaction by date for one establishment", () => {
   );
 
   expect(getLastInteraction(singleEstablishmentInteractions)).toEqual({
-    siret: "34326262205742",
-    pole: "C",
-    unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-    type: null,
-    date: "2020-03-30",
     agent: null,
-    note: null
+    date: "2020-03-30",
+    note: null,
+    pole: "C",
+    siret: "34326262205742",
+    type: null,
+    unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
   });
 });
 
@@ -138,7 +138,7 @@ test("get distinct siret numbers from a list of interactions", () => {
     "34326262205742",
     "34326262206666",
     "34326262207777",
-    "34326262208888"
+    "34326262208888",
   ]);
 });
 
@@ -146,402 +146,402 @@ test("get interactions sorted by siret", () => {
   expect(groupInteractionsBySiret(sampleInteractions)).toEqual([
     [
       {
-        siret: "34326262205742",
-        pole: "T",
-        unite: "UC 00 - unité de contrôle 0 d'inspection des Hautes Pyrénées",
-        type: null,
+        agent: null,
         date: "2018-03-28",
-        agent: null,
-        note: null
-      },
-      {
-        siret: "34326262205742",
+        note: null,
         pole: "T",
-        unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
+        siret: "34326262205742",
         type: null,
-        date: "2019-03-28",
-        agent: null,
-        note: null
+        unite: "UC 00 - unité de contrôle 0 d'inspection des Hautes Pyrénées",
       },
       {
+        agent: null,
+        date: "2019-03-28",
+        note: null,
+        pole: "T",
         siret: "34326262205742",
+        type: null,
+        unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
+      },
+      {
+        agent: null,
+        date: "2020-03-30",
+        note: null,
         pole: "C",
+        siret: "34326262205742",
+        type: null,
         unite:
           "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-        type: null,
-        date: "2020-03-30",
-        agent: null,
-        note: null
       },
       {
-        siret: "34326262205742",
-        pole: "C",
-        unite: "Unité de contrôle des Pyrénées Orientales",
-        type: null,
+        agent: null,
         date: "2018-12-03",
-        agent: null,
-        note: null
+        note: null,
+        pole: "C",
+        siret: "34326262205742",
+        type: null,
+        unite: "Unité de contrôle des Pyrénées Orientales",
       },
       {
-        siret: "34326262205742",
-        pole: "3E_SRC",
-        unite: "DDPP DE L'EURE",
-        type: null,
+        agent: null,
         date: "2019-11-15",
-        agent: null,
-        note: null
+        note: null,
+        pole: "3E_SRC",
+        siret: "34326262205742",
+        type: null,
+        unite: "DDPP DE L'EURE",
       },
       {
-        siret: "34326262205742",
-        pole: "3E_SRC",
-        unite: "DDPP DES BOUCHES DU RHONE",
-        type: null,
+        agent: null,
         date: "2020-02-01",
-        agent: null,
-        note: null
-      }
-    ],
-    [
-      {
-        siret: "34326262206666",
-        pole: "T",
-        unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
-        type: null,
-        date: "2019-03-28",
-        agent: null,
-        note: null
-      },
-      {
-        siret: "34326262206666",
-        pole: "T",
-        unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
-        type: null,
-        date: "2020-03-28",
-        agent: null,
-        note: null
-      }
-    ],
-    [
-      {
-        siret: "34326262207777",
-        pole: "C",
-        unite:
-          "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-        type: null,
-        date: "2020-03-30",
-        agent: null,
-        note: null
-      },
-      {
-        siret: "34326262207777",
-        pole: "C",
-        unite:
-          "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-        type: null,
-        date: "2020-01-30",
-        agent: null,
-        note: null
-      }
-    ],
-    [
-      {
-        siret: "34326262208888",
+        note: null,
         pole: "3E_SRC",
-        unite: "DDPP DE L'EURE",
+        siret: "34326262205742",
         type: null,
-        date: "2019-11-15",
-        agent: null,
-        note: null
-      },
-      {
-        siret: "34326262208888",
-        pole: "3E_SRC",
         unite: "DDPP DES BOUCHES DU RHONE",
-        type: null,
-        date: "2019-03-04",
+      },
+    ],
+    [
+      {
         agent: null,
-        note: null
-      }
-    ]
+        date: "2019-03-28",
+        note: null,
+        pole: "T",
+        siret: "34326262206666",
+        type: null,
+        unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
+      },
+      {
+        agent: null,
+        date: "2020-03-28",
+        note: null,
+        pole: "T",
+        siret: "34326262206666",
+        type: null,
+        unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
+      },
+    ],
+    [
+      {
+        agent: null,
+        date: "2020-03-30",
+        note: null,
+        pole: "C",
+        siret: "34326262207777",
+        type: null,
+        unite:
+          "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
+      },
+      {
+        agent: null,
+        date: "2020-01-30",
+        note: null,
+        pole: "C",
+        siret: "34326262207777",
+        type: null,
+        unite:
+          "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
+      },
+    ],
+    [
+      {
+        agent: null,
+        date: "2019-11-15",
+        note: null,
+        pole: "3E_SRC",
+        siret: "34326262208888",
+        type: null,
+        unite: "DDPP DE L'EURE",
+      },
+      {
+        agent: null,
+        date: "2019-03-04",
+        note: null,
+        pole: "3E_SRC",
+        siret: "34326262208888",
+        type: null,
+        unite: "DDPP DES BOUCHES DU RHONE",
+      },
+    ],
   ]);
 });
 
 test("get the last interaction of each establishment", () => {
   expect(getEstablishmentsLastInteractions(sampleInteractions)).toEqual([
     {
+      agent: null,
+      date: "2020-03-30",
+      note: null,
+      pole: "C",
       siret: "34326262205742",
-      pole: "C",
-      unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
       type: null,
-      date: "2020-03-30",
-      agent: null,
-      note: null
+      unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
     },
     {
-      siret: "34326262206666",
-      pole: "T",
-      unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
-      type: null,
+      agent: null,
       date: "2020-03-28",
-      agent: null,
-      note: null
+      note: null,
+      pole: "T",
+      siret: "34326262206666",
+      type: null,
+      unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
     },
     {
-      siret: "34326262207777",
-      pole: "C",
-      unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-      type: null,
+      agent: null,
       date: "2020-03-30",
-      agent: null,
-      note: null
+      note: null,
+      pole: "C",
+      siret: "34326262207777",
+      type: null,
+      unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
     },
     {
-      siret: "34326262208888",
-      pole: "3E_SRC",
-      unite: "DDPP DE L'EURE",
-      type: null,
-      date: "2019-11-15",
       agent: null,
-      note: null
-    }
+      date: "2019-11-15",
+      note: null,
+      pole: "3E_SRC",
+      siret: "34326262208888",
+      type: null,
+      unite: "DDPP DE L'EURE",
+    },
   ]);
 });
 
 const sampleEnterprise = {
-  interactions_C: [
+  interactions_3E_SRC: [
     {
-      siret: "34326262205742",
-      pole: "C",
-      unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-      type: null,
-      date: "2020-03-30",
       agent: null,
-      note: null,
+      date: "2019-11-15",
       etablissement: {
-        etat_etablissement: "A",
         adresse_composant: {
           code_postal: "31000",
-          localite: "TOULOUSE"
-        }
-      }
+          localite: "TOULOUSE",
+        },
+        etat_etablissement: "A",
+      },
+      note: null,
+      pole: "3E_SRC",
+      siret: "34326262205742",
+      type: null,
+      unite: "DDPP DE L'EURE",
     },
     {
-      siret: "34326262205742",
-      pole: "C",
-      unite: "Unité de contrôle des Pyrénées Orientales",
-      type: null,
-      date: "2018-12-03",
       agent: null,
-      note: null,
+      date: "2020-02-01",
       etablissement: {
-        etat_etablissement: "A",
         adresse_composant: {
           code_postal: "31000",
-          localite: "TOULOUSE"
-        }
-      }
-    },
-    {
-      siret: "34326262206666",
-      pole: "C",
-      unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-      type: null,
-      date: "2020-03-30",
-      agent: null,
-      note: null,
-      etablissement: {
+          localite: "TOULOUSE",
+        },
         etat_etablissement: "A",
-        adresse_composant: {
-          code_postal: "32000",
-          localite: "AUCH"
-        }
-      }
+      },
+      note: null,
+      pole: "3E_SRC",
+      siret: "34326262205742",
+      type: null,
+      unite: "DDPP DES BOUCHES DU RHONE",
     },
     {
-      siret: "34326262207777",
-      pole: "C",
-      unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
-      type: null,
-      date: "2020-01-30",
       agent: null,
-      note: null,
+      date: "2019-11-15",
       etablissement: {
-        etat_etablissement: "F",
         adresse_composant: {
           code_postal: "64000",
-          localite: "BAYONNE"
-        }
-      }
-    }
+          localite: "BAYONNE",
+        },
+        etat_etablissement: "F",
+      },
+      note: null,
+      pole: "3E_SRC",
+      siret: "34326262207777",
+      type: null,
+      unite: "DDPP DE L'EURE",
+    },
+    {
+      agent: null,
+      date: "2019-03-04",
+      etablissement: {
+        adresse_composant: {
+          code_postal: "81000",
+          localite: "ALBI",
+        },
+        etat_etablissement: "A",
+      },
+      note: null,
+      pole: "3E_SRC",
+      siret: "34326262208888",
+      type: null,
+      unite: "DDPP DES BOUCHES DU RHONE",
+    },
+  ],
+  interactions_C: [
+    {
+      agent: null,
+      date: "2020-03-30",
+      etablissement: {
+        adresse_composant: {
+          code_postal: "31000",
+          localite: "TOULOUSE",
+        },
+        etat_etablissement: "A",
+      },
+      note: null,
+      pole: "C",
+      siret: "34326262205742",
+      type: null,
+      unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
+    },
+    {
+      agent: null,
+      date: "2018-12-03",
+      etablissement: {
+        adresse_composant: {
+          code_postal: "31000",
+          localite: "TOULOUSE",
+        },
+        etat_etablissement: "A",
+      },
+      note: null,
+      pole: "C",
+      siret: "34326262205742",
+      type: null,
+      unite: "Unité de contrôle des Pyrénées Orientales",
+    },
+    {
+      agent: null,
+      date: "2020-03-30",
+      etablissement: {
+        adresse_composant: {
+          code_postal: "32000",
+          localite: "AUCH",
+        },
+        etat_etablissement: "A",
+      },
+      note: null,
+      pole: "C",
+      siret: "34326262206666",
+      type: null,
+      unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
+    },
+    {
+      agent: null,
+      date: "2020-01-30",
+      etablissement: {
+        adresse_composant: {
+          code_postal: "64000",
+          localite: "BAYONNE",
+        },
+        etat_etablissement: "F",
+      },
+      note: null,
+      pole: "C",
+      siret: "34326262207777",
+      type: null,
+      unite: "UC 00 - unité de contrôle 0 d'inspection du travail de l'Ariège",
+    },
   ],
   interactions_T: [
     {
-      siret: "34326262205742",
-      pole: "T",
-      unite: "UC 00 - unité de contrôle 0 d'inspection des Hautes Pyrénées",
-      type: null,
+      agent: null,
       date: "2018-03-28",
-      agent: null,
-      note: null,
       etablissement: {
-        etat_etablissement: "A",
         adresse_composant: {
           code_postal: "31000",
-          localite: "TOULOUSE"
-        }
-      }
-    },
-    {
+          localite: "TOULOUSE",
+        },
+        etat_etablissement: "A",
+      },
+      note: null,
+      pole: "T",
       siret: "34326262205742",
-      pole: "T",
-      unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
       type: null,
-      date: "2019-03-28",
-      agent: null,
-      note: null,
-      etablissement: {
-        etat_etablissement: "A",
-        adresse_composant: {
-          code_postal: "31000",
-          localite: "TOULOUSE"
-        }
-      }
+      unite: "UC 00 - unité de contrôle 0 d'inspection des Hautes Pyrénées",
     },
     {
-      siret: "34326262206666",
-      pole: "T",
-      unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
-      type: null,
-      date: "2019-03-28",
       agent: null,
-      note: null,
+      date: "2019-03-28",
       etablissement: {
+        adresse_composant: {
+          code_postal: "31000",
+          localite: "TOULOUSE",
+        },
         etat_etablissement: "A",
+      },
+      note: null,
+      pole: "T",
+      siret: "34326262205742",
+      type: null,
+      unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
+    },
+    {
+      agent: null,
+      date: "2019-03-28",
+      etablissement: {
         adresse_composant: {
           code_postal: "32000",
-          localite: "AUCH"
-        }
-      }
-    },
-    {
-      siret: "34326262208888",
+          localite: "AUCH",
+        },
+        etat_etablissement: "A",
+      },
+      note: null,
       pole: "T",
+      siret: "34326262206666",
+      type: null,
       unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
-      type: null,
+    },
+    {
+      agent: null,
       date: "2020-03-28",
-      agent: null,
-      note: null,
       etablissement: {
-        etat_etablissement: "A",
         adresse_composant: {
           code_postal: "81000",
-          localite: "ALBI"
-        }
-      }
-    }
-  ],
-  interactions_3E_SRC: [
-    {
-      siret: "34326262205742",
-      pole: "3E_SRC",
-      unite: "DDPP DE L'EURE",
-      type: null,
-      date: "2019-11-15",
-      agent: null,
-      note: null,
-      etablissement: {
+          localite: "ALBI",
+        },
         etat_etablissement: "A",
-        adresse_composant: {
-          code_postal: "31000",
-          localite: "TOULOUSE"
-        }
-      }
-    },
-    {
-      siret: "34326262205742",
-      pole: "3E_SRC",
-      unite: "DDPP DES BOUCHES DU RHONE",
-      type: null,
-      date: "2020-02-01",
-      agent: null,
+      },
       note: null,
-      etablissement: {
-        etat_etablissement: "A",
-        adresse_composant: {
-          code_postal: "31000",
-          localite: "TOULOUSE"
-        }
-      }
-    },
-    {
-      siret: "34326262207777",
-      pole: "3E_SRC",
-      unite: "DDPP DE L'EURE",
-      type: null,
-      date: "2019-11-15",
-      agent: null,
-      note: null,
-      etablissement: {
-        etat_etablissement: "F",
-        adresse_composant: {
-          code_postal: "64000",
-          localite: "BAYONNE"
-        }
-      }
-    },
-    {
+      pole: "T",
       siret: "34326262208888",
-      pole: "3E_SRC",
-      unite: "DDPP DES BOUCHES DU RHONE",
       type: null,
-      date: "2019-03-04",
-      agent: null,
-      note: null,
-      etablissement: {
-        etat_etablissement: "A",
-        adresse_composant: {
-          code_postal: "81000",
-          localite: "ALBI"
-        }
-      }
-    }
-  ]
+      unite: "Unité de Contrôle 4 Secteur Nord-Ouest de Haute-Garonne",
+    },
+  ],
 };
 
-test("get the last interaction of each establishment", () => {
+test("get interaction of each establishment", () => {
   expect(
     getEnterpriseInteractions({
       enterprise: sampleEnterprise,
-      type: ["interactions_3E_SRC", "interactions_T", "interactions_C"]
+      type: ["interactions_3E_SRC", "interactions_T", "interactions_C"],
     })
   ).toEqual([
     {
-      siret: "34326262205742",
-      etat: "A",
       commune: "31000 TOULOUSE",
       date: "30/03/2020",
-      pole: "C"
+      etat: "A",
+      pole: "C",
+      siret: "34326262205742",
     },
     {
-      siret: "34326262206666",
-      etat: "A",
       commune: "32000 AUCH",
       date: "30/03/2020",
-      pole: "C"
+      etat: "A",
+      pole: "C",
+      siret: "34326262206666",
     },
     {
-      siret: "34326262208888",
-      etat: "A",
       commune: "81000 ALBI",
       date: "28/03/2020",
-      pole: "T"
+      etat: "A",
+      pole: "T",
+      siret: "34326262208888",
     },
     {
-      siret: "34326262207777",
-      etat: "F",
       commune: "64000 BAYONNE",
       date: "30/01/2020",
-      pole: "C"
-    }
+      etat: "F",
+      pole: "C",
+      siret: "34326262207777",
+    },
   ]);
 });

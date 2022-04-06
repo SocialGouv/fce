@@ -1,12 +1,14 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Subcategory from "../../SharedComponents/Subcategory";
-import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import "./psi.scss";
-import Value from "../../../../shared/Value";
-import Table from "../../SharedComponents/Table";
+
+import PropTypes from "prop-types";
+import React from "react";
+
 import { useAccidentTravailBySiret } from "../../../../../services/AccidentTravail/hooks";
+import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
+import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Table from "../../SharedComponents/Table";
 
 const WorkAccident = ({ siret }) => {
   const { loading, data, error } = useAccidentTravailBySiret(siret);
@@ -85,7 +87,7 @@ const WorkAccident = ({ siret }) => {
 };
 
 WorkAccident.propTypes = {
-  siret: PropTypes.string.isRequired
+  siret: PropTypes.string.isRequired,
 };
 
 export default WorkAccident;

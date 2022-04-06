@@ -1,21 +1,22 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Helmet } from "react-helmet";
-import Value from "../../../../shared/Value";
-import Dashboard from "../Dashboard";
+import { faCircle, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquare, faCircle } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
+import React from "react";
+import { Helmet } from "react-helmet";
+
+import { formatAddress } from "../../../../../helpers/Address";
 import { getEnterpriseName } from "../../../../../helpers/Enterprise";
 import { isActiveEstablishment } from "../../../../../helpers/Establishment";
-import { formatAddress } from "../../../../../helpers/Address";
-import InfoBox from "../../../../shared/InfoBox";
 import { formatSiret } from "../../../../../helpers/utils";
+import InfoBox from "../../../../shared/InfoBox";
+import Value from "../../../../shared/Value";
+import Dashboard from "../Dashboard";
 
 const EstablishmentHeader = ({
   enterprise,
   establishment,
   establishment: { adresse_composant },
-  apprentissage
+  apprentissage,
 }) => {
   const address = adresse_composant && formatAddress(adresse_composant);
 
@@ -104,10 +105,10 @@ const EstablishmentHeader = ({
 };
 
 EstablishmentHeader.propTypes = {
+  adresse_composant: PropTypes.object,
+  apprentissage: PropTypes.object.isRequired,
   enterprise: PropTypes.object.isRequired,
   establishment: PropTypes.object.isRequired,
-  adresse_composant: PropTypes.object,
-  apprentissage: PropTypes.object.isRequired
 };
 
 export default EstablishmentHeader;

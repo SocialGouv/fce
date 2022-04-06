@@ -1,17 +1,18 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
+
 import Agreements from "./Agreements";
-import Psi from "./Psi";
-import Egapro from "./Egapro";
 import { CollectiveAgreements } from "./CollectiveAgreements";
+import Egapro from "./Egapro";
+import Psi from "./Psi";
 import WorkAccident from "./WorkAccident";
 
 const EnterpriseRelationship = ({
   enterprise,
   egapro,
-  enterprise: { idcc }
+  enterprise: { idcc },
 }) => (
   <section id="relationship" className="data-sheet__section">
     <div className="section-header">
@@ -34,8 +35,8 @@ const EnterpriseRelationship = ({
 );
 
 EnterpriseRelationship.propTypes = {
+  egapro: PropTypes.object.isRequired,
   enterprise: PropTypes.object.isRequired,
-  egapro: PropTypes.object.isRequired
 };
 
 export default EnterpriseRelationship;

@@ -1,13 +1,13 @@
 import {
+  FETCH_SUCCESSION_ERROR,
   FETCH_SUCCESSION_START,
   FETCH_SUCCESSION_SUCCESS,
-  FETCH_SUCCESSION_ERROR
 } from "../constants/ActionTypes";
 
 const initialState = {
-  successions: [],
+  error: null,
   isLoading: false,
-  error: null
+  successions: [],
 };
 
 const successions = (state = initialState, action) => {
@@ -15,20 +15,20 @@ const successions = (state = initialState, action) => {
     case FETCH_SUCCESSION_START:
       return {
         ...initialState,
-        isLoading: true
+        isLoading: true,
       };
 
     case FETCH_SUCCESSION_SUCCESS:
       return {
-        isLoading: false,
         error: null,
-        successions: action.successions
+        isLoading: false,
+        successions: action.successions,
       };
 
     case FETCH_SUCCESSION_ERROR:
       return {
         ...initialState,
-        error: action.payload
+        error: action.payload,
       };
 
     default:

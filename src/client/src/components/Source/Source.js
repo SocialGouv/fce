@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-
 import "./source.scss";
+
+import PropTypes from "prop-types";
+import React from "react";
 
 const Source = ({ name, updated, isTableCell = false, isCustomSource }) => {
   return isTableCell ? (
@@ -20,9 +20,9 @@ const Source = ({ name, updated, isTableCell = false, isCustomSource }) => {
 
 Source.propTypes = {
   isCustomSource: PropTypes.bool.isRequired,
+  isTableCell: PropTypes.bool,
   name: PropTypes.string,
   updated: PropTypes.string,
-  isTableCell: PropTypes.bool
 };
 
 export default Source;

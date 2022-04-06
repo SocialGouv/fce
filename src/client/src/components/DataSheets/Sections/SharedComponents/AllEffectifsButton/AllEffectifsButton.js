@@ -1,9 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
-import Button from "../../../../shared/Button";
-
 import "./allEffectifsButton.scss";
+
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
+
+import Button from "../../../../shared/Button";
 
 const AllEffectifsButton = ({ getAllEffectifs, value, isLoading }) => {
   return (
@@ -12,7 +13,7 @@ const AllEffectifsButton = ({ getAllEffectifs, value, isLoading }) => {
         onClick={getAllEffectifs}
         value={value}
         buttonClasses={classNames("is-primary", {
-          "is-loading": isLoading
+          "is-loading": isLoading,
         })}
       />
     </div>
@@ -20,9 +21,9 @@ const AllEffectifsButton = ({ getAllEffectifs, value, isLoading }) => {
 };
 
 AllEffectifsButton.propTypes = {
+  getAllEffectifs: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   value: PropTypes.string.isRequired,
-  getAllEffectifs: PropTypes.func.isRequired
 };
 
 export default AllEffectifsButton;

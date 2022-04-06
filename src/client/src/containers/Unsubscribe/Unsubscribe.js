@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
 import UnsubscribeView from "../../components/Unsubscribe";
 import Http from "../../services/Http";
 
@@ -8,7 +9,7 @@ const Unsubscribe = () => {
   const [hasError, setHasError] = useState(false);
   const delay = useRef(null);
 
-  const handleMessage = message => {
+  const handleMessage = (message) => {
     setMessage(message);
     clearTimeout(delay.current);
     delay.current = setTimeout(() => {
@@ -19,10 +20,10 @@ const Unsubscribe = () => {
 
   const checkSubscriptionStatus = () => {
     return Http.get("/mailing-list/user")
-      .then(res => {
+      .then((res) => {
         setIsSubscribed(res.data?.result?.isSubscribed);
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
       });
   };
@@ -36,7 +37,7 @@ const Unsubscribe = () => {
             "Votre email a été supprimé de notre liste de contacts."
           );
         })
-        .catch(e => {
+        .catch((e) => {
           console.error(e);
           setHasError(true);
           handleMessage("Une erreur est survenue, réessayez ultérieurement.");
@@ -47,7 +48,7 @@ const Unsubscribe = () => {
           setIsSubscribed(true);
           handleMessage("Votre email a été ajouté à notre liste de contacts.");
         })
-        .catch(e => {
+        .catch((e) => {
           if (e.response.status === 409) {
             setIsSubscribed(true);
             handleMessage(

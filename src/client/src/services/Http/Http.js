@@ -1,43 +1,44 @@
 import axios from "axios";
 import buildURL from "axios/lib/helpers/buildURL";
-import Config from "../Config";
+
 import Auth from "../Auth";
+import Config from "../Config";
 
 const Http = axios.create({
-  baseURL: Config.get("api_endpoint")
+  baseURL: Config.get("api_endpoint"),
 });
 
 Http.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 
-Http.setAuthorization = token => {
+Http.setAuthorization = (token) => {
   Http.defaults.headers.common["Authorization"] = token;
   return Http;
 };
 
-Http.formData = data => {
+Http.formData = (data) => {
   const formData = new FormData();
-  Object.keys(data).forEach(key => formData.append(key, data[key]));
+  Object.keys(data).forEach((key) => formData.append(key, data[key]));
   return formData;
 };
 
 Http.interceptors.request.use(
-  config => {
+  (config) => {
     if (Auth.isLogged()) {
       config.headers.common["Authorization"] = `Bearer ${Auth.getToken()}`;
     }
     return config;
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
   }
 );
 
 Http.interceptors.response.use(
-  response => {
+  (response) => {
     return response;
   },
-  error => {
+  (error) => {
     if (error.response?.status === 401) {
       Auth.logout();
     }

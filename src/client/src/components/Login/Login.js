@@ -1,7 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import LoginForm from "./steps/Form";
 import "./login.scss";
+
+import PropTypes from "prop-types";
+import React from "react";
+
+import LoginForm from "./steps/Form";
 
 const Login = ({
   login,
@@ -13,7 +15,7 @@ const Login = ({
   setStep,
   showSuccessNotif,
   setShowSuccessNotif,
-  showMailingListSignup
+  showMailingListSignup,
 }) => {
   return (
     <section className="login">
@@ -34,16 +36,16 @@ const Login = ({
 };
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
-  sendCode: PropTypes.func.isRequired,
   errorMessage: PropTypes.string,
   infoMessage: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  step: PropTypes.string.isRequired,
-  setStep: PropTypes.func.isRequired,
-  showSuccessNotif: PropTypes.bool.isRequired,
+  login: PropTypes.func.isRequired,
+  sendCode: PropTypes.func.isRequired,
   setShowSuccessNotif: PropTypes.func.isRequired,
-  showMailingListSignup: PropTypes.bool.isRequired
+  setStep: PropTypes.func.isRequired,
+  showMailingListSignup: PropTypes.bool.isRequired,
+  showSuccessNotif: PropTypes.bool.isRequired,
+  step: PropTypes.string.isRequired,
 };
 
 export default Login;

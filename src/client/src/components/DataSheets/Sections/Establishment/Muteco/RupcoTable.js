@@ -1,10 +1,11 @@
-import React from "react";
+import "./rupcoTable.scss";
+
 import PropTypes from "prop-types";
+import React from "react";
+
 import Value from "../../../../shared/Value";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import Table from "../../SharedComponents/Table";
-
-import "./rupcoTable.scss";
 
 const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
   return (
@@ -20,10 +21,10 @@ const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
         </tr>
       </thead>
       <tbody>
-        {list.map(dossier => {
+        {list.map((dossier) => {
           const hasOtherEstablishments = !!(
             rupcoFiles &&
-            rupcoFiles.find(file => file.numero === dossier.numero)
+            rupcoFiles.find((file) => file.numero === dossier.numero)
               .etablissements.length > 1
           );
 
@@ -74,10 +75,10 @@ const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
 };
 
 RupcoTable.propTypes = {
+  hasTypeColumn: PropTypes.bool,
   list: PropTypes.array.isRequired,
-  siren: PropTypes.string.isRequired,
   rupcoFiles: PropTypes.arrayOf(PropTypes.object),
-  hasTypeColumn: PropTypes.bool
+  siren: PropTypes.string.isRequired,
 };
 
 export default RupcoTable;

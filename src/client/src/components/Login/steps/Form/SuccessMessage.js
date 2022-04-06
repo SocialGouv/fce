@@ -1,7 +1,7 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
+import React from "react";
 
 const SuccessMessage = ({ message }) => (
   <div className="login__notif login__notif--success swing-in-top-fwd">
@@ -11,7 +11,7 @@ const SuccessMessage = ({ message }) => (
 );
 
 SuccessMessage.propTypes = {
-  message: PropTypes.string.isRequired
+  message: PropTypes.string.isRequired,
 };
 
 export default SuccessMessage;

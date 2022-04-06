@@ -7,7 +7,7 @@ export const useScrollToLocationHash = ({ location, offset = -50 }) => {
       behavior: scrollTarget ? "smooth" : "auto",
       top: scrollTarget
         ? scrollTarget.getBoundingClientRect().top + window.pageYOffset + offset
-        : 0
+        : 0,
     });
   }, [location, offset]);
 };

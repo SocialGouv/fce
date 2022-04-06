@@ -1,20 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { withRouter } from "react-router";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./awesomeTable.scss";
+
 import {
   faAngleLeft,
   faAngleRight,
   faSort,
+  faSortDown,
   faSortUp,
-  faSortDown
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
+import PropTypes from "prop-types";
+import React from "react";
+import { withRouter } from "react-router";
+
 import Button from "../shared/Button";
 import LoadSpinner from "../shared/LoadSpinner";
 import Pager from "./Pager";
-
-import "./awesomeTable.scss";
 
 const getSortIcon = (field, sortField, sortDirection) => {
   if (field === sortField) {
@@ -35,12 +36,12 @@ const SearchAwesomeTable = ({
   isSortable = false,
   sortColumn,
   sortField,
-  sortDirection
+  sortDirection,
 }) => (
   <table className="table at">
     <thead className="at__head">
       <tr className="at__head__tr">
-        {fields.map(field => {
+        {fields.map((field) => {
           const isSortableField = isSortable && field.sortKey;
 
           return (
@@ -49,7 +50,7 @@ const SearchAwesomeTable = ({
               className={classNames({
                 at__head__th: true,
                 "at__head__th--important": field.importantHead,
-                "at__head__th--is-sortable": isSortableField
+                "at__head__th--is-sortable": isSortableField,
               })}
               onClick={() => isSortableField && sortColumn(field.sortKey)}
             >
@@ -82,13 +83,13 @@ const SearchAwesomeTable = ({
               <td
                 key={index}
                 className={classNames("at__body__td", {
-                  "table-cell--nowrap": index === 0
+                  "table-cell--nowrap": index === 0,
                 })}
               >
                 {field.html ? (
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: field.accessor(element)
+                      __html: field.accessor(element),
                     }}
                   />
                 ) : (
@@ -140,21 +141,21 @@ const SearchAwesomeTable = ({
 );
 
 SearchAwesomeTable.propTypes = {
-  showPagination: PropTypes.bool,
-  pagination: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool,
   data: PropTypes.array.isRequired,
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
-  prevText: PropTypes.string,
-  nextText: PropTypes.string,
-  prevPage: PropTypes.func,
-  nextPage: PropTypes.func,
-  selectedPage: PropTypes.func,
   history: PropTypes.object.isRequired,
+  isLoading: PropTypes.bool,
   isSortable: PropTypes.bool,
+  nextPage: PropTypes.func,
+  nextText: PropTypes.string,
+  pagination: PropTypes.object.isRequired,
+  prevPage: PropTypes.func,
+  prevText: PropTypes.string,
+  selectedPage: PropTypes.func,
+  showPagination: PropTypes.bool,
   sortColumn: PropTypes.func,
+  sortDirection: PropTypes.string,
   sortField: PropTypes.string,
-  sortDirection: PropTypes.string
 };
 
 export default withRouter(SearchAwesomeTable);

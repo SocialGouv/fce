@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+
 import UnsubscribePageView from "../../components/UnsubscribePage";
 import Http from "../../services/Http/index";
 
@@ -7,37 +8,37 @@ const UnsubscribePage = () => {
   const { pathname } = useLocation();
 
   const [unsubscriptionResponse, setUnsubscriptionResponse] = useState({
+    hasError: null,
     isLoading: false,
     message: null,
-    hasError: null
   });
 
   useEffect(() => {
     setUnsubscriptionResponse({
+      hasError: null,
       isLoading: true,
       message: null,
-      hasError: null
     });
 
     Http.delete("/mailing-list/email", {
-      data: { hash: pathname.replace("/unsubscribe/", "") }
+      data: { hash: pathname.replace("/unsubscribe/", "") },
     })
-      .then(res => {
+      .then((res) => {
         setUnsubscriptionResponse({
+          hasError: null,
           isLoading: false,
           message:
             res.status !== 200
               ? "Cette adresse email ne figure pas dans notre liste de contacts."
               : res.data.message,
-          hasError: null
         });
       })
-      .catch(e => {
+      .catch((e) => {
         console.error(e);
         setUnsubscriptionResponse({
+          hasError: true,
           isLoading: false,
           message: "Une erreur est survenue, réesayez ultérieurement.",
-          hasError: true
         });
       });
   }, [pathname]);

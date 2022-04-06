@@ -1,30 +1,30 @@
+import Config from "../../Config";
+import Http from "../../Http";
 import {
+  FETCH_PSI_ERROR,
   FETCH_PSI_START,
   FETCH_PSI_SUCCESS,
-  FETCH_PSI_ERROR
 } from "../constants/ActionTypes";
-import Http from "../../Http";
-import Config from "../../Config";
 
-export const loadPsi = identifier => dispatch => {
+export const loadPsi = (identifier) => (dispatch) => {
   const siren = identifier.slice(0, 9);
 
   dispatch({
-    type: FETCH_PSI_START
+    type: FETCH_PSI_START,
   });
 
   return Http.get(`/psi/${siren}`, { timeout: Config.get("pgApi.timeout") })
-    .then(res => {
+    .then((res) => {
       dispatch({
+        payload: { ...res.data.result },
         type: FETCH_PSI_SUCCESS,
-        payload: { ...res.data.result }
       });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
       dispatch({
+        payload: error,
         type: FETCH_PSI_ERROR,
-        payload: error
       });
     });
 };

@@ -1,24 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import _get from "lodash.get";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faExternalLinkSquareAlt,
   faUsers,
-  faExternalLinkSquareAlt
 } from "@fortawesome/free-solid-svg-icons";
-import Data from "../../SharedComponents/Data";
-import Table from "../../SharedComponents/Table";
-import Subcategory from "../../SharedComponents/Subcategory";
-import Value from "../../../../shared/Value";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import _get from "lodash.get";
+import PropTypes from "prop-types";
+import React from "react";
+import { connect } from "react-redux";
+
 import { formatEstablishmentAgreements } from "../../../../../helpers/Relationships";
 import Config from "../../../../../services/Config";
+import Value from "../../../../shared/Value";
+import Data from "../../SharedComponents/Data";
+import Subcategory from "../../SharedComponents/Subcategory";
+import Table from "../../SharedComponents/Table";
 import Psi from "./Psi";
 import WorkAccident from "./WorkAccident";
 
 const EstablishmentRelationship = ({
   establishment: { idcc, siret },
-  agreements
+  agreements,
 }) => {
   const establishmentAgreements = formatEstablishmentAgreements(
     agreements,
@@ -141,14 +142,14 @@ const EstablishmentRelationship = ({
 };
 
 EstablishmentRelationship.propTypes = {
-  establishment: PropTypes.object.isRequired,
+  agreements: PropTypes.object.isRequired,
   enterprise: PropTypes.object.isRequired,
-  agreements: PropTypes.object.isRequired
+  establishment: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    agreements: state.agreements
+    agreements: state.agreements,
   };
 };
 

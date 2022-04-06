@@ -1,9 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Subcategory from "../../SharedComponents/Subcategory";
-import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import "./psi.scss";
+
+import PropTypes from "prop-types";
+import React from "react";
+
 import Value from "../../../../shared/Value";
+import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
+import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
 
 const Egapro = ({ egapro }) => (
@@ -14,11 +16,11 @@ const Egapro = ({ egapro }) => (
     >
       <div className="section-datas__list">
         <div className="section-datas__list-description">
-          Toutes les entreprises d'au moins 50 salariés doivent calculer et publier leur index de l'égalité professionnelle
-          entre les hommes et les femmes, chaque année au 1er mars
+          Toutes les entreprises d&apos;au moins 50 salariés doivent calculer et
+          publier leur index de l&apos;égalité professionnelle entre les hommes
+          et les femmes, chaque année au 1er mars
         </div>
         <div className="section-datas__list-item">
-
           <PgApiDataHandler isLoading={egapro.isLoading} error={egapro.error}>
             {egapro.index?.length > 0 ? (
               <Table className="enterprise-mandataires">
@@ -45,7 +47,9 @@ const Egapro = ({ egapro }) => (
                 </tbody>
               </Table>
             ) : (
-              <div className="dt">Aucune déclaration pour cette entreprise.</div>
+              <div className="dt">
+                Aucune déclaration pour cette entreprise.
+              </div>
             )}
           </PgApiDataHandler>
         </div>
@@ -56,7 +60,7 @@ const Egapro = ({ egapro }) => (
 
 Egapro.propTypes = {
   egapro: PropTypes.object.isRequired,
-  sources: PropTypes.object.isRequired
+  sources: PropTypes.object.isRequired,
 };
 
 export default Egapro;

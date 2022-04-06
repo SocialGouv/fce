@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import "./homePage.scss";
+
+import React, { useEffect, useState } from "react";
 
 import Http from "../../services/Http";
-
-import { Summary, IconItems, HowItWork, DailyUse, Footer } from "./sections";
-import "./homePage.scss";
+import { DailyUse, Footer, HowItWork, IconItems, Summary } from "./sections";
 
 const HomePage = () => {
   const [users, setUsers] = useState();
@@ -15,10 +15,10 @@ const HomePage = () => {
       setIsLoading(true);
 
       return Http.get(`/matomo/getTotalUsers`)
-        .then(res => {
+        .then((res) => {
           setUsers(res?.data.users?.length || defaultUsers);
         })
-        .catch(error => {
+        .catch((error) => {
           setUsers(defaultUsers);
           console.error(error);
         })

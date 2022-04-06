@@ -1,5 +1,5 @@
-import { useState } from "react";
 import downloadjs from "downloadjs";
+import { useState } from "react";
 
 export const useFileDownload = (downloadQuery, { fileName, documentType }) => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ export const useFileDownload = (downloadQuery, { fileName, documentType }) => {
       setSuccess(true);
       return downloadjs(
         new Blob([data], {
-          type: contentType
+          type: contentType,
         }),
         fileName,
         documentType
@@ -33,8 +33,8 @@ export const useFileDownload = (downloadQuery, { fileName, documentType }) => {
 
   return {
     download,
+    error,
     loading,
     success,
-    error
   };
 };

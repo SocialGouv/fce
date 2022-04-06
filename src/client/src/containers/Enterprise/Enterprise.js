@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 
-import Config from "../../services/Config";
 import {
+  Enterprise as EnterpriseView,
   Establishment as EstablishmentView,
-  Enterprise as EnterpriseView
 } from "../../components/DataSheets";
 import { Error404 } from "../../components/Errors";
+import Config from "../../services/Config";
 import {
   loadAgreements,
+  loadEntreprise,
+  loadEstablishment,
   loadPsi,
   loadSources,
-  loadEstablishment,
-  loadEntreprise,
-  loadSuccessions
+  loadSuccessions,
 } from "../../services/Store/actions";
 import { loadApprentissage } from "../../services/Store/actions/apprentissage";
 import { loadEgapro } from "../../services/Store/actions/egapro";
@@ -34,7 +34,7 @@ const Enterprise = ({
   loadPsi,
   loadSources,
   loadEgapro,
-  loadSuccessions
+  loadSuccessions,
 }) => {
   const [state, setState] = useState(null);
   const [currentUrl, setCurrentUrl] = useState("");
@@ -47,7 +47,7 @@ const Enterprise = ({
   const loadMethod = isEnterprise ? loadEntreprise : loadEstablishment;
 
   useEffect(() => {
-    const mustLoadEntity = identifier => {
+    const mustLoadEntity = (identifier) => {
       const nextUrl = match.url;
 
       if (identifier !== currentEnterprise.siren && currentUrl !== nextUrl) {
@@ -57,7 +57,7 @@ const Enterprise = ({
       return state !== Config.get("state.success");
     };
 
-    const mustLoadPgApi = identifier => {
+    const mustLoadPgApi = (identifier) => {
       const isNewSiren = identifier.slice(0, 9) !== currentEnterprise.siren;
 
       return isNewSiren;
@@ -75,7 +75,7 @@ const Enterprise = ({
         .then(() => {
           setState(Config.get("state.success"));
         })
-        .catch(err => {
+        .catch((err) => {
           if (err.response?.status === 401) {
             setState(Config.get("state.unauthorize"));
           } else {
@@ -97,6 +97,7 @@ const Enterprise = ({
       loadSuccessions(identifier);
     }
   }, [
+    state,
     isEnterprise,
     identifier,
     match,
@@ -108,7 +109,7 @@ const Enterprise = ({
     loadEgapro,
     loadPsi,
     loadSources,
-    loadSuccessions
+    loadSuccessions,
   ]);
 
   useEffect(() => {
@@ -126,7 +127,7 @@ const Enterprise = ({
     enterprise.etablissements &&
     enterprise.etablissements.find(({ siret }) => siret === searchSiret);
 
-  const getHeadOffice = enterprise =>
+  const getHeadOffice = (enterprise) =>
     enterprise.etablissements &&
     enterprise.etablissements.find(
       ({ siege_social, siret }) =>
@@ -169,44 +170,45 @@ const Enterprise = ({
 
 Enterprise.propTypes = {
   agreements: PropTypes.object.isRequired,
-  egapro: PropTypes.object.isRequired,
-  psi: PropTypes.object.isRequired,
+  apprentissage: PropTypes.object.isRequired,
   currentEnterprise: PropTypes.object.isRequired,
+  egapro: PropTypes.object.isRequired,
   hasSearchResults: PropTypes.bool,
   history: PropTypes.object.isRequired,
-  apprentissage: PropTypes.object.isRequired,
   isLoaded: PropTypes.bool,
   loadAgreements: PropTypes.func.isRequired,
+  loadApprentissage: PropTypes.func.isRequired,
   loadEgapro: PropTypes.func.isRequired,
   loadEntreprise: PropTypes.func.isRequired,
   loadEstablishment: PropTypes.func.isRequired,
-  loadApprentissage: PropTypes.func.isRequired,
   loadPsi: PropTypes.func,
   loadSources: PropTypes.func.isRequired,
   loadSuccessions: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  psi: PropTypes.object.isRequired,
+  successions: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    currentEnterprise: state.enterprise.current,
     agreements: state.agreements,
-    psi: state.psi,
     apprentissage: state.apprentissage.apprentissage,
+    currentEnterprise: state.enterprise.current,
     egapro: state.egapro,
-    successions: state.successions
+    psi: state.psi,
+    successions: state.successions,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  loadEstablishment: siret => dispatch(loadEstablishment(siret)),
-  loadEntreprise: siren => dispatch(loadEntreprise(siren)),
-  loadAgreements: identifier => dispatch(loadAgreements(identifier)),
-  loadApprentissage: identifier => dispatch(loadApprentissage(identifier)),
-  loadEgapro: siren => dispatch(loadEgapro(siren)),
-  loadPsi: identifier => dispatch(loadPsi(identifier)),
+const mapDispatchToProps = (dispatch) => ({
+  loadAgreements: (identifier) => dispatch(loadAgreements(identifier)),
+  loadApprentissage: (identifier) => dispatch(loadApprentissage(identifier)),
+  loadEgapro: (siren) => dispatch(loadEgapro(siren)),
+  loadEntreprise: (siren) => dispatch(loadEntreprise(siren)),
+  loadEstablishment: (siret) => dispatch(loadEstablishment(siret)),
+  loadPsi: (identifier) => dispatch(loadPsi(identifier)),
   loadSources: () => dispatch(loadSources()),
-  loadSuccessions: siret => dispatch(loadSuccessions(siret))
+  loadSuccessions: (siret) => dispatch(loadSuccessions(siret)),
 });
 
 export default withRouter(

@@ -1,18 +1,19 @@
+import "./errorIE.scss";
+
+import ClipboardJS from "clipboard";
 import React from "react";
+
 import logoChrome from "../../assets/img/chrome-logo.svg";
 import logoFirefox from "../../assets/img/firefox-logo.svg";
 import logoSafari from "../../assets/img/safari-logo.svg";
-import ClipboardJS from "clipboard";
 import Button from "../../components/shared/Button";
-
-import "./errorIE.scss";
 
 new ClipboardJS(".copy");
 
 const browsers = [
-  { name: "Chrome", logo: logoChrome, alt: "logo du navigateur Chrome" },
-  { name: "Firefox", logo: logoFirefox, alt: "logo du navigateur Firefox" },
-  { name: "Safari", logo: logoSafari, alt: "logo du navigateur Safari" }
+  { alt: "logo du navigateur Chrome", logo: logoChrome, name: "Chrome" },
+  { alt: "logo du navigateur Firefox", logo: logoFirefox, name: "Firefox" },
+  { alt: "logo du navigateur Safari", logo: logoSafari, name: "Safari" },
 ];
 
 const ErrorIE = () => {

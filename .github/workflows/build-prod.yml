@@ -55,6 +55,28 @@ jobs:
           dockerfile: ./src/client/Dockerfile
           dockercontext: ./src/client
 
+  BuildGraphIql:
+    strategy:
+      # Don't fast-fail on tag and master
+      fail-fast: ${{ github.event_name == 'pull_request' || (github.ref !=
+        'refs/heads/master' && !startsWith(github.ref, 'refs/tags/')) }}
+
+    name: Building GraphIQL image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get project name
+        run: |
+          echo "project=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+
+      - name: Use autodevops to register image
+        uses: SocialGouv/actions/autodevops-build-register@v1
+        with:
+          environment: prod
+          token: ${{ secrets.GITHUB_TOKEN }}
+          imageName: ${{ env.project }}/graphiql
+          dockerfile: ./src/graphiql/Dockerfile
+          dockercontext: ./src/graphiql
+
   BuildStrapi:
     strategy:
       # Don't fast-fail on tag and master
@@ -131,7 +153,7 @@ jobs:
   deploy:
     name: Deploy application
     runs-on: ubuntu-latest
-    needs: [ BuildServer, BuildFront, BuildStrapi, BuildN8N, BuildHasura, Manifests ]
+    needs: [ BuildServer, BuildFront, BuildStrapi, BuildN8N, BuildHasura, BuildGraphIql,Manifests ]
     environment: production
     steps:
       - uses: SocialGouv/actions/autodevops-deploy@v1

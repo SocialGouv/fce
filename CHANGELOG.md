@@ -1,3 +1,10 @@
+# [27.40.0](https://github.com/SocialGouv/fce/compare/v27.39.1...v27.40.0) (2022-04-21)
+
+
+### Features
+
+* **tool:** add graphiql instance to request BCE ([#198](https://github.com/SocialGouv/fce/issues/198)) ([1ebaee5](https://github.com/SocialGouv/fce/commit/1ebaee5701cbc600a7a8c63e2e36336c7c1ae896))
+
 ## [27.39.1](https://github.com/SocialGouv/fce/compare/v27.39.0...v27.39.1) (2022-04-06)
 
 

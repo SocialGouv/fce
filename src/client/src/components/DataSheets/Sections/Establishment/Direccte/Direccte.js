@@ -9,7 +9,6 @@ import Source from "../../../../../containers/Source";
 import { getLastInteraction } from "../../../../../helpers/Interactions";
 import Config from "../../../../../services/Config";
 import Value from "../../../../shared/Value";
-import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
 
@@ -46,12 +45,6 @@ const Direccte = ({ establishment }) => {
       </div>
       <div className="section-datas">
         <Subcategory>
-          <Data
-            name="Unité de contrôle compétente (inspection du travail)"
-            value={establishment.unite_controle_competente}
-            columnClasses={["is-6", "is-6"]}
-            sourceSi="Siene"
-          />
           <dl className="data dl columns direccte-interactions__title">
             <dt className={`dt column`}>
               Dernier contrôle ou visite au cours des 24 derniers mois (Pôle T,

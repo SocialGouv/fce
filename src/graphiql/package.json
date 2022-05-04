@@ -1,25 +1,23 @@
 {
-  "name": "graphiql-js-example",
+  "name": "graphiql-bce",
   "version": "1.0.0",
   "description": "using CRA aka react-scripts with javascript",
   "keywords": [],
-  "main": "src/index.js",
   "dependencies": {
     "@graphiql/create-fetcher": "latest",
     "graphiql": "latest",
     "graphql": "15.7.2",
     "react": "latest",
-    "react-dom": "latest",
-    "react-scripts": "latest"
+    "react-dom": "latest"
   },
   "devDependencies": {
-    "typescript": "3.3.3"
+    "@vitejs/plugin-react-refresh": "^1.3.6",
+    "vite": "^2.9.7"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "vite --port=3002",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "browserslist": [
     ">0.2%",

@@ -20,10 +20,10 @@ const defaultQuery = `
 # Vous pouvez ensuite requêter l'API
 
 {
-  imp_StockUniteLegale(where: { siren: { _eq: "356000000" } }) {
+  fce_entreprises(where: { siren: { _eq: "356000000" } }) {
     siren
-    denominationUniteLegale
-    denominationUsuelle1UniteLegale
+    denominationunitelegale
+    denominationusuelle1unitelegale
   }
 }
 `;

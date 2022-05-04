@@ -4,6 +4,8 @@ import fs from "fs";
 import https from "https";
 import path from "path";
 import { DOWNLOAD_STORAGE_PATH } from "../../utils/constants";
+import download from "download";
+import {promisifyStream} from "../../utils/stream";
 
 
 export class DownloadFile implements INodeType {
@@ -49,7 +51,7 @@ export class DownloadFile implements INodeType {
         const filename = this.getNodeParameter("fileName", 0) as string;
 
         try {
-            fs.mkdirSync(DOWNLOAD_STORAGE_PATH)
+            fs.mkdirSync(DOWNLOAD_STORAGE_PATH);
         } catch (e) {
         }
 
@@ -57,15 +59,7 @@ export class DownloadFile implements INodeType {
 
         const outputStream = fs.createWriteStream(outputPath);
 
-        await new Promise(async (resolve, reject) => {
-            const request = https.get(url, (response) =>
-                response.pipe(outputStream)
-            );
-
-            request.on("error", reject);
-
-            outputStream.on("finish", resolve);
-        });
+        await promisifyStream(download(url).pipe(outputStream));
 
         return [
             this.helpers.returnJsonArray({})

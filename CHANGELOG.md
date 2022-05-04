@@ -1,3 +1,10 @@
+# [27.41.0](https://github.com/SocialGouv/fce/compare/v27.40.0...v27.41.0) (2022-05-04)
+
+
+### Features
+
+* remove Unite Controle Competente field ([#199](https://github.com/SocialGouv/fce/issues/199)) ([f79d816](https://github.com/SocialGouv/fce/commit/f79d816c7e0434ac63f4c39c3e42b2f0bfed653f))
+
 # [27.40.0](https://github.com/SocialGouv/fce/compare/v27.39.1...v27.40.0) (2022-04-21)
 
 

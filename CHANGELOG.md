@@ -1,3 +1,10 @@
+# [27.42.0](https://github.com/SocialGouv/fce/compare/v27.41.4...v27.42.0) (2022-05-31)
+
+
+### Features
+
+* **accessrequest:** prevent email domains with access from requesting ([#208](https://github.com/SocialGouv/fce/issues/208)) ([0fbb814](https://github.com/SocialGouv/fce/commit/0fbb8146ec6d421219e2d60482a60d9c0f5409db))
+
 ## [27.41.4](https://github.com/SocialGouv/fce/compare/v27.41.3...v27.41.4) (2022-05-31)
 
 

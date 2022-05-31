@@ -1,5 +1,7 @@
+import { endsWith, some } from "lodash";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Select from "react-select";
 import { z } from "zod";
 
@@ -16,8 +18,24 @@ const submitForm = async (data) => {
   return response.data;
 };
 
+const alreadyAcceptedEmailDomains = [
+  "@drieets.gouv.fr",
+  "@dreets.gouv.fr",
+  "@travail.gouv.fr",
+  "@emploi.gouv.fr",
+];
+
 const schema = z.object({
-  email: z.string().email(),
+  email: z
+    .string()
+    .email()
+    .refine(
+      (email) =>
+        !some(alreadyAcceptedEmailDomains, (domain) => endsWith(email, domain)),
+      {
+        message: "Access already granted",
+      }
+    ),
   structure: z.string(),
 });
 
@@ -129,11 +147,16 @@ const validStructures = [
 const hasErrors = (errors) => Object.keys(errors).length > 0;
 
 const errorsMessageMap = {
+  "Access already granted": (
+    <span>
+      Vous avez déjà accès à FCE. <Link to="/login">Connectez-vous ici.</Link>
+    </span>
+  ),
   "Invalid email": "Email invalide",
 };
 
 const translateErrorMessages = (error) =>
-  (error || []).reduce((acc, { path, message }) => {
+  ((error && error.errors) || []).reduce((acc, { path, message }) => {
     acc[path] = errorsMessageMap[message] || message;
     return acc;
   }, {});
@@ -145,7 +168,6 @@ const RequestAccessForm = ({ onSuccess }) => {
 
   const validate = (data) => {
     const { error } = validateFormData(data);
-
     return translateErrorMessages(error);
   };
 
@@ -170,9 +192,10 @@ const RequestAccessForm = ({ onSuccess }) => {
 
   return (
     <StepForm onSubmit={onSubmit}>
-      {hasErrors(errors) && (
-        <FormError errorMessage="Une erreur s'est produite" />
-      )}
+      {hasErrors(errors) &&
+        Object.entries(errors).map(([key, message]) => (
+          <FormError key={`error-${key}`} errorMessage={message} />
+        ))}
       <FormInput label="Email" name="email" type="email" required={true} />
       <FormInput
         label="Structure"

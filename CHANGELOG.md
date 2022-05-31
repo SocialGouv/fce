@@ -1,3 +1,10 @@
+## [27.42.1](https://github.com/SocialGouv/fce/compare/v27.42.0...v27.42.1) (2022-05-31)
+
+
+### Bug Fixes
+
+* **apigouv:** update api gouv token ([#209](https://github.com/SocialGouv/fce/issues/209)) ([db05ea4](https://github.com/SocialGouv/fce/commit/db05ea40e6979930ab6f8422d465e7943b49a128))
+
 # [27.42.0](https://github.com/SocialGouv/fce/compare/v27.41.4...v27.42.0) (2022-05-31)
 
 

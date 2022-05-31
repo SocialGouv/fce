@@ -28,6 +28,16 @@ const createManifests = async () => {
         livenessProbe: probe,
         readinessProbe: probe,
         startupProbe: probe,
+        resources: {
+          requests: {
+            cpu: "5m",
+            memory: "16Mi",
+          },
+          limits: {
+            cpu: "500m",
+            memory: "512Mi",
+          },
+        },
       },
     },
   });

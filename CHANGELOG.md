@@ -1,3 +1,10 @@
+## [27.41.2](https://github.com/SocialGouv/fce/compare/v27.41.1...v27.41.2) (2022-05-31)
+
+
+### Bug Fixes
+
+* **faq:** update azure storage public url ([#204](https://github.com/SocialGouv/fce/issues/204)) ([1f3bd0b](https://github.com/SocialGouv/fce/commit/1f3bd0bca4d5261e6fed5248565326968ac0e097))
+
 ## [27.41.1](https://github.com/SocialGouv/fce/compare/v27.41.0...v27.41.1) (2022-05-31)
 
 

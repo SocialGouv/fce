@@ -1,3 +1,10 @@
+## [27.41.1](https://github.com/SocialGouv/fce/compare/v27.41.0...v27.41.1) (2022-05-31)
+
+
+### Bug Fixes
+
+* **faq:** update azure storage credentials for faq videos ([#203](https://github.com/SocialGouv/fce/issues/203)) ([fc78181](https://github.com/SocialGouv/fce/commit/fc78181bd4fd18ce60d283e954fade1ecf994099))
+
 # [27.41.0](https://github.com/SocialGouv/fce/compare/v27.40.0...v27.41.0) (2022-05-04)
 
 

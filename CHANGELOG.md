@@ -1,3 +1,10 @@
+## [27.41.3](https://github.com/SocialGouv/fce/compare/v27.41.2...v27.41.3) (2022-05-31)
+
+
+### Bug Fixes
+
+* **strapi:** increase container limits to prevent crash on upload ([#205](https://github.com/SocialGouv/fce/issues/205)) ([2b42b0d](https://github.com/SocialGouv/fce/commit/2b42b0da40d9c96f5b33a1db6770c69dfeeb9dc5))
+
 ## [27.41.2](https://github.com/SocialGouv/fce/compare/v27.41.1...v27.41.2) (2022-05-31)
 
 

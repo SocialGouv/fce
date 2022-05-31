@@ -1,3 +1,10 @@
+## [27.41.4](https://github.com/SocialGouv/fce/compare/v27.41.3...v27.41.4) (2022-05-31)
+
+
+### Bug Fixes
+
+* **k8s:** fix tests ([#206](https://github.com/SocialGouv/fce/issues/206)) ([55bfdda](https://github.com/SocialGouv/fce/commit/55bfdda02e515ca9ba6329c1fa152f81cc3a18e3))
+
 ## [27.41.3](https://github.com/SocialGouv/fce/compare/v27.41.2...v27.41.3) (2022-05-31)
 
 

@@ -1247,7 +1247,7 @@ metadata:
     team: fce
   namespace: fce
 data:
-  STORAGE_URL: https://fceprod.blob.core.windows.net/strapi
+  STORAGE_URL: https://fceprod2.blob.core.windows.net/strapi
   DATABASE_SSL: 'true'
   FCE_SERVER_URL: http://server:80
 ---

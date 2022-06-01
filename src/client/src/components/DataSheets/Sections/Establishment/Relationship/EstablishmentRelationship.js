@@ -9,7 +9,11 @@ import React from "react";
 import { connect } from "react-redux";
 
 import Config from "../../../../../services/Config";
-import { groupAccordsByType } from "../../../../../utils/accords/accords";
+import {
+  getGroupedAccordsLastSigning,
+  getGroupedAccordsSum,
+  groupAccordsByType,
+} from "../../../../../utils/accords/accords";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
@@ -24,8 +28,8 @@ const EstablishmentRelationship = ({ siret }) => {
   const { loading, data, error } = useAccordsEntreprise(siret);
 
   const accords = groupAccordsByType(data || []);
-  const nbAccords = 10;
-  const lastDate = 1000;
+  const nbAccords = getGroupedAccordsSum(accords);
+  const lastDate = getGroupedAccordsLastSigning(accords);
 
   return (
     <section id="relation" className="data-sheet__section">

@@ -1,14 +1,17 @@
-import { format, isAfter, parse } from "date-fns";
+import { format, getUnixTime, isAfter, parse } from "date-fns";
 import {
   entries,
   fromPairs,
   groupBy,
   map,
   mapValues,
+  maxBy,
   pipe,
+  prop,
   reduce,
   reverse,
   sortBy,
+  sum,
   values,
 } from "lodash/fp";
 
@@ -79,4 +82,12 @@ export const groupAccordsByType = pipe(
       ? format(lastSignDate, "dd/MM/yyyy")
       : lastSignDate,
   }))
+);
+
+export const getGroupedAccordsSum = pipe(values, map(prop("count")), sum);
+
+export const getGroupedAccordsLastSigning = pipe(
+  values,
+  map(prop("lastSignDate")),
+  maxBy((date) => getUnixTime(parse(date, "dd/MM/yyyy", new Date())))
 );

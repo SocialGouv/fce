@@ -8,6 +8,8 @@ import RupcoTable from "./RupcoTable";
 const Rcc = ({ rccList, siren, otherRupco }) => {
   const hasRcc = !!(rccList && rccList.length);
 
+  console.log(rccList);
+
   return (
     <Subcategory subtitle="RCC" sourceSi="SI PSE/RUPCO">
       <ConditionalData

@@ -1,11 +1,13 @@
 import { differenceInMonths, parse } from "date-fns/fp";
 import {
+  filter,
   groupBy,
   pipe,
   prop,
   reduce,
   startsWith,
   toLower,
+  uniqBy,
   values,
 } from "lodash/fp";
 
@@ -36,14 +38,6 @@ const isLice = pipe(getType, toLower, startsWith("lice"));
 
 const isPse = pipe(getType, toLower, startsWith("pse"));
 
-export const filterRcc = (rupcos) => rupcos.filter(isRcc);
-export const filterLice = (rupcos) =>
-  rupcos.filter(isLice).filter(not(isInvalidLice));
-export const filterPse = (rupcos) =>
-  rupcos.filter(isPse).filter(not(isExpiredPse));
-
-const PSE_VALID_DURATION_IN_MONTH = 36;
-
 const parseRupcoDate = parse(new Date(), "yyyy-MM-dd");
 
 const isExpiredPse = pipe(
@@ -59,6 +53,26 @@ const isInvalidLice = ({
 }) =>
   nombre_de_ruptures_de_contrats_en_debut_de_procedure === 0 &&
   nombre_de_ruptures_de_contrats_en_fin_de_procedure === 0;
+
+const removeRupcoDuplicates = uniqBy(
+  ({ numero, siret }) => `${numero}-${siret}`
+);
+
+export const filterRcc = pipe(filter(isRcc), removeRupcoDuplicates);
+
+export const filterLice = pipe(
+  filter(isLice),
+  filter(not(isInvalidLice)),
+  removeRupcoDuplicates
+);
+
+export const filterPse = pipe(
+  filter(isPse),
+  filter(not(isExpiredPse)),
+  removeRupcoDuplicates
+);
+
+const PSE_VALID_DURATION_IN_MONTH = 36;
 
 export const groupDossier = pipe(groupBy("numero"), values);
 

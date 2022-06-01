@@ -1,5 +1,5 @@
 import parse from "csv-parse";
-import stringify from "csv-stringify";
+import { stringify } from "csv-stringify";
 import { Duplex, Readable, Transform } from "stream";
 import { decode } from "html-entities";
 import replaceStream from "replacestream";
@@ -17,7 +17,7 @@ type Constraint = {
   relname: string;
   conname: string;
   constraintdef: string;
-}
+};
 
 export const getAllConstraints = async (client: ClientBase, tablename: string) => {
   const response = await client.query(`
@@ -32,21 +32,21 @@ export const getAllConstraints = async (client: ClientBase, tablename: string) =
   `);
 
   return response.rows;
-}
+};
 
 const dropConstraint = async (client: ClientBase, {nspname, relname, conname}: Constraint) =>
-  client.query(`ALTER TABLE ${nspname}."${relname}" DROP CONSTRAINT "${conname}"`)
+  client.query(`ALTER TABLE ${nspname}."${relname}" DROP CONSTRAINT "${conname}"`);
 
 export const dropConstraints = async (client: ClientBase, constraints: Constraint[]) => {
   await Promise.all(constraints.map((constraint) => dropConstraint(client, constraint)));
-}
+};
 
 export const createConstraint = async (client: ClientBase, {nspname, relname, conname, constraintdef}: Constraint) =>
-  client.query(`ALTER TABLE ${nspname}."${relname}" ADD CONSTRAINT "${conname}" ${constraintdef}`)
+  client.query(`ALTER TABLE ${nspname}."${relname}" ADD CONSTRAINT "${conname}" ${constraintdef}`);
 
 export const createConstraints = async (client: ClientBase, constraints: Constraint[]) => {
   await Promise.all(constraints.map((constraint) => createConstraint(client, constraint)));
-}
+};
 
 export type Index = {
   tablename: string;
@@ -69,29 +69,29 @@ export const getAllIndexes = async (client: ClientBase, tablename: string) => {
   `);
 
   return response.rows;
-}
+};
 
 export const deleteIndex = async (client: ClientBase, index: Index) => {
     await client.query(`DROP INDEX ${index.indexname}`);
-}
+};
 
 export const deleteIndexes = async (client: ClientBase, indexes: Index[]) => {
   await Promise.all(indexes.map(index => deleteIndex(client, index)));
-}
+};
 
 export const createIndex = async (client: ClientBase, index: Index) => {
   await client.query(index.indexdef);
-}
+};
 
 export const createIndexes = async (client: ClientBase, indexes: Index[]) => {
   await Promise.all(indexes.map((index) => createIndex(client, index)));
-}
+};
 
 export const sanitizeHtmlChars = (): Transform => {
-    const htmlEntitiesRegex = /&(?:[a-z]+|#x?\d+);/gi
+    const htmlEntitiesRegex = /&(?:[a-z]+|#x?\d+);/gi;
 
     return replaceStream(htmlEntitiesRegex, (entity) => decode(entity));
-}
+};
 
 export const createPool = async (context: IExecuteFunctions) => {
     const pgCreds = await context.getCredentials("postgres");
@@ -100,7 +100,7 @@ export const createPool = async (context: IExecuteFunctions) => {
         ...pgCreds,
         ssl: pgCreds && pgCreds.ssl !== "disable"
     });
-}
+};
 
 export const createClient = async (context: IExecuteFunctions) => {
   const pgCreds = await context.getCredentials("postgres");
@@ -109,7 +109,7 @@ export const createClient = async (context: IExecuteFunctions) => {
     ...pgCreds,
     ssl: pgCreds && pgCreds.ssl !== "disable"
   });
-}
+};
 
 export const connect = (pool: Pool) => new Promise<PoolClient>((resolve, reject) => {
     pool.connect((err, client) => {
@@ -126,6 +126,7 @@ type MapCsvConfig = {
     delimiter?: string;
 };
 
+// tslint:disable-next-line:no-any
 export const filterRows = (predicate: (params: any) => boolean) => new Transform(
     {
         objectMode: true,
@@ -136,33 +137,38 @@ export const filterRows = (predicate: (params: any) => boolean) => new Transform
             callback();
         }
     }
-)
+);
 
 export const mapRow = <T, U>(transform: (input: T) => U) => new Transform({
     objectMode: true,
+  // tslint:disable-next-line:no-any
     transform(chunk: any, encoding: string, callback) {
         this.push(transform(chunk));
         callback();
     }
 });
 
+// tslint:disable-next-line:no-any
 export const tapRow = (fn: (arg: any) => void) => mapRow<any, any>((val) => {
   fn(val);
   return val;
-})
+});
 
+// tslint:disable-next-line:no-any
 export const logRow = () => mapRow<any, any>((val) => {
     console.log(JSON.stringify(val));
     return val;
-})
+});
 
 const isString = <T>(value: string | T): value is string => typeof value === "string";
 
 export const deduplicate = (field: string | string[] | undefined) => {
+  // tslint:disable-next-line:no-any
     const keys = new LargeSet<any>();
 
     return new Transform({
         objectMode: true,
+      // tslint:disable-next-line:no-any
         transform(chunk: any, encoding: string, callback) {
             if (!field) {
                 this.push(chunk);
@@ -185,7 +191,7 @@ export const deduplicate = (field: string | string[] | undefined) => {
             callback();
         }
     });
-}
+};
 
 export const parseCsv = ({ columns, delimiter = ";" }: MapCsvConfig) => parse({
     delimiter,
@@ -240,8 +246,8 @@ export const dateStream = (date: DateParam): DateStreamReturn => {
     return {
         transform,
         getMaxDate,
-    }
-}
+    };
+};
 
 const padStream = (field: string, length: number) => mapRow((row: Record<string, string>) => ({
     ...row,
@@ -258,7 +264,7 @@ export const truncateTable = (client: ClientBase, tableName: string) =>
 type ConflictSafeInsertOptions = {
     table: string;
     columns: string[];
-}
+};
 
 export type InsertMethod = (client: ClientBase, stream: Readable, options: ConflictSafeInsertOptions) => Promise<void>;
 
@@ -287,12 +293,12 @@ export const conflictSafeInsert = (conflictQuery = "DO NOTHING"): InsertMethod =
     await client.query(`INSERT INTO ${table} SELECT * from ${tempTableName} ON CONFLICT ${conflictQuery};`);
 
     await client.query(`DROP TABLE ${tempTableName};`);
-}
+};
 
 const makePostgreCopyStreamGenerator = (client: ClientBase, {
   table,
   columns
-}: ConflictSafeInsertOptions) => client.query(copy.from(`COPY ${table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`))
+}: ConflictSafeInsertOptions) => client.query(copy.from(`COPY ${table}(${columns.join(",")}) FROM STDIN WITH (format csv, header true, delimiter ';');`));
 
 /**
  * Fast insertion that bypasses conflict resolutions. May fail in case of unicity conflicts.
@@ -310,4 +316,4 @@ export const fastInsert: InsertMethod= async (client: ClientBase, stream: Readab
             makePostgreCopyStreamGenerator(client, { table, columns })
         )
     );
-}
+};

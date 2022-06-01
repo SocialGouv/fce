@@ -23,13 +23,15 @@ import {
   padSiret,
   parseCsv,
   sanitizeHtmlChars,
-  stringifyCsv, tapRow,
+  stringifyCsv,
 } from "./postgre";
 import { Transform } from "stream";
 import { format } from "date-fns";
 import { decodeStream } from "iconv-lite";
+import {createPostgreInserter, Inserter} from "./inserters";
 
-export type IngestDbConfig = {
+// tslint:disable-next-line:no-any
+export type IngestDbConfig<InserterData = any> = {
   fieldsMapping: Record<string, string> | string[];
   table: string;
   replaceHtmlChars?: boolean;
@@ -58,10 +60,15 @@ export type IngestDbConfig = {
   label?: string,
   createTemporaryFile?: boolean,
   keepConstraints?: boolean
-}
+  inserter?: Inserter<InserterData>
+};
 
 export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfig, postgrePool?: Pool) => {
-  const pool = postgrePool || await createPool(context)
+  // tslint:disable-next-line:no-any
+  const inserter = params.inserter ||
+    createPostgreInserter(params, postgrePool || await createPool(context));
+
+  const pool = postgrePool || await createPool(context);
 
   const nonEmptyFields = params.nonEmptyFields || [];
 
@@ -85,6 +92,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     console.log(`Starting ${params.label}`);
   }
 
+  // tslint:disable-next-line:no-any
   let stream: any = input(params.filename);
 
   if (params.encoding === "windows-1252") {
@@ -98,7 +106,7 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
   stream = stream.pipe(parseCsv({ columns: params.fieldsMapping, delimiter: params.separator }));
 
   if (params.nonEmptyFields && params.nonEmptyFields.length > 0) {
-    stream = stream.pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])))
+    stream = stream.pipe(filterRows((row) => !nonEmptyFields.some(field => !row[field])));
   }
 
   if (params.padSiren) {
@@ -117,15 +125,15 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     stream = stream.pipe(mapRow((row: Record<string, string>) => ({
       ...row,
       siren: row.siret.substring(0, 9),
-    })))
+    })));
   }
 
   if (params.transform) {
-    stream = stream.pipe(params.transform())
+    stream = stream.pipe(params.transform());
   }
 
   if (params.date) {
-    stream = stream.pipe(dateTransform)
+    stream = stream.pipe(dateTransform);
   }
 
   stream = stream.pipe(mapRow((row) => {
@@ -140,8 +148,9 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     }))
     .pipe(stringifyCsv({
       columns
-    }))
+    }));
 
+  // tslint:disable-next-line:no-any
   stream.on("error", (error: any) => {
     console.error(error);
   });
@@ -155,38 +164,12 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     await client.query(truncateRequest);
   }
 
-  // We remove indexes and constraints to optimize ingests
-  const constraints = await getAllConstraints(client, params.table);
-  if (!params.keepConstraints) {
-    await dropConstraints(client, constraints);
-  }
-
-  const indexes = await getAllIndexes(client, params.table);
-  if (!params.keepConstraints) {
-    await deleteIndexes(client, indexes);
-  }
-
-
-  const insertMethod = params.bypassConflictSafeInsert
-    ? fastInsert
-    : conflictSafeInsert(params.conflictQuery);
-
-  const extendedInsertMethod: InsertMethod = !params.createTemporaryFile
-    ? insertMethod
-    : async (client, inputStream, options) => {
-
-      const tempFilePath = path.join(DOWNLOAD_STORAGE_PATH,`tmp-${Date.now()}`);
-      await promisifyStream(inputStream.pipe(createWriteStream(tempFilePath)));
-
-      const outputStream = createReadStream(tempFilePath);
-
-      return insertMethod(client, outputStream, options);
-    };
+  const inserterOnInitOutput = await inserter?.onInit?.();
 
   let error: Error | null = null;
 
   try {
-    await extendedInsertMethod(client, stream, {
+    await inserter.insert(client, stream, {
       table: params.table,
       columns
     });
@@ -203,19 +186,11 @@ export const ingestDb = async (context: IExecuteFunctions, params: IngestDbConfi
     error = err as Error;
   }
 
-
-
-  if (!params.keepConstraints) {
-    // We restore indexes and constraints
-    console.log(`Recreating indexes`);
-    await createIndexes(client, indexes);
-    console.log(`Recreating constraints`);
-    await createConstraints(client, constraints);
-  }
+  await inserter?.onTeardown?.(inserterOnInitOutput);
 
   if (error) {
     throw error;
   }
 
   return [context.helpers.returnJsonArray({})];
-}
+};

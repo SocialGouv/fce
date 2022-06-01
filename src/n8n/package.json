@@ -60,7 +60,7 @@
     "dependencies": {
         "@azure/storage-file-share": "^12.8.0",
         "csv-parse": "^4.16.0",
-        "csv-stringify": "^5.6.2",
+        "csv-stringify": "^6.1.0",
         "date-fns": "^2.22.1",
         "date-fns-tz": "^1.1.6",
         "extract-zip": "^2.0.1",

@@ -49,12 +49,10 @@ export const etablissementResolvers = {
     etablissement: (parent, { siret }) => api.getEtablissementBySiret(siret),
   },
   Etablissement: {
-    effectifs_mensuels: (parent, { maxCount }) => {
-      console.log(parent, maxCount);
-      return api.getLastEtablissementEffectifsMensuelBySiretAndDate(
+    effectifs_mensuels: (parent, { maxCount }) =>
+      api.getLastEtablissementEffectifsMensuelBySiretAndDate(
         parent?.siret,
         { date: new Date(), length: maxCount }
       )
-    }
   }
 }

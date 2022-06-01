@@ -1,4 +1,4 @@
-import { getYear, parseISO } from "date-fns";
+import { getYear, isAfter, parse, parseISO } from "date-fns";
 import {
   groupBy,
   map,
@@ -30,6 +30,12 @@ const countByDateField = (date_field) =>
 
 export const getSignCounts = countByDateField("anneeSignature");
 export const getBreakCounts = countByDateField("anneeRupture");
+
+export const getDataAfterYear = (apprentissages, year) =>
+  apprentissages.filter(({ date_debut }) => {
+    const parsedDateDebut = parse(date_debut, "yyyy-MM-dd", new Date());
+    return isAfter(parsedDateDebut, new Date(year, 0, 1));
+  });
 
 export const formatApprentissage = pipe(
   groupBy("siret"),

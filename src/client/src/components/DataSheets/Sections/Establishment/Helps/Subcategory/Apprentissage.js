@@ -7,6 +7,7 @@ import { renderIfSiret } from "../../../../../../helpers/hoc/renderIfSiret";
 import { formatNumber } from "../../../../../../helpers/utils";
 import {
   getBreakCounts,
+  getDataAfterYear,
   getSignCounts,
   getSignesTotalFromSignes,
 } from "../../../../../../utils/apprentissage/apprentissage";
@@ -26,16 +27,16 @@ const displayedYears = LAST_3_YEARS;
 
 const Apprentissage = ({ siret }) => {
   const { loading, data, error } = useApprentissageData(siret);
-  const apprentissagesSignes = getSignCounts(data || []);
-  const apprentissagesRompus = getBreakCounts(data || []);
+  const minYear = getCustomPastYear(2);
+  const dataAfterMinYear = getDataAfterYear(data || [], minYear);
+  const apprentissagesSignes = getSignCounts(dataAfterMinYear || []);
+  const apprentissagesRompus = getBreakCounts(dataAfterMinYear || []);
 
   return (
     <Subcategory subtitle="Apprentissage">
       <LoadableContent loading={loading} error={error}>
         <Data
-          name={`Embauche en contrat d'apprentissage depuis ${getCustomPastYear(
-            2
-          )}`}
+          name={`Embauche en contrat d'apprentissage depuis ${minYear}`}
           value={getSignesTotalFromSignes(apprentissagesSignes)}
           columnClasses={["is-7", "is-5"]}
           sourceSi="Ari@ne"

@@ -6,6 +6,7 @@ import {
 } from 'n8n-workflow';
 import {downloadNewestFile, downloadOldestFile} from "../../utils/minio";
 import { createMinioClient } from "../../clients/minio";
+import {initDownloadFolder} from "../../utils/filesystem";
 
 export class MinioDownload implements INodeType {
 	description: INodeTypeDescription = {
@@ -68,10 +69,10 @@ export class MinioDownload implements INodeType {
 		const bucket = this.getNodeParameter('bucket', 0) as string;
 		const outputName = this.getNodeParameter('outputName', 0) as string;
 		const downloadArchive = this.getNodeParameter('downloadArchive', 0) as boolean;
-
+    await initDownloadFolder();
 		const client = await createMinioClient(this);
 
-		const prefix = downloadArchive ? "archives/" : ""
+		const prefix = downloadArchive ? "archives/" : "";
 
     const downloadMethod = downloadArchive ? downloadNewestFile : downloadOldestFile;
 

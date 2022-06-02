@@ -24,7 +24,7 @@ export const getFiles = async (client: Client, bucket: string, regex: RegExp, pr
       resolve(files);
     });
   });
-}
+};
 
 export const filterOldestFile = (files: BucketItem[]): BucketItem =>
   files.reduce(
@@ -45,13 +45,13 @@ const exists = async (path: string): Promise<boolean> => {
   } catch(err) {
     return false;
   }
-}
+};
 
 const createIfNotExist = async (path: string): Promise<void> => {
   if (!await exists(path)) {
     await fs.mkdir(path, { recursive: true });
   }
-}
+};
 
 export const downloadFile = async (client: Client, bucket: string, file: BucketItem, outputFileName: string) => {
   await createIfNotExist(DOWNLOAD_STORAGE_PATH);
@@ -61,12 +61,12 @@ export const downloadFile = async (client: Client, bucket: string, file: BucketI
   } catch (err) {
     console.error(err);
   }
-}
+};
 
 type DownloadFileOutput = {
   outputFile: string;
   remoteFile: string;
-}
+};
 
 export const downloadFileFromList = (selector: (fileList: BucketItem[]) => BucketItem) => async (client: Client, bucket: string, regex: RegExp, outputFileName?: string, prefix = ""): Promise<DownloadFileOutput> => {
   const files = await getFiles(client, bucket, regex, prefix);
@@ -86,7 +86,7 @@ export const downloadFileFromList = (selector: (fileList: BucketItem[]) => Bucke
     outputFile,
     remoteFile: oldestFile.name
   };
-}
+};
 
 export const downloadOldestFile = downloadFileFromList(filterOldestFile);
 export const downloadNewestFile = downloadFileFromList(filterNewestFile);
@@ -96,7 +96,7 @@ export const archiveFile = async (client: Client, bucket: string, filename: stri
   await client.copyObject(bucket, `archives/${filename}`, `/${bucket}/${filename}`, conditions);
 
   return client.removeObject(bucket, filename);
-}
+};
 
 type ContentType = "text/csv";
 
@@ -105,4 +105,4 @@ export const uploadFile = async (client: Client, bucket: string, filename: strin
     "Content-Type": contentType
   };
   await client.fPutObject(bucket, outputFileName, filename, metadata);
-}
+};

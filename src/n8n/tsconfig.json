@@ -1,21 +1,18 @@
 {
 	"compilerOptions": {
 		"lib": [
-			"es2020"
-		],
-		"types": [
-			"node",
-			"jest"
+			"es2020",
+      "dom"
 		],
 		"module": "commonjs",
 		"noImplicitAny": true,
 		"removeComments": true,
 		"strictNullChecks": true,
 		"strict": true,
+    "skipLibCheck": true,
 		"preserveConstEnums": true,
 		"outDir": "./dist/",
 		"target": "es2020",
-		"sourceMap": true,
     "esModuleInterop": true
 	},
 	"include": [
@@ -25,7 +22,6 @@
 		"test/**/*"
 	],
 	"exclude": [
-		"**/*.spec.ts",
-    "node_modules/danfojs-node/types"
+		"**/*.spec.ts"
 	]
 }

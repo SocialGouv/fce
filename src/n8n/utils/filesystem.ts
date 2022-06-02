@@ -1,4 +1,7 @@
 import {promises as fs} from "fs";
+import {DOWNLOAD_STORAGE_PATH} from "./constants";
+
+export const initDownloadFolder = () => createIfNotExist(DOWNLOAD_STORAGE_PATH);
 
 const exists = async (path: string): Promise<boolean> => {
   try {

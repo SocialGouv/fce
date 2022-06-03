@@ -60,6 +60,13 @@ export class MinioDownload implements INodeType {
         type: 'boolean',
         description: 'Download the file from archives. Used for debug/dev purpose.',
         default: false
+      },
+      {
+        displayName: 'Minimum update timestamp',
+        name: 'minUpdateDate',
+        type: 'number',
+        description: 'Only download if there is a file updated after this timestamp',
+        default: 0
       }
 		]
 	};
@@ -69,6 +76,7 @@ export class MinioDownload implements INodeType {
 		const bucket = this.getNodeParameter('bucket', 0) as string;
 		const outputName = this.getNodeParameter('outputName', 0) as string;
 		const downloadArchive = this.getNodeParameter('downloadArchive', 0) as boolean;
+		const minUpdateDate = this.getNodeParameter('minUpdateDate', 0) as number;
     await initDownloadFolder();
 		const client = await createMinioClient(this);
 
@@ -78,10 +86,13 @@ export class MinioDownload implements INodeType {
 
 		const { outputFile, remoteFile } = await downloadMethod(
 		  client,
-      bucket,
-      new RegExp(downloadRegex),
-      outputName,
-      prefix
+      {
+        bucket,
+        regex: new RegExp(downloadRegex),
+        outputFileName: outputName,
+        prefix,
+        lastModifiedAfterTimestamp: minUpdateDate
+      },
     );
 
 		return [

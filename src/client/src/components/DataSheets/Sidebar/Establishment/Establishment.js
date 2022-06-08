@@ -1,28 +1,31 @@
 import "./establishment.scss";
 
+import { faCircle, faSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames";
+import _get from "lodash.get";
 import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { isActiveEstablishment } from "../../../../helpers/Establishment";
 import { formatSiret } from "../../../../helpers/utils";
-import {
-  getCity,
-  getCodePostal,
-  getState,
-} from "../../../../utils/establishment/establishment";
 import Value from "../../../shared/Value";
-import State from "../../Sections/SharedComponents/State";
 
 const Establishment = ({ establishment }) => {
-  const codePostal = getCodePostal(establishment);
+  const isActive = isActiveEstablishment(establishment);
+  const stateClass = isActive ? "icon--success" : "icon--danger";
+
+  const codePostal = _get(establishment, "adresse_composant.code_postal");
   const formatedPostalCode = codePostal ? `${codePostal.slice(0, 2)} - ` : "";
 
   return (
     <section>
       <div className="establishment__siret">
-        <div className="establishment__state-icon">
-          <State state={getState(establishment)} />
-        </div>
+        <FontAwesomeIcon
+          className={classNames("establishment__state-icon", stateClass)}
+          icon={isActive ? faCircle : faSquare}
+        />
         <Link
           to={`/establishment/${establishment.siret}`}
           className="establishment__siret"
@@ -33,7 +36,13 @@ const Establishment = ({ establishment }) => {
       <div className="establishment__location">
         <Value value={formatedPostalCode} empty="" />
 
-        <Value value={getCity(establishment)} empty="" />
+        <Value
+          value={
+            establishment.adresse_composant &&
+            establishment.adresse_composant.localite
+          }
+          empty=""
+        />
       </div>
     </section>
   );

@@ -9,8 +9,7 @@ import frentreprise from "frentreprise";
 import EntrepriseModel from "./frentreprise/models/Entreprise";
 import EtablissementModel from "./frentreprise/models/Etablissement";
 import { isDev } from "./utils/isDev";
-import {setupGraphql} from "./graphql/graphql";
-import {registerBceProxy} from "./proxy/bce";
+import { registerHasuraProxy } from "./proxy/hasura";
 
 require("dotenv").config();
 const config = require("config");
@@ -22,7 +21,7 @@ if (!isDev()) {
   Sentry.init({ dsn: sentryUrlKey });
 }
 
-async function init() {
+function init() {
   frentreprise.EntrepriseModel = EntrepriseModel;
   frentreprise.EtablissementModel = EtablissementModel;
 
@@ -44,12 +43,10 @@ async function init() {
   });
   app.use(cors());
 
-  registerBceProxy(app);
+  registerHasuraProxy(app);
 
   app.use(bodyParser.json()); // support json encoded bodies
   app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
-  await setupGraphql(app); // must be setup after body parser or parser won't work on other routes
 
   app.get("/", (req, res) => {
     console.log("getting");

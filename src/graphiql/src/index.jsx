@@ -1,13 +1,14 @@
 import React, { StrictMode } from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import "./styles.css";
 import "graphiql/graphiql.min.css";
 import GraphiQL from "graphiql";
 import { useState } from "react";
 
-const URL = "https://api.data.social.gouv.fr/v1/graphql";
+const URL = "https://bce-integration-api.cegedim.cloud/v1/graphql";
 
 const container = document.getElementById("root");
+const root = createRoot(container);
 
 const defaultQuery = `
 # Vous devez définir les votre jeton d'identification dans le champ REQUEST HEADERS
@@ -47,9 +48,8 @@ const App = () => {
   )
 }
 
-render(
+root.render(
   <StrictMode>
   <App />
-  </StrictMode>,
-  container
+  </StrictMode>
 );

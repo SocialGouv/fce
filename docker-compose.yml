@@ -42,7 +42,6 @@ services:
           "type": "RS512",
           "key": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqNLaioRe1pwECnl+gQOZk/0bwAc533XRxA6elDhtMAk55YE41KM+Y5x8+HQ0OS9rR/SorutHiG7gaTjo1I1ajWmNYohA4351c3MnNeUPQv67jdbxHBxog7viCE8k7uZ52JqimEjEQRAZ9A1cg9aAWuGAv9RRVNexfpZtxe5UGBSs+0WHNb8ihc6y4aRyAKzwPW1nDhpkwq8r7g0FnfeGtSjU586yMokjPj8TNtRYzKSeilX4g+huFpz1gCEOcs/nKIQTEJXcd+rjaSUi7mcC7yoIUGKQFNRLTCVuNbwOY01yz8g2PTd0apsKqTj1H7rqHHC/wdHXjlATzRaVpU/7KOnsNVzU72lU54xsI9qpEDUierBIcJOtEj49dOE9WQSCynwKHcVWdUShH2gfsIMrFGrgy0r36TAQzalJJHocFwWWaB1uuNI6RQ1niiRjU3nhFI6AHdr0g4lhgPaFD0YADiMrGV9/qa4VeHSGQmAwAABy2Z/SGy+Fu4zQ8Sxsm33phkX54PO10NVHlCuFeVkpVMrUnEKdtVpZijQ8qanWX5CtiPTCaenOYl+GEM+Q93LKOQDmRRwqdnV0SXLHr1v1bu9BeNceeK4EJotO2j/pefzmLIZuIA+d9HJdaaS1HoFAHo4IcFOQixbM6h2S3tZz70nhM0yaTLsapd3NWD5WBNMCAwEAAQ==\n-----END PUBLIC KEY-----"
         }
-      FCE_SERVER_URL: http://host.docker.internal:3001
 
   storage:
     image: mcr.microsoft.com/azure-storage/azurite
@@ -64,11 +63,8 @@ services:
     volumes:
       - elasticdata:/usr/share/elasticsearch/data
 
-  redis:
-    image: redis
-    ports:
-      - 6379:6379
 volumes:
   pgdata:
   elasticdata:
   azuritedata:
+

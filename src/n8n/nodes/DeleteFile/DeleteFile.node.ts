@@ -47,9 +47,8 @@ export class DeleteFile implements INodeType {
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
     const filename = this.getNodeParameter('filename', 0) as string;
     const filepath = this.getNodeParameter('filepath', 0) as string;
-    console.log(DOWNLOAD_STORAGE_PATH, filename);
+
     const resolvedPath = filepath || path.join(DOWNLOAD_STORAGE_PATH, filename);
-    console.log(resolvedPath);
 
     await fs.promises.unlink(resolvedPath);
 

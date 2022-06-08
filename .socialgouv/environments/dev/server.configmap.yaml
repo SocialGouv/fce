@@ -30,8 +30,3 @@ data:
   #ELASTIC SEARCH
   ELASTIC_URL: "https://recherche-entreprises-prod.es.francecentral.azure.elastic-cloud.com"
   ELASTIC_INDEX: "fce-search"
-
-  #CACHING
-  CACHE_TYPE: "redis"
-  REDIS_URL: "redis://redis:80"
-  TZ: "UTC"

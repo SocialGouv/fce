@@ -1,41 +1,40 @@
+import _get from "lodash.get";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { hideIf } from "../../../../../helpers/hoc/hideIf";
 import { formatNumber, formatSiret } from "../../../../../helpers/utils";
-import {
-  formatActivitePartielle,
-  getTotalValues,
-} from "../../../../../utils/activite-partielle/activite-partielle";
-import {
-  getCategoryLabel,
-  getState,
-} from "../../../../../utils/establishment/establishment";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
-import { useActivitePartielle } from "./ActivitePartielle.gql";
 
-const ActivitePartielle = ({ enterprise: { siren } }) => {
-  const { data, loading, error } = useActivitePartielle(siren);
+const ActivitePartielle = ({
+  enterprise: { activite_partielle, etablissements },
+}) => {
+  const hasActivitePartielle = !!activite_partielle;
 
-  if (loading || error) {
-    return null;
-  }
+  const totalActivitePartielle =
+    hasActivitePartielle &&
+    activite_partielle.length > 1 &&
+    activite_partielle.reduce(
+      (totals, { nbHeuresAutorisees, nbHeuresConsommees }) => {
+        totals.nbHeuresAutorisees += parseFloat(nbHeuresAutorisees);
+        totals.nbHeuresConsommees += parseFloat(nbHeuresConsommees);
+        return {
+          nbHeuresAutorisees: totals.nbHeuresAutorisees,
+          nbHeuresConsommees: totals.nbHeuresConsommees,
+        };
+      },
+      { nbHeuresAutorisees: 0, nbHeuresConsommees: 0 }
+    );
 
-  const activitePartielle = data.etablissements_activite_partielle;
-  const hasActivitePartielle = activitePartielle.length > 0;
-
-  const formattedActivitePartielle = formatActivitePartielle(activitePartielle);
-  const totalActivitePartielle = getTotalValues(formattedActivitePartielle);
   return (
     <Subcategory subtitle="Activité partielle" sourceSi="APART">
       <Data
         name="Nb d'établissements ayant eu recours à l'activité partielle au cours des 24 derniers mois"
-        value={activitePartielle.length}
+        value={hasActivitePartielle && activite_partielle.length}
         emptyValue="0"
         columnClasses={["is-8", "is-4"]}
       />
@@ -56,16 +55,16 @@ const ActivitePartielle = ({ enterprise: { siren } }) => {
               </tr>
             </thead>
             <tbody>
-              {formattedActivitePartielle.map(
-                ({
-                  siret,
-                  nb_h_auto_cum,
-                  nb_h_conso_cum,
-                  date_decision,
-                  etablissement,
-                }) => {
-                  const etat = getState(etablissement);
-                  const categorie = getCategoryLabel(etablissement);
+              {activite_partielle.map(
+                ({ siret, nbHeuresAutorisees, nbHeuresConsommees, date }) => {
+                  const establishment = etablissements.find(
+                    (etab) => etab.siret.trim() === siret.trim()
+                  );
+                  const etat = _get(establishment, "etat_etablissement");
+                  const categorie = _get(
+                    establishment,
+                    "categorie_etablissement"
+                  );
 
                   return (
                     <tr key={siret}>
@@ -77,12 +76,12 @@ const ActivitePartielle = ({ enterprise: { siren } }) => {
                       </td>
                       <td>{categorie}</td>
                       <td className="has-text-right">
-                        {formatNumber(Math.round(nb_h_auto_cum))}
+                        {formatNumber(Math.round(nbHeuresAutorisees))}
                       </td>
                       <td className="has-text-right">
-                        {formatNumber(Math.round(nb_h_conso_cum))}
+                        {formatNumber(Math.round(nbHeuresConsommees))}
                       </td>
-                      <td>{<Value value={date_decision} />}</td>
+                      <td>{<Value value={date} />}</td>
                       <td className="see-details">
                         <SeeDetailsLink
                           link={`/establishment/${siret}/#muteco`}
@@ -102,12 +101,12 @@ const ActivitePartielle = ({ enterprise: { siren } }) => {
                   </th>
                   <td className="has-text-right">
                     {formatNumber(
-                      Math.round(totalActivitePartielle.nb_h_auto_cum)
+                      Math.round(totalActivitePartielle.nbHeuresAutorisees)
                     )}
                   </td>
                   <td className="has-text-right">
                     {formatNumber(
-                      Math.round(totalActivitePartielle.nb_h_conso_cum)
+                      Math.round(totalActivitePartielle.nbHeuresConsommees)
                     )}
                   </td>
                   <td colSpan="2" />
@@ -125,6 +124,4 @@ ActivitePartielle.propTypes = {
   enterprise: PropTypes.object.isRequired,
 };
 
-export default hideIf(({ enterprise }) => !enterprise?.siren)(
-  ActivitePartielle
-);
+export default ActivitePartielle;

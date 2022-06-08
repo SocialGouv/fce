@@ -9,15 +9,6 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import { formatSiret } from "../../../../../helpers/utils";
-import {
-  computeTotalRuptures,
-  getDateEnregistrement,
-  getDateJugement,
-  getEtat,
-  getNumero,
-  getSituationJuridique,
-  getTypeLabel,
-} from "../../../../../utils/rupco/rupco";
 import Value from "../../../../shared/Value";
 
 const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
@@ -35,27 +26,27 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
         <tr className="accordion-table__row">
           {hasTypeColumn && (
             <td>
-              <Value value={getTypeLabel(procedure[0])} />
+              <Value value={procedure.type} />
             </td>
           )}
           <td>
-            <Value value={getDateEnregistrement(procedure[0])} />
+            <Value value={procedure.date_enregistrement} />
           </td>
           <td className="has-text-right">
-            <Value value={getNumero(procedure[0])} />
+            <Value value={procedure.numero} />
           </td>
           <td>
-            <Value value={getEtat(procedure[0])} />
+            <Value value={procedure.etat} />
           </td>
           <td>
-            <Value value={getSituationJuridique(procedure[0])} />
+            <Value value={procedure.situation_juridique} />
           </td>
           <td className="has-text-right">
-            <Value value={getDateJugement(procedure[0])} />
+            <Value value={procedure.date_jugement} />
           </td>
           <td className="has-text-right">
             <Value
-              value={computeTotalRuptures(procedure)}
+              value={procedure.nombre_de_ruptures}
               nonEmptyValues="0"
               hasNumberFormat
             />
@@ -68,7 +59,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
               onClick={() => setIsActiveAccordion(!isActiveAccordion)}
               className="has-text-right accordion-table__header"
             >
-              <Value value={procedure.length} hasNumberFormat />
+              <Value value={procedure.etablissements.length} hasNumberFormat />
               <FontAwesomeIcon
                 icon={
                   isActiveAccordion ? faChevronCircleDown : faChevronCircleLeft
@@ -80,27 +71,20 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
       </tbody>
       <tbody className="accordion-table__container">
         {isActiveAccordion &&
-          procedure.map(
-            ({
-              siret,
-              nombre_de_ruptures_de_contrats_en_debut_de_procedure,
-              nombre_de_ruptures_de_contrats_en_fin_de_procedure,
-            }) => (
-              <tr key={siret}>
-                <td colSpan={hasTypeColumn ? 6 : 5} />
-                <td className="has-text-right">
-                  {nombre_de_ruptures_de_contrats_en_fin_de_procedure ||
-                    nombre_de_ruptures_de_contrats_en_debut_de_procedure}
-                </td>
-                <td className="has-text-link has-text-right">
-                  <Value
-                    value={formatSiret(siret)}
-                    link={`/establishment/${siret}/#muteco`}
-                  />
-                </td>
-              </tr>
-            )
-          )}
+          procedure.etablissements.map((etablissement) => (
+            <tr key={etablissement.siret}>
+              <td colSpan={hasTypeColumn ? 6 : 5} />
+              <td className="has-text-right">
+                {etablissement.nombre_de_ruptures}
+              </td>
+              <td className="has-text-link has-text-right">
+                <Value
+                  value={formatSiret(etablissement.siret)}
+                  link={`/establishment/${etablissement.siret}/#muteco`}
+                />
+              </td>
+            </tr>
+          ))}
       </tbody>
     </>
   );
@@ -108,7 +92,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
 
 AccordionTable.propTypes = {
   hasTypeColumn: PropTypes.bool,
-  procedure: PropTypes.array.isRequired,
+  procedure: PropTypes.object.isRequired,
 };
 
 export default AccordionTable;

@@ -35,7 +35,7 @@ const Subcategory = ({
         datas.map((data) => {
           return (
             <Data
-              key={data.key || data.name}
+              key={data.name}
               name={data.name}
               value={data.value}
               emptyValue={data.emptyValue || "-"}

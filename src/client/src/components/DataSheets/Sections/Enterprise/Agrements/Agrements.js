@@ -15,7 +15,7 @@ const Agrements = ({ enterprise }) => {
         <h2 className="title">Agréments</h2>
       </div>
       <div className="section-datas">
-        <OrganismeFormation entreprise={enterprise} />
+        <OrganismeFormation siren={enterprise.siren} />
       </div>
     </section>
   );

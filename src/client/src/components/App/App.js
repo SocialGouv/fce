@@ -11,7 +11,6 @@ import { PersistGate } from "redux-persist/lib/integration/react";
 import { Error403, Error404 } from "../../components/Errors";
 import IEChecker from "../../components/IEChecker";
 import Enterprise from "../../containers/Enterprise";
-import LegacyEtablissement from "../../containers/Enterprise/LegacyEtablissement";
 import Login from "../../containers/Login";
 import PublicPage from "../../containers/PublicPage";
 import Search from "../../containers/Search";
@@ -81,7 +80,7 @@ const App = () => {
                             <PrivateRoute
                               exact
                               path="/establishment/:siret"
-                              component={LegacyEtablissement}
+                              component={Enterprise}
                             />
                             <Route
                               exact

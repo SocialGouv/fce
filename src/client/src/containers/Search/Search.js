@@ -1,7 +1,7 @@
 import { groupBy, omit } from "lodash";
 import { prop } from "lodash/fp";
 import moment from "moment";
-import React, { useEffect } from "react";
+import React from "react";
 
 import SearchView from "../../components/Search";
 import Http from "../../services/Http";
@@ -45,13 +45,6 @@ const Search = () => {
   const { data, loading, error, makeQuery } = useSearchQuery();
 
   const resetSearch = useResetSearch();
-
-  useEffect(() => {
-    if (searchQuery) {
-      onSearch();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const downloadQuery = async () => {
     const trimmedQuery = searchQuery?.trim();

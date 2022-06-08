@@ -1,39 +1,25 @@
 import "./sidebar.scss";
 
-import { faArrowDown, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { sortBy } from "lodash";
-import { compose } from "lodash/fp";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
-import { renderIfSiren } from "../../../helpers/hoc/renderIfSiren";
 import Config from "../../../services/Config";
 import {
   resetSearch,
   setSearchFilters,
   setSearchTerm,
 } from "../../../services/Store/actions";
-import {
-  getEtablissements,
-  getNafLabel,
-  getName,
-} from "../../../utils/entreprise/entreprise";
-import { getState, isSiege } from "../../../utils/establishment/establishment";
-import { not } from "../../../utils/functions/functions";
-import { plural } from "../../../utils/plural/plural";
 import Button from "../../shared/Button";
 import Value from "../../shared/Value";
 import EstablishmentsItems from "./EstablishmentsItems/EstablishmentsItems";
-import {
-  getEtablissementsCount,
-  getEtablissementsFermesCount,
-  useSidebarData,
-} from "./Sidebar.gql";
 
 const Sidebar = ({
-  siren,
+  establishments,
+  enterprise,
+  headOffice,
   isEstablishmentDisplayed,
   history,
   setSearchTerm,
@@ -41,29 +27,11 @@ const Sidebar = ({
 }) => {
   const limitItems = Config.get("sidebarEstablishmentsLimit");
 
-  const [displayAll, setDisplayAll] = useState(false);
-  const {
-    loading,
-    data: entreprise,
-    error,
-  } = useSidebarData(siren, {
-    limit: !displayAll ? limitItems : undefined,
-  });
-
-  if (loading || error) {
-    return null;
-  }
-
-  const etablissements = getEtablissements(entreprise);
-
-  const etablissementsCount = getEtablissementsCount(entreprise);
-  const etablissementsFermesCount = getEtablissementsFermesCount(entreprise);
-  const headOffice = etablissements.find(isSiege);
-
-  const displayedEstablishments = sortBy(
-    etablissements.filter(not(isSiege)),
-    getState
-  );
+  const closedEstablishmentsCount = establishments.filter(
+    (establishment) =>
+      establishment.etat_etablissement ===
+      Config.get("establishmentState").ferme
+  ).length;
 
   return (
     <>
@@ -75,10 +43,16 @@ const Sidebar = ({
         <section className="sidebar__enterprise">
           <h3 className="sidebar__enterprise-title">
             Entreprise{" "}
-            <Value value={getName(entreprise).toLowerCase()} empty="-" />
+            <Value
+              value={
+                enterprise.raison_sociale &&
+                enterprise.raison_sociale.toLowerCase()
+              }
+              empty="-"
+            />
           </h3>
           <p className="sidebar__enterprise-naf">
-            <Value value={getNafLabel(entreprise)} empty="-" />
+            <Value value={enterprise.libelle_naf} empty="-" />
           </p>
           {isEstablishmentDisplayed && (
             <Button
@@ -86,7 +60,7 @@ const Sidebar = ({
               icon={faArrowRight}
               buttonClasses={["sidebar__enterprise-button", "is-secondary"]}
               callback={() => {
-                history.push(`/enterprise/${siren}`);
+                history.push(`/enterprise/${enterprise.siren}`);
               }}
             />
           )}
@@ -94,27 +68,29 @@ const Sidebar = ({
 
         <section className="sidebar__establishments">
           <p className="sidebar__establishments-count">
-            <strong>
-              <Value value={etablissementsCount} empty="Aucun " />{" "}
-              {plural({
-                count: etablissementsCount,
-                plural: "établissements",
-                singular: "établissement",
-              })}
-              {etablissementsFermesCount > 0 && (
-                <>
-                  <br />
-                  <span>
-                    dont {etablissementsFermesCount}{" "}
-                    {plural({
-                      count: etablissementsFermesCount,
-                      plural: "fermés",
-                      singular: "fermé",
-                    })}
-                  </span>
-                </>
-              )}
-            </strong>
+            {establishments.length >= limitItems ? (
+              <strong>
+                Plus de <Value value={establishments.length} /> établissements
+              </strong>
+            ) : (
+              <>
+                <strong>
+                  <Value value={establishments.length} empty="Aucun " />{" "}
+                  établissement
+                  {establishments.length > 1 && "s"}
+                </strong>
+
+                {!!closedEstablishmentsCount && (
+                  <>
+                    <br />
+                    <span>
+                      dont {closedEstablishmentsCount} fermé
+                      {closedEstablishmentsCount > 1 && "s"}
+                    </span>
+                  </>
+                )}
+              </>
+            )}
           </p>
 
           <div>
@@ -127,32 +103,26 @@ const Sidebar = ({
         </section>
 
         <section className="sidebar__establishments">
-          {etablissementsCount > 1 && (
+          {establishments.length > 1 && (
             <>
               <EstablishmentsItems
-                establishments={displayedEstablishments}
+                establishments={establishments.filter(
+                  (establishment) => establishment.siret !== headOffice?.siret
+                )}
                 establishmentType="Autres établissements"
                 limit={limitItems}
               />
-              {etablissementsCount > limitItems && (
-                <>
-                  <Button
-                    value="Afficher la liste"
-                    icon={faArrowDown}
-                    className="button is-secondary is-outlined sidebar__view-all-button"
-                    onClick={() => setDisplayAll(true)}
-                  />
-                  <Button
-                    value="Rechercher tous les établissements"
-                    icon={faArrowRight}
-                    className="button is-secondary is-outlined sidebar__view-all-button"
-                    onClick={() => {
-                      resetSearch();
-                      setSearchTerm(siren);
-                      history.push("/");
-                    }}
-                  />
-                </>
+              {establishments.length > limitItems && (
+                <Button
+                  value="Voir tous les établissements"
+                  icon={faArrowRight}
+                  className="button is-secondary is-outlined sidebar__view-all-button"
+                  onClick={() => {
+                    resetSearch();
+                    setSearchTerm(enterprise.siren);
+                    history.push("/");
+                  }}
+                />
               )}
             </>
           )}
@@ -177,16 +147,14 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Sidebar.propTypes = {
+  enterprise: PropTypes.object.isRequired,
+  establishments: PropTypes.array.isRequired,
+  headOffice: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   isEstablishmentDisplayed: PropTypes.bool,
   resetSearch: PropTypes.func.isRequired,
   setSearchFilters: PropTypes.func.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
-  siren: PropTypes.string.isRequired,
 };
 
-export default compose(
-  withRouter,
-  connect(null, mapDispatchToProps),
-  renderIfSiren
-)(Sidebar);
+export default withRouter(connect(null, mapDispatchToProps)(Sidebar));

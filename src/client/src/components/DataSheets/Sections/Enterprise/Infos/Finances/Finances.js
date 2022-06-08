@@ -3,69 +3,45 @@ import "./finances.scss";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { renderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
-import {
-  getDateDeclaration,
-  getFormattedChiffreAffaire,
-} from "../../../../../../utils/donnees-ecofi/donnees-ecofi";
-import LoadSpinner from "../../../../../shared/LoadSpinner";
 import Value from "../../../../../shared/Value";
 import Table from "../../../SharedComponents/Table";
-import { useFinanceData } from "./Finances.gql";
 
-const getKey = (label, donneeEcofi) =>
-  `${label}-${getDateDeclaration(donneeEcofi)}`;
-
-const Finances = ({ siren }) => {
-  const { loading, data: donneesEcofi, error } = useFinanceData(siren);
-
-  if (loading) {
-    return <LoadSpinner />;
-  }
-
-  if (error) {
-    return <Value value={error} />;
-  }
-
+const Finances = ({ establishment }) => {
   let dates = [];
   let caList = [];
-  let resultats = [];
-  let capitauxPropres = [];
+  let emptyList = [];
 
-  if (donneesEcofi) {
-    dates = donneesEcofi.map((donneeEcofi) => {
+  if (establishment.donnees_ecofi) {
+    dates = Object.keys(establishment.donnees_ecofi).map((date, index) => {
       return (
-        <th className="has-text-right" key={getKey("date", donneeEcofi)}>
-          <Value value={getDateDeclaration(donneeEcofi)} empty="-" />
+        <th className="has-text-right" key={index}>
+          <Value value={date} empty="-" />
         </th>
       );
     });
-    caList = donneesEcofi.map((donneeEcofi) => {
+    caList = Object.values(establishment.donnees_ecofi).map((ca, index) => {
+      ca = new Intl.NumberFormat("fr-FR", {
+        currency: "EUR",
+        minimumFractionDigits: 0,
+        style: "currency",
+      }).format(ca);
       return (
-        <td className="has-text-right" key={getKey("ca", donneeEcofi)}>
-          <Value value={getFormattedChiffreAffaire(donneeEcofi)} empty="-" />
+        <td className="has-text-right" key={index}>
+          <Value value={ca} empty="-" />
         </td>
       );
     });
 
-    resultats = donneesEcofi.map((donneeEcofi) => {
+    emptyList = Object.values(establishment.donnees_ecofi).map((ca, index) => {
       return (
-        <td className="has-text-right" key={getKey("resultat", donneeEcofi)}>
-          Non disponible
-        </td>
-      );
-    });
-
-    capitauxPropres = donneesEcofi.map((donneeEcofi) => {
-      return (
-        <td className="has-text-right" key={getKey("capitaux", donneeEcofi)}>
+        <td className="has-text-right" key={index}>
           Non disponible
         </td>
       );
     });
   }
 
-  return donneesEcofi ? (
+  return establishment.donnees_ecofi ? (
     <Table className="enterprise-finances">
       <thead>
         <tr>
@@ -80,11 +56,11 @@ const Finances = ({ siren }) => {
         </tr>
         <tr>
           <th scope="row">Résultats</th>
-          {resultats}
+          {emptyList}
         </tr>
         <tr>
           <th scope="row">Capitaux propres</th>
-          {capitauxPropres}
+          {emptyList}
         </tr>
       </tbody>
     </Table>
@@ -96,7 +72,7 @@ const Finances = ({ siren }) => {
 };
 
 Finances.propTypes = {
-  siren: PropTypes.string.isRequired,
+  establishment: PropTypes.object.isRequired,
 };
 
-export default renderIfSiren(Finances);
+export default Finances;

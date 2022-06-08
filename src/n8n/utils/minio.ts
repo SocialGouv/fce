@@ -3,15 +3,14 @@ import { promises as fs } from "fs";
 import * as path from "path";
 import { DOWNLOAD_STORAGE_PATH } from "./constants";
 
-export const getFiles = async (client: Client, bucket: string, regex: RegExp, prefix = ""): Promise<BucketItem[]> => {
-  const stream = client.listObjectsV2(bucket, prefix);
+export const getFiles = async (client: Client, bucket: string, regex: RegExp): Promise<BucketItem[]> => {
+  const stream = client.listObjectsV2(bucket);
 
   return new Promise((resolve, reject) => {
     const files: BucketItem[] = [];
 
     stream.on("data", (data) => {
-      const verifiedName = data.name?.slice(prefix.length);
-      if (verifiedName && verifiedName.match(regex)) {
+      if (data.name && data.name.match(regex)) {
         files.push(data);
       }
     });
@@ -30,12 +29,6 @@ export const filterOldestFile = (files: BucketItem[]): BucketItem =>
   files.reduce(
     (oldest, file) =>
       file && file.lastModified < oldest.lastModified ? file : oldest
-  );
-
-export const filterNewestFile = (files: BucketItem[]): BucketItem =>
-  files.reduce(
-    (newest, file) =>
-      file && file.lastModified > newest.lastModified ? file : newest
   );
 
 const exists = async (path: string): Promise<boolean> => {
@@ -68,15 +61,16 @@ type DownloadFileOutput = {
   remoteFile: string;
 }
 
-export const downloadFileFromList = (selector: (fileList: BucketItem[]) => BucketItem) => async (client: Client, bucket: string, regex: RegExp, outputFileName?: string, prefix = ""): Promise<DownloadFileOutput> => {
-  const files = await getFiles(client, bucket, regex, prefix);
+export const downloadOldestFile = async (client: Client, bucket: string, regex: RegExp, outputFileName?: string): Promise<DownloadFileOutput> => {
+  const files = await getFiles(client, bucket, regex);
+
   if (files.length === 0) {
     return {
       outputFile: "",
       remoteFile: ""
     };
   }
-  const oldestFile = selector(files);
+  const oldestFile = filterOldestFile(files);
 
   const outputFile = path.join(DOWNLOAD_STORAGE_PATH, outputFileName || oldestFile.name);
 
@@ -87,9 +81,6 @@ export const downloadFileFromList = (selector: (fileList: BucketItem[]) => Bucke
     remoteFile: oldestFile.name
   };
 }
-
-export const downloadOldestFile = downloadFileFromList(filterOldestFile);
-export const downloadNewestFile = downloadFileFromList(filterNewestFile);
 
 export const archiveFile = async (client: Client, bucket: string, filename: string): Promise<void> => {
   const conditions = new CopyConditions();

@@ -1,17 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { getRupco } from "../../../../../utils/entreprise/entreprise";
-import { filterLice, groupDossier } from "../../../../../utils/rupco/rupco";
 import ConditionalData from "../../SharedComponents/ConditionalData";
 import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
 
-const Lice = ({ entreprise }) => {
-  const lice = filterLice(getRupco(entreprise));
-  const hasLice = !!(lice && lice.length);
-
-  const formattedData = groupDossier(lice);
+const Lice = ({ liceList }) => {
+  const hasLice = !!(liceList && liceList.length);
 
   return (
     <Subcategory
@@ -22,13 +17,13 @@ const Lice = ({ entreprise }) => {
         text="Procédure(s) enregistrée(s) depuis le 2 décembre 2019"
         showTable={hasLice}
       />
-      {hasLice && <RupcoTable list={formattedData} hasTypeColumn />}
+      {hasLice && <RupcoTable list={liceList} hasTypeColumn />}
     </Subcategory>
   );
 };
 
 Lice.propTypes = {
-  entreprise: PropTypes.object,
+  liceList: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Lice;

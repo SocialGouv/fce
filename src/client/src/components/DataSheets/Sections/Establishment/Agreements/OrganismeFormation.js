@@ -1,12 +1,11 @@
 import * as PropTypes from "prop-types";
 import React, { useState } from "react";
 
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import { useOrganismeFormationBySiret } from "../../../../../services/OrganismeFormation/hooks";
 import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
 import ButtonLink from "../../../../shared/Button/ButtonLink";
-import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Data from "../../SharedComponents/Data";
+import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import Subcategory from "../../SharedComponents/Subcategory";
 import OrganismeFormationEffectifs from "./OrganismeFormationEffectifs";
 import OrganismeFormationInfo from "./OrganismeFormationInfo";
@@ -19,33 +18,37 @@ const OrganismeFormation = ({ siret }) => {
 
   return (
     <Subcategory subtitle="Organisme de formation">
-      <LoadableContent loading={loading} error={error}>
-        <Data
-          key="OrganismeFormation"
-          name="Organisme de formation"
-          value={isOrganismeFormation(data?.organismes_formation)}
-        />
-        <OrganismeFormationInfo
-          organismes_formation={data?.organismes_formation}
-        />
-        {!showMore ? (
-          <ButtonLink onClick={() => setShowMore(true)}>
-            &gt; Voir plus de détails
-          </ButtonLink>
-        ) : (
+      <PgApiDataHandler isLoading={loading} error={error}>
+        {loading === false && (
           <>
-            <OrganismeFormationTypes
-              organismes_formation={data?.organismes_formation}
+            <Data
+              key="OrganismeFormation"
+              name="Organisme de formation"
+              value={isOrganismeFormation(data.organismes_formation)}
             />
-            <OrganismeFormationSpecialty
-              organismes_formation={data?.organismes_formation}
+            <OrganismeFormationInfo
+              organismes_formation={data.organismes_formation}
             />
-            <OrganismeFormationEffectifs
-              organismes_formation={data?.organismes_formation}
-            />
+            {!showMore ? (
+              <ButtonLink onClick={() => setShowMore(true)}>
+                &gt; Voir plus de détails
+              </ButtonLink>
+            ) : (
+              <>
+                <OrganismeFormationTypes
+                  organismes_formation={data.organismes_formation}
+                />
+                <OrganismeFormationSpecialty
+                  organismes_formation={data.organismes_formation}
+                />
+                <OrganismeFormationEffectifs
+                  organismes_formation={data.organismes_formation}
+                />
+              </>
+            )}
           </>
         )}
-      </LoadableContent>
+      </PgApiDataHandler>
     </Subcategory>
   );
 };
@@ -54,4 +57,4 @@ OrganismeFormation.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(OrganismeFormation);
+export default OrganismeFormation;

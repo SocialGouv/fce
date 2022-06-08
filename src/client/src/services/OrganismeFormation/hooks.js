@@ -1,12 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
 
-import { BCE_CLIENT } from "../GraphQL/GraphQL";
-
 const organismeFormationBySiretQuery = gql`
   query GetOrganismeFormation($siret: String!) {
-    organismes_formation: fce_organismes_formation(
-      where: { siret: { _eq: $siret } }
-    ) {
+    organismes_formation(where: { siret: { _eq: $siret } }) {
       siren
       numero_declaration_activite
       denomination
@@ -30,9 +26,7 @@ const organismeFormationBySiretQuery = gql`
 
 const organismeFormationBySirenQuery = gql`
   query GetOrganismeFormation($siren: String!) {
-    organismes_formation: fce_organismes_formation(
-      where: { siren: { _eq: $siren } }
-    ) {
+    organismes_formation(where: { siren: { _eq: $siren } }) {
       siret
       numero_declaration_activite
       denomination
@@ -55,13 +49,7 @@ const organismeFormationBySirenQuery = gql`
 `;
 
 export const useOrganismeFormationBySiren = (siren) =>
-  useQuery(organismeFormationBySirenQuery, {
-    context: { clientName: BCE_CLIENT },
-    variables: { siren },
-  });
+  useQuery(organismeFormationBySirenQuery, { variables: { siren } });
 
 export const useOrganismeFormationBySiret = (siret) =>
-  useQuery(organismeFormationBySiretQuery, {
-    context: { clientName: BCE_CLIENT },
-    variables: { siret },
-  });
+  useQuery(organismeFormationBySiretQuery, { variables: { siret } });

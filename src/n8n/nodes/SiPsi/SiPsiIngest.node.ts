@@ -1,17 +1,15 @@
 import { INodeExecutionData, INodeType, INodeTypeDescription } from "n8n-workflow";
 import { IExecuteFunctions } from "n8n-core";
 import { ingestDb, IngestDbConfig } from "../../utils/ingestDb";
-import { getColumnsMapping, getFileType, getFileYear, getSiPsiFileDate,} from "../../utils/siPsi";
-import { parse, format } from "date-fns";
+import { getFileType, getSiPsiFileDate, SiPsiKey } from "../../utils/siPsi";
 
 type SiPsiParams = {
   key: string;
-  columns: string[] | Record<string, string>;
+  columns: string[];
   filename: string;
   updateDate: string;
   truncate?: boolean;
   conflictQuery?: string;
-  keepConstraints?: boolean;
 };
 
 const makeConfig = ({
@@ -21,17 +19,15 @@ const makeConfig = ({
   updateDate,
   truncate = false,
   conflictQuery,
-  keepConstraints
 }: SiPsiParams): IngestDbConfig => ({
   fieldsMapping: columns,
   filename,
   table: `psi_${key}`,
   truncate,
-  separator: ",",
+  separator: "\t",
   updateHistoryQuery: updateHistoryQuery(updateDate, `psi_${key}`),
   nonEmptyFields: [key],
   conflictQuery,
-  keepConstraints
 });
 
 const updateHistoryQuery = (updateDate: string, table: string) =>
@@ -74,30 +70,30 @@ export class SiPsiIngest implements INodeType {
     const [previousYearFile, currentYearFile] = files.sort();
 
     const fileType = getFileType(files[0]);
-    const previousYear = +getFileYear(previousYearFile);
 
-    const updateDate = format(parse(`${previousYear + 1}`, "yyyy", new Date()), "yyyy-MM-dd");
+    const previousYearColumns = [fileType, "salaries_annee_precedente"];
 
-    console.log(updateDate);
+    const updateDate = getSiPsiFileDate(currentYearFile);
 
-    await ingestDb(this, makeConfig({
-      key: fileType,
-      columns: getColumnsMapping(fileType, previousYear, false),
-      filename: previousYearFile,
-      updateDate,
-      truncate: true
-    }));
+    await ingestDb(this, {
+      ...makeConfig({
+        key: fileType,
+        columns: previousYearColumns,
+        filename: previousYearFile,
+        updateDate,
+        truncate: true
+      }),
+    });
 
-    console.log(getColumnsMapping(fileType, previousYear + 1, true));
+    const currentYearColumns = [fileType, "salaries_annee_courante"];
 
     return ingestDb(this, {
       ...makeConfig({
         key: fileType,
-        columns: getColumnsMapping(fileType, previousYear + 1, true),
+        columns: currentYearColumns,
         filename: currentYearFile,
         updateDate,
         conflictQuery: `(${fileType}) DO UPDATE SET salaries_annee_courante = EXCLUDED.salaries_annee_courante`,
-        keepConstraints: true
       }),
     });
   }

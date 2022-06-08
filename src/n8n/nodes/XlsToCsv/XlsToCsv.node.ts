@@ -75,7 +75,7 @@ export class XlsToCsv implements INodeType {
     try {
       const workBook = xlsx.readFile(inputPath);
 
-      const csvSheet = xlsx.utils.sheet_to_csv(workBook.Sheets[sheetName || workBook.SheetNames[0]]);
+      const csvSheet = xlsx.utils.sheet_to_csv(workBook.Sheets[sheetName]);
 
       const trimmedCsv = trimRows(csvSheet, trimRowsCount);
 

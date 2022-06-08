@@ -6,7 +6,7 @@ import React from "react";
 import Apprentissage from "./Subcategory/Apprentissage";
 import ContratsAides from "./Subcategory/ContratsAides";
 
-const EstablishmentHelps = ({ siret }) => {
+const EstablishmentHelps = ({ establishment, apprentissage }) => {
   return (
     <section id="helps" className="data-sheet__section">
       <div className="section-header">
@@ -16,15 +16,16 @@ const EstablishmentHelps = ({ siret }) => {
         <h2 className="title">Aides</h2>
       </div>
       <div className="section-datas">
-        <ContratsAides siret={siret} />
-        <Apprentissage siret={siret} />
+        <ContratsAides establishment={establishment} />
+        <Apprentissage apprentissage={apprentissage} />
       </div>
     </section>
   );
 };
 
 EstablishmentHelps.propTypes = {
-  siret: PropTypes.string.isRequired,
+  apprentissage: PropTypes.object.isRequired,
+  establishment: PropTypes.object.isRequired,
 };
 
 export default EstablishmentHelps;

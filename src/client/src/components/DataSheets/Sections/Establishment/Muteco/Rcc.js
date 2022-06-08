@@ -5,10 +5,8 @@ import ConditionalData from "../../SharedComponents/ConditionalData";
 import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
 
-const Rcc = ({ rccList, siren, otherRupco }) => {
+const Rcc = ({ rccList, siren, enterpriseRcc }) => {
   const hasRcc = !!(rccList && rccList.length);
-
-  console.log(rccList);
 
   return (
     <Subcategory subtitle="RCC" sourceSi="SI PSE/RUPCO">
@@ -17,14 +15,14 @@ const Rcc = ({ rccList, siren, otherRupco }) => {
         showTable={hasRcc}
       />
       {hasRcc && (
-        <RupcoTable list={rccList} siren={siren} otherRupco={otherRupco} />
+        <RupcoTable list={rccList} siren={siren} rupcoFiles={enterpriseRcc} />
       )}
     </Subcategory>
   );
 };
 
 Rcc.propTypes = {
-  otherRupco: PropTypes.arrayOf(PropTypes.object),
+  enterpriseRcc: PropTypes.arrayOf(PropTypes.object),
   rccList: PropTypes.arrayOf(PropTypes.object),
   siren: PropTypes.string.isRequired,
 };

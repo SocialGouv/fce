@@ -11,12 +11,18 @@ const SuccessionData = ({ name, values }) => (
     </div>
     <div className="dd column">
       <div>
-        {values.map(({ siret, dateliensuccession }, index) => (
+        {values.map(({ link, siret, date }, index) => (
           <div key={index}>
-            <Link to={`/establishement/${siret}`}>
-              <Value value={siret} />
-            </Link>{" "}
-            ({dateliensuccession ? <Value value={dateliensuccession} /> : ""})
+            {link ? (
+              <>
+                <Link key={index} to={link}>
+                  <Value value={siret} />
+                </Link>{" "}
+                ({date ? <Value value={date} /> : ""})
+              </>
+            ) : (
+              <Value key={index} value={siret} />
+            )}
           </div>
         ))}
       </div>

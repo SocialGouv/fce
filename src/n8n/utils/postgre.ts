@@ -273,7 +273,6 @@ export const conflictSafeInsert = (conflictQuery = "DO NOTHING"): InsertMethod =
     table,
     columns
 }: ConflictSafeInsertOptions) => {
-  console.log(conflictQuery);
     const tempTableName = `temp_${table}_${Date.now()}`;
 
     await client.query(`CREATE TABLE ${tempTableName} (LIKE ${table} INCLUDING ALL);`);

@@ -50,7 +50,6 @@ Button.propTypes = {
   icon: PropTypes.object,
   iconClasses: PropTypes.arrayOf(PropTypes.string),
   isDisabled: PropTypes.bool,
-  link: PropTypes.string,
   rowReverse: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

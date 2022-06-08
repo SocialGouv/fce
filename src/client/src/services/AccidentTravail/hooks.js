@@ -1,13 +1,9 @@
 import { gql, useQuery } from "@apollo/client";
 
-import { BCE_CLIENT } from "../GraphQL/GraphQL";
-
 const accidentTravailBySiretQuery = gql`
   query GetAccidentTravail($siret: String!) {
-    accidents_travail: fce_accidents_travail(
-      where: { SIRET: { _eq: $siret } }
-    ) {
-      siret: SIRET
+    accidents_travail(where: { siret: { _eq: $siret } }) {
+      siret
       avec_arret_travail
       code_naf_niv1
       mortels
@@ -22,10 +18,8 @@ const accidentTravailBySiretQuery = gql`
 
 const accidentTravailBySirenQuery = gql`
   query GetAccidentTravail($siren: String!) {
-    accidents_travail: fce_accidents_travail(
-      where: { siren: { _eq: $siren } }
-    ) {
-      siret: SIRET
+    accidents_travail(where: { siren: { _eq: $siren } }) {
+      siret
       avec_arret_travail
       code_naf_niv1
       mortels
@@ -39,13 +33,7 @@ const accidentTravailBySirenQuery = gql`
 `;
 
 export const useAccidentTravailBySiren = (siren) =>
-  useQuery(accidentTravailBySirenQuery, {
-    context: { clientName: BCE_CLIENT },
-    variables: { siren },
-  });
+  useQuery(accidentTravailBySirenQuery, { variables: { siren } });
 
 export const useAccidentTravailBySiret = (siret) =>
-  useQuery(accidentTravailBySiretQuery, {
-    context: { clientName: BCE_CLIENT },
-    variables: { siret },
-  });
+  useQuery(accidentTravailBySiretQuery, { variables: { siret } });

@@ -1,16 +1,6 @@
 table:
   name: accidents_travail
   schema: public
-object_relationships:
-- name: etablissement
-  using:
-    manual_configuration:
-      column_mapping:
-        siret: siret
-      insertion_order: null
-      remote_table:
-        name: etablissements
-        schema: public
 select_permissions:
 - permission:
     columns:

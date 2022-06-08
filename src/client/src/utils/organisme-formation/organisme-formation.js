@@ -1,6 +1,6 @@
 import { range, some, sum } from "lodash";
 
-export const isOrganismeFormation = (data) => data && data.length > 0;
+export const isOrganismeFormation = (data) => data.length > 0;
 
 export const getNumeroDeclaration = (data) =>
   data.map((declaration) => declaration.numero_declaration_activite).join(", ");

@@ -1,17 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { getRupco } from "../../../../../utils/entreprise/entreprise";
-import { filterRcc, groupDossier } from "../../../../../utils/rupco/rupco";
 import ConditionalData from "../../SharedComponents/ConditionalData";
 import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
 
-const Rcc = ({ entreprise }) => {
-  const rcc = filterRcc(getRupco(entreprise));
-  const hasRcc = !!(rcc && rcc.length);
-
-  const formattedData = groupDossier(rcc);
+const Rcc = ({ rccList }) => {
+  const hasRcc = !!(rccList && rccList.length);
 
   return (
     <Subcategory
@@ -22,13 +17,13 @@ const Rcc = ({ entreprise }) => {
         text="Procédure(s) enregistrée(s) depuis le 22 décembre 2017"
         showTable={hasRcc}
       />
-      {hasRcc && <RupcoTable list={formattedData} />}
+      {hasRcc && <RupcoTable list={rccList} />}
     </Subcategory>
   );
 };
 
 Rcc.propTypes = {
-  entreprise: PropTypes.object,
+  rccList: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Rcc;

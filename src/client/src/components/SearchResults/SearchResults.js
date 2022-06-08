@@ -53,6 +53,8 @@ const SearchResults = ({
     "0 salarié": "0 salarié",
   };
 
+  console.log(results);
+
   return (
     <div className="app-search-results container is-fullhd">
       {pagination.items > 0 && (

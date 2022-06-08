@@ -25,26 +25,17 @@ export class DownloadLatestEffectif implements INodeType {
     }],
 		inputs: ['main'],
 		outputs: ['main'],
-		properties: [{
-      displayName: 'Download archive',
-      name: 'downloadArchive',
-      type: 'boolean',
-      description: 'Download the file from archives. Used for debug/dev purpose.',
-      default: false
-    }]
+		properties: []
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-    const downloadArchive = this.getNodeParameter('downloadArchive', 0) as boolean;
-
 		const client = await createMinioClient(this);
 
 		const bucket = "dares";
 		const outputName = "ts_effectifs.csv";
 		const regex = /^TRANS-SISSMO-effectifs_([0-9]*).csv$/i
 
-    const prefix = downloadArchive ? "archives/" : "";
-		const bucketFiles = await getFiles(client, bucket, regex, prefix);
+		const bucketFiles = await getFiles(client, bucket, regex);
 
 		const getTextDate = (name: string) => {
       const dateMatch = regex.exec(name);

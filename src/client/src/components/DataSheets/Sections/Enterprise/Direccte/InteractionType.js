@@ -2,31 +2,14 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import { formatSiret } from "../../../../../helpers/utils";
-import { usDateToFrenchDate } from "../../../../../utils/date/date";
-import {
-  formatInteractions,
-  getInteractions,
-} from "../../../../../utils/entreprise/entreprise";
-import {
-  getCity,
-  getCodePostal,
-  getState,
-} from "../../../../../utils/establishment/establishment";
-import { INTERACTION_TYPE } from "../../../../../utils/interactions/interactions";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
 
 const InteractionType = ({ type, interactions }) => {
-  const isControl = type === INTERACTION_TYPE.CONTROL;
-  const formattedInteractions = formatInteractions(
-    getInteractions(interactions).filter(
-      ({ type: interactionType }) => interactionType === type
-    )
-  );
-
-  const numberOfEstablishments = formattedInteractions.length;
+  const isControl = type === "control";
+  const numberOfEstablishments = interactions.length;
   const s = numberOfEstablishments > 1 ? "s" : "";
 
   const subtitle = `${numberOfEstablishments} établissement${s} ${
@@ -35,7 +18,7 @@ const InteractionType = ({ type, interactions }) => {
 
   return (
     <Subcategory subtitle={subtitle}>
-      {formattedInteractions.length ? (
+      {interactions.length ? (
         <Table>
           <thead>
             <tr>
@@ -48,29 +31,24 @@ const InteractionType = ({ type, interactions }) => {
             </tr>
           </thead>
           <tbody>
-            {formattedInteractions.map((interaction) => {
-              const etab = interaction.etablissement;
-              return (
-                <tr key={interaction.siret + interaction.pole}>
-                  <td className="table-cell--nowrap">
-                    {formatSiret(interaction.siret)}
-                  </td>
-                  <td className="table-cell--center-cell">
-                    {getState(etab) && <State state={getState(etab)} />}
-                  </td>
-                  <td>
-                    {getCodePostal(etab)} {getCity(etab)}
-                  </td>
-                  <td>{usDateToFrenchDate(interaction.date)}</td>
-                  <td>{interaction.pole}</td>
-                  <td className="see-details">
-                    <SeeDetailsLink
-                      link={`/establishment/${interaction.siret}/#direccte`}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
+            {interactions.map((etab) => (
+              <tr key={etab.siret + etab.pole}>
+                <td className="table-cell--nowrap">
+                  {formatSiret(etab.siret)}
+                </td>
+                <td className="table-cell--center-cell">
+                  {etab.etat && <State state={etab.etat} />}
+                </td>
+                <td>{etab.commune}</td>
+                <td>{etab.date}</td>
+                <td>{etab.pole}</td>
+                <td className="see-details">
+                  <SeeDetailsLink
+                    link={`/establishment/${etab.siret}/#direccte`}
+                  />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       ) : (
@@ -81,7 +59,7 @@ const InteractionType = ({ type, interactions }) => {
 };
 
 InteractionType.propTypes = {
-  interactions: PropTypes.object.isRequired,
+  interactions: PropTypes.array.isRequired,
   type: PropTypes.string.isRequired,
 };
 

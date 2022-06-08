@@ -1,3 +1,10 @@
+# [27.43.0](https://github.com/SocialGouv/fce/compare/v27.42.1...v27.43.0) (2022-06-08)
+
+
+### Features
+
+* **hasura:** move postgre data requests to hasura ([#202](https://github.com/SocialGouv/fce/issues/202)) ([76beeaa](https://github.com/SocialGouv/fce/commit/76beeaa209f106920233bbb9ee4fd3d08c341d17))
+
 ## [27.42.1](https://github.com/SocialGouv/fce/compare/v27.42.0...v27.42.1) (2022-05-31)
 
 

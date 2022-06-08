@@ -1,3 +1,10 @@
+# [27.44.0](https://github.com/SocialGouv/fce/compare/v27.43.0...v27.44.0) (2022-06-08)
+
+
+### Features
+
+* **bce:** revert move to BCE ([#211](https://github.com/SocialGouv/fce/issues/211)) ([9e2bc66](https://github.com/SocialGouv/fce/commit/9e2bc6611377f0b0868ee058c2e66f2b89dd6cb8))
+
 # [27.43.0](https://github.com/SocialGouv/fce/compare/v27.42.1...v27.43.0) (2022-06-08)
 
 

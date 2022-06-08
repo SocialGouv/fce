@@ -1,0 +1,3 @@
+table:
+  name: etablissements_contrats_aides
+  schema: public

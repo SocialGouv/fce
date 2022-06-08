@@ -534,6 +534,7 @@ data:
   HASURA_GRAPHQL_LOG_LEVEL: debug
   HASURA_GRAPHQL_DEV_MODE: 'false'
   HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
+  FCE_SERVER_URL: http://server:80
 ---
 apiVersion: v1
 kind: Service
@@ -869,19 +870,19 @@ metadata:
     app.github.com/run: '1234'
     app.github.com/sha: '0123456'
   labels:
-    app: pgadmin
+    app: redis
     application: fce
-    component: fce
+    component: redis
     owner: fce
     team: fce
     cert: wildcard
-  name: pgadmin
+  name: redis
   namespace: fce-mybranch
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pgadmin
+      app: redis
   template:
     metadata:
       annotations:
@@ -894,102 +895,67 @@ spec:
         app.github.com/run: '1234'
         app.github.com/sha: '0123456'
       labels:
-        app: pgadmin
+        app: redis
         application: fce
-        component: fce
+        component: redis
         owner: fce
         team: fce
         cert: wildcard
     spec:
       containers:
-        - image: dpage/pgadmin4
+        - image: redis:6.2.5-alpine3.14
           livenessProbe:
-            httpGet:
-              path: /misc/ping
-              port: http
-            initialDelaySeconds: 60
-          name: pgadmin
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 5
+            exec:
+              command:
+                - sh
+                - '-c'
+                - redis-cli ping
+          name: redis
           ports:
-            - containerPort: 80
+            - containerPort: 6379
               name: http
           readinessProbe:
-            httpGet:
-              path: /misc/ping
-              port: http
-            initialDelaySeconds: 60
+            failureThreshold: 15
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+            exec:
+              command:
+                - sh
+                - '-c'
+                - redis-cli ping
           resources:
-            requests:
-              memory: 256Mi
             limits:
-              memory: 512Mi
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 5m
+              memory: 128Mi
           startupProbe:
-            httpGet:
-              path: /misc/ping
-              port: http
-            initialDelaySeconds: 60
-          envFrom:
-            - secretRef:
-                name: pgadmin-env
----
-apiVersion: bitnami.com/v1alpha1
-kind: SealedSecret
-metadata:
-  annotations:
-    sealedsecrets.bitnami.com/cluster-wide: 'true'
-    kapp.k14s.io/disable-default-ownership-label-rules: ''
-    kapp.k14s.io/disable-default-label-scoping-rules: ''
-    kapp.k14s.io/delete-strategy: orphan
-    app.github.com/job: '5678'
-    app.github.com/ref: refs/heads/mybranch
-    app.github.com/repo: socialgouv/fce
-    app.github.com/run: '1234'
-    app.github.com/sha: '0123456'
-  name: pgadmin-env
-  namespace: fce-mybranch
-  labels:
-    application: fce
-    component: fce
-    owner: fce
-    team: fce
-    cert: wildcard
-spec:
-  encryptedData:
-    PGADMIN_DEFAULT_EMAIL: >-
-      AgA9PzLJGrsW8qnZ2C5CRhWPstRx7LRjQFPsPcxl/I1HfCJ7itZ1a7m9P3XiAKnt5uB4nQhskbzLIeOa8Qk4J8OU3qCbSQP9wJut5G6TUbCeP1H7NJvkoiqQbTCoNatgZr9USyVE84Q27s1heNbYSIem/hDYg3BqKgXnoJXctNN5vfWLloMseowPwTr8ly4TNpiw6K1lAKpNyPmtk9T0MFGJ/Z9lBldtttUJaJd2kc594sP3GSfKeHMNx2fXL4gVq1Vjo3TiPdvBLPb2ELzKE4H+goxDXj0m4eibYaKbPYuxsT/enrdzZxU/tOPBK760qRsPQctIkEyME5+5VUyxq1rAYt2p9ZQGbooh06uHfa73/Lqxetui9MU44XMwGKQ6mVTkApXfgEj7AzbjXVrU2gjKgDDQEsvtfA7cAH1rxuplZr/nlKNiSbeBDWDNxg1AJ1o379SSJzmcM162ZRxyoosMcsoCdbuvlQEAhMS+PTRmyI/UxSfOVsMp3GHVFykVhc+NFvQNU/hZbSZT4LHujYqCL84kTupxxB6/6b4Xf3BX+Ra692wh+IZORS3lkQInnkOp7jVZhxv3HpZXlUxTFwMWbPSUuNXb6EdRTULFmBBdKtBkNb7J67ePZXdjgTeGiQJeBAfA5kmZxPoK2EIEge97ty30mzdz6bIE3iWKD0xfw6UeA5MPZgm1K7h1Aj1ze++SniPeKahDIZdYzn1hTV7qHRd9+HAlZu4Izxu6QUJdpK0=
-    PGADMIN_DEFAULT_PASSWORD: >-
-      AgBJqz/mf8ZBaF3RgCxSOQobM9yuG/o68bnuWC9UG7M/twO2+fE3wciT2WOUIXLXkjjLrAlYbVymmMWvqB7vjPPF5ys2n9qIAjAIYKxjKcOJvXIG2FG0+jAHb1qZFobTBzfROgwedtT2gQ0JiB0Xl7aKj6Gze90n5HBDBw4WyEA9Zn20MRiLmaeYd/VRhHlth5Dfi+3T2a+C30nGha7lqKIe1DfS2NjeqyVq+EGWw5FDdJSVZNumM3FBdqvpNRMfgonD21R5YLO8HIJEzEaSyz0TfldFyLt0rHuX5jE5ktBN/KZ1bOT/v4u9WtXQnQSiXeeDnVJVXOuEjSwcry5uS/GAAxk8WUtM5lk6ZJPHC0uMUYM+CLdDUg/0BnP/pT4NXkxlgwQHT+wVunupo+B+sb2eMem3xjuHcmc7ykAGmqKlHupUwRByPhDLRn64B8K0h3TQwnZ/Ak3YobGUVXOq7g2eie9KShc0tuWhZRrbgFsRaZ/k5lhPodaadAxgrHwKAULRSfeTnzfUbMjHUkiUQpFeYkukJzvhC/ooD7d2W5A8fZmX+5/QA4y+TCpGWj8MU++Jm0DbK1RxQpTrAr9LwiuJqYg1sYKd8jWJJWfcmnjbdYJKtiC1oKXNtggPsPGc4GWEXB1tZRPA5qZjfX3l9j3JZHRdR9TxxfeFeKKmw25e2t5rJ6ix91wL3ZcQNCbpVlPIdtF1H8qlPd9akUWF5IfHhhG45f7xALtjDcBtuu4vGQ==
-  template:
-    metadata:
-      annotations:
-        sealedsecrets.bitnami.com/cluster-wide: 'true'
-        kapp.k14s.io/disable-default-ownership-label-rules: ''
-        kapp.k14s.io/disable-default-label-scoping-rules: ''
-        kapp.k14s.io/delete-strategy: orphan
-        app.github.com/job: '5678'
-        app.github.com/ref: refs/heads/mybranch
-        app.github.com/repo: socialgouv/fce
-        app.github.com/run: '1234'
-        app.github.com/sha: '0123456'
-      name: pgadmin-env
-      labels:
-        application: fce
-        component: fce
-        owner: fce
-        team: fce
-        cert: wildcard
-    type: Opaque
+            failureThreshold: 12
+            periodSeconds: 5
+            exec:
+              command:
+                - sh
+                - '-c'
+                - redis-cli ping
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: pgadmin
+    app: redis
     application: fce
-    component: fce
+    component: redis
     owner: fce
     team: fce
     cert: wildcard
-  name: pgadmin
+  name: redis
   annotations:
     kapp.k14s.io/disable-default-ownership-label-rules: ''
     kapp.k14s.io/disable-default-label-scoping-rules: ''
@@ -1004,49 +970,10 @@ spec:
   ports:
     - name: http
       port: 80
-      targetPort: 80
+      targetPort: 6379
   selector:
-    app: pgadmin
+    app: redis
   type: ClusterIP
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    kapp.k14s.io/disable-default-ownership-label-rules: ''
-    kapp.k14s.io/disable-default-label-scoping-rules: ''
-    kapp.k14s.io/delete-strategy: orphan
-    app.github.com/job: '5678'
-    app.github.com/ref: refs/heads/mybranch
-    app.github.com/repo: socialgouv/fce
-    app.github.com/run: '1234'
-    app.github.com/sha: '0123456'
-  labels:
-    app: pgadmin
-    application: fce
-    component: fce
-    owner: fce
-    team: fce
-    cert: wildcard
-  name: pgadmin
-  namespace: fce-mybranch
-spec:
-  rules:
-    - host: pgadmin-fce-mybranch.dev2.fabrique.social.gouv.fr
-      http:
-        paths:
-          - backend:
-              service:
-                name: pgadmin
-                port:
-                  name: http
-            path: /
-            pathType: Prefix
-  tls:
-    - hosts:
-        - pgadmin-fce-mybranch.dev2.fabrique.social.gouv.fr
-      secretName: wildcard-crt
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -1207,6 +1134,10 @@ spec:
       AgBqZKD0bZhSLFvHJ9hsrpAtYokK+bIykNFRstFKjk8vUbEYR3RZF2wOamd39E8HSTuZyWkI2y2lKlMvELWVDrYBXWSGIeCkphd6tI9ES1ZizgiY/9iqnlLQBUdTzAG5HH/MUlejE0/Rbumj2W8uuEngmm4uY7Ylmjb4iVery3lPaRx7AXWRD4cFKhsvrsLSA73VdDMsGDioorxMh9niRDwwQWsCNU8o7+XJMzZg/Aq+yIntU7lhfDi6fHkXG/5RZvq+eC3Me90VlDTGqN7Rw8goYdzmJUruC4GvAo3MYsD6eMne3dLeaOyWmhkfQx8u9PklwzLHxnVc7htxl1JUPIFkIcScBxxZYEGEPJdNUvH1aL3FlpnkOWkjBEmBECe+CQO9x58J1M4yIL8OzL8ytTJqJq8cB9677OJzgxJqqK1lqQMKpJDrYOsjBzgnsK57xAI2pWurv6xWdg+A8e5ZvT5nka16l3VWsr2bEMg1jRXoKeAuqzOosqyxHXkkZkl0/m/e3v/vucomFB1N/Cik970z0L0BZr4ztd0oUhRaXGCFFbXeWSc5uUJXNXhUdQ7ISaAjbr1iRSQmr9NeB2VKm5tqOmR8Wike5jltsaz8bM7oz0nE55aDOVYNYiCUpC16ky/BE9uYr+iX1U9RkrzPvXnPlOmIBI3KhInE17xWqXDgAEhfU0mICONgFZ90eMsJkm51wWBcd+PhQ8Ld/8VpwJuhJHBWvtq5EtLPPhQpuxYQCNPbEcv4xxMCwJx1ljxrXL9g5lr53xl9UmdrMKs=
     API_TOKEN: >-
       AgA5TseHibqsLxr1Cvom/JCKKSQNwFl8uWNS3sUf40jMc/bcyYWUyhQqYfsb/BCzzXpPP6O/S6Egy858/XZ2VshfIJ31iYYpoRydEzWZnOln4f9woxLc3U6pG5WP94QRJCpKUrsfTU68pZ+UDU3xnswXvQNwGgjb/F9ZTimwS585qHqdyuuFT6Fexf7kxPQXys1J7eAHUuqXcaUOrl/WDdzSuFjdA1HeKj6f747kNbT3wreEHqFtQTK+lNaSZUVZ5oMEJ5O3aGJd+eEWEHf9dvkKdVO1giGhH/hB42ziGq4bCVGFC4NerMUE/X7HYmtleR0MOiycTlBFzTbYkGugrMhgUEL4KxM/FXyCPfNr4YUbHJLOykUTeWstcclsx9Qhn3uRhdE9yXjabnh1NhLgjxp5ttD1EQGYQ8+floKGCsuXi/AMHvp0ewi1EJMV7WP5pDjx+3ywzDdfSnYolOI7iXkshEuZSkgIjBeU4K/wiqrcWbC3KX4Evgr+SoXO5DAucAu6InSjGdbRqxKfuhJcx1l12ggMOivYHt71CWJ3mFKS/vHLuTXwUOhpmr6Ifl6rxnMRHObmBjZdJmjF7WWWqkkpSxFJ9qWiNoKJYw/DtgNJlRyUQazjt6Qda8jv7XfDHuuO5qdChIjZU2ir2wwkLEd3GtlJRuJYSMq/SF8m0d+rShnWexM/MUe7RZIBdNTWwnflm0AhWvlX7JXe/5+GyraHa/MCM+QdQZvw/KfSAOPVNA==
+    BCE_URL: >-
+      AgBEg+yozPzkDskJzB/hhs/scXK3yARQsGb9b/V84cbKG+uY3QJ8vecxu7TZtTiXb4nJpdNATyEO92QorEIkPc9FRJiJvgXT1bNd3U/sdRMO93Ag5hrytXoQnW++hRnjaInf1V8YYoQcU/AjNYx/ZEK0B1vewDyU19pQmuqp5loB4dLliaRcv/USSqGG1o1Yk6nsedczhUsb78m708IsMFt5Sfdzbx5jIXxpjza0EaggPM3razHLmfYXd1Sbo9uj6Z9wWWlKpICMamQNF5KTFWG+0FPGgRK9j6soODPGfmlBYFVEGWD/roNayp1dSIVUgbkjXCDJrrxM+z6Tgrw5NhWNrwyV0rOJLqAK5RHLxZbpYVKhsrhny5HKFQ0nX8ke18QgFQ6ucmZRmnGG3DiPoO6CMQDPE6E/XHsImIlhIhYMPWh1RNCoMMq94Wpg6LP4PJPGgz5z/xeRgtVQXewNTqdNkxTbIxHWkLjw+MAfpj9IwDoplbtC94fp/bv6zlIyKgeWDXSJMD4wIW/IfSxj29Nwu5qsyihfv1cVr4cCPGs6a7sjUOoyxAN2LgwAkj9lI9EMbD7NC5vJcpJyRk8eCYlCNNGnTCgT8b45BSOEfEG/KGoLle0yXMcCaY1S1hfZyxVUSDsrCqCTUENOaXvsdSFXA+F6M367MvAp5wltHExGTgCmBiR/ihgbQ3Z2wx5mdG9CItTHAvpk8OTAcPnO241+GuE5/1xM1GgysuTxJf3Tf+Rr3upVhwD0I+E=
+    BCE_TOKEN: >-
+      AgCcubVBYRek27ZtR8AH4uQCPIIaz1MIHetjIJpPrZmVfdrUcNHaFV/rI51Gq+tE7AeIwIPmB9teZ39eiT25cWXYs0XM30XNu/L9b4NvdmWIg6RLTicT1vitLHYHfwJBa8cYuZV21mAJiuGh5ay6pUFgRZ0lPfj2gsQn/7+A2TapGN21ERHvUaD6rYo7y+0STUdRGaDe1RH/fsNP5VPpBCP1K7lSJ/7ZFN5CV4a7jNC7ZTaYwzx4+xGKzSwkKcS6g9ii2R3uSkBqinwd6x+wybfgCAGHqjSv0uvcuc7Z0c3C+ro8BH/uw17WaFC5myaLN6oJBAvUa32zhJw6qGbhF3G+loUS4keVsYjpxE9KlL15z2w/t/Qw/rB72meoV9Ry7iAoJugKNRMTUnUO12jnZE6useqmCRkvLUCQ94ngymE16Zoqqn0qemtVa3DHEk94maIikNV+eI/hV9BsReeGnu8AyfpMECGrCSmXBaiJiBP/5RzFiqXSYyBrLZIPKumZua0ykt+XsJH6lP+WZzcOxGjX4gS1NBObsPS6pKsZuKrBpVp0J7RykEN4aPMBHqjlNLPzhug/pfzPP3+qMlI8QqLanfr0zUUhoaUGDTbAO79zhR1VSEtLwSpE6c4OkCJ/7qWMei/R+ki1+BmyBwtHrcK2Hj7w6wDV3eELnqvoOvODubIOe9OlhxiIYJA6M1Li4Xxh89dpQkAuonDIvdk6jS3i4eBDXkY+i3GUirOSF7qIna57tzSPiluuPcUzBJ33PTDzAVMwrMCNBGCBWKfwaUfUSDkEoFgXjDP4dsuYkyhKPrRTgoA1kxeESxWJl19bO/KY+Y/DW39Pzz34NYlwGzryjry9iHODl7EgQMZOIL2jlKWCv9z17s9RRbkVbuRjDcRCZCp8C08Ptiwlr96u2UOA5HUkIUKXOwTkoo5ZRVp2+0M7Y/S2ipmKIYPVxpdrULF0hkUKrruzjnsDV2GEKHzJNeosLueod4DlUiMbakJyEslI4PDq255CGKKSW7Jr3uxEQDi9EAzlqrhSjessXWdx9pfiFpRrm6+EKKDtYrBLSlHRPZBCYOXmCB+Ws/lXCHgKIJI49TFdM+zGfMsPxKf9McSA96n078GAfFZlKyQ1Y4j9o7rAzAMse2fQAI+C5TO3cv2Q7sWVCH8BpZwJ57vjw+K8ssCwtnHkMyaIM5urHPCDyI5OcPihexXB0/NpaY9mmTxeFiFZcN3od9ICBDIPZ2ekThG8iLrleuUtsbwAbrSo3EL4PnfIJAuLCTOlXPjdUPWuC4ata6rd2NNZ6U8z0vtZ0cqslQSKebeKdoVk6V1dVZ/cHaSp2hQQYS7jcF0YnftBWjxaXUaqj0Akwk5k0IG/7Swb1gG0Gr/XA3htadHYFOI6CC+7OECJKBwXlksrSWCZ9z6yQ5sO968t728mjsYOXT47Q0Xs/Cbp9ff24Z1u6LWITFwP9bgTXWv+iEYNVy4vwJ11fsbmuDDk+sqbl1EF5b4Snbzjj7RDjPT2FOp2ef2QudA/lbazPXyeqGRrq+KYurhsIC+ZRA/KFAHYl7EmeQY8vwjGd5OzQq92vQdz7XimrkQiZFk9AUTdeGID3fD3TGw4VfVSYEC3V5O0rqstROeJQbpFJR9FDHgAlS/MvvBBHM3jxYz/SRo0iHXfXCMpfsqgo1H8r35JxFFFtzBAkhn/1xfckxuXvhfwMJXLJGhH8Ecxh8t/92rJA8efKES+c9R8z1XsHUq5J75dgUETwTcZZxG9shiHAHQsefVXUHDPtzNC6BHhZaFoZkNSjGkC3lmDsJuEkggbH/Vevdh1JNUk56JxELJbLDvvVypPlvUCdufG+eYA8djZR623ZzoGSGOCj1iCRUtuJ2YRQJ9gsgqOEloAK80fYx7AHebCpvQ+mAvg2QuxOj6Qjw==
   template:
     metadata:
       annotations:
@@ -1265,6 +1196,9 @@ data:
   STRAPI_URL: http://strapi:80
   ELASTIC_URL: https://recherche-entreprises-prod.es.francecentral.azure.elastic-cloud.com
   ELASTIC_INDEX: fce-search
+  CACHE_TYPE: redis
+  REDIS_URL: redis://redis:80
+  TZ: UTC
 ---
 apiVersion: v1
 kind: Service

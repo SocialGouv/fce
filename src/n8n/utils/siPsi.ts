@@ -31,3 +31,8 @@ export const getFileType = (filename: string): SiPsiKey => {
 
   return (match ? match[1] : "").toLowerCase() as SiPsiKey;
 };
+
+export const getColumnsMapping = (fileType: string, year: number, isCurrentYear: boolean) => ({
+  [fileType === "siret" ? "siret" : "client_siren"]: fileType,
+  [`salaries_distincts_${year}`]: isCurrentYear ? "salaries_annee_courante" : "salaries_annee_precedente"
+});

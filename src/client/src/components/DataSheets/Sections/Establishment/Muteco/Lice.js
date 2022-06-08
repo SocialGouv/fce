@@ -5,7 +5,7 @@ import ConditionalData from "../../SharedComponents/ConditionalData";
 import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
 
-const Lice = ({ liceList, siren, enterpriseLice }) => {
+const Lice = ({ liceList, siren, otherRupco }) => {
   const hasLice = !!(liceList && liceList.length);
 
   return (
@@ -21,7 +21,7 @@ const Lice = ({ liceList, siren, enterpriseLice }) => {
         <RupcoTable
           list={liceList}
           siren={siren}
-          rupcoFiles={enterpriseLice}
+          otherRupco={otherRupco}
           hasTypeColumn
         />
       )}
@@ -30,8 +30,8 @@ const Lice = ({ liceList, siren, enterpriseLice }) => {
 };
 
 Lice.propTypes = {
-  enterpriseLice: PropTypes.arrayOf(PropTypes.object),
   liceList: PropTypes.arrayOf(PropTypes.object),
+  otherRupco: PropTypes.arrayOf(PropTypes.object),
   siren: PropTypes.string.isRequired,
 };
 

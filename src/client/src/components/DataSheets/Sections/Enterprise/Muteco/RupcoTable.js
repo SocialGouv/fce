@@ -37,7 +37,7 @@ const RupcoTable = ({ list, hasTypeColumn = false }) => (
     {list.map((procedure) => (
       <AccordionTable
         procedure={procedure}
-        key={`${procedure.numero}`}
+        key={`${procedure[0].numero}`}
         hasTypeColumn={hasTypeColumn}
       />
     ))}

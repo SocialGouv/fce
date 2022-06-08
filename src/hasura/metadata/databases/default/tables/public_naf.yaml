@@ -1,0 +1,13 @@
+table:
+  name: naf
+  schema: public
+select_permissions:
+- permission:
+    columns:
+    - recherche
+    - code
+    - libelle
+    - nomenclature
+    - id
+    filter: {}
+  role: user

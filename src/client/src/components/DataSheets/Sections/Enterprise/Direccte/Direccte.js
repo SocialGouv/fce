@@ -3,15 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 
-import {
-  getEnterpriseControls,
-  getEnterpriseVisits,
-} from "../../../../../helpers/Interactions";
+import { renderIfSiren } from "../../../../../helpers/hoc/renderIfSiren";
+import { useInteractionsBySiren } from "./Interactions.gql";
 import InteractionType from "./InteractionType";
 
-const Direccte = ({ enterprise }) => {
-  const controlInteractions = getEnterpriseControls(enterprise);
-  const visitInteractions = getEnterpriseVisits(enterprise);
+const Direccte = ({ entreprise: { siren } }) => {
+  const { loading, data, error } = useInteractionsBySiren(siren);
+  if (loading || error) {
+    return null;
+  }
 
   return (
     <section
@@ -25,15 +25,15 @@ const Direccte = ({ enterprise }) => {
         <h2 className="title">Visites et contrôles</h2>
       </div>
       <div className="section-datas">
-        <InteractionType type="control" interactions={controlInteractions} />
-        <InteractionType type="visit" interactions={visitInteractions} />
+        <InteractionType type="control" interactions={data} />
+        <InteractionType type="visit" interactions={data} />
       </div>
     </section>
   );
 };
 
 Direccte.propTypes = {
-  enterprise: PropTypes.object.isRequired,
+  entreprise: PropTypes.object.isRequired,
 };
 
-export default Direccte;
+export default renderIfSiren(Direccte);

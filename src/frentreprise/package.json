@@ -28,9 +28,9 @@
     "tunnel": "^0.0.6"
   },
   "scripts": {
-    "start": "NODE_ENV=development webpack --color --watch",
-    "build": "NODE_ENV=production webpack --color",
-    "test": "NODE_ENV=test jest",
+    "start": "cross-env NODE_ENV=development webpack --color --watch",
+    "build": "cross-env NODE_ENV=production webpack --color",
+    "test": "cross-env NODE_ENV=test jest",
     "test-watch": "npm run test -- --watchAll",
     "coverage": "rm -rf coverage/ && npm run test -- --coverage --coverageDirectory=coverage",
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore src"
@@ -45,6 +45,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-root-import": "^6.4.1",
     "babel-plugin-syntax-async-functions": "^6.13.0",
+    "cross-env": "^7.0.3",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.10.0",

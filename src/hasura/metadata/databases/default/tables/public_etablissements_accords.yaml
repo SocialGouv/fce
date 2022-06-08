@@ -1,0 +1,35 @@
+table:
+  name: etablissements_accords
+  schema: public
+object_relationships:
+- name: etablissement
+  using:
+    manual_configuration:
+      column_mapping:
+        siret: siret
+      insertion_order: null
+      remote_table:
+        name: etablissements
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - dt_sign
+    - num_dos
+    - siren
+    - siret
+    - autres
+    - classifications
+    - conditions_travail
+    - droit_syndical
+    - egalite_pro
+    - emploi
+    - epargne
+    - formation
+    - nouvelles_technologies
+    - protection_sociale
+    - remuneration
+    - temps_travail
+    - id
+    filter: {}
+  role: user

@@ -8,18 +8,19 @@ import Unsubscribe from "../../../../containers/Unsubscribe";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 import withLoading from "../../../../services/withLoading";
-import Sidebar from "../../Sidebar";
+import { getSiren } from "../../../../utils/entreprise/entreprise";
+import Sidebar from "../../Sidebar/Sidebar";
 import PrintSection from "../SharedComponents/PrintSection";
 import QuickAccess from "../SharedComponents/QuickAccess";
 import Agrements from "./Agrements/Agrements";
 import Direccte from "./Direccte";
-import EnterpriseRelationship from "./EnterpriseRelationship";
+import RelationsEntreprise from "./EnterpriseRelationship";
 import Header from "./Header";
 import Helps from "./Helps";
 import Infos from "./Infos";
 import Muteco from "./Muteco";
 
-const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
+const Enterprise = ({ enterprise }) => {
   const location = useLocation();
 
   useScrollToLocationHash({ location });
@@ -30,11 +31,7 @@ const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
         <PrintSection />
         <div className="columns">
           <div className="column is-3 aside-box is-hidden-touch">
-            <Sidebar
-              enterprise={enterprise}
-              headOffice={headOffice}
-              establishments={establishments}
-            />
+            <Sidebar siren={getSiren(enterprise)} />
           </div>
           <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
             <Header enterprise={enterprise} />
@@ -52,9 +49,9 @@ const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
                   { label: "Agréments", link: "agrements" },
                 ]}
               />
-              <Infos enterprise={enterprise} headOffice={headOffice} />
-              <Direccte enterprise={enterprise} />
-              <EnterpriseRelationship enterprise={enterprise} egapro={egapro} />
+              <Infos enterprise={enterprise} />
+              <Direccte entreprise={enterprise} />
+              <RelationsEntreprise enterprise={enterprise} />
               <Muteco enterprise={enterprise} />
               <Helps enterprise={enterprise} />
               <Agrements enterprise={enterprise} />
@@ -69,10 +66,7 @@ const Enterprise = ({ enterprise, headOffice, establishments, egapro }) => {
 };
 
 Enterprise.propTypes = {
-  egapro: PropTypes.object.isRequired,
   enterprise: PropTypes.object.isRequired,
-  establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired,
 };
 
 export default withLoading(Enterprise);

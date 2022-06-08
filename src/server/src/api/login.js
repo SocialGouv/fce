@@ -14,6 +14,7 @@ import { adminAuth } from "../middlewares/admin-auth";
 const router = express.Router();
 
 router.post("/requestAuthCode", async (req, res) => {
+  console.log(req.body);
   const { email } = req.body;
 
   try {

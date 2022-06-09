@@ -1,3 +1,10 @@
+# [27.45.0](https://github.com/SocialGouv/fce/compare/v27.44.0...v27.45.0) (2022-06-09)
+
+
+### Features
+
+* **hasura:** reapply migration to hasura ([#212](https://github.com/SocialGouv/fce/issues/212)) ([d76e8eb](https://github.com/SocialGouv/fce/commit/d76e8eb9212f6b6d49ae7681490772df7701458c))
+
 # [27.44.0](https://github.com/SocialGouv/fce/compare/v27.43.0...v27.44.0) (2022-06-08)
 
 

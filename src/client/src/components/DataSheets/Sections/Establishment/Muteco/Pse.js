@@ -5,7 +5,7 @@ import ConditionalData from "../../SharedComponents/ConditionalData";
 import Subcategory from "../../SharedComponents/Subcategory";
 import RupcoTable from "./RupcoTable";
 
-const Pse = ({ pseList, siren, enterprisePse }) => {
+const Pse = ({ pseList, siren, otherRupco }) => {
   const hasPse = !!(pseList && pseList.length);
 
   return (
@@ -15,14 +15,14 @@ const Pse = ({ pseList, siren, enterprisePse }) => {
         showTable={hasPse}
       />
       {hasPse && (
-        <RupcoTable list={pseList} siren={siren} rupcoFiles={enterprisePse} />
+        <RupcoTable list={pseList} siren={siren} otherRupco={otherRupco} />
       )}
     </Subcategory>
   );
 };
 
 Pse.propTypes = {
-  enterprisePse: PropTypes.arrayOf(PropTypes.object),
+  otherRupco: PropTypes.arrayOf(PropTypes.object),
   pseList: PropTypes.arrayOf(PropTypes.object),
   siren: PropTypes.string.isRequired,
 };

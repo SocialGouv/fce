@@ -1,0 +1,17 @@
+table:
+  name: interactions_pole_3e
+  schema: public
+select_permissions:
+- permission:
+    columns:
+    - date_visite
+    - filieres
+    - inspecteurs
+    - region
+    - siren
+    - siret
+    - suivi_eti
+    - type_suivi
+    - id
+    filter: {}
+  role: user

@@ -1,23 +1,23 @@
-import _get from "lodash.get";
+import { get } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 
 import { getCustomPastYear } from "../../../../../helpers/Date/Date";
 import Config from "../../../../../services/Config";
+import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
+import { useAgrementsIae } from "./AgrementsIAE.gql";
 
-const AgrementsIAE = ({ establishment }) => {
-  const hasAgrements = !!(
-    establishment.agrements_iae &&
-    Object.values(establishment.agrements_iae)
-      .map((agrementData) => agrementData.agrement)
-      .includes(true)
-  );
+const AgrementsIAE = ({ siret }) => {
+  const { loading, data: agrements, error } = useAgrementsIae(siret);
+  const hasAgrements = Object.values(agrements || {})
+    .map((agrementData) => agrementData.agrement)
+    .includes(true);
 
   return (
-    <>
+    <LoadableContent loading={loading} error={error}>
       <Subcategory
         subtitle="Insertion par l’activité économique (IAE)"
         datas={[
@@ -46,10 +46,7 @@ const AgrementsIAE = ({ establishment }) => {
 
           <tbody>
             {Object.entries(Config.get("agrementsIae")).map(([key, label]) => {
-              const { etp, agrement, salariesInsertion } = _get(
-                establishment,
-                `agrements_iae[${key}]`
-              );
+              const { etp, agrement, salariesInsertion } = get(agrements, key);
 
               return (
                 <tr key={key}>
@@ -69,10 +66,10 @@ const AgrementsIAE = ({ establishment }) => {
           </tbody>
         </Table>
       )}
-    </>
+    </LoadableContent>
   );
 };
 
-AgrementsIAE.propTypes = { establishment: PropTypes.object.isRequired };
+AgrementsIAE.propTypes = { siret: PropTypes.string.isRequired };
 
 export default AgrementsIAE;

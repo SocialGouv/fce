@@ -4,7 +4,7 @@ import {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { downloadOldestFile } from "../../utils/minio";
+import {downloadNewestFile, downloadOldestFile} from "../../utils/minio";
 import { createMinioClient } from "../../clients/minio";
 
 export class MinioDownload implements INodeType {
@@ -52,7 +52,14 @@ export class MinioDownload implements INodeType {
 				default: '',
 				placeholder: 'Output name',
 				description: 'The name of the output file',
-			}
+			},
+      {
+        displayName: 'Download archive',
+        name: 'downloadArchive',
+        type: 'boolean',
+        description: 'Download the file from archives. Used for debug/dev purpose.',
+        default: false
+      }
 		]
 	};
 
@@ -60,10 +67,21 @@ export class MinioDownload implements INodeType {
 		const downloadRegex = this.getNodeParameter('downloadRegex', 0) as string;
 		const bucket = this.getNodeParameter('bucket', 0) as string;
 		const outputName = this.getNodeParameter('outputName', 0) as string;
+		const downloadArchive = this.getNodeParameter('downloadArchive', 0) as boolean;
 
 		const client = await createMinioClient(this);
 
-		const { outputFile, remoteFile } = await downloadOldestFile(client, bucket, new RegExp(downloadRegex), outputName);
+		const prefix = downloadArchive ? "archives/" : ""
+
+    const downloadMethod = downloadArchive ? downloadNewestFile : downloadOldestFile;
+
+		const { outputFile, remoteFile } = await downloadMethod(
+		  client,
+      bucket,
+      new RegExp(downloadRegex),
+      outputName,
+      prefix
+    );
 
 		return [
 			this.helpers.returnJsonArray({

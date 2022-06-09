@@ -1,26 +1,38 @@
-import _get from "lodash.get";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
-import { getEstablishment } from "../../../../../../helpers/Enterprise";
-import { arraySum, formatSiret } from "../../../../../../helpers/utils";
+import { getCustomPastYear } from "../../../../../../helpers/Date";
+import { renderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
+import { formatSiret } from "../../../../../../helpers/utils";
+import {
+  formatApprentissage,
+  getEstablishmentSignedCount,
+  getSignedTotal,
+} from "../../../../../../utils/apprentissage/apprentissage";
+import {
+  getCity,
+  getCodePostal,
+  getSiret,
+  getState,
+} from "../../../../../../utils/establishment/establishment";
 import Data from "../../../SharedComponents/Data";
 import SeeDetailsLink from "../../../SharedComponents/SeeDetailsLink";
 import State from "../../../SharedComponents/State";
 import Subcategory from "../../../SharedComponents/Subcategory";
 import Table from "../../../SharedComponents/Table";
+import { useApprentissageBySiren } from "./Apprentissage.gql";
 
-const Apprentissage = ({ apprentissage, etablissements }) => {
-  const total = apprentissage
-    ? apprentissage.reduce((total, { signes }) => {
-        return Object.values(signes).reduce(
-          (total, nbApprentissage) => total + nbApprentissage,
-          total
-        );
-      }, 0)
-    : 0;
+const Apprentissage = ({ entreprise: { siren } }) => {
+  const { data, loading, error } = useApprentissageBySiren(siren);
 
+  if (loading || error) {
+    return null;
+  }
+
+  const formattedApprentissage = formatApprentissage(
+    data.etablissements_apprentissage
+  );
+  const total = getSignedTotal(formattedApprentissage);
   const hasApprentissage = !!total;
 
   return (
@@ -46,17 +58,12 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
               </tr>
             </thead>
             <tbody>
-              {apprentissage.map(({ siret, signes }) => {
-                const establishment = getEstablishment(siret, etablissements);
-                const etat = _get(establishment, "etat_etablissement");
-                const codePostal = _get(
-                  establishment,
-                  "adresse_composant.code_postal"
-                );
-                const localite = _get(
-                  establishment,
-                  "adresse_composant.localite"
-                );
+              {formattedApprentissage.map((apprentissage) => {
+                const etablissement = apprentissage.etablissement;
+                const etat = getState(etablissement);
+                const codePostal = getCodePostal(etablissement);
+                const localite = getCity(etablissement);
+                const siret = getSiret(etablissement);
 
                 return (
                   <tr key={siret}>
@@ -68,7 +75,7 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
                       localite ? localite : ""
                     }`}</td>
                     <td className="has-text-right">
-                      {arraySum(Object.values(signes))}
+                      {getEstablishmentSignedCount(apprentissage)}
                     </td>
                     <td className="see-details">
                       <SeeDetailsLink link={`/establishment/${siret}/#helps`} />
@@ -85,8 +92,9 @@ const Apprentissage = ({ apprentissage, etablissements }) => {
 };
 
 Apprentissage.propTypes = {
-  apprentissage: PropTypes.arrayOf(PropTypes.object),
-  etablissements: PropTypes.arrayOf(PropTypes.object).isRequired,
+  entreprise: PropTypes.shape({
+    siren: PropTypes.string,
+  }),
 };
 
-export default Apprentissage;
+export default renderIfSiren(Apprentissage);

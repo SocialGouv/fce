@@ -9,14 +9,15 @@ import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import Subcategory from "../../SharedComponents/Subcategory";
 import { PsiSiret } from "./PsiSiret";
 
-const Psi = ({ psi, establishments, sources }) => {
+const Psi = ({ psi, establishments, sources, entreprise }) => {
   if (!sources.SIPSI) return "";
 
   const currentYear = Number(sources.SIPSI.date.split("/").pop());
   const lastYear = currentYear - 1;
 
   const hasPsi = Boolean(
-    psi.enterprise.current_year || psi.enterprise.last_year
+    entreprise?.psi?.salaries_annee_courante ||
+      entreprise?.psi?.salaries_annee_precedente
   );
 
   const establishmentsWithPsi = psi.establishments.length
@@ -104,10 +105,10 @@ const Psi = ({ psi, establishments, sources }) => {
                     <tbody>
                       <tr>
                         <td className="has-text-right">
-                          {psi.enterprise.current_year}
+                          {entreprise.psi.salaries_annee_courante}
                         </td>
                         <td className="has-text-right">
-                          {psi.enterprise.last_year}
+                          {entreprise.psi.salaries_annee_precedente}
                         </td>
                       </tr>
                     </tbody>
@@ -135,6 +136,7 @@ const Psi = ({ psi, establishments, sources }) => {
 };
 
 Psi.propTypes = {
+  entreprise: PropTypes.object.isRequired,
   establishments: PropTypes.array.isRequired,
   psi: PropTypes.object.isRequired,
   sources: PropTypes.object.isRequired,

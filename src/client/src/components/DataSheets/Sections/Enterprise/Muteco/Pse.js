@@ -1,12 +1,17 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+import { getRupco } from "../../../../../utils/entreprise/entreprise";
+import { filterPse, groupDossier } from "../../../../../utils/rupco/rupco";
 import RupcoTable from "../../Enterprise/Muteco/RupcoTable";
 import ConditionalData from "../../SharedComponents/ConditionalData";
 import Subcategory from "../../SharedComponents/Subcategory";
 
-const Pse = ({ pseList }) => {
-  const hasPse = !!(pseList && pseList.length);
+const Pse = ({ entreprise }) => {
+  const pse = filterPse(getRupco(entreprise));
+
+  const formattedData = groupDossier(pse);
+  const hasPse = !!(pse && pse.length);
 
   return (
     <Subcategory subtitle="PSE" sourceSi="SI PSE/RUPCO">
@@ -14,13 +19,13 @@ const Pse = ({ pseList }) => {
         text="Procédure(s) enregistrée(s) au cours des 36 derniers mois"
         showTable={hasPse}
       />
-      {hasPse && <RupcoTable list={pseList} />}
+      {hasPse && <RupcoTable list={formattedData} />}
     </Subcategory>
   );
 };
 
 Pse.propTypes = {
-  pseList: PropTypes.arrayOf(PropTypes.object),
+  entreprise: PropTypes.object,
 };
 
 export default Pse;

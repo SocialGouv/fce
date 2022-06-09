@@ -1,31 +1,52 @@
+import { getYear, subYears } from "date-fns";
 import PropTypes from "prop-types";
 import React from "react";
 
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
-import { hasApprentissage } from "../../../../../../helpers/Establishment";
+import { renderIfSiret } from "../../../../../../helpers/hoc/renderIfSiret";
 import { formatNumber } from "../../../../../../helpers/utils";
+import {
+  getBreakCounts,
+  getDataAfterYear,
+  getSignCounts,
+  getSignesTotalFromSignes,
+} from "../../../../../../utils/apprentissage/apprentissage";
+import LoadableContent from "../../../../../shared/LoadableContent/LoadableContent";
 import Data from "../../../SharedComponents/Data";
 import Subcategory from "../../../SharedComponents/Subcategory";
 import Table from "../../../SharedComponents/Table";
+import { useApprentissageData } from "./Apprentissage.gql";
 
-const Apprentissage = ({ apprentissage }) => {
+const LAST_3_YEARS = [
+  getYear(subYears(new Date(), 2)),
+  getYear(subYears(new Date(), 1)),
+  getYear(new Date()),
+];
+
+const displayedYears = LAST_3_YEARS;
+
+const Apprentissage = ({ siret }) => {
+  const { loading, data, error } = useApprentissageData(siret);
+  const minYear = getCustomPastYear(2);
+  const dataAfterMinYear = getDataAfterYear(data || [], minYear);
+  const apprentissagesSignes = getSignCounts(dataAfterMinYear || []);
+  const apprentissagesRompus = getBreakCounts(dataAfterMinYear || []);
+
   return (
-    <>
-      <Subcategory subtitle="Apprentissage">
+    <Subcategory subtitle="Apprentissage">
+      <LoadableContent loading={loading} error={error}>
         <Data
-          name={`Embauche en contrat d'apprentissage depuis ${getCustomPastYear(
-            2
-          )}`}
-          value={hasApprentissage(apprentissage)}
+          name={`Embauche en contrat d'apprentissage depuis ${minYear}`}
+          value={getSignesTotalFromSignes(apprentissagesSignes)}
           columnClasses={["is-7", "is-5"]}
           sourceSi="Ari@ne"
         />
-        {hasApprentissage(apprentissage) && (
+        {data?.length > 0 && (
           <Table isBordered>
             <thead>
               <tr>
                 <th />
-                {Object.keys(apprentissage).map((year) => (
+                {displayedYears.map((year) => (
                   <th className="has-text-right" key={year}>
                     {year}
                   </th>
@@ -35,29 +56,35 @@ const Apprentissage = ({ apprentissage }) => {
             <tbody>
               <tr>
                 <th>Nombre de contrats d{`'`}apprentissage signés</th>
-                {Object.entries(apprentissage).map(([year, { signes }]) => (
-                  <td className="has-text-right" key={year}>
-                    {signes && formatNumber(signes)}
+                {displayedYears.map((year) => (
+                  <td className="has-text-right" key={`signes-${year}`}>
+                    {(apprentissagesSignes[year] &&
+                      formatNumber(apprentissagesSignes[year])) ||
+                      0}
                   </td>
                 ))}
               </tr>
 
               <tr>
                 <th>Nombre de contrats rompus </th>
-                {Object.entries(apprentissage).map(([year, { rompus }]) => (
-                  <td className="has-text-right" key={year}>
-                    {rompus && formatNumber(rompus)}
+                {displayedYears.map((year) => (
+                  <td className="has-text-right" key={`rompus-${year}`}>
+                    {(apprentissagesRompus[year] &&
+                      formatNumber(apprentissagesRompus[year])) ||
+                      0}
                   </td>
                 ))}
               </tr>
             </tbody>
           </Table>
         )}
-      </Subcategory>
-    </>
+      </LoadableContent>
+    </Subcategory>
   );
 };
 
-Apprentissage.propTypes = { apprentissage: PropTypes.object };
+Apprentissage.propTypes = {
+  siret: PropTypes.string.isRequired,
+};
 
-export default Apprentissage;
+export default renderIfSiret(Apprentissage);

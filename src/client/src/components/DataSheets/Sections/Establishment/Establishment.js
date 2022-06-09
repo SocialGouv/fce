@@ -6,29 +6,24 @@ import { useLocation } from "react-router-dom";
 
 import Unsubscribe from "../../../../containers/Unsubscribe";
 import UsersFeedback from "../../../../containers/UsersFeedback";
+import { renderIfSiret } from "../../../../helpers/hoc/renderIfSiret";
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
-import withLoading from "../../../../services/withLoading";
-import Sidebar from "../../Sidebar";
+import { getSirenFromSiret } from "../../../../utils/establishment/establishment";
+import Sidebar from "../../Sidebar/Sidebar";
 import PrintSection from "../SharedComponents/PrintSection";
 import QuickAccess from "../SharedComponents/QuickAccess";
-import Activity from "./Activity";
+import Activite from "./Activity/Activite";
 import Agrements from "./Agreements/Agrements";
-import Direccte from "./Direccte";
+import Controles from "./Direccte/Controles";
 import Header from "./Header";
 import Helps from "./Helps";
 import Muteco from "./Muteco";
 import Relationship from "./Relationship";
 
-const Establishment = ({
-  establishment,
-  establishments,
-  enterprise,
-  headOffice,
-  apprentissage,
-  successions,
-}) => {
+const Establishment = ({ siret }) => {
   const location = useLocation();
   useScrollToLocationHash({ location });
+  const siren = getSirenFromSiret(siret);
 
   return (
     <div>
@@ -36,20 +31,11 @@ const Establishment = ({
         <PrintSection />
         <div className="columns">
           <div className="column is-3 aside-box is-hidden-touch">
-            <Sidebar
-              enterprise={enterprise}
-              headOffice={headOffice}
-              establishments={establishments}
-              isEstablishmentDisplayed={true}
-            />
+            <Sidebar siren={siren} isEstablishmentDisplayed={true} />
           </div>
 
           <div className="data-sheet__main-content column is-9-desktop is-12-tablet">
-            <Header
-              establishment={establishment}
-              enterprise={enterprise}
-              apprentissage={apprentissage}
-            />
+            <Header siret={siret} siren={siren} />
             <div className="data-sheet__main-container">
               <QuickAccess
                 anchors={[
@@ -61,22 +47,12 @@ const Establishment = ({
                   { label: "Agréments", link: "agrements" },
                 ]}
               />
-              <Activity
-                establishment={establishment}
-                enterprise={enterprise}
-                successions={successions}
-              />
-              <Direccte establishment={establishment} enterprise={enterprise} />
-              <Relationship
-                establishment={establishment}
-                enterprise={enterprise}
-              />
-              <Muteco establishment={establishment} enterprise={enterprise} />
-              <Helps
-                establishment={establishment}
-                apprentissage={apprentissage}
-              />
-              <Agrements etablissement={establishment} />
+              <Activite siret={siret} />
+              <Controles siret={siret} />
+              <Relationship siret={siret} />
+              <Muteco siret={siret} />
+              <Helps siret={siret} />
+              <Agrements siret={siret} />
             </div>
             <UsersFeedback fullWidth />
           </div>
@@ -88,12 +64,8 @@ const Establishment = ({
 };
 
 Establishment.propTypes = {
-  apprentissage: PropTypes.object.isRequired,
-  enterprise: PropTypes.object.isRequired,
-  establishment: PropTypes.object.isRequired,
-  establishments: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headOffice: PropTypes.object.isRequired,
+  siret: PropTypes.string.isRequired,
   successions: PropTypes.object.isRequired,
 };
 
-export default withLoading(Establishment);
+export default renderIfSiret(Establishment);

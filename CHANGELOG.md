@@ -1,3 +1,10 @@
+## [27.46.1](https://github.com/SocialGouv/fce/compare/v27.46.0...v27.46.1) (2022-06-09)
+
+
+### Bug Fixes
+
+* **establishment:** fix displayed estalishment name ([#213](https://github.com/SocialGouv/fce/issues/213)) ([1469559](https://github.com/SocialGouv/fce/commit/1469559ad1a3616d62bc14fefacf763364cd5e93))
+
 # [27.46.0](https://github.com/SocialGouv/fce/compare/v27.45.0...v27.46.0) (2022-06-09)
 
 

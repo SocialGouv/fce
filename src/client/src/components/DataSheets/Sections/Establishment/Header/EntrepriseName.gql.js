@@ -14,7 +14,7 @@ const raisonSocialeQuery = gql`
 
 export const useRaisonSociale = pipe(
   (siren) => useQuery(raisonSocialeQuery, { variables: { siren } }),
-  mapQueryResult(prop("entreprises.raison_sociale"))
+  mapQueryResult(prop("entreprise.raison_sociale"))
 );
 
 const entrepriseNameQuery = gql`
@@ -28,9 +28,11 @@ const entrepriseNameQuery = gql`
   }
 `;
 
-export const useEntrepriseNameData = pipe((siren) =>
-  useQuery(entrepriseNameQuery, {
-    context: { clientName: BCE_CLIENT },
-    variables: { siren },
-  })
+export const useEntrepriseNameData = pipe(
+  (siren) =>
+    useQuery(entrepriseNameQuery, {
+      context: { clientName: BCE_CLIENT },
+      variables: { siren },
+    }),
+  mapQueryResult(prop("fce_entreprises[0]"))
 );

@@ -5,6 +5,7 @@ import {
   groupBy,
   map,
   maxBy,
+  negate,
   pipe,
   prop,
   replace,
@@ -13,6 +14,7 @@ import {
   sortBy,
   values,
 } from "lodash/fp";
+import { isUndefined } from "lodash/lang";
 
 import {
   isActive as isActiveEtablissement,
@@ -32,14 +34,16 @@ export const getRupco = prop("rupco");
 
 export const getName = (entreprise) => {
   const personneUniteLegale = [
-    entreprise.prenom1unitelegale,
-    entreprise.nomunitelegale,
-  ].join(" ");
+    prop("prenom1unitelegale", entreprise),
+    prop("nomunitelegale", entreprise),
+  ]
+    .filter(negate(isUndefined))
+    .join(" ");
 
   return (
     getRaisonSociale(entreprise) ||
-    entreprise.denominationunitelegale ||
-    entreprise.denominationusuelle1unitelegale ||
+    prop("denominationunitelegale", entreprise) ||
+    prop("denominationusuelle1unitelegale", entreprise) ||
     personneUniteLegale
   );
 };

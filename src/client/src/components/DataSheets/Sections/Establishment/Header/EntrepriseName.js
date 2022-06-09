@@ -8,10 +8,9 @@ import Value from "../../../../shared/Value";
 import { useEntrepriseNameData, useRaisonSociale } from "./EntrepriseName.gql";
 
 const EntrepriseName = ({ siren }) => {
-  const raisonSocialeQuery = useRaisonSociale(siren);
-  const entrepriseNameData = useEntrepriseNameData(siren);
-
-  const name = raisonSocialeQuery.data || getName(entrepriseNameData);
+  const { data: raisonSociale } = useRaisonSociale(siren);
+  const { data: entreprise } = useEntrepriseNameData(siren);
+  const name = raisonSociale || getName(entreprise);
   return (
     <>
       <Helmet>

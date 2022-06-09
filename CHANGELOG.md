@@ -1,3 +1,10 @@
+# [27.46.0](https://github.com/SocialGouv/fce/compare/v27.45.0...v27.46.0) (2022-06-09)
+
+
+### Features
+
+* **n8n:** add elasticsearch ingest process ([#210](https://github.com/SocialGouv/fce/issues/210)) ([69c7755](https://github.com/SocialGouv/fce/commit/69c7755616e537d68f762ea271d789033601a1b1))
+
 # [27.45.0](https://github.com/SocialGouv/fce/compare/v27.44.0...v27.45.0) (2022-06-09)
 
 

@@ -12,3 +12,7 @@ data:
   MINIO_SSL: "true"
   GENERIC_TIMEZONE: "Europe/Paris"
   AZURE_SHARE_NAME: "bce"
+
+  MINIO_BCE_ENDPOINT: "bce-prod-minio.cegedim.cloud"
+  MINIO_BCE_PORT: "443"
+  MINIO_BCE_SSL: "true"

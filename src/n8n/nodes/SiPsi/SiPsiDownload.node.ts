@@ -51,7 +51,10 @@ export class SiPsiDownload implements INodeType {
     const downloadRegex = new RegExp(`^ClientsPSI-${key}-([0-9]*)-([0-9]*)\\.csv$`, "i");
 
     const client = await createMinioClient(this);
-    const { remoteFile: remoteFile1 } = await downloadOldestFile(client, bucket, downloadRegex);
+    const { remoteFile: remoteFile1 } = await downloadOldestFile(client, {
+      bucket,
+      regex: downloadRegex
+    });
 
     const matchingFiles = await getFiles(client, bucket, downloadRegex);
 
@@ -60,7 +63,13 @@ export class SiPsiDownload implements INodeType {
       .filter(filename => filename !== remoteFile1)[0];
 
     const otherYearFileRegex = new RegExp(`^${otherYearFile}$`, "i");
-    const { remoteFile: remoteFile2 } = await downloadOldestFile(client, bucket, otherYearFileRegex);
+    const { remoteFile: remoteFile2 } = await downloadOldestFile(
+      client,
+      {
+        bucket,
+        regex: otherYearFileRegex
+      }
+    );
 
     return [
       this.helpers.returnJsonArray({

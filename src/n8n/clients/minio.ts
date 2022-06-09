@@ -11,4 +11,4 @@ export const createMinioClient = async (context: IExecuteFunctions) => {
   };
 
   return new Client(sanitizedCredentials);
-}
+};

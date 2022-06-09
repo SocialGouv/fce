@@ -59,7 +59,11 @@ export class DownloadLatestEffectif implements INodeType {
 
 		const downloadRegex = new RegExp(`^TRANS-SISSMO-effectifs_${getTextDate(oldestFile)}.csv$`, "i");
 
-		const { outputFile, remoteFile } = await downloadOldestFile(client, bucket, new RegExp(downloadRegex), outputName);
+		const { outputFile, remoteFile } = await downloadOldestFile(client, {
+      bucket,
+      regex: new RegExp(downloadRegex),
+      outputFileName: outputName
+    });
 
 		return [
 		  this.helpers.returnJsonArray({

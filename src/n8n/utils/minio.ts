@@ -2,6 +2,7 @@ import {BucketItem, Client, CopyConditions} from "minio";
 import { promises as fs } from "fs";
 import * as path from "path";
 import { DOWNLOAD_STORAGE_PATH } from "./constants";
+import {isAfter} from "date-fns";
 
 export const getFiles = async (client: Client, bucket: string, regex: RegExp, prefix = ""): Promise<BucketItem[]> => {
   const stream = client.listObjectsV2(bucket, prefix);
@@ -24,7 +25,7 @@ export const getFiles = async (client: Client, bucket: string, regex: RegExp, pr
       resolve(files);
     });
   });
-}
+};
 
 export const filterOldestFile = (files: BucketItem[]): BucketItem =>
   files.reduce(
@@ -45,13 +46,13 @@ const exists = async (path: string): Promise<boolean> => {
   } catch(err) {
     return false;
   }
-}
+};
 
 const createIfNotExist = async (path: string): Promise<void> => {
   if (!await exists(path)) {
     await fs.mkdir(path, { recursive: true });
   }
-}
+};
 
 export const downloadFile = async (client: Client, bucket: string, file: BucketItem, outputFileName: string) => {
   await createIfNotExist(DOWNLOAD_STORAGE_PATH);
@@ -61,32 +62,53 @@ export const downloadFile = async (client: Client, bucket: string, file: BucketI
   } catch (err) {
     console.error(err);
   }
-}
+};
 
 type DownloadFileOutput = {
   outputFile: string;
   remoteFile: string;
-}
+};
 
-export const downloadFileFromList = (selector: (fileList: BucketItem[]) => BucketItem) => async (client: Client, bucket: string, regex: RegExp, outputFileName?: string, prefix = ""): Promise<DownloadFileOutput> => {
-  const files = await getFiles(client, bucket, regex, prefix);
-  if (files.length === 0) {
+type DownloadFileOptions = {
+  bucket: string;
+  regex: RegExp;
+  outputFileName?: string;
+  prefix?:string;
+  lastModifiedAfterTimestamp?: number
+};
+
+export const downloadFileFromList = (selector: (fileList: BucketItem[]) => BucketItem) =>
+  async (client: Client, {
+    bucket,
+    regex,
+    outputFileName,
+    prefix = "",
+    lastModifiedAfterTimestamp = 0
+  }: DownloadFileOptions): Promise<DownloadFileOutput> => {
+    const files = await getFiles(client, bucket, regex, prefix);
+
+    const filteredFiles = files.filter(
+      ({ lastModified }) => isAfter(lastModified, lastModifiedAfterTimestamp)
+    );
+
+    if (filteredFiles.length === 0) {
+      return {
+        outputFile: "",
+        remoteFile: ""
+      };
+    }
+
+    const dowloadedFile = selector(filteredFiles);
+
+    const outputFile = path.join(DOWNLOAD_STORAGE_PATH, outputFileName || dowloadedFile.name);
+
+    await downloadFile(client, bucket, dowloadedFile, outputFile);
+
     return {
-      outputFile: "",
-      remoteFile: ""
+      outputFile,
+      remoteFile: dowloadedFile.name
     };
-  }
-  const oldestFile = selector(files);
-
-  const outputFile = path.join(DOWNLOAD_STORAGE_PATH, outputFileName || oldestFile.name);
-
-  await downloadFile(client, bucket, oldestFile, outputFile);
-
-  return {
-    outputFile,
-    remoteFile: oldestFile.name
-  };
-}
+};
 
 export const downloadOldestFile = downloadFileFromList(filterOldestFile);
 export const downloadNewestFile = downloadFileFromList(filterNewestFile);
@@ -96,7 +118,7 @@ export const archiveFile = async (client: Client, bucket: string, filename: stri
   await client.copyObject(bucket, `archives/${filename}`, `/${bucket}/${filename}`, conditions);
 
   return client.removeObject(bucket, filename);
-}
+};
 
 type ContentType = "text/csv";
 
@@ -105,4 +127,4 @@ export const uploadFile = async (client: Client, bucket: string, filename: strin
     "Content-Type": contentType
   };
   await client.fPutObject(bucket, outputFileName, filename, metadata);
-}
+};

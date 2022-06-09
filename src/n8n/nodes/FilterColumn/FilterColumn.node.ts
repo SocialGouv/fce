@@ -7,12 +7,11 @@ import {
     INodeType,
     INodeTypeDescription,
 } from 'n8n-workflow';
-import { Pool } from "pg";
 import parse from "csv-parse";
-import stringify from "csv-stringify";
+import { stringify } from "csv-stringify";
 
 import { DOWNLOAD_STORAGE_PATH } from "../../utils/constants";
-import { identityTransform, promisifyStream } from "../../utils/stream";
+import { identityTransform } from "../../utils/stream";
 import { filterRows, sanitizeHtmlChars } from "../../utils/postgre";
 
 export type FilterColumnConfig = {
@@ -21,7 +20,7 @@ export type FilterColumnConfig = {
     sanitizeHtmlChars?: boolean;
     filteredColumn: string;
     test: string;
-}
+};
 
 export class FilterColumn implements INodeType {
     description: INodeTypeDescription = {
@@ -93,7 +92,7 @@ export class FilterColumn implements INodeType {
         const regExp = new RegExp(test);
 
         const filePath = path.join(path.dirname(fileName), `${Date.now()}-${path.basename(fileName)}`);
-        const outputPath = path.join(DOWNLOAD_STORAGE_PATH, filePath)
+        const outputPath = path.join(DOWNLOAD_STORAGE_PATH, filePath);
 
         const writeStream = createWriteStream(outputPath);
 
@@ -102,6 +101,7 @@ export class FilterColumn implements INodeType {
                 ? sanitizeHtmlChars()
                 : identityTransform())
             .pipe(parse({ delimiter: separator, columns: true }))
+          // tslint:disable-next-line:no-any
             .pipe(filterRows((row: any) => regExp.test(row[filteredColumn])))
             .pipe(stringify({ header: true, delimiter: separator }))
             .pipe(writeStream);

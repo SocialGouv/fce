@@ -1,13 +1,20 @@
 import "./rupcoTable.scss";
 
+import { some } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 
+import {
+  getEtat,
+  getNombreRupture,
+  getNumero,
+  getTypeLabel,
+} from "../../../../../utils/rupco/rupco";
 import Value from "../../../../shared/Value";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import Table from "../../SharedComponents/Table";
 
-const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
+const RupcoTable = ({ list, siren, otherRupco, hasTypeColumn = false }) => {
   return (
     <Table className="rupco-table-establishment">
       <thead>
@@ -22,30 +29,29 @@ const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
       </thead>
       <tbody>
         {list.map((dossier) => {
-          const hasOtherEstablishments = !!(
-            rupcoFiles &&
-            rupcoFiles.find((file) => file.numero === dossier.numero)
-              .etablissements.length > 1
+          const hasOtherEstablishments = some(
+            otherRupco,
+            (file) => getNumero(file) === getNumero(dossier)
           );
 
           return (
-            <tr key={dossier.numero}>
+            <tr key={getNumero(dossier)}>
               {hasTypeColumn && (
                 <td className="col-width-40">
-                  <Value value={dossier.type} />
+                  <Value value={getTypeLabel(dossier)} />
                 </td>
               )}
               <td>
                 <Value value={dossier.date_enregistrement} />
               </td>
               <td className="has-text-right">
-                <Value value={dossier.numero} />
+                <Value value={getNumero(dossier)} />
               </td>
               <td className="col-width-20">
-                <Value value={dossier.etat} />
+                <Value value={getEtat(dossier)} />
               </td>
               <td className="has-text-right col-width-20">
-                <Value value={dossier.nombre_de_ruptures} hasNumberFormat />
+                <Value value={getNombreRupture(dossier)} hasNumberFormat />
               </td>
               <td>
                 <Value
@@ -77,7 +83,7 @@ const RupcoTable = ({ list, siren, rupcoFiles, hasTypeColumn = false }) => {
 RupcoTable.propTypes = {
   hasTypeColumn: PropTypes.bool,
   list: PropTypes.array.isRequired,
-  rupcoFiles: PropTypes.arrayOf(PropTypes.object),
+  otherRupco: PropTypes.arrayOf(PropTypes.object),
   siren: PropTypes.string.isRequired,
 };
 

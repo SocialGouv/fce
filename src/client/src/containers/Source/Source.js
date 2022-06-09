@@ -1,18 +1,35 @@
+import { format, parseISO } from "date-fns";
+import fr from "date-fns/locale/fr";
 import PropTypes from "prop-types";
 import React from "react";
-import { connect } from "react-redux";
 
 import SourceView from "../../components/Source";
+import { useSources } from "./Source.gql";
+
+const formatDate = (dateFormat) => (source) => {
+  try {
+    return format(parseISO(source?.date), dateFormat, { locale: fr });
+  } catch (err) {
+    return "";
+  }
+};
+
+const formatSourceDate = formatDate("MMMM yyyy");
+
+const formatTableCellDate = formatDate("dd/MM/yyyy");
 
 const Source = ({
-  sources,
   si = null,
   isTableCell = false,
   sourceDate = null,
   sourceCustom = null,
 }) => {
-  const name = sourceCustom ? sourceCustom : sources[si] && sources[si].name;
-  const updated = sourceDate || (sources[si] && sources[si].date);
+  const { data: sources } = useSources();
+  const source = sources?.find?.(({ si: sourceSi }) => sourceSi === si);
+  const name = sourceCustom || `${source?.fournisseur} / ${source?.si}`;
+  const updated =
+    sourceDate ||
+    (isTableCell ? formatTableCellDate : formatSourceDate)(source);
 
   return (
     <SourceView
@@ -24,18 +41,11 @@ const Source = ({
   );
 };
 
-const mapStateToProps = ({ sources }) => {
-  return {
-    sources,
-  };
-};
-
 Source.propTypes = {
   isTableCell: PropTypes.bool,
   si: PropTypes.string,
   sourceCustom: PropTypes.string,
   sourceDate: PropTypes.string,
-  sources: PropTypes.object.isRequired,
 };
 
-export default connect(mapStateToProps)(Source);
+export default Source;

@@ -3,31 +3,33 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import _get from "lodash.get";
+import { get } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 
-import { formatEstablishmentAgreements } from "../../../../../helpers/Relationships";
 import Config from "../../../../../services/Config";
+import {
+  getGroupedAccordsLastSigning,
+  getGroupedAccordsSum,
+  groupAccordsByType,
+} from "../../../../../utils/accords/accords";
+import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
+import ConventionsCollectives from "./ConventionsCollectives";
+import { useAccordsEntreprise } from "./EstablishmentRelationship.gql";
 import Psi from "./Psi";
 import WorkAccident from "./WorkAccident";
 
-const EstablishmentRelationship = ({
-  establishment: { idcc, siret },
-  agreements,
-}) => {
-  const establishmentAgreements = formatEstablishmentAgreements(
-    agreements,
-    siret
-  );
+const EstablishmentRelationship = ({ siret }) => {
+  const { loading, data, error } = useAccordsEntreprise(siret);
 
-  const nbAccords = establishmentAgreements.count;
-  const lastDate = establishmentAgreements.lastSignatureDate;
+  const accords = groupAccordsByType(data || []);
+  const nbAccords = getGroupedAccordsSum(accords);
+  const lastDate = getGroupedAccordsLastSigning(accords);
 
   return (
     <section id="relation" className="data-sheet__section">
@@ -38,100 +40,68 @@ const EstablishmentRelationship = ({
         <h2 className="title">Relation travail</h2>
       </div>
       <div className="section-datas">
-        <Subcategory
-          subtitle="Convention(s) collective(s) appliquée(s)"
-          sourceSi="DSN"
-        >
-          <div className="section-datas__list">
-            <div className="section-datas__list-description">
-              Cliquez sur la convention collective pour consulter son contenu
-              sur Legifrance
-            </div>
-            <ul>
-              {idcc
-                ? idcc.map(({ code, libelle }) => (
-                    <li className="section-datas__list-item" key={code}>
-                      <a
-                        href={
-                          Config.get("legifranceSearchUrl.idcc") +
-                          code.replace(/^0+/, "")
-                        }
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        <Value value={`${code} - ${libelle}`} />
-                      </a>
-                    </li>
-                  ))
-                : "-"}
-            </ul>
-          </div>
-        </Subcategory>
+        <ConventionsCollectives siret={siret} />
         <Subcategory subtitle="Accords d'entreprise" sourceSi="D@cccord">
-          <Data
-            name="Nombre total d'accords d'entreprise déposés depuis 1980"
-            value={nbAccords}
-            emptyValue="aucun accord connu"
-            columnClasses={["is-7", "is-5"]}
-            hasNumberFormat
-          />
-          {nbAccords > 0 && (
-            <>
-              <Data
-                name="Date de signature du dernier accord d'entreprise déposé"
-                value={lastDate}
-                emptyValue="-"
-                columnClasses={["is-7", "is-5"]}
-              />
-              {lastDate && (
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Thématique</th>
-                      <th className="has-text-right">Nombre d{"'"}accords</th>
-                      <th>Date de signature du dernier accord</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Config.get("accords").map(({ key, value }) => (
-                      <tr key={`accord-${key}`}>
-                        <td className="col-width-40">{value}</td>
-                        <td className="has-text-right">
-                          <Value
-                            value={_get(
-                              establishmentAgreements.agreements,
-                              `${key}.count`
-                            )}
-                            empty="-"
-                            nonEmptyValues={[0, "0"]}
-                            hasNumberFormat
-                          />
-                        </td>
-                        <td>
-                          <Value
-                            value={_get(
-                              establishmentAgreements.agreements,
-                              `${key}.lastDate`
-                            )}
-                            empty="-"
-                          />
-                        </td>
+          <LoadableContent loading={loading} error={error}>
+            <Data
+              name="Nombre total d'accords d'entreprise déposés depuis 1980"
+              value={nbAccords}
+              emptyValue="aucun accord connu"
+              columnClasses={["is-7", "is-5"]}
+              hasNumberFormat
+            />
+            {nbAccords > 0 && (
+              <>
+                <Data
+                  name="Date de signature du dernier accord d'entreprise déposé"
+                  value={lastDate}
+                  emptyValue="-"
+                  columnClasses={["is-7", "is-5"]}
+                />
+                {lastDate && (
+                  <Table>
+                    <thead>
+                      <tr>
+                        <th>Thématique</th>
+                        <th className="has-text-right">Nombre d{"'"}accords</th>
+                        <th>Date de signature du dernier accord</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              )}
+                    </thead>
+                    <tbody>
+                      {Config.get("accords").map(({ key, value }) => (
+                        <tr key={`accord-${key}`}>
+                          <td className="col-width-40">{value}</td>
+                          <td className="has-text-right">
+                            <Value
+                              value={get(accords, `${key}.count`)}
+                              empty="-"
+                              nonEmptyValues={[0, "0"]}
+                              hasNumberFormat
+                            />
+                          </td>
+                          <td>
+                            <Value
+                              value={get(accords, `${key}.lastSignDate`)}
+                              empty="-"
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                )}
 
-              <a
-                href={Config.get("legifranceSearchUrl.accords") + siret}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                Rechercher ces accords sur Legifrance{" "}
-                <FontAwesomeIcon icon={faExternalLinkSquareAlt} />
-              </a>
-            </>
-          )}
+                <a
+                  href={Config.get("legifranceSearchUrl.accords") + siret}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  Rechercher ces accords sur Legifrance{" "}
+                  <FontAwesomeIcon icon={faExternalLinkSquareAlt} />
+                </a>
+              </>
+            )}
+          </LoadableContent>
         </Subcategory>
 
         <Psi siret={siret} />
@@ -143,8 +113,7 @@ const EstablishmentRelationship = ({
 
 EstablishmentRelationship.propTypes = {
   agreements: PropTypes.object.isRequired,
-  enterprise: PropTypes.object.isRequired,
-  establishment: PropTypes.object.isRequired,
+  siret: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {

@@ -1,0 +1,23 @@
+table:
+  name: interactions_pole_3e_src
+  schema: public
+select_permissions:
+- permission:
+    columns:
+    - cible_controle
+    - clos
+    - clos_automatiquement
+    - date
+    - date_cloture
+    - date_creation
+    - libelle_region
+    - nature_controle
+    - numero_dossier
+    - numero_etablissement
+    - region
+    - siren
+    - siret
+    - type_controle
+    - id
+    filter: {}
+  role: user

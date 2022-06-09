@@ -1,3 +1,3 @@
-import Enterprise from "./Enterprise";
+import Enterprise from "./LegacyEnterprise";
 
 export default Enterprise;

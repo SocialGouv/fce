@@ -1,0 +1,197 @@
+table:
+  name: entreprises
+  schema: public
+object_relationships:
+- name: categorie_juridique
+  using:
+    manual_configuration:
+      column_mapping:
+        categoriejuridiqueunitelegale: code
+      insertion_order: null
+      remote_table:
+        name: categorie_juridique
+        schema: public
+- name: naf
+  using:
+    manual_configuration:
+      column_mapping:
+        activiteprincipaleunitelegale: code
+      insertion_order: null
+      remote_table:
+        name: naf
+        schema: public
+- name: psi
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: psi_siren
+        schema: public
+array_relationships:
+- name: accidents_travail
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: accidents_travail
+        schema: public
+- name: accords
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: etablissements_accords
+        schema: public
+- name: activite_partielle
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: etablissements_activite_partielle
+        schema: public
+- name: apprentissage
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: etablissements_apprentissage
+        schema: public
+- name: egapro
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: egapro_index
+        schema: public
+- name: etablissements
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: etablissements
+        schema: public
+- name: idcc
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: etablissements_idcc
+        schema: public
+- name: interactions_3E_SEER
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: interactions_pole_3e
+        schema: public
+- name: interactions_3E_SRC
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: interactions_pole_3e_src
+        schema: public
+- name: interactions_C
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: interactions_pole_c
+        schema: public
+- name: interactions_T
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: interactions_pole_t
+        schema: public
+- name: organismes_formation
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: organismes_formation
+        schema: public
+- name: rupco
+  using:
+    manual_configuration:
+      column_mapping:
+        siren: siren
+      insertion_order: null
+      remote_table:
+        name: rupco_etablissements
+        schema: public
+remote_relationships:
+- definition:
+    hasura_fields:
+    - siren
+    remote_field:
+      entreprise:
+        arguments:
+          siren: $siren
+    remote_schema: entreprise-api
+  name: api
+select_permissions:
+- permission:
+    columns:
+    - activiteprincipaleunitelegale
+    - anneecategorieentreprise
+    - anneeeffectifsunitelegale
+    - caractereemployeurunitelegale
+    - categorieentreprise
+    - categoriejuridiqueunitelegale
+    - economiesocialesolidaireunitelegale
+    - etatadministratifunitelegale
+    - nicsiegeunitelegale
+    - nomenclatureactiviteprincipaleunitelegale
+    - sexeunitelegale
+    - siren
+    - statutdiffusionunitelegale
+    - trancheeffectifsunitelegale
+    - unitepurgeeunitelegale
+    - datecreationunitelegale
+    - datedebut
+    - datederniertraitementunitelegale
+    - nombreperiodesunitelegale
+    - denominationunitelegale
+    - denominationusuelle1unitelegale
+    - denominationusuelle2unitelegale
+    - denominationusuelle3unitelegale
+    - identifiantassociationunitelegale
+    - nomunitelegale
+    - nomusageunitelegale
+    - prenom1unitelegale
+    - prenom2unitelegale
+    - prenom3unitelegale
+    - prenom4unitelegale
+    - prenomusuelunitelegale
+    - pseudonymeunitelegale
+    - sigleunitelegale
+    filter: {}
+  role: user

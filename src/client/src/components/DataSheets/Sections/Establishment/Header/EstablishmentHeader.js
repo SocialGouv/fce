@@ -2,51 +2,52 @@ import { faCircle, faSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
-import { Helmet } from "react-helmet";
 
-import { formatAddress } from "../../../../../helpers/Address";
-import { getEnterpriseName } from "../../../../../helpers/Enterprise";
-import { isActiveEstablishment } from "../../../../../helpers/Establishment";
+import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import { formatSiret } from "../../../../../helpers/utils";
+import {
+  getNafCode,
+  getNafLabel,
+} from "../../../../../utils/entreprise/entreprise";
+import {
+  getAdresse,
+  getCategoryLabel,
+  getDateCreation,
+  getDateFermetureEtablissement,
+  isActive,
+} from "../../../../../utils/establishment/establishment";
 import InfoBox from "../../../../shared/InfoBox";
 import Value from "../../../../shared/Value";
 import Dashboard from "../Dashboard";
+import EntrepriseName from "./EntrepriseName";
+import { useEstablishmentHeaderData } from "./EstablishmentHeader.gql";
 
-const EstablishmentHeader = ({
-  enterprise,
-  establishment,
-  establishment: { adresse_composant },
-  apprentissage,
-}) => {
-  const address = adresse_composant && formatAddress(adresse_composant);
+const EstablishmentHeader = ({ siren, siret }) => {
+  const { data: etablissement } = useEstablishmentHeaderData(siret);
+  const adresse = etablissement ? getAdresse(etablissement) : "";
 
-  const isActive = isActiveEstablishment(establishment);
-  const stateClass = isActive ? "icon--success" : "icon--danger";
+  const isEtablissementActive = isActive(etablissement);
+
+  const stateClass = isEtablissementActive ? "icon--success" : "icon--danger";
 
   return (
     <section id="header" className="data-sheet-header">
-      <Helmet>
-        <title>FCE - établissement {getEnterpriseName(enterprise) || ""}</title>
-      </Helmet>
-
-      <h1 className="data-sheet-header__title">
-        <Value value={getEnterpriseName(enterprise) || null} empty=" " />
-      </h1>
+      <EntrepriseName siren={siren} />
       <div className="columns">
         <div className="column">
-          <InfoBox value={establishment.categorie_etablissement} />
+          <InfoBox value={getCategoryLabel(etablissement)} />
         </div>
       </div>
       <div className="columns is-vcentered data-sheet-header__primary-infos">
         <div className="column is-4 data-sheet-header__siret">
           <span>SIRET : </span>
           <span>
-            <Value value={formatSiret(establishment.siret)} empty="" />
+            <Value value={formatSiret(siret)} empty="" />
           </span>
         </div>
         <div className="column is-8">
           <span className="has-text-segoe">
-            <Value value={address} empty="" />
+            <Value value={adresse} empty="" />
           </span>
         </div>
       </div>
@@ -55,31 +56,28 @@ const EstablishmentHeader = ({
           <div className="data-sheet-header__status">
             <div>
               <FontAwesomeIcon
-                icon={isActive ? faCircle : faSquare}
+                icon={isEtablissementActive ? faCircle : faSquare}
                 className={`data-sheet-header__status-icon ${stateClass}`}
               />
             </div>
             <div className="has-text-segoe">
-              {isActive ? (
+              {isEtablissementActive ? (
                 <span>
                   Ouvert depuis le{" "}
-                  <Value value={establishment.date_creation} empty="" />
+                  <Value value={getDateCreation(etablissement)} empty="" />
                 </span>
               ) : (
                 <div>
                   <div>
                     Fermé depuis le{" "}
                     <Value
-                      value={
-                        establishment.date_fin ||
-                        establishment.date_dernier_traitement_etablissement
-                      }
+                      value={getDateFermetureEtablissement(etablissement)}
                       empty=""
                     />
                   </div>
                   <div>
                     Date de création:{" "}
-                    <Value value={establishment.date_creation} empty="" />
+                    <Value value={getDateCreation(etablissement)} empty="" />
                   </div>
                 </div>
               )}
@@ -88,27 +86,22 @@ const EstablishmentHeader = ({
         </div>
         <div className="column is-8">
           <span className="has-text-segoe data-sheet-header__naf">
-            <Value value={establishment.naf} empty="-" />{" "}
+            <Value value={getNafCode(etablissement)} empty="-" />{" "}
             <Value
-              value={
-                establishment.libelle_naf &&
-                establishment.libelle_naf.toLowerCase()
-              }
+              value={(getNafLabel(etablissement) || "").toLowerCase()}
               empty=""
             />
           </span>
         </div>
       </div>
-      <Dashboard establishment={establishment} apprentissage={apprentissage} />
+      <Dashboard siret={siret} />
     </section>
   );
 };
 
 EstablishmentHeader.propTypes = {
-  adresse_composant: PropTypes.object,
-  apprentissage: PropTypes.object.isRequired,
-  enterprise: PropTypes.object.isRequired,
-  establishment: PropTypes.object.isRequired,
+  siren: PropTypes.string.isRequired,
+  siret: PropTypes.string.isRequired,
 };
 
-export default EstablishmentHeader;
+export default renderIfSiret(EstablishmentHeader);

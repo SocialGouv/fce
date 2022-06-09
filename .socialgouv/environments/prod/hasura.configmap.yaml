@@ -11,3 +11,4 @@ data:
   HASURA_GRAPHQL_LOG_LEVEL: "info"
   HASURA_GRAPHQL_DEV_MODE: "false"
   HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
+  FCE_SERVER_URL: "http://server:80"

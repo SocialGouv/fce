@@ -1,1 +1,1 @@
-export { default } from "./EnterpriseRelationship";
+export { default } from "./RelationsEntreprise";

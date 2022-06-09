@@ -1,0 +1,24 @@
+table:
+  name: etablissements_idcc
+  schema: public
+object_relationships:
+- name: libelle
+  using:
+    manual_configuration:
+      column_mapping:
+        idcc: code
+      insertion_order: null
+      remote_table:
+        name: idcc
+        schema: public
+select_permissions:
+- permission:
+    columns:
+    - date_maj
+    - id
+    - idcc
+    - mois
+    - siren
+    - siret
+    filter: {}
+  role: user

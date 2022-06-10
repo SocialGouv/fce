@@ -1,3 +1,10 @@
+## [27.46.2](https://github.com/SocialGouv/fce/compare/v27.46.1...v27.46.2) (2022-06-10)
+
+
+### Bug Fixes
+
+* **conventionsCollective:** remove invalid conventions display ([#214](https://github.com/SocialGouv/fce/issues/214)) ([cc29e38](https://github.com/SocialGouv/fce/commit/cc29e38e5e87ed52874d627c68f561b66e4749b5))
+
 ## [27.46.1](https://github.com/SocialGouv/fce/compare/v27.46.0...v27.46.1) (2022-06-09)
 
 

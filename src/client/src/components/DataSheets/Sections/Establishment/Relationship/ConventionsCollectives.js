@@ -3,7 +3,12 @@ import React from "react";
 
 import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import Config from "../../../../../services/Config";
-import { getLastConventionCollectives } from "../../../../../utils/conventions-collectives/conventions-collectives";
+import {
+  getConventionCode,
+  getConventionLibelle,
+  getLastConventionCollectives,
+  removeInvalidConventions,
+} from "../../../../../utils/conventions-collectives/conventions-collectives";
 import Value from "../../../../shared/Value";
 import Subcategory from "../../SharedComponents/Subcategory";
 import { useConventionsCollectives } from "./ConventionsCollectives.gql";
@@ -15,7 +20,9 @@ const ConventionsCollectives = ({ siret }) => {
     return null;
   }
 
-  const idcc = getLastConventionCollectives(data.etablissements_idcc);
+  const idcc = removeInvalidConventions(
+    getLastConventionCollectives(data.etablissements_idcc)
+  );
 
   return (
     <Subcategory
@@ -29,17 +36,24 @@ const ConventionsCollectives = ({ siret }) => {
         </div>
         <ul>
           {idcc
-            ? idcc.map(({ libelle: { code, libelle } }) => (
-                <li className="section-datas__list-item" key={code}>
+            ? idcc.map((convention) => (
+                <li
+                  className="section-datas__list-item"
+                  key={getConventionCode(convention)}
+                >
                   <a
                     href={
                       Config.get("legifranceSearchUrl.idcc") +
-                      code.replace(/^0+/, "")
+                      getConventionCode(convention)?.replace?.(/^0+/, "")
                     }
                     target="_blank"
                     rel="noreferrer noopener"
                   >
-                    <Value value={`${code} - ${libelle}`} />
+                    <Value
+                      value={`${getConventionCode(
+                        convention
+                      )} - ${getConventionLibelle(convention)}`}
+                    />
                   </a>
                 </li>
               ))

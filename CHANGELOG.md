@@ -1,3 +1,10 @@
+## [27.46.3](https://github.com/SocialGouv/fce/compare/v27.46.2...v27.46.3) (2022-06-27)
+
+
+### Bug Fixes
+
+* fix DonneeEcofi int to float ca ([#215](https://github.com/SocialGouv/fce/issues/215)) ([479505a](https://github.com/SocialGouv/fce/commit/479505aa0ac508c554da9e6e10f51ccf9a50e496))
+
 ## [27.46.2](https://github.com/SocialGouv/fce/compare/v27.46.1...v27.46.2) (2022-06-10)
 
 

@@ -13,8 +13,9 @@ const TrancheEffectifsInsee = ({ siret }) => {
     <Data
       name="Tranche Effectif INSEE"
       value={text}
+      emptyValue="Non disponible"
       nonEmptyValue=""
-      sourceCustom={`Sirène - ${data?.date_reference}`}
+      sourceCustom={`Sirène ${data?.date_reference || ""}`}
     />
   );
 };

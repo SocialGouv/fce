@@ -1,3 +1,10 @@
+## [27.46.4](https://github.com/SocialGouv/fce/compare/v27.46.3...v27.46.4) (2022-06-27)
+
+
+### Bug Fixes
+
+* fix empty value tranche effectif ([#216](https://github.com/SocialGouv/fce/issues/216)) ([e35abdc](https://github.com/SocialGouv/fce/commit/e35abdcfc04b81b4f07bae212fc2da60f86b8a99))
+
 ## [27.46.3](https://github.com/SocialGouv/fce/compare/v27.46.2...v27.46.3) (2022-06-27)
 
 

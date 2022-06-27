@@ -2,18 +2,22 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import { formatSiret } from "../../../../../helpers/utils";
+import {
+  getCity,
+  getState,
+} from "../../../../../utils/establishment/establishment";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import State from "../../SharedComponents/State";
 import Table from "../../SharedComponents/Table";
 
-export const PsiSiretTable = ({ establishments, year, isVisiblePsiTable }) => {
+export const PsiSiretTable = ({ psi, year, isVisiblePsiTable }) => {
   return (
     <div>
       <div className="psi-siret__establishment-count">
-        {establishments.length} établissement(s) identifié(s) en {year}
+        {psi.length} établissement(s) identifié(s) en {year}
       </div>
 
-      {!!establishments.length && isVisiblePsiTable && (
+      {!!psi.length && isVisiblePsiTable && (
         <Table className="psi-siret__table">
           <thead>
             <tr>
@@ -24,17 +28,15 @@ export const PsiSiretTable = ({ establishments, year, isVisiblePsiTable }) => {
             </tr>
           </thead>
           <tbody>
-            {establishments.map((etab) => (
-              <tr key={etab.siret}>
-                <td className="table-cell--nowrap">
-                  {formatSiret(etab.siret)}
-                </td>
+            {psi.map((psi) => (
+              <tr key={psi.siret}>
+                <td className="table-cell--nowrap">{formatSiret(psi.siret)}</td>
                 <td className="table-cell--center-cell">
-                  {etab.etat && <State state={etab.etat} />}
+                  <State state={getState(psi.etablissement)} />
                 </td>
-                <td>{etab.commune}</td>
+                <td>{getCity(psi.etablissement)}</td>
                 <td className="table-cell--nowrap see-details">
-                  <SeeDetailsLink link={`/establishment/${etab.siret}/#psi`} />
+                  <SeeDetailsLink link={`/establishment/${psi.siret}/#psi`} />
                 </td>
               </tr>
             ))}
@@ -46,7 +48,7 @@ export const PsiSiretTable = ({ establishments, year, isVisiblePsiTable }) => {
 };
 
 PsiSiretTable.propTypes = {
-  establishments: PropTypes.array.isRequired,
   isVisiblePsiTable: PropTypes.bool.isRequired,
+  psi: PropTypes.array.isRequired,
   year: PropTypes.number.isRequired,
 };

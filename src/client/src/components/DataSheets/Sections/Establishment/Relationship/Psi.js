@@ -1,30 +1,34 @@
 import "./psi.scss";
 
+import { getYear, parseISO } from "date-fns";
 import PropTypes from "prop-types";
 import React from "react";
-import { connect } from "react-redux";
 
+import { getSirenFromSiret } from "../../../../../utils/establishment/establishment";
 import Data from "../../SharedComponents/Data";
 import PgApiDataHandler from "../../SharedComponents/PgApiDataHandler";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink/SeeDetailsLink";
 import Subcategory from "../../SharedComponents/Subcategory";
+import { usePsi } from "./Psi.gql";
 
-const Psi = ({ psi, siret, sources }) => {
-  if (!sources.SIPSI) return "";
+const Psi = ({ siret }) => {
+  const { loading, data, error } = usePsi(siret);
 
-  const siren = siret.slice(0, 9);
-  const currentYear = Number(sources.SIPSI.date.split("/").pop());
+  if (loading || error) {
+    return null;
+  }
+
+  const currentYear = getYear(parseISO(data.psi_update.date));
   const lastYear = currentYear - 1;
 
-  const establishmentPsi = psi.establishments?.find(
-    (establishment) => establishment.siret === siret
+  const hasPsi = Boolean(
+    data.psi_siret?.salaries_annee_courante ||
+      data.psi_siret?.salaries_annee_precedente
   );
 
-  const hasPsi = Boolean(
-    establishmentPsi?.current_year || establishmentPsi?.last_year
-  );
   const isEnterpriseWithPsi = Boolean(
-    psi.enterprise.current_year || psi.enterprise.last_year
+    data.psi_siren?.salaries_annee_courante ||
+      data.psi_siren?.salaries_annee_precedente
   );
 
   return (
@@ -33,7 +37,7 @@ const Psi = ({ psi, siret, sources }) => {
         subtitle="Prestations de services internationales (PSI)"
         sourceSi="SIPSI"
       >
-        <PgApiDataHandler isLoading={psi.isLoading} error={psi.error}>
+        <PgApiDataHandler isLoading={loading} error={error}>
           <Data
             name={`Etablissement identifié comme lieu d'une ou plusieurs PSI`}
             description={
@@ -46,20 +50,20 @@ const Psi = ({ psi, siret, sources }) => {
             columnClasses={["is-10", "is-2"]}
             value={hasPsi ? "Oui" : "Non"}
           />
-          {!!establishmentPsi?.current_year && (
+          {!!data.psi_siret?.salaries_annee_courante && (
             <Data
               name={`Nombre de salariés distincts détachés en ${currentYear}`}
               className="psi__data"
               columnClasses={["is-10", "is-2"]}
-              value={establishmentPsi.current_year}
+              value={data.psi_siret?.salaries_annee_courante}
             />
           )}
-          {!!establishmentPsi?.last_year && (
+          {!!data.psi_siret?.salaries_annee_precedente && (
             <Data
               name={`Nombre de salariés distincts détachés en ${lastYear}`}
               className="psi__data"
               columnClasses={["is-10", "is-2"]}
-              value={establishmentPsi.last_year}
+              value={data.psi_siret?.salaries_annee_precedente}
             />
           )}
 
@@ -69,7 +73,7 @@ const Psi = ({ psi, siret, sources }) => {
             description={
               isEnterpriseWithPsi && (
                 <SeeDetailsLink
-                  link={`/enterprise/${siren}/#psi`}
+                  link={`/enterprise/${getSirenFromSiret(siret)}/#psi`}
                   text="Voir les informations de l'entreprise"
                 />
               )
@@ -85,16 +89,7 @@ const Psi = ({ psi, siret, sources }) => {
 };
 
 Psi.propTypes = {
-  psi: PropTypes.object.isRequired,
   siret: PropTypes.string.isRequired,
-  sources: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    psi: state.psi,
-    sources: state.sources,
-  };
-};
-
-export default connect(mapStateToProps, null)(Psi);
+export default Psi;

@@ -1,14 +1,24 @@
+import { sortBy } from "lodash";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import Button from "../../../../shared/Button/Button";
 import { PsiSiretTable } from "./PsiSiretTable";
 
-export const PsiSiret = ({ establishments, years }) => {
-  const numberOfEstablishmentsWithPsi =
-    establishments.currentYear.length + establishments.lastYear.length;
+export const PsiSiret = ({ psi, years }) => {
+  const numberOfEstablishmentsWithPsi = psi.length;
   const [isVisiblePsiTable, setIsVisiblePsiTable] = useState(
     numberOfEstablishmentsWithPsi < 10
+  );
+
+  const psiCurrentYear = sortBy(
+    psi.filter((psi) => psi.salaries_annee_courante > 0),
+    "etablissement.etatadministratifetablissement"
+  );
+
+  const psiLastYear = sortBy(
+    psi.filter((psi) => psi.salaries_annee_precedente > 0),
+    "etablissement.etatadministratifetablissement"
   );
 
   return (
@@ -38,13 +48,13 @@ export const PsiSiret = ({ establishments, years }) => {
       )}
 
       <PsiSiretTable
-        establishments={establishments.currentYear}
+        psi={psiCurrentYear}
         year={years.currentYear}
         isVisiblePsiTable={isVisiblePsiTable}
       />
 
       <PsiSiretTable
-        establishments={establishments.lastYear}
+        psi={psiLastYear}
         year={years.lastYear}
         isVisiblePsiTable={isVisiblePsiTable}
       />
@@ -53,10 +63,7 @@ export const PsiSiret = ({ establishments, years }) => {
 };
 
 PsiSiret.propTypes = {
-  establishments: PropTypes.shape({
-    currentYear: PropTypes.array.isRequired,
-    lastYear: PropTypes.array.isRequired,
-  }).isRequired,
+  psi: PropTypes.array.isRequired,
   years: PropTypes.shape({
     currentYear: PropTypes.number.isRequired,
     lastYear: PropTypes.number.isRequired,

@@ -1,3 +1,10 @@
+## [27.46.5](https://github.com/SocialGouv/fce/compare/v27.46.4...v27.46.5) (2022-06-27)
+
+
+### Bug Fixes
+
+* fix PSI ([#217](https://github.com/SocialGouv/fce/issues/217)) ([f7fb54b](https://github.com/SocialGouv/fce/commit/f7fb54be6009674a7040558821954ca19a50d4b9))
+
 ## [27.46.4](https://github.com/SocialGouv/fce/compare/v27.46.3...v27.46.4) (2022-06-27)
 
 

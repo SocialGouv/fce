@@ -26,7 +26,7 @@ export const entrepriseTypes = buildSchema(`
   }
 
   type DonneeEcofi {
-    ca: Int
+    ca: Float
     date_fin_exercice: String
     date_fin_exercice_timestamp: Int
   }

@@ -23,11 +23,11 @@ export const etablissementTypes = buildSchema(`
   }
 
   type TrancheEffectif {
-    de: Int!
-    a: Int!
-    code: String!
-    date_reference: String!
-    intitule: String!
+    de: Int
+    a: Int
+    code: String
+    date_reference: String
+    intitule: String
   }
 
   type EffectifMensuel {

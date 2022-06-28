@@ -1,3 +1,10 @@
+## [27.46.6](https://github.com/SocialGouv/fce/compare/v27.46.5...v27.46.6) (2022-06-28)
+
+
+### Bug Fixes
+
+* fix source agrements ([#218](https://github.com/SocialGouv/fce/issues/218)) ([ff70605](https://github.com/SocialGouv/fce/commit/ff70605c10d64e6e4dd8c4038afcd2854be81a84))
+
 ## [27.46.5](https://github.com/SocialGouv/fce/compare/v27.46.4...v27.46.5) (2022-06-27)
 
 

@@ -18,7 +18,7 @@ const OrganismeFormation = ({ siret }) => {
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <Subcategory subtitle="Organisme de formation">
+    <Subcategory subtitle="Organisme de formation" sourceSi="DAT">
       <LoadableContent loading={loading} error={error}>
         <Data
           key="OrganismeFormation"

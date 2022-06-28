@@ -20,6 +20,7 @@ const AgrementsIAE = ({ siret }) => {
     <LoadableContent loading={loading} error={error}>
       <Subcategory
         subtitle="Insertion par l’activité économique (IAE)"
+        sourceSi="ASP Extranet IAE2.0"
         datas={[
           {
             columnClasses: ["is-7", "is-5"],
@@ -35,12 +36,12 @@ const AgrementsIAE = ({ siret }) => {
           <thead>
             <tr>
               <th />
-              <th>Agrément(s) en {getCustomPastYear(1)}</th>
+              <th>Agrément(s) en {getCustomPastYear(4)}</th>
               <th>
                 Nombre de salariés en insertion présents en{" "}
-                {getCustomPastYear(1)}
+                {getCustomPastYear(4)}
               </th>
-              <th>Nombre d’ETP en année {getCustomPastYear(1)}</th>
+              <th>Nombre d’ETP en année {getCustomPastYear(4)}</th>
             </tr>
           </thead>
 

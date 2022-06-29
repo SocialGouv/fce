@@ -2,7 +2,6 @@ import { get } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { getCustomPastYear } from "../../../../../helpers/Date/Date";
 import Config from "../../../../../services/Config";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
@@ -20,6 +19,7 @@ const AgrementsIAE = ({ siret }) => {
     <LoadableContent loading={loading} error={error}>
       <Subcategory
         subtitle="Insertion par l’activité économique (IAE)"
+        sourceSi="ASP Extranet IAE2.0"
         datas={[
           {
             columnClasses: ["is-7", "is-5"],
@@ -35,12 +35,9 @@ const AgrementsIAE = ({ siret }) => {
           <thead>
             <tr>
               <th />
-              <th>Agrément(s) en {getCustomPastYear(1)}</th>
-              <th>
-                Nombre de salariés en insertion présents en{" "}
-                {getCustomPastYear(1)}
-              </th>
-              <th>Nombre d’ETP en année {getCustomPastYear(1)}</th>
+              <th>Agrément(s) en 2018</th>
+              <th>Nombre de salariés en insertion présents en 2018</th>
+              <th>Nombre d’ETP en année 2018</th>
             </tr>
           </thead>
 

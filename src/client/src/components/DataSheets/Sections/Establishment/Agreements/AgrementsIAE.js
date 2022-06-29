@@ -2,7 +2,6 @@ import { get } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { getCustomPastYear } from "../../../../../helpers/Date/Date";
 import Config from "../../../../../services/Config";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
@@ -36,12 +35,9 @@ const AgrementsIAE = ({ siret }) => {
           <thead>
             <tr>
               <th />
-              <th>Agrément(s) en {getCustomPastYear(4)}</th>
-              <th>
-                Nombre de salariés en insertion présents en{" "}
-                {getCustomPastYear(4)}
-              </th>
-              <th>Nombre d’ETP en année {getCustomPastYear(4)}</th>
+              <th>Agrément(s) en 2018</th>
+              <th>Nombre de salariés en insertion présents en 2018</th>
+              <th>Nombre d’ETP en année 2018</th>
             </tr>
           </thead>
 

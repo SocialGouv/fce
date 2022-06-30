@@ -22,7 +22,7 @@ import Dashboard from "../Dashboard";
 import EntrepriseName from "./EntrepriseName";
 import { useEstablishmentHeaderData } from "./EstablishmentHeader.gql";
 
-const EstablishmentHeader = ({ siren, siret }) => {
+const EstablishmentHeader = ({ siret }) => {
   const { data: etablissement } = useEstablishmentHeaderData(siret);
   const adresse = etablissement ? getAdresse(etablissement) : "";
 
@@ -32,7 +32,7 @@ const EstablishmentHeader = ({ siren, siret }) => {
 
   return (
     <section id="header" className="data-sheet-header">
-      <EntrepriseName siren={siren} />
+      <EntrepriseName siret={siret} />
       <div className="columns">
         <div className="column">
           <InfoBox value={getCategoryLabel(etablissement)} />
@@ -100,7 +100,6 @@ const EstablishmentHeader = ({ siren, siret }) => {
 };
 
 EstablishmentHeader.propTypes = {
-  siren: PropTypes.string.isRequired,
   siret: PropTypes.string.isRequired,
 };
 

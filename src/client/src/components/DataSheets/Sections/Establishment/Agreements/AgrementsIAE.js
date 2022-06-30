@@ -24,7 +24,6 @@ const AgrementsIAE = ({ siret }) => {
           {
             columnClasses: ["is-7", "is-5"],
             name: "Insertion par l’activité économique (IAE)",
-            sourceSi: "ASP Extranet IAE2.0",
             value: hasAgrements,
           },
         ]}

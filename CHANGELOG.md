@@ -1,3 +1,10 @@
+# [27.47.0](https://github.com/SocialGouv/fce/compare/v27.46.7...v27.47.0) (2022-06-30)
+
+
+### Features
+
+* update raison sociale on etablissement view ([#220](https://github.com/SocialGouv/fce/issues/220)) ([a7e35ac](https://github.com/SocialGouv/fce/commit/a7e35ac3457d40d549123a4c871b4bbbfd69a48a))
+
 ## [27.46.7](https://github.com/SocialGouv/fce/compare/v27.46.6...v27.46.7) (2022-06-29)
 
 

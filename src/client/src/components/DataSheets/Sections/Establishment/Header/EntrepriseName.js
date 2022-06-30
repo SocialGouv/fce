@@ -2,30 +2,30 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Helmet } from "react-helmet";
 
-import { renderIfSiren } from "../../../../../helpers/hoc/renderIfSiren";
-import { getName } from "../../../../../utils/entreprise/entreprise";
+import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import Value from "../../../../shared/Value";
-import { useEntrepriseNameData, useRaisonSociale } from "./EntrepriseName.gql";
+import { useRaisonSociale } from "./EntrepriseName.gql";
 
-const EntrepriseName = ({ siren }) => {
-  const { data: raisonSociale } = useRaisonSociale(siren);
-  const { data: entreprise } = useEntrepriseNameData(siren);
-  const name = raisonSociale || getName(entreprise);
+const EntrepriseName = ({ siret }) => {
+  const { loading, data: raisonSociale, error } = useRaisonSociale(siret);
+  if (loading || error) {
+    return null;
+  }
   return (
     <>
       <Helmet>
-        <title>FCE - établissement {name}</title>
+        <title>FCE - établissement {raisonSociale}</title>
       </Helmet>
 
       <h1 className="data-sheet-header__title">
-        <Value value={name} empty=" " />
+        <Value value={raisonSociale} empty=" " />
       </h1>
     </>
   );
 };
 
 EntrepriseName.propTypes = {
-  siren: PropTypes.string.isRequired,
+  siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiren(EntrepriseName);
+export default renderIfSiret(EntrepriseName);

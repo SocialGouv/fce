@@ -5,34 +5,18 @@ import { BCE_CLIENT } from "../../../../../services/GraphQL/GraphQL";
 import { mapQueryResult } from "../../../../../utils/graphql/graphql";
 
 const raisonSocialeQuery = gql`
-  query GetEstablishementHeader($siren: String!) {
-    entreprise(siren: $siren) {
-      raison_sociale
+  query GetEstablishementHeader($siret: String!) {
+    fce_etablissements(where: { siret: { _eq: $siret } }) {
+      etb_raisonsociale
     }
   }
 `;
 
 export const useRaisonSociale = pipe(
-  (siren) => useQuery(raisonSocialeQuery, { variables: { siren } }),
-  mapQueryResult(prop("entreprise.raison_sociale"))
-);
-
-const entrepriseNameQuery = gql`
-  query getNomEntreprise($siren: String!) {
-    fce_entreprises(where: { siren: { _eq: $siren } }) {
-      denominationunitelegale
-      denominationusuelle1unitelegale
-      prenom1unitelegale
-      nomunitelegale
-    }
-  }
-`;
-
-export const useEntrepriseNameData = pipe(
-  (siren) =>
-    useQuery(entrepriseNameQuery, {
+  (siret) =>
+    useQuery(raisonSocialeQuery, {
       context: { clientName: BCE_CLIENT },
-      variables: { siren },
+      variables: { siret },
     }),
-  mapQueryResult(prop("fce_entreprises[0]"))
+  mapQueryResult(prop("fce_etablissements[0].etb_raisonsociale"))
 );

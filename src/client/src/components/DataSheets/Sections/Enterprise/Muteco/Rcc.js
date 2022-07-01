@@ -15,7 +15,7 @@ const Rcc = ({ entreprise }) => {
 
   return (
     <Subcategory
-      subtitle="Ruptures conventionenelles collectives (RCC)"
+      subtitle="Ruptures conventionnelles collectives (RCC)"
       sourceSi="SI PSE/RUPCO"
     >
       <ConditionalData

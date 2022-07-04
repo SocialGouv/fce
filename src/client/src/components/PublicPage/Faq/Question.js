@@ -20,7 +20,7 @@ export const Question = ({ question, reponse }) => {
       </dt>
       {isOpen && (
         <dd className="faq__reponse">
-          <ReactMarkdown source={reponse} />
+          <ReactMarkdown>{reponse}</ReactMarkdown>
         </dd>
       )}
     </>

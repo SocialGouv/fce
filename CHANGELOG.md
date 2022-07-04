@@ -1,3 +1,10 @@
+## [27.47.1](https://github.com/SocialGouv/fce/compare/v27.47.0...v27.47.1) (2022-07-04)
+
+
+### Bug Fixes
+
+* **faq:** fix responses not displayed ([#222](https://github.com/SocialGouv/fce/issues/222)) ([15cd890](https://github.com/SocialGouv/fce/commit/15cd890ee664dcaafcb57d1c315eedb37117cbc8))
+
 # [27.47.0](https://github.com/SocialGouv/fce/compare/v27.46.7...v27.47.0) (2022-06-30)
 
 

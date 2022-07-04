@@ -15,3 +15,9 @@ data:
   MINIO_BCE_ENDPOINT: "bce-prod-minio.cegedim.cloud"
   MINIO_BCE_PORT: "443"
   MINIO_BCE_SSL: "true"
+
+  ELASTIC_SEARCH_URL: "https://recherche-entreprises-prod.es.francecentral.azure.elastic-cloud.com"
+
+  SMTP_URL: "smtp.tipimail.com"
+  SMTP_PORT: "587"
+  SMTP_SECURE: "false"

@@ -1,6 +1,6 @@
 import { INodeExecutionData, INodeType, INodeTypeDescription } from "n8n-workflow";
 import { IExecuteFunctions } from "n8n-core";
-import {createElasticClient} from "../../utils/elastic";
+import {createElasticClient, getCredentialsFromContext} from "../../utils/elastic";
 import {getIndexLastUpdateTime} from "../../utils/elasticSearch";
 import {formatISO} from "date-fns";
 
@@ -11,6 +11,12 @@ export class ElasticIndexLastUpdate implements INodeType {
     group: ['transform'],
     version: 1,
     description: "Elastic search last index update",
+    credentials: [
+      {
+        name: "elasticsearch",
+        required: true
+      }
+    ],
     defaults: {
       name: 'Elastic search last index update',
       color: '#772244',
@@ -21,7 +27,12 @@ export class ElasticIndexLastUpdate implements INodeType {
   };
 
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
-    const client = createElasticClient({});
+    const { apiKey, endPoint } = await getCredentialsFromContext(this);
+
+    const client = createElasticClient({
+      url: endPoint,
+      apiKey,
+    });
     const lastUpdateTimestamp = await getIndexLastUpdateTime(client, "fce-search");
     const lastUpdateDate = lastUpdateTimestamp ?
       formatISO(new Date(lastUpdateTimestamp)) :

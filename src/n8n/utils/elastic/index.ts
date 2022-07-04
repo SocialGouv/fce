@@ -10,6 +10,7 @@ import {
 } from "./elastic";
 import { Enterprise, mapEnterprise } from "./enterprise";
 import {Client, ClientOptions} from "@elastic/elasticsearch";
+import {IExecuteFunctions} from "n8n-core";
 
 let prevSiret = "";
 async function* manipulate(
@@ -136,3 +137,11 @@ export const elasticIngest = async ({
     throw err;
   }
 };
+
+type ElasticCredentials = {
+  endPoint: string;
+  apiKey: string;
+};
+
+export const getCredentialsFromContext = async (context: IExecuteFunctions): Promise<ElasticCredentials> =>
+  await context.getCredentials("elasticsearch") as unknown as ElasticCredentials;

@@ -1,3 +1,10 @@
+# [27.48.0](https://github.com/SocialGouv/fce/compare/v27.47.1...v27.48.0) (2022-07-04)
+
+
+### Features
+
+* enable elastic search ingest ([#223](https://github.com/SocialGouv/fce/issues/223)) ([386abcd](https://github.com/SocialGouv/fce/commit/386abcd6da02a695bfb63ea75ba0272365cddb0b))
+
 ## [27.47.1](https://github.com/SocialGouv/fce/compare/v27.47.0...v27.47.1) (2022-07-04)
 
 

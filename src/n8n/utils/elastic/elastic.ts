@@ -121,7 +121,5 @@ export const createIndex = async (client: Client, indexName: string): Promise<st
 
 export const getDocsCount = async (client: Client, indexName: string): Promise<number> => {
   const stats = await client.indices.stats({ index: indexName });
-
-  // @ts-ignore
-  return stats._all.primaries.docs.count;
+  return stats.body._all.primaries.docs.count;
 };

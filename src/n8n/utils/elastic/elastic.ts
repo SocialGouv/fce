@@ -63,10 +63,7 @@ const index = {
 export const deleteOldIndices = async (client: Client, indexToKeep: string, indexName: string): Promise<void> => {
   const allIndices: string[] = await client.cat
     .indices({ format: "json" })
-    .then((indices) => indices.map(
-      ({ index }) => index || ""
-    )
-  );
+    .then(({ body }) => body.map(({ index }: { index: string }) => index));
 
   // list indices to delete
   const matchingIndices = allIndices.filter(

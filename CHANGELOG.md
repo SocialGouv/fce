@@ -1,3 +1,10 @@
+## [27.48.3](https://github.com/SocialGouv/fce/compare/v27.48.2...v27.48.3) (2022-07-05)
+
+
+### Bug Fixes
+
+* **n8n:** fix elastic search docs count ([#226](https://github.com/SocialGouv/fce/issues/226)) ([3ef1c70](https://github.com/SocialGouv/fce/commit/3ef1c70379e9647132b77ee2dd86e189f56fc583))
+
 ## [27.48.2](https://github.com/SocialGouv/fce/compare/v27.48.1...v27.48.2) (2022-07-05)
 
 

@@ -1,4 +1,4 @@
-import {Client} from "@elastic/elasticsearch";
+import { Client } from "@elastic/elasticsearch";
 
 export const getIndexLastUpdateTime = async (client: Client, index: string) => {
   try {
@@ -8,7 +8,7 @@ export const getIndexLastUpdateTime = async (client: Client, index: string) => {
       h: "creation.date"
     });
 
-    return cat?.[0]?.["creation.date"] ? +cat?.[0]?.["creation.date"] : null;
+    return cat.body[0]?.["creation.date"] ? +cat.body[0]?.["creation.date"] : null;
     // tslint:disable-next-line:no-any
   } catch(err: any) {
     if (err?.meta?.body?.error?.type) {

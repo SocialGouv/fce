@@ -1,3 +1,10 @@
+## [27.48.1](https://github.com/SocialGouv/fce/compare/v27.48.0...v27.48.1) (2022-07-05)
+
+
+### Bug Fixes
+
+* **n8n:** fix elastic client version compatibility ([#224](https://github.com/SocialGouv/fce/issues/224)) ([97c590e](https://github.com/SocialGouv/fce/commit/97c590ec700344f76bd86f8c4a9ed4d59b595651))
+
 # [27.48.0](https://github.com/SocialGouv/fce/compare/v27.47.1...v27.48.0) (2022-07-04)
 
 

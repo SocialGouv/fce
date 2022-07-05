@@ -1,3 +1,10 @@
+## [27.48.2](https://github.com/SocialGouv/fce/compare/v27.48.1...v27.48.2) (2022-07-05)
+
+
+### Bug Fixes
+
+* **n8n:** fix notification email config ([#225](https://github.com/SocialGouv/fce/issues/225)) ([3d5f460](https://github.com/SocialGouv/fce/commit/3d5f4607ea8e2a52e12d2f249bb924ff801af2c2))
+
 ## [27.48.1](https://github.com/SocialGouv/fce/compare/v27.48.0...v27.48.1) (2022-07-05)
 
 

@@ -1,3 +1,10 @@
+# [27.49.0](https://github.com/SocialGouv/fce/compare/v27.48.3...v27.49.0) (2022-07-08)
+
+
+### Features
+
+* **etablissement:** add niveau seveso ([#221](https://github.com/SocialGouv/fce/issues/221)) ([eddc6ae](https://github.com/SocialGouv/fce/commit/eddc6aed7c5fc51b4c65771a731743a24cf3fbcf))
+
 ## [27.48.3](https://github.com/SocialGouv/fce/compare/v27.48.2...v27.48.3) (2022-07-05)
 
 

@@ -12,6 +12,7 @@ import { useSuccessionData } from "./Activite.gql";
 import DeveloppementEconomique from "./DeveloppementEconomique";
 import EffectifsDsn from "./EffectifsDsn";
 import EffectifsEtp from "./EffectifsEtp";
+import Seveso from "./Seveso";
 import SuccessionData from "./SuccessionData";
 import TrancheEffectifsInsee from "./TrancheEffectifsInsee";
 
@@ -48,6 +49,7 @@ const Activite = ({ siret }) => {
           <EffectifsDsn siret={siret} />
           <EffectifsEtp siret={siret} />
         </Subcategory>
+        <Seveso siret={siret} />
         <DeveloppementEconomique siret={siret} />
       </div>
     </section>

@@ -15,6 +15,7 @@ import EffectifsEtp from "./EffectifsEtp";
 import Seveso from "./Seveso";
 import SuccessionData from "./SuccessionData";
 import TrancheEffectifsInsee from "./TrancheEffectifsInsee";
+import Finess from "./Finess";
 
 const Activite = ({ siret }) => {
   const { loading, data, error } = useSuccessionData(siret);
@@ -50,6 +51,7 @@ const Activite = ({ siret }) => {
           <EffectifsEtp siret={siret} />
         </Subcategory>
         <Seveso siret={siret} />
+        <Finess siret={siret} />
         <DeveloppementEconomique siret={siret} />
       </div>
     </section>

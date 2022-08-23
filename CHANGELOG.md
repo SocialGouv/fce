@@ -1,3 +1,10 @@
+# [27.50.0](https://github.com/SocialGouv/fce/compare/v27.49.0...v27.50.0) (2022-08-23)
+
+
+### Features
+
+* editIAE and add Finess ([d167459](https://github.com/SocialGouv/fce/commit/d1674591344fc3a57d34bc90c4982803f1159cb6))
+
 # [27.49.0](https://github.com/SocialGouv/fce/compare/v27.48.3...v27.49.0) (2022-07-08)
 
 

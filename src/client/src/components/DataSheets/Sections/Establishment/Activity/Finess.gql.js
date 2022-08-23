@@ -4,23 +4,20 @@ import { pipe, prop } from "lodash/fp";
 import { BCE_CLIENT } from "../../../../../services/GraphQL/GraphQL";
 import { mapQueryResult } from "../../../../../utils/graphql/graphql";
 
-const iaeQuery = gql`
-  query GetIae($siret: String!) {
-    fce_iae(where: { siret: { _eq: $siret } }) {
-      kind_aci
-      kind_ai
-      kind_ea
-      kind_ei
-      kind_etti
+const finessQuery = gql`
+  query GetFiness($siret: String!) {
+    fce_finess(where: { siret: { _eq: $siret } }) {
+      Numero_FINESS_EJ
+      Numero_FINESS_ET
     }
   }
 `;
 
-export const useIaeEstablishment = pipe(
+export const useFinessEstablishment = pipe(
   (siret) =>
-    useQuery(iaeQuery, {
+    useQuery(finessQuery, {
       context: { clientName: BCE_CLIENT },
       variables: { siret },
     }),
-  mapQueryResult(prop("fce_iae[0]"))
+  mapQueryResult(prop("fce_finess[0]"))
 );

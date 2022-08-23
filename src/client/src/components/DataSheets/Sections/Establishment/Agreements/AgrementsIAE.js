@@ -1,67 +1,57 @@
-import { get } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
 
-import Config from "../../../../../services/Config";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
-import Value from "../../../../shared/Value";
+import Data from "../../SharedComponents/Data/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table";
-import { useAgrementsIae } from "./AgrementsIAE.gql";
+import { useIaeEstablishment } from "./AgrementsIAE.gql";
 
 const AgrementsIAE = ({ siret }) => {
-  const { loading, data: agrements, error } = useAgrementsIae(siret);
-  const hasAgrements = Object.values(agrements || {})
-    .map((agrementData) => agrementData.agrement)
-    .includes(true);
+  const { loading, data: agrements, error } = useIaeEstablishment(siret);
+
+  if (loading || error) {
+    return null;
+  }
 
   return (
     <LoadableContent loading={loading} error={error}>
       <Subcategory
-        subtitle="Insertion par l’activité économique (IAE)"
-        sourceSi="ASP Extranet IAE2.0"
-        datas={[
-          {
-            columnClasses: ["is-7", "is-5"],
-            name: "Insertion par l’activité économique (IAE)",
-            value: hasAgrements,
-          },
-        ]}
-      />
-
-      {hasAgrements && (
-        <Table>
-          <thead>
-            <tr>
-              <th />
-              <th>Agrément(s) en 2018</th>
-              <th>Nombre de salariés en insertion présents en 2018</th>
-              <th>Nombre d’ETP en année 2018</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {Object.entries(Config.get("agrementsIae")).map(([key, label]) => {
-              const { etp, agrement, salariesInsertion } = get(agrements, key);
-
-              return (
-                <tr key={key}>
-                  <th>{label}</th>
-                  <td>
-                    <Value value={agrement} />
-                  </td>
-                  <td className="has-text-right">
-                    <Value value={salariesInsertion} hasNumberFormat />
-                  </td>
-                  <td className="has-text-right">
-                    <Value value={etp && Math.round(etp)} hasNumberFormat />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      )}
+        subtitle="Insertion par l'activité économique (IAE)"
+        sourceSi="IAE"
+      >
+        <LoadableContent error={error} loading={loading}>
+          <Data
+            name="Entreprise d'insertion (EI)"
+            nonEmptyValue=""
+            emptyValue="Non"
+            value={agrements?.kind_ei ?? "Non"}
+          />
+          <Data
+            name="Association intermédiaire (AI)"
+            nonEmptyValue=""
+            emptyValue="Non"
+            value={agrements?.kind_ai ?? "Non"}
+          />
+          <Data
+            name="Atelier et chantier d'insertion (ACI)"
+            nonEmptyValue=""
+            emptyValue="Non"
+            value={agrements?.kind_aci ?? "Non"}
+          />
+          <Data
+            name="Entreprise de travail temporaire d'insertion (ETTI)"
+            nonEmptyValue=""
+            emptyValue="Non"
+            value={agrements?.kind_etti ?? "Non"}
+          />
+          <Data
+            name="Entreprise adaptée (EA)"
+            nonEmptyValue=""
+            emptyValue="Non"
+            value={agrements?.kind_ea ?? "Non"}
+          />
+        </LoadableContent>
+      </Subcategory>
     </LoadableContent>
   );
 };

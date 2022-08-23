@@ -12,10 +12,10 @@ import { useSuccessionData } from "./Activite.gql";
 import DeveloppementEconomique from "./DeveloppementEconomique";
 import EffectifsDsn from "./EffectifsDsn";
 import EffectifsEtp from "./EffectifsEtp";
+import Finess from "./Finess";
 import Seveso from "./Seveso";
 import SuccessionData from "./SuccessionData";
 import TrancheEffectifsInsee from "./TrancheEffectifsInsee";
-import Finess from "./Finess";
 
 const Activite = ({ siret }) => {
   const { loading, data, error } = useSuccessionData(siret);

@@ -142,7 +142,7 @@ export const useDashboardData = pipe(
         siret: SIRET,
         ...rest,
       })),
-      psi_siret: fce_psi_siret,
+      psi_siret: fce_psi_siret[0],
     })
   )
 );

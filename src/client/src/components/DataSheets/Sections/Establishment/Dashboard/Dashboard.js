@@ -89,8 +89,9 @@ const hasAide = pipe(
 
 const isOrganismeFormation = (data) => data?.organismes_formation?.length > 0;
 
-const Dashboard = ({ siret, psi }) => {
+const Dashboard = ({ siret }) => {
   const { data } = useDashboardData(siret);
+
   const { data: effectif, loading: effectifLoading } = useEffectif(siret);
 
   const hasInteractions = dataHasInteractions(data);
@@ -105,12 +106,11 @@ const Dashboard = ({ siret, psi }) => {
 
   const lastControl = getLatestInteraction(getInteractions(data))?.date;
 
-  const establishmentPsiData = psi.establishments.find(
-    (establishment) => establishment.siret === siret
-  );
+  const establishmentPsiData = data?.psi_siret?.SIRET === siret;
 
   const isEnterprisePsiContractor = Boolean(
-    psi.enterprise.current_year + psi.enterprise.last_year
+    data?.psi_siren[0]?.salaries_annee_courante +
+      data?.psi_siren[0]?.salaries_annee_precedente
   );
 
   const isEstablishmentWithPsi = Boolean(establishmentPsiData);

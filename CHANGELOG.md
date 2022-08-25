@@ -1,3 +1,10 @@
+## [27.50.1](https://github.com/SocialGouv/fce/compare/v27.50.0...v27.50.1) (2022-08-25)
+
+
+### Bug Fixes
+
+* fixDashBoardPSI condition to display ([#229](https://github.com/SocialGouv/fce/issues/229)) ([4d8b437](https://github.com/SocialGouv/fce/commit/4d8b437866bbea8ffa475b0249ad002543cc121c))
+
 # [27.50.0](https://github.com/SocialGouv/fce/compare/v27.49.0...v27.50.0) (2022-08-23)
 
 

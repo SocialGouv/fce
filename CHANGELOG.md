@@ -1,3 +1,10 @@
+## [27.50.2](https://github.com/SocialGouv/fce/compare/v27.50.1...v27.50.2) (2022-08-26)
+
+
+### Bug Fixes
+
+* Link Succession establishment ([#230](https://github.com/SocialGouv/fce/issues/230)) ([4ae8a93](https://github.com/SocialGouv/fce/commit/4ae8a934f5675c3184889f549e5e99d40be67c7c))
+
 ## [27.50.1](https://github.com/SocialGouv/fce/compare/v27.50.0...v27.50.1) (2022-08-25)
 
 

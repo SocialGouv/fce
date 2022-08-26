@@ -13,7 +13,7 @@ const SuccessionData = ({ name, values }) => (
       <div>
         {values.map(({ siret, dateliensuccession }, index) => (
           <div key={index}>
-            <Link to={`/establishement/${siret}`}>
+            <Link to={`/establishment/${siret}`}>
               <Value value={siret} />
             </Link>{" "}
             ({dateliensuccession ? <Value value={dateliensuccession} /> : ""})

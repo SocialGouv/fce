@@ -28,7 +28,7 @@ data:
   STRAPI_URL: "http://strapi:80"
 
   #ELASTIC SEARCH
-  ELASTIC_URL: "https://recherche-entreprises-prod2.es.francecentral.azure.elastic-cloud.com"
+  ELASTIC_URL: "https://recherche-entreprises-prod.es.francecentral.azure.elastic-cloud.com"
   ELASTIC_INDEX: "fce-search"
 
   #CACHING

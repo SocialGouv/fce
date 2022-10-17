@@ -16,7 +16,7 @@ data:
   MINIO_BCE_PORT: "443"
   MINIO_BCE_SSL: "true"
 
-  ELASTIC_SEARCH_URL: "https://recherche-entreprises-prod.es.francecentral.azure.elastic-cloud.com"
+  ELASTIC_SEARCH_URL: "https://recherche-entreprises-prod2.es.francecentral.azure.elastic-cloud.com"
 
   SMTP_URL: "smtp.tipimail.com"
   SMTP_PORT: "587"

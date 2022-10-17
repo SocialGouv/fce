@@ -1,3 +1,10 @@
+## [27.50.3](https://github.com/SocialGouv/fce/compare/v27.50.2...v27.50.3) (2022-10-17)
+
+
+### Bug Fixes
+
+* upgrade ES ingestion ([#231](https://github.com/SocialGouv/fce/issues/231)) ([c8be879](https://github.com/SocialGouv/fce/commit/c8be879e20b34abc484c2f37f170060eac7c6360))
+
 ## [27.50.2](https://github.com/SocialGouv/fce/compare/v27.50.1...v27.50.2) (2022-08-26)
 
 

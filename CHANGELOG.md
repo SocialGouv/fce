@@ -1,3 +1,10 @@
+## [27.50.4](https://github.com/SocialGouv/fce/compare/v27.50.3...v27.50.4) (2022-10-18)
+
+
+### Bug Fixes
+
+* use new ES cluster for read ([#232](https://github.com/SocialGouv/fce/issues/232)) ([b1cd78d](https://github.com/SocialGouv/fce/commit/b1cd78de48aa94657f8afa0950e9223d7712b5b6))
+
 ## [27.50.3](https://github.com/SocialGouv/fce/compare/v27.50.2...v27.50.3) (2022-10-17)
 
 

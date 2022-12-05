@@ -28,7 +28,7 @@ import { getSiret } from "../../../../../utils/establishment/establishment";
 import LinkButton from "../../../../shared/Button/LinkButton";
 import InfoBox from "../../../../shared/InfoBox";
 import Value from "../../../../shared/Value";
-import SocieteComLink from "./SocieteComLink";
+import AnnuaireEntreprisesLink from "./AnnuaireEntreprisesLink";
 
 const EnterpriseHeader = ({ enterprise, resetSearch, setSearchTerm }) => {
   const stateClass = isActive(enterprise) ? "icon--success" : "icon--danger";
@@ -114,7 +114,7 @@ const EnterpriseHeader = ({ enterprise, resetSearch, setSearchTerm }) => {
 
         <div className="columns data-sheet-header__enterprise-external-link">
           <span className="column">
-            Voir sur <SocieteComLink siren={getSiren(enterprise)} />
+            Voir sur <AnnuaireEntreprisesLink siren={getSiren(enterprise)} />
           </span>
         </div>
       </section>

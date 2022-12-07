@@ -40,7 +40,7 @@ exports.up = (pgm) => {
   pgm.createIndex("organismes_formation", "siren");
 
   pgm.sql(`INSERT INTO import_updates (fournisseur, si, "table") VALUES
-        ('DAT', 'DAT', 'organismes_formation')`);
+        ('OF', 'OF', 'organismes_formation')`);
 };
 
 exports.down = (pgm) => {

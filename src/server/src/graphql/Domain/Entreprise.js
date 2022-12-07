@@ -12,7 +12,7 @@ export const entrepriseTypes = buildSchema(`
 
   type Entreprise {
     siren: String!
-    capital_social: Int
+    capital_social: Float
     raison_sociale: String
     numero_tva_intracommunautaire: String
     forme_juridique: String

@@ -34,7 +34,7 @@ const EffectifsEtp = ({ siret }) => {
             hasNumberFormat={true}
             name={`Effectif ETP ${getMonthName(mois)} ${annee}`}
             nonEmptyValue=""
-            sourceCustom={`Acoss / DSN ${getMonthName(mois)} ${annee}`}
+            sourceCustom={`Gip-Mds / DSN ${getMonthName(mois)} ${annee}`}
             value={effectifs_mensuels}
           />
         ))}

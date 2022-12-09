@@ -1,3 +1,10 @@
+## [27.50.5](https://github.com/SocialGouv/fce/compare/v27.50.4...v27.50.5) (2022-12-09)
+
+
+### Bug Fixes
+
+* Ajout Tirets pour indicateurs mutation économique ([#233](https://github.com/SocialGouv/fce/issues/233)) ([4f9a877](https://github.com/SocialGouv/fce/commit/4f9a877e040742e4da126ca11741b14d92d49bdb))
+
 ## [27.50.4](https://github.com/SocialGouv/fce/compare/v27.50.3...v27.50.4) (2022-10-18)
 
 

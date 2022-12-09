@@ -1,3 +1,10 @@
+## [27.50.6](https://github.com/SocialGouv/fce/compare/v27.50.5...v27.50.6) (2022-12-09)
+
+
+### Bug Fixes
+
+* Replace source data organisme de formation ([#234](https://github.com/SocialGouv/fce/issues/234)) ([0c7cdac](https://github.com/SocialGouv/fce/commit/0c7cdac9328b129e6649612958559af1d58d4fe4))
+
 ## [27.50.5](https://github.com/SocialGouv/fce/compare/v27.50.4...v27.50.5) (2022-12-09)
 
 

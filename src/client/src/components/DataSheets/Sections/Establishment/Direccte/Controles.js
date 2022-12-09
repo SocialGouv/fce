@@ -37,7 +37,7 @@ const Controles = ({ siret }) => {
         <span className="icon">
           <FontAwesomeIcon icon={faCalendarCheck} />
         </span>
-        <h2 className="title">Visites et Contrôles de la Direccte</h2>
+        <h2 className="title">Visites et Contrôles de la DREETS/DDETS</h2>
       </div>
       <div className="section-datas">
         <Subcategory>

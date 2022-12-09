@@ -141,11 +141,11 @@ const Dashboard = ({ siret }) => {
             smallText={true}
             value={
               <>
-                {activity.hasPse && <div>PSE</div>}
-                {activity.hasRcc && <div>RCC</div>}
+                {activity.hasPse && <div>PSE-</div>}
+                {activity.hasRcc && <div>RCC-</div>}
                 {activity.hasLice &&
                   activity.liceTypes.map((type) => (
-                    <div key={type}>{type}</div>
+                    <div key={type}>{type}-</div>
                   ))}
                 {activity.partialActivity && <div>Activité partielle</div>}
               </>

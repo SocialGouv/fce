@@ -1,3 +1,10 @@
+## [27.50.7](https://github.com/SocialGouv/fce/compare/v27.50.6...v27.50.7) (2022-12-09)
+
+
+### Bug Fixes
+
+* Replace direccte by drets/ddets ([#235](https://github.com/SocialGouv/fce/issues/235)) ([1ae2a27](https://github.com/SocialGouv/fce/commit/1ae2a272ce9d91d7cb62f6d30b07ec9e1ae380a1))
+
 ## [27.50.6](https://github.com/SocialGouv/fce/compare/v27.50.5...v27.50.6) (2022-12-09)
 
 

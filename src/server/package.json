@@ -17,7 +17,6 @@
     "test": "jest",
     "appsearch-indexer": "node scripts/appsearchIndexer.js",
     "appsearch-updater": "node scripts/appsearchUpdater.js",
-    "ii": "node scripts/idx.js",
     "migrate": "node-pg-migrate",
     "shell": "node ./src/shell/run.js",
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore src"

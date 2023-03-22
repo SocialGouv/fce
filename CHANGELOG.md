@@ -1,3 +1,10 @@
+## [27.50.8](https://github.com/SocialGouv/fce/compare/v27.50.7...v27.50.8) (2023-03-22)
+
+
+### Bug Fixes
+
+* markDown rendring in PublicPage ([#238](https://github.com/SocialGouv/fce/issues/238)) ([dbd11f7](https://github.com/SocialGouv/fce/commit/dbd11f7e4143748940718427e4a0358ae4a35c05))
+
 ## [27.50.7](https://github.com/SocialGouv/fce/compare/v27.50.6...v27.50.7) (2022-12-09)
 
 

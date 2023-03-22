@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import UsersFeedback from "../../containers/UsersFeedback";
 import LoadSpinner from "../shared/LoadSpinner";
@@ -23,10 +24,9 @@ const PublicPage = ({ pageData = null, isLoading, hasError }) => {
         ) : (
           <>
             <h1>{pageData && pageData.titre}</h1>
-            <ReactMarkdown
-              source={pageData && pageData.contenu}
-              escapeHtml={false}
-            />
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {pageData?.contenu}
+            </ReactMarkdown>
           </>
         )}
       </div>

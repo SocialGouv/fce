@@ -1,5 +1,0 @@
-- name: entreprise-api
-  definition:
-    url: '{{FCE_SERVER_URL}}/api/graphql'
-    timeout_seconds: 60
-  comment: ""

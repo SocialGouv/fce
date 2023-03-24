@@ -21,9 +21,6 @@ data:
   MATOMO_ID_SITE: ""
   MATOMO_URL: ""
 
-  #HASURA
-  HASURA_URL: "http://hasura:80"
-
   #Strapi
   STRAPI_URL: "http://strapi:80"
 

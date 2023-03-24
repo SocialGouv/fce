@@ -1,3 +1,10 @@
+## [27.50.10](https://github.com/SocialGouv/fce/compare/v27.50.9...v27.50.10) (2023-03-24)
+
+
+### Bug Fixes
+
+* remove unused tables ([#245](https://github.com/SocialGouv/fce/issues/245)) ([4e6d745](https://github.com/SocialGouv/fce/commit/4e6d745f20269e1d56e4785b11c2ba50d9d4ec67))
+
 ## [27.50.9](https://github.com/SocialGouv/fce/compare/v27.50.8...v27.50.9) (2023-03-24)
 
 

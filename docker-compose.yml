@@ -12,17 +12,6 @@ services:
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_DB: fce
-  db-hasura:
-    image: postgres:13.2
-    # ports:
-    #   - 5432:5432
-    volumes:
-      - pgdata2:/var/lib/postgresql/data:delegated
-    command: postgres -c shared_preload_libraries=pg_stat_statements -c
-      pg_stat_statements.track=all
-    environment:
-      POSTGRES_PASSWORD: root
-      POSTGRES_DB: hasura
   db-strapi:
     image: postgres:13.2
     ports:
@@ -39,32 +28,7 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
-
-  hasura:
-    image: hasura/graphql-engine:v2.3.1
-    ports:
-      - 8080:8080
-    depends_on:
-      - db
-    restart: always
-    environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgresql://postgres:root@db:5432/fce
-      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgresql://postgres:root@db-hasura:5432/hasura
-      ## enable the console served by server
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
-      ## enable debugging mode. It is recommended to disable this in production
-      HASURA_GRAPHQL_DEV_MODE: "true"
-      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      ## uncomment next line to set an admin secret
-      HASURA_GRAPHQL_ADMIN_SECRET: helloworld
-      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: "anonymous"
-      HASURA_GRAPHQL_JWT_SECRET: >
-        {
-          "type": "RS512",
-          "key": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAqNLaioRe1pwECnl+gQOZk/0bwAc533XRxA6elDhtMAk55YE41KM+Y5x8+HQ0OS9rR/SorutHiG7gaTjo1I1ajWmNYohA4351c3MnNeUPQv67jdbxHBxog7viCE8k7uZ52JqimEjEQRAZ9A1cg9aAWuGAv9RRVNexfpZtxe5UGBSs+0WHNb8ihc6y4aRyAKzwPW1nDhpkwq8r7g0FnfeGtSjU586yMokjPj8TNtRYzKSeilX4g+huFpz1gCEOcs/nKIQTEJXcd+rjaSUi7mcC7yoIUGKQFNRLTCVuNbwOY01yz8g2PTd0apsKqTj1H7rqHHC/wdHXjlATzRaVpU/7KOnsNVzU72lU54xsI9qpEDUierBIcJOtEj49dOE9WQSCynwKHcVWdUShH2gfsIMrFGrgy0r36TAQzalJJHocFwWWaB1uuNI6RQ1niiRjU3nhFI6AHdr0g4lhgPaFD0YADiMrGV9/qa4VeHSGQmAwAABy2Z/SGy+Fu4zQ8Sxsm33phkX54PO10NVHlCuFeVkpVMrUnEKdtVpZijQ8qanWX5CtiPTCaenOYl+GEM+Q93LKOQDmRRwqdnV0SXLHr1v1bu9BeNceeK4EJotO2j/pefzmLIZuIA+d9HJdaaS1HoFAHo4IcFOQixbM6h2S3tZz70nhM0yaTLsapd3NWD5WBNMCAwEAAQ==\n-----END PUBLIC KEY-----"
-        }
-      FCE_SERVER_URL: http://host.docker.internal:3001
-
+      
   storage:
     image: mcr.microsoft.com/azure-storage/azurite
     ports:

@@ -32,10 +32,6 @@ const config = {
       process.env.PG_SSL === "true",
     port: process.env.PG_PORT,
   },
-  hasura: {
-    url: process.env.HASURA_URL,
-    token: process.env.HASURA_TOKEN
-  },
   bce: {
     url: process.env.BCE_URL,
     token: process.env.BCE_TOKEN

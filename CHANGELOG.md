@@ -1,3 +1,10 @@
+## [27.50.9](https://github.com/SocialGouv/fce/compare/v27.50.8...v27.50.9) (2023-03-24)
+
+
+### Bug Fixes
+
+* Remove frontreprise ([#239](https://github.com/SocialGouv/fce/issues/239)) ([612018f](https://github.com/SocialGouv/fce/commit/612018feabb551df74de4567badabf77ac3625f0))
+
 ## [27.50.8](https://github.com/SocialGouv/fce/compare/v27.50.7...v27.50.8) (2023-03-22)
 
 

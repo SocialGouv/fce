@@ -4,10 +4,6 @@ import * as Sentry from "@sentry/node";
 import cors from "cors";
 
 import apiRouter from "./api";
-// eslint-disable-next-line node/no-missing-import
-import frentreprise from "frentreprise";
-import EntrepriseModel from "./frentreprise/models/Entreprise";
-import EtablissementModel from "./frentreprise/models/Etablissement";
 import { isDev } from "./utils/isDev";
 import {setupGraphql} from "./graphql/graphql";
 import {registerBceProxy} from "./proxy/bce";
@@ -23,25 +19,6 @@ if (!isDev()) {
 }
 
 async function init() {
-  frentreprise.EntrepriseModel = EntrepriseModel;
-  frentreprise.EtablissementModel = EtablissementModel;
-
-  if (!isDev()) {
-    frentreprise.initSentry(sentryUrlKey);
-  }
-
-  // remove "ApiGouvAssociations"
-  ["ApiGouv"].forEach((sourceName) => {
-    const source = frentreprise.getDataSource(sourceName).source;
-    source.token = config.get("APIGouv.token");
-    source.axiosConfig = {
-      ...source.axiosConfig,
-      proxy: (config.has("proxy") && config.get("proxy")) || false,
-    };
-    if (config.has("apiTimeout")) {
-      source.axiosConfig.timeout = config.get("apiTimeout");
-    }
-  });
   app.use(cors());
 
   registerBceProxy(app);

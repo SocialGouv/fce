@@ -76,12 +76,6 @@ Secrets can be encrypted using [webseal](https://socialgouv.github.io/sre-tools)
 
 ## Troubleshooting
 
-- **Mes modifications dans frentreprise ne sont pas prises en compte**
-
-Au changement de branche le lien entre `frentreprise` et le `server` peuvent se casser, redémarrer le container `frentreprise` devrait régler le problème.
-
-Une manière de voir facilement si le lien est bon est d'écouter le container `server` et de faire une modification sur `frentreprise`, s'il redémarre c'est que tout fonctionne.
-
 - **If you get this error `function uuid_generate_v4() does not exist`, run on your db**
 
 ```sql

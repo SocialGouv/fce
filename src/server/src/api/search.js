@@ -2,94 +2,9 @@ import Communes from "../models/Communes";
 import Naf from "../models/Naf";
 import Departements from "../models/Departements";
 import withAuth from "../middlewares/auth";
-import NotFoundException from "../Exceptions/NotFoundException";
-// eslint-disable-next-line node/no-missing-import
-import frentreprise, { isSIRET, isSIREN } from "frentreprise";
-import { limitRate } from "../middlewares/limit-rate";
 
 const express = require("express");
 const router = express.Router();
-const config = require("config");
-
-const logError = (data, err) => {
-  console.error({ logError: err });
-  data.error = true;
-  try {
-    data.message = err.toString();
-  } catch (Exception) {
-    console.error({ logErrorCatch: Exception });
-    data.message = "Unknown";
-  }
-};
-
-const isSuccessEnterprise = (data) => {
-  return !!data.results?.[0]._success;
-};
-
-const isSuccessEstablishment = (data, siret) => {
-  const establishments = data?.results?.[0]?.etablissements;
-  if (!Array.isArray(establishments)) {
-    return false;
-  }
-
-  const establishment = establishments.find(
-    (establishment) => establishment?.siret === siret
-  );
-
-  return !!establishment?._success;
-};
-
-router.get("/entity", withAuth, limitRate({
-  count: 2 * config.get("api.requestsPer10Seconds"),
-  period: 10000
-}), function (req, res) {
-  const query = (req.query["q"] || "").trim();
-  const dataSource = (req.query["dataSource"] || "").trim();
-
-  const data = {
-    query: {
-      format: "json",
-      terms: {
-        q: query,
-      },
-      isSIRET: isSIRET(query),
-      isSIREN: isSIREN(query),
-      dataSource,
-    },
-  };
-
-  const freCall = frentreprise
-    .getEntreprise(query, dataSource)
-    .then((entreprise) => {
-      data.results = [entreprise.export()];
-      const success = isSIREN(query)
-        ? isSuccessEnterprise(data)
-        : isSuccessEstablishment(data, query);
-
-      if (!success) {
-        data.code = 404;
-        throw new NotFoundException(`${query} in ${dataSource}`);
-      }
-    }, logError.bind(this, data));
-
-  freCall
-    .then(() => {
-      data.size = (data.results && data.results.length) || 0;
-      sendResult(data, res);
-    })
-    .catch((e) => {
-      logError(data, e);
-      sendResult(data, res);
-    });
-});
-
-const sendResult = (data, response) => {
-  if (data?.error) {
-    return response.status(data.code || 400).send(data);
-  }
-
-  return response.send(data);
-};
 
 router.get("/communes", withAuth, function (req, res) {
   const query = (req.query["q"] || "").trim();

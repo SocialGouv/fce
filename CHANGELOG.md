@@ -1,3 +1,10 @@
+# [27.51.0](https://github.com/SocialGouv/fce/compare/v27.50.10...v27.51.0) (2023-03-24)
+
+
+### Features
+
+* run migration on server start ([#246](https://github.com/SocialGouv/fce/issues/246)) ([0ae3dd6](https://github.com/SocialGouv/fce/commit/0ae3dd6dc3b050a3d357c7d5f81e58074d5bec58))
+
 ## [27.50.10](https://github.com/SocialGouv/fce/compare/v27.50.9...v27.50.10) (2023-03-24)
 
 

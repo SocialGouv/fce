@@ -9,14 +9,10 @@
   },
   "scripts": {
     "start": "node build/server.js",
-    "watch": "webpack --color --watch & nodemon --expose-gc --inspect=0.0.0.0",
+    "watch": "concurrently \"webpack --color --watch\" \"nodemon --expose-gc --inspect=0.0.0.0\"",
     "nodemon": "nodemon build/server.js",
     "build": "cross-env NODE_ENV=production webpack --color",
-    "watchwin": "webpack --color --watch",
-    "startwin": "nodemon --expose-gc --inspect=0.0.0.0",
     "test": "jest",
-    "appsearch-indexer": "node scripts/appsearchIndexer.js",
-    "appsearch-updater": "node scripts/appsearchUpdater.js",
     "migrate": "node-pg-migrate",
     "shell": "node ./src/shell/run.js",
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore src"
@@ -33,6 +29,7 @@
     "axios-cache-adapter": "^2.7.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
+    "concurrently": "^7.6.0",
     "config": "3.3.6",
     "cors": "^2.8.5",
     "csv-parse": "^4.15.4",

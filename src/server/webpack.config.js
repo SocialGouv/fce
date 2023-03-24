@@ -26,12 +26,6 @@ module.exports = {
   },
 
   resolve: {
-    alias: {
-      frentreprise: path.resolve(
-        __dirname,
-        "../frentreprise/dist/frentreprise"
-      ),
-    },
     extensions: [".js"],
   },
 

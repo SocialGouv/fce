@@ -45,7 +45,6 @@
     "express-graphql": "^0.12.0",
     "express-http-proxy": "^1.6.3",
     "fast-csv": "^3.4.0",
-    "frentreprise": "file:../frentreprise",
     "graphql": "^16.3.0",
     "html-entities": "^2.3.2",
     "json2csv": "^5.0.1",

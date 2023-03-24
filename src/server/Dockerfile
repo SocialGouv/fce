@@ -19,4 +19,6 @@ RUN yarn install --production --frozen-lockfile
 
 COPY --from=builder-server /app/build .
 
-CMD node ./server.js
+COPY --chmod=755 ./server/start.sh .
+
+CMD ./start.sh

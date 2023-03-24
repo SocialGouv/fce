@@ -17,7 +17,9 @@ COPY --from=builder-server /app/package.json /app/yarn.lock ./
 
 RUN yarn install --production --frozen-lockfile
 
-COPY --from=builder-server /app/build .
+COPY --from=builder-server /app/build .  
+
+COPY ./server/migrations ./migrations
 
 COPY --chmod=755 ./server/start.sh .
 

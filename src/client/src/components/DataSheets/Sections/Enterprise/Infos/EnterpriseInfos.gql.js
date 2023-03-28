@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { pipe, prop } from "lodash/fp";
 
+import { BCE_CLIENT } from "../../../../../services/GraphQL/GraphQL";
 import { mapQueryResult } from "../../../../../utils/graphql/graphql";
 
 const entrepriseInfosQuery = gql`
@@ -42,19 +43,23 @@ export const useEntrepriseInfos = pipe(
 );
 
 const effectifsMensuelsQuery = gql`
-  query GetEffectifsMensuels($siren: String!, $limit: Int) {
-    entreprise(siren: $siren) {
-      effectifs_mensuels(length: $limit) {
-        mois
-        annee
-        effectifs_mensuels
-      }
+  query getEffectifETP($siren: String!, $limit: Int!) {
+    fce_entreprises_etp_effectif(
+      where: { siren: { _eq: $siren } }
+      order_by: { periode_concerne: desc }
+      limit: $limit
+    ) {
+      periode_concerne
+      effectif
     }
   }
 `;
 
 export const useEffectifsMensuels = pipe(
   (siren, limit) =>
-    useQuery(effectifsMensuelsQuery, { variables: { limit, siren } }),
-  mapQueryResult(prop("entreprise.effectifs_mensuels"))
+    useQuery(effectifsMensuelsQuery, {
+      context: { clientName: BCE_CLIENT },
+      variables: { limit, siren },
+    }),
+  mapQueryResult(prop("fce_entreprises_etp_effectif"))
 );

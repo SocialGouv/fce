@@ -1,22 +1,28 @@
 import { gql, useQuery } from "@apollo/client";
 import { pipe, prop } from "lodash/fp";
 
+import { BCE_CLIENT } from "../../../../../services/GraphQL/GraphQL";
 import { mapQueryResult } from "../../../../../utils/graphql/graphql";
 
-const effectifsEtpQuery = gql`
+const effectifsEtablissementsEtpQuery = gql`
   query ActiviteApiQuery($siret: String!, $effectifsMaxCount: Int) {
-    etablissement(siret: $siret) {
-      effectifs_mensuels(maxCount: $effectifsMaxCount) {
-        mois
-        annee
-        effectifs_mensuels
-      }
+    fce_etablissements_etp_effectif(
+      where: { siret: { _eq: $siret } }
+      order_by: { periode_concerne: desc }
+      limit: $effectifsMaxCount
+    ) {
+      periode_concerne
+      effectif
+      siret
     }
   }
 `;
 
-export const useEffectifsEtpData = pipe(
+export const useEffectifsEtablissementsEtpData = pipe(
   (siret, { effectifsMaxCount } = {}) =>
-    useQuery(effectifsEtpQuery, { variables: { effectifsMaxCount, siret } }),
-  mapQueryResult(prop("etablissement.effectifs_mensuels"))
+    useQuery(effectifsEtablissementsEtpQuery, {
+      context: { clientName: BCE_CLIENT },
+      variables: { effectifsMaxCount, siret },
+    }),
+  mapQueryResult(prop("fce_etablissements_etp_effectif"))
 );

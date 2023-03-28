@@ -1,7 +1,7 @@
 {
   "api_endpoint": "https://fce.fabrique.social.gouv.fr/api",
   "matomo": {
-    "url": "//matomo.fabrique.social.gouv.fr",
+    "url": "//matomo.fabrique.social.gouv.fr/",
     "serverTrackerName": "matomo.php",
     "siteId": "8"
   },

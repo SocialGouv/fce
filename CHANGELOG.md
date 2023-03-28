@@ -1,3 +1,10 @@
+# [27.52.0](https://github.com/SocialGouv/fce/compare/v27.51.0...v27.52.0) (2023-03-28)
+
+
+### Features
+
+* update graphiql client with integration URL ([#247](https://github.com/SocialGouv/fce/issues/247)) ([ad3c8e4](https://github.com/SocialGouv/fce/commit/ad3c8e47e8d0375b38440b3148f5792470a71285))
+
 # [27.51.0](https://github.com/SocialGouv/fce/compare/v27.50.10...v27.51.0) (2023-03-24)
 
 

@@ -1,3 +1,10 @@
+## [27.52.1](https://github.com/SocialGouv/fce/compare/v27.52.0...v27.52.1) (2023-03-28)
+
+
+### Bug Fixes
+
+* matomo url ([#249](https://github.com/SocialGouv/fce/issues/249)) ([03105a8](https://github.com/SocialGouv/fce/commit/03105a8279653a46f6ac48c9e93b3db60dc3cf14))
+
 # [27.52.0](https://github.com/SocialGouv/fce/compare/v27.51.0...v27.52.0) (2023-03-28)
 
 

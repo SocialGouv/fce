@@ -11,12 +11,6 @@ data:
   JWT_APPSEARCH_ENGINE_NAME: fce
   JWT_ELASTIC_CLIENT_ADDRESS: http://elasticsearch:9200/
 
-  #Minio
-  MINIO_ENDPOINT: fce.minio.fabrique.social.gouv.fr
-  MINIO_PORT: "443"
-  MINIO_USE_SSL: "1"
-  MINIO_ARCHIVE_FILES: "0"
-
   #MATOMO
   MATOMO_ID_SITE: ""
   MATOMO_URL: ""

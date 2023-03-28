@@ -1,11 +1,12 @@
-import React, { StrictMode } from "react";
+import React, {StrictMode, useMemo} from "react";
 import { render } from "react-dom";
 import "./styles.css";
 import "graphiql/graphiql.min.css";
 import GraphiQL from "graphiql";
 import { useState } from "react";
 
-const URL = "https://api.data.social.gouv.fr/v1/graphql";
+const PROD_URL = "https://api.data.social.gouv.fr/v1/graphql";
+const INTEG_URL = "https://bce-integration-api.cegedim.cloud/v1/graphql";
 
 const container = document.getElementById("root");
 
@@ -26,8 +27,8 @@ const defaultQuery = `
   }
 }
 `;
-const graphQLFetcher = (graphQLParams, { headers }) => {
-  return fetch(URL, {
+const graphQLFetcher = (url) => (graphQLParams, { headers }) => {
+  return fetch(url, {
     method: "post",
     headers,
     body: JSON.stringify(graphQLParams)
@@ -36,14 +37,33 @@ const graphQLFetcher = (graphQLParams, { headers }) => {
 
 const App = () => {
   const [headers, setHeaders] = useState(localStorage.getItem("headers") || "");
+  const [url, setUrl] = useState("https://api.data.social.gouv.fr/v1/graphql");
+
 
   const onEditHeaders = (headers) => {
     localStorage.setItem("headers", headers);
     setHeaders(headers);
   }
 
+  const onUrlChange = (event) => {
+    setUrl(event.target.value);
+  }
+
+  const fetcher = useMemo(() => graphQLFetcher(url), [url])
+
   return (
-      <GraphiQL fetcher={graphQLFetcher} defaultQuery={defaultQuery} headers={headers} onEditHeaders={onEditHeaders}/>
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      <div>
+        <label>Environnement: </label>
+        <select value={url} onChange={onUrlChange}>
+          <option value={INTEG_URL}>integration</option>
+          <option value={PROD_URL}>prod</option>
+        </select>
+      </div>
+      <div style={{ flexGrow: 1 }}>
+        <GraphiQL fetcher={fetcher} defaultQuery={defaultQuery} headers={headers} onEditHeaders={onEditHeaders}/>
+      </div>
+    </div>
   )
 }
 

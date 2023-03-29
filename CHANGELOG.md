@@ -1,3 +1,10 @@
+## [27.52.2](https://github.com/SocialGouv/fce/compare/v27.52.1...v27.52.2) (2023-03-29)
+
+
+### Bug Fixes
+
+* remove unused files + unused deps ([#251](https://github.com/SocialGouv/fce/issues/251)) ([1737c67](https://github.com/SocialGouv/fce/commit/1737c673259ca5682045c117e3e19b61664624b3))
+
 ## [27.52.1](https://github.com/SocialGouv/fce/compare/v27.52.0...v27.52.1) (2023-03-28)
 
 

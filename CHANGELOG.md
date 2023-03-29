@@ -1,3 +1,10 @@
+# [27.53.0](https://github.com/SocialGouv/fce/compare/v27.52.2...v27.53.0) (2023-03-29)
+
+
+### Features
+
+* use BCE effectif data ([#248](https://github.com/SocialGouv/fce/issues/248)) ([f15ce0f](https://github.com/SocialGouv/fce/commit/f15ce0fe639f66ee9c4851dbdc8fc4d2c7977cc9))
+
 ## [27.52.2](https://github.com/SocialGouv/fce/compare/v27.52.1...v27.52.2) (2023-03-29)
 
 

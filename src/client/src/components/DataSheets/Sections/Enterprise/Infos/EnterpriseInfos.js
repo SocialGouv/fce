@@ -6,7 +6,7 @@ import React, { useMemo, useState } from "react";
 
 import AllEffectifsEtpButton from "../../../../../containers/AllEffectifsEtpButton";
 import Association from "../../../../../containers/Association/Association";
-import { getMonthName } from "../../../../../helpers/Date";
+import { getDateMonthName, getDateYear } from "../../../../../helpers/Date";
 import { formatSiret, formatTva } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 import {
@@ -73,12 +73,14 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
   const trancheEffectifs = getTrancheEffectifs(enterprise);
 
   const EffectifEtpDataComponents = effectifsMensuels?.length ? (
-    effectifsMensuels.map(({ annee, mois, effectifs_mensuels }) => (
+    effectifsMensuels.map(({ periode_concerne, effectif }) => (
       <Data
-        key={`${annee}-${mois}`}
-        name={`Effectif ETP ${getMonthName(mois)}`}
-        value={effectifs_mensuels}
-        sourceCustom={`Acoss / DSN ${getMonthName(mois)} ${annee}`}
+        key={periode_concerne}
+        name={`Effectif ETP ${getDateMonthName(periode_concerne)}`}
+        value={effectif}
+        sourceCustom={`Acoss / DSN ${getDateMonthName(
+          periode_concerne
+        )} ${getDateYear(periode_concerne)}`}
         hasNumberFormat
       />
     ))

@@ -2,11 +2,11 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import AllEffectifsEtp from "../../../../../containers/AllEffectifsEtpButton/AllEffectifsEtpButton";
-import { getMonthName } from "../../../../../helpers/Date";
+import { getDateMonthName, getDateYear } from "../../../../../helpers/Date";
 import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Data from "../../SharedComponents/Data/Data";
-import { useEffectifsEtpData } from "./EffectifsEtp.gql";
+import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
 
 const MAX_EFFECTIF_COUNT = 24;
 
@@ -18,7 +18,7 @@ const EffectifsEtp = ({ siret }) => {
     loading,
     data: effectifsMensuels,
     error,
-  } = useEffectifsEtpData(siret, {
+  } = useEffectifsEtablissementsEtpData(siret, {
     effectifsMaxCount: maxDisplayedEffectifsCount,
   });
 
@@ -28,14 +28,18 @@ const EffectifsEtp = ({ siret }) => {
   return (
     <>
       <LoadableContent loading={loading} error={error}>
-        {effectifsMensuels?.map?.(({ annee, mois, effectifs_mensuels }) => (
+        {effectifsMensuels?.map?.(({ periode_concerne, effectif }) => (
           <Data
-            key={`${annee}-${mois}-effectifsETP`}
+            key={`${periode_concerne}-effectifsETP`}
             hasNumberFormat={true}
-            name={`Effectif ETP ${getMonthName(mois)} ${annee}`}
+            name={`Effectif ETP ${getDateMonthName(
+              periode_concerne
+            )} ${getDateYear(periode_concerne)}`}
             nonEmptyValue=""
-            sourceCustom={`Gip-Mds / DSN ${getMonthName(mois)} ${annee}`}
-            value={effectifs_mensuels}
+            sourceCustom={`Gip-Mds / DSN ${getDateMonthName(
+              periode_concerne
+            )} ${getDateYear(periode_concerne)}`}
+            value={effectif}
           />
         ))}
       </LoadableContent>

@@ -20,6 +20,20 @@ export const getMonthName = (month, shortName = false) => {
   return Moment(`2020-${twoDigitsMonth}-01`).format(format);
 };
 
+export const getDateMonthName = (date) => {
+  if (!date) {
+    return "";
+  }
+  return Moment(date).format("MMMM");
+};
+
+export const getDateYear = (date) => {
+  if (!date) {
+    return "";
+  }
+  return Moment(date).year();
+};
+
 export const getLastDateInteraction = (interactions, format = "DD/MM/YYYY") => {
   const moments =
     Array.isArray(interactions) &&

@@ -8,8 +8,6 @@ data:
   N8N_BASIC_AUTH_ACTIVE: "true"
   PG_PORT: "5432"
   PG_SSL: "true"
-  MINIO_PORT: "443"
-  MINIO_SSL: "true"
   GENERIC_TIMEZONE: "Europe/Paris"
   AZURE_SHARE_NAME: "bce"
 

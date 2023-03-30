@@ -1,3 +1,10 @@
+## [27.53.1](https://github.com/SocialGouv/fce/compare/v27.53.0...v27.53.1) (2023-03-30)
+
+
+### Bug Fixes
+
+* **n8n:** set n8n production db to its right database ([#253](https://github.com/SocialGouv/fce/issues/253)) ([7ea877f](https://github.com/SocialGouv/fce/commit/7ea877fefeb1d42e7a54954ff856568fffd3ed84))
+
 # [27.53.0](https://github.com/SocialGouv/fce/compare/v27.52.2...v27.53.0) (2023-03-29)
 
 

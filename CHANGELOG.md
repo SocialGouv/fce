@@ -1,3 +1,10 @@
+## [27.53.2](https://github.com/SocialGouv/fce/compare/v27.53.1...v27.53.2) (2023-03-30)
+
+
+### Bug Fixes
+
+* use n8n specific db user ([#254](https://github.com/SocialGouv/fce/issues/254)) ([b3d2bc9](https://github.com/SocialGouv/fce/commit/b3d2bc9600a206145b7e64ad78f7c3366398dbd6))
+
 ## [27.53.1](https://github.com/SocialGouv/fce/compare/v27.53.0...v27.53.1) (2023-03-30)
 
 

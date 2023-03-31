@@ -34,6 +34,7 @@ import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
 import {
   useEffectifsMensuels,
+  useEffectifsPhysique,
   useEntrepriseInfos,
 } from "./EnterpriseInfos.gql";
 import Finances from "./Finances";
@@ -58,6 +59,11 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
     loading: effectifsMensuelsLoading,
     error: effectifsMensuelsError,
   } = useEffectifsMensuels(siren, effectifsMensuelsLimit);
+  const {
+    data: effectifsPhysique,
+    loading: effectifsPhysiqueLoading,
+    error: effectifsPhysiqueError,
+  } = useEffectifsPhysique(siren);
   const enterprise = useMemo(
     () => merge({}, baseEntreprise, { api: entreprisesInfos }),
     [baseEntreprise, entreprisesInfos]
@@ -131,6 +137,12 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             value={trancheEffectifs && dashboardSizeRanges[trancheEffectifs]}
             sourceSi={"Sirène"}
           />
+          <LoadableContent
+            loading={effectifsPhysiqueLoading}
+            error={effectifsPhysiqueError}
+          >
+            <Data name="Effectif physique" value={effectifsPhysique} />
+          </LoadableContent>
           <LoadableContent
             loading={effectifsMensuelsLoading}
             error={effectifsMensuelsError}

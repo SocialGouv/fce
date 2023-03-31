@@ -55,6 +55,18 @@ const effectifsMensuelsQuery = gql`
   }
 `;
 
+const effectifsPhysiqueQuery = gql`
+  query getEffectifPhysique($siren: String!) {
+    fce_Effectifs_Physiques(
+      where: { SIREN: { _eq: $siren } }
+      order_by: { DATE: desc }
+      limit: 1
+    ) {
+      EFF_TOTAL
+    }
+  }
+`;
+
 export const useEffectifsMensuels = pipe(
   (siren, limit) =>
     useQuery(effectifsMensuelsQuery, {
@@ -62,4 +74,12 @@ export const useEffectifsMensuels = pipe(
       variables: { limit, siren },
     }),
   mapQueryResult(prop("fce_entreprises_etp_effectif"))
+);
+export const useEffectifsPhysique = pipe(
+  (siren) =>
+    useQuery(effectifsPhysiqueQuery, {
+      context: { clientName: BCE_CLIENT },
+      variables: { siren },
+    }),
+  mapQueryResult(prop("fce_Effectifs_Physiques[0].EFF_TOTAL"))
 );

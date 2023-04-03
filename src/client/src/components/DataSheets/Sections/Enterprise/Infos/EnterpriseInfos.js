@@ -201,7 +201,10 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             }
           />
         </Subcategory>
-        <Subcategory subtitle="Données financières" sourceCustom="INPI-BCE">
+        <Subcategory
+          subtitle="Données financières"
+          sourceSi={"Comptes Annuels"}
+        >
           <Finances siren={getSiren(enterprise)} />
         </Subcategory>
         <Subcategory

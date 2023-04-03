@@ -22,6 +22,7 @@ import Table from "../../SharedComponents/Table";
 import ConventionsCollectives from "./ConventionsCollectives";
 import { useAccordsEntreprise } from "./EstablishmentRelationship.gql";
 import Psi from "./Psi";
+import UniteDeControle from "./UniteDeControle.jsx";
 import WorkAccident from "./WorkAccident";
 
 const EstablishmentRelationship = ({ siret }) => {
@@ -40,6 +41,7 @@ const EstablishmentRelationship = ({ siret }) => {
         <h2 className="title">Relation travail</h2>
       </div>
       <div className="section-datas">
+        <UniteDeControle siret={siret} />
         <ConventionsCollectives siret={siret} />
         <Subcategory subtitle="Accords d'entreprise" sourceSi="D@cccord">
           <LoadableContent loading={loading} error={error}>

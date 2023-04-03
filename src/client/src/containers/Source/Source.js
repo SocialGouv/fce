@@ -14,19 +14,31 @@ const formatDate = (dateFormat) => (source) => {
   }
 };
 
+const formatDateUniteControle = (source) => {
+  try {
+    return format(parseISO(source?.date_import), "MMMM yyyy", { locale: fr });
+  } catch (err) {
+    return "";
+  }
+};
+
 const formatSourceDate = formatDate("MMMM yyyy");
 
 const formatTableCellDate = formatDate("dd/MM/yyyy");
 
 const Source = ({
   si = null,
+  hasDateImport = false,
   isTableCell = false,
   sourceDate = null,
   sourceCustom = null,
 }) => {
   const { data: sources } = useSources();
-  const source = sources?.find?.(({ si: sourceSi }) => sourceSi === si);
+  const source = sources?.find?.(
+    ({ si: sourceSi, table }) => sourceSi === si || si === table
+  );
   const name = sourceCustom || `${source?.fournisseur} / ${source?.si}`;
+  const uniteControleUpdated = formatDateUniteControle(source);
   const updated =
     sourceDate ||
     (isTableCell ? formatTableCellDate : formatSourceDate)(source);
@@ -34,14 +46,15 @@ const Source = ({
   return (
     <SourceView
       name={name}
-      updated={updated}
+      updated={hasDateImport ? uniteControleUpdated : updated}
       isTableCell={isTableCell}
-      isCustomSource={!!sourceCustom}
+      isCustomSource={hasDateImport ? !hasDateImport : !!sourceCustom}
     />
   );
 };
 
 Source.propTypes = {
+  hasDateImport: PropTypes.bool,
   isTableCell: PropTypes.bool,
   si: PropTypes.string,
   sourceCustom: PropTypes.string,

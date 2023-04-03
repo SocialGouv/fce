@@ -201,7 +201,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             }
           />
         </Subcategory>
-        <Subcategory subtitle="Données financières" sourceCustom="DGFIP">
+        <Subcategory subtitle="Données financières" sourceCustom="INPI-BCE">
           <Finances siren={getSiren(enterprise)} />
         </Subcategory>
         <Subcategory

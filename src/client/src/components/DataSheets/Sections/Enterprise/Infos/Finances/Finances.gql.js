@@ -6,7 +6,10 @@ import { mapQueryResult } from "../../../../../../utils/graphql/graphql";
 
 const financeQuery = gql`
   query FinanceIndicatorsQuery($siren: String!) {
-    fce_finance_indicateurs(where: { siren: { _eq: $siren } }) {
+    fce_finance_indicateurs(
+      where: { siren: { _eq: $siren } }
+      order_by: { date_cloture_exercice: desc }
+    ) {
       EBIT
       Marge_brute
       EBE

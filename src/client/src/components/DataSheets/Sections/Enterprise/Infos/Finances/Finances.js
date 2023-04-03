@@ -37,7 +37,6 @@ const Finances = ({ siren }) => {
   let EBE = [];
   let resultats = [];
   let resultExploi = [];
-  let capitauxPropres = [];
 
   if (donneesEcofi) {
     dates = donneesEcofi.map((donneeEcofi) => {
@@ -76,14 +75,6 @@ const Finances = ({ siren }) => {
       );
     });
     resultats = donneesEcofi.map((donneeEcofi) => {
-      capitauxPropres = donneesEcofi.map((donneeEcofi) => {
-        return (
-          <td className="has-text-right" key={getKey("capitaux", donneeEcofi)}>
-            Non disponible
-          </td>
-        );
-      });
-
       return (
         <td
           className="has-text-right"
@@ -123,10 +114,6 @@ const Finances = ({ siren }) => {
         <tr>
           <th scope="row">Résultat net (€)</th>
           {resultats}
-        </tr>
-        <tr>
-          <th scope="row">Capitaux propres</th>
-          {capitauxPropres}
         </tr>
       </tbody>
     </Table>

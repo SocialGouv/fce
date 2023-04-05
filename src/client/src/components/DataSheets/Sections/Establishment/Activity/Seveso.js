@@ -14,7 +14,7 @@ const Seveso = ({ siret }) => {
   const seuil = seveso ?? "Non Seveso";
 
   return (
-    <Subcategory subtitle="Seveso" sourceSi="georisques">
+    <Subcategory subtitle="Seveso" sourceSi="Géorisques">
       <Data
         name="Niveau Seveso"
         value={seuil}

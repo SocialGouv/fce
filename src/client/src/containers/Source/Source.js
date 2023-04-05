@@ -35,7 +35,7 @@ const Source = ({
 }) => {
   const { data: sources } = useSources();
   const source = sources?.find?.(
-    ({ si: sourceSi, table }) => sourceSi === si || si === table
+    ({ si: sourceSi, table }) => si === table || sourceSi === si
   );
   const name = sourceCustom || `${source?.fournisseur} / ${source?.si}`;
   const uniteControleUpdated = formatDateUniteControle(source);

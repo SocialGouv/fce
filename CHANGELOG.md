@@ -1,3 +1,10 @@
+# [27.54.0](https://github.com/SocialGouv/fce/compare/v27.53.2...v27.54.0) (2023-04-06)
+
+
+### Features
+
+* add uc rattachement ([#256](https://github.com/SocialGouv/fce/issues/256)) ([75bee7a](https://github.com/SocialGouv/fce/commit/75bee7a782ad02d1069625ed2d3590d49006a2e4))
+
 ## [27.53.2](https://github.com/SocialGouv/fce/compare/v27.53.1...v27.53.2) (2023-03-30)
 
 

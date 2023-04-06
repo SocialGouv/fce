@@ -4,7 +4,7 @@ import {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import {downloadNewestFile, downloadOldestFile} from "../../utils/minio";
+import { downloadNewestFile } from "../../utils/minio";
 import { createMinioClient } from "../../clients/minio";
 import {initDownloadFolder} from "../../utils/filesystem";
 
@@ -82,9 +82,7 @@ export class MinioDownload implements INodeType {
 
 		const prefix = downloadArchive ? "archives/" : "";
 
-    const downloadMethod = downloadArchive ? downloadNewestFile : downloadOldestFile;
-
-		const { outputFile, remoteFile } = await downloadMethod(
+		const { outputFile, remoteFile } = await downloadNewestFile(
 		  client,
       {
         bucket,

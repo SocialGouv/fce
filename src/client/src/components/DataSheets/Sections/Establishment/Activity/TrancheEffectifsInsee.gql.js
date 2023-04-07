@@ -4,11 +4,11 @@ import { pipe, prop } from "lodash/fp";
 import { mapQueryResult } from "../../../../../utils/graphql/graphql";
 
 const trancheEffectifsInseeQuery = gql`
-  query trancheEffectifsInseeQuery($siret: String!) {
+  query trancheEffectifsInseeQuery1($siret: String!) {
     etablissement(siret: $siret) {
-      tranche_effectif_salarie_etablissement {
-        intitule
+      tranche_effectif_salarie {
         date_reference
+        intitule
       }
     }
   }
@@ -21,5 +21,5 @@ export const useTrancheEffectifsInsee = pipe(
         siret,
       },
     }),
-  mapQueryResult(prop("etablissement.tranche_effectif_salarie_etablissement"))
+  mapQueryResult(prop("etablissement.tranche_effectif_salarie"))
 );

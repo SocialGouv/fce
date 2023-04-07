@@ -10,7 +10,7 @@ import {
 import { useAssociationData } from "./Association.gql";
 
 const Association = ({ siret }) => {
-  const { loading, data, error } = useAssociationData(siret);
+  const { loading, data, error } = useAssociationData(siret?.siret);
   if (error || loading) {
     return null;
   }

@@ -19,13 +19,13 @@ const Mandataires = ({ mandataires }) => {
         {mandataires.map((mandataire, index) => (
           <tr key={index}>
             <td>
-              <Value value={mandataire.fonction} />
+              <Value value={mandataire?.data?.fonction} />
             </td>
             <td>
               <Value
                 value={
-                  mandataire.raison_sociale ||
-                  `${mandataire.nom} ${mandataire.prenom}`
+                  mandataire?.data?.raison_sociale ||
+                  `${mandataire?.data?.nom} ${mandataire?.data?.prenom}`
                 }
               />
             </td>

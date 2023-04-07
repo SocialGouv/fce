@@ -12,27 +12,25 @@ const entrepriseInfosQuery = gql`
         annee
         effectifs_annuels
       }
-      effectifs_mensuels {
-        mois
-        annee
-        effectifs_mensuels
-      }
       extraits_rcs_infogreffe {
         date_immatriculation
         observations {
           date
-          date_timestamp
           libelle
         }
       }
       mandataires_sociaux {
-        fonction
-        prenom
-        nom
-        raison_sociale
+        data {
+          fonction
+          prenom
+          nom
+          raison_sociale
+        }
       }
       numero_tva_intracommunautaire
-      siret_siege_social
+      siret_siege_social {
+        siret
+      }
     }
   }
 `;

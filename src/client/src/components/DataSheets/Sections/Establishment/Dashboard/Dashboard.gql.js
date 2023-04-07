@@ -169,11 +169,11 @@ export const useLastEffectif = pipe(
 );
 
 const trancheEffectifsInseeQuery = gql`
-  query trancheEffectifsInseeQuery($siret: String!) {
+  query trancheEffectifsInseeQuery2($siret: String!) {
     etablissement(siret: $siret) {
-      tranche_effectif_salarie_etablissement {
-        intitule
+      tranche_effectif_salarie {
         date_reference
+        intitule
       }
     }
   }
@@ -186,7 +186,7 @@ export const useTrancheEffectifsInsee = pipe(
         siret,
       },
     }),
-  mapQueryResult(prop("etablissement.tranche_effectif_salarie_etablissement"))
+  mapQueryResult(prop("etablissement.tranche_effectif_salarie"))
 );
 
 export const useEffectif = (siret) => {

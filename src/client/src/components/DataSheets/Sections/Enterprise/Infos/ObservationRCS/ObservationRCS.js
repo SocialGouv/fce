@@ -11,7 +11,7 @@ import Data from "../../../SharedComponents/Data";
 
 const ObservationRCS = ({ observations }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const obs = reverse(sortBy(observations, "date_timestamp"));
+  const obs = reverse(sortBy(observations, new Date("date")));
   const displayedObservations = isExpanded
     ? observations
     : observations.slice(0, 1);

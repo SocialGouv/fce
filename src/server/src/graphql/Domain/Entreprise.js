@@ -1,8 +1,7 @@
 import { buildSchema } from "graphql";
 import ApiEntreprise from "../../models/ApiEntreprise";
 import { parse } from "date-fns";
-
-
+import ApiEntrepriseV3 from "../../models/ApiEntrepriseV3";
 
 export const entrepriseTypes = buildSchema(`
   type Query {
@@ -19,9 +18,9 @@ export const entrepriseTypes = buildSchema(`
     forme_juridique_code: String
     effectifs_annuel: EffectifAnnuel
     effectifs_mensuels(date: String, length: Int): [EffectifMensuel]
-    mandataires_sociaux: [MandataireSocial]
+    mandataires_sociaux: [MandataireData]
     extraits_rcs_infogreffe: ExtraitRcs
-    siret_siege_social: String
+    siret_siege_social: SiegeSocial
     donnees_ecofi: [DonneeEcofi]
   }
 
@@ -45,7 +44,9 @@ export const entrepriseTypes = buildSchema(`
     effectifs_annuels: Float
     annee: Int
   }
-
+  type MandataireData {
+    data:MandataireSocial
+  }
   type MandataireSocial {
     nom: String
     prenom: String
@@ -60,33 +61,126 @@ export const entrepriseTypes = buildSchema(`
 
   type ExtraitRcs {
     date_immatriculation: String
-    date_immatriculation_timestamp: Int
     date_extrait: String
     observations: [ObservationRcs]
   }
 
+  type SiegeSocial {
+    siret: String
+  }
+
   type ObservationRcs {
     date: String
-    date_timestamp: Int
     numero: Int
     libelle: String
   }
 `);
 
 const api = new ApiEntreprise({ log: true });
+const apiV3 = new ApiEntrepriseV3({ log: true });
 
 export const entrepriseResolvers = {
   Query: {
-    entreprise: (parent, { siren }) => api.getEntrepriseBySiren(siren),
-    association: (parent, { siret }) => api.getAssociation(siret),
+    entreprise: async (parent, { siren }) => {
+      try {
+        return await api.getEntrepriseBySiren(siren);
+      } catch (error) {
+        console.error(
+          `Failed to fetch entreprise data for siren ${siren}: ${error}`
+        );
+        return null;
+      }
+    },
+    association: async (parent, { siret }) => {
+      try {
+        return await apiV3.getAssociation(siret);
+      } catch (error) {
+        console.error(
+          `Failed to fetch association data for siret ${siret}: ${error}`
+        );
+        return null;
+      }
+    },
   },
   Entreprise: {
-    effectifs_mensuels: (parent, { date, length }) => {
-      const parsedDate = date ? parse(date, "MM/yyyy", new Date()) : new Date();
-      return api.getLastEntrepriseEffectifsMensuelBySirenAndDate(parent.siren, { date: parsedDate, length });
+    effectifs_mensuels: async (parent, { date, length }) => {
+      try {
+        const parsedDate = date
+          ? parse(date, "MM/yyyy", new Date())
+          : new Date();
+        return await api.getLastEntrepriseEffectifsMensuelBySirenAndDate(
+          parent.siren,
+          {
+            date: parsedDate,
+            length,
+          }
+        );
+      } catch (error) {
+        console.error(
+          `Failed to fetch effectifs mensuels data for siren ${parent.siren}: ${error}`
+        );
+        return null;
+      }
     },
-    effectifs_annuel: (parent) => api.getEntrepriseEffectifsAnnuelsBySiren(parent.siren),
-    extraits_rcs_infogreffe: (parent) => api.getRcsInfogreffeBySiren(parent.siren),
-    donnees_ecofi: (parent) => api.getExercice(parent.siret_siege_social)
-  }
-}
+    numero_tva_intracommunautaire: async (parent) => {
+      try {
+        return await apiV3.getTva(parent.siren);
+      } catch (error) {
+        console.error(
+          `Failed to fetch numero tva intracommunautaire data for siren ${parent.siren}: ${error}`
+        );
+        return null;
+      }
+    },
+    siret_siege_social: async (parent) => {
+      try {
+        return await apiV3.getSiegeSocial(parent.siren);
+      } catch (error) {
+        console.error(
+          `Failed to fetch siret siege social data for siren ${parent.siren}: ${error}`
+        );
+        return null;
+      }
+    },
+    mandataires_sociaux: async (parent) => {
+      try {
+        return await apiV3.getMandatairesSociaux(parent.siren);
+      } catch (error) {
+        console.error(
+          `Failed to fetch mandataires sociaux data for siren ${parent.siren}: ${error}`
+        );
+        return null;
+      }
+    },
+    effectifs_annuel: async (parent) => {
+      try {
+        return await api.getEntrepriseEffectifsAnnuelsBySiren(parent.siren);
+      } catch (error) {
+        console.error(
+          `Failed to fetch effectifs annuels data for siren ${parent.siren}: ${error}`
+        );
+        return null;
+      }
+    },
+    extraits_rcs_infogreffe: async (parent) => {
+      try {
+        return await apiV3.getRcsInfogreffeBySiren(parent.siren);
+      } catch (error) {
+        console.error(
+          `Failed to fetch extraits rcs infogreffe data for siren ${parent.siren}: ${error}`
+        );
+        return null;
+      }
+    },
+    donnees_ecofi: async (parent) => {
+      try {
+        return await api.getExercice(parent.siret_siege_social.siret);
+      } catch (error) {
+        console.error(
+          `Failed to fetch extraits rcs infogreffe data for siren ${parent.siren}: ${error}`
+        );
+        return null;
+      }
+    },
+  },
+};

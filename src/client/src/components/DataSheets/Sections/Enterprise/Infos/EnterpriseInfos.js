@@ -141,7 +141,11 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             loading={effectifsPhysiqueLoading}
             error={effectifsPhysiqueError}
           >
-            <Data name="Effectif physique" value={effectifsPhysique} />
+            <Data
+              name="Effectif physique"
+              value={effectifsPhysique}
+              sourceSi={"DSN"}
+            />
           </LoadableContent>
           <LoadableContent
             loading={effectifsMensuelsLoading}

@@ -9,6 +9,7 @@ import Data from "../Data";
 
 const Subcategory = ({
   subtitle = null,
+  hasDateImport = false,
   datas = [],
   children,
   sourceSi = null,
@@ -24,6 +25,7 @@ const Subcategory = ({
           {(sourceCustom || sourceSi) && (
             <Source
               si={sourceSi}
+              hasDateImport={hasDateImport}
               sourceDate={sourceDate}
               sourceCustom={sourceCustom}
             />
@@ -58,6 +60,7 @@ Subcategory.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   datas: PropTypes.arrayOf(PropTypes.object),
+  hasDateImport: PropTypes.bool,
   sourceCustom: PropTypes.string,
   sourceDate: PropTypes.string,
   sourceSi: PropTypes.string,

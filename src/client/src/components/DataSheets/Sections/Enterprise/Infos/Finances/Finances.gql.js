@@ -4,18 +4,17 @@ import { pipe, prop } from "lodash/fp";
 import { mapQueryResult } from "../../../../../../utils/graphql/graphql";
 
 const financeQuery = gql`
-  query GetFinance($siren: String!) {
-    entreprise(siren: $siren) {
-      donnees_ecofi {
-        ca
+  query GetFinance($siret: String!) {
+    finance(siret: $siret) {
+      data {
+        ca: chiffre_affaires
         date_fin_exercice
-        date_fin_exercice_timestamp
       }
     }
   }
 `;
 
 export const useFinanceData = pipe(
-  (siren) => useQuery(financeQuery, { variables: { siren } }),
-  mapQueryResult(prop("entreprise.donnees_ecofi"))
+  (siret) => useQuery(financeQuery, { variables: { siret } }),
+  mapQueryResult(prop("finance"))
 );

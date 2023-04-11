@@ -1,5 +1,9 @@
-import { isNull, negate, pipe, prop } from "lodash/fp";
+import { complement, defaultTo, isNil, pipe, prop } from "lodash/fp";
 
-export const getNumeroRna = prop("id");
+export const getNumeroRna = prop("rna");
 
-export const isAssociation = pipe(getNumeroRna, negate(isNull));
+export const isAssociation = pipe(
+  defaultTo({}),
+  getNumeroRna,
+  complement(isNil)
+);

@@ -8,7 +8,6 @@ import {
   negate,
   pipe,
   prop,
-  replace,
   reverse,
   size,
   sortBy,
@@ -41,7 +40,6 @@ export const getName = (entreprise) => {
     .join(" ");
 
   return (
-    getRaisonSociale(entreprise) ||
     prop("denominationunitelegale", entreprise) ||
     prop("denominationusuelle1unitelegale", entreprise) ||
     personneUniteLegale
@@ -53,11 +51,7 @@ export const getOpeningDate = prop("datecreationunitelegale");
 export const getClosingDate = prop("datederniertraitementunitelegale");
 export const getAccidentsTravail = prop("accidents_travail");
 export const getEtablissements = prop("etablissements");
-export const getRaisonSociale = pipe(
-  prop("api.raison_sociale"),
-  replace("*/")(" "),
-  replace("/", "")
-);
+
 const getInteractionsT = pipe(prop("interactions_T"), normalizeInteractionsT);
 
 const getInteractionsC = pipe(prop("interactions_C"), normalizeInteractionsC);
@@ -73,31 +67,13 @@ const getInteractions3ESRC = pipe(
 
 export const getNafCode = prop("naf.code");
 export const getNafLabel = prop("naf.libelle");
-export const getCapitalSocial = prop("api.capital_social");
-export const getMandatairesSociaux = prop("api.mandataires_sociaux");
+export const getCapitalSocial = prop("api.capital.montant");
 export const getNumeroTvaIntracommunautaire = prop(
-  "api.numero_tva_intracommunautaire"
+  "numero_tva_intracommunautaire"
 );
 
-export const getDonneesEcofi = prop("api.donnees_ecofi");
-
-export const getRcsInfo = prop("api.extraits_rcs_infogreffe");
-export const getRcsObservations = pipe(getRcsInfo, prop("observations"));
-export const getDateImmatriculationRcs = pipe(
-  getRcsInfo,
-  prop("date_immatriculation")
-);
-
-export const getSiretSiegeSocial = prop("api.siret_siege_social");
-
-const getEffectifsAnnuel = prop("api.effectifs_annuel");
-export const getEffectifsAnnuelValue = pipe(
-  getEffectifsAnnuel,
-  prop("effectifs_annuels")
-);
-export const getEffectifsAnnuelAnnee = pipe(getEffectifsAnnuel, prop("annee"));
-
-export const getEffectifsMensuels = prop("api.effectifs_mensuels");
+export const getRcsObservations = prop("api.observations");
+export const getDateImmatriculationRcs = prop("api.date_immatriculation");
 
 export const getSiegeSocial = pipe(getEtablissements, find(isSiege));
 

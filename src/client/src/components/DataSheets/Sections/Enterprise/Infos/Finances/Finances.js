@@ -3,7 +3,7 @@ import "./finances.scss";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { renderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
+import { renderIfSiret } from "../../../../../../helpers/hoc/renderIfSiret";
 import {
   getDateDeclaration,
   getFormattedChiffreAffaire,
@@ -16,8 +16,8 @@ import { useFinanceData } from "./Finances.gql";
 const getKey = (label, donneeEcofi) =>
   `${label}-${getDateDeclaration(donneeEcofi)}`;
 
-const Finances = ({ siren }) => {
-  const { loading, data: donneesEcofi, error } = useFinanceData(siren);
+const Finances = ({ siret }) => {
+  const { loading, data: donneesEcofi, error } = useFinanceData(siret);
 
   if (loading) {
     return <LoadSpinner />;
@@ -35,14 +35,17 @@ const Finances = ({ siren }) => {
   if (donneesEcofi) {
     dates = donneesEcofi.map((donneeEcofi) => {
       return (
-        <th className="has-text-right" key={getKey("date", donneeEcofi)}>
+        <th
+          className="has-text-right"
+          key={getKey("data.date_fin_exercice", donneeEcofi)}
+        >
           <Value value={getDateDeclaration(donneeEcofi)} empty="-" />
         </th>
       );
     });
     caList = donneesEcofi.map((donneeEcofi) => {
       return (
-        <td className="has-text-right" key={getKey("ca", donneeEcofi)}>
+        <td className="has-text-right" key={getKey("data.ca", donneeEcofi)}>
           <Value value={getFormattedChiffreAffaire(donneeEcofi)} empty="-" />
         </td>
       );
@@ -96,7 +99,7 @@ const Finances = ({ siren }) => {
 };
 
 Finances.propTypes = {
-  siren: PropTypes.string.isRequired,
+  siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiren(Finances);
+export default renderIfSiret(Finances);

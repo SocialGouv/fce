@@ -1,14 +1,14 @@
 import axios from "axios";
-import { getYear, subMonths } from "date-fns";
-import { getTwoCharactersMonth } from "../utils/date";
 import { createCacheAdapter } from "../utils/axios-cache/axios-cache";
 import { createCache } from "../utils/cache";
 
-const ENTREPRISE_API_URL = "https://entreprise.api.gouv.fr/v2/";
+const ENTREPRISE_API_URL = "https://entreprise.api.gouv.fr/v3/";
+const CUSTOM_ENTREPRISE_API_URL =
+  "https://entreprise.api.gouv.fr/v4/djepva/api-association/";
 
 const cache = createCache();
 
-class ApiEntreprise {
+class ApiEntrepriseV3 {
   constructor({ log } = {}) {
     if (log) {
       this.request.interceptors.request.use((x) => {
@@ -28,11 +28,10 @@ class ApiEntreprise {
     }
   }
   request = axios.create({
-    baseURL: ENTREPRISE_API_URL,
     params: {
       token: process.env.API_GOUV_TOKEN,
       context: "Tiers",
-      recipient: "Direccte Occitanie",
+      recipient: "17670001100016",
       object: "FCEE - Direccte Occitanie",
       non_diffusables: true,
     },
@@ -41,117 +40,68 @@ class ApiEntreprise {
     }),
   });
 
-  async getEntrepriseBySiren(siren) {
-    const { data } = await this.request.get(`entreprises/${siren}`);
-    return data?.entreprise;
-  }
-
   async getEtablissementBySiret(siret) {
-    const { data } = await this.request.get(`etablissements/${siret}`);
-
-    return data?.etablissement;
-  }
-
-  async getLastEntrepriseEffectifsMensuelBySirenAndDate(
-    siren,
-    { date, length = 3, max = 24 } = {}
-  ) {
-    return this.getEntrepriseEffectifsMensuelBySirenAndDate(siren, date)
-      .then(async (effectif) =>
-        length <= 1
-          ? [effectif]
-          : [effectif].concat(
-              await this.getLastEntrepriseEffectifsMensuelBySirenAndDate(
-                siren,
-                { date: subMonths(date, 1), length: length - 1, max: max - 1 }
-              )
-            )
-      )
-      .catch(() =>
-        max <= 1
-          ? []
-          : this.getLastEntrepriseEffectifsMensuelBySirenAndDate(siren, {
-              date: subMonths(date, 1),
-              length,
-              max: max - 1,
-            })
-      );
-  }
-
-  async getEntrepriseEffectifsMensuelBySirenAndDate(siren, date = new Date()) {
-    const month = getTwoCharactersMonth(date);
-    const year = getYear(date);
-
     const { data } = await this.request.get(
-      `effectifs_mensuels_acoss_covid/${year}/${month}/entreprise/${siren}`
+      `${ENTREPRISE_API_URL}insee/sirene/etablissements/${siret}`
     );
-    console.log("effectifs_mensuels_acoss_covid", data);
-    return data;
+    return data?.data;
   }
-
-  async getEntrepriseEffectifsAnnuelsBySiren(siren) {
-    const { data } = await this.request.get(
-      `effectifs_annuels_acoss_covid/${siren}`
-    );
-
-    return data;
-  }
-
   async getRcsInfogreffeBySiren(siren) {
-    const { data } = await this.request.get(`extraits_rcs_infogreffe/${siren}`);
-
-    return data;
-  }
-
-  async getAssociation(siret) {
-    const { data } = await this.request.get(`/associations/${siret}`);
-    return data;
-  }
-
-  async getExercice(siret) {
     try {
-      const { data } = await this.request.get(`/exercices/${siret}`);
-      return data?.exercices || [];
-    } catch (err) {
-      return [];
+      const { data } = await this.request.get(
+        `${ENTREPRISE_API_URL}infogreffe/rcs/unites_legales/${siren}/extrait_kbis`
+      );
+      return data?.data;
+    } catch (error) {
+      console.error(
+        `Error fetching RcsInfogreffe for siren ${siren}: ${error}`
+      );
+      throw new Error("Failed to fetch RcsInfogreffe");
     }
   }
-
-  async getLastEtablissementEffectifsMensuelBySiretAndDate(
-    siret,
-    { date, length = 3, max = 24 } = {}
-  ) {
-    return this.getEtablissementEffectifMensuelBySiretAndDate(siret, date)
-      .then(async (effectif) =>
-        length <= 1
-          ? [effectif]
-          : [effectif].concat(
-              await this.getLastEtablissementEffectifsMensuelBySiretAndDate(
-                siret,
-                { date: subMonths(date, 1), length: length - 1, max: max - 1 }
-              )
-            )
-      )
-      .catch(() =>
-        max <= 1
-          ? []
-          : this.getLastEtablissementEffectifsMensuelBySiretAndDate(siret, {
-              date: subMonths(date, 1),
-              length,
-              max: max - 1,
-            })
-      );
-  }
-
-  async getEtablissementEffectifMensuelBySiretAndDate(siret, date) {
-    const month = getTwoCharactersMonth(date);
-    const year = getYear(date);
-
+  async getMandatairesSociaux(siren) {
     const { data } = await this.request.get(
-      `effectifs_mensuels_acoss_covid/${year}/${month}/etablissement/${siret}`
+      `${ENTREPRISE_API_URL}infogreffe/rcs/unites_legales/${siren}/mandataires_sociaux`
     );
-    return data;
+    return data?.data;
+  }
+  async getTva(siren) {
+    try {
+      const { data } = await this.request.get(
+        `${ENTREPRISE_API_URL}european_commission/unites_legales/${siren}/numero_tva`
+      );
+      return data?.data;
+    } catch (error) {
+      console.error(`Error fetching numero TVA for siren ${siren}: ${error}`);
+      throw new Error("Failed to fetch numero TVA");
+    }
+  }
+  async getAssociation(siren) {
+    try {
+      const { data } = await this.request.get(
+        `${CUSTOM_ENTREPRISE_API_URL}associations/open_data/${siren}`
+      );
+      return data?.data;
+    } catch (error) {
+      console.error(
+        `Error fetching numero association open data for siren ${siren}: ${error}`
+      );
+      throw new Error("Failed to fetch numero association open data");
+    }
+  }
+  async getExercices(siret) {
+    try {
+      const { data } = await this.request.get(
+        `${ENTREPRISE_API_URL}dgfip/etablissements/${siret}/chiffres_affaires`
+      );
+      return data?.data;
+    } catch (error) {
+      console.error(
+        `Error fetching 3 last exercices for siret ${siret}: ${error}`
+      );
+      throw new Error("Failed to fetch 3 last exercices");
+    }
   }
 }
 
-export default ApiEntreprise;
+export default ApiEntrepriseV3;

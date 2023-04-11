@@ -1,13 +1,8 @@
-import { format, parseISO } from "date-fns/fp";
 import { pipe, prop } from "lodash/fp";
 
-export const getDateDeclaration = pipe(
-  prop("date_fin_exercice"),
-  parseISO,
-  format("dd/MM/yyyy")
-);
+export const getDateDeclaration = prop("data.date_fin_exercice");
 
-export const getChiffreAffaire = prop("ca");
+export const getChiffreAffaire = prop("data.ca");
 
 export const formatChiffreAffaire = (chiffreAffaire) =>
   new Intl.NumberFormat("fr-FR", {

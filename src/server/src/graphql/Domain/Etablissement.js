@@ -1,6 +1,5 @@
 import { buildSchema } from "graphql";
-import ApiEntreprise from "../../models/ApiEntreprise";
-import ApiEntrepriseV3 from "../../models/ApiEntrepriseV3";
+import ApiEntrepriseV3 from "../../models/ApiEntreprise";
 
 export const etablissementTypes = buildSchema(`
   type Query {
@@ -13,8 +12,6 @@ export const etablissementTypes = buildSchema(`
   
   }
   
- 
-  
   type TrancheEffectifSalarie {
     de: Int
     a: Int
@@ -22,14 +19,6 @@ export const etablissementTypes = buildSchema(`
     date_reference: String
     intitule: String
   }
-  
-
-  
-
-  
-
-  
-
 
 `);
 

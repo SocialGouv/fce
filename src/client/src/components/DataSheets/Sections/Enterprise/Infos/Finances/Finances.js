@@ -53,6 +53,7 @@ const Finances = ({ siren }) => {
         </td>
       );
     });
+
     margeBrute = donneesEcofi.map((donneeEcofi) => {
       return (
         <td className="has-text-right" key={getKey("Marge_brute", donneeEcofi)}>
@@ -60,6 +61,7 @@ const Finances = ({ siren }) => {
         </td>
       );
     });
+
     EBE = donneesEcofi.map((donneeEcofi) => {
       return (
         <td className="has-text-right" key={getKey("EBE", donneeEcofi)}>
@@ -67,6 +69,7 @@ const Finances = ({ siren }) => {
         </td>
       );
     });
+
     resultExploi = donneesEcofi.map((donneeEcofi) => {
       return (
         <td className="has-text-right" key={getKey("EBIT", donneeEcofi)}>

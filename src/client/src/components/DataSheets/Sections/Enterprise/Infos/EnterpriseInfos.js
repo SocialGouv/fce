@@ -64,7 +64,6 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
     () => merge({}, baseEntreprise, { api: entreprisesInfos }),
     [baseEntreprise, entreprisesInfos]
   );
-  console.log(enterprise, "$$$$$$$$$$$$$$$$$$$$$");
 
   const dashboardSizeRanges = {
     ...Config.get("inseeSizeRanges"),

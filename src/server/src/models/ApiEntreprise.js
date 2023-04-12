@@ -8,7 +8,7 @@ const CUSTOM_ENTREPRISE_API_URL =
 
 const cache = createCache();
 
-class ApiEntrepriseV3 {
+class ApiEntreprise {
   constructor({ log } = {}) {
     if (log) {
       this.request.interceptors.request.use((x) => {
@@ -65,6 +65,18 @@ class ApiEntrepriseV3 {
     );
     return data?.data;
   }
+  async getSiegeSocial(siren) {
+    try {
+      const { data } = await this.request.get(
+        `${ENTREPRISE_API_URL}insee/sirene/unites_legales/${siren}/siege_social`
+      );
+      return data?.data;
+    } catch (error) {
+      console.error(`Error fetching siege social for siren ${siren}: ${error}`);
+      throw new Error("Failed to fetch siege social");
+    }
+  }
+
   async getTva(siren) {
     try {
       const { data } = await this.request.get(
@@ -104,4 +116,4 @@ class ApiEntrepriseV3 {
   }
 }
 
-export default ApiEntrepriseV3;
+export default ApiEntreprise;

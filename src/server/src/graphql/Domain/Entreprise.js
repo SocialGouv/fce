@@ -1,5 +1,5 @@
 import { buildSchema } from "graphql";
-import ApiEntrepriseV3 from "../../models/ApiEntreprise";
+import ApiEntreprise from "../../models/ApiEntreprise";
 
 export const entrepriseTypes = buildSchema(`
   type Query {
@@ -57,15 +57,13 @@ export const entrepriseTypes = buildSchema(`
   }
 `);
 
-const apiV3 = new ApiEntrepriseV3({ log: true });
+const api = new ApiEntreprise({ log: true });
 
 export const entrepriseResolvers = {
   Query: {
-    extraitsRcsInfogreffe: async (parent, { siren }) => {
+    extraitsRcsInfogreffe: async (_, { siren }) => {
       try {
-        const extraitsRcsInfogreffe = await apiV3.getRcsInfogreffeBySiren(
-          siren
-        );
+        const extraitsRcsInfogreffe = await api.getRcsInfogreffeBySiren(siren);
         return extraitsRcsInfogreffe;
       } catch (error) {
         console.error(
@@ -74,9 +72,9 @@ export const entrepriseResolvers = {
         return null;
       }
     },
-    association: async (parent, { siret }) => {
+    association: async (_, { siret }) => {
       try {
-        const association = await apiV3.getAssociation(siret);
+        const association = await api.getAssociation(siret);
         return association;
       } catch (error) {
         console.error(
@@ -85,9 +83,9 @@ export const entrepriseResolvers = {
         return null;
       }
     },
-    finance: async (parent, { siret }) => {
+    finance: async (_, { siret }) => {
       try {
-        const finance = await apiV3.getExercices(siret);
+        const finance = await api.getExercices(siret);
         return finance;
       } catch (error) {
         console.error(
@@ -96,18 +94,18 @@ export const entrepriseResolvers = {
         return null;
       }
     },
-    tva_intracommunautaire: async (parent, { siren }) => {
+    tva_intracommunautaire: async (_, { siren }) => {
       try {
-        const tva_intracommunautaire = await apiV3.getTva(siren);
+        const tva_intracommunautaire = await api.getTva(siren);
         return tva_intracommunautaire;
       } catch (error) {
         console.error(`Failed to fetch tva for siren ${siren}: ${error}`);
         return null;
       }
     },
-    mandataires: async (parent, { siren }) => {
+    mandataires: async (_, { siren }) => {
       try {
-        const mandataires = await apiV3.getMandatairesSociaux(siren);
+        const mandataires = await api.getMandatairesSociaux(siren);
         return mandataires;
       } catch (error) {
         console.error(

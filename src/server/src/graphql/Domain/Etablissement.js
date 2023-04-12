@@ -1,5 +1,5 @@
 import { buildSchema } from "graphql";
-import ApiEntrepriseV3 from "../../models/ApiEntreprise";
+import ApiEntreprise from "../../models/ApiEntreprise";
 
 export const etablissementTypes = buildSchema(`
   type Query {
@@ -22,7 +22,7 @@ export const etablissementTypes = buildSchema(`
 
 `);
 
-const api = new ApiEntrepriseV3();
+const api = new ApiEntreprise();
 
 export const etablissementResolvers = {
   Query: {

@@ -1,51 +1,32 @@
 import { buildSchema } from "graphql";
 import ApiEntreprise from "../../models/ApiEntreprise";
-import { parse } from "date-fns";
-
-
 
 export const entrepriseTypes = buildSchema(`
   type Query {
-    entreprise(siren: String!): Entreprise
+    extraitsRcsInfogreffe(siren: String!): ExtraitRcs
     association(siret: String!): Association
+    finance(siret:String!):[DonneeEcofi]
+    tva_intracommunautaire(siren:String!):TvaIntracommunautaire
+    mandataires(siren:String!):[MandataireData]
   }
 
-  type Entreprise {
-    siren: String!
-    capital_social: Float
-    raison_sociale: String
-    numero_tva_intracommunautaire: String
-    forme_juridique: String
-    forme_juridique_code: String
-    effectifs_annuel: EffectifAnnuel
-    effectifs_mensuels(date: String, length: Int): [EffectifMensuel]
-    mandataires_sociaux: [MandataireSocial]
-    extraits_rcs_infogreffe: ExtraitRcs
-    siret_siege_social: String
-    donnees_ecofi: [DonneeEcofi]
+  type TvaIntracommunautaire {
+  tva_number: String
   }
-
-  type DonneeEcofi {
-    ca: Float
-    date_fin_exercice: String
-    date_fin_exercice_timestamp: Int
-  }
+    type DonneeEcofi {
+      data:Finance
+    }
+    type Finance {
+      chiffre_affaires: Float
+      date_fin_exercice: String
+    }
 
   type Association {
-    id: String
+    rna: String
   }
-
-  type EffectifMensuel {
-    mois: Int
-    annee: Int
-    effectifs_mensuels: Float
+  type MandataireData {
+    data:MandataireSocial
   }
-
-  type EffectifAnnuel {
-    effectifs_annuels: Float
-    annee: Int
-  }
-
   type MandataireSocial {
     nom: String
     prenom: String
@@ -60,14 +41,17 @@ export const entrepriseTypes = buildSchema(`
 
   type ExtraitRcs {
     date_immatriculation: String
-    date_immatriculation_timestamp: Int
     date_extrait: String
     observations: [ObservationRcs]
+    capital:Capital
   }
+
+  type Capital {
+    montant: Float
+  }  
 
   type ObservationRcs {
     date: String
-    date_timestamp: Int
     numero: Int
     libelle: String
   }
@@ -77,16 +61,58 @@ const api = new ApiEntreprise({ log: true });
 
 export const entrepriseResolvers = {
   Query: {
-    entreprise: (parent, { siren }) => api.getEntrepriseBySiren(siren),
-    association: (parent, { siret }) => api.getAssociation(siret),
-  },
-  Entreprise: {
-    effectifs_mensuels: (parent, { date, length }) => {
-      const parsedDate = date ? parse(date, "MM/yyyy", new Date()) : new Date();
-      return api.getLastEntrepriseEffectifsMensuelBySirenAndDate(parent.siren, { date: parsedDate, length });
+    extraitsRcsInfogreffe: async (_, { siren }) => {
+      try {
+        const extraitsRcsInfogreffe = await api.getRcsInfogreffeBySiren(siren);
+        return extraitsRcsInfogreffe;
+      } catch (error) {
+        console.error(
+          `Failed to fetch extraits Rcs Infogreffe for siren ${siren}: ${error}`
+        );
+        return null;
+      }
     },
-    effectifs_annuel: (parent) => api.getEntrepriseEffectifsAnnuelsBySiren(parent.siren),
-    extraits_rcs_infogreffe: (parent) => api.getRcsInfogreffeBySiren(parent.siren),
-    donnees_ecofi: (parent) => api.getExercice(parent.siret_siege_social)
-  }
-}
+    association: async (_, { siret }) => {
+      try {
+        const association = await api.getAssociation(siret);
+        return association;
+      } catch (error) {
+        console.error(
+          `Failed to fetch association data for siret ${siret}: ${error}`
+        );
+        return null;
+      }
+    },
+    finance: async (_, { siret }) => {
+      try {
+        const finance = await api.getExercices(siret);
+        return finance;
+      } catch (error) {
+        console.error(
+          `Failed to fetch finace indicators for siren ${siret}: ${error}`
+        );
+        return null;
+      }
+    },
+    tva_intracommunautaire: async (_, { siren }) => {
+      try {
+        const tva_intracommunautaire = await api.getTva(siren);
+        return tva_intracommunautaire;
+      } catch (error) {
+        console.error(`Failed to fetch tva for siren ${siren}: ${error}`);
+        return null;
+      }
+    },
+    mandataires: async (_, { siren }) => {
+      try {
+        const mandataires = await api.getMandatairesSociaux(siren);
+        return mandataires;
+      } catch (error) {
+        console.error(
+          `Failed to fetch mandataires for siren ${siren}: ${error}`
+        );
+        return null;
+      }
+    },
+  },
+};

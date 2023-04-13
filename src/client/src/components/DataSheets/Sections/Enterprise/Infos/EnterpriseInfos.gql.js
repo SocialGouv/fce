@@ -4,42 +4,61 @@ import { pipe, prop } from "lodash/fp";
 import { BCE_CLIENT } from "../../../../../services/GraphQL/GraphQL";
 import { mapQueryResult } from "../../../../../utils/graphql/graphql";
 
-const entrepriseInfosQuery = gql`
-  query GetEntrepriseInfos($siren: String!) {
-    entreprise(siren: $siren) {
-      capital_social
-      effectifs_annuel {
-        annee
-        effectifs_annuels
+const extraitsRcsInfogreffeQuery = gql`
+  query GetExtraitsRcsInfogreffe($siren: String!) {
+    extraitsRcsInfogreffe(siren: $siren) {
+      date_immatriculation
+      observations {
+        date
+        libelle
       }
-      effectifs_mensuels {
-        mois
-        annee
-        effectifs_mensuels
+      capital {
+        montant
       }
-      extraits_rcs_infogreffe {
-        date_immatriculation
-        observations {
-          date
-          date_timestamp
-          libelle
-        }
-      }
-      mandataires_sociaux {
+
+      # mandataires_sociaux {
+      #   data {
+      #     fonction
+      #     prenom
+      #     nom
+      #     raison_sociale
+      #   }
+      # }
+      # numero_tva_intracommunautaire
+    }
+  }
+`;
+const tva_intracommunautaireQuery = gql`
+  query GetTva($siren: String!) {
+    tva_intracommunautaire(siren: $siren) {
+      numero_tva_intracommunautaire: tva_number
+    }
+  }
+`;
+const mandataires_sociauxQuery = gql`
+  query GetMandataires_sociaux($siren: String!) {
+    mandataires(siren: $siren) {
+      data {
         fonction
         prenom
         nom
         raison_sociale
       }
-      numero_tva_intracommunautaire
-      siret_siege_social
     }
   }
 `;
 
-export const useEntrepriseInfos = pipe(
-  (siren) => useQuery(entrepriseInfosQuery, { variables: { siren } }),
-  mapQueryResult(prop("entreprise"))
+export const useExtraitsRcsInfogreffe = pipe(
+  (siren) => useQuery(extraitsRcsInfogreffeQuery, { variables: { siren } }),
+  mapQueryResult(prop("extraitsRcsInfogreffe"))
+);
+export const useMandataireInfos = pipe(
+  (siren) => useQuery(mandataires_sociauxQuery, { variables: { siren } }),
+  mapQueryResult(prop("mandataires"))
+);
+export const useTva_intracommunautaire = pipe(
+  (siren) => useQuery(tva_intracommunautaireQuery, { variables: { siren } }),
+  mapQueryResult(prop("tva_intracommunautaire"))
 );
 
 const effectifsMensuelsQuery = gql`

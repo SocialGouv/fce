@@ -4,6 +4,7 @@ import { pipe, prop } from "lodash/fp";
 import { BCE_CLIENT } from "../../../../../services/GraphQL/GraphQL";
 import { getSirenFromSiret } from "../../../../../utils/establishment/establishment";
 import { mapQueryResult } from "../../../../../utils/graphql/graphql";
+import { useTrancheEffectifsInsee } from "../Activity/TrancheEffectifsInsee.gql";
 
 const dashboardQuery = gql`
   query getDashboardData($siret: String!, $siren: String!) {
@@ -166,27 +167,6 @@ export const useLastEffectif = pipe(
       variables: { siret },
     }),
   mapQueryResult(prop("fce_etablissements_dsn_eff[0].eff"))
-);
-
-const trancheEffectifsInseeQuery = gql`
-  query trancheEffectifsInseeQuery($siret: String!) {
-    etablissement(siret: $siret) {
-      tranche_effectif_salarie_etablissement {
-        intitule
-        date_reference
-      }
-    }
-  }
-`;
-
-export const useTrancheEffectifsInsee = pipe(
-  (siret) =>
-    useQuery(trancheEffectifsInseeQuery, {
-      variables: {
-        siret,
-      },
-    }),
-  mapQueryResult(prop("etablissement.tranche_effectif_salarie_etablissement"))
 );
 
 export const useEffectif = (siret) => {

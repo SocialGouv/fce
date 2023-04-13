@@ -15,17 +15,13 @@ import {
   getCategorie,
   getCategorieJuridiqueLabel,
   getDateImmatriculationRcs,
-  getEffectifsAnnuelAnnee,
-  getEffectifsAnnuelValue,
   getEstablishmentsCount,
-  getMandatairesSociaux,
   getNafCode,
   getNafLabel,
   getNumeroTvaIntracommunautaire,
   getRcsObservations,
   getSiegeSocial,
   getSiren,
-  getSiretSiegeSocial,
   getTrancheEffectifs,
 } from "../../../../../utils/entreprise/entreprise";
 import { getSiret } from "../../../../../utils/establishment/establishment";
@@ -35,7 +31,9 @@ import Subcategory from "../../SharedComponents/Subcategory";
 import {
   useEffectifsMensuels,
   useEffectifsPhysique,
-  useEntrepriseInfos,
+  useExtraitsRcsInfogreffe,
+  useMandataireInfos,
+  useTva_intracommunautaire,
 } from "./EnterpriseInfos.gql";
 import Finances from "./Finances";
 import Mandataires from "./Mandataires";
@@ -51,9 +49,13 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
 
   const siren = getSiren(baseEntreprise);
 
-  const { data: entreprisesInfos } = useEntrepriseInfos(
+  const { data: entreprisesInfos } = useExtraitsRcsInfogreffe(
     getSiren(baseEntreprise)
   );
+  const { data: tva_intracommunautaire } = useTva_intracommunautaire(
+    getSiren(baseEntreprise)
+  );
+  const { data: mandataires } = useMandataireInfos(getSiren(baseEntreprise));
   const {
     data: effectifsMensuels,
     loading: effectifsMensuelsLoading,
@@ -82,9 +84,9 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
     effectifsMensuels.map(({ periode_concerne, effectif }) => (
       <Data
         key={periode_concerne}
-        name={`Effectif ETP ${getDateMonthName(periode_concerne)}`}
+        name={`Effectif ETP`}
         value={effectif}
-        sourceCustom={`Acoss / DSN ${getDateMonthName(
+        sourceCustom={`Gip-Mds / DSN ${getDateMonthName(
           periode_concerne
         )} ${getDateYear(periode_concerne)}`}
         hasNumberFormat
@@ -93,8 +95,6 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
   ) : (
     <Data name={`Effectif ETP`} />
   );
-
-  const mandataires = getMandatairesSociaux(enterprise) || [];
 
   const siegeSocial = getSiegeSocial(enterprise);
   const nafCode = getNafCode(enterprise);
@@ -130,7 +130,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             } fermé(s)`}
           />
 
-          <Association siret={getSiretSiegeSocial(enterprise)} />
+          <Association siret={getSiret(siegeSocial)} />
 
           <Data
             name="Tranche d'effectif"
@@ -159,14 +159,6 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
               onClick={() => setEffectifsMensuelsLimit(MAX_EFFECTIFS_MENSUELS)}
             />
           )}
-          <Data
-            name={`Effectif ${getEffectifsAnnuelAnnee(
-              enterprise
-            )} en équivalent temps plein`}
-            value={getEffectifsAnnuelValue(enterprise)}
-            sourceCustom={`Acoss / DSN ${getEffectifsAnnuelAnnee(enterprise)}`}
-            hasNumberFormat
-          />
         </Subcategory>
 
         <Subcategory
@@ -212,8 +204,8 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
           <Data
             name="Numéro de TVA intra communautaire"
             value={
-              getNumeroTvaIntracommunautaire(enterprise) &&
-              formatTva(getNumeroTvaIntracommunautaire(enterprise))
+              getNumeroTvaIntracommunautaire(tva_intracommunautaire) &&
+              formatTva(getNumeroTvaIntracommunautaire(tva_intracommunautaire))
             }
           />
         </Subcategory>
@@ -221,7 +213,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
           subtitle="Données financières"
           sourceSi={"Comptes Annuels"}
         >
-          <Finances siren={getSiren(enterprise)} />
+          <Finances siren={siren} />
         </Subcategory>
         <Subcategory
           subtitle="Mandataires sociaux"

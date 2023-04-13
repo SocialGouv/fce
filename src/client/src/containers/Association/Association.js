@@ -16,7 +16,6 @@ const Association = ({ siret }) => {
   }
 
   const { association } = data;
-
   return (
     <>
       <Data name="Association" value={isAssociation(association)} />

@@ -41,14 +41,17 @@ const Finances = ({ siren }) => {
   if (donneesEcofi) {
     dates = donneesEcofi.map((donneeEcofi) => {
       return (
-        <th className="has-text-right" key={getKey("date", donneeEcofi)}>
+        <th
+          className="has-text-right"
+          key={getKey("data.date_fin_exercice", donneeEcofi)}
+        >
           <Value value={getDateDeclaration(donneeEcofi)} empty="-" />
         </th>
       );
     });
     caList = donneesEcofi.map((donneeEcofi) => {
       return (
-        <td className="has-text-right" key={getKey("ca", donneeEcofi)}>
+        <td className="has-text-right" key={getKey("data.ca", donneeEcofi)}>
           <Value value={getFormattedChiffreAffaire(donneeEcofi)} empty="-" />
         </td>
       );

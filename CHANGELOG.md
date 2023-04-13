@@ -1,3 +1,10 @@
+# [27.55.0](https://github.com/SocialGouv/fce/compare/v27.54.1...v27.55.0) (2023-04-13)
+
+
+### Features
+
+* integrate bce finance indicators ([#252](https://github.com/SocialGouv/fce/issues/252)) ([57d48dc](https://github.com/SocialGouv/fce/commit/57d48dc13de536f49fbc133c62b78586f00e464c))
+
 ## [27.54.1](https://github.com/SocialGouv/fce/compare/v27.54.0...v27.54.1) (2023-04-06)
 
 

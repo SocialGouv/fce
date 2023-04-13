@@ -1,3 +1,10 @@
+# [27.57.0](https://github.com/SocialGouv/fce/compare/v27.56.0...v27.57.0) (2023-04-13)
+
+
+### Features
+
+* migrate api entrprise v3 ([#260](https://github.com/SocialGouv/fce/issues/260)) ([1563caa](https://github.com/SocialGouv/fce/commit/1563caa29c8801deffdea30c5f1ee11b65563f26))
+
 # [27.56.0](https://github.com/SocialGouv/fce/compare/v27.55.0...v27.56.0) (2023-04-13)
 
 

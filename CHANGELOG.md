@@ -1,3 +1,10 @@
+# [27.56.0](https://github.com/SocialGouv/fce/compare/v27.55.0...v27.56.0) (2023-04-13)
+
+
+### Features
+
+* add effectif physique ([#255](https://github.com/SocialGouv/fce/issues/255)) ([a78782a](https://github.com/SocialGouv/fce/commit/a78782adf137e499ba93d7c65e9eb3761cd7272a))
+
 # [27.55.0](https://github.com/SocialGouv/fce/compare/v27.54.1...v27.55.0) (2023-04-13)
 
 

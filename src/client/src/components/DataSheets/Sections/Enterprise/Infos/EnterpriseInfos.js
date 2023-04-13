@@ -30,6 +30,7 @@ import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
 import {
   useEffectifsMensuels,
+  useEffectifsPhysique,
   useExtraitsRcsInfogreffe,
   useMandataireInfos,
   useTva_intracommunautaire,
@@ -60,6 +61,11 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
     loading: effectifsMensuelsLoading,
     error: effectifsMensuelsError,
   } = useEffectifsMensuels(siren, effectifsMensuelsLimit);
+  const {
+    data: effectifsPhysique,
+    loading: effectifsPhysiqueLoading,
+    error: effectifsPhysiqueError,
+  } = useEffectifsPhysique(siren);
   const enterprise = useMemo(
     () => merge({}, baseEntreprise, { api: entreprisesInfos }),
     [baseEntreprise, entreprisesInfos]
@@ -132,6 +138,16 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             sourceSi={"Sirène"}
           />
           <LoadableContent
+            loading={effectifsPhysiqueLoading}
+            error={effectifsPhysiqueError}
+          >
+            <Data
+              name="Effectif physique"
+              value={effectifsPhysique}
+              sourceSi={"DSN"}
+            />
+          </LoadableContent>
+          <LoadableContent
             loading={effectifsMensuelsLoading}
             error={effectifsMensuelsError}
           >
@@ -193,8 +209,11 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             }
           />
         </Subcategory>
-        <Subcategory subtitle="Données financières" sourceCustom="DGFIP">
-          <Finances siret={getSiret(siegeSocial)} />
+        <Subcategory
+          subtitle="Données financières"
+          sourceSi={"Comptes Annuels"}
+        >
+          <Finances siren={siren} />
         </Subcategory>
         <Subcategory
           subtitle="Mandataires sociaux"

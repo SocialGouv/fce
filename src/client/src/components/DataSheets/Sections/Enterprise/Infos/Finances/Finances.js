@@ -7,6 +7,10 @@ import { renderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
 import {
   getDateDeclaration,
   getFormattedChiffreAffaire,
+  getFormattedEBE,
+  getFormattedEBIT,
+  getFormattedMargeBrute,
+  getFormattedResult,
 } from "../../../../../../utils/donnees-ecofi/donnees-ecofi";
 import LoadSpinner from "../../../../../shared/LoadSpinner";
 import Value from "../../../../../shared/Value";
@@ -29,8 +33,10 @@ const Finances = ({ siren }) => {
 
   let dates = [];
   let caList = [];
+  let margeBrute = [];
+  let EBE = [];
   let resultats = [];
-  let capitauxPropres = [];
+  let resultExploi = [];
 
   if (donneesEcofi) {
     dates = donneesEcofi.map((donneeEcofi) => {
@@ -48,18 +54,36 @@ const Finances = ({ siren }) => {
       );
     });
 
-    resultats = donneesEcofi.map((donneeEcofi) => {
+    margeBrute = donneesEcofi.map((donneeEcofi) => {
       return (
-        <td className="has-text-right" key={getKey("resultat", donneeEcofi)}>
-          Non disponible
+        <td className="has-text-right" key={getKey("Marge_brute", donneeEcofi)}>
+          <Value value={getFormattedMargeBrute(donneeEcofi)} empty="-" />
         </td>
       );
     });
 
-    capitauxPropres = donneesEcofi.map((donneeEcofi) => {
+    EBE = donneesEcofi.map((donneeEcofi) => {
       return (
-        <td className="has-text-right" key={getKey("capitaux", donneeEcofi)}>
-          Non disponible
+        <td className="has-text-right" key={getKey("EBE", donneeEcofi)}>
+          <Value value={getFormattedEBE(donneeEcofi)} empty="-" />
+        </td>
+      );
+    });
+
+    resultExploi = donneesEcofi.map((donneeEcofi) => {
+      return (
+        <td className="has-text-right" key={getKey("EBIT", donneeEcofi)}>
+          <Value value={getFormattedEBIT(donneeEcofi)} empty="-" />
+        </td>
+      );
+    });
+    resultats = donneesEcofi.map((donneeEcofi) => {
+      return (
+        <td
+          className="has-text-right"
+          key={getKey("Resultat_net", donneeEcofi)}
+        >
+          <Value value={getFormattedResult(donneeEcofi)} empty="-" />
         </td>
       );
     });
@@ -75,16 +99,24 @@ const Finances = ({ siren }) => {
       </thead>
       <tbody>
         <tr>
-          <th scope="row">Chiffre d{"'"}affaires</th>
+          <th scope="row">Chiffre d{"'"}affaires (€)</th>
           {caList}
         </tr>
         <tr>
-          <th scope="row">Résultats</th>
-          {resultats}
+          <th scope="row">Marge brute (€)</th>
+          {margeBrute}
         </tr>
         <tr>
-          <th scope="row">Capitaux propres</th>
-          {capitauxPropres}
+          <th scope="row">EBITDA-EBE (€)</th>
+          {EBE}
+        </tr>
+        <tr>
+          <th scope="row">{`Résultat d'exploitation (€)`}</th>
+          {resultExploi}
+        </tr>
+        <tr>
+          <th scope="row">Résultat net (€)</th>
+          {resultats}
         </tr>
       </tbody>
     </Table>

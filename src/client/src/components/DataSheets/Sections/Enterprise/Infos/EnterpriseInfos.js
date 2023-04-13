@@ -201,7 +201,10 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             }
           />
         </Subcategory>
-        <Subcategory subtitle="Données financières" sourceCustom="DGFIP">
+        <Subcategory
+          subtitle="Données financières"
+          sourceSi={"Comptes Annuels"}
+        >
           <Finances siren={getSiren(enterprise)} />
         </Subcategory>
         <Subcategory

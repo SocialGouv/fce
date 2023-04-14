@@ -1,6 +1,7 @@
 import {
   faArrowRight,
   faCircle,
+  faFileDownload,
   faSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -115,6 +116,18 @@ const EnterpriseHeader = ({ enterprise, resetSearch, setSearchTerm }) => {
         <div className="columns data-sheet-header__enterprise-external-link">
           <span className="column">
             Voir sur <AnnuaireEntreprisesLink siren={getSiren(enterprise)} />
+          </span>
+        </div>
+        <div className="columns data-sheet-header__enterprise-external-link">
+          <span className="column">
+            <a
+              href={`https://annuaire-entreprises.data.gouv.fr/justificatif-immatriculation-pdf/${enterprise.siren}`}
+              rel="noreferrer noopener"
+              target="_blank"
+            >
+              Télécharger le justificatif d’immatriculation sur Annuaire
+              entreprise <FontAwesomeIcon icon={faFileDownload} />
+            </a>
           </span>
         </div>
       </section>

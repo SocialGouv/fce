@@ -1,5 +1,7 @@
 import "./psi.scss";
 
+import { faExternalLinkSquareAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -48,6 +50,16 @@ const Egapro = ({ enterprise }) => (
             <div className="dt">Aucune déclaration pour cette entreprise.</div>
           )}
         </div>
+      </div>
+      <div>
+        <a
+          href={`https://egapro.travail.gouv.fr/consulter-index/recherche?q=${enterprise.siren}`}
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          Consulter l&apos;index de l&apos;égalité professionnelle sur Egapro{" "}
+          <FontAwesomeIcon icon={faExternalLinkSquareAlt} />
+        </a>
       </div>
     </Subcategory>
   </div>

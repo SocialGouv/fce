@@ -1,3 +1,10 @@
+# [27.58.0](https://github.com/SocialGouv/fce/compare/v27.57.0...v27.58.0) (2023-04-17)
+
+
+### Features
+
+* add annuel to effectif ETP text ([#261](https://github.com/SocialGouv/fce/issues/261)) ([5326b20](https://github.com/SocialGouv/fce/commit/5326b206553e03f75ad8fe59defcf9634723e065))
+
 # [27.57.0](https://github.com/SocialGouv/fce/compare/v27.56.0...v27.57.0) (2023-04-13)
 
 

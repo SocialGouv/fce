@@ -48,5 +48,11 @@ export const sortByDate = (sortableList) =>
 
 export const getStartDateStatsParam = (months = 1) =>
   Moment().subtract(parseInt(months), "months").format("YYYY-MM-DD");
+export const setYearMonthFormat = (date) => {
+  if (!date) {
+    return "";
+  }
+  return Moment(date).format("YYYY-MM");
+};
 
 export const getLastObjectStatsKey = () => Moment().format("YYYY-MM");

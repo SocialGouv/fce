@@ -34,58 +34,60 @@ const EffectifsDsn = ({ siret }) => {
             hasNumberFormat={true}
           />
           <AllEffectifsDsnButton
+            text="Afficher le détail et l'historique des effectifs"
             loading={loading}
             onClick={() => setIsExpanded(true)}
           />
         </>
       ) : (
         !loading && (
-          <Table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Effectif Total</th>
-                <th>Homme</th>
-                <th>Femme</th>
-                <th>CDD</th>
-                <th>CDI</th>
-                <th>Total Interim</th>
-                <th>CDI Inter</th>
-                <th>Inter mission</th>
-              </tr>
-            </thead>
-            <tbody>
-              {effectifs?.map?.((effectif) => (
-                <tr key={`effectif-${effectif?.id}`}>
-                  <td>{effectif?.mois}</td>
-                  <td>
-                    <Value value={effectif?.eff} empty="-" />
-                  </td>
-                  <td>
-                    <Value value={effectif?.hommes} empty="-" />
-                  </td>
-                  <td>
-                    <Value value={effectif?.femmes} empty="-" />
-                  </td>
-                  <td>
-                    <Value value={effectif?.cdd} empty="-" />
-                  </td>
-                  <td>
-                    <Value value={effectif?.cdi} empty="-" />
-                  </td>
-                  <td>
-                    <Value value={effectif?.interim} empty="-" />
-                  </td>
-                  <td>
-                    <Value value={effectif?.cdi_inter} empty="-" />
-                  </td>
-                  <td>
-                    <Value value={effectif?.inter_mission} empty="-" />
-                  </td>
+          <>
+            <Table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Effectif Total</th>
+                  <th>Homme</th>
+                  <th>Femme</th>
+                  <th>CDD</th>
+                  <th>CDI</th>
+                  <th>Total Interim</th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {effectifs?.map?.((effectif) => (
+                  <tr key={`effectif-${effectif?.id}`}>
+                    <td>{effectif?.mois}</td>
+                    <td>
+                      <Value value={effectif?.eff} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.hommes} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.femmes} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.cdd} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.cdi} empty="-" />
+                    </td>
+                    <td>
+                      <Value value={effectif?.interim} empty="-" />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+            {isExpanded && (
+              <AllEffectifsDsnButton
+                text="Afficher uniquement l'effectif physique"
+                loading={loading}
+                onClick={() => setIsExpanded(false)}
+              />
+            )}
+          </>
         )
       )}
     </LoadableContent>

@@ -7,9 +7,9 @@ import React from "react";
 
 import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
+// import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
 import { useSuccessionData } from "./Activite.gql";
-import DeveloppementEconomique from "./DeveloppementEconomique";
 import EffectifsDsn from "./EffectifsDsn";
 import EffectifsEtp from "./EffectifsEtp";
 import Finess from "./Finess";
@@ -48,11 +48,18 @@ const Activite = ({ siret }) => {
         <Subcategory className="effectifs-establishment" subtitle="Effectifs">
           <TrancheEffectifsInsee siret={siret} />
           <EffectifsDsn siret={siret} />
-          <EffectifsEtp siret={siret} />
+          {/* <Data
+            name="Effectifs ETP"
+            nonEmptyValue=""
+            emptyValue=""
+            sourceCustom={"Gip-Mds / DSN"}
+          /> */}
+          <Subcategory subtitle="Effectifs ETP" sourceCustom={`Gip-Mds / DSN`}>
+            <EffectifsEtp siret={siret} />
+          </Subcategory>
         </Subcategory>
         <Seveso siret={siret} />
         <Finess siret={siret} />
-        <DeveloppementEconomique siret={siret} />
       </div>
     </section>
   );

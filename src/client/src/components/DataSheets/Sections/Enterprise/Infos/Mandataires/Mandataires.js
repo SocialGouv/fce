@@ -3,6 +3,7 @@ import "./enterprise-mandataires.scss";
 import PropTypes from "prop-types";
 import React from "react";
 
+import { uniqueData } from "../../../../../../utils/entreprise/entreprise";
 import Value from "../../../../../shared/Value";
 import Table from "../../../SharedComponents/Table";
 
@@ -16,16 +17,16 @@ const Mandataires = ({ mandataires }) => {
         </tr>
       </thead>
       <tbody>
-        {mandataires.map((mandataire, index) => (
+        {uniqueData(mandataires).map((mandataire, index) => (
           <tr key={index}>
             <td>
-              <Value value={mandataire?.data?.fonction} />
+              <Value value={mandataire?.fonction} />
             </td>
             <td>
               <Value
                 value={
-                  mandataire?.data?.raison_sociale ||
-                  `${mandataire?.data?.nom} ${mandataire?.data?.prenom}`
+                  mandataire?.raison_sociale ||
+                  `${mandataire?.nom} ${mandataire?.prenom}`
                 }
               />
             </td>

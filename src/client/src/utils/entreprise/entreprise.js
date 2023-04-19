@@ -106,3 +106,35 @@ export const formatInteractions = pipe(
   sortBy("date"),
   reverse
 );
+const tableauEnMajuscules = (data) =>
+  data.map((objet) => {
+    const nouvelObjet = {};
+    for (const path in objet) {
+      nouvelObjet[path] = objet[path].toUpperCase();
+    }
+    return nouvelObjet;
+  });
+export const uniqueData = (data) => {
+  const dataToUpperCase = tableauEnMajuscules(data);
+  return Object.values(
+    dataToUpperCase
+      .sort((a, b) => {
+        if (a.raison_sociale < b.raison_sociale) {
+          return -1;
+        }
+        if (a.raison_sociale > b.raison_sociale) {
+          return 1;
+        }
+        return 0;
+      })
+      .reduce((acc, current) => {
+        const key = current?.raison_sociale
+          ? `${current.raison_sociale}_${current.fonction}`
+          : `${current.nom}_${current.prenom}_${current.fonction}`;
+        if (!acc[key]) {
+          acc[key] = current;
+        }
+        return acc;
+      }, {})
+  );
+};

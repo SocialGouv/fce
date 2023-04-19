@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { pipe, prop } from "lodash/fp";
+import { concat, pipe, prop } from "lodash/fp";
 
 import { BCE_CLIENT } from "../../../../../services/GraphQL/GraphQL";
 import { mapQueryResult } from "../../../../../utils/graphql/graphql";
@@ -15,16 +15,6 @@ const extraitsRcsInfogreffeQuery = gql`
       capital {
         montant
       }
-
-      # mandataires_sociaux {
-      #   data {
-      #     fonction
-      #     prenom
-      #     nom
-      #     raison_sociale
-      #   }
-      # }
-      # numero_tva_intracommunautaire
     }
   }
 `;
@@ -37,25 +27,33 @@ const tva_intracommunautaireQuery = gql`
 `;
 const mandataires_sociauxQuery = gql`
   query GetMandataires_sociaux($siren: String!) {
-    mandataires(siren: $siren) {
-      data {
-        fonction
-        prenom
-        nom
-        raison_sociale
-      }
+    fce_imr_rep_pm(where: { siren: { _eq: $siren } }) {
+      raison_sociale: denomination
+      fonction: qualite
+    }
+    fce_imr_rep_pp(where: { siren: { _eq: $siren } }) {
+      fonction: qualite
+      nom: nom_patronymique
+      prenom: prenoms
     }
   }
 `;
+export const useMandataireInfos = pipe(
+  (siren) =>
+    useQuery(mandataires_sociauxQuery, {
+      context: { clientName: BCE_CLIENT },
+      variables: { siren },
+    }),
+  mapQueryResult((data) => {
+    return concat(data.fce_imr_rep_pm, data.fce_imr_rep_pp);
+  })
+);
 
 export const useExtraitsRcsInfogreffe = pipe(
   (siren) => useQuery(extraitsRcsInfogreffeQuery, { variables: { siren } }),
   mapQueryResult(prop("extraitsRcsInfogreffe"))
 );
-export const useMandataireInfos = pipe(
-  (siren) => useQuery(mandataires_sociauxQuery, { variables: { siren } }),
-  mapQueryResult(prop("mandataires"))
-);
+
 export const useTva_intracommunautaire = pipe(
   (siren) => useQuery(tva_intracommunautaireQuery, { variables: { siren } }),
   mapQueryResult(prop("tva_intracommunautaire"))

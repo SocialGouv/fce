@@ -106,3 +106,5 @@ export const formatInteractions = pipe(
   sortBy("date"),
   reverse
 );
+
+export const getMesure = prop("mesure");

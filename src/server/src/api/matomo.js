@@ -59,10 +59,11 @@ router.get("/matomo/:months/:startDate", async (req, res) => {
   });
 
   try {
+    console.log(process.env.MATOMO_ID_SITE);
+    console.log(process.env.MATOMO_TOKEN_AUTH);
     const satisfactionRatesResponse = await feedback.getSatisfactionRates(
       startDate
     );
-
     if (!satisfactionRatesResponse) {
       throw Error("Error: UsersFeedback get query have failed");
     }
@@ -83,6 +84,7 @@ router.get("/matomo/:months/:startDate", async (req, res) => {
       Math.round(totalRate / satisfactionRates.length);
 
     const stats = await axios.get(`${process.env.MATOMO_URL}?${statsParams}`);
+
     const users = await axios.get(`${process.env.MATOMO_URL}?${usersParams}`);
 
     res.send({

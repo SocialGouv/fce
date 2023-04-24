@@ -1,3 +1,10 @@
+# [27.59.0](https://github.com/SocialGouv/fce/compare/v27.58.0...v27.59.0) (2023-04-24)
+
+
+### Features
+
+* fix matomo token ([#268](https://github.com/SocialGouv/fce/issues/268)) ([ce89d43](https://github.com/SocialGouv/fce/commit/ce89d43b82a32987aa7103cd536e70a14fffb887))
+
 # [27.58.0](https://github.com/SocialGouv/fce/compare/v27.57.0...v27.58.0) (2023-04-17)
 
 

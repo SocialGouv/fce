@@ -34,25 +34,19 @@ const EffectifsEtp = ({ siret }) => {
       {displayedEffectifsCount === MIN_EFFECTIFS_COUNT && (
         <>
           <LoadableContent loading={loading} error={error}>
-            <Data
-              hasNumberFormat={true}
-              name={`Effectif ETP ${
-                effectifsMensuels[0]?.periode_concerne &&
-                getDateMonthName(effectifsMensuels[0]?.periode_concerne)
-              } ${
-                effectifsMensuels[0]?.periode_concerne &&
-                getDateYear(effectifsMensuels[0]?.periode_concerne)
-              }`}
-              nonEmptyValue=""
-              sourceCustom={`Gip-Mds / DSN ${
-                effectifsMensuels[0]?.periode_concerne &&
-                getDateMonthName(effectifsMensuels[0]?.periode_concerne)
-              } ${
-                effectifsMensuels[0]?.periode_concerne &&
-                getDateYear(effectifsMensuels[0]?.periode_concerne)
-              }`}
-              value={effectifsMensuels[0]?.effectif}
-            />
+            {effectifsMensuels && (
+              <Data
+                hasNumberFormat={true}
+                name={`Effectif ETP ${getDateMonthName(
+                  effectifsMensuels[0]?.periode_concerne
+                )} ${getDateYear(effectifsMensuels[0]?.periode_concerne)}`}
+                nonEmptyValue=""
+                sourceCustom={`Gip-Mds / DSN ${getDateMonthName(
+                  effectifsMensuels[0]?.periode_concerne
+                )} ${getDateYear(effectifsMensuels[0]?.periode_concerne)}`}
+                value={effectifsMensuels[0]?.effectif}
+              />
+            )}
           </LoadableContent>
           <AllEffectifsEtp
             text="Afficher tous les effectifs ETP"

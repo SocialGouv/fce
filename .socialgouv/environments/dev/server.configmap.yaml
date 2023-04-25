@@ -12,7 +12,7 @@ data:
   JWT_ELASTIC_CLIENT_ADDRESS: http://elasticsearch:9200/
 
   #MATOMO
-  MATOMO_ID_SITE: "4"
+  MATOMO_ID_SITE: "8"
   MATOMO_URL: https://matomo.fabrique.social.gouv.fr
 
   #Strapi

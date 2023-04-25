@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import { concat, pipe, prop } from "lodash/fp";
+import { pipe, prop } from "lodash/fp";
 
 import { BCE_CLIENT } from "../../../../../services/GraphQL/GraphQL";
 import { mapQueryResult } from "../../../../../utils/graphql/graphql";
@@ -27,14 +27,13 @@ const tva_intracommunautaireQuery = gql`
 `;
 const mandataires_sociauxQuery = gql`
   query GetMandataires_sociaux($siren: String!) {
-    fce_imr_rep_pm(where: { siren: { _eq: $siren } }) {
-      raison_sociale: denomination
-      fonction: qualite
-    }
-    fce_imr_rep_pp(where: { siren: { _eq: $siren } }) {
-      fonction: qualite
+    fce_imr_rep_avec_classment(
+      where: { siren: { _eq: $siren } }
+      order_by: { classement: asc }
+    ) {
       nom: nom_patronymique
-      prenom: prenoms
+      fonction: qualite
+      classement
     }
   }
 `;
@@ -44,9 +43,7 @@ export const useMandataireInfos = pipe(
       context: { clientName: BCE_CLIENT },
       variables: { siren },
     }),
-  mapQueryResult((data) => {
-    return concat(data.fce_imr_rep_pm, data.fce_imr_rep_pp);
-  })
+  mapQueryResult(prop("fce_imr_rep_avec_classment"))
 );
 
 export const useExtraitsRcsInfogreffe = pipe(

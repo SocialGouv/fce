@@ -36,14 +36,24 @@ const EffectifsEtp = ({ siret }) => {
           <LoadableContent loading={loading} error={error}>
             <Data
               hasNumberFormat={true}
-              name={`Effectif ETP ${getDateMonthName(
-                effectifsMensuels[0]?.periode_concerne
-              )} ${getDateYear(effectifsMensuels[0]?.periode_concerne)}`}
+              name={`Effectif ETP ${
+                effectifsMensuels[0]?.periode_concerne &&
+                getDateMonthName(effectifsMensuels[0]?.periode_concerne)
+              } ${
+                effectifsMensuels[0]?.periode_concerne &&
+                getDateYear(effectifsMensuels[0]?.periode_concerne)
+              }`}
               nonEmptyValue=""
-              sourceCustom={`Gip-Mds / DSN ${getDateMonthName(
-                effectifsMensuels[0]?.periode_concerne
-              )} ${getDateYear(effectifsMensuels[0]?.periode_concerne)}`}
-              value={effectifsMensuels[0]?.effectif}
+              sourceCustom={`Gip-Mds / DSN ${
+                effectifsMensuels[0]?.periode_concerne &&
+                getDateMonthName(effectifsMensuels[0]?.periode_concerne)
+              } ${
+                effectifsMensuels[0]?.periode_concerne &&
+                getDateYear(effectifsMensuels[0]?.periode_concerne)
+              }`}
+              value={
+                effectifsMensuels[0]?.effectif && effectifsMensuels[0]?.effectif
+              }
             />
           </LoadableContent>
           <AllEffectifsEtp

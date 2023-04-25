@@ -51,9 +51,7 @@ const EffectifsEtp = ({ siret }) => {
                 effectifsMensuels[0]?.periode_concerne &&
                 getDateYear(effectifsMensuels[0]?.periode_concerne)
               }`}
-              value={
-                effectifsMensuels[0]?.effectif && effectifsMensuels[0]?.effectif
-              }
+              value={effectifsMensuels[0]?.effectif}
             />
           </LoadableContent>
           <AllEffectifsEtp

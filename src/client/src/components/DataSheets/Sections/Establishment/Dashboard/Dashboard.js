@@ -112,7 +112,6 @@ const Dashboard = ({ siret }) => {
     data?.psi_siren[0]?.salaries_annee_courante +
       data?.psi_siren[0]?.salaries_annee_precedente
   );
-
   const isEstablishmentWithPsi = Boolean(establishmentPsiData);
 
   return (
@@ -141,12 +140,17 @@ const Dashboard = ({ siret }) => {
             smallText={true}
             value={
               <>
-                {activity.hasPse && <div>PSE-</div>}
-                {activity.hasRcc && <div>RCC-</div>}
-                {activity.hasLice &&
-                  activity.liceTypes.map((type) => (
-                    <div key={type}>{type}-</div>
-                  ))}
+                {/* <div>
+                  {!activity.hasPse && "PSE-"}
+                  {!activity.hasRcc && "RCC-"}
+                </div> */}
+                {activity.hasLice && (
+                  <div>
+                    {!activity.hasPse && "PSE-"}
+                    {!activity.hasRcc && "RCC-"}
+                    {activity.liceTypes?.join("-")}
+                  </div>
+                )}
                 {activity.partialActivity && <div>Activité partielle</div>}
               </>
             }

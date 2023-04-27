@@ -140,17 +140,12 @@ const Dashboard = ({ siret }) => {
             smallText={true}
             value={
               <>
-                {/* <div>
-                  {!activity.hasPse && "PSE-"}
-                  {!activity.hasRcc && "RCC-"}
-                </div> */}
-                {activity.hasLice && (
-                  <div>
-                    {!activity.hasPse && "PSE-"}
-                    {!activity.hasRcc && "RCC-"}
-                    {activity.liceTypes?.join("-")}
-                  </div>
-                )}
+                <div>
+                  {activity.hasPse && "PSE-"}
+                  {activity.hasRcc && "RCC-"}
+                  {activity.hasLice && activity.liceTypes?.join("-")}
+                </div>
+
                 {activity.partialActivity && <div>Activité partielle</div>}
               </>
             }

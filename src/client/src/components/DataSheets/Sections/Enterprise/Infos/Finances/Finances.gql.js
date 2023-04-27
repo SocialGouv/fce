@@ -9,6 +9,7 @@ const financeQuery = gql`
     fce_finance_indicateurs(
       where: { siren: { _eq: $siren } }
       order_by: { date_cloture_exercice: desc }
+      limit: 5
     ) {
       EBIT
       Marge_brute
@@ -29,4 +30,20 @@ export const useFinanceData = pipe(
       variables: { siren },
     }),
   mapQueryResult(prop("fce_finance_indicateurs"))
+);
+
+const financeApiEntrepriseQuery = gql`
+  query GetFinanceApiEntreprise($siret: String!) {
+    finance(siret: $siret) {
+      data {
+        ca: chiffre_affaires
+        date_fin_exercice
+      }
+    }
+  }
+`;
+
+export const useFinanceDataApiEntreprise = pipe(
+  (siret) => useQuery(financeApiEntrepriseQuery, { variables: { siret } }),
+  mapQueryResult(prop("finance"))
 );

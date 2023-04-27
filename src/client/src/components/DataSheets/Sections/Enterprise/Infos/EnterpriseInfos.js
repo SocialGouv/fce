@@ -213,7 +213,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
           subtitle="Données financières"
           sourceSi={"Comptes Annuels"}
         >
-          <Finances siren={siren} />
+          <Finances siren={siren} siret={getSiret(siegeSocial)} />
         </Subcategory>
         <Subcategory
           subtitle="Mandataires sociaux"

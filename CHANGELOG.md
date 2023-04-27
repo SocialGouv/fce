@@ -1,3 +1,10 @@
+# [27.61.0](https://github.com/SocialGouv/fce/compare/v27.60.0...v27.61.0) (2023-04-27)
+
+
+### Features
+
+* fix matomo dev ([#271](https://github.com/SocialGouv/fce/issues/271)) ([90d3a50](https://github.com/SocialGouv/fce/commit/90d3a5069fad2a1b463bf536d36120491d9cc042))
+
 # [27.60.0](https://github.com/SocialGouv/fce/compare/v27.59.0...v27.60.0) (2023-04-25)
 
 

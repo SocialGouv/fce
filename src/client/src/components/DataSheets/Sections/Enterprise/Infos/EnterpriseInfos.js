@@ -84,7 +84,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
     effectifsMensuels.map(({ periode_concerne, effectif }) => (
       <Data
         key={periode_concerne}
-        name={`Effectif ETP`}
+        name={`Effectif ETP annuel`}
         value={effectif}
         sourceCustom={`Gip-Mds / DSN ${getDateMonthName(
           periode_concerne

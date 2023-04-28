@@ -8,6 +8,7 @@ const PlanRelanceQuery = gql`
   query GetPlanRelance($siren: String!) {
     fce_planrelance(where: { siren: { _eq: $siren } }) {
       mesure
+      date: mise_a_jour
     }
   }
 `;
@@ -18,5 +19,5 @@ export const usePlanRelanceBySiren = pipe(
       context: { clientName: BCE_CLIENT },
       variables: { siren },
     }),
-  mapQueryResult(prop("fce_planrelance[0]"))
+  mapQueryResult(prop("fce_planrelance"))
 );

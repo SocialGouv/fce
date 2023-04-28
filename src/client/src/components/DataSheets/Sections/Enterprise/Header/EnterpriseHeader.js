@@ -55,7 +55,7 @@ const EnterpriseHeader = ({ enterprise, resetSearch, setSearchTerm }) => {
               <Value value={formatSiren(getSiren(enterprise))} empty="" />
             </span>
           </div>
-          <div className="column is-8 data-sheet-header__enterprise-button">
+          <div className="column is-4 data-sheet-header__enterprise-button">
             <LinkButton
               value=""
               icon={faArrowRight}
@@ -64,6 +64,11 @@ const EnterpriseHeader = ({ enterprise, resetSearch, setSearchTerm }) => {
             >
               Voir le siège social
             </LinkButton>
+          </div>
+          <div className="columns is-4 data-sheet-header__enterprise-external-link">
+            <span className="column">
+              Voir sur <AnnuaireEntreprisesLink siren={getSiren(enterprise)} />
+            </span>
           </div>
         </div>
 
@@ -98,7 +103,7 @@ const EnterpriseHeader = ({ enterprise, resetSearch, setSearchTerm }) => {
             </div>
           </div>
 
-          <div className="column is-8 data-sheet-header__enterprise-button">
+          <div className="column is-4 data-sheet-header__enterprise-button">
             <LinkButton
               icon={faArrowRight}
               buttonClasses={["is-secondary", "is-outlined"]}
@@ -113,11 +118,6 @@ const EnterpriseHeader = ({ enterprise, resetSearch, setSearchTerm }) => {
           </div>
         </div>
 
-        <div className="columns data-sheet-header__enterprise-external-link">
-          <span className="column">
-            Voir sur <AnnuaireEntreprisesLink siren={getSiren(enterprise)} />
-          </span>
-        </div>
         <div className="columns data-sheet-header__enterprise-external-link">
           <span className="column">
             <a

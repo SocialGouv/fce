@@ -37,9 +37,7 @@ const EffectifsEtp = ({ siret }) => {
             {effectifsMensuels && (
               <Data
                 hasNumberFormat={true}
-                name={`Effectif ETP ${getDateMonthName(
-                  effectifsMensuels[0]?.periode_concerne
-                )} ${getDateYear(effectifsMensuels[0]?.periode_concerne)}`}
+                name={"Effectif ETP"}
                 nonEmptyValue=""
                 sourceCustom={`Gip-Mds / DSN ${getDateMonthName(
                   effectifsMensuels[0]?.periode_concerne

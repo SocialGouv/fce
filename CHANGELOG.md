@@ -1,3 +1,10 @@
+# [27.62.0](https://github.com/SocialGouv/fce/compare/v27.61.0...v27.62.0) (2023-05-02)
+
+
+### Features
+
+* etablissement effectif tables+ delete rebrique developpement ec… ([#263](https://github.com/SocialGouv/fce/issues/263)) ([98ec883](https://github.com/SocialGouv/fce/commit/98ec8833d074d2bc56e160b7ec7728a5cf09a70d))
+
 # [27.61.0](https://github.com/SocialGouv/fce/compare/v27.60.0...v27.61.0) (2023-04-27)
 
 

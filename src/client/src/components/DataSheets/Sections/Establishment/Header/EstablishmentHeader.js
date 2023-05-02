@@ -1,4 +1,8 @@
-import { faCircle, faSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircle,
+  faFileDownload,
+  faSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
@@ -95,6 +99,18 @@ const EstablishmentHeader = ({ siret }) => {
         </div>
       </div>
       <Dashboard siret={siret} />
+      <div className="columns data-sheet-header__enterprise-external-link">
+        <span className="column">
+          <a
+            href={`https://api.avis-situation-sirene.insee.fr/identification/pdf//${siret}`}
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            Télécharger l’avis de situation SIRENE{" "}
+            <FontAwesomeIcon icon={faFileDownload} />
+          </a>
+        </span>
+      </div>
     </section>
   );
 };

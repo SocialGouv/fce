@@ -1,3 +1,10 @@
+# [27.65.0](https://github.com/SocialGouv/fce/compare/v27.64.0...v27.65.0) (2023-05-02)
+
+
+### Features
+
+* Get mandataires data from BCE ([#264](https://github.com/SocialGouv/fce/issues/264)) ([01b2dd7](https://github.com/SocialGouv/fce/commit/01b2dd733998ed2c941725a79c85ee7f0ab3d0f1))
+
 # [27.64.0](https://github.com/SocialGouv/fce/compare/v27.63.0...v27.64.0) (2023-05-02)
 
 

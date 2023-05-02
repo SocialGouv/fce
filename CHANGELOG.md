@@ -1,3 +1,10 @@
+# [27.63.0](https://github.com/SocialGouv/fce/compare/v27.62.0...v27.63.0) (2023-05-02)
+
+
+### Features
+
+* add link Egapo + avis situation siren + justificatif immatricul… ([#262](https://github.com/SocialGouv/fce/issues/262)) ([0fc1b54](https://github.com/SocialGouv/fce/commit/0fc1b542633ea9959532c15bd1a379c078e61681))
+
 # [27.62.0](https://github.com/SocialGouv/fce/compare/v27.61.0...v27.62.0) (2023-05-02)
 
 

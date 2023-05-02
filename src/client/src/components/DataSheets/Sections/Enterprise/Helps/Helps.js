@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import Apprentissage from "./Subcategory/Apprentissage";
+import PlanDeRelance from "./Subcategory/PlanDeRelance";
 
 const Helps = ({ enterprise }) => {
   return (
@@ -14,8 +15,10 @@ const Helps = ({ enterprise }) => {
         </span>
         <h2 className="title">Aides</h2>
       </div>
+
       <div className="section-datas">
         <Apprentissage entreprise={enterprise} />
+        <PlanDeRelance entreprise={enterprise} />
       </div>
     </section>
   );

@@ -3,11 +3,11 @@ import React from "react";
 
 import AllEffectifsEtpButtonView from "../../components/DataSheets/Sections/SharedComponents/AllEffectifsButton";
 
-const AllEffectifsEtpButton = ({ onClick, loading }) => {
+const AllEffectifsEtpButton = ({ onClick, loading, text }) => {
   return (
     <AllEffectifsEtpButtonView
       getAllEffectifs={onClick}
-      value="Afficher tous les effectifs ETP"
+      value={text}
       isLoading={loading}
     />
   );
@@ -16,6 +16,7 @@ const AllEffectifsEtpButton = ({ onClick, loading }) => {
 AllEffectifsEtpButton.propTypes = {
   loading: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 export default AllEffectifsEtpButton;

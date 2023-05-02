@@ -43,6 +43,11 @@ const OrganismeFormation = ({ siret }) => {
             <OrganismeFormationEffectifs
               organismes_formation={data?.organismes_formation}
             />
+            {showMore && (
+              <ButtonLink onClick={() => setShowMore(false)}>
+                &gt; Voir moins de détails
+              </ButtonLink>
+            )}
           </>
         )}
       </LoadableContent>

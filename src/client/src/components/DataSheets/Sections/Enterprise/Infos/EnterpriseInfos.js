@@ -129,9 +129,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
               establishmentCount - activeEstablishmentCount
             } fermé(s)`}
           />
-
           <Association siret={getSiret(siegeSocial)} />
-
           <Data
             name="Tranche d'effectif"
             value={trancheEffectifs && dashboardSizeRanges[trancheEffectifs]}
@@ -144,6 +142,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             <Data
               name="Effectif physique"
               value={effectifsPhysique}
+              hasNumberFormat={true}
               sourceSi={"DSN"}
             />
           </LoadableContent>
@@ -155,8 +154,16 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
           </LoadableContent>
           {effectifsMensuelsLimit === MIN_EFFECTIFS_MENSUELS && (
             <AllEffectifsEtpButton
+              text="Afficher tous les effectifs ETP"
               loading={effectifsMensuelsLoading}
               onClick={() => setEffectifsMensuelsLimit(MAX_EFFECTIFS_MENSUELS)}
+            />
+          )}{" "}
+          {effectifsMensuelsLimit === MAX_EFFECTIFS_MENSUELS && (
+            <AllEffectifsEtpButton
+              text="Afficher moins d'effectifs ETP"
+              loading={effectifsMensuelsLoading}
+              onClick={() => setEffectifsMensuelsLimit(MIN_EFFECTIFS_MENSUELS)}
             />
           )}
         </Subcategory>

@@ -106,3 +106,7 @@ export const formatInteractions = pipe(
   sortBy("date"),
   reverse
 );
+export const formatUpperCase = (data) => {
+  if (!data) return "";
+  return data.toUpperCase();
+};

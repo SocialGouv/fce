@@ -7,6 +7,7 @@ import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Data from "../../SharedComponents/Data/Data";
 import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
+import EffectifEtpGraph from "./EffectifsEtpGraph";
 
 const MAX_EFFECTIF_COUNT = 24;
 
@@ -42,6 +43,7 @@ const EffectifsEtp = ({ siret }) => {
             value={effectif}
           />
         ))}
+        <EffectifEtpGraph data={effectifsMensuels} />
       </LoadableContent>
       {showEffectifEtpButton && (
         <AllEffectifsEtp

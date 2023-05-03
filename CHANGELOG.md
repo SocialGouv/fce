@@ -1,3 +1,10 @@
+# [27.66.0](https://github.com/SocialGouv/fce/compare/v27.65.0...v27.66.0) (2023-05-03)
+
+
+### Features
+
+* work on ca finance indicator ([#269](https://github.com/SocialGouv/fce/issues/269)) ([2f81839](https://github.com/SocialGouv/fce/commit/2f81839d20977bb1cd631c950e159983367399c8))
+
 # [27.65.0](https://github.com/SocialGouv/fce/compare/v27.64.0...v27.65.0) (2023-05-02)
 
 

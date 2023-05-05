@@ -15,16 +15,6 @@ const extraitsRcsInfogreffeQuery = gql`
       capital {
         montant
       }
-
-      # mandataires_sociaux {
-      #   data {
-      #     fonction
-      #     prenom
-      #     nom
-      #     raison_sociale
-      #   }
-      # }
-      # numero_tva_intracommunautaire
     }
   }
 `;
@@ -37,25 +27,30 @@ const tva_intracommunautaireQuery = gql`
 `;
 const mandataires_sociauxQuery = gql`
   query GetMandataires_sociaux($siren: String!) {
-    mandataires(siren: $siren) {
-      data {
-        fonction
-        prenom
-        nom
-        raison_sociale
-      }
+    fce_imr_rep_avec_classment(
+      where: { siren: { _eq: $siren } }
+      order_by: { classement: asc }
+    ) {
+      nom: nom_patronymique
+      fonction: qualite
+      classement
     }
   }
 `;
+export const useMandataireInfos = pipe(
+  (siren) =>
+    useQuery(mandataires_sociauxQuery, {
+      context: { clientName: BCE_CLIENT },
+      variables: { siren },
+    }),
+  mapQueryResult(prop("fce_imr_rep_avec_classment"))
+);
 
 export const useExtraitsRcsInfogreffe = pipe(
   (siren) => useQuery(extraitsRcsInfogreffeQuery, { variables: { siren } }),
   mapQueryResult(prop("extraitsRcsInfogreffe"))
 );
-export const useMandataireInfos = pipe(
-  (siren) => useQuery(mandataires_sociauxQuery, { variables: { siren } }),
-  mapQueryResult(prop("mandataires"))
-);
+
 export const useTva_intracommunautaire = pipe(
   (siren) => useQuery(tva_intracommunautaireQuery, { variables: { siren } }),
   mapQueryResult(prop("tva_intracommunautaire"))

@@ -9,7 +9,6 @@ import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Subcategory from "../../SharedComponents/Subcategory";
 import { useSuccessionData } from "./Activite.gql";
-import DeveloppementEconomique from "./DeveloppementEconomique";
 import EffectifsDsn from "./EffectifsDsn";
 import EffectifsEtp from "./EffectifsEtp";
 import Finess from "./Finess";
@@ -45,14 +44,17 @@ const Activite = ({ siret }) => {
             )}
           </LoadableContent>
         </Subcategory>
-        <Subcategory className="effectifs-establishment" subtitle="Effectifs">
+        <Subcategory
+          className="effectifs-establishment"
+          subtitle="Effectifs"
+          displayCharts
+        >
           <TrancheEffectifsInsee siret={siret} />
           <EffectifsDsn siret={siret} />
           <EffectifsEtp siret={siret} />
         </Subcategory>
         <Seveso siret={siret} />
         <Finess siret={siret} />
-        <DeveloppementEconomique siret={siret} />
       </div>
     </section>
   );

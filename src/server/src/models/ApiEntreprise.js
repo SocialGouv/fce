@@ -18,11 +18,6 @@ class ApiEntreprise {
       });
 
       this.request.interceptors.response.use((response) => {
-        console.log(
-          `${response.config.url} : ${
-            Date.now() - response.config.meta.requestStartedAt
-          } ms`
-        );
         return response;
       });
     }

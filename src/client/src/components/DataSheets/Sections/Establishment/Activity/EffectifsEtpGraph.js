@@ -1,70 +1,117 @@
-import Chartjs from "chart.js";
+import {
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from "chart.js";
 import PropTypes from "prop-types";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Line } from "react-chartjs-2";
 
-const backgroundColors = [
-  "rgba(41, 128, 185, 0.25)",
-  "rgba(41, 128, 185, 0.30)",
-  "rgba(41, 128, 185, 0.35)",
-  "rgba(41, 128, 185, 0.40)",
-  "rgba(41, 128, 185, 0.45)",
-  "rgba(41, 128, 185, 0.50)",
-  "rgba(41, 128, 185, 0.55)",
-  "rgba(41, 128, 185, 0.60)",
-  "rgba(41, 128, 185, 0.65)",
-  "rgba(41, 128, 185, 0.70)",
-  "rgba(41, 128, 185, 0.75)",
-  "rgba(41, 128, 185, 0.80)",
-  "rgba(41, 128, 185, 0.85)",
-];
+import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
+import { useDsnEffectif } from "./EffectifsDsn.gql";
+import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
+import { getCommunDates } from "./EffectifsHelper";
 
-const EffectifEtpGraph = ({ data }) => {
-  const canvasRef = useRef(null);
-  const [persistData, setPersistData] = useState(null);
-
-  if (!persistData) {
-    setPersistData(data);
-  }
-
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+const RANGE = 12;
+const EffectifEtpGraph = ({ siret }) => {
+  const [range, setRange] = useState(RANGE);
+  const [chartData, setChartData] = useState([]);
+  const { data: etp_data } = useEffectifsEtablissementsEtpData(
+    siret,
+    {
+      effectifsMaxCount: range,
+    },
+    { periode_concerne: "asc" },
+    [range]
+  );
+  const { data: dsn_data } = useDsnEffectif(
+    siret,
+    {
+      limit: range,
+    },
+    { mois: "asc" }
+  );
   useEffect(() => {
-    if (canvasRef?.current) {
-      new Chartjs(canvasRef.current, {
-        data: {
-          datasets: [
-            {
-              backgroundColor: backgroundColors,
-              borderColor: backgroundColors,
-              borderWidth: 2,
-              data: persistData.map(({ periode_concerne, effectif }) => {
-                return {
-                  y: effectif,
-                  x: periode_concerne,
-                };
-              }),
-              label: "Effectif Etp par année",
-            },
-          ],
-          labels: persistData.map(({ periode_concerne }) => periode_concerne),
-        },
-        options: {
-          scales: {
-            xAxes: [
-              {
-                stacked: true,
-              },
-            ],
-          },
-        },
-        type: "line",
-      });
-    }
-  }, [persistData, canvasRef]);
+    const data = getCommunDates(etp_data, dsn_data);
+    setChartData(data);
+  }, [etp_data, dsn_data]);
 
-  return <canvas ref={canvasRef} height={"90"} />;
+  const dataChart = useMemo(() => {
+    return {
+      datasets: [
+        {
+          backgroundColor: "#2980b9",
+          borderColor: "#2980b9",
+          borderWidth: 3,
+          data: chartData?.map((obj) => obj?.effectif),
+          label: "Effectif ETP",
+        },
+        {
+          backgroundColor: "#e74c3c",
+          borderColor: "#e74c3c",
+          borderWidth: 3,
+          data: chartData?.map((obj) => obj?.eff),
+          label: "Effectif DSN",
+        },
+      ],
+      // labels: etp_data?.map((obj) => setYearMonthFormat(obj?.periode_concerne)),
+      labels: chartData?.map((obj) => obj?.date),
+    };
+  }, [chartData]);
+  console.log(chartData);
+  const options = {
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Chart.js Line Chart",
+      },
+    },
+    responsive: true,
+  };
+  const onSelectChange = (event) => {
+    setRange(parseInt(event.target.value));
+  };
+  return (
+    <>
+      <LoadableContent>
+        <div>
+          <select value={range} onChange={onSelectChange}>
+            <option value={100}>{"6 mois"}</option>
+            <option value={12}>{"1 an"}</option>
+            <option value={24}>{"2 ans"}</option>
+            <option value={48}>{"3 ans"}</option>
+          </select>
+        </div>
+        {chartData?.length > 0 ? (
+          <Line options={options} data={dataChart} />
+        ) : (
+          <div>No data available.</div>
+        )}
+      </LoadableContent>
+    </>
+  );
 };
 
 EffectifEtpGraph.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  siret: PropTypes.string.isRequired,
 };
 
-export default EffectifEtpGraph;
+export default renderIfSiret(EffectifEtpGraph);

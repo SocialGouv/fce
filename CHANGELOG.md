@@ -1,3 +1,38 @@
+# [27.66.0](https://github.com/SocialGouv/fce/compare/v27.65.0...v27.66.0) (2023-05-03)
+
+
+### Features
+
+* work on ca finance indicator ([#269](https://github.com/SocialGouv/fce/issues/269)) ([2f81839](https://github.com/SocialGouv/fce/commit/2f81839d20977bb1cd631c950e159983367399c8))
+
+# [27.65.0](https://github.com/SocialGouv/fce/compare/v27.64.0...v27.65.0) (2023-05-02)
+
+
+### Features
+
+* Get mandataires data from BCE ([#264](https://github.com/SocialGouv/fce/issues/264)) ([01b2dd7](https://github.com/SocialGouv/fce/commit/01b2dd733998ed2c941725a79c85ee7f0ab3d0f1))
+
+# [27.64.0](https://github.com/SocialGouv/fce/compare/v27.63.0...v27.64.0) (2023-05-02)
+
+
+### Features
+
+* add plan relance ([#265](https://github.com/SocialGouv/fce/issues/265)) ([d659232](https://github.com/SocialGouv/fce/commit/d65923222e9433fc7c712aa9610c808d423c0b18))
+
+# [27.63.0](https://github.com/SocialGouv/fce/compare/v27.62.0...v27.63.0) (2023-05-02)
+
+
+### Features
+
+* add link Egapo + avis situation siren + justificatif immatricul… ([#262](https://github.com/SocialGouv/fce/issues/262)) ([0fc1b54](https://github.com/SocialGouv/fce/commit/0fc1b542633ea9959532c15bd1a379c078e61681))
+
+# [27.62.0](https://github.com/SocialGouv/fce/compare/v27.61.0...v27.62.0) (2023-05-02)
+
+
+### Features
+
+* etablissement effectif tables+ delete rebrique developpement ec… ([#263](https://github.com/SocialGouv/fce/issues/263)) ([98ec883](https://github.com/SocialGouv/fce/commit/98ec8833d074d2bc56e160b7ec7728a5cf09a70d))
+
 # [27.61.0](https://github.com/SocialGouv/fce/compare/v27.60.0...v27.61.0) (2023-04-27)
 
 

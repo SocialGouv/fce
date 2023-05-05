@@ -5,10 +5,14 @@ import { BCE_CLIENT } from "../../../../../services/GraphQL/GraphQL";
 import { mapQueryResult } from "../../../../../utils/graphql/graphql";
 
 const effectifsDsnQuery = gql`
-  query getEtablissementsEffectifDsn($siret: String!, $limit: Int) {
+  query getEtablissementsEffectifDsn(
+    $siret: String!
+    $order_by: [fce_etablissements_dsn_effectif_order_by!]
+    $limit: Int
+  ) {
     fce_etablissements_dsn_effectif(
       where: { siret: { _eq: $siret } }
-      order_by: { mois: desc }
+      order_by: $order_by
       limit: $limit
     ) {
       siret
@@ -27,12 +31,12 @@ const effectifsDsnQuery = gql`
 `;
 
 export const useDsnEffectif = pipe(
-  (siret, { limit }) =>
+  (siret, { limit }, order_by = { mois: "desc" }) =>
     useQuery(effectifsDsnQuery, {
       context: {
         clientName: BCE_CLIENT,
       },
-      variables: { limit, siret },
+      variables: { limit, order_by, siret },
     }),
   mapQueryResult(prop("fce_etablissements_dsn_effectif"))
 );

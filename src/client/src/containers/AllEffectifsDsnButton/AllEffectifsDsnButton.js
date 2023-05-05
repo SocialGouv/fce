@@ -3,11 +3,11 @@ import React from "react";
 
 import AllEffectifsDsnButtonView from "../../components/DataSheets/Sections/SharedComponents/AllEffectifsButton";
 
-const AllEffectifsDsnButton = ({ onClick, loading }) => {
+const AllEffectifsDsnButton = ({ text, onClick, loading }) => {
   return (
     <AllEffectifsDsnButtonView
       getAllEffectifs={onClick}
-      value="Afficher le détail et l'historique des effectifs"
+      value={text}
       isLoading={loading}
     />
   );
@@ -16,6 +16,7 @@ const AllEffectifsDsnButton = ({ onClick, loading }) => {
 AllEffectifsDsnButton.propTypes = {
   loading: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 export default AllEffectifsDsnButton;

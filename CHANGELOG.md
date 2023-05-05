@@ -1,3 +1,10 @@
+# [27.67.0](https://github.com/SocialGouv/fce/compare/v27.66.0...v27.67.0) (2023-05-05)
+
+
+### Features
+
+* activate maintenance ([#272](https://github.com/SocialGouv/fce/issues/272)) ([0fb808a](https://github.com/SocialGouv/fce/commit/0fb808abe96d98e3f2cef543550e6074703ebeec))
+
 # [27.66.0](https://github.com/SocialGouv/fce/compare/v27.65.0...v27.66.0) (2023-05-03)
 
 

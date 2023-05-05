@@ -116,7 +116,7 @@ const globalConfig = {
     accords: "https://www.legifrance.gouv.fr/liste/acco?siret=",
     idcc: "https://www.legifrance.gouv.fr/liste/idcc?idcc_suggest=",
   },
-  maintenanceMode: /*process.env.REACT_APP_MAINTENANCE === "true"*/ true,
+  maintenanceMode: /*process.env.REACT_APP_MAINTENANCE === "true"*/ false,
   pgApi: {
     timeout: 10000,
   },

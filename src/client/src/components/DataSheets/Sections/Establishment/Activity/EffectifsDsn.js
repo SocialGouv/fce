@@ -11,6 +11,7 @@ import { useDsnEffectif } from "./EffectifsDsn.gql";
 
 const EXPANDED_MAX_EFFECTIFS = 12;
 const COLLAPSED_MAX_EFFECTIFS = 1;
+const START_DATE = "2018-01";
 
 const EffectifsDsn = ({ siret }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -18,9 +19,14 @@ const EffectifsDsn = ({ siret }) => {
     loading,
     error,
     data: effectifs,
-  } = useDsnEffectif(siret, {
-    limit: isExpanded ? EXPANDED_MAX_EFFECTIFS : COLLAPSED_MAX_EFFECTIFS,
-  });
+  } = useDsnEffectif(
+    siret,
+    {
+      limit: isExpanded ? EXPANDED_MAX_EFFECTIFS : COLLAPSED_MAX_EFFECTIFS,
+    },
+    { mois: "desc" },
+    START_DATE
+  );
 
   return (
     <LoadableContent loading={loading} error={error}>

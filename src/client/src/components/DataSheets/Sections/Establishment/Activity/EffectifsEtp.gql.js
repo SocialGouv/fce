@@ -9,9 +9,10 @@ const effectifsEtablissementsEtpQuery = gql`
     $siret: String!
     $effectifsMaxCount: Int
     $order_by: [fce_etablissements_etp_effectif_order_by!]
+    $start_date: date
   ) {
     fce_etablissements_etp_effectif(
-      where: { siret: { _eq: $siret } }
+      where: { siret: { _eq: $siret }, periode_concerne: { _gte: $start_date } }
       order_by: $order_by
       limit: $effectifsMaxCount
     ) {
@@ -26,11 +27,17 @@ export const useEffectifsEtablissementsEtpData = pipe(
   (
     siret,
     { effectifsMaxCount } = {},
-    order_by = { periode_concerne: "desc" }
+    order_by = { periode_concerne: "desc" },
+    start_date
   ) =>
     useQuery(effectifsEtablissementsEtpQuery, {
       context: { clientName: BCE_CLIENT },
-      variables: { effectifsMaxCount, order_by, siret },
+      variables: {
+        effectifsMaxCount,
+        order_by,
+        siret,
+        start_date,
+      },
     }),
   mapQueryResult(prop("fce_etablissements_etp_effectif"))
 );

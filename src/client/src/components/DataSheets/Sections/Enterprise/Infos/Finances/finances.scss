@@ -5,3 +5,12 @@
         margin-top: $spacing-2;
     }
 }
+.chart-wrapper{
+    flex-grow: 1;
+  margin-top:$spacing-5 ;
+  height:20rem ;
+  display: flex;
+  align-items:center ;
+  justify-content: center;
+
+}

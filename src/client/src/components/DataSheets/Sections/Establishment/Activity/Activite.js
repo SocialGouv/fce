@@ -44,11 +44,7 @@ const Activite = ({ siret }) => {
             )}
           </LoadableContent>
         </Subcategory>
-        <Subcategory
-          className="effectifs-establishment"
-          subtitle="Effectifs"
-          displayCharts
-        >
+        <Subcategory className="effectifs-establishment" subtitle="Effectifs">
           <TrancheEffectifsInsee siret={siret} />
           <EffectifsDsn siret={siret} />
           <EffectifsEtp siret={siret} />

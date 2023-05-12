@@ -1,11 +1,14 @@
 @import "../../../../App/variables";
-.chart {
-    flex-grow: 1;
+.chart-selec-data-source{
+  display: flex;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 18px;
+  row-gap: 16px;
+}  
   
-    .body{
-      flex-direction: row;
-    }
-  }
   
   .analysisChart {
     display: flex;

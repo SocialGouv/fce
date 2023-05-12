@@ -1,12 +1,10 @@
 import "./subcategory.scss";
 
-import { faChartPie } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 
 import Source from "../../../../../containers/Source";
-import LinkButton from "../../../../shared/Button/LinkButton";
 import Data from "../Data";
 
 const Subcategory = ({
@@ -18,7 +16,6 @@ const Subcategory = ({
   sourceCustom = null,
   sourceDate = null,
   className = "",
-  displayCharts = false,
 }) => {
   return (
     <div className={classNames("subcategory", className)}>
@@ -31,14 +28,6 @@ const Subcategory = ({
               hasDateImport={hasDateImport}
               sourceDate={sourceDate}
               sourceCustom={sourceCustom}
-            />
-          )}
-          {displayCharts && (
-            <LinkButton
-              value={null}
-              // buttonClasses={["data-sheet__print-button"]}
-              icon={faChartPie}
-              callback={() => console.log("imen")}
             />
           )}
         </div>
@@ -71,7 +60,6 @@ Subcategory.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   datas: PropTypes.arrayOf(PropTypes.object),
-  displayCharts: PropTypes.bool,
   hasDateImport: PropTypes.bool,
   sourceCustom: PropTypes.string,
   sourceDate: PropTypes.string,

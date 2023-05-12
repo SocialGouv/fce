@@ -48,11 +48,60 @@ export const sortByDate = (sortableList) =>
 
 export const getStartDateStatsParam = (months = 1) =>
   Moment().subtract(parseInt(months), "months").format("YYYY-MM-DD");
+
 export const setYearMonthFormat = (date) => {
   if (!date) {
     return "";
   }
   return Moment(date).format("YYYY-MM");
+};
+const START_DATE_LABEL = {
+  LAST_FIVE_YEARS: 60,
+  LAST_FOUR_YEARS: 48,
+  LAST_SIX_MONTHS: 6,
+  LAST_THREE_YEARS: 36,
+  LAST_TWO_YEARS: 24,
+  LAST_YEAR: 12,
+};
+
+export const START_DATE_BY_LABEL = {
+  [START_DATE_LABEL.LAST_YEAR]: {
+    num: "1",
+    path: "years",
+  },
+  [START_DATE_LABEL.LAST_TWO_YEARS]: {
+    num: "2",
+    path: "years",
+  },
+  [START_DATE_LABEL.LAST_THREE_YEARS]: {
+    num: "3",
+    path: "years",
+  },
+  [START_DATE_LABEL.LAST_FOUR_YEARS]: {
+    num: "4",
+    path: "years",
+  },
+  [START_DATE_LABEL.LAST_FIVE_YEARS]: {
+    num: "5",
+    path: "years",
+  },
+  [START_DATE_LABEL.LAST_SIX_MONTHS]: {
+    num: "6",
+    path: "months",
+  },
+};
+
+export const getStartDateEtp = (range) => {
+  if (range) {
+    const date = new Moment();
+    return Moment(date)
+      .subtract(START_DATE_BY_LABEL[range].num, START_DATE_BY_LABEL[range].path)
+      .format("YYYY-MM-DD");
+  }
+};
+export const getStartDate = (range) => {
+  const data = getStartDateEtp(range);
+  return setYearMonthFormat(data);
 };
 
 export const getLastObjectStatsKey = () => Moment().format("YYYY-MM");

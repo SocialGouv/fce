@@ -18,6 +18,7 @@ import EffectifEtpGraph from "./EffectifsEtpGraph";
 
 const MAX_EFFECTIF_COUNT = 24;
 const MIN_EFFECTIFS_COUNT = 1;
+const start_date = "2018-01-01";
 const EffectifsEtp = ({ siret }) => {
   const [displayedEffectifsCount, setDisplayedEffectifsCount] =
     useState(MIN_EFFECTIFS_COUNT);
@@ -26,9 +27,14 @@ const EffectifsEtp = ({ siret }) => {
     loading,
     data: effectifsMensuels,
     error,
-  } = useEffectifsEtablissementsEtpData(siret, {
-    effectifsMaxCount: displayedEffectifsCount,
-  });
+  } = useEffectifsEtablissementsEtpData(
+    siret,
+    {
+      effectifsMaxCount: displayedEffectifsCount,
+    },
+    { periode_concerne: "desc" },
+    start_date
+  );
 
   return (
     <>

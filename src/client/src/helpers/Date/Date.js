@@ -93,8 +93,7 @@ export const START_DATE_BY_LABEL = {
 
 export const getStartDateEtp = (range) => {
   if (range) {
-    const date = new Moment();
-    return Moment(date)
+    return Moment()
       .subtract(START_DATE_BY_LABEL[range].num, START_DATE_BY_LABEL[range].path)
       .format("YYYY-MM-DD");
   }

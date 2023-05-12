@@ -9,6 +9,7 @@ const financeQuery = gql`
     fce_finance_indicateurs(
       where: { siren: { _eq: $siren } }
       order_by: { date_cloture_exercice: desc }
+      limit: 5
     ) {
       EBIT
       Marge_brute

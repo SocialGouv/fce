@@ -54,33 +54,41 @@ const EffectifsEtp = ({ siret }) => {
         </>
       )}
       {displayedEffectifsCount === MAX_EFFECTIF_COUNT && (
-        <Subcategory subtitle="Effectifs ETP" sourceCustom={`Gip-Mds / DSN`}>
+        <>
           <LoadableContent loading={loading} error={error}>
             {effectifsMensuels && (
-              <Table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Effectif ETP</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {effectifsMensuels?.map?.(
-                    ({ periode_concerne, effectif }) => (
-                      <tr key={`${periode_concerne}-effectifsETP`}>
-                        <td>{setYearMonthFormat(periode_concerne)}</td>
-                        <td>
-                          <Value
-                            value={effectif}
-                            hasNumberFormat={true}
-                            empty="-"
-                          />
-                        </td>
-                      </tr>
-                    )
-                  )}
-                </tbody>
-              </Table>
+              <Subcategory
+                subtitle="Effectifs ETP"
+                sourceCustom={`Gip-Mds / DSN ${
+                  effectifsMensuels &&
+                  getDateMonthName(effectifsMensuels[0]?.periode_concerne)
+                } ${getDateYear(effectifsMensuels[0]?.periode_concerne)}`}
+              >
+                <Table>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Effectif ETP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {effectifsMensuels?.map?.(
+                      ({ periode_concerne, effectif }) => (
+                        <tr key={`${periode_concerne}-effectifsETP`}>
+                          <td>{setYearMonthFormat(periode_concerne)}</td>
+                          <td>
+                            <Value
+                              value={effectif}
+                              hasNumberFormat={true}
+                              empty="-"
+                            />
+                          </td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </Table>
+              </Subcategory>
             )}
           </LoadableContent>
           <AllEffectifsEtp
@@ -88,7 +96,7 @@ const EffectifsEtp = ({ siret }) => {
             loading={loading}
             onClick={() => setDisplayedEffectifsCount(MIN_EFFECTIFS_COUNT)}
           />
-        </Subcategory>
+        </>
       )}
     </>
   );

@@ -6,6 +6,7 @@ import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
+import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table";
 import { useDsnEffectif } from "./EffectifsDsn.gql";
 
@@ -42,44 +43,46 @@ const EffectifsDsn = ({ siret }) => {
       ) : (
         !loading && (
           <>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Effectif Total</th>
-                  <th>Homme</th>
-                  <th>Femme</th>
-                  <th>CDD</th>
-                  <th>CDI</th>
-                  <th>Total Interim</th>
-                </tr>
-              </thead>
-              <tbody>
-                {effectifs?.map?.((effectif) => (
-                  <tr key={`effectif-${effectif?.id}`}>
-                    <td>{effectif?.mois}</td>
-                    <td>
-                      <Value value={effectif?.eff} empty="-" />
-                    </td>
-                    <td>
-                      <Value value={effectif?.hommes} empty="-" />
-                    </td>
-                    <td>
-                      <Value value={effectif?.femmes} empty="-" />
-                    </td>
-                    <td>
-                      <Value value={effectif?.cdd} empty="-" />
-                    </td>
-                    <td>
-                      <Value value={effectif?.cdi} empty="-" />
-                    </td>
-                    <td>
-                      <Value value={effectif?.interim} empty="-" />
-                    </td>
+            <Subcategory subtitle="Effectif physique" sourceSi="DSN">
+              <Table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Effectif Total</th>
+                    <th>Homme</th>
+                    <th>Femme</th>
+                    <th>CDD</th>
+                    <th>CDI</th>
+                    <th>Total Interim</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {effectifs?.map?.((effectif) => (
+                    <tr key={`effectif-${effectif?.id}`}>
+                      <td>{effectif?.mois}</td>
+                      <td>
+                        <Value value={effectif?.eff} empty="-" />
+                      </td>
+                      <td>
+                        <Value value={effectif?.hommes} empty="-" />
+                      </td>
+                      <td>
+                        <Value value={effectif?.femmes} empty="-" />
+                      </td>
+                      <td>
+                        <Value value={effectif?.cdd} empty="-" />
+                      </td>
+                      <td>
+                        <Value value={effectif?.cdi} empty="-" />
+                      </td>
+                      <td>
+                        <Value value={effectif?.interim} empty="-" />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Subcategory>
             {isExpanded && (
               <AllEffectifsDsnButton
                 text="Afficher uniquement l'effectif physique"

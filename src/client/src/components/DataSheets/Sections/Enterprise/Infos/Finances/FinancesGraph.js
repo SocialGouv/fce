@@ -12,9 +12,9 @@ function FinancesGraph({ data }) {
   const chartData = {
     datasets: [
       {
-        backgroundColor: "#3498DB",
+        backgroundColor: "#85C1E9 ",
         borderColor: "#3498DB",
-        borderWidth: 3,
+        borderWidth: 2.5,
 
         data: sortedDataAsc(data)?.map(({ EBE }) => EBE),
         fill: false,
@@ -24,9 +24,9 @@ function FinancesGraph({ data }) {
         pointBorderWidth: 1,
       },
       {
-        backgroundColor: "#D98880",
-        borderColor: "#D98880",
-        borderWidth: 3,
+        backgroundColor: "#FCF3CF",
+        borderColor: "#F4D03F",
+        borderWidth: 2.5,
 
         data: sortedDataAsc(data)?.map(({ ca }) => ca),
 
@@ -36,9 +36,9 @@ function FinancesGraph({ data }) {
         pointBorderWidth: 1,
       },
       {
-        backgroundColor: "#2ECC71",
+        backgroundColor: "#ABEBC6",
         borderColor: "#2ECC71",
-        borderWidth: 3,
+        borderWidth: 2.5,
 
         data: sortedDataAsc(data)?.map(({ EBIT }) => EBIT),
 
@@ -48,9 +48,9 @@ function FinancesGraph({ data }) {
         pointBorderWidth: 1,
       },
       {
-        backgroundColor: "#B71C1C",
+        backgroundColor: "#F1948A",
         borderColor: "#B71C1C",
-        borderWidth: 3,
+        borderWidth: 2.5,
 
         data: sortedDataAsc(data)?.map(({ Resultat_net }) => Resultat_net),
 
@@ -60,9 +60,9 @@ function FinancesGraph({ data }) {
         pointBorderWidth: 1,
       },
       {
-        backgroundColor: "#34495E",
-        borderColor: "#34495E",
-        borderWidth: 3,
+        backgroundColor: "#BB8FCE",
+        borderColor: "#5B2C6F ",
+        borderWidth: 2.5,
 
         data: sortedDataAsc(data)?.map(({ Marge_brute }) => Marge_brute),
 

@@ -1,3 +1,10 @@
+# [27.69.0](https://github.com/SocialGouv/fce/compare/v27.68.0...v27.69.0) (2023-05-23)
+
+
+### Features
+
+* redirect authenticated users to search page ([#277](https://github.com/SocialGouv/fce/issues/277)) ([cfb711b](https://github.com/SocialGouv/fce/commit/cfb711b437e00da0617300908c2f892f7297c3f2))
+
 # [27.68.0](https://github.com/SocialGouv/fce/compare/v27.67.0...v27.68.0) (2023-05-05)
 
 

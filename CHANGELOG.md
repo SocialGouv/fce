@@ -1,3 +1,24 @@
+# [27.69.0](https://github.com/SocialGouv/fce/compare/v27.68.0...v27.69.0) (2023-05-23)
+
+
+### Features
+
+* redirect authenticated users to search page ([#277](https://github.com/SocialGouv/fce/issues/277)) ([cfb711b](https://github.com/SocialGouv/fce/commit/cfb711b437e00da0617300908c2f892f7297c3f2))
+
+# [27.68.0](https://github.com/SocialGouv/fce/compare/v27.67.0...v27.68.0) (2023-05-05)
+
+
+### Features
+
+* desactivate maintenance ([#273](https://github.com/SocialGouv/fce/issues/273)) ([0488306](https://github.com/SocialGouv/fce/commit/04883063b75feb804c7bfcb05b1a1cf7f452b3cd))
+
+# [27.67.0](https://github.com/SocialGouv/fce/compare/v27.66.0...v27.67.0) (2023-05-05)
+
+
+### Features
+
+* activate maintenance ([#272](https://github.com/SocialGouv/fce/issues/272)) ([0fb808a](https://github.com/SocialGouv/fce/commit/0fb808abe96d98e3f2cef543550e6074703ebeec))
+
 # [27.66.0](https://github.com/SocialGouv/fce/compare/v27.65.0...v27.66.0) (2023-05-03)
 
 

@@ -70,7 +70,11 @@ const EffectifsEtp = ({ siret }) => {
                       <tr key={`${periode_concerne}-effectifsETP`}>
                         <td>{setYearMonthFormat(periode_concerne)}</td>
                         <td>
-                          <Value value={effectif} empty="-" />
+                          <Value
+                            value={effectif}
+                            hasNumberFormat={true}
+                            empty="-"
+                          />
                         </td>
                       </tr>
                     )

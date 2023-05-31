@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
-// import LineChart from "../../../../../Charts/LineChart";
 import { Line } from "react-chartjs-2";
 
 import { setYearMonthFormat } from "../../../../../../helpers/Date";

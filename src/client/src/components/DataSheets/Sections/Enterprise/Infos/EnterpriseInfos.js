@@ -31,7 +31,7 @@ import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
 import Table from "../../SharedComponents/Table/Table";
-import EffectifsGraph from "./EffectifsGraph";
+import EffectifGraph from "./EffectifGraph";
 import {
   useEffectifsMensuels,
   useEffectifsPhysique,
@@ -212,7 +212,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
                   </>
                 )}
                 {!displayTable && (
-                  <EffectifsGraph chartData={effectifsMensuels} />
+                  <EffectifGraph chartData={effectifsMensuels} />
                 )}
               </Subcategory>
             )}

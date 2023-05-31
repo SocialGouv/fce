@@ -3,7 +3,6 @@ import "./finances.scss";
 import PropTypes from "prop-types";
 import React from "react";
 
-// import { getDateYear } from "../../../../../../helpers/Date";
 import { renderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
 import {
   concatApiEntrepriseBceData,
@@ -63,30 +62,6 @@ const Finances = ({ siret, siren }) => {
       );
     });
     caList = orderedData?.map((donneeEcofi) => {
-      // let isFromApiEntreprise = false;
-      // const filteredData = donneesEcofiApi?.filter((obj) => {
-      //   if (
-      //     obj.data.date_fin_exercice.includes(
-      //       getDateYear(donneeEcofi.date_fin_exercice)
-      //     )
-      //   ) {
-      //     isFromApiEntreprise = true;
-      //     return obj;
-      //   }
-      // });
-
-      // let caValue = 0;
-
-      // if (getFormattedChiffreAffaire(donneeEcofi) !== 0) {
-      //   caValue = getFormattedChiffreAffaire(donneeEcofi);
-      // }
-      // if (
-      //   getFormattedChiffreAffaire(donneeEcofi) === "0" &&
-      //   filteredData?.length > 0
-      // ) {
-      //   caValue = getFormattedChiffreAffaire(filteredData[0]?.data);
-      // }
-
       return (
         <td className="has-text-right" key={getKey("data.ca", donneeEcofi)}>
           <Value

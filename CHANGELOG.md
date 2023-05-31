@@ -1,3 +1,10 @@
+## [27.70.1](https://github.com/SocialGouv/fce/compare/v27.70.0...v27.70.1) (2023-05-31)
+
+
+### Bug Fixes
+
+* **env:** fix server env ([#275](https://github.com/SocialGouv/fce/issues/275)) ([b90e5a8](https://github.com/SocialGouv/fce/commit/b90e5a857d30decb094ca27421bc8d40b4a783a4))
+
 # [27.70.0](https://github.com/SocialGouv/fce/compare/v27.69.0...v27.70.0) (2023-05-26)
 
 

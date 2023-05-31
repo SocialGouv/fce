@@ -1,18 +1,7 @@
 import "./effectifEtp.scss";
 
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-} from "chart.js";
 import PropTypes from "prop-types";
 import React, { useEffect, useMemo, useState } from "react";
-import { Line } from "react-chartjs-2";
 
 import {
   getStartDate,
@@ -20,25 +9,15 @@ import {
   setYearMonthFormat,
 } from "../../../../../helpers/Date";
 import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import LineChart from "../../../../Charts/LineChart";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import { useDsnEffectif } from "./EffectifsDsn.gql";
 import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
 const RANGE = 12;
-const EffectifEtpGraph = ({ siret }) => {
+const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
   const [range, setRange] = useState(RANGE);
   const [chartData, setChartData] = useState([]);
-  const [etpBtn, setEtpBtn] = useState(true);
-  const [dsnBtn, setDsnBtn] = useState(false);
   const { data: etp_data } = useEffectifsEtablissementsEtpData(
     siret,
 
@@ -48,6 +27,7 @@ const EffectifEtpGraph = ({ siret }) => {
     { periode_concerne: "asc" },
     getStartDateEtp(range)
   );
+
   const { data: dsn_data } = useDsnEffectif(
     siret,
     {
@@ -56,10 +36,11 @@ const EffectifEtpGraph = ({ siret }) => {
     { mois: "asc" },
     getStartDate(range)
   );
+
   useEffect(() => {
-    if (etpBtn) setChartData(etp_data);
-    if (dsnBtn) setChartData(dsn_data);
-  }, [dsnBtn, etpBtn, etp_data, dsn_data]);
+    if (isEtpData) setChartData(etp_data);
+    if (isDsnData) setChartData(dsn_data);
+  }, [isDsnData, isEtpData, etp_data, dsn_data]);
 
   const dataChart = useMemo(() => {
     return {
@@ -70,37 +51,39 @@ const EffectifEtpGraph = ({ siret }) => {
           borderWidth: 3,
 
           data: chartData?.map((obj) =>
-            etpBtn && !dsnBtn
+            isEtpData && !isDsnData
               ? obj?.effectif !== 0
                 ? obj?.effectif
                 : null
               : obj?.eff
           ),
 
-          label: etpBtn && !dsnBtn ? "Effectif ETP" : "Effectif DSN",
+          label: isEtpData && !isDsnData ? "Effectif ETP" : "Effectif physique",
 
           pointBackgroundColor: "white",
           pointBorderWidth: 1,
         },
       ],
       labels: chartData?.map((obj) =>
-        etpBtn && !dsnBtn
+        isEtpData && !isDsnData
           ? obj?.effectif !== 0
             ? setYearMonthFormat(obj?.periode_concerne)
             : null
           : obj.mois
       ),
     };
-  }, [chartData, etpBtn, dsnBtn]);
+  }, [chartData, isEtpData, isDsnData]);
 
   const options = {
+    maintainAspectRatio: false,
     plugins: {
       legend: {
+        display: false,
         position: "top",
       },
       title: {
-        display: false,
-        text: "Chart.js Line Chart",
+        display: true,
+        text: isEtpData && !isDsnData ? "Effectif ETP" : "Effectif physique",
       },
     },
 
@@ -119,21 +102,6 @@ const EffectifEtpGraph = ({ siret }) => {
     setRange(parseInt(event.target.value));
   };
 
-  const onSelectEtpData = () => {
-    if (!etpBtn) {
-      setEtpBtn(true);
-      setDsnBtn(false);
-      setChartData(etp_data);
-    }
-  };
-
-  const onSelectDsnData = () => {
-    if (!dsnBtn) {
-      setDsnBtn(true);
-      setEtpBtn(false);
-      setChartData(dsn_data);
-    }
-  };
   return (
     <>
       <LoadableContent>
@@ -151,18 +119,14 @@ const EffectifEtpGraph = ({ siret }) => {
               </select>
             </div>
             {etp_data?.length > 0 || dsn_data?.length > 0 ? (
-              <Line options={options} data={dataChart} />
+              <LoadableContent>
+                <div className="chart-wrapper">
+                  <LineChart options={options} data={dataChart} />
+                </div>
+              </LoadableContent>
             ) : (
               <div>No data available.</div>
             )}
-            <div className="chart-selec-data-source">
-              <button disabled={etpBtn} onClick={onSelectEtpData}>
-                {"Effectif ETP"}
-              </button>
-              <button disabled={dsnBtn} onClick={onSelectDsnData}>
-                {"Effectif DSN"}
-              </button>
-            </div>
           </>
         )}
       </LoadableContent>
@@ -170,8 +134,10 @@ const EffectifEtpGraph = ({ siret }) => {
   );
 };
 
-EffectifEtpGraph.propTypes = {
+EffectifGraph.propTypes = {
+  isDsnData: PropTypes.bool,
+  isEtpData: PropTypes.bool,
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(EffectifEtpGraph);
+export default renderIfSiret(EffectifGraph);

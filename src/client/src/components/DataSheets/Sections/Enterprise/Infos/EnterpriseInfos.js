@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { merge } from "lodash";
 import PropTypes from "prop-types";
 import React, { useMemo, useState } from "react";
+import Toggle from "react-toggle";
 
 import AllEffectifsEtpButton from "../../../../../containers/AllEffectifsEtpButton";
 import Association from "../../../../../containers/Association/Association";
@@ -26,8 +27,11 @@ import {
 } from "../../../../../utils/entreprise/entreprise";
 import { getSiret } from "../../../../../utils/establishment/establishment";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
+import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
+import Table from "../../SharedComponents/Table/Table";
+import EffectifsGraph from "./EffectifsGraph";
 import {
   useEffectifsMensuels,
   useEffectifsPhysique,
@@ -39,13 +43,14 @@ import Finances from "./Finances";
 import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
 
-const MIN_EFFECTIFS_MENSUELS = 3;
+const MIN_EFFECTIFS_MENSUELS = 1;
 const MAX_EFFECTIFS_MENSUELS = 24;
 
 const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
   const [effectifsMensuelsLimit, setEffectifsMensuelsLimit] = useState(
     MIN_EFFECTIFS_MENSUELS
   );
+  const [displayTable, setDisplayTable] = useState(false);
 
   const siren = getSiren(baseEntreprise);
 
@@ -79,6 +84,10 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
   const establishmentCount = getEstablishmentsCount(enterprise);
   const activeEstablishmentCount = getActiveEtablissementsCount(enterprise);
   const trancheEffectifs = getTrancheEffectifs(enterprise);
+
+  const handleChange = (event) => {
+    setDisplayTable(event.target.checked);
+  };
 
   const EffectifEtpDataComponents = effectifsMensuels?.length ? (
     effectifsMensuels.map(({ periode_concerne, effectif }) => (
@@ -150,22 +159,74 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             loading={effectifsMensuelsLoading}
             error={effectifsMensuelsError}
           >
-            {EffectifEtpDataComponents}
+            {effectifsMensuelsLimit === MIN_EFFECTIFS_MENSUELS &&
+              EffectifEtpDataComponents}
+            {effectifsMensuelsLimit === MAX_EFFECTIFS_MENSUELS && (
+              <Subcategory subtitle="Effectifs Etp annuels" sourceSi="DSN">
+                <div className="display_table_chart__switch">
+                  <Toggle
+                    id="display_table_chart-toggle"
+                    checked={displayTable}
+                    name="burritoIsReady"
+                    value={displayTable}
+                    onChange={handleChange}
+                  />
+                  <span className="source" htmlFor="display_table_chart-toggle">
+                    {!displayTable ? " Afficher Tableau" : " Afficher Courbe"}
+                  </span>
+                </div>
+                {displayTable && (
+                  <>
+                    <Table>
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Effectif</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {effectifsMensuels?.map?.((effectif) => (
+                          <tr key={`effectif-${effectif?.id}`}>
+                            <td>
+                              <Value
+                                value={effectif?.periode_concerne}
+                                empty="-"
+                              />
+                            </td>
+                            <td>
+                              <Value value={effectif?.effectif} empty="-" />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </Table>
+
+                    <AllEffectifsEtpButton
+                      text="Afficher moins d'effectifs ETP"
+                      isUp
+                      loading={effectifsMensuelsLoading}
+                      onClick={() =>
+                        setEffectifsMensuelsLimit(MIN_EFFECTIFS_MENSUELS)
+                      }
+                    />
+                  </>
+                )}
+                {!displayTable && (
+                  <EffectifsGraph chartData={effectifsMensuels} />
+                )}
+              </Subcategory>
+            )}
           </LoadableContent>
-          {effectifsMensuelsLimit === MIN_EFFECTIFS_MENSUELS && (
-            <AllEffectifsEtpButton
-              text="Afficher tous les effectifs ETP"
-              loading={effectifsMensuelsLoading}
-              onClick={() => setEffectifsMensuelsLimit(MAX_EFFECTIFS_MENSUELS)}
-            />
-          )}{" "}
-          {effectifsMensuelsLimit === MAX_EFFECTIFS_MENSUELS && (
-            <AllEffectifsEtpButton
-              text="Afficher moins d'effectifs ETP"
-              loading={effectifsMensuelsLoading}
-              onClick={() => setEffectifsMensuelsLimit(MIN_EFFECTIFS_MENSUELS)}
-            />
-          )}
+          {effectifsMensuels?.length > 1 &&
+            effectifsMensuelsLimit === MIN_EFFECTIFS_MENSUELS && (
+              <AllEffectifsEtpButton
+                text="Afficher tous les effectifs ETP"
+                loading={effectifsMensuelsLoading}
+                onClick={() =>
+                  setEffectifsMensuelsLimit(MAX_EFFECTIFS_MENSUELS)
+                }
+              />
+            )}{" "}
         </Subcategory>
 
         <Subcategory

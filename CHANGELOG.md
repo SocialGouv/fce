@@ -1,3 +1,10 @@
+# [27.70.0](https://github.com/SocialGouv/fce/compare/v27.69.0...v27.70.0) (2023-05-26)
+
+
+### Features
+
+* fix entete effectif etablissement ([#276](https://github.com/SocialGouv/fce/issues/276)) ([4b0d1e7](https://github.com/SocialGouv/fce/commit/4b0d1e7a119dd497c9e7fad7893d71893abcece0))
+
 # [27.69.0](https://github.com/SocialGouv/fce/compare/v27.68.0...v27.69.0) (2023-05-23)
 
 

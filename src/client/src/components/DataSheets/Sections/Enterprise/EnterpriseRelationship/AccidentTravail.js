@@ -27,8 +27,7 @@ const AccidentTravail = ({ entreprise: { siren } }) => {
     return null;
   }
 
-  const accidents = data.accidents_travail;
-  console.log(accidents);
+  const accidents = data?.accidents_travail;
 
   return (
     <div>

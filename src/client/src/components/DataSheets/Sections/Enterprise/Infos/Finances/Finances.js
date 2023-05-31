@@ -3,7 +3,7 @@ import "./finances.scss";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { getDateYear } from "../../../../../../helpers/Date";
+// import { getDateYear } from "../../../../../../helpers/Date";
 import { renderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
 import {
   concatApiEntrepriseBceData,
@@ -52,7 +52,7 @@ const Finances = ({ siret, siren }) => {
       donneesEcofiApi
     );
     const orderedData = sortedData(donneesEcofi);
-    dates = orderedData.map((donneeEcofi) => {
+    dates = orderedData?.map((donneeEcofi) => {
       return (
         <th
           className="has-text-right"
@@ -63,31 +63,35 @@ const Finances = ({ siret, siren }) => {
       );
     });
     caList = orderedData?.map((donneeEcofi) => {
-      const filteredData = donneesEcofiApi?.filter((obj) => {
-        if (
-          obj.data.date_fin_exercice.includes(
-            getDateYear(donneeEcofi.date_fin_exercice)
-          )
-        )
-          return obj;
-      });
+      // let isFromApiEntreprise = false;
+      // const filteredData = donneesEcofiApi?.filter((obj) => {
+      //   if (
+      //     obj.data.date_fin_exercice.includes(
+      //       getDateYear(donneeEcofi.date_fin_exercice)
+      //     )
+      //   ) {
+      //     isFromApiEntreprise = true;
+      //     return obj;
+      //   }
+      // });
 
-      let caValue = 0;
-      if (getFormattedChiffreAffaire(donneeEcofi) !== 0) {
-        caValue = getFormattedChiffreAffaire(donneeEcofi);
-      }
-      if (
-        getFormattedChiffreAffaire(donneeEcofi) !== 0 &&
-        filteredData?.length > 0
-      ) {
-        caValue = getFormattedChiffreAffaire(filteredData[0]?.data);
-      }
+      // let caValue = 0;
+
+      // if (getFormattedChiffreAffaire(donneeEcofi) !== 0) {
+      //   caValue = getFormattedChiffreAffaire(donneeEcofi);
+      // }
+      // if (
+      //   getFormattedChiffreAffaire(donneeEcofi) === "0" &&
+      //   filteredData?.length > 0
+      // ) {
+      //   caValue = getFormattedChiffreAffaire(filteredData[0]?.data);
+      // }
 
       return (
         <td className="has-text-right" key={getKey("data.ca", donneeEcofi)}>
           <Value
             isApi={donneeEcofi?.isFromApiEntreprise}
-            value={caValue}
+            value={getFormattedChiffreAffaire(donneeEcofi)}
             empty={"-"}
           />
         </td>
@@ -146,6 +150,7 @@ const Finances = ({ siret, siren }) => {
           key={getKey("data.ca", donneeEcofi.data)}
         >
           <Value
+            isApi
             value={getFormattedChiffreAffaire(donneeEcofi.data)}
             empty="-"
           />
@@ -193,20 +198,23 @@ const Finances = ({ siret, siren }) => {
           />
         </>
       ) : donneesEcofiBce.length === 0 && donneesEcofiApi ? (
-        <Table className="enterprise-finances">
-          <thead>
-            <tr>
-              <th>Date fin exercice</th>
-              {datesApi}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">Chiffre d{"'"}affaires (€)</th>
-              {caListApi}
-            </tr>
-          </tbody>
-        </Table>
+        <>
+          <Table className="enterprise-finances">
+            <thead>
+              <tr>
+                <th>Date fin exercice</th>
+                {datesApi}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Chiffre d{"'"}affaires (€)</th>
+                {caListApi}
+              </tr>
+            </tbody>
+          </Table>
+          <FinancesGraph data={donneesEcofiApi} isDataApi={true} />
+        </>
       ) : (
         <p className="enterprise-finances__not-available has-text-centered">
           Non disponible

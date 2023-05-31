@@ -4,14 +4,14 @@
 .effectifs-establishment,
 .effectifs-establishment .data:last-of-type {
     margin-bottom: 0;
- 
-    
 }
-.display_table_chart__switch{
+
+.display_table_chart__switch {
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     padding-top: $spacing-2;
+
     &__switch {
         @extend %flex-center;
 
@@ -33,6 +33,7 @@
                 .react-toggle-track {
                     background-color: $primary;
                 }
+
                 &:hover {
                     .react-toggle-track {
                         background-color: darken($primary, 10%);

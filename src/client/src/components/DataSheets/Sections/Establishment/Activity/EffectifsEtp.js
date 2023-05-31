@@ -68,7 +68,7 @@ const EffectifsEtp = ({ siret }) => {
               />
             )}
           </LoadableContent>
-          {effectifsMensuels?.length > 1 && (
+          {effectifsMensuels?.length >= 1 && (
             <AllEffectifsEtp
               text="Afficher tous les effectifs ETP"
               loading={loading}

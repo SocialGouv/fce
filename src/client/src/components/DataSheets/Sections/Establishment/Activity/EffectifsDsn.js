@@ -55,7 +55,7 @@ const EffectifsDsn = ({ siret }) => {
             sourceSi="DSN"
             hasNumberFormat={true}
           />
-          {effectifs?.length > 1 && (
+          {effectifs?.length >= 1 && (
             <AllEffectifsEtpButton
               text="Afficher le détail et l'historique des effectifs"
               loading={loading}

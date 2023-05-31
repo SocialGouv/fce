@@ -10,6 +10,17 @@ $border-color: var(--border-color);
     position: relative;
     margin: auto;
     display: grid;
+    gap: 1em;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    height: 30vh;
+    width: 100%;
+    margin: 1em;
+}
+.finance-chart-wrapper {
+    position: relative;
+    margin: auto;
+    display: grid;
     // gap: 1em;
     grid-template-rows: 1fr;
     grid-template-columns: 80% 1fr;

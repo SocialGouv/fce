@@ -197,7 +197,7 @@ function FinancesGraph({ data }) {
   return (
     <div>
       {data?.length > 0 && (
-        <div className="chart-wrapper">
+        <div className="finance-chart-wrapper">
           <div>
             <Line
               ref={chartCanvasRef}

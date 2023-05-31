@@ -217,7 +217,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
               </Subcategory>
             )}
           </LoadableContent>
-          {effectifsMensuels?.length > 1 &&
+          {effectifsMensuels?.length >= 1 &&
             effectifsMensuelsLimit === MIN_EFFECTIFS_MENSUELS && (
               <AllEffectifsEtpButton
                 text="Afficher tous les effectifs ETP"

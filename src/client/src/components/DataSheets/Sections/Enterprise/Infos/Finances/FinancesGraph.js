@@ -12,7 +12,6 @@ function FinancesGraph({ data }) {
   const chartCanvasRef = useRef(null);
   const [datasetsToDisplay, setDatasetsToDisplay] = useState([
     "Chiffre d'affaires ",
-    // "Résultat d'exploitation ",
   ]);
 
   useEffect(() => {
@@ -179,12 +178,10 @@ function FinancesGraph({ data }) {
     responsive: true,
     scales: {
       x: {
-        border: { display: false },
+        border: { display: true },
       },
 
       y: {
-        border: { display: true },
-
         ticks: {
           callback: (label) => {
             return formatChiffre(label.toString()) + "(€)";
@@ -198,14 +195,6 @@ function FinancesGraph({ data }) {
     <div>
       {data?.length > 0 && (
         <div className="finance-chart-wrapper">
-          <div>
-            <Line
-              ref={chartCanvasRef}
-              id="chart"
-              options={options}
-              data={chartData}
-            />
-          </div>
           <div className="chart-legend">
             {datasets.map(({ label, borderColor }) => (
               <div key={label}>
@@ -220,6 +209,14 @@ function FinancesGraph({ data }) {
                 <span style={{ "--border-color": borderColor }} />
               </div>
             ))}
+          </div>
+          <div>
+            <Line
+              ref={chartCanvasRef}
+              id="chart"
+              options={options}
+              data={chartData}
+            />
           </div>
         </div>
       )}

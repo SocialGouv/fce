@@ -57,7 +57,7 @@ const EffectifsDsn = ({ siret }) => {
           />
           {effectifs?.length >= 1 && (
             <AllEffectifsEtpButton
-              text="Afficher le détail et l'historique des effectifs"
+              text="Afficher plus de détail"
               loading={loading}
               onClick={() => setIsExpanded(true)}
             />
@@ -125,7 +125,7 @@ const EffectifsDsn = ({ siret }) => {
             )}{" "}
             {displayTable && isExpanded && (
               <AllEffectifsEtpButton
-                text="Afficher uniquement l'effectif physique"
+                text="Afficher moins"
                 isUp
                 loading={loading}
                 onClick={() => setIsExpanded(false)}

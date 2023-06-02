@@ -164,6 +164,11 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             {effectifsMensuelsLimit === MAX_EFFECTIFS_MENSUELS && (
               <Subcategory subtitle="Effectifs Etp annuels" sourceSi="DSN">
                 <div className="display_table_chart__switch">
+                  <span className="source" htmlFor="display_table_chart-toggle">
+                    {!displayTable
+                      ? " Afficher Tableau "
+                      : " Afficher graphique "}
+                  </span>
                   <Toggle
                     id="display_table_chart-toggle"
                     checked={displayTable}
@@ -171,9 +176,6 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
                     value={displayTable}
                     onChange={handleChange}
                   />
-                  <span className="source" htmlFor="display_table_chart-toggle">
-                    {!displayTable ? " Afficher Tableau" : " Afficher Courbe"}
-                  </span>
                 </div>
                 {displayTable && (
                   <>
@@ -200,20 +202,19 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
                         ))}
                       </tbody>
                     </Table>
-
-                    <AllEffectifsEtpButton
-                      text="Afficher moins d'effectifs ETP"
-                      isUp
-                      loading={effectifsMensuelsLoading}
-                      onClick={() =>
-                        setEffectifsMensuelsLimit(MIN_EFFECTIFS_MENSUELS)
-                      }
-                    />
                   </>
                 )}
                 {!displayTable && (
                   <EffectifGraph chartData={effectifsMensuels} />
                 )}
+                <AllEffectifsEtpButton
+                  text="Afficher moins"
+                  isUp
+                  loading={effectifsMensuelsLoading}
+                  onClick={() =>
+                    setEffectifsMensuelsLimit(MIN_EFFECTIFS_MENSUELS)
+                  }
+                />
               </Subcategory>
             )}
           </LoadableContent>

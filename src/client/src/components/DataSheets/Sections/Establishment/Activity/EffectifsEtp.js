@@ -70,7 +70,7 @@ const EffectifsEtp = ({ siret }) => {
           </LoadableContent>
           {effectifsMensuels?.length >= 1 && (
             <AllEffectifsEtp
-              text="Afficher tous les effectifs ETP"
+              text="Afficher plus de détail"
               loading={loading}
               onClick={() => setDisplayedEffectifsCount(MAX_EFFECTIF_COUNT)}
             />
@@ -124,9 +124,9 @@ const EffectifsEtp = ({ siret }) => {
       {!displayTable &&
         displayedEffectifsCount !== MIN_EFFECTIFS_COUNT &&
         siret && <EffectifGraph siret={siret} isEtpData />}{" "}
-      {displayTable && displayedEffectifsCount === MAX_EFFECTIF_COUNT && (
+      {displayedEffectifsCount === MAX_EFFECTIF_COUNT && (
         <AllEffectifsEtp
-          text="Afficher moins d'effectifs ETP"
+          text="Afficher moins"
           isUp
           loading={loading}
           onClick={() => setDisplayedEffectifsCount(MIN_EFFECTIFS_COUNT)}

@@ -12,32 +12,33 @@ $border-color: var(--border-color);
     gap: 1em;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
-    height: 30vh;
+    height: 250px;
     width: 100%;
     margin: 1em;
 }
 .finance-chart-wrapper {
     position: relative;
-    margin: auto;
     display: grid;
-    // gap: 1em;
     grid-template-rows: 1fr;
-    grid-template-columns: 80% 1fr;
-    height: 30vh;
+    grid-template-columns: 1fr 80%;
+    height: 250px;
     width: 100%;
-    // margin: 1em;
 
     .chart-legend {
         font-size: 0.7rem;
+        font-weight: 600;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        margin-top: 1.5rem;
 
         div {
+            margin-bottom: 5px;
             span {
-                border-bottom: 3px solid $border-color !important;
-                width: 1.5rem !important;
-                margin-left: 5px;
+                background-color: $border-color !important;
+                width: 0.7em;
+                height: 0.7em;
+                margin-left: 4px;
+                transform: rotate(45deg);
             }
             display: flex;
             align-items: center;

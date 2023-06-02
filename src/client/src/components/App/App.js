@@ -17,7 +17,6 @@ import PublicPage from "../../containers/PublicPage";
 import Search from "../../containers/Search";
 import UnsubscribePage from "../../containers/UnsubscribePage";
 import SetMatomo from "../../helpers/Matomo/SetMatomo";
-import Auth from "../../services/Auth";
 import Config from "../../services/Config";
 import { apolloClient } from "../../services/GraphQL/GraphQL";
 import PrivateRoute from "../../services/PrivateRoute";
@@ -44,7 +43,6 @@ const getHistory = (matomoConfig) => {
 };
 
 const App = () => {
-  const isLogged = Auth.isLogged();
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
@@ -85,63 +83,39 @@ const App = () => {
                               path="/establishment/:siret"
                               component={LegacyEtablissement}
                             />
-                            {!isLogged ? (
-                              <Route
-                                exact
-                                path="/home"
-                                render={() => (
-                                  <Layout
-                                    hasLandingHeader={true}
-                                    hasSharedButton={true}
-                                  >
-                                    <HomePage />
-                                  </Layout>
-                                )}
-                              />
-                            ) : (
-                              <Redirect
-                                to={{
-                                  pathname: "/",
-                                }}
-                                component={Search}
-                              />
-                            )}
-                            {!isLogged ? (
-                              <Route
-                                exact
-                                path="/login"
-                                render={() => (
-                                  <Layout hasLandingHeader={true}>
-                                    <Login />
-                                  </Layout>
-                                )}
-                              />
-                            ) : (
-                              <Redirect
-                                to={{
-                                  pathname: "/",
-                                }}
-                                component={Search}
-                              />
-                            )}
-                            {!isLogged ? (
-                              <Route
-                                exact
-                                path="/request-access"
-                                render={() => (
-                                  <Layout hasLandingHeader={true}>
-                                    <RequestAccess />
-                                  </Layout>
-                                )}
-                              />
-                            ) : (
-                              <Redirect
-                                to={{
-                                  pathname: "/",
-                                }}
-                                component={Search}
-                              />
-                            )}
+                            <Route
+                              exact
+                              path="/home"
+                              render={() => (
+                                <Layout
+                                  hasLandingHeader={true}
+                                  hasSharedButton={true}
+                                >
+                                  <HomePage />
+                                </Layout>
+                              )}
+                            />
+
+                            <Route
+                              exact
+                              path="/login"
+                              render={() => (
+                                <Layout hasLandingHeader={true}>
+                                  <Login />
+                                </Layout>
+                              )}
+                            />
+
+                            <Route
+                              exact
+                              path="/request-access"
+                              render={() => (
+                                <Layout hasLandingHeader={true}>
+                                  <RequestAccess />
+                                </Layout>
+                              )}
+                            />
+
                             <Route
                               exact
                               path="/mentions-legales"

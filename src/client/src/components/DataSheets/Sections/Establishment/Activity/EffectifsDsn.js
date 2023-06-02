@@ -123,7 +123,7 @@ const EffectifsDsn = ({ siret }) => {
             {!displayTable && siret && (
               <EffectifsGraph isDsnData siret={siret} />
             )}{" "}
-            {displayTable && isExpanded && (
+            {isExpanded && (
               <AllEffectifsEtpButton
                 text="Afficher moins"
                 isUp

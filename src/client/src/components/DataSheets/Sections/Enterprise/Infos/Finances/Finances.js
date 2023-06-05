@@ -3,9 +3,9 @@ import "./finances.scss";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { getDateYear } from "../../../../../../helpers/Date";
 import { renderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
 import {
+  concatApiEntrepriseBceData,
   getDateDeclaration,
   getFormattedChiffreAffaire,
   getFormattedEBE,
@@ -18,6 +18,7 @@ import LoadSpinner from "../../../../../shared/LoadSpinner";
 import Value from "../../../../../shared/Value";
 import Table from "../../../SharedComponents/Table";
 import { useFinanceData, useFinanceDataApiEntreprise } from "./Finances.gql";
+import FinancesGraph from "./FinancesGraph";
 
 const getKey = (label, donneeEcofi) =>
   `${label}-${getDateDeclaration(donneeEcofi)}`;
@@ -45,34 +46,12 @@ const Finances = ({ siret, siren }) => {
   let resultExploi = [];
 
   if (donneesEcofiBce?.length > 0) {
-    let donneesEcofi = [...donneesEcofiBce];
-    const yearsEcofiBce = [
-      ...new Set(
-        donneesEcofiBce.map((obj) => getDateYear(obj.date_fin_exercice))
-      ),
-    ];
-
-    let filteredDonneesEcofiApi = [];
-    if (yearsEcofiBce?.length > 0 && donneesEcofiApi?.length > 0)
-      filteredDonneesEcofiApi = donneesEcofiApi
-        ?.map((obj) => {
-          if (
-            !yearsEcofiBce.includes(getDateYear(obj?.data?.date_fin_exercice))
-          )
-            return {
-              ...obj.data,
-              EBE: null,
-              EBIT: null,
-              Marge_brute: null,
-              Resultat_net: null,
-            };
-          return;
-        })
-        .filter(Boolean);
-
-    donneesEcofi = [...donneesEcofi, ...filteredDonneesEcofiApi];
+    const donneesEcofi = concatApiEntrepriseBceData(
+      donneesEcofiBce,
+      donneesEcofiApi
+    );
     const orderedData = sortedData(donneesEcofi);
-    dates = orderedData.map((donneeEcofi) => {
+    dates = orderedData?.map((donneeEcofi) => {
       return (
         <th
           className="has-text-right"
@@ -83,29 +62,13 @@ const Finances = ({ siret, siren }) => {
       );
     });
     caList = orderedData?.map((donneeEcofi) => {
-      const filteredData = donneesEcofiApi?.filter((obj) => {
-        if (
-          obj.data.date_fin_exercice.includes(
-            getDateYear(donneeEcofi.date_fin_exercice)
-          )
-        )
-          return obj;
-      });
-
-      let caValue = 0;
-      if (getFormattedChiffreAffaire(donneeEcofi) !== 0) {
-        caValue = getFormattedChiffreAffaire(donneeEcofi);
-      }
-      if (
-        getFormattedChiffreAffaire(donneeEcofi) !== 0 &&
-        filteredData?.length > 0
-      ) {
-        caValue = getFormattedChiffreAffaire(filteredData[0]?.data);
-      }
-
       return (
         <td className="has-text-right" key={getKey("data.ca", donneeEcofi)}>
-          <Value value={caValue} empty={"-"} />
+          <Value
+            isApi={donneeEcofi?.isFromApiEntreprise}
+            value={getFormattedChiffreAffaire(donneeEcofi)}
+            empty={"-"}
+          />
         </td>
       );
     });
@@ -162,6 +125,7 @@ const Finances = ({ siret, siren }) => {
           key={getKey("data.ca", donneeEcofi.data)}
         >
           <Value
+            isApi
             value={getFormattedChiffreAffaire(donneeEcofi.data)}
             empty="-"
           />
@@ -169,56 +133,69 @@ const Finances = ({ siret, siren }) => {
       );
     });
   }
-  return donneesEcofiBce?.length > 0 ? (
-    <Table className="enterprise-finances">
-      <thead>
-        <tr>
-          <th>Date fin exercice</th>
-          {dates}
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Chiffre d{"'"}affaires (€)</th>
-          {caList}
-        </tr>
-        <tr>
-          <th scope="row">Marge brute (€)</th>
-          {margeBrute}
-        </tr>
-        <tr>
-          <th scope="row">EBITDA-EBE (€)</th>
-          {EBE}
-        </tr>
-        <tr>
-          <th scope="row">{`Résultat d'exploitation (€)`}</th>
-          {resultExploi}
-        </tr>
-        <tr>
-          <th scope="row">Résultat net (€)</th>
-          {resultats}
-        </tr>
-      </tbody>
-    </Table>
-  ) : donneesEcofiBce.length === 0 && donneesEcofiApi ? (
-    <Table className="enterprise-finances">
-      <thead>
-        <tr>
-          <th>Date fin exercice</th>
-          {datesApi}
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Chiffre d{"'"}affaires (€)</th>
-          {caListApi}
-        </tr>
-      </tbody>
-    </Table>
-  ) : (
-    <p className="enterprise-finances__not-available has-text-centered">
-      Non disponible
-    </p>
+  return (
+    <>
+      {donneesEcofiBce?.length > 0 ? (
+        <>
+          {" "}
+          <Table className="enterprise-finances">
+            <thead>
+              <tr>
+                <th>Date fin exercice</th>
+                {dates}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Chiffre d{"'"}affaires (€)</th>
+                {caList}
+              </tr>
+              <tr>
+                <th scope="row">Marge brute (€)</th>
+                {margeBrute}
+              </tr>
+              <tr>
+                <th scope="row">EBITDA-EBE (€)</th>
+                {EBE}
+              </tr>
+              <tr>
+                <th scope="row">{`Résultat d'exploitation (€)`}</th>
+                {resultExploi}
+              </tr>
+              <tr>
+                <th scope="row">Résultat net (€)</th>
+                {resultats}
+              </tr>
+            </tbody>
+          </Table>
+          <FinancesGraph
+            data={concatApiEntrepriseBceData(donneesEcofiBce, donneesEcofiApi)}
+          />
+        </>
+      ) : donneesEcofiBce.length === 0 && donneesEcofiApi ? (
+        <>
+          <Table className="enterprise-finances">
+            <thead>
+              <tr>
+                <th>Date fin exercice</th>
+                {datesApi}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Chiffre d{"'"}affaires (€)</th>
+                {caListApi}
+              </tr>
+            </tbody>
+          </Table>
+          <FinancesGraph data={donneesEcofiApi} isDataApi={true} />
+        </>
+      ) : (
+        <p className="enterprise-finances__not-available has-text-centered">
+          Non disponible
+        </p>
+      )}
+    </>
   );
 };
 

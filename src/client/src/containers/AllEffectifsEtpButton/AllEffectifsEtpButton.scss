@@ -1,0 +1,15 @@
+@import "./../../components/App/variables";
+
+.all_effectifs_etp_button {
+    display: flex;
+    margin: $spacing-2 0;
+    align-items:center ;
+    justify-content: center;
+ button {  
+    border: none !important;
+    background-color: transparent;
+    text-decoration: underline ;
+    color: $primary !important;
+    cursor: pointer;
+}
+}

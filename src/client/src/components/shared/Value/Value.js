@@ -12,6 +12,7 @@ const Value = ({
   yes = "Oui",
   dateFormat = "L",
   breakLines = false,
+  isApi = false,
   link = false,
   nonEmptyValues = [],
   hasNumberFormat = false,
@@ -72,10 +73,24 @@ const Value = ({
     (typeof value === "string" || typeof value === "number") &&
     hasNumberFormat
   ) {
-    return formatNumber(value, numberFormatOptions);
+    return isApi ? (
+      <div className="sourceApi">
+        {formatNumber(value, numberFormatOptions)}
+        <span className="source">{" (DGFIP)"}</span>
+      </div>
+    ) : (
+      formatNumber(value, numberFormatOptions)
+    );
   }
 
-  return value;
+  return isApi ? (
+    <div className="sourceApi">
+      {value}
+      <span className="source">{" (DGFIP)"}</span>
+    </div>
+  ) : (
+    value
+  );
 };
 
 Value.propTypes = {
@@ -83,6 +98,7 @@ Value.propTypes = {
   dateFormat: PropTypes.string,
   empty: PropTypes.string,
   hasNumberFormat: PropTypes.bool,
+  isApi: PropTypes.bool,
   link: PropTypes.string,
   no: PropTypes.string,
   nonEmptyValues: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),

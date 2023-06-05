@@ -1,6 +1,45 @@
 @import "../../../../App/variables";
+@import "../../../../App/placeholders";
 
 .effectifs-establishment,
 .effectifs-establishment .data:last-of-type {
     margin-bottom: 0;
+}
+
+.display_table_chart__switch {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: $spacing-2;
+
+    &__switch {
+        @extend %flex-center;
+
+        .react-toggle {
+            margin-left: $spacing-4;
+
+            .react-toggle-track {
+                background-color: $grey;
+                box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.5);
+            }
+
+            &:hover {
+                .react-toggle-track {
+                    background-color: darken($grey, 10%);
+                }
+            }
+
+            &--checked {
+                .react-toggle-track {
+                    background-color: $primary;
+                }
+
+                &:hover {
+                    .react-toggle-track {
+                        background-color: darken($primary, 10%);
+                    }
+                }
+            }
+        }
+    }
 }

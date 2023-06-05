@@ -10,7 +10,6 @@ function UniteDeControle({ siret }) {
   if (loading || error) {
     return "error";
   }
-  console.log(data);
   return (
     <Subcategory
       subtitle="Unité de contrôle"

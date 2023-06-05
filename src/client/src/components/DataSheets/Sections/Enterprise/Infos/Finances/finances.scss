@@ -1,7 +1,55 @@
 @import "../../../../../App/variables";
+$border-color: var(--border-color);
 
 .enterprise-finances {
     &__not-available {
         margin-top: $spacing-2;
+    }
+}
+.chart-wrapper {
+    position: relative;
+    display: grid;
+    gap: 1em;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    height: 250px;
+    width: 100%;
+    margin: 1em;
+}
+.finance-chart-wrapper {
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 80%;
+    height: 250px;
+    width: 100%;
+
+    .chart-legend {
+        font-size: 0.7rem;
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        margin-top: 1.5rem;
+
+        div {
+            margin-bottom: 5px;
+            span {
+                background-color: $border-color !important;
+                width: 0.7em;
+                height: 0.7em;
+                margin-left: 4px;
+                transform: rotate(45deg);
+            }
+            display: flex;
+            align-items: center;
+            input[type="checkbox"] {
+                box-sizing: border-box;
+                padding: 0;
+                accent-color: $primary !important;
+            }
+            label {
+                margin-left: 5px;
+            }
+        }
     }
 }

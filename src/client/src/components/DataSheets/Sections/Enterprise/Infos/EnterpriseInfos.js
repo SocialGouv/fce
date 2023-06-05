@@ -221,7 +221,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
           {effectifsMensuels?.length >= 1 &&
             effectifsMensuelsLimit === MIN_EFFECTIFS_MENSUELS && (
               <AllEffectifsEtpButton
-                text="Afficher tous les effectifs ETP"
+                text="Afficher l'évolution des effectifs ETP"
                 loading={effectifsMensuelsLoading}
                 onClick={() =>
                   setEffectifsMensuelsLimit(MAX_EFFECTIFS_MENSUELS)

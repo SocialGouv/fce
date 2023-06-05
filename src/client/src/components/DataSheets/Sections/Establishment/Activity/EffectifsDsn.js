@@ -57,7 +57,7 @@ const EffectifsDsn = ({ siret }) => {
           />
           {effectifs?.length >= 1 && (
             <AllEffectifsEtpButton
-              text="Afficher plus de détail"
+              text="Afficher l'évolution des effectifs physiques"
               loading={loading}
               onClick={() => setIsExpanded(true)}
             />

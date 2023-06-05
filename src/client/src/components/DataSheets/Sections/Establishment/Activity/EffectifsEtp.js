@@ -70,7 +70,7 @@ const EffectifsEtp = ({ siret }) => {
           </LoadableContent>
           {effectifsMensuels?.length >= 1 && (
             <AllEffectifsEtp
-              text="Afficher plus de détail"
+              text="Afficher l'évolution des effectifs ETP"
               loading={loading}
               onClick={() => setDisplayedEffectifsCount(MAX_EFFECTIF_COUNT)}
             />

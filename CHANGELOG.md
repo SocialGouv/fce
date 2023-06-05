@@ -1,3 +1,10 @@
+# [27.71.0](https://github.com/SocialGouv/fce/compare/v27.70.1...v27.71.0) (2023-06-05)
+
+
+### Features
+
+* effectifs finance chart ([#278](https://github.com/SocialGouv/fce/issues/278)) ([f0641e6](https://github.com/SocialGouv/fce/commit/f0641e60b813f2271b9b9eaab3009b6ad624c62a))
+
 ## [27.70.1](https://github.com/SocialGouv/fce/compare/v27.70.0...v27.70.1) (2023-05-31)
 
 

@@ -6,7 +6,6 @@ import EstablishmentView from "./Establishment";
 
 const LegacyEnterprise = ({ match, history }) => {
   const siret = match.params.siret;
-
   return <EstablishmentView siret={siret} history={history} />;
 };
 

@@ -54,10 +54,14 @@ const Sidebar = ({
     return null;
   }
 
-  const etablissements = getEtablissements(entreprise);
+  const etablissements = entreprise ? getEtablissements(entreprise) : [];
 
-  const etablissementsCount = getEtablissementsCount(entreprise);
-  const etablissementsFermesCount = getEtablissementsFermesCount(entreprise);
+  const etablissementsCount = entreprise
+    ? getEtablissementsCount(entreprise)
+    : 0;
+  const etablissementsFermesCount = entreprise
+    ? getEtablissementsFermesCount(entreprise)
+    : 0;
   const headOffice = etablissements.find(isSiege);
 
   const displayedEstablishments = sortBy(

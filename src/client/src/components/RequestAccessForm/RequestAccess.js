@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
+import Auth from "../../services/Auth";
 import RequestAccessForm from "./RequestAccessForm";
+
+const isLogged = Auth.isLogged();
 
 const formText =
   "Vous pouvez demander un accès à FCE en utilisant ce formulaire.";
@@ -10,7 +13,9 @@ const successText =
 
 const RequestAccess = () => {
   const [isSuccess, setIsSuccess] = useState(false);
-
+  useEffect(() => {
+    if (isLogged) history.push("/");
+  }, [isLogged]);
   return (
     <section className="login">
       <div className="login__container login__container--form container">

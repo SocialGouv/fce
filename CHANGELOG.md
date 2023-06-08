@@ -1,3 +1,17 @@
+# [27.73.0](https://github.com/SocialGouv/fce/compare/v27.72.0...v27.73.0) (2023-06-07)
+
+
+### Features
+
+* finance indicators chart data from api entrprise ([#282](https://github.com/SocialGouv/fce/issues/282)) ([0df09b9](https://github.com/SocialGouv/fce/commit/0df09b9d434a27fb0dece5657c662748400d7773))
+
+# [27.72.0](https://github.com/SocialGouv/fce/compare/v27.71.0...v27.72.0) (2023-06-07)
+
+
+### Features
+
+* fix routing ([#279](https://github.com/SocialGouv/fce/issues/279)) ([5aea44d](https://github.com/SocialGouv/fce/commit/5aea44d2776a472454c10c07a3ff8eb25cbd74e8))
+
 # [27.71.0](https://github.com/SocialGouv/fce/compare/v27.70.1...v27.71.0) (2023-06-05)
 
 

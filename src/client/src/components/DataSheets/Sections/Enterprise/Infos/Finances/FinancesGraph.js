@@ -105,6 +105,7 @@ function FinancesGraph({ data }) {
         label: "Chiffre d'affaires ",
         pointBackgroundColor: "white",
         pointBorderWidth: 1,
+        tension: 0.3,
       },
       {
         backgroundColor: "#ABEBC6",
@@ -114,6 +115,7 @@ function FinancesGraph({ data }) {
         label: "Résultat d'exploitation ",
         pointBackgroundColor: "white",
         pointBorderWidth: 1,
+        tension: 0.3,
       },
       {
         backgroundColor: "#F1948A",
@@ -123,6 +125,7 @@ function FinancesGraph({ data }) {
         label: "Résultat net ",
         pointBackgroundColor: "white",
         pointBorderWidth: 1,
+        tension: 0.3,
       },
       {
         backgroundColor: "#BB8FCE",
@@ -132,6 +135,7 @@ function FinancesGraph({ data }) {
         label: "Marge brute ",
         pointBackgroundColor: "white",
         pointBorderWidth: 1,
+        tension: 0.3,
       },
     ],
     labels: sortedDataAsc(data)?.map(({ date_fin_exercice }) =>

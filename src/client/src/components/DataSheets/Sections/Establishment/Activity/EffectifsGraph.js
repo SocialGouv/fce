@@ -49,7 +49,6 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
           backgroundColor: "#2980b9",
           borderColor: "#2980b9",
           borderWidth: 3,
-
           data: chartData?.map((obj) =>
             isEtpData && !isDsnData
               ? obj?.effectif !== 0
@@ -61,7 +60,9 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
           label: isEtpData && !isDsnData ? "Effectif ETP" : "Effectif physique",
 
           pointBackgroundColor: "white",
+
           pointBorderWidth: 1,
+          tension: 0.3,
         },
       ],
       labels: chartData?.map((obj) =>
@@ -125,7 +126,7 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
                 </div>
               </LoadableContent>
             ) : (
-              <div>No data available.</div>
+              <div>Données non disponibles.</div>
             )}
           </>
         )}

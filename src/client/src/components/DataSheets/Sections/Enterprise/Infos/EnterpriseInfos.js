@@ -196,7 +196,11 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
                               />
                             </td>
                             <td>
-                              <Value value={effectif?.effectif} empty="-" />
+                              <Value
+                                hasNumberFormat
+                                value={effectif?.effectif}
+                                empty="-"
+                              />
                             </td>
                           </tr>
                         ))}

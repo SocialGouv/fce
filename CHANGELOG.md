@@ -1,3 +1,10 @@
+# [27.75.0](https://github.com/SocialGouv/fce/compare/v27.74.0...v27.75.0) (2023-06-09)
+
+
+### Features
+
+* unknown siret/siren ([#281](https://github.com/SocialGouv/fce/issues/281)) ([12e0d8e](https://github.com/SocialGouv/fce/commit/12e0d8eb1e4bc610c66f1ed9dbf39ff127807062))
+
 # [27.74.0](https://github.com/SocialGouv/fce/compare/v27.73.0...v27.74.0) (2023-06-09)
 
 

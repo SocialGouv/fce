@@ -28,9 +28,10 @@ import { useEstablishmentHeaderData } from "./EstablishmentHeader.gql";
 
 const EstablishmentHeader = ({ siret }) => {
   const { data: etablissement } = useEstablishmentHeaderData(siret);
-  const adresse = etablissement ? getAdresse(etablissement) : "";
+  const adresse = etablissement?.length > 0 ? getAdresse(etablissement[0]) : "";
 
-  const isEtablissementActive = isActive(etablissement);
+  const isEtablissementActive =
+    etablissement?.length > 0 ? isActive(etablissement[0]) : false;
 
   const stateClass = isEtablissementActive ? "icon--success" : "icon--danger";
 

@@ -35,5 +35,5 @@ export const useEstablishmentHeaderData = pipe(
       context: { clientName: BCE_CLIENT },
       variables: { siret },
     }),
-  mapQueryResult(prop("fce_etablissements[0]"))
+  mapQueryResult(prop("fce_etablissements"))
 );

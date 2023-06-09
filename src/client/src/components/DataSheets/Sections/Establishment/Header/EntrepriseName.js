@@ -11,14 +11,22 @@ const EntrepriseName = ({ siret }) => {
   if (loading || error) {
     return null;
   }
+  const etb_raisonsociale = () => {
+    if (!raisonSociale || raisonSociale?.length === 0) return "";
+    return raisonSociale[0]?.etb_raisonsociale;
+  };
   return (
     <>
       <Helmet>
-        <title>FCE - établissement {raisonSociale}</title>
+        <title>
+          {etb_raisonsociale
+            ? `FCE - établissement ${etb_raisonsociale}`
+            : "FCE - établissement"}
+        </title>
       </Helmet>
 
       <h1 className="data-sheet-header__title">
-        <Value value={raisonSociale} empty=" " />
+        <Value value={etb_raisonsociale ? etb_raisonsociale : ""} empty=" " />
       </h1>
     </>
   );

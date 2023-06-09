@@ -1,3 +1,10 @@
+# [27.74.0](https://github.com/SocialGouv/fce/compare/v27.73.0...v27.74.0) (2023-06-09)
+
+
+### Features
+
+* fix entrprise la redoute bug ([#280](https://github.com/SocialGouv/fce/issues/280)) ([279e58f](https://github.com/SocialGouv/fce/commit/279e58fd25ce36f4df42d5c04f901e9c28b7d844))
+
 # [27.73.0](https://github.com/SocialGouv/fce/compare/v27.72.0...v27.73.0) (2023-06-07)
 
 

@@ -1,3 +1,10 @@
+# [27.76.0](https://github.com/SocialGouv/fce/compare/v27.75.0...v27.76.0) (2023-06-09)
+
+
+### Features
+
+* arrondir les courbes ([#283](https://github.com/SocialGouv/fce/issues/283)) ([8b502d5](https://github.com/SocialGouv/fce/commit/8b502d5d838b4a1ad816f32fdb27d0d9e0777e14))
+
 # [27.75.0](https://github.com/SocialGouv/fce/compare/v27.74.0...v27.75.0) (2023-06-09)
 
 

@@ -9,7 +9,7 @@ import {
   sortedDataAsc,
 } from "../../../../../../utils/donnees-ecofi/donnees-ecofi";
 
-function FinancesGraph({ data, isDataApi = false }) {
+function FinancesGraph({ data = [], isDataApi = false }) {
   const chartCanvasRef = useRef(null);
   const [datasetsToDisplay, setDatasetsToDisplay] = useState([
     "Chiffre d'affaires ",
@@ -83,14 +83,12 @@ function FinancesGraph({ data, isDataApi = false }) {
           backgroundColor: "#F1948A",
           borderColor: "#B71C1C",
           borderWidth: 2.5,
-
           label: "Résultat net ",
         },
         {
           backgroundColor: "#BB8FCE",
           borderColor: "#5B2C6F",
           borderWidth: 2.5,
-
           label: "Marge brute ",
         },
       ];
@@ -105,6 +103,7 @@ function FinancesGraph({ data, isDataApi = false }) {
             label: "Chiffre d'affaires ",
             pointBackgroundColor: "white",
             pointBorderWidth: 1,
+            tension: 0.3,
           },
         ],
         labels: sortedApiDataAsc(data)?.map(({ data }) =>
@@ -122,6 +121,7 @@ function FinancesGraph({ data, isDataApi = false }) {
             label: "EBITDA-EBE ",
             pointBackgroundColor: "white",
             pointBorderWidth: 1,
+            tension: 0.3,
           },
           {
             backgroundColor: "#FCF3CF",
@@ -131,6 +131,7 @@ function FinancesGraph({ data, isDataApi = false }) {
             label: "Chiffre d'affaires ",
             pointBackgroundColor: "white",
             pointBorderWidth: 1,
+            tension: 0.3,
           },
           {
             backgroundColor: "#ABEBC6",
@@ -140,6 +141,7 @@ function FinancesGraph({ data, isDataApi = false }) {
             label: "Résultat d'exploitation ",
             pointBackgroundColor: "white",
             pointBorderWidth: 1,
+            tension: 0.3,
           },
           {
             backgroundColor: "#F1948A",
@@ -149,6 +151,7 @@ function FinancesGraph({ data, isDataApi = false }) {
             label: "Résultat net ",
             pointBackgroundColor: "white",
             pointBorderWidth: 1,
+            tension: 0.3,
           },
           {
             backgroundColor: "#BB8FCE",
@@ -158,13 +161,13 @@ function FinancesGraph({ data, isDataApi = false }) {
             label: "Marge brute ",
             pointBackgroundColor: "white",
             pointBorderWidth: 1,
+            tension: 0.3,
           },
         ],
         labels: sortedDataAsc(data)?.map(({ date_fin_exercice }) =>
           setYearMonthFormat(date_fin_exercice)
         ),
       };
-  console.log(chartData);
   const options = {
     interaction: {
       intersect: false,

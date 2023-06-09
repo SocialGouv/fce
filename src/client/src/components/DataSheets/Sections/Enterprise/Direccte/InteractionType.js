@@ -61,11 +61,13 @@ const InteractionType = ({ type, interactions }) => {
                   <td>
                     {getCodePostal(etab)} {getCity(etab)}
                   </td>
-                  <td>{usDateToFrenchDate(interaction.date)}</td>
-                  <td>{interaction.pole}</td>
+                  <td>
+                    {interaction?.date && usDateToFrenchDate(interaction?.date)}
+                  </td>
+                  <td>{interaction?.pole}</td>
                   <td className="see-details">
                     <SeeDetailsLink
-                      link={`/establishment/${interaction.siret}/#direccte`}
+                      link={`/establishment/${interaction?.siret}/#direccte`}
                     />
                   </td>
                 </tr>

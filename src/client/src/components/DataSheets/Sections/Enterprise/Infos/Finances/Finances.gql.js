@@ -6,10 +6,9 @@ import { mapQueryResult } from "../../../../../../utils/graphql/graphql";
 
 const financeQuery = gql`
   query FinanceIndicatorsQuery($siren: String!) {
-    fce_finance_indicateurs(
-      where: { siren: { _eq: $siren } }
+    bilan_C: fce_finance_indicateurs(
+      where: { siren: { _eq: $siren }, type_bilan: { _neq: "K" } }
       order_by: { date_cloture_exercice: desc }
-      limit: 5
     ) {
       EBIT
       Marge_brute
@@ -17,6 +16,18 @@ const financeQuery = gql`
       Resultat_net
       ca: Chiffre_d_affaires
       date_fin_exercice: date_cloture_exercice
+    }
+    bilan_Type_K: fce_finance_indicateurs(
+      where: { siren: { _eq: $siren }, type_bilan: { _eq: "k" } }
+      order_by: { date_cloture_exercice: desc }
+    ) {
+      EBIT
+      Marge_brute
+      EBE
+      Resultat_net
+      ca: Chiffre_d_affaires
+      date_fin_exercice: date_cloture_exercice
+      type_bilan
     }
   }
 `;
@@ -29,7 +40,10 @@ export const useFinanceData = pipe(
       },
       variables: { siren },
     }),
-  mapQueryResult(prop("fce_finance_indicateurs"))
+  mapQueryResult(({ bilan_C, bilan_Type_K }) => ({
+    bilan_K: bilan_Type_K,
+    donneesEcofiBce: bilan_C,
+  }))
 );
 
 const financeApiEntrepriseQuery = gql`

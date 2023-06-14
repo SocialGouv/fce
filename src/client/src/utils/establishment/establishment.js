@@ -50,15 +50,16 @@ const groupDefined = (separator = "") =>
   pipe(filter(negate(isEmpty)), join(separator));
 
 export const getAdresse = (etablissement) => {
-  return [
-    groupDefined()([
-      getNumero(etablissement),
-      getIndiceRepetition(etablissement),
-    ]),
-    getTypeVoie(etablissement),
-    getNomVoie(etablissement),
-    "-",
-    getCodePostal(etablissement),
-    getCity(etablissement),
-  ].join(" ");
+  if (etablissement)
+    return [
+      groupDefined()([
+        getNumero(etablissement),
+        getIndiceRepetition(etablissement),
+      ]),
+      getTypeVoie(etablissement),
+      getNomVoie(etablissement),
+      "-",
+      getCodePostal(etablissement),
+      getCity(etablissement),
+    ].join(" ");
 };

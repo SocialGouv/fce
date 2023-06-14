@@ -28,13 +28,11 @@ import { useEstablishmentHeaderData } from "./EstablishmentHeader.gql";
 
 const EstablishmentHeader = ({ siret }) => {
   const { data: etablissement } = useEstablishmentHeaderData(siret);
-  const adresse = etablissement?.length > 0 ? getAdresse(etablissement[0]) : "";
+  const adresse = getAdresse(etablissement);
 
-  const isEtablissementActive =
-    etablissement?.length > 0 ? isActive(etablissement[0]) : false;
+  const isEtablissementActive = isActive(etablissement);
 
   const stateClass = isEtablissementActive ? "icon--success" : "icon--danger";
-
   return (
     <section id="header" className="data-sheet-header">
       <EntrepriseName siret={siret} />
@@ -69,7 +67,11 @@ const EstablishmentHeader = ({ siret }) => {
               {isEtablissementActive ? (
                 <span>
                   Ouvert depuis le{" "}
-                  <Value value={getDateCreation(etablissement)} empty="" />
+                  <Value
+                    value={getDateCreation(etablissement)}
+                    empty=""
+                    datecreationetablissement
+                  />
                 </span>
               ) : (
                 <div>

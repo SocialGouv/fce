@@ -1,3 +1,10 @@
+# [27.77.0](https://github.com/SocialGouv/fce/compare/v27.76.0...v27.77.0) (2023-06-14)
+
+
+### Features
+
+* fix display etablissement name ([#285](https://github.com/SocialGouv/fce/issues/285)) ([eee5f08](https://github.com/SocialGouv/fce/commit/eee5f0897f4a6222ae4ccdb275480be933d6cc76))
+
 # [27.76.0](https://github.com/SocialGouv/fce/compare/v27.75.0...v27.76.0) (2023-06-09)
 
 

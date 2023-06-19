@@ -77,13 +77,19 @@ jobs:
         dockerfile: server/Dockerfile
 
     build-graphiql:
-      imagePackage: graphiql
-      context: src/graphiql
+      use: build
+      with:
+        imagePackage: graphiql
+        context: src/graphiql
 
     build-strapi:
-      imagePackage: strapi
-      context: src/strapi
+      use: build
+      with:
+        imagePackage: strapi
+        context: src/strapi
 
     build-n8n:
-      imagePackage: n8n
-      context: src/n8n
+      use: build
+      with:
+        imagePackage: n8n
+        context: src/n8n

@@ -1,0 +1,88 @@
+front:
+  ~chart: app
+  ~needs: [build-front]
+  imagePackage: front
+  probesPath: /healthz
+  containerPort: 80
+  envFrom:
+    - configMapRef:
+        name: client-env
+
+server:
+  ~chart: app
+  ~needs: [build-server]
+  imagePackage: server
+  probesPath: /healthz
+  containerPort: 3000
+  envFrom:
+    - secretRef:
+        name: server-env
+    - configMapRef:
+        name: server-env
+
+graphiql:
+  ~chart: app
+  ~needs: [build-graphiql]
+  imagePackage: graphiql
+  probesPath: /healthz
+  containerPort: 80
+
+n8n:
+  ~chart: app
+  ~needs: [build-n8n]
+  imagePackage: n8n
+  probesPath: /healthz
+  containerPort: 5678
+  envFrom:
+    - secretRef:
+        name: n8n-env
+    - configMapRef:
+        name: n8n-env
+  volumes:
+    - name: downloads
+  volumeMounts:
+    - name: downloads
+      mountPath: /tmp/download
+
+redis:
+  ~chart: redis
+
+strapi:
+  ~chart: app
+  ~needs: [build-strapi]
+  imagePackage: strapi
+  probesPath: /_health
+  containerPort: 1337
+  envFrom:
+    - secretRef:
+        name: strapi-env
+    - configMapRef:
+        name: strapi-env
+
+jobs:
+  ~chart: jobs
+  runs:
+
+    build-front:
+      use: build
+      with:
+        imagePackage: front
+        context: src/client
+
+    build-server:
+      use: build
+      with:
+        imagePackage: server
+        context: src/server
+
+    build-graphiql:
+      imagePackage: graphiql
+      context: src/graphiql
+
+    build-strapi:
+      imagePackage: strapi
+      context: src/strapi
+
+    build-n8n:
+      imagePackage: n8n
+      context: src/n8n

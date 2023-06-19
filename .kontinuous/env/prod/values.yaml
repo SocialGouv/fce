@@ -1,0 +1,23 @@
+n8n:
+  resources:
+    limits:
+      cpu: "4"
+      memory: 1280Mi
+
+redis:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+server:
+  resources:
+    limits:
+      cpu: "500m"
+      memory: 1280Mi
+
+strapi:
+  resources:
+    limits:
+      cpu: "500m"
+      memory: 512Mi

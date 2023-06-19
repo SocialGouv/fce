@@ -73,7 +73,8 @@ jobs:
       use: build
       with:
         imagePackage: server
-        context: src/server
+        context: src
+        dockerfile: server/Dockerfile
 
     build-graphiql:
       imagePackage: graphiql

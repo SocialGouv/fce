@@ -101,7 +101,6 @@ export const getStartDateEtp = (date, range) => {
 };
 export const getStartDate = (date, range) => {
   const data = getStartDateEtp(date, range);
-  console.log(date, "====>", data);
   return setYearMonthFormat(data);
 };
 

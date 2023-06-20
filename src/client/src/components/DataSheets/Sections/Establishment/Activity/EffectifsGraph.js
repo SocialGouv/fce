@@ -30,13 +30,13 @@ const EffectifGraph = ({
       effectifsMaxCount: range,
     },
     { periode_concerne: "asc" },
-    getStartDateEtp(range)
+    getStartDateEtp(date, range)
   );
 
   const { data: dsn_data } = useDsnEffectif(
     siret,
     {
-      limit: range + 1,
+      limit: range,
     },
     { mois: "asc" },
     getStartDate(date, range)

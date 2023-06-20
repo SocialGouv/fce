@@ -78,7 +78,13 @@ const EffectifsEtp = ({ siret }) => {
         </>
       )}
       {displayedEffectifsCount === MAX_EFFECTIF_COUNT && (
-        <Subcategory subtitle="Effectifs ETP" sourceCustom={`Gip-Mds / DSN`}>
+        <Subcategory
+          subtitle="Effectifs ETP"
+          sourceCustom={`Gip-Mds / DSN ${getDateMonthName(
+            effectifsMensuels[0]?.periode_concerne
+          )} ${getDateYear(effectifsMensuels[0]?.periode_concerne)}`}
+          value={effectifsMensuels[0]?.effectif}
+        >
           <div className="display_table_chart__switch">
             <Toggle
               id="display_table_chart-toggle"
@@ -123,7 +129,13 @@ const EffectifsEtp = ({ siret }) => {
       )}
       {!displayTable &&
         displayedEffectifsCount !== MIN_EFFECTIFS_COUNT &&
-        siret && <EffectifGraph siret={siret} isEtpData />}{" "}
+        siret && (
+          <EffectifGraph
+            siret={siret}
+            isEtpData
+            date={effectifsMensuels[0]?.periode_concerne}
+          />
+        )}{" "}
       {displayedEffectifsCount === MAX_EFFECTIF_COUNT && (
         <AllEffectifsEtp
           text="Afficher moins"

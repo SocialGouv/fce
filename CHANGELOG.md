@@ -1,3 +1,10 @@
+# [27.78.0](https://github.com/SocialGouv/fce/compare/v27.77.0...v27.78.0) (2023-06-20)
+
+
+### Features
+
+* add bilan consolide ([#284](https://github.com/SocialGouv/fce/issues/284)) ([41b9da8](https://github.com/SocialGouv/fce/commit/41b9da8adb0d74cd1de552da037856af12d55690))
+
 # [27.77.0](https://github.com/SocialGouv/fce/compare/v27.76.0...v27.77.0) (2023-06-14)
 
 

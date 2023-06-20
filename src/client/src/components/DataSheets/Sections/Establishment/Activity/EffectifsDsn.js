@@ -41,6 +41,7 @@ const EffectifsDsn = ({ siret }) => {
       />
     );
   }
+  console.log(effectifs?.[0]?.mois, "date");
   const handleChange = (event) => {
     setDisplayTable(event.target.checked);
   };
@@ -145,7 +146,11 @@ const EffectifsDsn = ({ siret }) => {
               )}
             </Subcategory>
             {!displayTable && siret && (
-              <EffectifsGraph isDsnData siret={siret} />
+              <EffectifsGraph
+                isDsnData
+                siret={siret}
+                date={effectifs?.[0]?.mois}
+              />
             )}{" "}
             {isExpanded && (
               <AllEffectifsEtpButton

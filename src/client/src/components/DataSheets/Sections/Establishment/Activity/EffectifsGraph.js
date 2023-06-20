@@ -15,7 +15,12 @@ import { useDsnEffectif } from "./EffectifsDsn.gql";
 import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
 
 const RANGE = 12;
-const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
+const EffectifGraph = ({
+  siret,
+  isEtpData = false,
+  isDsnData = false,
+  date,
+}) => {
   const [range, setRange] = useState(RANGE);
   const [chartData, setChartData] = useState([]);
   const { data: etp_data } = useEffectifsEtablissementsEtpData(
@@ -31,10 +36,10 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
   const { data: dsn_data } = useDsnEffectif(
     siret,
     {
-      limit: range,
+      limit: range + 1,
     },
     { mois: "asc" },
-    getStartDate(range)
+    getStartDate(date, range)
   );
 
   useEffect(() => {
@@ -139,6 +144,7 @@ EffectifGraph.propTypes = {
   isDsnData: PropTypes.bool,
   isEtpData: PropTypes.bool,
   siret: PropTypes.string.isRequired,
+  date: PropTypes.string,
 };
 
 export default renderIfSiret(EffectifGraph);

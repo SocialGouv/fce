@@ -15,7 +15,7 @@ import LegacyEtablissement from "../../containers/Enterprise/LegacyEtablissement
 import Login from "../../containers/Login";
 import PublicPage from "../../containers/PublicPage";
 import Search from "../../containers/Search";
-import UnsubscribePage from "../../containers/UnsubscribePage";
+// import UnsubscribePage from "../../containers/UnsubscribePage";
 import SetMatomo from "../../helpers/Matomo/SetMatomo";
 import Config from "../../services/Config";
 import { apolloClient } from "../../services/GraphQL/GraphQL";
@@ -52,7 +52,7 @@ const App = () => {
               <div className="app">
                 <Switch>
                   <Switch>
-                    <Route
+                    {/* <Route
                       exact
                       path="/unsubscribe/:hash"
                       render={(props) => (
@@ -60,7 +60,7 @@ const App = () => {
                           <UnsubscribePage {...props} />
                         </Layout>
                       )}
-                    />
+                    /> */}
                     <Route>
                       <IEChecker>
                         {isActiveMaintenanceMode ? (

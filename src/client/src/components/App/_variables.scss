@@ -6,6 +6,7 @@ $deep-blue: #284293;
 $cobalt-blue: #004aad;
 $carolina-blue: #22a1e2;
 $blue: #2980b9;
+$dark-blue: #000091;
 $turquoise: #2aa995;
 $faced-blue: #5499c6;
 $light-sky-blue: #d4e6f1;
@@ -18,8 +19,9 @@ $white-alabaster: #fafafa;
 $white-smoke: #f5f5f5;
 $grey-geyser: #dde1e5;
 $grey: #808080;
-$grey-tundora: #4a4a4a;
+$grey-tundora: #666666;
 $dark-grey: #363636;
+$default-grey: #dddddd;
 
 $primary: $blue;
 $secondary: $turquoise;
@@ -71,6 +73,7 @@ $font-size-small: 0.8rem;
 $segoe: "Segoe Pro", sans-serif;
 $evolventa: "Evolventa", sans-serif;
 $roboto: Roboto, sans-serif;
+$marianne: "Marianne", sans-serif;
 
 /* SPACING (values from Bulma) */
 $spacing-1: map-get($spacing-values, "1"); // 0.25rem

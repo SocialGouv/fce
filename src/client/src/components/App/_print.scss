@@ -76,7 +76,10 @@
             padding: 0.35rem !important;
         }
     }
-
+    .header__logo_FCE {
+        display: flex;
+        flex-direction: row;
+    }
     // >>> HIDE ELEMENTS
     .header__buttons,
     .beta-message,
@@ -86,10 +89,14 @@
     .table .see-details-link,
     .user-feedback,
     .footer,
+    .breadcrumbs,
+    .header__titles,
+    .logo_FCE,
     .icon,
     .dashboard-item__header-icon,
     .data-sheet-header__status svg,
-    [href^="https://www.legifrance.gouv.fr"] {
+    [href^="https://www.legifrance.gouv.fr"]
+    {
         display: none !important;
     }
 

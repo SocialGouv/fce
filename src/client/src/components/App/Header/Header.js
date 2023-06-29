@@ -1,22 +1,28 @@
 import "./header.scss";
 
-import { faChevronLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faChevronLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
-import logo from "../../../assets/img/logo_gouv-65w38h.png";
+import LogoFCE from "../../../assets/img/FCE.svg";
+import Logo from "../../../assets/img/GouvernementSVG.svg";
 import { resetSearch } from "../../../services/Store/actions";
+import HeaderLogo from "../Logo/Logo.jsx";
 
-const Header = ({ resetSearch, location, showBetaMessage }) => {
+const Header = ({ resetSearch, location }) => {
+  useEffect(() => {
+    console.log("location", location);
+  }, [location]);
+
   return (
-    <header className="app-header">
-      <div className="container is-fullhd">
-        <nav>
-          <div className="header__items is-tablet">
+    <header className="app-header ">
+      <div className="container is-fluid ">
+        <nav className="navbar">
+          <div className="header__items is-tablet ">
             <Link
               className="header__home-link"
               to="/"
@@ -24,10 +30,30 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
                 resetSearch();
               }}
             >
-              <img className="header__logo" src={logo} alt="Logo Marianne" />
-              <div className="header__title">Fiche Commune Entreprise</div>
+              <div className="header__logo_FCE">
+                <HeaderLogo
+                  title="république française"
+                  className="header__logo_marianne"
+                  width={140}
+                  height={54}
+                  logo={Logo}
+                />
+                <HeaderLogo
+                  title="Logo de la Fiche Commune Entreprise"
+                  className="header__logo_marianne logo_FCE"
+                  width={53.83}
+                  height={48}
+                  logo={LogoFCE}
+                />
+                <div className="header__titles">
+                  <div className="header__title">Fiche Commune Entreprise</div>
+                  <div className="header__sub_title">
+                    Le portail de l’intelligence collective des agents publics
+                  </div>
+                </div>
+              </div>
             </Link>
-            {(location.pathname.includes("/establishment") ||
+            {/* {(location.pathname.includes("/establishment") ||
               location.pathname.includes("/enterprise")) && (
               <div className="header__buttons">
                 <div className="navbar-end is-flex">
@@ -51,11 +77,12 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
                   </Link>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         </nav>
       </div>
 
+      {/* 
       {showBetaMessage && (
         <div className="beta-message">
           <div>
@@ -73,7 +100,7 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
             )}
           </div>
         </div>
-      )}
+      )} */}
     </header>
   );
 };
@@ -89,7 +116,6 @@ const mapDispatchToProps = (dispatch) => {
 Header.propTypes = {
   location: PropTypes.object,
   resetSearch: PropTypes.func,
-  showBetaMessage: PropTypes.bool.isRequired,
 };
 
 export default withRouter(connect(null, mapDispatchToProps)(Header));

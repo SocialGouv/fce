@@ -58,7 +58,8 @@ a {
 .table {
     @extend .is-striped;
 
-    td.table-cell, th.table-cell {
+    td.table-cell,
+    th.table-cell {
         &--center-cell {
             text-align: center;
         }
@@ -94,10 +95,9 @@ a {
 .sourceApi {
     display: flex;
     align-items: flex-end !important;
-    color:black;
+    color: black;
     span {
         font-size: 0.5rem;
         color: $grey !important;
-       
     }
 }

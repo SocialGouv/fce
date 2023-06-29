@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-import Unsubscribe from "../../../../containers/Unsubscribe";
+// import Unsubscribe from "../../../../containers/Unsubscribe";
 import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 import withLoading from "../../../../services/withLoading";
@@ -60,7 +60,7 @@ const Enterprise = ({ enterprise }) => {
           </div>
         </div>
       </section>
-      <Unsubscribe />
+      {/* <Unsubscribe /> */}
     </div>
   );
 };

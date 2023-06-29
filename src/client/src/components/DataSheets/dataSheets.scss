@@ -22,6 +22,9 @@
             margin-bottom: $spacing-4;
             font-size: $font-size-datasheet-header;
             font-weight: bold;
+            @media print {
+                margin-top: 4rem !important;
+            }
         }
 
         &__status {

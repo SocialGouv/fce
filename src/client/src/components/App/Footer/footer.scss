@@ -4,101 +4,63 @@
 .app {
     .footer {
         padding: 0;
-        background-color: $footer-bg;
+        background-color: $white;
+        box-shadow: 0 -1px 0 0 $dark-blue;
+
+        &-row:not(:first-of-type) {
+            border-left: 1px solid $footer-link;
+            padding-left: 1.5rem;
+        }
 
         .container {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: $spacing-4 $padding-app-x;
-
-            @include from($tablet) {
-                flex-direction: row;
-            }
+            flex-direction: column !important;
         }
 
         &__gouv {
             display: flex;
-            flex-direction: column;
-
-            @include from($tablet) {
-                align-items: flex-start;
-            }
+            flex-direction: row !important;
+            padding: 1rem 4.25rem;
         }
-
-        &__gouv-text {
-            margin-top: $spacing-4;
-            padding-bottom: $spacing-2;
-            font-family: $segoe;
-            font-style: italic;
-            text-align: left;
-
-            @include from($tablet) {
-                max-width: 16rem;
-                margin-top: 0;
-                text-align: right;
-            }
-        }
-
         &__gouv-logo {
-            width: 80px;
             background: #fff;
-
-            @include from($tablet) {
-                width: 100px;
-                margin-left: auto;
-                padding: $spacing-1;
-            }
         }
 
         &__links {
+            display: flex;
+            padding: 1rem 7.5rem;
+            align-items: flex-start;
+            flex-flow: row wrap;
+            gap: 1rem;
+            color: $footer-link !important;
+            font-size: $font-size-small !important;
+            line-height: 1.25rem !important;
+            font-family: $marianne;
             a {
-                color: $footer-link;
-                transition: color 0.3s;
+                color: $footer-link !important;
 
                 &:hover {
-                    color: $primary;
+                    color: $dark-blue !important;
+                    text-decoration: underline !important;
+                    text-underline-offset: 2px;
                 }
             }
 
             &-row {
                 display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                height: 1rem;
             }
 
-            &-row:not(:last-of-type) {
-                margin-bottom: $spacing-2;
-            }
-
-            &-item:not(:last-of-type)::after {
-                content: "\2022";
-                margin: 0 $spacing-4;
-            }
-
-            &-row:last-of-type {
-                display: block;
-
-                .footer__links-item:first-of-type {
-                    margin-bottom: $spacing-2;
-
-                    &::after {
-                        content: none;
-                    }
-                }
-            }
-
-            @media (min-width: 1024px) {
-                &-row:last-of-type {
-                    display: flex;
-
-                    .footer__links-item:first-of-type {
-                        margin-bottom: 0;
-
-                        &::after {
-                            content: "\2022";
-                        }
-                    }
-                }
+            &-row:not(:first-of-type) {
+                box-shadow: -1px 0 0 0 $default-grey;
+                padding-left: 1rem;
             }
         }
+    }
+    .second-footer {
+        box-shadow: 0 -1px 0 0 $default-grey !important;
     }
 }

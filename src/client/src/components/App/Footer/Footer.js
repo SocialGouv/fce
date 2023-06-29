@@ -3,8 +3,9 @@ import "./footer.scss";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import mariane from "../../../assets/img/logo_gouv.png";
+import Logo from "../../../assets/img/Footer_Logo.svg";
 import Config from "../../../services/Config";
+import HeaderLogo from "../Logo/Logo.jsx";
 
 const Footer = () => {
   const [communicationKitLink, setCommunicationKitLink] = useState(null);
@@ -24,8 +25,21 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="footer">
-      <div className="container is-fullhd">
+    <>
+      <footer className="footer">
+        <div className="container is-fluid">
+          <div className="footer__gouv">
+            <HeaderLogo
+              title="république française"
+              className="header__logo_marianne"
+              width={290}
+              height={130}
+              logo={Logo}
+            />
+          </div>
+        </div>
+      </footer>
+      <footer className="footer second-footer">
         <div className="footer__links">
           <ul className="footer__links-row">
             <li className="footer__links-item">
@@ -33,23 +47,30 @@ const Footer = () => {
                 A propos
               </Link>
             </li>
+          </ul>
+          <ul className="footer__links-row">
             <li className="footer__links-item">
               <Link className="footer__link" to="/faq">
                 FAQ
               </Link>
             </li>
+          </ul>
+          <ul className="footer__links-row">
             <li className="footer__links-item">
               <Link className="footer__link" to="/aide">
                 Aide
               </Link>
             </li>
           </ul>
+
           <ul className="footer__links-row">
             <li className="footer__links-item">
               <Link className="footer__link" to="/sources-des-donnees">
                 Sources des données
               </Link>
             </li>
+          </ul>
+          <ul className="footer__links-row">
             <li className="footer__links-item">
               <Link className="footer__link" to="/statistics">
                 Statistiques
@@ -62,6 +83,8 @@ const Footer = () => {
                 Mentions légales
               </Link>
             </li>
+          </ul>
+          <ul className="footer__links-row">
             <li className="footer__links-item">
               <Link className="footer__link" to="/politique-de-confidentialite">
                 Politique de confidentialité
@@ -75,6 +98,8 @@ const Footer = () => {
                 {Config.get("contact.mailto")}
               </a>
             </li>
+          </ul>
+          <ul className="footer__links-row">
             <li className="footer__links-item">
               {communicationKitLink?.lien ? (
                 <a
@@ -90,19 +115,8 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-
-        <div className="footer__gouv">
-          <div className="footer__gouv-text">
-            Un service fourni par la fabrique des ministères sociaux
-          </div>
-          <img
-            src={mariane}
-            alt="Logo des institutions du gouvernement français"
-            className="footer__gouv-logo"
-          />
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 };
 

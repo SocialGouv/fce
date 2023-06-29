@@ -12,7 +12,7 @@ import {
 } from "react-accessible-accordion";
 
 import trancheEffectif from "../../containers/Search/tranche-effectif.json";
-import Unsubscribe from "../../containers/Unsubscribe/Unsubscribe";
+// import Unsubscribe from "../../containers/Unsubscribe/Unsubscribe";
 import UsersFeedback from "../../containers/UsersFeedback";
 import SearchResults from "../SearchResults";
 import AutoCompleteFilter from "./Filters/AutoCompleteFilter";
@@ -210,7 +210,7 @@ const Search = ({
       />
       <div>
         <UsersFeedback />
-        <Unsubscribe />
+        {/* <Unsubscribe /> */}
       </div>
     </div>
   );

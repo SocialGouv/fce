@@ -5,6 +5,7 @@ import React from "react";
 import { isIE } from "../../helpers/BrowserDetection";
 import Config from "../../services/Config";
 import LandingHeader from "../shared/LandingHeader";
+import Breadcrumbs from "./Breadcrumbs/Breadcrumbs.jsx";
 import Footer from "./Footer";
 import Header from "./Header";
 
@@ -20,7 +21,11 @@ const Layout = ({
       {hasLandingHeader ? (
         <LandingHeader hasSharedButton={hasSharedButton} />
       ) : (
-        <Header showBetaMessage={!isActiveMaintenanceMode} />
+        <>
+          {" "}
+          <Header showBetaMessage={!isActiveMaintenanceMode} />
+          <Breadcrumbs />
+        </>
       )}
       <div className={classNames("app-container", { ie11: isIE })}>
         {children}

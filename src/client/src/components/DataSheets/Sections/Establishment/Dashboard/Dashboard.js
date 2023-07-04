@@ -1,15 +1,6 @@
 import "./dashboard.scss";
 
 import {
-  faCalendarCheck,
-  faChild,
-  faExclamationTriangle,
-  faGlobeAmericas,
-  faGraduationCap,
-  faMedkit,
-  faUserInjured,
-} from "@fortawesome/free-solid-svg-icons";
-import {
   entries,
   filter,
   flatten,
@@ -31,6 +22,13 @@ import {
   normalizeInteractionsC,
   normalizeInteractionsT,
 } from "../../../../../utils/interactions/interactions";
+import Calendar from "../../../../shared/Icons/Calendar.jsx";
+import Effectif from "../../../../shared/Icons/EffectifIcon.jsx";
+import HealthIcon from "../../../../shared/Icons/HealthIcon.jsx";
+import Hospital from "../../../../shared/Icons/HospitalIcon.jsx";
+import Network from "../../../../shared/Icons/Network.jsx";
+import SchoolIcon from "../../../../shared/Icons/SchoolIcon.jsx";
+import Warning from "../../../../shared/Icons/Warning.jsx";
 import { useDashboardData, useEffectif } from "./Dashboard.gql";
 import Item from "./Item";
 
@@ -113,70 +111,78 @@ const Dashboard = ({ siret }) => {
       data?.psi_siren[0]?.salaries_annee_precedente
   );
   const isEstablishmentWithPsi = Boolean(establishmentPsiData);
+  const effectifItem = <Effectif size={40} />;
 
   return (
-    <div className="dashboard columns">
-      <div className="column container">
+    <div className="dashboard ">
+      <div className="columns column ">
         <Item
-          icon={faChild}
+          icon={effectifItem}
           name="Effectif"
           value={effectifLoading ? "Chargement ..." : effectif}
         />
 
         <Item
-          icon={faCalendarCheck}
+          icon={<Calendar />}
           name="Visites"
           smallText={!hasInteractions}
           value={hasInteractions ? lastControl : "Pas d'intervention connue"}
         />
 
-        {(activity.hasPse ||
-          activity.hasRcc ||
-          activity.hasLice ||
-          activity.partialActivity) && (
-          <Item
-            icon={faExclamationTriangle}
-            name="Mut Eco"
-            smallText={true}
-            value={
-              <>
-                <div>
-                  {activity.hasPse && "PSE-"}
-                  {activity.hasRcc && "RCC-"}
-                  {activity.hasLice && activity.liceTypes?.join("-")}
-                </div>
-
-                {activity.partialActivity && <div>Activité partielle</div>}
-              </>
-            }
-          />
-        )}
-
-        {hasAide(data) && <Item icon={faMedkit} name="Aides" value="Oui" />}
-
-        {(isEnterprisePsiContractor || isEstablishmentWithPsi) && (
-          <Item
-            icon={faGlobeAmericas}
-            name="PSI"
-            smallText={true}
-            value={
+        <Item
+          icon={<Warning />}
+          name="Mutations économiques"
+          smallText={true}
+          value={
+            <>
+              {!activity.hasPse &&
+                !activity.hasRcc &&
+                !activity.hasLice &&
+                !activity.partialActivity &&
+                "Non"}
               <div>
-                {isEstablishmentWithPsi && <div>Salariés détachés</div>}
-                {isEnterprisePsiContractor && <div>Entreprise DO</div>}
+                {activity.hasPse && "PSE-"}
+                {activity.hasRcc && "RCC-"}
+                {activity.hasLice && activity.liceTypes?.join("-")}
               </div>
-            }
-          />
-        )}
-        {data?.accidents_travail?.[0]?.total > 0 && (
-          <Item
-            icon={faUserInjured}
-            name="Accident Travail"
-            value={data?.accidents_travail?.[0]?.total}
-          />
-        )}
-        {isOrganismeFormation(data) && (
-          <Item icon={faGraduationCap} name="Organisme Formation" value="Oui" />
-        )}
+
+              {activity.partialActivity && <div>Activité partielle</div>}
+            </>
+          }
+        />
+      </div>
+      <div className="columns column ">
+        <Item
+          icon={<Network />}
+          name="PSI"
+          smallText={true}
+          value={
+            <div>
+              <ul>
+                {isEstablishmentWithPsi && <li>Salariés détachés</li>}
+                {isEnterprisePsiContractor && <li>Entreprise DO</li>}
+              </ul>
+              {!isEnterprisePsiContractor && !isEstablishmentWithPsi && "Non"}
+            </div>
+          }
+        />
+        <Item
+          icon={<Hospital />}
+          name="Accident Travail"
+          value={data?.accidents_travail?.[0]?.total}
+          empty="Non"
+        />
+        <Item
+          icon={<HealthIcon />}
+          name="Aides"
+          value={hasAide(data) ? "Oui" : "Non"}
+        />
+
+        <Item
+          icon={<SchoolIcon />}
+          name="Organisme Formation"
+          value={isOrganismeFormation(data) ? "Oui" : "Non"}
+        />
       </div>
     </div>
   );

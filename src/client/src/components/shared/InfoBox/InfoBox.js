@@ -14,7 +14,7 @@ const formatPostfix = (value) =>
 const InfoBox = ({ value }) => {
   return (
     <div className="info-box">
-      <span className="info-box__pill has-text-primary">
+      <span className="info-box__pill ">
         <span className="info-box__print">{formatPrefix(value)}</span>
         <Value value={value} empty="" />
         <span className="info-box__print">{formatPostfix(value)}</span>

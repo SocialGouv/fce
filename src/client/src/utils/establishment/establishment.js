@@ -21,7 +21,7 @@ export const isActive = pipe(getState, equals("A"));
 export const isSiege = pipe(prop("etablissementsiege"), equals("true"));
 
 export const getCategoryLabel = (etablissement) =>
-  isSiege(etablissement) ? "Siège Social" : "Établissement";
+  isSiege(etablissement) ? "Siège Social" : "Établissement secondaire";
 
 export const getCodePostal = (etablissement) =>
   prop("codepostaletablissement", etablissement) ||
@@ -58,8 +58,13 @@ export const getAdresse = (etablissement) => {
       ]),
       getTypeVoie(etablissement),
       getNomVoie(etablissement),
-      "-",
-      getCodePostal(etablissement),
-      getCity(etablissement),
     ].join(" ");
 };
+export const getCodePostalAndCity = (etablissement) => {
+  if (etablissement)
+    return [getCodePostal(etablissement), getCity(etablissement)].join(" ");
+};
+
+export const getEtablissementsCount = prop("nb_eta");
+
+export const getEtablissementsFermesCount = prop("nb_eta_fermes");

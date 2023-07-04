@@ -1,51 +1,65 @@
 @import "./../../../../App/variables";
 @import "./../../../../App/placeholders";
 
-.dashboard .column {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-
-    .dashboard-item {
-        margin-right: $spacing-3;
-        margin-bottom: $spacing-3;
-        border: solid 1px $primary;
-        border-radius: $border-radius-2;
-        padding: $spacing-1;
-        height: 8.8rem;
-        width: 8.8rem;
+.dashboard {
+    margin-top: $spacing-3;
+    .column {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: $spacing-2;
+        margin-bottom: 0 !important;
 
-        &__header {
-            margin-bottom: $spacing-3;
-            padding: $spacing-2;
-            border-bottom: solid 2px $primary;
-            display: flex;
-            justify-content: center;
-
-            &-icon {
-                color: $primary;
-                width: 1rem;
-                margin-right: $spacing-2;
-            }
-
-            &-label {
-                font-weight: bold;
-            }
-        }
-
-        &__data {
-            @extend %flex-center;
-            text-align: center;
+        .dashboard-item {
+            margin-right: $spacing-3;
+            margin-bottom: $spacing-2;
+            border: solid 1px #ddd;
+            padding: $spacing-4;
+            max-height: 8.8rem;
             flex: 1;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 2rem;
+            &-icon {
+                width: 1rem;
+            }
+            &__data {
+                flex: 1;
 
-            &--small-text {
-                font-size: 0.9rem;
+                &__header {
+                    margin-bottom: $spacing-3;
+                    display: flex;
+                    justify-content: flex-start;
+                    text-align: start;
+                    flex-direction: column;
+                    font-family: $marianne;
+                    line-height: 1.5rem;
+
+                    &-label {
+                        font-size: $font-size-base;
+                        font-weight: bold;
+                        color: $title-grey;
+                        margin-right: $spacing-2;
+                    }
+                    &-value {
+                        color: $default-text-gey !important;
+                        font-size: $font-size-small;
+                        font-weight: 400;
+                        ul {
+                            list-style-type: disc;
+                        }
+                    }
+                }
+
+                @extend %flex-start;
+                flex-direction: column;
+
+                &--small-text {
+                    font-size: 0.9rem;
+                }
             }
         }
     }

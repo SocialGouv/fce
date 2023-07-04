@@ -18,7 +18,7 @@ const EntrepriseName = ({ siret }) => {
       </Helmet>
 
       <h1 className="data-sheet-header__title">
-        <Value value={raisonSociale} empty=" " />
+        <Value value={raisonSociale.toLowerCase()} empty=" " />
       </h1>
     </>
   );

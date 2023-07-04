@@ -95,6 +95,8 @@
     .icon,
     .dashboard-item__header-icon,
     .data-sheet-header__status svg,
+    .data-sheet-header__bloc_link,
+    .data-sheet-header-address-icon,
     [href^="https://www.legifrance.gouv.fr"]
     {
         display: none !important;
@@ -142,6 +144,9 @@
             text-transform: uppercase !important;
             border: 1pt solid #000 !important;
             border-radius: 0 !important;
+            // display: flex !important;
+
+            // justify-content: center;
         }
 
         &__print {
@@ -164,6 +169,19 @@
         &-header__enterprise-button,
         &-header__enterprise-external-link {
             display: none !important;
+        }
+        &-header__status {
+            display: flex !important;
+            flex-direction: row !important;
+            white-space: nowrap !important;
+            display: inline-block !important;
+
+            &-icon,
+            &-date {
+                display: flex !important;
+                justify-content: flex-start !important;
+                margin-left: 0 !important;
+            }
         }
 
         &__print-section {

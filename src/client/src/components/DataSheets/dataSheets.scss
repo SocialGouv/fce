@@ -11,32 +11,117 @@
         margin-bottom: $spacing-5;
         background-color: $white;
         border-radius: $border-radius-2;
-
-        &__siren,
-        &__siret {
-            font-family: $roboto;
-            font-weight: bold;
+        .is-bold {
+            font-weight: bold !important;
+            margin-right: 0.25rem;
         }
 
+        .has-list-style:before {
+            content: "• ";
+        }
+        .columns {
+            margin-bottom: 0;
+        }
+        .column {
+            padding-bottom: 0.75rem;
+            padding-top: 0.25rem;
+        }
+        &__siren,
+        &__siret {
+            font-family: $marianne;
+            font-weight: 400;
+            line-height: 1.5rem;
+            font-size: $font-size-base;
+            color: #000000;
+        }
+        &-address {
+            align-items: center;
+        }
+        &-address,
+        &-top {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 0.25rem;
+            font-family: $marianne;
+            font-weight: 400;
+            line-height: 1.25rem;
+            font-size: $font-size-base;
+            color: #000000;
+            span {
+                line-height: 1.25rem !important;
+                margin-right: 5px;
+            }
+        }
         &__title {
             margin-bottom: $spacing-4;
             font-size: $font-size-datasheet-header;
             font-weight: bold;
+            font-family: $marianne;
+            text-transform: capitalize;
+            line-height: 2.5rem;
+            color: $title-grey;
+
             @media print {
                 margin-top: 4rem !important;
             }
         }
+        &__bloc {
+            display: flex;
+            flex-direction: column;
+            &_link {
+                display: flex;
+                align-items: center;
+                margin-top: 0.25rem;
+                a {
+                    color: $dark-blue !important;
+                    font-family: $marianne;
+                    font-size: $font-size-base;
+                    font-weight: 400;
+                    line-height: 1.5rem;
+                    text-decoration: underline !important;
+                    text-underline-offset: 4px;
+                }
+            }
+        }
+        &__status-closed {
+            display: flex;
+            font-family: $marianne;
+            font-weight: 400;
+            line-height: 1.5rem;
+            font-size: $font-size-base;
+            color: #000000;
+            margin: 0.5rem 0;
+        }
 
         &__status {
             display: flex;
+            align-items: center;
 
             &-icon {
                 margin-right: $spacing-2;
             }
+            &-date {
+                font-family: $marianne;
+                font-weight: 400;
+                line-height: 1.5rem;
+                font-size: $font-size-base;
+                color: #000000;
+            }
         }
 
         &__naf {
-            font-weight: bold;
+            display: flex;
+            flex-wrap: wrap;
+            font-weight: 400;
+            line-height: 1.75rem;
+            color: #000;
+            font-family: $marianne;
+            font-size: $font-size-base;
+            span {
+                margin-right: 5px;
+            }
         }
 
         @media not print {

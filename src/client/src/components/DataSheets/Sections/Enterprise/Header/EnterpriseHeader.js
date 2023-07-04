@@ -81,7 +81,7 @@ const EnterpriseHeader = ({ enterprise, resetSearch, setSearchTerm }) => {
                   className={`data-sheet-header__status-icon ${stateClass}`}
                 />
               </div>
-              <div className="has-text-segoe">
+              <div>
                 {isActive(enterprise) ? (
                   <span>
                     Ouvert depuis le{" "}

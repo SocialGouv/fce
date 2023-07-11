@@ -1,7 +1,5 @@
 import "./establishmentActivity.scss";
 
-import { faHistory } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -20,12 +18,9 @@ const Activite = ({ siret }) => {
   const { loading, data, error } = useSuccessionData(siret);
 
   return (
-    <section id="activity" className="data-sheet__section">
+    <section id="activity" className="data-sheet__bloc_section">
       <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faHistory} />
-        </span>
-        <h2 className="title">Activité</h2>
+        <h2 className="dark-blue-title">Activité</h2>
       </div>
       <div className="section-datas">
         <Subcategory subtitle="Lien de succession" sourceSi="Sirène">

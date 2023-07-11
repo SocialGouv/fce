@@ -8,21 +8,20 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-        gap: $spacing-2;
+        gap: $spacing-3;
         margin-bottom: 0 !important;
 
         .dashboard-item {
-            margin-right: $spacing-3;
             margin-bottom: $spacing-2;
             border: solid 1px #ddd;
-            padding: $spacing-4;
+            padding: $spacing-4 $spacing-5;
             max-height: 8.8rem;
             flex: 1;
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             align-items: flex-start;
-            gap: 2rem;
+            gap: $spacing-5;
             &-icon {
                 width: 1rem;
             }

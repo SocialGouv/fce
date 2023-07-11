@@ -1,0 +1,42 @@
+@import "../../../../App/variables";
+@import "../../../../App/placeholders";
+
+.data-sheet--table {
+    .non-bordered-table-overflow-container {
+        overflow-x: auto !important;
+        box-shadow: 0px 2px 6px 0px rgba(0, 0, 18, 0.16) !important;
+        border-radius: 0.5rem !important;
+        padding: $spacing-4 $spacing-4 0 $spacing-4;
+        border-color: transparent !important;
+        margin-bottom: $spacing-5;
+    }
+    .table td,
+    .table th {
+        border: none !important;
+        padding: $spacing-4;
+    }
+
+    .table {
+        width: 100%;
+        margin-top: 0;
+        border-color: transparent !important;
+
+        th {
+            background: white;
+            position: sticky;
+            top: 0;
+            font-family: $marianne;
+            font-size: $font-size-base-small;
+            font-weight: 700;
+            line-height: 1.5rem;
+        }
+
+        td {
+            padding: $spacing-4 !important;
+            font-family: $marianne;
+            font-size: $font-size-base-small;
+            font-weight: 400;
+            line-height: 1.5rem;
+        }
+    }
+}

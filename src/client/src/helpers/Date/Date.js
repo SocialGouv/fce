@@ -91,15 +91,16 @@ export const START_DATE_BY_LABEL = {
   },
 };
 
-export const getStartDateEtp = (range) => {
-  if (range) {
-    return Moment()
+export const getStartDateEtp = (date, range) => {
+  if (date && range) {
+    return Moment(date)
       .subtract(START_DATE_BY_LABEL[range].num, START_DATE_BY_LABEL[range].path)
+      .add(1, "months")
       .format("YYYY-MM-DD");
   }
 };
-export const getStartDate = (range) => {
-  const data = getStartDateEtp(range);
+export const getStartDate = (date, range) => {
+  const data = getStartDateEtp(date, range);
   return setYearMonthFormat(data);
 };
 

@@ -12,6 +12,7 @@ const TrancheEffectifsInsee = ({ siret }) => {
   return (
     <Data
       name="Tranche Effectif INSEE"
+      className="has-no-border"
       value={text}
       emptyValue="Non disponible"
       nonEmptyValue=""

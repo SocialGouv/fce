@@ -9,19 +9,25 @@ $border-color: var(--border-color);
 .chart-wrapper {
     position: relative;
     display: grid;
-    gap: 1em;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr;
-    height: 250px;
+    height: 17.625rem;
     width: 100%;
-    margin: 1em;
+    margin-top: 1em;
+    border-radius: 0.75rem;
+    border: 1px solid #e6edff;
+    padding: 1rem;
+    @media print {
+        margin: $spacing-3 0 !important;
+        height: 100% !important;
+    }
 }
 .finance-chart-wrapper {
     position: relative;
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 80%;
-    height: 250px;
+    height: 17.625rem;
     width: 100%;
 
     .chart-legend {

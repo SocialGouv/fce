@@ -28,11 +28,11 @@ const Data = ({
         <div className={`column ${columnClasses[0]}`}>
           {description ? (
             <div>
-              <div className="dt">{name}</div>
+              <div className="dt ">{name}</div>
               <div>{description}</div>
             </div>
           ) : (
-            <div className="dt">{name}</div>
+            <div className="dt dt-title ">{name}</div>
           )}
         </div>
         <div className={`dd column ${columnClasses[1]}`}>
@@ -48,13 +48,15 @@ const Data = ({
                 />
               </Link>
             ) : (
-              <Value
-                value={value}
-                empty={emptyValue}
-                nonEmptyValues={nonEmptyValue}
-                hasNumberFormat={hasNumberFormat}
-                numberFormatOptions={numberFormatOptions}
-              />
+              <div className="data-value">
+                <Value
+                  value={value}
+                  empty={emptyValue}
+                  nonEmptyValues={nonEmptyValue}
+                  hasNumberFormat={hasNumberFormat}
+                  numberFormatOptions={numberFormatOptions}
+                />
+              </div>
             )}
           </div>
           {(sourceSi || sourceCustom) && (

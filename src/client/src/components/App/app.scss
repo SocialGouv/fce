@@ -56,8 +56,8 @@ a {
 }
 
 .table {
-    @extend .is-striped;
-
+    // @extend .is-striped;
+    border: 0;
     td.table-cell,
     th.table-cell {
         &--center-cell {

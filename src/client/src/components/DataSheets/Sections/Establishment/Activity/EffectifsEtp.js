@@ -14,8 +14,7 @@ import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
-import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table/Table";
+import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
 import EffectifGraph from "./EffectifsGraph";
 
@@ -24,7 +23,7 @@ const MIN_EFFECTIFS_COUNT = 1;
 const start_date = "2018-01-01";
 const EffectifsEtp = ({ siret }) => {
   const [displayedEffectifsCount, setDisplayedEffectifsCount] =
-    useState(MIN_EFFECTIFS_COUNT);
+    useState(MAX_EFFECTIF_COUNT);
   const [displayTable, setDisplayTable] = useState(false);
 
   const {
@@ -48,38 +47,54 @@ const EffectifsEtp = ({ siret }) => {
         name={"Effectif ETP"}
         emptyValue="Non disponible"
         sourceCustom={`Gip-Mds / DSN`}
+        className="has-no-border"
       />
     );
   }
   return (
     <>
-      {displayedEffectifsCount === MIN_EFFECTIFS_COUNT && (
-        <>
-          <LoadableContent loading={loading} error={error}>
-            {effectifsMensuels && (
-              <Data
-                hasNumberFormat={true}
-                name={"Effectif ETP"}
-                nonEmptyValue=""
-                sourceCustom={`Gip-Mds / DSN ${getDateMonthName(
-                  effectifsMensuels[0]?.periode_concerne
-                )} ${getDateYear(effectifsMensuels[0]?.periode_concerne)}`}
-                value={effectifsMensuels[0]?.effectif}
-              />
-            )}
-          </LoadableContent>
-          {effectifsMensuels?.length >= 1 && (
+      <>
+        <LoadableContent loading={loading} error={error}>
+          {effectifsMensuels && (
+            <Data
+              hasNumberFormat={true}
+              name={"Effectif ETP"}
+              emptyValue="0"
+              className="has-no-border"
+              sourceCustom={`Gip-Mds / DSN ${getDateMonthName(
+                effectifsMensuels[0]?.periode_concerne
+              )} ${getDateYear(effectifsMensuels[0]?.periode_concerne)}`}
+              value={effectifsMensuels[0]?.effectif}
+            />
+          )}
+        </LoadableContent>
+        {displayedEffectifsCount === MIN_EFFECTIFS_COUNT &&
+          effectifsMensuels?.length >= 1 && (
             <AllEffectifsEtp
               text="Afficher l'évolution des effectifs ETP"
               loading={loading}
               onClick={() => setDisplayedEffectifsCount(MAX_EFFECTIF_COUNT)}
             />
           )}
-        </>
-      )}
+        {displayedEffectifsCount === MAX_EFFECTIF_COUNT && (
+          <AllEffectifsEtp
+            text="Masquer le détail des effectifs"
+            isUp
+            loading={loading}
+            onClick={() => setDisplayedEffectifsCount(MIN_EFFECTIFS_COUNT)}
+          />
+        )}
+      </>
       {displayedEffectifsCount === MAX_EFFECTIF_COUNT && (
-        <Subcategory subtitle="Effectifs ETP" sourceCustom={`Gip-Mds / DSN`}>
+        <>
+          {" "}
           <div className="display_table_chart__switch">
+            <button
+              className="toggle-label "
+              onClick={() => setDisplayTable(!displayTable)}
+            >
+              {" Affichage Courbe"}
+            </button>
             <Toggle
               id="display_table_chart-toggle"
               checked={displayTable}
@@ -87,51 +102,49 @@ const EffectifsEtp = ({ siret }) => {
               value={displayTable}
               onChange={handleChange}
             />
-            <span className="source" htmlFor="display_table_chart-toggle">
-              {!displayTable ? " Afficher Tableau" : " Afficher Courbe"}
-            </span>
           </div>
           <LoadableContent loading={loading} error={error}>
-            {displayTable && effectifsMensuels && (
-              <Table>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Effectif ETP</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {effectifsMensuels?.map?.(
-                    ({ periode_concerne, effectif }) => (
-                      <tr key={`${periode_concerne}-effectifsETP`}>
-                        <td>{setYearMonthFormat(periode_concerne)}</td>
-                        <td>
-                          <Value
-                            value={effectif}
-                            hasNumberFormat={true}
-                            empty="-"
-                          />
-                        </td>
-                      </tr>
-                    )
-                  )}
-                </tbody>
-              </Table>
+            {!displayTable && effectifsMensuels && (
+              <div className="data-sheet--table">
+                {" "}
+                <NonBorderedTable>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Effectif ETP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {effectifsMensuels?.map?.(
+                      ({ periode_concerne, effectif }) => (
+                        <tr key={`${periode_concerne}-effectifsETP`}>
+                          <td>{setYearMonthFormat(periode_concerne)}</td>
+                          <td>
+                            <Value
+                              value={effectif}
+                              hasNumberFormat={true}
+                              empty="0"
+                            />
+                          </td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </NonBorderedTable>
+              </div>
             )}
           </LoadableContent>
-        </Subcategory>
+        </>
       )}
-      {!displayTable &&
+      {displayTable &&
         displayedEffectifsCount !== MIN_EFFECTIFS_COUNT &&
-        siret && <EffectifGraph siret={siret} isEtpData />}{" "}
-      {displayedEffectifsCount === MAX_EFFECTIF_COUNT && (
-        <AllEffectifsEtp
-          text="Afficher moins"
-          isUp
-          loading={loading}
-          onClick={() => setDisplayedEffectifsCount(MIN_EFFECTIFS_COUNT)}
-        />
-      )}
+        siret && (
+          <EffectifGraph
+            siret={siret}
+            isEtpData
+            date={effectifsMensuels[0]?.periode_concerne}
+          />
+        )}{" "}
     </>
   );
 };

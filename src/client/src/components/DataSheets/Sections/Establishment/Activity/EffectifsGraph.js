@@ -15,7 +15,12 @@ import { useDsnEffectif } from "./EffectifsDsn.gql";
 import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
 
 const RANGE = 12;
-const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
+const EffectifGraph = ({
+  siret,
+  isEtpData = false,
+  isDsnData = false,
+  date,
+}) => {
   const [range, setRange] = useState(RANGE);
   const [chartData, setChartData] = useState([]);
   const { data: etp_data } = useEffectifsEtablissementsEtpData(
@@ -25,7 +30,7 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
       effectifsMaxCount: range,
     },
     { periode_concerne: "asc" },
-    getStartDateEtp(range)
+    getStartDateEtp(date, range)
   );
 
   const { data: dsn_data } = useDsnEffectif(
@@ -34,7 +39,7 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
       limit: range,
     },
     { mois: "asc" },
-    getStartDate(range)
+    getStartDate(date, range)
   );
 
   useEffect(() => {
@@ -46,15 +51,11 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
     return {
       datasets: [
         {
-          backgroundColor: "#2980b9",
-          borderColor: "#2980b9",
-          borderWidth: 3,
+          backgroundColor: "#000091",
+          borderColor: "#000091",
+          borderWidth: 2,
           data: chartData?.map((obj) =>
-            isEtpData && !isDsnData
-              ? obj?.effectif !== 0
-                ? obj?.effectif
-                : null
-              : obj?.eff
+            isEtpData && !isDsnData ? obj?.effectif : obj?.eff
           ),
 
           label: isEtpData && !isDsnData ? "Effectif ETP" : "Effectif physique",
@@ -67,9 +68,7 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
       ],
       labels: chartData?.map((obj) =>
         isEtpData && !isDsnData
-          ? obj?.effectif !== 0
-            ? setYearMonthFormat(obj?.periode_concerne)
-            : null
+          ? setYearMonthFormat(obj?.periode_concerne)
           : obj.mois
       ),
     };
@@ -83,7 +82,18 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
         position: "top",
       },
       title: {
+        color: "#0063CB",
         display: true,
+        font: {
+          family: "Marianne, sans-serif",
+          size: 14,
+
+          weight: 700,
+        },
+        padding: {
+          bottom: 30,
+          top: 5,
+        },
         text: isEtpData && !isDsnData ? "Effectif ETP" : "Effectif physique",
       },
     },
@@ -93,9 +103,20 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
     scales: {
       x: {
         border: { display: false },
+        grid: {
+          borderColor: "white",
+          color: "white", // <-- this line is answer to initial question
+        },
+        ticks: { color: "#7C8DB5 " },
       },
+
       y: {
         border: { display: false },
+        grid: {
+          borderColor: "#E6EDFF",
+          color: "#E6EDFF", // <-- this line is answer to initial question
+        },
+        ticks: { color: "#7C8DB5" },
       },
     },
   };
@@ -104,12 +125,12 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
   };
 
   return (
-    <>
+    <div className="chart">
       <LoadableContent>
         {(dsn_data?.length > 0 || etp_data?.length > 0) && (
           <>
             {" "}
-            <div>
+            <div className="select-periode">
               <select value={range} onChange={onSelectChange}>
                 <option value={6}>{"6 mois"}</option>
                 <option value={12}>{"1 an"}</option>
@@ -131,11 +152,12 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
           </>
         )}
       </LoadableContent>
-    </>
+    </div>
   );
 };
 
 EffectifGraph.propTypes = {
+  date: PropTypes.string,
   isDsnData: PropTypes.bool,
   isEtpData: PropTypes.bool,
   siret: PropTypes.string.isRequired,

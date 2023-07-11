@@ -82,6 +82,10 @@
                     line-height: 1.5rem;
                     text-decoration: underline !important;
                     text-underline-offset: 4px;
+                    text-decoration-thickness: 1px !important;
+                    &:hover {
+                        text-decoration-thickness: 2px !important;
+                    }
                 }
             }
         }
@@ -149,7 +153,21 @@
             box-shadow: $box-shadow-spread;
         }
     }
-
+    &__bloc_section {
+        scroll-margin: $spacing-6;
+        margin: $spacing-5 0;
+        .dark-blue-title {
+            font-family: $marianne;
+            font-style: normal;
+            font-weight: 700 !important;
+            line-height: 2.25rem !important;
+            font-size: $font-size-title !important;
+            color: $dark-blue !important;
+            background-color: $white;
+            padding-top: $spacing-4;
+            text-transform: capitalize;
+        }
+    }
     &__section {
         scroll-margin: $spacing-6;
         margin: $spacing-5 0;

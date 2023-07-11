@@ -1,14 +1,15 @@
 import "./AllEffectifsEtpButton.scss";
 
-import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 
+import ArrowDown from "../../components/shared/Icons/ArrowDown.jsx";
+import ArrowUp from "../../components/shared/Icons/ArrowUp.jsx";
+
 const AllEffectifsEtpButton = ({ onClick, loading, text, isUp = false }) => {
   return (
-    <div className="all_effectifs_etp_button">
+    <div className="all_effectifs_etp_button is-link-text">
       <button
         onClick={onClick}
         className={classNames("is-primary", {
@@ -16,8 +17,8 @@ const AllEffectifsEtpButton = ({ onClick, loading, text, isUp = false }) => {
         })}
       >
         {text + " "}
-        <FontAwesomeIcon icon={isUp ? faCaretUp : faCaretDown} />
       </button>
+      <span className="icon">{isUp ? <ArrowUp /> : <ArrowDown />}</span>
     </div>
   );
 };

@@ -30,9 +30,7 @@ function LineChart({ data, options = {} }) {
 
 LineChart.propTypes = {
   data: PropTypes.array,
-  // height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   options: PropTypes.array,
-  // width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default LineChart;

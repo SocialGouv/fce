@@ -147,9 +147,6 @@
             text-transform: uppercase !important;
             border: 1pt solid #000 !important;
             border-radius: 0 !important;
-            // display: flex !important;
-
-            // justify-content: center;
         }
 
         &__print {
@@ -193,6 +190,11 @@
         .non-bordered-table-overflow-container {
             box-shadow: none;
             border-radius: 0 !important;
+        }
+        .box-shadow {
+            box-shadow: none;
+            border-radius: 0 !important;
+            padding: $spacing-4 $spacing-4 0 $spacing-4;
         }
         &__section {
             // CUSTOM RULES ON "Visites et contrôles"
@@ -239,6 +241,7 @@
                     page-break-inside: avoid !important;
 
                     &__header {
+                        border-top: none !important;
                         border-bottom-width: 1pt !important;
                     }
 

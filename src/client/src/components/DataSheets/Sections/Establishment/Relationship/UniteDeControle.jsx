@@ -18,7 +18,7 @@ function UniteDeControle({ siret }) {
       hasDateImport
     >
       <div className="section-datas__list">
-        <div>
+        <div className="is-link-text ">
           {data?.CODE_UC}-{data?.LIB_UC}{" "}
           <a href={`mailto:${data?.Courrier_electronique}`}>
             {data?.Courrier_electronique}

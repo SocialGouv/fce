@@ -155,7 +155,7 @@
     }
     &__bloc_section {
         scroll-margin: $spacing-6;
-        margin: $spacing-5 0;
+        margin: $spacing-5 0 2.5rem 0;
         .dark-blue-title {
             font-family: $marianne;
             font-style: normal;
@@ -164,8 +164,64 @@
             font-size: $font-size-title !important;
             color: $dark-blue !important;
             background-color: $white;
-            padding-top: $spacing-4;
+            padding: $spacing-3;
             text-transform: capitalize;
+        }
+
+        .section-header {
+            border-bottom: solid 0.0625rem $default-grey;
+            border-top: solid 0.0625rem $default-grey;
+        }
+        .section-datas {
+            padding: 0 $spacing-4;
+            align-self: stretch;
+
+            &__list {
+                margin-top: $spacing-3;
+                font-family: $marianne;
+                font-size: $font-size-base-small;
+                font-weight: 400;
+                line-height: 1.5rem;
+                color: $title-grey;
+                a {
+                    color: $dark-blue !important;
+
+                    text-decoration: underline !important;
+                    text-underline-offset: 4px;
+                    &:hover {
+                        text-decoration-thickness: 2px !important;
+                    }
+                }
+                .list-item {
+                    .dt-title {
+                        display: list-item;
+                        list-style-type: disc !important;
+                        margin-left: $spacing-5 !important;
+                    }
+                }
+            }
+
+            &__list-description {
+                font-size: $font-size-base-small;
+                margin-bottom: $spacing-3;
+                font-family: $marianne;
+            }
+            &__list-items {
+                margin: 0 $spacing-5;
+                list-style-type: disc;
+                color: $dark-blue;
+            }
+            &__list-item {
+                margin-bottom: $spacing-1;
+            }
+
+            &__list-item {
+                margin-bottom: $spacing-2;
+            }
+
+            .dt {
+                font-weight: 700;
+            }
         }
     }
     &__section {

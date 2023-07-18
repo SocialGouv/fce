@@ -34,7 +34,7 @@ const ConventionsCollectives = ({ siret }) => {
           Cliquez sur la convention collective pour consulter son contenu sur
           Legifrance
         </div>
-        <ul>
+        <ul className="section-datas__list-items">
           {idcc
             ? idcc.map((convention) => (
                 <li

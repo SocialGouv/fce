@@ -18,8 +18,8 @@ const COLLAPSED_MAX_EFFECTIFS = 1;
 const START_DATE = "2018-01";
 
 const EffectifsDsn = ({ siret }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [displayTable, setDisplayTable] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [displayTable, setDisplayTable] = useState(true);
 
   const {
     loading,
@@ -80,7 +80,7 @@ const EffectifsDsn = ({ siret }) => {
               className="toggle-label "
               onClick={() => setDisplayTable(!displayTable)}
             >
-              {" Affichage Courbe"}
+              {!displayTable ? " Affichage Courbe" : "Affichage Tableau"}
             </button>
             <Toggle
               id="display_table_chart-toggle"
@@ -92,7 +92,7 @@ const EffectifsDsn = ({ siret }) => {
           </div>
           {!displayTable && (
             <div className="data-sheet--table">
-              <NonBorderedTable>
+              <NonBorderedTable className="box-shadow">
                 <thead>
                   <tr>
                     <th>Date</th>

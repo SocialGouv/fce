@@ -1,8 +1,3 @@
-import {
-  faExternalLinkSquareAlt,
-  faUsers,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { get } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
@@ -17,8 +12,8 @@ import {
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
+import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table";
 import ConventionsCollectives from "./ConventionsCollectives";
 import { useAccordsEntreprise } from "./EstablishmentRelationship.gql";
 import Psi from "./Psi";
@@ -33,12 +28,9 @@ const EstablishmentRelationship = ({ siret }) => {
   const lastDate = getGroupedAccordsLastSigning(accords);
 
   return (
-    <section id="relation" className="data-sheet__section">
+    <section id="relation" className="data-sheet__bloc_section ">
       <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faUsers} />
-        </span>
-        <h2 className="title">Relation travail</h2>
+        <h2 className=" section-header dark-blue-title">Relation travail</h2>
       </div>
       <div className="section-datas">
         <UniteDeControle siret={siret} />
@@ -50,6 +42,7 @@ const EstablishmentRelationship = ({ siret }) => {
               value={nbAccords}
               emptyValue="aucun accord connu"
               columnClasses={["is-7", "is-5"]}
+              className="has-no-border"
               hasNumberFormat
             />
             {nbAccords > 0 && (
@@ -59,48 +52,51 @@ const EstablishmentRelationship = ({ siret }) => {
                   value={lastDate}
                   emptyValue="-"
                   columnClasses={["is-7", "is-5"]}
+                  className="has-no-border"
                 />
                 {lastDate && (
-                  <Table>
-                    <thead>
-                      <tr>
-                        <th>Thématique</th>
-                        <th className="has-text-right">Nombre d{"'"}accords</th>
-                        <th>Date de signature du dernier accord</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {Config.get("accords").map(({ key, value }) => (
-                        <tr key={`accord-${key}`}>
-                          <td className="col-width-40">{value}</td>
-                          <td className="has-text-right">
-                            <Value
-                              value={get(accords, `${key}.count`)}
-                              empty="-"
-                              nonEmptyValues={[0, "0"]}
-                              hasNumberFormat
-                            />
-                          </td>
-                          <td>
-                            <Value
-                              value={get(accords, `${key}.lastSignDate`)}
-                              empty="-"
-                            />
-                          </td>
+                  <div className="data-sheet--table">
+                    <NonBorderedTable>
+                      <thead>
+                        <tr>
+                          <th>Thématique</th>
+                          <th>Nombre d{"'"}accords</th>
+                          <th>Date de signature du dernier accord</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </Table>
+                      </thead>
+                      <tbody>
+                        {Config.get("accords").map(({ key, value }) => (
+                          <tr key={`accord-${key}`}>
+                            <td>{value}</td>
+                            <td>
+                              <Value
+                                value={get(accords, `${key}.count`)}
+                                empty="-"
+                                nonEmptyValues={[0, "0"]}
+                                hasNumberFormat
+                              />
+                            </td>
+                            <td>
+                              <Value
+                                value={get(accords, `${key}.lastSignDate`)}
+                                empty="-"
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </NonBorderedTable>
+                  </div>
                 )}
-
-                <a
-                  href={Config.get("legifranceSearchUrl.accords") + siret}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  Rechercher ces accords sur Legifrance{" "}
-                  <FontAwesomeIcon icon={faExternalLinkSquareAlt} />
-                </a>
+                <div className="is-link-text ">
+                  <a
+                    href={Config.get("legifranceSearchUrl.accords") + siret}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    Rechercher ces accords sur Legifrance{" "}
+                  </a>
+                </div>
               </>
             )}
           </LoadableContent>

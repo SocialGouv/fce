@@ -18,13 +18,13 @@ import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBordere
 import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
 import EffectifGraph from "./EffectifsGraph";
 
-const MAX_EFFECTIF_COUNT = 24;
+const MAX_EFFECTIF_COUNT = 12;
 const MIN_EFFECTIFS_COUNT = 1;
 const start_date = "2018-01-01";
 const EffectifsEtp = ({ siret }) => {
   const [displayedEffectifsCount, setDisplayedEffectifsCount] =
-    useState(MAX_EFFECTIF_COUNT);
-  const [displayTable, setDisplayTable] = useState(false);
+    useState(MIN_EFFECTIFS_COUNT);
+  const [displayTable, setDisplayTable] = useState(true);
 
   const {
     loading,
@@ -93,7 +93,7 @@ const EffectifsEtp = ({ siret }) => {
               className="toggle-label "
               onClick={() => setDisplayTable(!displayTable)}
             >
-              {" Affichage Courbe"}
+              {!displayTable ? " Affichage Courbe" : "Affichage Tableau"}
             </button>
             <Toggle
               id="display_table_chart-toggle"
@@ -107,7 +107,7 @@ const EffectifsEtp = ({ siret }) => {
             {!displayTable && effectifsMensuels && (
               <div className="data-sheet--table">
                 {" "}
-                <NonBorderedTable>
+                <NonBorderedTable className="box-shadow">
                   <thead>
                     <tr>
                       <th>Date</th>

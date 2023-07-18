@@ -51,18 +51,19 @@ button {
         font-family: $marianne;
         font-size: $font-size-base-small;
         font-style: normal;
-        font-weight: 400;
+        font-weight: 500;
         line-height: 1.5rem;
         color: #363636;
     }
     a {
         color: $dark-blue !important;
         font-family: $marianne;
-        font-size: $font-size-base;
-        font-weight: 400;
+        font-size: $font-size-base-small;
+        font-weight: 400 !important;
         line-height: 1.5rem;
         text-decoration: underline !important;
         text-underline-offset: 4px;
+
         &:hover {
             text-decoration-thickness: 2px !important;
         }

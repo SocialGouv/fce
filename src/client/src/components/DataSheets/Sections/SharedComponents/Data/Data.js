@@ -28,8 +28,9 @@ const Data = ({
         <div className={`column ${columnClasses[0]}`}>
           {description ? (
             <div>
-              <div className="dt ">{name}</div>
-              <div>{description}</div>
+              <div className={`dt ${columnClasses[2]} `}>
+                {name} {description}
+              </div>
             </div>
           ) : (
             <div className="dt dt-title ">{name}</div>

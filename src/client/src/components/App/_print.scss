@@ -133,6 +133,9 @@
                 margin-right: 1rem !important;
                 border-bottom: none !important;
             }
+            &__data__header {
+                display: inline !important;
+            }
         }
     }
 
@@ -161,7 +164,7 @@
             font-size: 1.2rem !important;
         }
         &-header__primary-infos,
-        &-header__status,
+        // &-header__status,
         &-header__naf {
             @extend %reset-block;
             @extend %margin-bottom-small;
@@ -173,14 +176,12 @@
         &-header__status {
             display: flex !important;
             flex-direction: row !important;
-            white-space: nowrap !important;
-            display: inline-block !important;
 
             &-icon,
             &-date {
                 display: flex !important;
                 justify-content: flex-start !important;
-                margin-left: 0 !important;
+                margin: 0 !important;
             }
         }
 
@@ -190,6 +191,7 @@
         .non-bordered-table-overflow-container {
             box-shadow: none;
             border-radius: 0 !important;
+            margin-top: $spacing-1;
         }
         .box-shadow {
             box-shadow: none;
@@ -205,7 +207,7 @@
 
             & .section-header {
                 @extend %margin-bottom-medium;
-                border-bottom: 2pt solid $primary !important;
+                border-bottom: 1px solid $primary !important;
 
                 .title {
                     @extend %margin-bottom-small;
@@ -253,7 +255,69 @@
                         span {
                             font-size: 0.8rem;
                             color: $grey !important;
-                            color-adjust: exact;
+                        }
+                    }
+                }
+            }
+        }
+        &__bloc-section {
+            // CUSTOM RULES ON "Visites et contrôles"
+            &.direccte-interactions-enterprise,
+            &.direccte-interactions-establishment {
+                page-break-inside: avoid !important;
+            }
+
+            & .section-header {
+                @extend %margin-bottom-medium;
+                border-width: 1px !important;
+
+                .title {
+                    @extend %margin-bottom-medium;
+                    font-size: 1.3rem !important;
+                    text-transform: uppercase !important;
+                }
+
+                &:before {
+                    display: none !important;
+                }
+            }
+
+            & .section-datas {
+                @extend %margin-bottom-big;
+
+                // @TODO : rename dl, dd, dt classes to something more meaningful
+                .dl,
+                .dd,
+                .dt {
+                    @extend %reset-block;
+                }
+
+                .dl {
+                    padding: 0.5rem 0 !important;
+                }
+
+                .data__value {
+                    @extend %margin-bottom-small;
+                }
+
+                .subcategory {
+                    @extend %margin-bottom-medium;
+
+                    page-break-inside: avoid !important;
+
+                    &__header {
+                        border-top: none !important;
+                        border-bottom-width: 1px !important;
+                    }
+
+                    &__title {
+                        font-size: 1.2rem;
+                    }
+
+                    .source {
+                        span {
+                            font-size: 0.8rem;
+                            color: $grey !important;
                         }
                     }
                 }

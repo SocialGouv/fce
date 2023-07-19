@@ -11,9 +11,18 @@
         padding: $spacing-3 0;
         border-bottom: solid 0.0625rem $default-grey;
         border-top: solid 0.0625rem $default-grey;
+        @media print {
+            border-top: none !important;
+            display: flex !important;
+            align-items: flex-start;
+            justify-content: space-around;
+            padding: $spacing-1 !important;
+        }
         .source {
             font-size: 0.8rem !important;
-
+            @media print {
+                text-align: end !important;
+            }
             @media print {
                 &__label,
                 &__name,

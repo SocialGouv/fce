@@ -21,7 +21,7 @@ const WorkAccident = ({ siret }) => {
           <div className="section-datas__list ">
             <Data
               name={
-                "Déclaration d'accident du travail professionnel au cours des 36 derniers mois"
+                "Déclaration d'accident du travail professionnel au cours des 36 derniers mois."
               }
               description={
                 <span className="psi__desc">

@@ -36,6 +36,11 @@
                     flex-direction: column;
                     font-family: $marianne;
                     line-height: 1.5rem;
+                    @media print {
+                        display: flex !important;
+                        align-items: flex-start !important;
+                        justify-content: space-around !important;
+                    }
 
                     &-label {
                         font-size: $font-size-base;

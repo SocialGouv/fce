@@ -11,6 +11,17 @@
         margin-bottom: $spacing-5;
         background-color: $white;
         border-radius: $border-radius-2;
+        &__status {
+            @media print {
+                display: flex !important;
+                gap: 0 !important;
+            }
+            &-date {
+                @media print {
+                    text-align: start !important;
+                }
+            }
+        }
         .is-bold {
             font-weight: bold !important;
             margin-right: 0.25rem;
@@ -64,7 +75,7 @@
             color: $title-grey;
 
             @media print {
-                margin-top: 4rem !important;
+                margin-top: 2rem !important;
             }
         }
         &__bloc {
@@ -156,6 +167,22 @@
     &__bloc_section {
         scroll-margin: $spacing-6;
         margin: $spacing-5 0 2.5rem 0;
+        .data {
+            @media print {
+                display: flex !important;
+                align-items: flex-start;
+                justify-content: space-around;
+            }
+            .dd {
+                @media print {
+                    display: flex !important;
+                    justify-content: space-around;
+                }
+                .source {
+                    text-align: end !important;
+                }
+            }
+        }
         .dark-blue-title {
             font-family: $marianne;
             font-style: normal;
@@ -166,11 +193,17 @@
             background-color: $white;
             padding: $spacing-3;
             text-transform: capitalize;
+            @media print {
+                padding: $spacing-1 !important;
+            }
         }
 
         .section-header {
             border-bottom: solid 0.0625rem $default-grey;
             border-top: solid 0.0625rem $default-grey;
+            @media print {
+                border-width: 1px !important;
+            }
         }
         .section-datas {
             padding: 0 $spacing-4;
@@ -210,6 +243,9 @@
                 margin: 0 $spacing-5;
                 list-style-type: disc;
                 color: $dark-blue;
+                @media print {
+                    display: none;
+                }
             }
             &__list-item {
                 margin-bottom: $spacing-1;

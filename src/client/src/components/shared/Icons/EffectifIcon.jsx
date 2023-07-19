@@ -1,7 +1,7 @@
 import Proptypes from "prop-types";
 import React from "react";
 
-const HealthIcon = ({ size = 40 }) => (
+const EffectifIcon = ({ size = 40 }) => (
   <svg
     width={size}
     height={size}
@@ -54,8 +54,8 @@ const HealthIcon = ({ size = 40 }) => (
   </svg>
 );
 
-HealthIcon.propTypes = {
+EffectifIcon.propTypes = {
   size: Proptypes.number,
 };
 
-export default HealthIcon;
+export default EffectifIcon;

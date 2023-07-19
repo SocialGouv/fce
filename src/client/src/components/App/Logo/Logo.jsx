@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-function HeaderLogo({ logo, width, height, className, title }) {
+function Logo({ logo, width, height, className, title }) {
   return (
     <div
       className="logo-wrapper"
@@ -15,7 +15,7 @@ function HeaderLogo({ logo, width, height, className, title }) {
   );
 }
 
-HeaderLogo.propTypes = {
+Logo.propTypes = {
   className: PropTypes.String,
   height: PropTypes.number,
   logo: PropTypes.element,
@@ -23,4 +23,4 @@ HeaderLogo.propTypes = {
   width: PropTypes.number,
 };
 
-export default HeaderLogo;
+export default Logo;

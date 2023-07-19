@@ -11,17 +11,7 @@
         margin-bottom: $spacing-5;
         background-color: $white;
         border-radius: $border-radius-2;
-        &__status {
-            @media print {
-                display: flex !important;
-                gap: 0 !important;
-            }
-            &-date {
-                @media print {
-                    text-align: start !important;
-                }
-            }
-        }
+
         .is-bold {
             font-weight: bold !important;
             margin-right: 0.25rem;
@@ -123,6 +113,13 @@
                 line-height: 1.5rem;
                 font-size: $font-size-base;
                 color: #000000;
+                @media print {
+                    text-align: start !important;
+                }
+            }
+            @media print {
+                display: flex !important;
+                gap: 0 !important;
             }
         }
 

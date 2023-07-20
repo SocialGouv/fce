@@ -1,3 +1,10 @@
+# [27.79.0](https://github.com/SocialGouv/fce/compare/v27.78.0...v27.79.0) (2023-07-20)
+
+
+### Features
+
+* fix echelle temps source graph effectif ([59e3466](https://github.com/SocialGouv/fce/commit/59e34668cdf335f9123c3a4bed87c434fc8ecaa3))
+
 # [27.78.0](https://github.com/SocialGouv/fce/compare/v27.77.0...v27.78.0) (2023-06-20)
 
 

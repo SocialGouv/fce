@@ -24,16 +24,21 @@ const getKey = (label, donneeEcofi) =>
   `${label}-${getDateDeclaration(donneeEcofi)}`;
 
 const Finances = ({ siret, siren }) => {
-  const { loading, data: donneesEcofiBce, error } = useFinanceData(siren);
-
+  const { loading, data, error } = useFinanceData(siren);
   const { data: donneesEcofiApi } = useFinanceDataApiEntreprise(siret);
+  let donneesEcofiBce = [];
 
+  let hasBilan_K = false;
   if (loading) {
     return <LoadSpinner />;
   }
 
   if (error) {
     return <Value value={error} />;
+  }
+  if (data) {
+    donneesEcofiBce = data.donneesEcofiBce;
+    hasBilan_K = data?.bilan_K.length > 0;
   }
 
   let dates = [];
@@ -135,9 +140,20 @@ const Finances = ({ siret, siren }) => {
   }
   return (
     <>
+      {hasBilan_K && (
+        <>
+          Cette entreprise déclare un bilan consolidé, voir sur{" "}
+          <a
+            rel="noreferrer noopener"
+            target="_blank"
+            href={`https://annuaire-entreprises.data.gouv.fr/donnees-financieres/${siren}`}
+          >
+            l’Annuaire des Entreprises
+          </a>
+        </>
+      )}
       {donneesEcofiBce?.length > 0 ? (
         <>
-          {" "}
           <Table className="enterprise-finances">
             <thead>
               <tr>

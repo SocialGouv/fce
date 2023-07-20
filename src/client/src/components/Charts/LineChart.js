@@ -25,6 +25,7 @@ ChartJS.register(
 );
 
 function LineChart({ data, options = {} }) {
+  if (!data) return null;
   return <div>{data && <Line options={options} data={data} />}</div>;
 }
 

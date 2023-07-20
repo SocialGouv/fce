@@ -32,6 +32,7 @@ const EffectifsDsn = ({ siret }) => {
     { mois: "desc" },
     START_DATE
   );
+
   if (!effectifs || effectifs.length == 0) {
     return (
       <Data
@@ -41,9 +42,11 @@ const EffectifsDsn = ({ siret }) => {
       />
     );
   }
+
   const handleChange = (event) => {
     setDisplayTable(event.target.checked);
   };
+
   return (
     <LoadableContent loading={loading} error={error}>
       {!isExpanded ? (
@@ -145,7 +148,11 @@ const EffectifsDsn = ({ siret }) => {
               )}
             </Subcategory>
             {!displayTable && siret && (
-              <EffectifsGraph isDsnData siret={siret} />
+              <EffectifsGraph
+                isDsnData
+                siret={siret}
+                date={effectifs?.[0]?.mois}
+              />
             )}{" "}
             {isExpanded && (
               <AllEffectifsEtpButton

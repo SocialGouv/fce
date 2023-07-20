@@ -15,9 +15,15 @@ import { useDsnEffectif } from "./EffectifsDsn.gql";
 import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
 
 const RANGE = 12;
-const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
+const EffectifGraph = ({
+  siret,
+  isEtpData = false,
+  isDsnData = false,
+  date,
+}) => {
   const [range, setRange] = useState(RANGE);
   const [chartData, setChartData] = useState([]);
+
   const { data: etp_data } = useEffectifsEtablissementsEtpData(
     siret,
 
@@ -25,7 +31,7 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
       effectifsMaxCount: range,
     },
     { periode_concerne: "asc" },
-    getStartDateEtp(range)
+    getStartDateEtp(date, range)
   );
 
   const { data: dsn_data } = useDsnEffectif(
@@ -34,7 +40,7 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
       limit: range,
     },
     { mois: "asc" },
-    getStartDate(range)
+    getStartDate(date, range)
   );
 
   useEffect(() => {
@@ -50,11 +56,7 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
           borderColor: "#2980b9",
           borderWidth: 3,
           data: chartData?.map((obj) =>
-            isEtpData && !isDsnData
-              ? obj?.effectif !== 0
-                ? obj?.effectif
-                : null
-              : obj?.eff
+            isEtpData && !isDsnData ? obj?.effectif : obj?.eff
           ),
 
           label: isEtpData && !isDsnData ? "Effectif ETP" : "Effectif physique",
@@ -67,9 +69,7 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
       ],
       labels: chartData?.map((obj) =>
         isEtpData && !isDsnData
-          ? obj?.effectif !== 0
-            ? setYearMonthFormat(obj?.periode_concerne)
-            : null
+          ? setYearMonthFormat(obj?.periode_concerne)
           : obj.mois
       ),
     };
@@ -99,6 +99,7 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
       },
     },
   };
+
   const onSelectChange = (event) => {
     setRange(parseInt(event.target.value));
   };
@@ -136,6 +137,7 @@ const EffectifGraph = ({ siret, isEtpData = false, isDsnData = false }) => {
 };
 
 EffectifGraph.propTypes = {
+  date: PropTypes.string,
   isDsnData: PropTypes.bool,
   isEtpData: PropTypes.bool,
   siret: PropTypes.string.isRequired,

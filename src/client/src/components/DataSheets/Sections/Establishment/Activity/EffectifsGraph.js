@@ -56,11 +56,7 @@ const EffectifGraph = ({
           borderColor: "#2980b9",
           borderWidth: 3,
           data: chartData?.map((obj) =>
-            isEtpData && !isDsnData
-              ? obj?.effectif !== 0
-                ? obj?.effectif
-                : null
-              : obj?.eff
+            isEtpData && !isDsnData ? obj?.effectif : obj?.eff
           ),
 
           label: isEtpData && !isDsnData ? "Effectif ETP" : "Effectif physique",
@@ -73,9 +69,7 @@ const EffectifGraph = ({
       ],
       labels: chartData?.map((obj) =>
         isEtpData && !isDsnData
-          ? obj?.effectif !== 0
-            ? setYearMonthFormat(obj?.periode_concerne)
-            : null
+          ? setYearMonthFormat(obj?.periode_concerne)
           : obj.mois
       ),
     };

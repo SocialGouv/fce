@@ -19,7 +19,7 @@ import Table from "../../SharedComponents/Table/Table";
 import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
 import EffectifGraph from "./EffectifsGraph";
 
-const MAX_EFFECTIF_COUNT = 24;
+const MAX_EFFECTIF_COUNT = 12;
 const MIN_EFFECTIFS_COUNT = 1;
 const start_date = "2018-01-01";
 const EffectifsEtp = ({ siret }) => {

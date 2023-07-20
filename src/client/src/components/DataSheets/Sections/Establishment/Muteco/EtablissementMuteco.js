@@ -1,5 +1,3 @@
-import { faUmbrella } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -16,8 +14,8 @@ import {
 } from "../../../../../utils/rupco/rupco";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
+import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table";
 import { useMutecoData } from "./EtablissementMuteco.gql";
 import Lice from "./Lice";
 import Pse from "./Pse";
@@ -50,79 +48,75 @@ const EtablissementMuteco = ({ siret }) => {
   const otherRupco = data.otherRupco;
 
   return (
-    <section id="muteco" className="data-sheet__section">
+    <section id="muteco" className="data-sheet__bloc_section">
       <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faUmbrella} />
-        </span>
-        <h2 className="title">Mutations Économiques</h2>
+        <h2 className="dark-blue-title">Mutations Économiques</h2>
       </div>
       <div className="section-datas">
         <Subcategory subtitle="Activité partielle" sourceSi="APART">
           <Data
             name="Recours sur les 24 derniers mois"
             value={hasActivitePartielle}
-            columnClasses={["is-8", "is-4"]}
+            columnClasses={["is-6", "is-6"]}
+            className="has-no-border"
           />
           {hasActivitePartielle && (
-            <Table isBordered>
-              <thead>
-                <tr>
-                  <th className="th">Numéro de convention</th>
-                  <th className="th">Nombre d{"'"}avenants</th>
-                  <th className="th">Date de décision (convention initiale)</th>
-                  <th className="th">Nombre total d{"'"}heures autorisées</th>
-                  <th className="th">Nombre total d{"'"}heures consommées</th>
-                  <th className="th">Motif</th>
-                </tr>
-              </thead>
-              <tbody>
-                {displayedActivitePartielle.map(
-                  ({
-                    num_convention,
-                    num_avenant,
-                    date_decision,
-                    nb_h_auto_cum,
-                    nb_h_conso_cum,
-                    cause,
-                  }) => (
-                    <tr key={num_convention}>
-                      <td>{num_convention}</td>
-                      <td>{num_avenant + 1}</td>
-                      <td>{<Value value={date_decision} />}</td>
-                      <td className="has-text-right">
-                        {formatNumber(Math.round(nb_h_auto_cum))}
-                      </td>
-                      <td className="has-text-right">
-                        {formatNumber(Math.round(nb_h_conso_cum))}
-                      </td>
-                      <td>{cause}</td>
-                    </tr>
-                  )
-                )}
-              </tbody>
-
-              {totalActivitePartielle && (
-                <tfoot>
+            <div className="data-sheet--table ">
+              <NonBorderedTable className="box-shadow" isScrollable>
+                <thead>
                   <tr>
-                    <th colSpan="3" className="has-text-right">
-                      Total{" "}
+                    <th className="th">Numéro de convention</th>
+                    <th className="th">Nombre d{"'"}avenants</th>
+                    <th className="th">
+                      Date de décision (convention initiale)
                     </th>
-                    <td className="has-text-right">
-                      {formatNumber(
-                        Math.round(totalActivitePartielle.nb_h_auto_cum)
-                      )}
-                    </td>
-                    <td className="has-text-right">
-                      {formatNumber(
-                        Math.round(totalActivitePartielle.nb_h_conso_cum)
-                      )}
-                    </td>
-                    <td />
+                    <th className="th">Nombre total d{"'"}heures autorisées</th>
+                    <th className="th">Nombre total d{"'"}heures consommées</th>
+                    <th className="th">Motif</th>
                   </tr>
-                </tfoot>
-              )}
-            </Table>
+                </thead>
+                <tbody>
+                  {displayedActivitePartielle.map(
+                    ({
+                      num_convention,
+                      num_avenant,
+                      date_decision,
+                      nb_h_auto_cum,
+                      nb_h_conso_cum,
+                      cause,
+                    }) => (
+                      <tr key={num_convention}>
+                        <td>{num_convention}</td>
+                        <td>{num_avenant + 1}</td>
+                        <td>{<Value value={date_decision} />}</td>
+                        <td>{formatNumber(Math.round(nb_h_auto_cum))}</td>
+                        <td>{formatNumber(Math.round(nb_h_conso_cum))}</td>
+                        <td>{cause}</td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+
+                {totalActivitePartielle && (
+                  <tfoot>
+                    <tr>
+                      <th colSpan="3">Total </th>
+                      <td>
+                        {formatNumber(
+                          Math.round(totalActivitePartielle.nb_h_auto_cum)
+                        )}
+                      </td>
+                      <td>
+                        {formatNumber(
+                          Math.round(totalActivitePartielle.nb_h_conso_cum)
+                        )}
+                      </td>
+                      <td />
+                    </tr>
+                  </tfoot>
+                )}
+              </NonBorderedTable>
+            </div>
           )}
         </Subcategory>
 

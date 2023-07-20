@@ -22,6 +22,7 @@
         width: 100%;
         margin-top: 0;
         border-color: transparent !important;
+        background-color: white !important;
 
         th {
             background: white;
@@ -43,5 +44,28 @@
                 padding: $spacing-1 !important;
             }
         }
+        tbody {
+            overflow-y: scroll !important;
+            max-height: 80vh;
+            ::-webkit-scrollbar {
+                width: 14px !important;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                border: 4px solid rgba(0, 0, 0, 0);
+                background-clip: padding-box;
+                border-radius: 9999px;
+                background-color: #aaaaaa;
+            }
+        }
+        tfoot {
+            th:first-child {
+                text-align: center;
+            }
+        }
     }
+}
+.is-scrollable {
+    overflow-y: scroll;
+    max-height: 80vh;
 }

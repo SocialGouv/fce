@@ -173,6 +173,7 @@
             .dd {
                 @media print {
                     display: flex !important;
+                    align-items: center;
                     justify-content: space-around;
                 }
                 .source {

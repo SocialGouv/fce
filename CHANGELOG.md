@@ -1,3 +1,10 @@
+# [27.80.0](https://github.com/SocialGouv/fce/compare/v27.79.0...v27.80.0) (2023-07-26)
+
+
+### Features
+
+* fix annuaire entreprise link ([#291](https://github.com/SocialGouv/fce/issues/291)) ([b2e91c8](https://github.com/SocialGouv/fce/commit/b2e91c820907ddb298f3e41272b91372ef970da9))
+
 # [27.79.0](https://github.com/SocialGouv/fce/compare/v27.78.0...v27.79.0) (2023-07-20)
 
 

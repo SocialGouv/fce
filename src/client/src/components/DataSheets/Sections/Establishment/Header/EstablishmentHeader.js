@@ -105,7 +105,7 @@ const EstablishmentHeader = ({ siret }) => {
       <div className="columns data-sheet-header__enterprise-external-link">
         <span className="column">
           <a
-            href={`https://api.avis-situation-sirene.insee.fr/identification/pdf//${siret}`}
+            href={`https://api-avis-situation-sirene.insee.fr/identification/pdf/${siret}`}
             rel="noreferrer noopener"
             target="_blank"
           >

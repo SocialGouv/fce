@@ -58,10 +58,7 @@
                 padding: $spacing-1 !important;
             }
         }
-        tbody {
-            overflow-y: scroll !important;
-            max-height: 80vh;
-        }
+
         tfoot {
             th,
             td {
@@ -76,5 +73,9 @@
 }
 .is-scrollable {
     overflow-y: scroll;
-    max-height: 80vh;
+    max-height: 60vh;
+    @media print {
+        overflow: visible !important;
+        max-height: max-content;
+    }
 }

@@ -106,7 +106,7 @@ const EffectifGraph = ({
         border: { display: false },
         grid: {
           borderColor: "white",
-          color: "white", // <-- this line is answer to initial question
+          color: "white",
         },
         ticks: { color: "#7C8DB5 " },
       },
@@ -115,7 +115,7 @@ const EffectifGraph = ({
         border: { display: false },
         grid: {
           borderColor: "#E6EDFF",
-          color: "#E6EDFF", // <-- this line is answer to initial question
+          color: "#E6EDFF",
         },
         ticks: { color: "#7C8DB5" },
       },

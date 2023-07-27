@@ -13,7 +13,7 @@ import NonBorderedTable from "../../SharedComponents/NonBorderedTable";
 import { useDsnEffectif } from "./EffectifsDsn.gql";
 import EffectifsGraph from "./EffectifsGraph";
 
-const EXPANDED_MAX_EFFECTIFS = 12;
+const EXPANDED_MAX_EFFECTIFS = 60;
 const COLLAPSED_MAX_EFFECTIFS = 1;
 const START_DATE = "2018-01";
 
@@ -95,7 +95,7 @@ const EffectifsDsn = ({ siret }) => {
           </div>
           {!displayTable && (
             <div className="data-sheet--table">
-              <NonBorderedTable className="box-shadow">
+              <NonBorderedTable className="box-shadow" isScrollable>
                 <thead>
                   <tr>
                     <th>Date</th>

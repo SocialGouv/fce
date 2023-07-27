@@ -62,10 +62,7 @@ const EtablissementMuteco = ({ siret }) => {
           />
           {hasActivitePartielle && (
             <div className="data-sheet--table ">
-              <NonBorderedTable
-                className="bordered"
-                isScrollable={displayedActivitePartielle.length > 6}
-              >
+              <NonBorderedTable className="bordered">
                 <thead>
                   <tr>
                     <th className="th">Numéro de convention</th>

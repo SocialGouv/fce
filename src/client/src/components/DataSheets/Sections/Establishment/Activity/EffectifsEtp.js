@@ -18,7 +18,7 @@ import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBordere
 import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
 import EffectifGraph from "./EffectifsGraph";
 
-const MAX_EFFECTIF_COUNT = 12;
+const MAX_EFFECTIF_COUNT = 60;
 const MIN_EFFECTIFS_COUNT = 1;
 const start_date = "2018-01-01";
 const EffectifsEtp = ({ siret }) => {
@@ -107,7 +107,7 @@ const EffectifsEtp = ({ siret }) => {
             {!displayTable && effectifsMensuels && (
               <div className="data-sheet--table">
                 {" "}
-                <NonBorderedTable className="box-shadow">
+                <NonBorderedTable className="box-shadow" isScrollable>
                   <thead>
                     <tr>
                       <th>Date</th>

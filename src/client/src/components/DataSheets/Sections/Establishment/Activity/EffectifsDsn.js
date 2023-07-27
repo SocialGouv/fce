@@ -33,6 +33,7 @@ const EffectifsDsn = ({ siret }) => {
     { mois: "desc" },
     START_DATE
   );
+
   if (!effectifs || effectifs.length == 0) {
     return (
       <Data
@@ -43,9 +44,11 @@ const EffectifsDsn = ({ siret }) => {
       />
     );
   }
+
   const handleChange = (event) => {
     setDisplayTable(event.target.checked);
   };
+
   return (
     <LoadableContent loading={loading} error={error}>
       <>

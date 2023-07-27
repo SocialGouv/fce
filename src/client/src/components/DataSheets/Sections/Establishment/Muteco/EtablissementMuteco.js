@@ -62,7 +62,10 @@ const EtablissementMuteco = ({ siret }) => {
           />
           {hasActivitePartielle && (
             <div className="data-sheet--table ">
-              <NonBorderedTable className="box-shadow" isScrollable>
+              <NonBorderedTable
+                className="bordered"
+                isScrollable={displayedActivitePartielle.length > 6}
+              >
                 <thead>
                   <tr>
                     <th className="th">Numéro de convention</th>
@@ -100,7 +103,9 @@ const EtablissementMuteco = ({ siret }) => {
                 {totalActivitePartielle && (
                   <tfoot>
                     <tr>
-                      <th colSpan="3">Total </th>
+                      <th> </th>
+                      <th> </th>
+                      <th className="tfoot-recour"> Total </th>
                       <td>
                         {formatNumber(
                           Math.round(totalActivitePartielle.nb_h_auto_cum)

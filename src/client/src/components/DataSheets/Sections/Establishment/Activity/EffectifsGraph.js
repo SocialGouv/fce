@@ -23,6 +23,7 @@ const EffectifGraph = ({
 }) => {
   const [range, setRange] = useState(RANGE);
   const [chartData, setChartData] = useState([]);
+
   const { data: etp_data } = useEffectifsEtablissementsEtpData(
     siret,
 
@@ -120,6 +121,7 @@ const EffectifGraph = ({
       },
     },
   };
+
   const onSelectChange = (event) => {
     setRange(parseInt(event.target.value));
   };

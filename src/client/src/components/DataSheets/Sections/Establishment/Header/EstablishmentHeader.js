@@ -124,7 +124,7 @@ const EstablishmentHeader = ({ siret, siren }) => {
             <span className="data-sheet-header__bloc_link">
               <Download />
               <a
-                href={`https://api.avis-situation-sirene.insee.fr/identification/pdf//${siret}`}
+                href={`https://api-avis-situation-sirene.insee.fr/identification/pdf/${siret}`}
                 rel="noreferrer noopener"
                 target="_blank"
               >

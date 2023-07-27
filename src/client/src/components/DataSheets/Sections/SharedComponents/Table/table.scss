@@ -11,11 +11,10 @@
         margin-top: $spacing-4;
         padding: $spacing-5 0;
 
-        // th,
-        // tfoot tr > td {
-        //     // border-right: $border-grey-light;
-        //     border: none !important;
-        // }
+        th,
+        tfoot tr > td {
+            border-right: $border-grey-light;
+        }
 
         td {
             padding: $spacing-2 $spacing-3;

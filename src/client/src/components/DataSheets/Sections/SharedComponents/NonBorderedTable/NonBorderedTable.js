@@ -9,11 +9,10 @@ const NonBorderedTable = ({
   className = "",
   isScrollable = false,
 }) => {
-  console.log(isScrollable);
   return (
     <div
       className={classNames(
-        "non-bordered-table-overflow-container",
+        "non-bordered-table-overflow-container hoverable ",
 
         className
       )}

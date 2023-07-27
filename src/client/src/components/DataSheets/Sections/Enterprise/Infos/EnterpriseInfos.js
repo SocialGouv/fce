@@ -7,7 +7,11 @@ import Toggle from "react-toggle";
 
 import AllEffectifsEtpButton from "../../../../../containers/AllEffectifsEtpButton";
 import Association from "../../../../../containers/Association/Association";
-import { getDateMonthName, getDateYear } from "../../../../../helpers/Date";
+import {
+  getDateMonthName,
+  getDateYear,
+  sortByPeriode,
+} from "../../../../../helpers/Date";
 import { formatSiret, formatTva } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 import {
@@ -208,8 +212,8 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
                     </Table>
                   </>
                 )}
-                {!displayTable && (
-                  <EffectifGraph chartData={effectifsMensuels} />
+                {!displayTable && effectifsMensuels && (
+                  <EffectifGraph chartData={sortByPeriode(effectifsMensuels)} />
                 )}
                 <AllEffectifsEtpButton
                   text="Afficher moins"

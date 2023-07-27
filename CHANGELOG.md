@@ -1,3 +1,17 @@
+# [27.80.0](https://github.com/SocialGouv/fce/compare/v27.79.0...v27.80.0) (2023-07-26)
+
+
+### Features
+
+* fix annuaire entreprise link ([#291](https://github.com/SocialGouv/fce/issues/291)) ([b2e91c8](https://github.com/SocialGouv/fce/commit/b2e91c820907ddb298f3e41272b91372ef970da9))
+
+# [27.79.0](https://github.com/SocialGouv/fce/compare/v27.78.0...v27.79.0) (2023-07-20)
+
+
+### Features
+
+* fix echelle temps source graph effectif ([59e3466](https://github.com/SocialGouv/fce/commit/59e34668cdf335f9123c3a4bed87c434fc8ecaa3))
+
 # [27.78.0](https://github.com/SocialGouv/fce/compare/v27.77.0...v27.78.0) (2023-06-20)
 
 

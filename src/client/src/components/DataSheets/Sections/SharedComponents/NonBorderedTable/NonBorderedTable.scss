@@ -22,16 +22,6 @@
         border-color: transparent !important;
         margin-bottom: $spacing-5;
     }
-    .table td {
-        border: none !important;
-    }
-    .table th {
-        border-width: 1px !important;
-        border-bottom: 1px solid $border-grey-light !important;
-        border-top: none !important;
-        border-left: none !important;
-        border-right: none !important;
-    }
 
     .table {
         width: 100%;
@@ -49,7 +39,7 @@
         }
 
         td {
-            padding: $spacing-3 !important;
+            padding: $spacing-1 !important;
             font-family: $marianne;
             font-size: $font-size-base-small;
             font-weight: 400;
@@ -60,10 +50,6 @@
         }
 
         tfoot {
-            th,
-            td {
-                border: none !important;
-            }
             .tfoot-recour {
                 text-align: start;
                 padding: $spacing-3;
@@ -73,7 +59,7 @@
 }
 .is-scrollable {
     overflow-y: scroll;
-    max-height: 60vh;
+    max-height: 50vh;
     @media print {
         overflow: visible !important;
         max-height: max-content;

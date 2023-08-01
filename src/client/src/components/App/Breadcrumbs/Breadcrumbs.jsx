@@ -7,7 +7,12 @@ import { Link, useLocation } from "react-router-dom";
 
 const Breadcrumbs = () => {
   const location = useLocation();
-  if (location.pathname === "" || location.pathname === "/") return null;
+  if (
+    location.pathname === "" ||
+    location.pathname === "/" ||
+    location.pathname === "/search"
+  )
+    return null;
 
   return (
     <div className="breadcrumbs">

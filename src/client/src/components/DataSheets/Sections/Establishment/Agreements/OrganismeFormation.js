@@ -5,6 +5,8 @@ import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import { useOrganismeFormationBySiret } from "../../../../../services/OrganismeFormation/hooks";
 import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
 import ButtonLink from "../../../../shared/Button/ButtonLink";
+import ArrowDown from "../../../../shared/Icons/ArrowDown.jsx";
+import ArrowUp from "../../../../shared/Icons/ArrowUp.jsx";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
@@ -23,6 +25,7 @@ const OrganismeFormation = ({ siret }) => {
         <Data
           key="OrganismeFormation"
           name="Organisme de formation"
+          className="has-no-border"
           value={isOrganismeFormation(data?.organismes_formation)}
         />
         <OrganismeFormationInfo
@@ -30,7 +33,10 @@ const OrganismeFormation = ({ siret }) => {
         />
         {!showMore ? (
           <ButtonLink onClick={() => setShowMore(true)}>
-            &gt; Voir plus de détails
+            Voir plus de détails
+            <span className="icon">
+              <ArrowDown />
+            </span>
           </ButtonLink>
         ) : (
           <>
@@ -45,7 +51,10 @@ const OrganismeFormation = ({ siret }) => {
             />
             {showMore && (
               <ButtonLink onClick={() => setShowMore(false)}>
-                &gt; Voir moins de détails
+                Voir moins de détails
+                <span className="icon">
+                  <ArrowUp />
+                </span>
               </ButtonLink>
             )}
           </>

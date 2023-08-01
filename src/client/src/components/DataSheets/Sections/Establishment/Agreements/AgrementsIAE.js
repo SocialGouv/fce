@@ -24,30 +24,35 @@ const AgrementsIAE = ({ siret }) => {
             name="Entreprise d'insertion (EI)"
             nonEmptyValue=""
             emptyValue="Non"
+            className="has-no-border"
             value={agrements?.kind_ei ?? "Non"}
           />
           <Data
             name="Association intermédiaire (AI)"
             nonEmptyValue=""
             emptyValue="Non"
+            className="has-no-border"
             value={agrements?.kind_ai ?? "Non"}
           />
           <Data
             name="Atelier et chantier d'insertion (ACI)"
             nonEmptyValue=""
             emptyValue="Non"
+            className="has-no-border"
             value={agrements?.kind_aci ?? "Non"}
           />
           <Data
             name="Entreprise de travail temporaire d'insertion (ETTI)"
             nonEmptyValue=""
             emptyValue="Non"
+            className="has-no-border"
             value={agrements?.kind_etti ?? "Non"}
           />
           <Data
             name="Entreprise adaptée (EA)"
             nonEmptyValue=""
             emptyValue="Non"
+            className="has-no-border"
             value={agrements?.kind_ea ?? "Non"}
           />
         </LoadableContent>

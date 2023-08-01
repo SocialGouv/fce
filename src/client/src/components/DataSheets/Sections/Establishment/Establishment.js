@@ -17,6 +17,7 @@ import Agrements from "./Agreements/Agrements";
 import Controles from "./Direccte/Controles";
 import Header from "./Header";
 import Helps from "./Helps";
+import ListEstablishment from "./ListEtablishments/ListEstablishment.jsx";
 import Muteco from "./Muteco";
 import Relationship from "./Relationship";
 
@@ -53,6 +54,11 @@ const Establishment = ({ siret }) => {
               <Muteco siret={siret} />
               <Helps siret={siret} />
               <Agrements siret={siret} />
+              <ListEstablishment
+                siret={siret}
+                siren={siren}
+                isEstablishmentDisplayed={true}
+              />
             </div>
             <UsersFeedback fullWidth />
           </div>

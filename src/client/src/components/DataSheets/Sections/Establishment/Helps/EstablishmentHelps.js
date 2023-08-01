@@ -1,5 +1,3 @@
-import { faMedkit } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -8,12 +6,9 @@ import ContratsAides from "./Subcategory/ContratsAides";
 
 const EstablishmentHelps = ({ siret }) => {
   return (
-    <section id="helps" className="data-sheet__section">
-      <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faMedkit} />
-        </span>
-        <h2 className="title">Aides</h2>
+    <section id="helps" className="data-sheet__bloc_section ">
+      <div className="section-header ">
+        <h2 className="dark-blue-title">Aides</h2>
       </div>
       <div className="section-datas">
         <ContratsAides siret={siret} />

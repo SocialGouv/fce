@@ -29,7 +29,11 @@ const OrganismeFormationTypes = ({ organismes_formation }) => {
 
   return (
     <>
-      <Data name="Types de certifications" value={content} />
+      <Data
+        name="Types de certifications"
+        value={content}
+        className="has-no-border"
+      />
     </>
   );
 };

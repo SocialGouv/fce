@@ -12,12 +12,7 @@ export const capitalize = (str) =>
     .join(" ");
 
 const getCodeNafLibelle = (code) =>
-  codesNafLabelIndex.get(
-    code
-      .replace(/[A-z]+$/, "")
-      .padEnd(5, "0")
-      .slice(0, 5)
-  );
+  codesNafLabelIndex.get(code.padEnd(5, "0").slice(0, 5));
 const codesNafLabelIndex = codesNaf.reduce(
   (map, { id, label }) => map.set(id, label),
   new Map()

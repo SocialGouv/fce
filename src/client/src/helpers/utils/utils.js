@@ -1,4 +1,4 @@
-import { codesNaf } from "./codeNaf";
+import codesNaf from "@socialgouv/codes-naf";
 
 export const joinNoFalsy = (arr, delimiter = "") =>
   arr.filter((element) => !!element).join(delimiter);
@@ -18,7 +18,6 @@ const getCodeNafLibelle = (code) =>
       .padEnd(5, "0")
       .slice(0, 5)
   );
-
 const codesNafLabelIndex = codesNaf.reduce(
   (map, { id, label }) => map.set(id, label),
   new Map()

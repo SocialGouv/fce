@@ -11,18 +11,13 @@ export const capitalize = (str) =>
     .map((str) => `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`)
     .join(" ");
 
-const getCodeNafLibelle = (code) => {
-  if (typeof code !== "string") {
-    throw new Error("Invalid input: code parameter must be a string");
-  }
-
-  const cleanedCode = code
-    .replace(/[A-Za-z]+$/, "")
-    .padEnd(5, "0")
-    .slice(0, 5);
-
-  return codesNafLabelIndex.get(cleanedCode);
-};
+const getCodeNafLibelle = (code) =>
+  codesNafLabelIndex.get(
+    code
+      .replace(/[A-z]+$/, "")
+      .padEnd(5, "0")
+      .slice(0, 5)
+  );
 
 const codesNafLabelIndex = codesNaf.reduce(
   (map, { id, label }) => map.set(id, label),

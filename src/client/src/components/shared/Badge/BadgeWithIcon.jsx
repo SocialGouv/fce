@@ -6,18 +6,23 @@ import React from "react";
 import ClosedIcon from "../Icons/ClosedIcon.jsx";
 import OpenedIcon from "../Icons/OpenedIcon.jsx";
 
-const BadgeWithIcon = ({ text, state }) => {
+const BadgeWithIcon = ({ text, state, isTableBadge = false }) => {
   return (
-    <div className={`badge badge__${state}`}>
-      <span className="badge__span">
-        {text === "ouvert" ? <OpenedIcon /> : <ClosedIcon />}
+    <div className={text ? `badge badge__${state}` : ""}>
+      <span className={text ? "badge__span" : ""}>
+        {state === "icon--success" ? <OpenedIcon /> : <ClosedIcon />}
       </span>
-      <span className="badge-text">{text}</span>
+      {text && (
+        <span className={`${isTableBadge && "badge__small-text"} badge-text`}>
+          {text}
+        </span>
+      )}
     </div>
   );
 };
 BadgeWithIcon.propTypes = {
-  text: PropTypes.string.isRequired,
+  isTableBadge: PropTypes.bool,
   state: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
 };
 export default BadgeWithIcon;

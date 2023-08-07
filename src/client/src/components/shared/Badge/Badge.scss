@@ -12,6 +12,10 @@
     line-height: 1.5rem;
     text-transform: uppercase;
     font-weight: bold;
+    &__small-text {
+        font-size: 0.75rem !important;
+        font-weight: normal !important;
+    }
     &__span {
         display: flex;
         align-items: center;

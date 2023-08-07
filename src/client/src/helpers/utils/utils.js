@@ -1,3 +1,5 @@
+import { codesNaf } from "./codeNaf";
+
 export const joinNoFalsy = (arr, delimiter = "") =>
   arr.filter((element) => !!element).join(delimiter);
 
@@ -8,6 +10,20 @@ export const capitalize = (str) =>
     .split(" ")
     .map((str) => `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`)
     .join(" ");
+
+const getCodeNafLibelle = (code) =>
+  codesNafLabelIndex.get(
+    code
+      .replace(/[A-z]+$/, "")
+      .padEnd(5, "0")
+      .slice(0, 5)
+  );
+
+const codesNafLabelIndex = codesNaf.reduce(
+  (map, { id, label }) => map.set(id, label),
+  new Map()
+);
+export const getLibelletFromCodeNaf = (code) => getCodeNafLibelle(code);
 
 export const countValuesInArray = (array, fields) => {
   if (!Array.isArray(fields) || !fields.length) {

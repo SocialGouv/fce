@@ -53,11 +53,7 @@ const Controles = ({ siret }) => {
                   <th>Unité</th>
                   <th>Type</th>
                   <th>Agent</th>
-                  <th>
-                    Source
-                    <br />
-                    Date de mise à jour
-                  </th>
+                  <th>Source Date de mise à jour</th>
                 </tr>
               </thead>
               <tbody>

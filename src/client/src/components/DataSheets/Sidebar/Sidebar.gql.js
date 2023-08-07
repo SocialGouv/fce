@@ -25,6 +25,9 @@ const sidebarQuery = gql`
         codepostal2etablissement
         libellecommuneetablissement
         libellecommune2etablissement
+        activiteprincipaleetablissement
+        trancheeffectifsetablissement
+        etb_raisonsociale
       }
       entreprise_nbr_etablissements_siren {
         nb_eta

@@ -1,10 +1,3 @@
-import {
-  faArrowRight,
-  faCircle,
-  faFileDownload,
-  faSquare,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 import { Helmet } from "react-helmet";
@@ -21,24 +14,37 @@ import {
   getClosingDate,
   getName,
   getOpeningDate,
-  getSiegeSocial,
   getSiren,
   isActive,
 } from "../../../../../utils/entreprise/entreprise";
-import { getSiret } from "../../../../../utils/establishment/establishment";
-import LinkButton from "../../../../shared/Button/LinkButton";
+import {
+  getEtablissementsCount,
+  getEtablissementsFermesCount,
+} from "../../../../../utils/establishment/establishment";
+import { plural } from "../../../../../utils/plural/plural";
+import BadgeWithIcon from "../../../../shared/Badge/BadgeWithIcon.jsx";
+import Download from "../../../../shared/Icons/Download.jsx";
 import InfoBox from "../../../../shared/InfoBox";
 import Value from "../../../../shared/Value";
+import { useEstablishmentHeaderNumData } from "../../Establishment/Header/EstablishmentHeader.gql";
 import AnnuaireEntreprisesLink from "./AnnuaireEntreprisesLink";
 
-const EnterpriseHeader = ({ enterprise, resetSearch, setSearchTerm }) => {
+const EnterpriseHeader = ({ enterprise }) => {
+  const { data: etablissementCount } = useEstablishmentHeaderNumData(
+    getSiren(enterprise)
+  );
+
   const stateClass = isActive(enterprise) ? "icon--success" : "icon--danger";
-
-  const siegeSocial = getSiegeSocial(enterprise);
-
+  const stateText = isActive(enterprise) ? "ouvert" : "fermé";
+  const etablissementsCount = etablissementCount
+    ? getEtablissementsCount(etablissementCount)
+    : 0;
+  const etablissementsFermesCount = etablissementCount
+    ? getEtablissementsFermesCount(etablissementCount)
+    : 0;
   return (
-    <>
-      <section id="header" className="data-sheet-header">
+    <section id="header" className="data-sheet-header">
+      <>
         <Helmet>
           <title>FCE - entreprise {getName(enterprise) || ""}</title>
         </Helmet>
@@ -46,101 +52,108 @@ const EnterpriseHeader = ({ enterprise, resetSearch, setSearchTerm }) => {
         <h1 className="data-sheet-header__title">
           <Value value={getName(enterprise) || null} empty=" " />
         </h1>
-        <InfoBox value="Entreprise" />
+      </>
+      <div className="columns">
+        <div className="column data-sheet-header-top">
+          <InfoBox value="Entreprise" />
+          <p className="data-sheet-header-top-count">
+            <>
+              <Value value={etablissementsCount} empty="Aucun " />{" "}
+              {plural({
+                count: etablissementsCount,
+                plural: " établissements ",
+                singular: " établissement ",
+              })}
+              {etablissementsFermesCount > 0 && (
+                <>
+                  <span>
+                    dont {etablissementsFermesCount}{" "}
+                    {plural({
+                      count: etablissementsFermesCount,
+                      plural: "fermés",
+                      singular: "fermé",
+                    })}
+                  </span>
+                </>
+              )}
+            </>
+          </p>
+        </div>
+      </div>
 
-        <div className="columns is-vcentered">
-          <div className="column is-4 data-sheet-header__siren">
-            <span>SIREN : </span>
-            <span>
-              <Value value={formatSiren(getSiren(enterprise))} empty="" />
-            </span>
-          </div>
-          <div className="column is-4 data-sheet-header__enterprise-button">
-            <LinkButton
-              value=""
-              icon={faArrowRight}
-              buttonClasses={["is-secondary", "is-outlined"]}
-              link={`/establishment/${getSiret(siegeSocial)}`}
-            >
-              Voir le siège social
-            </LinkButton>
-          </div>
-          <div className="columns is-4 data-sheet-header__enterprise-external-link">
-            <span className="column">
-              Voir sur <AnnuaireEntreprisesLink siren={getSiren(enterprise)} />
-            </span>
-          </div>
+      <div className="columns is-vcentered data-sheet-header__primary-infos">
+        <div className="column is-6 data-sheet-header__siren">
+          <span>SIREN : </span>
+          <span>
+            <Value value={formatSiren(getSiren(enterprise))} empty="" />
+          </span>
         </div>
 
-        <div className="columns is-vcentered">
-          <div className="column is-4">
+        <div className="column text-left is-6 data-sheet-header__enterprise-external-link ">
+          <span className="data-sheet-header__bloc_link ">
+            Voir sur <AnnuaireEntreprisesLink siren={getSiren(enterprise)} />
+          </span>
+        </div>
+      </div>
+
+      <div className="columns ">
+        <div className="column is-6">
+          <div className="data-sheet-header__bloc">
             <div className="data-sheet-header__status">
-              <div>
-                <FontAwesomeIcon
-                  icon={isActive(enterprise) ? faCircle : faSquare}
-                  className={`data-sheet-header__status-icon ${stateClass}`}
-                />
+              <div className="data-sheet-header__status-icon">
+                <BadgeWithIcon text={stateText} state={stateClass} />
               </div>
-              <div>
-                {isActive(enterprise) ? (
-                  <span>
-                    Ouvert depuis le{" "}
+
+              <div className="data-sheet-header__status-date ">
+                <span>
+                  depuis le{" "}
+                  <Value
+                    datecreationetablissement
+                    value={
+                      isActive(enterprise)
+                        ? getOpeningDate(enterprise)
+                        : getClosingDate(enterprise)
+                    }
+                    empty=""
+                  />
+                </span>
+
+                {!isActive(enterprise) && (
+                  <div className="data-sheet-header__status-closed">
+                    Date de création:{" "}
                     <Value value={getOpeningDate(enterprise)} empty="" />
-                  </span>
-                ) : (
-                  <div>
-                    <div>
-                      Fermé depuis le{" "}
-                      <Value value={getClosingDate(enterprise)} empty="" />
-                    </div>
-                    <div>
-                      Date de création:{" "}
-                      <Value value={getOpeningDate(enterprise)} empty="" />
-                    </div>
                   </div>
                 )}
               </div>
             </div>
           </div>
-
-          <div className="column is-4 data-sheet-header__enterprise-button">
-            <LinkButton
-              icon={faArrowRight}
-              buttonClasses={["is-secondary", "is-outlined"]}
-              onClick={() => {
-                resetSearch();
-                setSearchTerm(getSiren(enterprise));
-              }}
-              link="/search"
-            >
-              Voir tous les établissements
-            </LinkButton>
+        </div>
+      </div>
+      <div className="columns">
+        <div className="column ">
+          <div className="data-sheet-header__bloc">
+            <span className="data-sheet-header__bloc_link">
+              <Download />
+              <a
+                href={`https://annuaire-entreprises.data.gouv.fr/justificatif-immatriculation-pdf/${enterprise.siren}`}
+                rel="noreferrer noopener"
+                target="_blank"
+              >
+                {
+                  " Télécharger le justificatif d’immatriculation sur l'Annuaire des entreprises"
+                }
+              </a>
+            </span>
           </div>
         </div>
-
-        <div className="columns data-sheet-header__enterprise-external-link">
-          <span className="column">
-            <a
-              href={`https://annuaire-entreprises.data.gouv.fr/justificatif-immatriculation-pdf/${enterprise.siren}`}
-              rel="noreferrer noopener"
-              target="_blank"
-            >
-              Télécharger le justificatif d’immatriculation sur Annuaire
-              entreprise <FontAwesomeIcon icon={faFileDownload} />
-            </a>
-          </span>
-        </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 
 EnterpriseHeader.propTypes = {
   enterprise: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  resetSearch: PropTypes.func.isRequired,
-  setSearchFilters: PropTypes.func.isRequired,
-  setSearchTerm: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {

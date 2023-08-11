@@ -159,7 +159,7 @@ const EffectifsDsn = ({ siret }) => {
               </NonBorderedTable>
             </div>
           )}
-          {displayTable && siret && (
+          {displayTable && (
             <EffectifsGraph
               date={effectifs?.[0]?.mois}
               isDsnData

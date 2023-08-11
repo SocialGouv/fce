@@ -1,17 +1,8 @@
-import { faHistory } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { merge } from "lodash";
 import PropTypes from "prop-types";
-import React, { useMemo, useState } from "react";
-import Toggle from "react-toggle";
+import React, { useMemo } from "react";
 
-import AllEffectifsEtpButton from "../../../../../containers/AllEffectifsEtpButton";
 import Association from "../../../../../containers/Association/Association";
-import {
-  getDateMonthName,
-  getDateYear,
-  sortByPeriode,
-} from "../../../../../helpers/Date";
 import { formatSiret, formatTva } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 import {
@@ -31,13 +22,10 @@ import {
 } from "../../../../../utils/entreprise/entreprise";
 import { getSiret } from "../../../../../utils/establishment/establishment";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
-import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table/Table";
-import EffectifGraph from "./EffectifGraph";
+import Effectis from "./Effectis.jsx";
 import {
-  useEffectifsMensuels,
   useEffectifsPhysique,
   useExtraitsRcsInfogreffe,
   useMandataireInfos,
@@ -47,15 +35,7 @@ import Finances from "./Finances";
 import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
 
-const MIN_EFFECTIFS_MENSUELS = 1;
-const MAX_EFFECTIFS_MENSUELS = 24;
-
 const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
-  const [effectifsMensuelsLimit, setEffectifsMensuelsLimit] = useState(
-    MIN_EFFECTIFS_MENSUELS
-  );
-  const [displayTable, setDisplayTable] = useState(false);
-
   const siren = getSiren(baseEntreprise);
 
   const { data: entreprisesInfos } = useExtraitsRcsInfogreffe(
@@ -65,11 +45,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
     getSiren(baseEntreprise)
   );
   const { data: mandataires } = useMandataireInfos(getSiren(baseEntreprise));
-  const {
-    data: effectifsMensuels,
-    loading: effectifsMensuelsLoading,
-    error: effectifsMensuelsError,
-  } = useEffectifsMensuels(siren, effectifsMensuelsLimit);
+
   const {
     data: effectifsPhysique,
     loading: effectifsPhysiqueLoading,
@@ -89,51 +65,37 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
   const activeEstablishmentCount = getActiveEtablissementsCount(enterprise);
   const trancheEffectifs = getTrancheEffectifs(enterprise);
 
-  const handleChange = (event) => {
-    setDisplayTable(event.target.checked);
-  };
-
-  const EffectifEtpDataComponents = effectifsMensuels?.length ? (
-    effectifsMensuels.map(({ periode_concerne, effectif }) => (
-      <Data
-        key={periode_concerne}
-        name={`Effectif ETP annuel`}
-        value={effectif}
-        sourceCustom={`Gip-Mds / DSN ${getDateMonthName(
-          periode_concerne
-        )} ${getDateYear(periode_concerne)}`}
-        hasNumberFormat
-      />
-    ))
-  ) : (
-    <Data name={`Effectif ETP`} />
-  );
-
   const siegeSocial = getSiegeSocial(enterprise);
   const nafCode = getNafCode(enterprise);
   const nafLabel = getNafLabel(enterprise);
   return (
-    <section id="infos" className="data-sheet__section">
+    <section id="infos" className="data-sheet__bloc_section">
       <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faHistory} />
-        </span>
-        <h2 className="title">Informations légales sur l’entreprise</h2>
+        <h2 className="dark-blue-title">
+          Informations légales sur l’entreprise
+        </h2>
       </div>
       <div className="section-datas">
         <Subcategory subtitle="Informations générales" sourceSi="Sirène">
           <Data
             name="Activité principale"
             value={`${nafCode ?? "-"} ${nafLabel ?? ""}`}
+            className="has-no-border"
           />
           <Data
             name="Forme juridique"
             value={getCategorieJuridiqueLabel(enterprise)}
+            className="has-no-border"
           />
-          <Data name="Catégorie" value={getCategorie(enterprise)} />
+          <Data
+            name="Catégorie"
+            value={getCategorie(enterprise)}
+            className="has-no-border"
+          />
           <Data
             name="Siège social (SIRET)"
             value={formatSiret(getSiret(siegeSocial) || "")}
+            className="has-no-border"
           />
           <Data
             name="Etablissements"
@@ -141,12 +103,14 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
                 ${activeEstablishmentCount} actif(s) et ${
               establishmentCount - activeEstablishmentCount
             } fermé(s)`}
+            className="has-no-border"
           />
           <Association siret={getSiret(siegeSocial)} />
           <Data
             name="Tranche d'effectif"
             value={trancheEffectifs && dashboardSizeRanges[trancheEffectifs]}
             sourceSi={"Sirène"}
+            className="has-no-border"
           />
           <LoadableContent
             loading={effectifsPhysiqueLoading}
@@ -157,85 +121,10 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
               value={effectifsPhysique}
               hasNumberFormat={true}
               sourceSi={"DSN"}
+              className="has-no-border"
             />
           </LoadableContent>
-          <LoadableContent
-            loading={effectifsMensuelsLoading}
-            error={effectifsMensuelsError}
-          >
-            {effectifsMensuelsLimit === MIN_EFFECTIFS_MENSUELS &&
-              EffectifEtpDataComponents}
-            {effectifsMensuelsLimit === MAX_EFFECTIFS_MENSUELS && (
-              <Subcategory subtitle="Effectifs Etp annuels" sourceSi="DSN">
-                <div className="display_table_chart__switch">
-                  <span className="source" htmlFor="display_table_chart-toggle">
-                    {!displayTable
-                      ? " Afficher Tableau "
-                      : " Afficher graphique "}
-                  </span>
-                  <Toggle
-                    id="display_table_chart-toggle"
-                    checked={displayTable}
-                    name="burritoIsReady"
-                    value={displayTable}
-                    onChange={handleChange}
-                  />
-                </div>
-                {displayTable && (
-                  <>
-                    <Table>
-                      <thead>
-                        <tr>
-                          <th>Date</th>
-                          <th>Effectif</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {effectifsMensuels?.map?.((effectif) => (
-                          <tr key={`effectif-${effectif?.id}`}>
-                            <td>
-                              <Value
-                                value={effectif?.periode_concerne}
-                                empty="-"
-                              />
-                            </td>
-                            <td>
-                              <Value
-                                hasNumberFormat
-                                value={effectif?.effectif}
-                                empty="-"
-                              />
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  </>
-                )}
-                {!displayTable && effectifsMensuels && (
-                  <EffectifGraph chartData={sortByPeriode(effectifsMensuels)} />
-                )}
-                <AllEffectifsEtpButton
-                  text="Afficher moins"
-                  isUp
-                  loading={effectifsMensuelsLoading}
-                  onClick={() =>
-                    setEffectifsMensuelsLimit(MIN_EFFECTIFS_MENSUELS)
-                  }
-                />
-              </Subcategory>
-            )}
-          </LoadableContent>
-          {effectifsMensuels?.length >= 1 &&
-            effectifsMensuelsLimit === MIN_EFFECTIFS_MENSUELS && (
-              <AllEffectifsEtpButton
-                text="Afficher l'évolution des effectifs ETP"
-                loading={effectifsMensuelsLoading}
-                onClick={() =>
-                  setEffectifsMensuelsLimit(MAX_EFFECTIFS_MENSUELS)
-                }
-              />
-            )}{" "}
+          <Effectis siren={siren} />
         </Subcategory>
 
         <Subcategory
@@ -243,18 +132,17 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
           sourceCustom="Infogreffe - RCS et DGFIP"
         >
           <div>
-            <span>
+            <span className="text">
               Informations d&apos;immatriculation (contenues dans un extrait
-              Kbis/D1)
-            </span>{" "}
-            : consulter le(s) justificatif(s) sur{" "}
-            <a
-              href={`https://annuaire-entreprises.data.gouv.fr/justificatif/${enterprise.siren}`}
-            >
-              annuaire entreprise
-            </a>
+              Kbis/D1) : consulter le(s) justificatif(s) sur{" "}
+              <a
+                href={`https://annuaire-entreprises.data.gouv.fr/justificatif/${enterprise.siren}`}
+              >
+                annuaire entreprise
+              </a>
+            </span>
           </div>
-          <div className="section-datas__list-description">
+          <div className="section-datas__list-description text">
             À partir de novembre 2021, les entreprises immatriculées au RCS ou
             au RNM n&apos;ont plus à fournir leur extrait Kbis/D1 dans leurs
             démarches administratives
@@ -264,6 +152,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
           <Data
             name="Date immatriculation RCS"
             value={getDateImmatriculationRcs(enterprise)}
+            className="has-no-border"
           />
 
           {getRcsObservations(enterprise) && (
@@ -277,6 +166,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             }
             hasNumberFormat
             numberFormatOptions={{ style: "currency" }}
+            className="has-no-border"
           />
           <Data
             name="Numéro de TVA intra communautaire"
@@ -284,6 +174,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
               getNumeroTvaIntracommunautaire(tva_intracommunautaire) &&
               formatTva(getNumeroTvaIntracommunautaire(tva_intracommunautaire))
             }
+            className="has-no-border"
           />
         </Subcategory>
         <Subcategory

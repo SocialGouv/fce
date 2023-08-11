@@ -12,17 +12,14 @@ const EffectifGraph = ({ chartData }) => {
     return {
       datasets: [
         {
-          backgroundColor: "#2980b9",
-          borderColor: "#2980b9",
-          borderWidth: 3,
+          backgroundColor: "#000091",
+          borderColor: "#000091",
+          borderWidth: 2,
           data: chartData?.map((obj) =>
             obj?.effectif !== 0 ? obj?.effectif : null
           ),
-
           label: "Effectif ETP",
-
           pointBackgroundColor: "white",
-
           pointBorderWidth: 1,
           tension: 0.3,
         },
@@ -38,11 +35,22 @@ const EffectifGraph = ({ chartData }) => {
 
     plugins: {
       legend: {
-        position: "top",
+        display: false,
       },
       title: {
-        display: false,
-        text: "Chart.js Line Chart",
+        color: "#0063CB",
+        display: true,
+        font: {
+          family: "Marianne, sans-serif",
+          size: 14,
+
+          weight: 700,
+        },
+        padding: {
+          bottom: 30,
+          top: 5,
+        },
+        text: "Effectif ETP",
       },
     },
 
@@ -51,9 +59,20 @@ const EffectifGraph = ({ chartData }) => {
     scales: {
       x: {
         border: { display: false },
+        grid: {
+          borderColor: "white",
+          color: "white",
+        },
+        ticks: { color: "#7C8DB5 " },
       },
+
       y: {
         border: { display: false },
+        grid: {
+          borderColor: "#E6EDFF",
+          color: "#E6EDFF",
+        },
+        ticks: { color: "#7C8DB5" },
       },
     },
   };

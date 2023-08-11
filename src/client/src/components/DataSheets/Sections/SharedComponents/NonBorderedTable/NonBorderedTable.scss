@@ -9,6 +9,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        @media print {
+            display: none !important;
+        }
         button {
             margin-left: $spacing-4;
             font-size: 0.875rem !important;
@@ -36,11 +39,6 @@
         }
     }
 
-    .box-shadow {
-        box-shadow: 0px 2px 6px 0px rgba(0, 0, 18, 0.16) !important;
-        border-radius: 0.5rem !important;
-        padding: $spacing-4 $spacing-4 0 $spacing-4;
-    }
     .bordered {
         border: 2px solid #dfdff1;
         -webkit-border-radius: 2px;
@@ -54,7 +52,7 @@
     .non-bordered-table-overflow-container {
         overflow-x: auto !important;
         border-color: transparent !important;
-        margin-bottom: $spacing-5;
+        margin: $spacing-5 0 !important;
     }
 
     .table {

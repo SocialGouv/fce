@@ -2,9 +2,21 @@
 @import "../App/placeholders";
 
 .data-sheet {
+    .box-shadow {
+        box-shadow: 0px 2px 6px 0px rgba(0, 0, 18, 0.16) !important;
+        border-radius: 0.5rem !important;
+        padding: $spacing-4;
+        @media print {
+            box-shadow: none !important;
+        }
+    }
     &.container {
         width: 100%;
         padding: 0 $padding-app-x;
+    }
+    .text-left {
+        display: flex;
+        justify-content: flex-end !important;
     }
 
     &-header {
@@ -74,7 +86,13 @@
             &_link {
                 display: flex;
                 align-items: center;
+                gap: $spacing-1;
                 margin-top: 0.25rem;
+                font-family: $marianne;
+                font-size: $font-size-base;
+                font-weight: 400;
+                line-height: 1.5rem;
+                color: #000000;
                 a {
                     color: $dark-blue !important;
                     font-family: $marianne;
@@ -206,7 +224,27 @@
         .section-datas {
             padding: 0 $spacing-4;
             align-self: stretch;
+            .text {
+                font-family: $marianne;
+                font-size: 0.875rem;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 1.5rem;
+                color: $title-grey;
+                a {
+                    color: $dark-blue !important;
+                    font-family: $marianne;
+                    font-size: $font-size-base-small;
+                    font-weight: 400 !important;
+                    line-height: 1.5rem;
+                    text-decoration: underline !important;
+                    text-underline-offset: 4px;
 
+                    &:hover {
+                        text-decoration-thickness: 2px !important;
+                    }
+                }
+            }
             &__list {
                 margin-top: $spacing-3;
                 font-family: $marianne;

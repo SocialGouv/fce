@@ -10,7 +10,7 @@ const AnnuaireEntreprisesLink = ({ siren }) => {
       className="is-link"
       href={`https://annuaire-entreprises.data.gouv.fr/entreprise/${siren}`}
     >
-      l’Annuaire des Entreprises
+      Annuaire des Entreprises
     </a>
   );
 };

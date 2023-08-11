@@ -5,5 +5,11 @@
 
     &__not-found {
         padding-top: $spacing-2;
+        font-family: $marianne;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.5rem;
+        color: $dark-grey;
     }
 }

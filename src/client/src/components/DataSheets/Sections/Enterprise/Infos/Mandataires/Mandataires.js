@@ -10,7 +10,7 @@ import NonBorderedTable from "../../../SharedComponents/NonBorderedTable/NonBord
 const Mandataires = ({ mandataires }) => {
   return mandataires && mandataires.length ? (
     <div className="data-sheet--table">
-      <NonBorderedTable isScrollable={mandataires.length > 4}>
+      <NonBorderedTable isScrollable={mandataires.length > 7}>
         <thead>
           <tr>
             <th className="th">Fonction</th>

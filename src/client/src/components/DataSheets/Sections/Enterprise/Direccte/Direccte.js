@@ -1,5 +1,3 @@
-import { faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -16,13 +14,10 @@ const Direccte = ({ entreprise: { siren } }) => {
   return (
     <section
       id="direccte"
-      className="data-sheet__section direccte-interactions-enterprise"
+      className="data-sheet__bloc_section direccte-interactions-enterprise"
     >
       <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faCalendarCheck} />
-        </span>
-        <h2 className="title">Visites et contrôles</h2>
+        <h2 className="dark-blue-title">Visites et contrôles</h2>
       </div>
       <div className="section-datas">
         <InteractionType type="control" interactions={data} />

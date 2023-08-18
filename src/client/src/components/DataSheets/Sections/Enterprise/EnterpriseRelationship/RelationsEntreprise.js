@@ -1,5 +1,3 @@
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -10,12 +8,9 @@ import Egapro from "./Egapro";
 import Psi from "./Psi";
 
 const RelationsEntreprise = ({ enterprise }) => (
-  <section id="relationship" className="data-sheet__section">
+  <section id="relationship" className="data-sheet__bloc_section">
     <div className="section-header">
-      <span className="icon">
-        <FontAwesomeIcon icon={faUsers} />
-      </span>
-      <h2 className="title">Relation travail</h2>
+      <h2 className="dark-blue-title">Relation travail</h2>
     </div>
     <div className="section-datas">
       <Egapro enterprise={enterprise} />

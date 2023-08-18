@@ -24,7 +24,9 @@ $border-color: var(--border-color);
     border: 1px solid #e6edff;
     padding: 1rem;
     @media print {
-        margin: $spacing-3 0 !important;
+        width: 100% !important;
+        border: none;
+        margin: 0 !important;
         height: 100% !important;
     }
 }
@@ -38,13 +40,6 @@ $border-color: var(--border-color);
     font-family: $marianne;
     div {
         margin-bottom: 5px;
-        span {
-            background-color: $border-color !important;
-            width: 0.5rem;
-            height: 0.5rem;
-            margin-left: 4px;
-            border-radius: 50%;
-        }
         display: flex;
         align-items: center;
 
@@ -61,9 +56,9 @@ $border-color: var(--border-color);
     height: 17.625rem;
     width: 100%;
     @media print {
+        height: 300px !important;
         width: 100% !important;
-        height: 400px !important;
-        padding: 1rem 0 !important;
+        margin: 1rem !important;
     }
 
     .chart-legend {
@@ -88,6 +83,13 @@ $border-color: var(--border-color);
                 width: 20px !important;
                 height: 20px !important;
             }
+        }
+    }
+    .chart-graph {
+        @media print {
+            height: 80% !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
     }
 }

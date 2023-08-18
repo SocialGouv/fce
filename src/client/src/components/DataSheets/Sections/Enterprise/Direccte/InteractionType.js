@@ -30,7 +30,7 @@ const InteractionType = ({ type, interactions }) => {
   const s = numberOfEstablishments > 1 ? "s" : "";
 
   const subtitle = `${numberOfEstablishments} établissement${s} ${
-    isControl ? "contrôlé " : "visité"
+    isControl ? "contrôlé" : "visité"
   }${s}${isControl ? "" : " par les Services économiques de l'État en région"}`;
 
   return (
@@ -53,7 +53,6 @@ const InteractionType = ({ type, interactions }) => {
               {formattedInteractions.map((interaction) => {
                 const etab = interaction?.etablissement;
                 const isEtablissementActive = isActive(etab);
-                console.log(isEtablissementActive);
                 const stateClass = isEtablissementActive
                   ? "icon--success"
                   : "icon--danger";

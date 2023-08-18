@@ -8,6 +8,7 @@ import {
   sortedApiDataAsc,
   sortedDataAsc,
 } from "../../../../../../utils/donnees-ecofi/donnees-ecofi";
+import EllipseIcon from "../../../../../shared/Icons/EllipseIcon.jsx";
 
 function FinancesGraph({ data = [], isDataApi = false }) {
   const chartCanvasRef = useRef(null);
@@ -238,13 +239,15 @@ function FinancesGraph({ data = [], isDataApi = false }) {
         <>
           {!isDataApi && (
             <div className="horizontal-chart-legend">
-              {datasets.map(({ label, borderColor }) => (
-                <div key={label}>
-                  <span style={{ "--border-color": borderColor }} />
-
-                  <label>{label}</label>
-                </div>
-              ))}
+              {datasets.map(
+                ({ label, borderColor }) =>
+                  datasetsToDisplay.includes(label) && (
+                    <div key={label}>
+                      <EllipseIcon color={borderColor} />
+                      <label>{label}</label>
+                    </div>
+                  )
+              )}
             </div>
           )}
 
@@ -268,7 +271,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
                 ))}
               </div>
             )}
-            <div>
+            <div className="chart-graph">
               <Line
                 ref={chartCanvasRef}
                 id="chart"

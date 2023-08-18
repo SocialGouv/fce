@@ -5,10 +5,11 @@ import { formatSiret } from "../../../../../helpers/utils";
 import {
   getCity,
   getState,
+  isActive,
 } from "../../../../../utils/establishment/establishment";
+import BadgeWithIcon from "../../../../shared/Badge/BadgeWithIcon.jsx";
+import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
-import State from "../../SharedComponents/State";
-import Table from "../../SharedComponents/Table";
 
 export const PsiSiretTable = ({ psi, year, isVisiblePsiTable }) => {
   return (
@@ -18,30 +19,53 @@ export const PsiSiretTable = ({ psi, year, isVisiblePsiTable }) => {
       </div>
 
       {!!psi.length && isVisiblePsiTable && (
-        <Table className="psi-siret__table">
-          <thead>
-            <tr>
-              <th className="th">SIRET</th>
-              <th className="th table-cell--center-cell">État</th>
-              <th className="th">Commune</th>
-              <th className="th see-details" />
-            </tr>
-          </thead>
-          <tbody>
-            {psi.map((psi) => (
-              <tr key={psi.siret}>
-                <td className="table-cell--nowrap">{formatSiret(psi.siret)}</td>
-                <td className="table-cell--center-cell">
-                  <State state={getState(psi.etablissement)} />
-                </td>
-                <td>{getCity(psi.etablissement)}</td>
-                <td className="table-cell--nowrap see-details">
-                  <SeeDetailsLink link={`/establishment/${psi.siret}/#psi`} />
-                </td>
+        <div className="data-sheet--table">
+          <NonBorderedTable
+            isScrollable={psi.length > 6}
+            className="psi-siret__table"
+          >
+            <thead>
+              <tr>
+                <th className="th">SIRET</th>
+                <th className="th table-cell--center-cell">État</th>
+                <th className="th">Commune</th>
+                <th className="th see-details" />
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {psi.map((psi) => {
+                const etab = psi.etablissement;
+                const isEtablissementActive = isActive(etab);
+                const stateClass = isEtablissementActive
+                  ? "icon--success"
+                  : "icon--danger";
+                const stateText = isEtablissementActive ? "ouvert" : "fermé";
+                return (
+                  <tr key={psi.siret}>
+                    <td className="table-cell--nowrap">
+                      {formatSiret(psi.siret)}
+                    </td>
+                    <td className="table-cell--center-cell">
+                      {getState(etab) && (
+                        <BadgeWithIcon
+                          isTableBadge
+                          text={stateText}
+                          state={stateClass}
+                        />
+                      )}
+                    </td>
+                    <td>{getCity(psi.etablissement)}</td>
+                    <td className="table-cell--nowrap see-details">
+                      <SeeDetailsLink
+                        link={`/establishment/${psi.siret}/#psi`}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </NonBorderedTable>
+        </div>
       )}
     </div>
   );

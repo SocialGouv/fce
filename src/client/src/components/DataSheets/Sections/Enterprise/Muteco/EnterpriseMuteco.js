@@ -1,5 +1,3 @@
-import { faUmbrella } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -10,12 +8,9 @@ import Rcc from "./Rcc";
 
 const EnterpriseMuteco = ({ enterprise }) => {
   return (
-    <section id="muteco" className="data-sheet__section">
+    <section id="muteco" className="data-sheet__bloc_section">
       <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faUmbrella} />
-        </span>
-        <h2 className="title">Mutations Economiques</h2>
+        <h2 className="dark-blue-title">Mutations Economiques</h2>
       </div>
       <div className="section-datas">
         <ActivitePartielle enterprise={enterprise} />

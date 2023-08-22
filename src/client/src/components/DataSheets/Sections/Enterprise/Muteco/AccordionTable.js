@@ -1,10 +1,5 @@
 import "./AccordionTable.scss";
 
-import {
-  faChevronCircleDown,
-  faChevronCircleLeft,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
@@ -18,6 +13,8 @@ import {
   getSituationJuridique,
   getTypeLabel,
 } from "../../../../../utils/rupco/rupco";
+import ArrowDown from "../../../../shared/Icons/ArrowDown.jsx";
+import ArrowUp from "../../../../shared/Icons/ArrowUp.jsx";
 import Value from "../../../../shared/Value";
 
 const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
@@ -32,7 +29,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
   return (
     <>
       <tbody>
-        <tr className="accordion-table__row">
+        <tr>
           {hasTypeColumn && (
             <td>
               <Value value={getTypeLabel(procedure[0])} />
@@ -41,7 +38,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
           <td>
             <Value value={getDateEnregistrement(procedure[0])} />
           </td>
-          <td className="has-text-right">
+          <td>
             <Value value={getNumero(procedure[0])} />
           </td>
           <td>
@@ -50,10 +47,10 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
           <td>
             <Value value={getSituationJuridique(procedure[0])} />
           </td>
-          <td className="has-text-right">
+          <td>
             <Value value={getDateJugement(procedure[0])} />
           </td>
-          <td className="has-text-right">
+          <td>
             <Value
               value={computeTotalRuptures(procedure)}
               nonEmptyValues="0"
@@ -66,19 +63,15 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
               tabIndex={0}
               onKeyDown={onKeyDown}
               onClick={() => setIsActiveAccordion(!isActiveAccordion)}
-              className="has-text-right accordion-table__header"
+              className="accordion-table__header"
             >
               <Value value={procedure.length} hasNumberFormat />
-              <FontAwesomeIcon
-                icon={
-                  isActiveAccordion ? faChevronCircleDown : faChevronCircleLeft
-                }
-              />
+              {isActiveAccordion ? <ArrowDown /> : <ArrowUp />}
             </div>
           </td>
         </tr>
       </tbody>
-      <tbody className="accordion-table__container">
+      <tbody>
         {isActiveAccordion &&
           procedure.map(
             ({
@@ -86,13 +79,13 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
               nombre_de_ruptures_de_contrats_en_debut_de_procedure,
               nombre_de_ruptures_de_contrats_en_fin_de_procedure,
             }) => (
-              <tr key={siret}>
+              <tr key={siret} className="sub-table">
                 <td colSpan={hasTypeColumn ? 6 : 5} />
-                <td className="has-text-right">
+                <td>
                   {nombre_de_ruptures_de_contrats_en_fin_de_procedure ||
                     nombre_de_ruptures_de_contrats_en_debut_de_procedure}
                 </td>
-                <td className="has-text-link has-text-right">
+                <td className="text has-text-right">
                   <Value
                     value={formatSiret(siret)}
                     link={`/establishment/${siret}/#muteco`}

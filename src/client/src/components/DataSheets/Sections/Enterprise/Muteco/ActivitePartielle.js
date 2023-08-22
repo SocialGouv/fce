@@ -10,13 +10,14 @@ import {
 import {
   getCategoryLabel,
   getState,
+  isActive,
 } from "../../../../../utils/establishment/establishment";
+import BadgeWithIcon from "../../../../shared/Badge/BadgeWithIcon.jsx";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
+import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
-import State from "../../SharedComponents/State";
 import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table";
 import { useActivitePartielle } from "./ActivitePartielle.gql";
 
 const ActivitePartielle = ({ enterprise: { siren } }) => {
@@ -37,11 +38,14 @@ const ActivitePartielle = ({ enterprise: { siren } }) => {
         name="Nb d'établissements ayant eu recours à l'activité partielle au cours des 24 derniers mois"
         value={activitePartielle.length}
         emptyValue="0"
-        columnClasses={["is-8", "is-4"]}
+        columnClasses={["is-10", "is-2"]}
+        className="has-no-border"
       />
       {hasActivitePartielle && (
-        <>
-          <Table>
+        <div className="data-sheet--table">
+          <NonBorderedTable
+            isScrollable={formattedActivitePartielle.length > 6}
+          >
             <thead>
               <tr>
                 <th className="th">SIRET</th>
@@ -66,28 +70,34 @@ const ActivitePartielle = ({ enterprise: { siren } }) => {
                 }) => {
                   const etat = getState(etablissement);
                   const categorie = getCategoryLabel(etablissement);
+                  const etab = etablissement;
+                  const isEtablissementActive = isActive(etab);
+                  const stateClass = isEtablissementActive
+                    ? "icon--success"
+                    : "icon--danger";
+                  const stateText = isEtablissementActive ? "ouvert" : "fermé";
 
                   return (
                     <tr key={siret}>
                       <td className="table-cell--nowrap">
-                        {formatSiret(siret)}
-                      </td>
-                      <td className="table-cell--center-cell">
-                        {etat && <State state={etat} />}
-                      </td>
-                      <td>{categorie}</td>
-                      <td className="has-text-right">
-                        {formatNumber(Math.round(nb_h_auto_cum))}
-                      </td>
-                      <td className="has-text-right">
-                        {formatNumber(Math.round(nb_h_conso_cum))}
-                      </td>
-                      <td>{<Value value={date_decision} />}</td>
-                      <td className="see-details">
                         <SeeDetailsLink
                           link={`/establishment/${siret}/#muteco`}
+                          text={formatSiret(siret)}
                         />
                       </td>
+                      <td className="table-cell--center-cell">
+                        {etat && (
+                          <BadgeWithIcon
+                            isTableBadge
+                            text={stateText}
+                            state={stateClass}
+                          />
+                        )}
+                      </td>
+                      <td>{categorie}</td>
+                      <td>{formatNumber(Math.round(nb_h_auto_cum))}</td>
+                      <td>{formatNumber(Math.round(nb_h_conso_cum))}</td>
+                      <td>{<Value value={date_decision} />}</td>
                     </tr>
                   );
                 }
@@ -97,15 +107,15 @@ const ActivitePartielle = ({ enterprise: { siren } }) => {
             {totalActivitePartielle && (
               <tfoot>
                 <tr>
-                  <th className="has-text-right" colSpan="3">
-                    Totaux
-                  </th>
-                  <td className="has-text-right">
+                  <th> </th>
+                  <th> </th>
+                  <th className="tfoot-recour">Totaux</th>
+                  <td>
                     {formatNumber(
                       Math.round(totalActivitePartielle.nb_h_auto_cum)
                     )}
                   </td>
-                  <td className="has-text-right">
+                  <td>
                     {formatNumber(
                       Math.round(totalActivitePartielle.nb_h_conso_cum)
                     )}
@@ -114,8 +124,8 @@ const ActivitePartielle = ({ enterprise: { siren } }) => {
                 </tr>
               </tfoot>
             )}
-          </Table>
-        </>
+          </NonBorderedTable>
+        </div>
       )}
     </Subcategory>
   );

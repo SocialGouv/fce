@@ -86,11 +86,15 @@
                 padding: $spacing-1 !important;
             }
         }
-
+        tbody {
+            .sub-table {
+                background-color: #f6f6f6 !important;
+            }
+        }
         tfoot {
             .tfoot-recour {
                 text-align: start;
-                padding: $spacing-3;
+                padding: $spacing-1;
             }
         }
     }

@@ -1,11 +1,9 @@
 import * as PropTypes from "prop-types";
 import React from "react";
 
-import { formatSiret } from "../../../../../helpers/utils";
 import { getOrganismesFormations } from "../../../../../utils/entreprise/entreprise";
 import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
 import Data from "../../SharedComponents/Data";
-import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 
 const OrganismeFormation = ({ entreprise }) => {
   const organismes_formation = getOrganismesFormations(entreprise);
@@ -17,14 +15,7 @@ const OrganismeFormation = ({ entreprise }) => {
           name="Organisme de formation"
           className="has-no-border"
           emptyValue=""
-          links={organismes_formation.map(({ siret }) => (
-            <div key={siret}>
-              <SeeDetailsLink
-                text={formatSiret(siret)}
-                link={`/establishment/${siret}/#agrements`}
-              />
-            </div>
-          ))}
+          links={organismes_formation}
         />
       ) : (
         <Data

@@ -5,7 +5,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Source from "../../../../../containers/Source";
+import { formatSiret } from "../../../../../helpers/utils";
 import Value from "../../../../shared/Value";
+import SeeDetailsLink from "../SeeDetailsLink/SeeDetailsLink";
 
 const Data = ({
   name,
@@ -39,7 +41,15 @@ const Data = ({
         </div>
         <div className={`dd column ${columnClasses[1]}`}>
           <div>
-            {links && links}
+            {links &&
+              links.map(({ siret }) => (
+                <div key={siret}>
+                  <SeeDetailsLink
+                    text={formatSiret(siret)}
+                    link={`/establishment/${siret}/#agrements`}
+                  />
+                </div>
+              ))}
             {link ? (
               <Link to={link}>
                 <Value

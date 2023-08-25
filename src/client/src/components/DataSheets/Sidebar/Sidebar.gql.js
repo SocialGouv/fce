@@ -40,12 +40,33 @@ const sidebarQuery = gql`
     }
   }
 `;
-
+const subHeaderQuery = gql`
+  query SubHeaderQuery($siren: String!, $limit: Int) {
+    entreprises: fce_entreprises(where: { siren: { _eq: $siren } }) {
+      nomunitelegale
+      prenom1unitelegale
+      denominationunitelegale
+      denominationusuelle1unitelegale
+      naf: entreprises_naf {
+        libelle
+        code
+      }
+    }
+  }
+`;
 export const useSidebarData = pipe(
   (siren, { limit } = {}) =>
     useQuery(sidebarQuery, {
       context: { clientName: BCE_CLIENT },
       variables: { limit, siren },
+    }),
+  mapQueryResult(prop("entreprises[0]"))
+);
+export const useSubHeaderData = pipe(
+  (siren) =>
+    useQuery(subHeaderQuery, {
+      context: { clientName: BCE_CLIENT },
+      variables: { siren },
     }),
   mapQueryResult(prop("entreprises[0]"))
 );

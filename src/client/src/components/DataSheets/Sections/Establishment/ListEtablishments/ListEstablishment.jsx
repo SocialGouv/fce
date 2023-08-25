@@ -177,7 +177,6 @@ const ListEstablishment = ({ siren }) => {
 
 ListEstablishment.propTypes = {
   siren: PropTypes.string.isRequired,
-  siret: PropTypes.string.isRequired,
 };
 
 export default ListEstablishment;

@@ -14,10 +14,9 @@ $border-color: var(--border-color);
 }
 .chart-wrapper {
     position: relative;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr;
-    height: 17.625rem;
+    display: flex;
+    min-height: 17.625rem;
+    flex-wrap: wrap;
     width: 100%;
     margin: 1em 0 !important;
     border-radius: 0.75rem;
@@ -29,12 +28,28 @@ $border-color: var(--border-color);
         margin: 0 !important;
         height: 100% !important;
     }
+    .chart-graph {
+        flex: 1;
+        width: 100% !important;
+        @media (max-width: 600px) {
+            border: none;
+            padding: 0;
+            width: 100%;
+        }
+        @media print {
+            height: 80% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    }
 }
 .horizontal-chart-legend {
     font-size: 0.7rem;
     font-weight: 400;
     display: flex !important;
     flex-direction: row !important;
+    flex-wrap: wrap;
+
     gap: $spacing-4;
     color: #000;
     font-family: $marianne;
@@ -50,10 +65,11 @@ $border-color: var(--border-color);
 }
 .finance-chart-wrapper {
     position: relative;
-    display: grid;
-    grid-template-rows: 1fr;
-    grid-template-columns: 1fr 80%;
-    height: 17.625rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    min-height: 17.625rem;
+
     width: 100%;
     @media print {
         height: 300px !important;
@@ -62,6 +78,7 @@ $border-color: var(--border-color);
     }
 
     .chart-legend {
+        flex: 1 3;
         font-size: $font-size-base-small;
         font-weight: 400;
         display: flex;
@@ -86,6 +103,17 @@ $border-color: var(--border-color);
         }
     }
     .chart-graph {
+        flex: 3 1;
+        flex-basis: 3;
+        width: 100% !important;
+        border-radius: 0.75rem;
+        border: 1px solid #e6edff;
+        padding: 1rem;
+        @media (max-width: 600px) {
+            border: none;
+            padding: 0;
+            width: 100%;
+        }
         @media print {
             height: 80% !important;
             margin: 0 !important;

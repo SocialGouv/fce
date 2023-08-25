@@ -2,7 +2,10 @@ import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 
-import { setYearMonthFormat } from "../../../../../../helpers/Date";
+import {
+  setYearFormat,
+  setYearMonthFormat,
+} from "../../../../../../helpers/Date";
 import {
   formatChiffre,
   sortedApiDataAsc,
@@ -166,7 +169,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
           },
         ],
         labels: sortedDataAsc(data)?.map(({ date_fin_exercice }) =>
-          setYearMonthFormat(date_fin_exercice)
+          setYearFormat(date_fin_exercice)
         ),
       };
   const options = {
@@ -175,7 +178,6 @@ function FinancesGraph({ data = [], isDataApi = false }) {
       mode: "index",
     },
     maintainAspectRatio: false,
-
     plugins: {
       legend: {
         display: false,
@@ -191,7 +193,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
             const label = tooltipItem.dataset.label || "";
             return (
               label +
-              "(€) :" +
+              "€:" +
               " " +
               formatChiffre(tooltipItem.parsed.y.toString()).toString()
             );
@@ -206,6 +208,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
         },
       },
     },
+
     responsive: true,
     scales: {
       x: {
@@ -225,7 +228,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
         },
         ticks: {
           callback: (label) => {
-            return formatChiffre(label.toString()) + "(€)";
+            return formatChiffre(label.toString()) + " €";
           },
           color: "#7C8DB5",
         },

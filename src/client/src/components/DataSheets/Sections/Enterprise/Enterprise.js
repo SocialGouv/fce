@@ -10,8 +10,10 @@ import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLo
 import withLoading from "../../../../services/withLoading";
 import { getSiren } from "../../../../utils/entreprise/entreprise";
 import Sidebar from "../../Sidebar/Sidebar";
+// import ListEstablishment from "../Establishment/ListEtablishments/ListEstablishment.jsx";
 import PrintSection from "../SharedComponents/PrintSection";
 import QuickAccess from "../SharedComponents/QuickAccess";
+// import SubHeader from "../SharedComponents/SubHeader/SubHeader.jsx";
 import Agrements from "./Agrements/Agrements";
 import Direccte from "./Direccte";
 import RelationsEntreprise from "./EnterpriseRelationship";
@@ -22,11 +24,13 @@ import Muteco from "./Muteco";
 
 const Enterprise = ({ enterprise }) => {
   const location = useLocation();
-
   useScrollToLocationHash({ location });
+  // const siren = getSiren(enterprise);
 
   return (
     <div>
+      {/* <SubHeader siren={siren} /> */}
+
       <section className="data-sheet container is-fullhd">
         <PrintSection />
         <div className="columns">
@@ -55,6 +59,10 @@ const Enterprise = ({ enterprise }) => {
               <Muteco enterprise={enterprise} />
               <Helps enterprise={enterprise} />
               <Agrements enterprise={enterprise} />
+              {/* <ListEstablishment
+                siren={siren}
+                isEstablishmentDisplayed={true}
+              /> */}
             </div>
             <UsersFeedback fullWidth />
           </div>

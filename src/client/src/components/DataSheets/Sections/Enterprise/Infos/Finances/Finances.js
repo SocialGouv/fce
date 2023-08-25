@@ -197,21 +197,23 @@ const Finances = ({ siret, siren }) => {
         </>
       ) : donneesEcofiBce.length === 0 && donneesEcofiApi ? (
         <>
-          <NonBorderedTable>
-            <thead>
-              <tr>
-                <th>Date fin exercice</th>
-                {datesApi}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Chiffre d{"'"}affaires (€)</th>
-                {caListApi}
-              </tr>
-            </tbody>
-          </NonBorderedTable>
-          <div className="box-shadow">
+          <div className="data-sheet--table">
+            <NonBorderedTable>
+              <thead>
+                <tr>
+                  <th>Date fin exercice</th>
+                  {datesApi}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Chiffre d{"'"}affaires (€)</th>
+                  {caListApi}
+                </tr>
+              </tbody>
+            </NonBorderedTable>
+          </div>
+          <div className={!donneesEcofiApi ? "box-shadow" : ""}>
             <FinancesGraph data={donneesEcofiApi} isDataApi={true} />
           </div>
         </>

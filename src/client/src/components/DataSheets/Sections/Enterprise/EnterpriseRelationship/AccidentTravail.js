@@ -55,7 +55,6 @@ const AccidentTravail = ({ entreprise: { siren } }) => {
                       <th>Etat</th>
                       <th>Commune</th>
                       <th>{"Nb d'accidents du travail"}</th>
-                      <th />
                     </tr>
                   </thead>
                   <tbody>
@@ -70,7 +69,15 @@ const AccidentTravail = ({ entreprise: { siren } }) => {
                         : "fermé";
                       return (
                         <tr key={getSiret(data.etablissement)}>
-                          <td>{getSiret(data.etablissement)}</td>
+                          <td>
+                            {" "}
+                            <SeeDetailsLink
+                              link={`/establishment/${getSiret(
+                                data.etablissement
+                              )}/#work-accidents`}
+                              text={getSiret(data.etablissement)}
+                            />
+                          </td>
                           <td className="table-cell--center-cell">
                             {getState(etab) && (
                               <BadgeWithIcon
@@ -81,13 +88,8 @@ const AccidentTravail = ({ entreprise: { siren } }) => {
                             )}
                           </td>
                           <td>{getCity(data.etablissement)}</td>
-                          <td>{data.total}</td>
-                          <td className="see-details">
-                            <SeeDetailsLink
-                              link={`/establishment/${getSiret(
-                                data.etablissement
-                              )}/#work-accidents`}
-                            />
+                          <td className="th table-cell--center-cell">
+                            {data.total}
                           </td>
                         </tr>
                       );

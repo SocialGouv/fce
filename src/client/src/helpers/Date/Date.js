@@ -65,6 +65,12 @@ export const setYearMonthFormat = (date) => {
   }
   return Moment(date).format("YYYY-MM");
 };
+export const setYearFormat = (date) => {
+  if (!date) {
+    return "";
+  }
+  return Moment(date).format("YYYY");
+};
 const START_DATE_LABEL = {
   LAST_FIVE_YEARS: 60,
   LAST_FOUR_YEARS: 48,

@@ -46,7 +46,6 @@ const InteractionType = ({ type, interactions }) => {
                 <th className="th">Commune</th>
                 <th className="th">Date dernier contrôle connu</th>
                 <th className="th">Pôle</th>
-                <th className="th see-details" />
               </tr>
             </thead>
             <tbody>
@@ -60,7 +59,10 @@ const InteractionType = ({ type, interactions }) => {
                 return (
                   <tr key={interaction.siret + interaction.pole}>
                     <td className="table-cell--nowrap">
-                      {formatSiret(interaction.siret)}
+                      <SeeDetailsLink
+                        text={formatSiret(interaction.siret)}
+                        link={`/establishment/${interaction?.siret}/#direccte`}
+                      />
                     </td>
                     <td className="table-cell--center-cell">
                       {getState(etab) && (
@@ -78,11 +80,8 @@ const InteractionType = ({ type, interactions }) => {
                       {interaction?.date &&
                         usDateToFrenchDate(interaction?.date)}
                     </td>
-                    <td>{interaction?.pole}</td>
-                    <td className="see-details">
-                      <SeeDetailsLink
-                        link={`/establishment/${interaction?.siret}/#direccte`}
-                      />
+                    <td className="th table-cell--center-cell">
+                      {interaction?.pole}
                     </td>
                   </tr>
                 );

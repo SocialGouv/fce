@@ -1,46 +1,40 @@
 import * as PropTypes from "prop-types";
 import React from "react";
 
+import { formatSiret } from "../../../../../helpers/utils";
 import { getOrganismesFormations } from "../../../../../utils/entreprise/entreprise";
 import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
 import Data from "../../SharedComponents/Data";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
-import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table";
 
 const OrganismeFormation = ({ entreprise }) => {
   const organismes_formation = getOrganismesFormations(entreprise);
   return (
-    <Subcategory subtitle="Organisme de formation">
-      <Data
-        key="OrganismeFormation"
-        name="Organisme de formation"
-        value={isOrganismeFormation(organismes_formation)}
-      />
-      <div className="section-datas__list-item">
-        {isOrganismeFormation(organismes_formation) && (
-          <Table>
-            <thead>
-              <tr>
-                <th>Siret</th>
-              </tr>
-            </thead>
-            <tbody>
-              {organismes_formation.map(({ siret }) => (
-                <tr key={siret}>
-                  <td>{siret}</td>
-                  <td className="see-details">
-                    <SeeDetailsLink
-                      link={`/establishment/${siret}/#agrements`}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )}
-      </div>
-    </Subcategory>
+    <>
+      {isOrganismeFormation(organismes_formation) ? (
+        <Data
+          key="OrganismeFormation"
+          name="Organisme de formation"
+          className="has-no-border"
+          emptyValue=""
+          links={organismes_formation.map(({ siret }) => (
+            <div key={siret}>
+              <SeeDetailsLink
+                text={formatSiret(siret)}
+                link={`/establishment/${siret}/#agrements`}
+              />
+            </div>
+          ))}
+        />
+      ) : (
+        <Data
+          key="OrganismeFormation"
+          name="Organisme de formation"
+          emptyValue={"Pas d'organisme de formation"}
+          className="has-no-border"
+        />
+      )}
+    </>
   );
 };
 

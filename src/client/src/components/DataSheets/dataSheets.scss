@@ -6,6 +6,11 @@
         box-shadow: 0px 2px 6px 0px rgba(0, 0, 18, 0.16) !important;
         border-radius: 0.5rem !important;
         padding: $spacing-4;
+        @media (max-width: 600px) {
+            border: none;
+            padding: 0;
+            box-shadow: none !important;
+        }
         @media print {
             box-shadow: none !important;
         }

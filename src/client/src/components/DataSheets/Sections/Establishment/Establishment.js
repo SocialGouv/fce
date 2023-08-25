@@ -12,6 +12,7 @@ import { getSirenFromSiret } from "../../../../utils/establishment/establishment
 import Sidebar from "../../Sidebar/Sidebar";
 import PrintSection from "../SharedComponents/PrintSection";
 import QuickAccess from "../SharedComponents/QuickAccess";
+// import SubHeader from "../SharedComponents/SubHeader/SubHeader.jsx";
 import Activite from "./Activity/Activite";
 import Agrements from "./Agreements/Agrements";
 import Controles from "./Direccte/Controles";
@@ -28,6 +29,8 @@ const Establishment = ({ siret }) => {
 
   return (
     <div>
+      {/* <SubHeader siren={siren} /> */}
+
       <section className="data-sheet container is-fullhd">
         <PrintSection />
         <div className="columns">
@@ -55,7 +58,6 @@ const Establishment = ({ siret }) => {
               <Helps siret={siret} />
               <Agrements siret={siret} />
               <ListEstablishment
-                siret={siret}
                 siren={siren}
                 isEstablishmentDisplayed={true}
               />

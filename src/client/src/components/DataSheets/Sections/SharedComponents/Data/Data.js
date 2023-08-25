@@ -21,6 +21,7 @@ const Data = ({
   sourceDate = null,
   hasNumberFormat = false,
   numberFormatOptions = null,
+  links,
 }) => {
   return (
     <>
@@ -38,6 +39,7 @@ const Data = ({
         </div>
         <div className={`dd column ${columnClasses[1]}`}>
           <div>
+            {links && links}
             {link ? (
               <Link to={link}>
                 <Value
@@ -80,6 +82,7 @@ Data.propTypes = {
   emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   hasNumberFormat: PropTypes.bool,
   link: PropTypes.string,
+  links: PropTypes.array,
   name: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.element]),
   nonEmptyValue: PropTypes.oneOfType([
     PropTypes.string,

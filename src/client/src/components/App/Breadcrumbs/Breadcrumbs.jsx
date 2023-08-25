@@ -13,7 +13,7 @@ const Breadcrumbs = () => {
     location.pathname === "/search"
   )
     return null;
-
+  console.log(location, "location");
   return (
     <div className="breadcrumbs">
       <div className="crumb">

@@ -87,7 +87,9 @@ const AccordsEntreprise = ({ enterprise }) => {
                           </td>
                           <td>{getCategoryLabel(etablissement)}</td>
                           <td>{formatNumber(total)}</td>
-                          <td>{toI18nDate(lastSignatureDate)}</td>
+                          <td className="th table-cell--center-cell">
+                            {toI18nDate(lastSignatureDate)}
+                          </td>
                         </tr>
                       );
                     }

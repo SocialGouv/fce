@@ -1,3 +1,10 @@
+# [27.82.0](https://github.com/SocialGouv/fce/compare/v27.81.0...v27.82.0) (2023-08-28)
+
+
+### Features
+
+* Mise à jour du lien vers le catalogue des données ([#293](https://github.com/SocialGouv/fce/issues/293)) ([2f992f0](https://github.com/SocialGouv/fce/commit/2f992f03fe1f471b5669596659bb15531d223672))
+
 # [27.81.0](https://github.com/SocialGouv/fce/compare/v27.80.0...v27.81.0) (2023-08-01)
 
 

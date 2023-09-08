@@ -1,10 +1,9 @@
 import "./sidebar.scss";
 
-import { faArrowDown, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { sortBy } from "lodash";
+import classNames from "classnames";
 import { compose } from "lodash/fp";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -17,120 +16,222 @@ import {
 } from "../../../services/Store/actions";
 import {
   getEtablissements,
-  getNafLabel,
-  getName,
+  // getName,
 } from "../../../utils/entreprise/entreprise";
-import { getState, isSiege } from "../../../utils/establishment/establishment";
-import { not } from "../../../utils/functions/functions";
-import { plural } from "../../../utils/plural/plural";
-import Button from "../../shared/Button";
-import Value from "../../shared/Value";
-import EstablishmentsItems from "./EstablishmentsItems/EstablishmentsItems";
-import {
-  getEtablissementsCount,
-  getEtablissementsFermesCount,
-  useSidebarData,
-} from "./Sidebar.gql";
+import { isSiege } from "../../../utils/establishment/establishment";
+// import Value from "../../shared/Value";
+import { useEstablishmentData } from "../Sections/SharedComponents/EstablishmentContext.jsx";
+import PrintSection from "./../../DataSheets/Sections/SharedComponents/PrintSection";
+import { getEtablissementsCount } from "./Sidebar.gql";
 
 const Sidebar = ({
   siren,
-  isEstablishmentDisplayed,
+  siret,
+  isEstablishmentDisplayed = false,
+  isEstablishmentsDisplayed = false,
+  isEntrepriseDisplayed = false,
   history,
   setSearchTerm,
   resetSearch,
 }) => {
   const limitItems = Config.get("sidebarEstablishmentsLimit");
-
-  const [displayAll, setDisplayAll] = useState(false);
-  const {
-    loading,
-    data: entreprise,
-    error,
-  } = useSidebarData(siren, {
-    limit: !displayAll ? limitItems : undefined,
-  });
+  console.log(
+    setSearchTerm,
+    isEstablishmentsDisplayed,
+    resetSearch,
+    limitItems,
+    history
+  );
+  console.log("setSearchTerm, resetSearch, limitItems", siret, history);
+  const { loading, data: entreprise, error } = useEstablishmentData();
 
   if (loading || error) {
     return null;
   }
+  console.log("historyhistory", history?.location.hash);
 
   const etablissements = entreprise ? getEtablissements(entreprise) : [];
 
   const etablissementsCount = entreprise
     ? getEtablissementsCount(entreprise)
     : 0;
-  const etablissementsFermesCount = entreprise
-    ? getEtablissementsFermesCount(entreprise)
-    : 0;
+
   const headOffice = etablissements.find(isSiege);
+  const etabSec = etablissements.find((obj) => obj.siret == siret);
+  const etabsecIsSiege = isSiege(etabSec);
 
-  const displayedEstablishments = sortBy(
-    etablissements.filter(not(isSiege)),
-    getState
-  );
+  const establishmentsAnchors = [
+    { label: "Activité", link: "#activity" },
+    { label: "Visites et contrôles", link: "#direccte" },
+    { label: "Relation travail", link: "#relation" },
+    { label: "Mutations économiques", link: "#muteco" },
+    { label: "Aides", link: "#helps" },
+    { label: "Agréments", link: "#agrements" },
+    { label: "Autres etablissements", link: "#autres-etablissements" },
+  ];
 
+  const entrepriseAnchors = [
+    { label: "Informations légales", link: "#infos" },
+    { label: "Visites et contrôles", link: "#direccte" },
+    { label: "Relation travail", link: "#relationship" },
+    {
+      label: "Mutations économiques",
+      link: "#muteco",
+    },
+    { label: "Aides", link: "#helps" },
+    { label: "Agréments", link: "#agrements" },
+    { label: "Autres etablissements", link: "#autres-etablissements" },
+  ];
   return (
     <>
-      <aside
-        className={`${
-          isEstablishmentDisplayed ? "establishment" : "enterprise"
-        } aside-contain`}
-      >
+      <aside className={` aside-contain`}>
         <section className="sidebar__enterprise">
-          <h3 className="sidebar__enterprise-title">
-            Entreprise{" "}
-            <Value value={getName(entreprise).toLowerCase()} empty="-" />
-          </h3>
-          <p className="sidebar__enterprise-naf">
-            <Value value={getNafLabel(entreprise)} empty="-" />
-          </p>
-          {isEstablishmentDisplayed && (
-            <Button
-              value="Voir la fiche entreprise"
-              icon={faArrowRight}
-              buttonClasses={["sidebar__enterprise-button", "is-secondary"]}
-              callback={() => {
-                history.push(`/enterprise/${siren}`);
-              }}
-            />
-          )}
-        </section>
-
-        <section className="sidebar__establishments">
-          <p className="sidebar__establishments-count">
-            <strong>
-              <Value value={etablissementsCount} empty="Aucun " />{" "}
-              {plural({
-                count: etablissementsCount,
-                plural: "établissements",
-                singular: "établissement",
-              })}
-              {etablissementsFermesCount > 0 && (
-                <>
-                  <br />
-                  <span>
-                    dont {etablissementsFermesCount}{" "}
-                    {plural({
-                      count: etablissementsFermesCount,
-                      plural: "fermés",
-                      singular: "fermé",
-                    })}
-                  </span>
-                </>
+          <div className="sidebar-items">
+            <div className="item">
+              <button
+                className={classNames([
+                  "item-title",
+                  `${isEntrepriseDisplayed && "active "}`,
+                ])}
+                onClick={() => {
+                  history.push(`/enterprise/${siren}`);
+                }}
+              >
+                Entreprise
+              </button>
+              {isEntrepriseDisplayed && (
+                <div className="anchors">
+                  {entrepriseAnchors.map(({ label, link }) => (
+                    <div key={label}>
+                      <div
+                        className="ellipse"
+                        style={{
+                          "--border-color":
+                            history?.location?.hash == link
+                              ? "#000091"
+                              : "#e3e3fd",
+                        }}
+                      />
+                      <a
+                        href={link}
+                        className={`${
+                          history?.location?.hash == link ? "active-anchor" : ""
+                        }`}
+                      >
+                        {" "}
+                        {label}
+                      </a>
+                    </div>
+                  ))}
+                </div>
               )}
-            </strong>
-          </p>
+            </div>
+            {headOffice && (
+              <div className="item">
+                <button
+                  className={classNames([
+                    "item-title",
+                    `${
+                      isEstablishmentDisplayed &&
+                      etabsecIsSiege &&
+                      "active selected-item"
+                    }`,
+                  ])}
+                  onClick={() => {
+                    history.push(`/establishment/${headOffice?.siret}`);
+                  }}
+                >
+                  Siège social
+                </button>
+                {isEstablishmentDisplayed && etabsecIsSiege && (
+                  <div className="anchors">
+                    {establishmentsAnchors.map(({ label, link }) => (
+                      <div key={label}>
+                        <div
+                          className="ellipse"
+                          style={{
+                            "--border-color":
+                              history?.location?.hash == link
+                                ? "#000091"
+                                : "#e3e3fd",
+                          }}
+                        />
+                        <a
+                          href={link}
+                          className={`${
+                            history?.location?.hash == link
+                              ? "active-anchor"
+                              : ""
+                          }`}
+                        >
+                          {" "}
+                          {label}
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+            <div className="item">
+              <button
+                className={classNames([
+                  "item-title",
+                  `${isEstablishmentDisplayed && !etabsecIsSiege && "active"}`,
+                  `${isEstablishmentsDisplayed && "selected-item"}`,
+                ])}
+                // onClick={() => {
+                //   !etablissementsCount
+                //     ? null
+                //     : history.push(`/list-establishments/${siren}`);
+                // }}
+              >
+                {" "}
+                {`${
+                  etablissementsCount ? etablissementsCount : "Aucun"
+                } établissements`}
+              </button>
 
-          <div>
-            <EstablishmentsItems
-              establishments={headOffice ? [headOffice] : []}
-              establishmentType="Siège social"
-              headOffice
-            />
+              {/* {isEstablishmentDisplayed && !etabsecIsSiege && (
+                <div className="anchors">
+                  <span className="etb-name">
+                    <Value
+                      value={getName(entreprise).toLowerCase()}
+                      empty="-"
+                    />
+                  </span>
+                  {establishmentsAnchors.map(({ label, link }) => (
+                    <div key={label}>
+                      <div
+                        className="ellipse"
+                        style={{
+                          "--border-color":
+                            history?.location?.hash == link
+                              ? "#000091"
+                              : "#e3e3fd",
+                        }}
+                      />
+                      <a
+                        href={link}
+                        className={`${
+                          history?.location?.hash == link ? "active-anchor" : ""
+                        }`}
+                      >
+                        {" "}
+                        {label}
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )} */}
+            </div>
+          </div>
+          <div className="sidebar-btns">
+            <PrintSection />
           </div>
         </section>
 
-        <section className="sidebar__establishments">
+        {/* <section className="sidebar__establishments">
           {etablissementsCount > 1 && (
             <>
               <EstablishmentsItems
@@ -160,7 +261,7 @@ const Sidebar = ({
               )}
             </>
           )}
-        </section>
+        </section> */}
       </aside>
     </>
   );
@@ -182,15 +283,16 @@ const mapDispatchToProps = (dispatch) => {
 
 Sidebar.propTypes = {
   history: PropTypes.object.isRequired,
+  isEntrepriseDisplayed: PropTypes.bool,
   isEstablishmentDisplayed: PropTypes.bool,
+  isEstablishmentsDisplayed: PropTypes.bool,
   resetSearch: PropTypes.func.isRequired,
   setSearchFilters: PropTypes.func.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
   siren: PropTypes.string.isRequired,
+  siret: PropTypes.string.isRequired,
 };
 
-export default compose(
-  withRouter,
-  connect(null, mapDispatchToProps),
-  renderIfSiren
-)(Sidebar);
+export default React.memo(
+  compose(withRouter, connect(null, mapDispatchToProps), renderIfSiren)(Sidebar)
+);

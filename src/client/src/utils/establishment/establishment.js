@@ -10,7 +10,7 @@ import {
   toLower,
 } from "lodash/fp";
 
-export const getSirenFromSiret = (siret) => siret.substring(0, 9);
+export const getSirenFromSiret = (siret) => siret?.substring(0, 9);
 
 export const getSiret = prop("siret");
 

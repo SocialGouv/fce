@@ -1,9 +1,12 @@
 @import "../../App/variables";
 @import "../../App/placeholders";
-
+$border-color: var(--border-color);
 .aside-box {
     > .aside-contain {
-        position: relative;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1;
         display: block;
         padding: $spacing-4 0;
         overflow: auto;
@@ -19,6 +22,88 @@
 }
 
 .sidebar {
+    &-items {
+        display: flex;
+        flex-direction: column;
+        .item {
+            button {
+                background-color: transparent;
+                border: none;
+                padding: $spacing-2;
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 1.5rem;
+                font-family: $marianne !important;
+                text-align: left;
+            }
+            .active {
+                color: $dark-blue;
+            }
+            .selected-item {
+                border-left: 2px solid $dark-blue;
+                color: $dark-blue;
+            }
+            &-title {
+                cursor: pointer;
+            }
+
+            .anchors {
+                display: flex;
+                flex-direction: column;
+                font-family: $marianne !important;
+                margin-left: $spacing-3;
+                list-style-position: outside;
+                .etb-name {
+                    padding: $spacing-2 $spacing-1;
+                    margin-left: $spacing-2;
+                    color: $dark-blue;
+                    font-weight: 700;
+                    text-transform: capitalize;
+                    border-left: 2px solid $dark-blue;
+                    font-family: $marianne !important;
+                }
+                div {
+                    display: flex;
+                    align-items: center;
+                    border-left: 1px solid #e3e3fd;
+                    margin-left: $spacing-4;
+                    padding: 0;
+                    a {
+                        color: $text-grey-dark;
+                        padding: $spacing-2;
+                        color: $title-grey !important;
+                        font-family: $marianne !important;
+                        font-size: 1rem;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 1.5rem;
+                    }
+                    .ellipse {
+                        background: $border-color !important;
+                        margin-left: -4px;
+                        border-radius: 50%;
+                        border-color: $border-color !important;
+                        width: 7px !important;
+                        height: 7px !important;
+                    }
+                    .active-anchor {
+                        color: $dark-blue !important;
+                        font-weight: 700 !important;
+                    }
+
+                    a:active {
+                        color: $dark-blue;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+    }
+    &-btns {
+        display: flex;
+        align-items: flex-start;
+    }
     &__enterprise {
         padding: $spacing-4;
         margin-bottom: $spacing-2;

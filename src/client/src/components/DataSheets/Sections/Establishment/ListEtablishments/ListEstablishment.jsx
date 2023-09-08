@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
@@ -13,15 +12,13 @@ import { getEtablissements } from "../../../../../utils/entreprise/entreprise";
 import { isActive } from "../../../../../utils/establishment/establishment";
 import BadgeWithIcon from "../../../../shared/Badge/BadgeWithIcon.jsx";
 import Value from "../../../../shared/Value";
-import {
-  getEtablissementsCount,
-  useSidebarData,
-} from "../../../Sidebar/Sidebar.gql";
+import { getEtablissementsCount } from "../../../Sidebar/Sidebar.gql";
+import { useEstablishmentData } from "../../SharedComponents/EstablishmentContext.jsx";
 import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import PaginationTable from "../../SharedComponents/PaginationTable/PaginationTable.jsx";
 
-const ListEstablishment = ({ siren }) => {
-  const { loading, data: entreprise, error } = useSidebarData(siren);
+const ListEstablishment = () => {
+  const { loading, data: entreprise, error } = useEstablishmentData();
   const history = useHistory();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -56,7 +53,7 @@ const ListEstablishment = ({ siren }) => {
   };
 
   return (
-    <section id="helps" className="data-sheet__bloc_section ">
+    <section id="autres-etablissements" className="data-sheet__bloc_section ">
       <div className="section-header ">
         <h2 className="dark-blue-title">
           Autres Etablissements (
@@ -161,13 +158,15 @@ const ListEstablishment = ({ siren }) => {
                   })}
               </tbody>
             </NonBorderedTable>
-            <div className="table-pagination">
-              <PaginationTable
-                currentPage={currentPage}
-                totalPages={totalPages}
-                handlePageClick={handlePageClick}
-              />
-            </div>
+            {etablissementsCount > 4 && (
+              <div className="table-pagination">
+                <PaginationTable
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  handlePageClick={handlePageClick}
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -175,8 +174,4 @@ const ListEstablishment = ({ siren }) => {
   );
 };
 
-ListEstablishment.propTypes = {
-  siren: PropTypes.string.isRequired,
-};
-
-export default ListEstablishment;
+export default React.memo(ListEstablishment);

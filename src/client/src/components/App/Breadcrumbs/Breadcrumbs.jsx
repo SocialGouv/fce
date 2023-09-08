@@ -7,13 +7,20 @@ import { Link, useLocation } from "react-router-dom";
 
 const Breadcrumbs = () => {
   const location = useLocation();
-  if (
-    location.pathname === "" ||
-    location.pathname === "/" ||
-    location.pathname === "/search"
-  )
-    return null;
-  console.log(location, "location");
+  const invalidPaths = [
+    "",
+    "/",
+    "/search",
+    "/a-propos",
+    "/faq",
+    "/aide",
+    "/sources-des-donnees",
+    "/statistics",
+    "/mentions-legales",
+    "/politique-de-confidentialite",
+  ];
+
+  if (invalidPaths.includes(location.pathname)) return null;
   return (
     <div className="breadcrumbs">
       <div className="crumb">
@@ -24,13 +31,15 @@ const Breadcrumbs = () => {
         <span>Liste établissements</span>
         <FontAwesomeIcon icon={faAngleRight} />
       </div>
-      <div className="crumb">
-        <span>
-          {location.pathname.includes("establishment")
-            ? "Fiche établissement"
-            : "Fiche entreprise"}
-        </span>
-      </div>
+      {!location.pathname.includes("list-establishments") && (
+        <div className="crumb">
+          <span>
+            {location.pathname.includes("establishment")
+              ? "Fiche établissement"
+              : location.pathname.includes("entreprise") && "Fiche entreprise"}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,10 @@
+@import "../../../App/variables";
+.sheet {
+    &.container {
+        width: 100%;
+        padding: $padding-app-x;
+        .column {
+            padding-top: 0.25rem 0.75rem;
+        }
+    }
+}

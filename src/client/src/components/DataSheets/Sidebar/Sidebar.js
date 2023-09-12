@@ -182,7 +182,7 @@ const Sidebar = ({
                   `${isEstablishmentsDisplayed && "selected-item"}`,
                 ])}
                 onClick={() => {
-                  !etablissementsCount
+                  return !etablissementsCount
                     ? null
                     : history.push(`/list-establishments/${siren}`);
                 }}

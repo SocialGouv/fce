@@ -90,6 +90,7 @@ const App = () => {
                               exact
                               path="/list-establishments/:siren"
                               component={ListEtablissements}
+                              isEstablishmentsDisplayed
                             />
                             <Route
                               exact

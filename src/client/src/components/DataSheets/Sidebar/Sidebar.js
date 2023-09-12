@@ -16,10 +16,11 @@ import {
 } from "../../../services/Store/actions";
 import {
   getEtablissements,
-  // getName,
+  getName,
 } from "../../../utils/entreprise/entreprise";
 import { isSiege } from "../../../utils/establishment/establishment";
-// import Value from "../../shared/Value";
+import EllipseIconAside from "../../shared/Icons/EllipseIconAside.jsx";
+import Value from "../../shared/Value";
 import { useEstablishmentData } from "../Sections/SharedComponents/EstablishmentContext.jsx";
 import PrintSection from "./../../DataSheets/Sections/SharedComponents/PrintSection";
 import { getEtablissementsCount } from "./Sidebar.gql";
@@ -91,7 +92,7 @@ const Sidebar = ({
               <button
                 className={classNames([
                   "item-title",
-                  `${isEntrepriseDisplayed && "active "}`,
+                  `${isEntrepriseDisplayed && "active selected-item "}`,
                 ])}
                 onClick={() => {
                   history.push(`/enterprise/${siren}`);
@@ -103,15 +104,15 @@ const Sidebar = ({
                 <div className="anchors">
                   {entrepriseAnchors.map(({ label, link }) => (
                     <div key={label}>
-                      <div
-                        className="ellipse"
-                        style={{
-                          "--border-color":
+                      <span className="ellipse-span">
+                        <EllipseIconAside
+                          color={
                             history?.location?.hash == link
                               ? "#000091"
-                              : "#e3e3fd",
-                        }}
-                      />
+                              : "#e3e3fd"
+                          }
+                        />
+                      </span>
                       <a
                         href={link}
                         className={`${
@@ -147,15 +148,15 @@ const Sidebar = ({
                   <div className="anchors">
                     {establishmentsAnchors.map(({ label, link }) => (
                       <div key={label}>
-                        <div
-                          className="ellipse"
-                          style={{
-                            "--border-color":
+                        <span className="ellipse-span">
+                          <EllipseIconAside
+                            color={
                               history?.location?.hash == link
                                 ? "#000091"
-                                : "#e3e3fd",
-                          }}
-                        />
+                                : "#e3e3fd"
+                            }
+                          />
+                        </span>
                         <a
                           href={link}
                           className={`${
@@ -180,11 +181,11 @@ const Sidebar = ({
                   `${isEstablishmentDisplayed && !etabsecIsSiege && "active"}`,
                   `${isEstablishmentsDisplayed && "selected-item"}`,
                 ])}
-                // onClick={() => {
-                //   !etablissementsCount
-                //     ? null
-                //     : history.push(`/list-establishments/${siren}`);
-                // }}
+                onClick={() => {
+                  !etablissementsCount
+                    ? null
+                    : history.push(`/list-establishments/${siren}`);
+                }}
               >
                 {" "}
                 {`${
@@ -192,7 +193,7 @@ const Sidebar = ({
                 } établissements`}
               </button>
 
-              {/* {isEstablishmentDisplayed && !etabsecIsSiege && (
+              {isEstablishmentDisplayed && !etabsecIsSiege && (
                 <div className="anchors">
                   <span className="etb-name">
                     <Value
@@ -202,15 +203,15 @@ const Sidebar = ({
                   </span>
                   {establishmentsAnchors.map(({ label, link }) => (
                     <div key={label}>
-                      <div
-                        className="ellipse"
-                        style={{
-                          "--border-color":
+                      <span className="ellipse-span">
+                        <EllipseIconAside
+                          color={
                             history?.location?.hash == link
                               ? "#000091"
-                              : "#e3e3fd",
-                        }}
-                      />
+                              : "#e3e3fd"
+                          }
+                        />
+                      </span>
                       <a
                         href={link}
                         className={`${
@@ -223,7 +224,7 @@ const Sidebar = ({
                     </div>
                   ))}
                 </div>
-              )} */}
+              )}
             </div>
           </div>
           <div className="sidebar-btns">

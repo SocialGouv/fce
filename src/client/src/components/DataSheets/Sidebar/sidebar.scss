@@ -9,10 +9,17 @@ $border-color: var(--border-color);
         z-index: 1;
         display: block;
         padding: $spacing-4 0;
+        margin-top: 2rem;
         overflow: auto;
         border-radius: $border-radius-2;
-        background-color: $white;
+        background-color: #f5f5fe;
         box-shadow: $box-shadow-spread;
+        margin-bottom: $spacing-1;
+    }
+    @media (max-width: 768px) {
+        > .aside-contain {
+            width: 100%;
+        }
     }
 }
 
@@ -69,6 +76,7 @@ $border-color: var(--border-color);
                     border-left: 1px solid #e3e3fd;
                     margin-left: $spacing-4;
                     padding: 0;
+
                     a {
                         padding: $spacing-2;
                         color: $title-grey !important;
@@ -78,13 +86,8 @@ $border-color: var(--border-color);
                         font-weight: 400;
                         line-height: 1.5rem;
                     }
-                    .ellipse {
-                        background: $border-color !important;
+                    .ellipse-span {
                         margin-left: -4px;
-                        border-radius: 50%;
-                        border-color: $border-color !important;
-                        width: 7px !important;
-                        height: 7px !important;
                     }
                     .active-anchor {
                         color: $dark-blue !important;

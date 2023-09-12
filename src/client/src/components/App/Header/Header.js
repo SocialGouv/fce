@@ -29,16 +29,18 @@ const Header = ({ resetSearch, location }) => {
               }}
             >
               <div className="header__logo_FCE">
-                <HeaderLogo
-                  title="république française"
-                  className="header__logo_marianne"
-                  width={140}
-                  height={54}
-                  logo={Logo}
-                />
+                <div className="header__logo_FCE-repub">
+                  <HeaderLogo
+                    title="république française"
+                    className="header__logo_marianne"
+                    width={140}
+                    height={54}
+                    logo={Logo}
+                  />
+                </div>
                 <HeaderLogo
                   title="Logo de la Fiche Commune Entreprise"
-                  className="header__logo_marianne logo_FCE"
+                  className="header__logo_marianne logo_FCE left"
                   width={53.83}
                   height={48}
                   logo={LogoFCE}

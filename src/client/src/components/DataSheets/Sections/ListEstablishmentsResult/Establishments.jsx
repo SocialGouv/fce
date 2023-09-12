@@ -1,3 +1,5 @@
+import "./ListEstablishmentsResult.scss";
+
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
@@ -55,13 +57,13 @@ export const Establishments = () => {
     ? getEtablissementsCount(entreprise)
     : 0;
   return (
-    <div className="sheet__main-container">
-      <h2 className="dark-blue-title">
+    <div className="sheet-container">
+      <h2 className="title">
         Liste des etablissements (
         <Value value={etablissementsCount} empty="0" />)
       </h2>
       <div className="data-sheet--table ">
-        <NonBorderedTable className="direccte-interactions-establishment__table">
+        <NonBorderedTable className="direccte-interactions-establishment__table etbList">
           <thead>
             <tr>
               <th>SIRET</th>

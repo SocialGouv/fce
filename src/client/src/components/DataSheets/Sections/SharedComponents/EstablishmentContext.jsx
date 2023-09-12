@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, { createContext, useContext } from "react";
 
+import LoadableContent from "../../../shared/LoadableContent/LoadableContent";
 import { useSidebarData } from "../../Sidebar/Sidebar.gql";
 
 const EstablishmentContext = createContext();
@@ -13,13 +14,18 @@ export const EstablishmentProvider = ({ siren, children }) => {
   } = useSidebarData(siren, {
     limit: undefined,
   });
+  if (loading || error) {
+    return null;
+  }
 
-  const sharedData = { data: entreprise, error, loading };
+  const sharedData = { data: entreprise, error, isLoading: loading };
 
   return (
-    <EstablishmentContext.Provider value={sharedData}>
-      {children}
-    </EstablishmentContext.Provider>
+    <LoadableContent loading={loading} error={error}>
+      <EstablishmentContext.Provider value={sharedData}>
+        {children}
+      </EstablishmentContext.Provider>
+    </LoadableContent>
   );
 };
 

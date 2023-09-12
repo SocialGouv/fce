@@ -116,7 +116,7 @@ const Finances = ({ siret, siren }) => {
     datesApi = donneesEcofiApi?.map((donneeEcofi) => {
       return (
         <th
-          className="has-text-right"
+          className="th table-cell--center-cell"
           key={getKey("data.date_fin_exercice", donneeEcofi?.data)}
         >
           <Value value={getDateDeclaration(donneeEcofi?.data)} empty="-" />
@@ -126,7 +126,7 @@ const Finances = ({ siret, siren }) => {
     caListApi = donneesEcofiApi?.map((donneeEcofi) => {
       return (
         <td
-          className="has-text-right"
+          className="th table-cell--center-cell"
           key={getKey("data.ca", donneeEcofi.data)}
         >
           <Value

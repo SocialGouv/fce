@@ -1,3 +1,10 @@
+## [27.82.1](https://github.com/SocialGouv/fce/compare/v27.82.0...v27.82.1) (2023-09-12)
+
+
+### Bug Fixes
+
+* update n8n minio psw ([#295](https://github.com/SocialGouv/fce/issues/295)) ([46fd67a](https://github.com/SocialGouv/fce/commit/46fd67a22c3f71b94f883c3033dbb61f631595dc))
+
 # [27.82.0](https://github.com/SocialGouv/fce/compare/v27.81.0...v27.82.0) (2023-08-28)
 
 

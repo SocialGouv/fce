@@ -3,8 +3,8 @@
 
 .data-sheet {
     .box-shadow {
-        box-shadow: 0px 2px 6px 0px rgba(0, 0, 18, 0.16) !important;
-        border-radius: 0.5rem !important;
+        // box-shadow: 0px 2px 6px 0px rgba(0, 0, 18, 0.16) !important;
+        // border-radius: 0.5rem !important;
         padding: $spacing-4;
         @media (max-width: 600px) {
             border: none;
@@ -18,6 +18,7 @@
     &.container {
         width: 100%;
         padding: 0 $padding-app-x;
+        padding-left:0 ;
     }
     .text-left {
         display: flex;
@@ -25,9 +26,7 @@
     }
 
     &-header {
-        margin-bottom: $spacing-5;
         background-color: $white;
-        border-radius: $border-radius-2;
 
         .is-bold {
             font-weight: bold !important;
@@ -160,8 +159,8 @@
         }
 
         @media not print {
-            padding: $spacing-5;
-            box-shadow: $box-shadow-spread;
+            padding-top: $spacing-5;
+            padding-bottom: 0;
         }
     }
 
@@ -176,13 +175,9 @@
     }
 
     &__main-container {
-        background-color: $white;
-        border-radius: $border-radius-2 $border-radius-2 0 0;
         padding: $spacing-4 $spacing-5;
-
-        @media not print {
-            box-shadow: $box-shadow-spread;
-        }
+        padding-top: 0;
+     
     }
     &__bloc_section {
         scroll-margin: $spacing-6;
@@ -316,9 +311,7 @@
             flex-direction: row;
             align-items: center;
             justify-content: flex-start;
-            border-radius: $border-radius-2 $border-radius-2 0 0;
             background: $white;
-            box-shadow: $box-shadow-spread;
             position: relative;
             padding: 0 $spacing-5;
 

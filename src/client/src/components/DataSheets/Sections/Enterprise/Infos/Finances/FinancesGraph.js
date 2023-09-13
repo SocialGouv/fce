@@ -66,7 +66,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
         {
           backgroundColor: "#85C1E9",
           borderColor: "#3498DB",
-          label: "EBITDA-EBE ",
+          label: "EBE ",
         },
         {
           backgroundColor: "#FCF3CF",
@@ -118,7 +118,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
             borderWidth: 2.5,
             data: sortedDataAsc(data)?.map(({ EBE }) => EBE),
             fill: false,
-            label: "EBITDA-EBE ",
+            label: "EBE ",
             pointBackgroundColor: "white",
             pointBorderWidth: 1,
             tension: 0.3,

@@ -1,3 +1,10 @@
+# [27.83.0](https://github.com/SocialGouv/fce/compare/v27.82.2...v27.83.0) (2023-09-13)
+
+
+### Features
+
+* Afficher que le libelle EBE ([#298](https://github.com/SocialGouv/fce/issues/298)) ([d59bbbf](https://github.com/SocialGouv/fce/commit/d59bbbfc7e15ee93088848c8802ef29597752025))
+
 ## [27.82.2](https://github.com/SocialGouv/fce/compare/v27.82.1...v27.82.2) (2023-09-13)
 
 

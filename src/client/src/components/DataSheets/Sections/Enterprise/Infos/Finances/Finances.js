@@ -171,7 +171,7 @@ const Finances = ({ siret, siren }) => {
                 {margeBrute}
               </tr>
               <tr>
-                <th scope="row">EBITDA-EBE (€)</th>
+                <th scope="row">EBE (€)</th>
                 {EBE}
               </tr>
               <tr>

@@ -1,3 +1,31 @@
+# [27.83.0](https://github.com/SocialGouv/fce/compare/v27.82.2...v27.83.0) (2023-09-13)
+
+
+### Features
+
+* Afficher que le libelle EBE ([#298](https://github.com/SocialGouv/fce/issues/298)) ([d59bbbf](https://github.com/SocialGouv/fce/commit/d59bbbfc7e15ee93088848c8802ef29597752025))
+
+## [27.82.2](https://github.com/SocialGouv/fce/compare/v27.82.1...v27.82.2) (2023-09-13)
+
+
+### Bug Fixes
+
+* update n8n minio psw ([#296](https://github.com/SocialGouv/fce/issues/296)) ([c23defc](https://github.com/SocialGouv/fce/commit/c23defcd3b8aa30ec9b5146aaf4c43f6580e6805))
+
+## [27.82.1](https://github.com/SocialGouv/fce/compare/v27.82.0...v27.82.1) (2023-09-12)
+
+
+### Bug Fixes
+
+* update n8n minio psw ([#295](https://github.com/SocialGouv/fce/issues/295)) ([46fd67a](https://github.com/SocialGouv/fce/commit/46fd67a22c3f71b94f883c3033dbb61f631595dc))
+
+# [27.82.0](https://github.com/SocialGouv/fce/compare/v27.81.0...v27.82.0) (2023-08-28)
+
+
+### Features
+
+* Mise à jour du lien vers le catalogue des données ([#293](https://github.com/SocialGouv/fce/issues/293)) ([2f992f0](https://github.com/SocialGouv/fce/commit/2f992f03fe1f471b5669596659bb15531d223672))
+
 # [27.81.0](https://github.com/SocialGouv/fce/compare/v27.80.0...v27.81.0) (2023-08-01)
 
 

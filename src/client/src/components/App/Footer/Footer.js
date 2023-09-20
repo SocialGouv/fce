@@ -65,9 +65,14 @@ const Footer = () => {
 
           <ul className="footer__links-row">
             <li className="footer__links-item">
-              <Link className="footer__link" to="/sources-des-donnees">
-                Sources des données
-              </Link>
+              <a
+                className="footer__link"
+                href="https://travail-sgsocialgouv.opendatasoft.com/pages/catalogue/"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                Catalogue des données
+              </a>
             </li>
           </ul>
           <ul className="footer__links-row">

@@ -122,7 +122,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
             borderWidth: 2.5,
             data: sortedDataAsc(data)?.map(({ EBE }) => EBE),
             fill: false,
-            label: "EBITDA-EBE ",
+            label: "EBE ",
             pointBackgroundColor: "white",
             pointBorderWidth: 1,
             tension: 0.3,

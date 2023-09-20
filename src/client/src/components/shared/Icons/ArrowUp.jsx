@@ -1,7 +1,7 @@
 import Proptypes from "prop-types";
 import React from "react";
 
-const ArrowUp = ({ size = 24, color = "#000091" }) => (
+const ArrowUp = ({ size = 22, color = "#000091" }) => (
   <svg
     width={size}
     height={size}

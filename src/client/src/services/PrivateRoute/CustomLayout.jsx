@@ -20,7 +20,7 @@ const CustomLayout = ({
           <SubHeader siren={siren} />
           <section className="data-sheet container is-fluid">
             <div className="columns">
-              <div className="column is-2 aside-box">
+              <div className="column column-small-screen  aside-box">
                 <Sidebar
                   siren={siren}
                   isEstablishmentDisplayed={isEstablishmentDisplayed}

@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 import { renderIfSiren } from "../../../helpers/hoc/renderIfSiren";
-import Config from "../../../services/Config";
 import {
   resetSearch,
   setSearchFilters,
@@ -20,6 +19,7 @@ import {
 } from "../../../utils/entreprise/entreprise";
 import { isSiege } from "../../../utils/establishment/establishment";
 import EllipseIconAside from "../../shared/Icons/EllipseIconAside.jsx";
+import MessageIcon from "../../shared/Icons/MessageIcon.jsx";
 import Value from "../../shared/Value";
 import { useEstablishmentData } from "../Sections/SharedComponents/EstablishmentContext.jsx";
 import PrintSection from "./../../DataSheets/Sections/SharedComponents/PrintSection";
@@ -32,24 +32,12 @@ const Sidebar = ({
   isEstablishmentsDisplayed = false,
   isEntrepriseDisplayed = false,
   history,
-  setSearchTerm,
-  resetSearch,
 }) => {
-  const limitItems = Config.get("sidebarEstablishmentsLimit");
-  console.log(
-    setSearchTerm,
-    isEstablishmentsDisplayed,
-    resetSearch,
-    limitItems,
-    history
-  );
-  console.log("setSearchTerm, resetSearch, limitItems", siret, history);
   const { loading, data: entreprise, error } = useEstablishmentData();
 
   if (loading || error) {
     return null;
   }
-  console.log("historyhistory", history?.location.hash);
 
   const etablissements = entreprise ? getEtablissements(entreprise) : [];
 
@@ -229,40 +217,14 @@ const Sidebar = ({
           </div>
           <div className="sidebar-btns">
             <PrintSection />
+            <button
+              className="print-btn data-sheet__print-button"
+              onClick={() => history.push("#user-feedback")}
+            >
+              <MessageIcon />
+            </button>
           </div>
         </section>
-
-        {/* <section className="sidebar__establishments">
-          {etablissementsCount > 1 && (
-            <>
-              <EstablishmentsItems
-                establishments={displayedEstablishments}
-                establishmentType="Autres établissements"
-                limit={limitItems}
-              />
-              {etablissementsCount > limitItems && (
-                <>
-                  <Button
-                    value="Afficher la liste"
-                    icon={faArrowDown}
-                    className="button is-secondary is-outlined sidebar__view-all-button"
-                    onClick={() => setDisplayAll(true)}
-                  />
-                  <Button
-                    value="Rechercher tous les établissements"
-                    icon={faArrowRight}
-                    className="button is-secondary is-outlined sidebar__view-all-button"
-                    onClick={() => {
-                      resetSearch();
-                      setSearchTerm(siren);
-                      history.push("/");
-                    }}
-                  />
-                </>
-              )}
-            </>
-          )}
-        </section> */}
       </aside>
     </>
   );

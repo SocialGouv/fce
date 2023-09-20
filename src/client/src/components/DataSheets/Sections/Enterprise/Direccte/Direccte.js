@@ -1,12 +1,15 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
 import { renderIfSiren } from "../../../../../helpers/hoc/renderIfSiren";
+import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
 import { useInteractionsBySiren } from "./Interactions.gql";
 import InteractionType from "./InteractionType";
 
 const Direccte = ({ entreprise: { siren } }) => {
   const { loading, data, error } = useInteractionsBySiren(siren);
+  const [direccteAccordionOpen, setDireccteAccordionOpen] = useState(false);
+
   if (loading || error) {
     return null;
   }
@@ -16,13 +19,18 @@ const Direccte = ({ entreprise: { siren } }) => {
       id="direccte"
       className="data-sheet__bloc_section direccte-interactions-enterprise"
     >
-      <div className="section-header">
-        <h2 className="dark-blue-title">Visites et contrôles</h2>
-      </div>
-      <div className="section-datas">
-        <InteractionType type="control" interactions={data} />
-        <InteractionType type="visit" interactions={data} />
-      </div>
+      <BlocTitle
+        isOpen={direccteAccordionOpen}
+        toggleAccordion={() => setDireccteAccordionOpen(!direccteAccordionOpen)}
+        text={"Visites et contrôles"}
+      />
+
+      {direccteAccordionOpen && (
+        <div className="section-datas">
+          <InteractionType type="control" interactions={data} />
+          <InteractionType type="visit" interactions={data} />
+        </div>
+      )}
     </section>
   );
 };

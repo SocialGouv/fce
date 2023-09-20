@@ -1,6 +1,15 @@
 @import "../../App/variables";
 @import "../../App/placeholders";
 $border-color: var(--border-color);
+.column-small-screen {
+    @media (max-width: 768px) {
+       
+          margin-top: $spacing-3;
+          padding: 0;
+         
+        
+    }
+}
 .aside-box {
     > .aside-contain {
         position: -webkit-sticky;
@@ -18,6 +27,9 @@ $border-color: var(--border-color);
     @media (max-width: 768px) {
         > .aside-contain {
             width: 100%;
+            margin: 0;
+            overflow: hidden;
+            padding:0 $spacing-2;
         }
     }
 }
@@ -25,6 +37,12 @@ $border-color: var(--border-color);
 .enterprise .sidebar__enterprise {
     border-left: 4px solid $secondary;
     margin-bottom: $spacing-5;
+}
+.sidebar__enterprise {
+    @media (max-width: 768px) {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 }
 
 .sidebar {
@@ -60,6 +78,7 @@ $border-color: var(--border-color);
                 font-family: $marianne !important;
                 margin-left: $spacing-3;
                 list-style-position: outside;
+
                 .etb-name {
                     padding: $spacing-2 $spacing-1;
                     margin-left: $spacing-2;
@@ -75,6 +94,9 @@ $border-color: var(--border-color);
                     border-left: 1px solid #e3e3fd;
                     margin-left: $spacing-4;
                     padding: 0;
+                    @media (max-width: 768px) {
+                        display: none;
+                    }
 
                     a {
                         padding: $spacing-2;
@@ -103,7 +125,26 @@ $border-color: var(--border-color);
     }
     &-btns {
         display: flex;
-        align-items: flex-start;
+        justify-content: flex-start;
+        gap: $spacing-2;
+        align-items: center;
+        @media (max-width: 768px) {
+            margin-left: $spacing-2 !important;
+        }
+        button {
+            color: inherit;
+            text-decoration: none;
+            background-color: white !important;
+            border: 1px solid #dddddd !important;
+            width: 2.5rem;
+            height: 2.5rem;
+            cursor: pointer;
+            &a:hover {
+                color: inherit !important;
+                text-decoration: none !important;
+                cursor: pointer;
+            }
+        }
     }
     &__enterprise {
         padding: $spacing-4;

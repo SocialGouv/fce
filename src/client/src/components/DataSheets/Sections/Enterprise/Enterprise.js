@@ -21,6 +21,7 @@ import Muteco from "./Muteco";
 const Enterprise = ({ enterprise }) => {
   const location = useLocation();
   useScrollToLocationHash({ location });
+
   return (
     <div>
       <Header enterprise={enterprise} />

@@ -1,7 +1,7 @@
 import "./header.scss";
 
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
@@ -11,11 +11,7 @@ import Logo from "../../../assets/img/GouvernementSVG.svg";
 import { resetSearch } from "../../../services/Store/actions";
 import HeaderLogo from "../Logo/Logo.jsx";
 
-const Header = ({ resetSearch, location }) => {
-  useEffect(() => {
-    console.log("location", location);
-  }, [location]);
-
+const Header = ({ resetSearch }) => {
   return (
     <header className="app-header ">
       <div className="container is-fluid ">

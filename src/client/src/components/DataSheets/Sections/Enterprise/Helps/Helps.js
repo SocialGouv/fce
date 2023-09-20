@@ -1,20 +1,27 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
+import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
 import Apprentissage from "./Subcategory/Apprentissage";
 import PlanDeRelance from "./Subcategory/PlanDeRelance";
 
 const Helps = ({ enterprise }) => {
+  const [accordionOpen, setAccordionOpen] = useState(false);
+
   return (
     <section id="helps" className="data-sheet__bloc_section">
-      <div className="section-header">
-        <h2 className="dark-blue-title">Aides</h2>
-      </div>
+      <BlocTitle
+        isOpen={accordionOpen}
+        toggleAccordion={() => setAccordionOpen(!accordionOpen)}
+        text={"Aides"}
+      />
 
-      <div className="section-datas">
-        <Apprentissage entreprise={enterprise} />
-        <PlanDeRelance entreprise={enterprise} />
-      </div>
+      {accordionOpen && (
+        <div className="section-datas">
+          <Apprentissage entreprise={enterprise} />
+          <PlanDeRelance entreprise={enterprise} />
+        </div>
+      )}
     </section>
   );
 };

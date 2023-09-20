@@ -3,8 +3,6 @@
 
 .data-sheet {
     .box-shadow {
-        // box-shadow: 0px 2px 6px 0px rgba(0, 0, 18, 0.16) !important;
-        // border-radius: 0.5rem !important;
         padding: $spacing-4;
         @media (max-width: 600px) {
             border: none;
@@ -18,7 +16,7 @@
     &.container {
         width: 100%;
         padding: 0 $padding-app-x;
-        padding-left:0 ;
+        padding-left: 0;
     }
     .text-left {
         display: flex;
@@ -27,6 +25,9 @@
 
     &-header {
         background-color: $white;
+        @media (max-width: 768px) {
+            padding: $spacing-2;
+        }
 
         .is-bold {
             font-weight: bold !important;
@@ -177,11 +178,10 @@
     &__main-container {
         padding: $spacing-4 $spacing-5;
         padding-top: 0;
-     
     }
     &__bloc_section {
         scroll-margin: $spacing-6;
-        margin: $spacing-5 0 2.5rem 0;
+        cursor: pointer;
         .data {
             @media print {
                 display: flex !important;
@@ -217,6 +217,16 @@
         .section-header {
             border-bottom: solid 0.0625rem $default-grey;
             border-top: solid 0.0625rem $default-grey;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .icon {
+                background-color: transparent;
+                border: none;
+                width: 2rem;
+                height: 2rem;
+                cursor: pointer;
+            }
             @media print {
                 border-width: 1px !important;
             }

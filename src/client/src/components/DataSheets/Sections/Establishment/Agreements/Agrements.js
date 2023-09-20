@@ -1,19 +1,26 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
+import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
 import AgrementsIAE from "./AgrementsIAE";
 import OrganismeFormation from "./OrganismeFormation";
 
 const Agrements = ({ siret }) => {
+  const [accordionOpen, setAccordionOpen] = useState(false);
+
   return (
     <section id="agrements" className="data-sheet__bloc_section ">
-      <div className="section-header">
-        <h2 className="dark-blue-title">Agréments</h2>
-      </div>
-      <div className="section-datas">
-        <AgrementsIAE siret={siret} />
-        <OrganismeFormation siret={siret} />
-      </div>
+      <BlocTitle
+        isOpen={accordionOpen}
+        toggleAccordion={() => setAccordionOpen(!accordionOpen)}
+        text={"Agréments"}
+      />
+      {accordionOpen && (
+        <div className="section-datas">
+          <AgrementsIAE siret={siret} />
+          <OrganismeFormation siret={siret} />
+        </div>
+      )}
     </section>
   );
 };

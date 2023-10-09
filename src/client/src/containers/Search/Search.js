@@ -38,7 +38,8 @@ const Search = () => {
   const [searchQuery, setSearchQuery] = useSearchTerms();
   const [searchPage, setSearchPage] = useSearchPage();
 
-  const { filters, addFilter, removeFilter } = useSearchFilters();
+  const { filters, addFilter, removeFilter, removeFilters } =
+    useSearchFilters();
 
   const { sortField, sortDirection, toggleSortField } = useSort();
 
@@ -89,6 +90,7 @@ const Search = () => {
   };
 
   const onSearch = () => {
+    console.log(filters, "filtersfilters");
     setSearchPage(1);
     makeQuery(searchQuery, {
       page: { current: 0, size: PAGE_SIZE },
@@ -111,6 +113,7 @@ const Search = () => {
       handlePageChange={handlePageChange}
       addFilter={addFilter}
       removeFilter={removeFilter}
+      removeFilters={removeFilters}
       filters={filters}
       sortField={sortField}
       sortDirection={sortDirection}

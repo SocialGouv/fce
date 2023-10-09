@@ -1,13 +1,6 @@
 import "./awesomeTable.scss";
 
-import {
-  faAngleLeft,
-  faAngleRight,
-  faSort,
-  faSortDown,
-  faSortUp,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
@@ -16,13 +9,6 @@ import { withRouter } from "react-router";
 import Button from "../shared/Button";
 import LoadSpinner from "../shared/LoadSpinner";
 import Pager from "./Pager";
-
-const getSortIcon = (field, sortField, sortDirection) => {
-  if (field === sortField) {
-    return sortDirection === "asc" ? faSortDown : faSortUp;
-  }
-  return faSort;
-};
 
 const SearchAwesomeTable = ({
   showPagination = false,
@@ -33,33 +19,14 @@ const SearchAwesomeTable = ({
   data,
   fields,
   history,
-  isSortable = false,
-  sortColumn,
-  sortField,
-  sortDirection,
 }) => (
   <table className="table at">
     <thead className="at__head">
       <tr className="at__head__tr">
         {fields.map((field) => {
-          const isSortableField = isSortable && field.sortKey;
-
           return (
-            <th
-              key={field.headName}
-              className={classNames({
-                at__head__th: true,
-                "at__head__th--important": field.importantHead,
-                "at__head__th--is-sortable": isSortableField,
-              })}
-              onClick={() => isSortableField && sortColumn(field.sortKey)}
-            >
+            <th key={field.headName} className="at__head__th">
               {field.headName}
-              {isSortableField && (
-                <FontAwesomeIcon
-                  icon={getSortIcon(field.sortKey, sortField, sortDirection)}
-                />
-              )}
             </th>
           );
         })}

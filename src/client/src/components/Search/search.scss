@@ -5,7 +5,8 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    color: inherit;
+    background-color: transparent !important;
+    border: none !important;
 }
 
 .app-search {
@@ -15,15 +16,13 @@
     justify-content: space-between;
 
     &__wrapper {
-        background-color: $primary;
-        color: $light;
-
         & .container {
             padding: $padding-app-x;
         }
     }
 
     .search-form {
+        padding: $spacing-4;
         .label {
             height: $spacing-5;
         }
@@ -39,18 +38,39 @@
             max-width: 100%;
             width: 100%;
             color: $dark-grey;
-            background-color: #fff;
-            border: 1px solid #dbdbdb;
-            border-radius: $border-radius-1;
+            border-bottom: 2px solid $dark-blue;
+            border-top-right-radius: $border-radius-1;
+            border-top-left-radius: $border-radius-1;
 
             @media not print {
                 box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
             }
 
             .input {
-                height: 3rem;
                 border: none;
                 box-shadow: none;
+                background-color: $contrast-grey !important;
+                font-family: $marianne;
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1.5rem;
+                &:focus,
+                &:active {
+                    outline: 5px solid #0a76f6 !important;
+                    outline-offset: 3px !important;
+                    outline-width: 2px !important;
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+            }
+            input::placeholder {
+                color: $title-grey;
+                font-family: $marianne;
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1.5rem;
             }
 
             .button {
@@ -74,15 +94,21 @@
         &__buttons {
             display: flex;
             flex-direction: column;
-            margin-top: $spacing-5 + $spacing-4;
 
             &--align-top {
                 justify-content: flex-start;
             }
 
             .action.button {
-                @extend %search-button;
                 border: 1px solid #fff;
+                padding: 0.625rem 1.5rem;
+                background-color: $dark-blue;
+                color: white;
+                font-family: $marianne;
+                font-size: 1.125rem;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 1.75rem;
             }
 
             > div {
@@ -90,46 +116,151 @@
             }
         }
 
-        &__reset.button {
-            @extend %search-button;
-            font-weight: normal;
-            background: none;
+        &__reset {
+            display: flex;
+            justify-content: end;
+            padding: 0 !important;
+            .button {
+                @extend %search-button;
+                font-weight: normal;
+                background: transparent;
+                font-family: $marianne;
+                color: $dark-blue !important;
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 1.5rem;
+                margin-top: $spacing-4;
+                border: none;
+                text-decoration: underline;
 
-            &:hover {
-                font-weight: bold;
+                &:hover,
+                &::selection {
+                    font-weight: bold;
+                    background-color: transparent;
+                    border: none;
+                }
             }
         }
 
         .field {
             width: 100%;
             margin-bottom: 0;
-        }
-
-        .filters__checkboxes {
-            flex-grow: 1;
-            margin-top: $spacing-2;
-
-            .filter-state {
+            display: flex;
+            &-input {
                 display: flex;
-                align-items: center;
+                gap: $spacing-3;
+            }
+            .control {
+                width: 100%;
+            }
 
-                .label {
-                    margin-bottom: 0;
-                }
+            .select_placeholder {
+                color: $title-grey;
+                font-size: 1rem;
+                font-style: $marianne;
+                font-weight: 400;
+                line-height: 1.5rem;
             }
         }
 
+        .filters__checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+
+            .filter__siege {
+                display: flex;
+                flex-direction: column;
+                margin-top: -$spacing-4;
+                label,
+                span {
+                    font-family: $marianne;
+                    font-size: 1rem;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 1.5rem;
+                    color: $title-grey;
+                    text-overflow: ellipsis;
+                }
+
+                &_button {
+                    display: flex;
+                    gap: $spacing-3;
+                }
+            }
+
+            .filter-state {
+                display: flex;
+                flex-direction: column;
+                margin-top: -$spacing-4;
+
+                .label {
+                    font-family: $marianne;
+                    font-size: 1rem;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 1.5rem;
+                    color: $title-grey;
+                }
+            }
+        }
+        .filters__selects {
+            margin-top: 1.4rem;
+            .horizontal-separator {
+                margin: $spacing-4 0;
+                border-bottom: 1px solid $default-grey;
+            }
+        }
+        .filters__left {
+            margin-top: 0 !important;
+        }
         &,
         .filters__checkboxes,
         .filters__selects {
             .label {
-                color: $white-smoke;
                 font-weight: bold;
                 margin-right: $spacing-4;
                 margin-bottom: $spacing-4;
 
                 &.label--state {
                     font-weight: normal;
+                }
+            }
+        }
+        .search_btn {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            .button {
+                background-color: $dark-blue;
+                color: #f5f5fe;
+                padding: 0.625rem 1.5rem;
+                font-family: $marianne;
+                font-size: 1.125rem;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 1.75rem;
+            }
+            .reset_button {
+                font-weight: normal;
+                background: transparent;
+                font-family: $marianne;
+                color: $dark-blue !important;
+                padding: 0.625rem 1.5rem;
+                font-family: $marianne;
+                font-size: 1.125rem;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 1.75rem;
+                border: none;
+                cursor: pointer;
+                text-decoration: underline;
+
+                &:hover,
+                &::selection {
+                    font-weight: bold;
+                    background-color: transparent;
+                    border: none;
                 }
             }
         }

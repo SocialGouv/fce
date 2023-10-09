@@ -12,11 +12,12 @@ const AutoCompleteFilter = ({
   options,
   id,
   label,
+  placeholder,
 }) => {
   const value = options.filter((option) => filters[id]?.includes(option.value));
 
   return (
-    <div>
+    <div id={id}>
       <label htmlFor={id} className="label">
         {label}
       </label>
@@ -26,11 +27,15 @@ const AutoCompleteFilter = ({
         isMulti
         options={options}
         value={value}
+        closeMenuOnSelect={false}
         onChange={(option) => {
           option ? addFilter(id, option.map(prop("value"))) : removeFilter(id);
         }}
         isClearable
-        placeholder=""
+        components={{
+          IndicatorSeparator: () => null,
+        }}
+        placeholder={placeholder}
         styles={selectCustomStyles}
       />
     </div>
@@ -43,6 +48,7 @@ AutoCompleteFilter.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,
+  placeholder: PropTypes.string.isRequired,
   removeFilter: PropTypes.func.isRequired,
 };
 

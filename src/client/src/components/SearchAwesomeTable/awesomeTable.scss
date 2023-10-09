@@ -15,7 +15,7 @@
     border-radius: $border-radius-2;
 
     th {
-        color: $grey-tundora;
+        color: $title-grey;
 
         &:not(:last-of-type) {
             border-right: $border-grey-light;
@@ -23,11 +23,9 @@
     }
 
     .at__head {
-        background: linear-gradient(to bottom, #ffffff 15%, $grey-geyser);
+        background-color: #f6f6f6;
 
         &__tr {
-            border: $border-grey-light;
-            border-bottom: 0;
             border-radius: $border-radius-2;
 
             @media not print {
@@ -38,7 +36,15 @@
         &__th {
             vertical-align: middle;
             white-space: nowrap;
-            color: $grey-tundora;
+            border-bottom: 2px solid #3a3a3a !important;
+            border-right: none !important;
+            font-family: $marianne;
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 1.5rem;
+            color: $title-grey;
+            padding: $spacing-4;
 
             &--important {
                 color: $primary;

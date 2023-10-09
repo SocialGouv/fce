@@ -16,10 +16,10 @@ function Logo({ logo, width, height, className, title }) {
 }
 
 Logo.propTypes = {
-  className: PropTypes.String,
+  className: PropTypes.string,
   height: PropTypes.number,
-  logo: PropTypes.element,
-  title: PropTypes.String,
+  logo: PropTypes.node,
+  title: PropTypes.string,
   width: PropTypes.number,
 };
 

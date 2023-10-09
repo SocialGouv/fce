@@ -15,10 +15,21 @@
     &__title {
         width: 80%;
         margin: $spacing-2 auto;
-        font-size: 2.35rem;
+        font-family: $marianne;
+        font-size: 1.75rem;
+        font-style: normal;
         font-weight: 700;
-        text-align: center;
+        line-height: 2.25rem;
         color: $black;
+        text-align: center;
+    }
+    &__title2 {
+        font-family: $marianne;
+        font-size: 1.25rem;
+        font-weight: 400;
+        line-height: 2rem;
+        color: $black;
+        text-align: center;
     }
 
     &__export-section {

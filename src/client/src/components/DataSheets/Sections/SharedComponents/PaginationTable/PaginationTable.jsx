@@ -80,7 +80,7 @@ const PaginationTable = ({ currentPage, totalPages, handlePageClick }) => {
   );
 };
 PaginationTable.propTypes = {
-  currentPage: PropTypes.string.isRequired,
+  currentPage: PropTypes.number.isRequired,
   handlePageClick: PropTypes.func.isRequired,
   totalPages: PropTypes.string.isRequired,
 };

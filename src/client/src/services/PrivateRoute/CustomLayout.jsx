@@ -18,7 +18,7 @@ const CustomLayout = ({
       <EstablishmentProvider siren={siren}>
         <div>
           <SubHeader siren={siren} />
-          <section className="data-sheet container is-fluid">
+          <section className="data-sheet container is-fullhd">
             <div className="columns">
               <div className="column column-small-screen  aside-box">
                 <Sidebar
@@ -40,7 +40,7 @@ const CustomLayout = ({
   );
 };
 CustomLayout.propTypes = {
-  children: PropTypes.elementType,
+  children: PropTypes.node,
   isEntrepriseDisplayed: PropTypes.bool.isRequired,
   isEstablishmentDisplayed: PropTypes.bool.isRequired,
   isEstablishmentsDisplayed: PropTypes.bool.isRequired,

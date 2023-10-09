@@ -47,6 +47,7 @@ const SearchResults = ({
   sortDirection,
   generateXlsx,
   downloadLoading,
+  searchTerm,
 }) => {
   const staffSizeRanges = {
     ...Config.get("inseeSizeRanges"),
@@ -59,9 +60,14 @@ const SearchResults = ({
         <div className="columns">
           <div className="column is-8 is-offset-2">
             <h2 className="app-search-results__title">
-              {pagination.items} établissement
-              {pagination.items > 1 && "s"} trouvé
-              {pagination.items > 1 && "s"}
+              {pagination.items} résultat
+              {pagination.items > 1 && "s"}{" "}
+              {searchTerm && (
+                <>
+                  <span className="app-search-results__title2">pour :</span>
+                  {` “${searchTerm}”`}
+                </>
+              )}
             </h2>
           </div>
           <div className="column is-2 app-search-results__export-section">
@@ -80,7 +86,7 @@ const SearchResults = ({
         {results?.length === 0 && (
           <div className="notification is-primary is-light">Aucun résultat</div>
         )}
-        {results?.length ? (
+        {results?.length > 0 ? (
           <div>
             <SearchAwesomeTable
               showPagination={pagination && pagination.pages > 1}
@@ -208,6 +214,7 @@ SearchResults.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
   results: PropTypes.array,
+  searchTerm: PropTypes.string,
   sort: PropTypes.func.isRequired,
   sortDirection: PropTypes.string,
   sortField: PropTypes.string,

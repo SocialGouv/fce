@@ -38,7 +38,6 @@ export const useSearchPage = () => {
 export const useSearchFilters = () => {
   const dispatch = useDispatch();
   const savedFilters = useSelector((state) => getSearchState(state).filters);
-
   // cache busting mechanism
   const validFilters = savedFilters.etats
     ? savedFilters
@@ -47,14 +46,37 @@ export const useSearchFilters = () => {
       };
 
   const addFilter = (key, value) => {
-    dispatch(setSearchFilters({ ...validFilters, [key]: value }));
+    dispatch(setSearchFilters({ ...savedFilters, [key]: value }));
   };
 
   const removeFilter = (key) => {
-    dispatch(setSearchFilters(omit(validFilters, key)));
+    dispatch(setSearchFilters(omit(savedFilters, key)));
+  };
+  const deleteKeys = (obj, keys) => {
+    if (!Array.isArray(keys)) {
+      throw new Error("Keys must be an array");
+    }
+
+    const newObj = {};
+
+    Object.keys(obj).forEach((key) => {
+      if (!keys.includes(key)) {
+        newObj[key] = obj[key];
+      }
+    });
+
+    return newObj;
   };
 
-  return { addFilter, filters: savedFilters, removeFilter };
+  const removeFilters = (keys) => {
+    const updatedFilters = keys.reduce(
+      (acc, key) => deleteKeys(acc, [key]),
+      validFilters
+    );
+    dispatch(setSearchFilters(updatedFilters));
+  };
+
+  return { addFilter, filters: savedFilters, removeFilter, removeFilters };
 };
 
 export const useSearchQuery = () => {

@@ -49,31 +49,6 @@ const Header = ({ resetSearch }) => {
                 </div>
               </div>
             </Link>
-            {/* {(location.pathname.includes("/establishment") ||
-              location.pathname.includes("/enterprise")) && (
-              <div className="header__buttons">
-                <div className="navbar-end is-flex">
-                  <Link to="/search" className="button">
-                    <span className="button-icon">
-                      <FontAwesomeIcon icon={faChevronLeft} />
-                    </span>
-                    <span>Liste des résultats</span>
-                  </Link>
-                  <Link
-                    to="/"
-                    onClick={() => {
-                      resetSearch();
-                    }}
-                    className="button"
-                  >
-                    <span className="button-icon">
-                      <FontAwesomeIcon icon={faPlus} />
-                    </span>
-                    <span>Nouvelle recherche</span>
-                  </Link>
-                </div>
-              </div>
-            )} */}
           </div>
         </nav>
       </div>

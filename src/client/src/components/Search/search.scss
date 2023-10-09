@@ -122,7 +122,6 @@
             padding: 0 !important;
             .button {
                 @extend %search-button;
-                font-weight: normal;
                 background: transparent;
                 font-family: $marianne;
                 color: $dark-blue !important;
@@ -242,12 +241,10 @@
                 line-height: 1.75rem;
             }
             .reset_button {
-                font-weight: normal;
                 background: transparent;
                 font-family: $marianne;
                 color: $dark-blue !important;
                 padding: 0.625rem 1.5rem;
-                font-family: $marianne;
                 font-size: 1.125rem;
                 font-style: normal;
                 font-weight: 500;

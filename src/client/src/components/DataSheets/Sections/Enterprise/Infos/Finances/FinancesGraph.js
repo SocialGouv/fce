@@ -70,7 +70,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
         {
           backgroundColor: "#85C1E9",
           borderColor: "#000091",
-          label: "EBITDA-EBE ",
+          label: "EBE ",
         },
         {
           backgroundColor: "#FCF3CF",

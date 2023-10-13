@@ -116,7 +116,7 @@ const Dashboard = ({ siret }) => {
   return (
     <div className="dashboard ">
       <div className="column ">
-        <div className="columns column ">
+        <div className="columns  ">
           <Item
             icon={effectifItem}
             name="Effectif"
@@ -152,7 +152,7 @@ const Dashboard = ({ siret }) => {
             }
           />
         </div>
-        <div className="columns column ">
+        <div className="columns  ">
           <Item
             icon={<Network />}
             name="PSI"

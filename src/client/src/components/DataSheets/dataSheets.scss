@@ -13,10 +13,12 @@
             box-shadow: none !important;
         }
     }
+    &__main-content {
+        width: 95%;
+    }
     &.container {
         width: 100%;
         padding: 0 $padding-app-x;
-        padding-left: 0;
     }
     .text-left {
         display: flex;
@@ -168,7 +170,7 @@
     &__print-section {
         display: flex;
         justify-content: flex-end;
-        margin: $spacing-5 0;
+        margin: $spacing-2 0;
     }
 
     &__print-button {

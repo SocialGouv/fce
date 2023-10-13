@@ -21,6 +21,7 @@ export const useElasticQuery = () => {
   const [data, setData] = useState(defaultData);
   const [loading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
 
   const makeQuery = useCallback(
     (query, { page: { size, current }, params }) => {
@@ -34,6 +35,7 @@ export const useElasticQuery = () => {
             results: response.data.results,
             total: response.data.total.value,
           });
+          setQuery(sentQuery);
         })
         .catch((err) => {
           setData(defaultData);
@@ -51,5 +53,6 @@ export const useElasticQuery = () => {
     error,
     loading,
     makeQuery,
+    query,
   };
 };

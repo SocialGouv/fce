@@ -21,7 +21,7 @@ import PaginationTable from "../../SharedComponents/PaginationTable/PaginationTa
 const ListEstablishment = () => {
   const { loading, data: entreprise, error } = useEstablishmentData();
   const history = useHistory();
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
   if (loading || error) {

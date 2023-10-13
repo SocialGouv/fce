@@ -24,7 +24,7 @@ import Rcc from "./Rcc";
 
 const EtablissementMuteco = ({ siret }) => {
   const { data, loading, error } = useMutecoData(siret);
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   if (loading || error) {
     return null;

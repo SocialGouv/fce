@@ -23,7 +23,7 @@ import WorkAccident from "./WorkAccident";
 
 const EstablishmentRelationship = ({ siret }) => {
   const { loading, data, error } = useAccordsEntreprise(siret);
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   const accords = groupAccordsByType(data || []);
   const nbAccords = getGroupedAccordsSum(accords);

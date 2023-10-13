@@ -20,7 +20,7 @@ import { useControles } from "./Controles.gql";
 
 const Controles = ({ siret }) => {
   const { loading, data: interactions, error } = useControles(siret);
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   if (loading || error) {
     return null;

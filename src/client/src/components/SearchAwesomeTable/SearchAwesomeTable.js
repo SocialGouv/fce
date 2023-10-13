@@ -1,12 +1,12 @@
 import "./awesomeTable.scss";
 
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 import { withRouter } from "react-router";
 
-import Button from "../shared/Button";
+import LeftArrow from "../shared/Icons/LeftArrow.jsx";
+import RightArrow from "../shared/Icons/RightArrow.jsx";
 import LoadSpinner from "../shared/LoadSpinner";
 import Pager from "./Pager";
 
@@ -73,32 +73,32 @@ const SearchAwesomeTable = ({
         <tr className="at__footer__tr">
           <td className="at__footer__td" colSpan={fields.length}>
             <div className="pageNav">
-              <Button
-                value={prevText}
-                icon={faAngleLeft}
-                iconClasses={["fa-2x"]}
-                buttonClasses={["prev-button"]}
-                isDisabled={pagination.current === pagination.min}
-                callback={() => {
-                  pagination.handlePageChange(--pagination.current);
-                }}
-              />
+              <button
+                className="prev-btn"
+                disabled={pagination.current === pagination.min}
+                onClick={() =>
+                  pagination.handlePageChange(--pagination.current)
+                }
+              >
+                <LeftArrow />
+                {prevText}
+              </button>
               <Pager
                 handlePageChange={pagination.handlePageChange}
                 currentPage={pagination.current}
                 max={pagination.pages}
               />
-              <Button
-                value={nextText}
-                icon={faAngleRight}
-                iconClasses={["fa-2x"]}
-                rowReverse={true}
-                buttonClasses={["next-button"]}
-                isDisabled={pagination.current === pagination.pages}
-                callback={() => {
-                  pagination.handlePageChange(++pagination.current);
-                }}
-              />
+
+              <button
+                className="prev-btn"
+                disabled={pagination.current === pagination.pages}
+                onClick={() =>
+                  pagination.handlePageChange(++pagination.current)
+                }
+              >
+                {nextText}
+                <RightArrow />
+              </button>
             </div>
           </td>
         </tr>

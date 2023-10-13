@@ -26,7 +26,7 @@ const Establishment = ({ siret }) => {
   const siren = getSirenFromSiret(siret);
 
   return (
-    <div>
+    <div className="data-sheet__main-content">
       <Header siret={siret} siren={siren} />
       <div className="data-sheet__main-container">
         <Activite siret={siret} />

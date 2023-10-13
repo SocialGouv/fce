@@ -1,7 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-const SearchBar = ({ label, searchTerm, setSearchTerm }) => {
+const SearchBar = ({ label, searchTerm, setSearchTerm, onEnterPress }) => {
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onEnterPress();
+    }
+  };
   return (
     <div className="control is-expanded">
       <div className="search-form__search">
@@ -15,6 +21,7 @@ const SearchBar = ({ label, searchTerm, setSearchTerm }) => {
             onChange={(e) => {
               setSearchTerm(e.target.value);
             }}
+            onKeyDown={handleKeyPress}
             value={searchTerm}
           />
         </div>
@@ -25,6 +32,7 @@ const SearchBar = ({ label, searchTerm, setSearchTerm }) => {
 
 SearchBar.propTypes = {
   label: PropTypes.string.isRequired,
+  onEnterPress: PropTypes.func.isRequired,
   searchTerm: PropTypes.string.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
 };

@@ -6,7 +6,7 @@ import Apprentissage from "./Subcategory/Apprentissage";
 import PlanDeRelance from "./Subcategory/PlanDeRelance";
 
 const Helps = ({ enterprise }) => {
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   return (
     <section id="helps" className="data-sheet__bloc_section">

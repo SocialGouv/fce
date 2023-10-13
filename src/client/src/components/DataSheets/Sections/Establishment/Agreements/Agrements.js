@@ -6,7 +6,7 @@ import AgrementsIAE from "./AgrementsIAE";
 import OrganismeFormation from "./OrganismeFormation";
 
 const Agrements = ({ siret }) => {
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   return (
     <section id="agrements" className="data-sheet__bloc_section ">

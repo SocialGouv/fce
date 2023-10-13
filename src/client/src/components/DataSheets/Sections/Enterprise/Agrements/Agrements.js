@@ -5,7 +5,7 @@ import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
 import OrganismeFormation from "./OrganismeFormation";
 
 const Agrements = ({ enterprise }) => {
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   return (
     <section id="agrements" className="data-sheet__bloc_section ">

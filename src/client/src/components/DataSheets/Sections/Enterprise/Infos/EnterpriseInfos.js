@@ -37,7 +37,7 @@ import Mandataires from "./Mandataires";
 import ObservationRCS from "./ObservationRCS";
 
 const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   const siren = getSiren(baseEntreprise);
 

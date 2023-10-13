@@ -82,8 +82,7 @@ export const useSearchFilters = () => {
 export const useSearchQuery = () => {
   const dispatch = useDispatch();
   const results = useSelector((state) => getSearchState(state).results);
-
-  const { data, loading, error, makeQuery } = useElasticQuery();
+  const { data, loading, error, makeQuery, query } = useElasticQuery();
 
   useEffect(() => {
     if (data.results !== null) {
@@ -96,6 +95,7 @@ export const useSearchQuery = () => {
     error,
     loading,
     makeQuery,
+    query,
   };
 };
 

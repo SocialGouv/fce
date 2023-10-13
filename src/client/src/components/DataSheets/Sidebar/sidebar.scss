@@ -14,10 +14,11 @@ $border-color: var(--border-color);
     > .aside-contain {
         position: -webkit-sticky;
         position: sticky;
-        top: 1rem;
+        top: 0;
         z-index: 1;
         display: block;
         padding: $spacing-4 0;
+        padding-top: 0 !important;
         margin-top: 2rem;
         overflow: auto;
         border-radius: $border-radius-2;
@@ -30,6 +31,7 @@ $border-color: var(--border-color);
             margin: 0;
             overflow: hidden;
             padding:0 $spacing-2;
+           
         }
     }
 }

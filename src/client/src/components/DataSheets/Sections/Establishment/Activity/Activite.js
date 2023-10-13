@@ -17,7 +17,7 @@ import TrancheEffectifsInsee from "./TrancheEffectifsInsee";
 
 const Activite = ({ siret }) => {
   const { loading, data, error } = useSuccessionData(siret);
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   return (
     <section id="activity" className="data-sheet__bloc_section">

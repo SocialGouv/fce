@@ -115,74 +115,76 @@ const Dashboard = ({ siret }) => {
 
   return (
     <div className="dashboard ">
-      <div className="columns column ">
-        <Item
-          icon={effectifItem}
-          name="Effectif"
-          value={effectifLoading ? "Chargement ..." : effectif}
-        />
+      <div className="column ">
+        <div className="columns column ">
+          <Item
+            icon={effectifItem}
+            name="Effectif"
+            value={effectifLoading ? "Chargement ..." : effectif}
+          />
 
-        <Item
-          icon={<Calendar />}
-          name="Visites"
-          smallText={!hasInteractions}
-          value={hasInteractions ? lastControl : "Pas d'intervention connue"}
-        />
+          <Item
+            icon={<Calendar />}
+            name="Visites"
+            smallText={!hasInteractions}
+            value={hasInteractions ? lastControl : "Pas d'intervention connue"}
+          />
 
-        <Item
-          icon={<Warning />}
-          name="Mutations économiques"
-          smallText={true}
-          value={
-            <>
-              {!activity.hasPse &&
-                !activity.hasRcc &&
-                !activity.hasLice &&
-                !activity.partialActivity &&
-                "Non"}
+          <Item
+            icon={<Warning />}
+            name="Mutations économiques"
+            smallText={true}
+            value={
+              <>
+                {!activity.hasPse &&
+                  !activity.hasRcc &&
+                  !activity.hasLice &&
+                  !activity.partialActivity &&
+                  "Non"}
+                <div>
+                  {activity.hasPse && "PSE-"}
+                  {activity.hasRcc && "RCC-"}
+                  {activity.hasLice && activity.liceTypes?.join("-")}
+                </div>
+
+                {activity.partialActivity && <div>Activité partielle</div>}
+              </>
+            }
+          />
+        </div>
+        <div className="columns column ">
+          <Item
+            icon={<Network />}
+            name="PSI"
+            smallText={true}
+            value={
               <div>
-                {activity.hasPse && "PSE-"}
-                {activity.hasRcc && "RCC-"}
-                {activity.hasLice && activity.liceTypes?.join("-")}
+                <ul>
+                  {isEstablishmentWithPsi && <li>Salariés détachés</li>}
+                  {isEnterprisePsiContractor && <li>Entreprise DO</li>}
+                </ul>
+                {!isEnterprisePsiContractor && !isEstablishmentWithPsi && "Non"}
               </div>
+            }
+          />
+          <Item
+            icon={<Hospital />}
+            name="Accident Travail"
+            value={data?.accidents_travail?.[0]?.total}
+            empty="Non"
+          />
+          <Item
+            icon={<HealthIcon />}
+            name="Aides"
+            value={hasAide(data) ? "Oui" : "Non"}
+          />
 
-              {activity.partialActivity && <div>Activité partielle</div>}
-            </>
-          }
-        />
-      </div>
-      <div className="columns column ">
-        <Item
-          icon={<Network />}
-          name="PSI"
-          smallText={true}
-          value={
-            <div>
-              <ul>
-                {isEstablishmentWithPsi && <li>Salariés détachés</li>}
-                {isEnterprisePsiContractor && <li>Entreprise DO</li>}
-              </ul>
-              {!isEnterprisePsiContractor && !isEstablishmentWithPsi && "Non"}
-            </div>
-          }
-        />
-        <Item
-          icon={<Hospital />}
-          name="Accident Travail"
-          value={data?.accidents_travail?.[0]?.total}
-          empty="Non"
-        />
-        <Item
-          icon={<HealthIcon />}
-          name="Aides"
-          value={hasAide(data) ? "Oui" : "Non"}
-        />
-
-        <Item
-          icon={<SchoolIcon />}
-          name="Organisme Formation"
-          value={isOrganismeFormation(data) ? "Oui" : "Non"}
-        />
+          <Item
+            icon={<SchoolIcon />}
+            name="Organisme Formation"
+            value={isOrganismeFormation(data) ? "Oui" : "Non"}
+          />
+        </div>
       </div>
     </div>
   );

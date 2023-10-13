@@ -18,7 +18,7 @@ import { useSort } from "../../utils/search-table/hooks";
 import divisionsNaf from "./divisions-naf.json";
 import trancheEffectif from "./tranche-effectif.json";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 
 const XLSX_DOC_TYPE =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
@@ -43,8 +43,7 @@ const Search = () => {
 
   const { sortField, sortDirection, toggleSortField } = useSort();
 
-  const { data, loading, error, makeQuery } = useSearchQuery();
-
+  const { data, loading, error, makeQuery, query } = useSearchQuery();
   const resetSearch = useResetSearch();
 
   useEffect(() => {
@@ -90,7 +89,6 @@ const Search = () => {
   };
 
   const onSearch = () => {
-    console.log(filters, "filtersfilters");
     setSearchPage(1);
     makeQuery(searchQuery, {
       page: { current: 0, size: PAGE_SIZE },
@@ -105,6 +103,7 @@ const Search = () => {
       results={data?.results}
       page={searchPage}
       pageSize={PAGE_SIZE}
+      query={query}
       totalResults={data?.total || 0}
       sendRequest={onSearch}
       searchTerm={searchQuery || ""}

@@ -8,7 +8,7 @@ import Pse from "./Pse";
 import Rcc from "./Rcc";
 
 const EnterpriseMuteco = ({ enterprise }) => {
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   return (
     <section id="muteco" className="data-sheet__bloc_section">

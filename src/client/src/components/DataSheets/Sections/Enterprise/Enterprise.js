@@ -23,7 +23,7 @@ const Enterprise = ({ enterprise }) => {
   useScrollToLocationHash({ location });
 
   return (
-    <div>
+    <div className="data-sheet__main-content">
       <Header enterprise={enterprise} />
       <div className="data-sheet__main-container">
         <Infos enterprise={enterprise} />

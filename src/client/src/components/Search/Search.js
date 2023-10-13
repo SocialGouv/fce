@@ -13,7 +13,7 @@ import AdministartionFilter from "./Filters/AdministartionFilter.jsx";
 import AutoCompleteFilter from "./Filters/AutoCompleteFilter";
 import CheckboxFilter from "./Filters/CheckboxFilter";
 // import CheckboxFilter from "./Filters/CheckboxFilter";
-import DirigeantFromFilter from "./Filters/DirigeantFromFilter";
+// import DirigeantFromFilter from "./Filters/DirigeantFromFilter";
 import LocationFilter from "./Filters/LocationFilter";
 // import StateFilter from "./Filters/StateFilter";
 import SearchBar from "./SearchBar";
@@ -37,6 +37,7 @@ const Search = ({
   error,
   results,
   page,
+  query,
   totalResults,
   sendRequest,
   searchTerm,
@@ -85,20 +86,21 @@ const Search = ({
                     setSearchTerm={setSearchTerm}
                     resetSearch={resetSearch}
                     isLoading={isLoading}
+                    onEnterPress={() => sendRequest(searchTerm, options)}
                   />
                 </div>
               </div>
             </div>
 
             <div className="columns filters__selects">
-              <div className="column is-one-quarter">
+              <div className="column is-one-third">
                 <LocationFilter
                   filters={filters}
                   addFilter={addFilter}
                   removeFilter={removeFilter}
                 />
               </div>
-              <div className="column is-one-quarter">
+              <div className="column is-one-third">
                 <AdministartionFilter
                   label="Situation administrative"
                   onFromSubmit={onFromSubmit}
@@ -151,47 +153,7 @@ const Search = ({
                   />
                 </AdministartionFilter>
               </div>
-              <div className="column is-one-quarter">
-                <AdministartionFilter
-                  id="dirigeant"
-                  label="Dirigeant"
-                  addSaveClearButton={false}
-                >
-                  <DirigeantFromFilter
-                    filters={filters}
-                    addFilter={addFilter}
-                    removeFilter={removeFilter}
-                    id="dirigeant"
-                    placeholder="Dirigeant"
-                  />
-                </AdministartionFilter>
-              </div>
-
-              <div className={classNames("column  search-form__buttons")}>
-                <div className="columns filters__checkboxes">
-                  {/* <div className="column ">
-                      <CheckboxFilter
-                        filters={filters}
-                        addFilter={addFilter}
-                        removeFilter={removeFilter}
-                        id="siege"
-                        label="Siège Social"
-                      />
-                    </div>
-                    <div className="column">
-                      <StateFilter
-                        filters={filters}
-                        addFilter={addFilter}
-                        removeFilter={removeFilter}
-                        id="etats"
-                      />
-                    </div> */}
-                </div>
-              </div>
-            </div>
-            <div className="columns">
-              <div className="column is-half" />
-              <div className="column is-half">
+              <div className="column is-one-third">
                 <div className="search_btn">
                   <button
                     className={classNames("action", "button", "is-medium", {
@@ -215,6 +177,19 @@ const Search = ({
                     Réinitialiser
                   </button>
                 </div>
+                {/* <AdministartionFilter
+                  id="dirigeant"
+                  label="Dirigeant"
+                  addSaveClearButton={false}
+                >
+                  <DirigeantFromFilter
+                    filters={filters}
+                    addFilter={addFilter}
+                    removeFilter={removeFilter}
+                    id="dirigeant"
+                    placeholder="Dirigeant"
+                  />
+                </AdministartionFilter> */}
               </div>
             </div>
           </div>
@@ -224,6 +199,7 @@ const Search = ({
       <SearchResults
         results={results}
         searchTerm={searchTerm}
+        query={query}
         pagination={{
           current: page,
           handlePageChange,
@@ -260,6 +236,7 @@ Search.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   options: PropTypes.object.isRequired,
   page: PropTypes.number,
+  query: PropTypes.string.isRequired,
   removeFilter: PropTypes.func.isRequired,
   removeFilters: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,

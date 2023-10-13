@@ -3,6 +3,10 @@
     background-color: $white;
     border-color: $grey !important;
 }
+%is-dark-blue {
+    color: $dark-blue !important;
+    background-color: $white;
+}
 
 %has-first-letter-uppercase {
     &::first-letter {

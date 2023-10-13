@@ -91,6 +91,11 @@
             flex-wrap: wrap;
         }
     }
+    .custom-dropdown-menu-filters{
+        max-height: 400px;
+        overflow-y: auto;
+        padding:4px ;
+    }
     .form-inputs {
         display: flex;
         flex-direction: row;

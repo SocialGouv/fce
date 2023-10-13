@@ -8,7 +8,7 @@ import InteractionType from "./InteractionType";
 
 const Direccte = ({ entreprise: { siren } }) => {
   const { loading, data, error } = useInteractionsBySiren(siren);
-  const [direccteAccordionOpen, setDireccteAccordionOpen] = useState(false);
+  const [direccteAccordionOpen, setDireccteAccordionOpen] = useState(true);
 
   if (loading || error) {
     return null;

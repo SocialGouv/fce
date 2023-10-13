@@ -59,7 +59,10 @@ const AdministartionFilter = ({
       )}
       {showMenu && (
         <div className="custom-dropdown-menu">
-          {childrenWithProps}
+          <div className="custom-dropdown-menu-filters">
+            {" "}
+            {childrenWithProps}
+          </div>
           {addSaveClearButton && (
             <div className="custom-dropdown-control-btns">
               <button

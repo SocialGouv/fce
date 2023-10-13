@@ -9,7 +9,7 @@ import Egapro from "./Egapro";
 import Psi from "./Psi";
 
 const RelationsEntreprise = ({ enterprise }) => {
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   return (
     <section id="relationship" className="data-sheet__bloc_section">

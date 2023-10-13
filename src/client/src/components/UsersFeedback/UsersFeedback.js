@@ -32,10 +32,21 @@ const UsersFeedback = ({
         "user-feedback--fullwidth": fullWidth,
       })}
     >
-      <div className="container is-fluid">
+      <div className="container is-fullhd">
         <div className="user-feedback__panel">
           <fieldset>
-            <div className="control user-feedback__useful">
+            <div
+              className="control user-feedback__useful"
+              onClick={() => setIsOpenModal(!isOpenModal)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  setIsOpenModal(!isOpenModal);
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-expanded={isOpenModal}
+            >
               <legend>Donnez-nous votre avis !</legend>
               <button
                 className="icon selected"

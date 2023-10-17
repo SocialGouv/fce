@@ -18,7 +18,7 @@ const PublicPage = ({ pageData = null, isLoading, hasError }) => {
   }
 
   return (
-    <div className="container is-fullhd">
+    <div className="container is-fluid">
       <div className="page content">
         {isLoading ? (
           <LoadSpinner />

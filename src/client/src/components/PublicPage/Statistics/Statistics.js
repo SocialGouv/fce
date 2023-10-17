@@ -90,7 +90,7 @@ const Statistics = () => {
   ];
 
   return (
-    <div className=" container page content is-fullhd ">
+    <div className=" container page content is-fluid ">
       <h1>Statistiques</h1>
       <div className="columns">
         <StatsFilters

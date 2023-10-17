@@ -56,7 +56,7 @@ const SearchResults = ({
   };
 
   return (
-    <div className="app-search-results container is-fullhd">
+    <div className="app-search-results container is-fluid">
       {pagination.items > 0 && (
         <div className="columns">
           <div className="column is-8 is-offset-2">

@@ -74,7 +74,7 @@ const Search = ({
   return (
     <div className="app-search">
       <div className="app-search__wrapper">
-        <div className="container is-fullhd">
+        <div className="container is-fluid">
           {error && <div className="notification is-danger">{error}</div>}
           <div className="form search-form">
             <div className="columns">
@@ -216,7 +216,7 @@ const Search = ({
         generateXlsx={generateXlsx}
         downloadLoading={downloadLoading}
       />
-      <div className="container is-fullhd">
+      <div className="container is-fluid">
         <UsersFeedback fullWidth />
       </div>
 

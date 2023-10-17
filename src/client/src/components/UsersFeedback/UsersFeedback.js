@@ -32,7 +32,7 @@ const UsersFeedback = ({
         "user-feedback--fullwidth": fullWidth,
       })}
     >
-      <div className="container is-fullhd">
+      <div className="container is-fluid">
         <div className="user-feedback__panel">
           <fieldset>
             <div

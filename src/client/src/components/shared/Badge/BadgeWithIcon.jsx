@@ -8,7 +8,7 @@ import OpenedIcon from "../Icons/OpenedIcon.jsx";
 
 const BadgeWithIcon = ({ text, state, isTableBadge = false }) => {
   return (
-    <div className={text ? `badge badge__${state}` : ""}>
+    <span className={text ? `badge badge__${state}` : ""}>
       <span className={text ? "badge__span" : ""}>
         {state === "icon--success" ? <OpenedIcon /> : <ClosedIcon />}
       </span>
@@ -17,7 +17,7 @@ const BadgeWithIcon = ({ text, state, isTableBadge = false }) => {
           {text}
         </span>
       )}
-    </div>
+    </span>
   );
 };
 BadgeWithIcon.propTypes = {

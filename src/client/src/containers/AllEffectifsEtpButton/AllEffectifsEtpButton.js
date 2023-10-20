@@ -17,8 +17,8 @@ const AllEffectifsEtpButton = ({ onClick, loading, text, isUp = false }) => {
         })}
       >
         {text + " "}
+        <span className="icon">{isUp ? <ArrowUp /> : <ArrowDown />}</span>
       </button>
-      <span className="icon">{isUp ? <ArrowUp /> : <ArrowDown />}</span>
     </div>
   );
 };

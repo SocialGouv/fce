@@ -15,13 +15,15 @@
             margin-bottom: $spacing-2;
             border: solid 1px #ddd;
             padding: $spacing-1;
-            height: 6rem;
             flex: 1;
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             align-items: flex-start;
             gap: $spacing-5;
+            @media not print {
+                min-height: 6rem;
+            }
             &-icon {
                 width: 1rem;
             }
@@ -38,8 +40,9 @@
                     line-height: 1.5rem;
                     @media print {
                         display: flex !important;
-                        align-items: flex-start !important;
-                        justify-content: space-around !important;
+                        flex-direction: row !important;
+                        align-items: center !important;
+                        justify-content: center !important;
                     }
 
                     &-label {
@@ -49,9 +52,10 @@
                         margin-right: $spacing-2;
                     }
                     &-value {
+                        font-family: $marianne;
                         color: $default-text-gey !important;
                         font-size: $font-size-small;
-                        font-weight: 400;
+                        font-weight: 700;
                         ul {
                             list-style-type: disc;
                         }

@@ -5,17 +5,14 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import trancheEffectif from "../../containers/Search/tranche-effectif.json";
-// import Unsubscribe from "../../containers/Unsubscribe/Unsubscribe";
 import UsersFeedback from "../../containers/UsersFeedback";
 import Config from "../../services/Config";
 import SearchResults from "../SearchResults";
 import AdministartionFilter from "./Filters/AdministartionFilter.jsx";
 import AutoCompleteFilter from "./Filters/AutoCompleteFilter";
 import CheckboxFilter from "./Filters/CheckboxFilter";
-// import CheckboxFilter from "./Filters/CheckboxFilter";
 // import DirigeantFromFilter from "./Filters/DirigeantFromFilter";
 import LocationFilter from "./Filters/LocationFilter";
-// import StateFilter from "./Filters/StateFilter";
 import SearchBar from "./SearchBar";
 
 const formatDivisionsNaf = (divisionsNaf) =>
@@ -74,7 +71,7 @@ const Search = ({
   return (
     <div className="app-search">
       <div className="app-search__wrapper">
-        <div className="container is-fluid">
+        <div className="container is-fullhd">
           {error && <div className="notification is-danger">{error}</div>}
           <div className="form search-form">
             <div className="columns">
@@ -219,8 +216,6 @@ const Search = ({
       <div className="container is-fluid">
         <UsersFeedback fullWidth />
       </div>
-
-      {/* <Unsubscribe /> */}
     </div>
   );
 };

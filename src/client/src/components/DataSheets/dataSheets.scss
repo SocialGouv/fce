@@ -14,9 +14,18 @@
         }
     }
     &__main-content {
-        padding: $spacing-4;
+        padding: $spacing-2 $spacing-4;
         width: 99%;
+        @media (max-width: 768px) {
+            padding: 0;
+        }
+       
     }
+    @media print {
+        .data-sheet__main-content {
+          width: 100%; /* Set the width to 100% when printing */
+        }
+      }
     &.container {
         width: 100%;
         padding: 0 $padding-app-x;
@@ -41,7 +50,7 @@
             content: "• ";
         }
         .columns {
-            margin-bottom: 0;
+            margin-bottom: $spacing-2;
         }
         .column {
             padding-bottom: 0.75rem;
@@ -86,6 +95,7 @@
 
             @media print {
                 margin-top: 2rem !important;
+                margin-bottom: $spacing-3 !important;
             }
         }
         &__bloc {
@@ -95,7 +105,7 @@
                 display: flex;
                 align-items: center;
                 gap: $spacing-1;
-                margin-top: 0.25rem;
+                margin-top: $spacing-3;
                 font-family: $marianne;
                 font-size: $font-size-base;
                 font-weight: 400;
@@ -132,6 +142,22 @@
 
             &-icon {
                 margin-right: $spacing-2;
+                @media print {
+                    display: none !important;
+                
+                }
+            }
+            &__print {
+                display: none;
+                @media print {
+                    display: inline-block !important;
+                    font-family: $marianne;
+                    font-weight: 400;
+                    line-height: 1.5rem;
+                    font-size: $font-size-base;
+                    color: #000000;
+                    text-transform: capitalize;
+                }
             }
             &-date {
                 font-family: $marianne;
@@ -179,8 +205,12 @@
     }
 
     &__main-container {
-        padding: $spacing-4 $spacing-5;
+        width: 100%;
+        margin: auto;
         padding-top: 0;
+        @media (max-width: 768px) {
+            padding: 0;
+        }
     }
     &__bloc_section {
         scroll-margin: $spacing-6;

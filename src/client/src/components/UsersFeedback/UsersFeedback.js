@@ -17,6 +17,8 @@ const UsersFeedback = ({
   dispatch,
   sendFeedback,
   fullWidth,
+  isOpenUserFeedback,
+  onOpenUserfeedback,
 }) => {
   const handleChange = (action) => (e) => {
     dispatch({ payload: e.target.value, type: action });
@@ -24,6 +26,9 @@ const UsersFeedback = ({
   const [thumbup, setThumbup] = useState(false);
   const [thumbdown, setThumbdown] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const handleOpenModal = () => {
+    onOpenUserfeedback();
+  };
   return (
     <section
       id="user-feedback"
@@ -37,10 +42,16 @@ const UsersFeedback = ({
           <fieldset>
             <div
               className="control user-feedback__useful"
-              onClick={() => setIsOpenModal(!isOpenModal)}
+              onClick={() => {
+                setIsOpenModal(!isOpenModal);
+                handleOpenModal;
+              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  setIsOpenModal(!isOpenModal);
+                  {
+                    setIsOpenModal(!isOpenModal);
+                    handleOpenModal;
+                  }
                 }
               }}
               tabIndex={0}
@@ -50,7 +61,10 @@ const UsersFeedback = ({
               <legend>Donnez-nous votre avis !</legend>
               <button
                 className="icon selected"
-                onClick={() => setIsOpenModal(!isOpenModal)}
+                onClick={() => {
+                  setIsOpenModal(!isOpenModal);
+                  onOpenUserfeedback();
+                }}
               >
                 {isOpenModal ? (
                   <ArrowUp color="white" />
@@ -61,7 +75,7 @@ const UsersFeedback = ({
             </div>
           </fieldset>
 
-          {isOpenModal && (
+          {(isOpenModal || isOpenUserFeedback) && (
             <div className="control user-feedback__comment">
               <span className="question">{`L'information trouvée vous a-t-elle été utile?`}</span>
               <div className="yes-no-btns">
@@ -91,39 +105,7 @@ const UsersFeedback = ({
                   Non
                 </button>
               </div>
-              {/* <div
-                id="user-feedback"
-                className="user-feedback__thumbs yes-no-btns"
-              >
-                <input
-                  id="thumb-up"
-                  type="radio"
-                  name="useful"
-                  value="thumbup"
-                  className={`yes-no-btn ${
-                    useful === "thumbup" ? "active" : ""
-                  }`}
-                  checked={useful === "thumbup"}
-                  onChange={handleChange(SET_USEFUL)}
-                />
-                <label htmlFor="thumb-up" className="radio" title="Oui">
-                  Oui
-                </label>
-                <input
-                  id="thumb-down"
-                  type="radio"
-                  name="useful"
-                  value="thumbdown"
-                  className={`yes-no-btn ${
-                    useful === "thumbdown" ? "active" : ""
-                  }`}
-                  checked={useful === "thumbdown"}
-                  onChange={handleChange(SET_USEFUL)}
-                />
-                <label htmlFor="thumb-down" className="radio" title="Non">
-                  Non
-                </label>
-              </div> */}
+
               <label htmlFor="comment">
                 Souhaitez vous nous en dire davantage ? (facultatif)
               </label>
@@ -161,6 +143,8 @@ const UsersFeedback = ({
 UsersFeedback.propTypes = {
   dispatch: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool,
+  isOpenUserFeedback: PropTypes.bool,
+  onOpenUserfeedback: PropTypes.func,
   sendFeedback: PropTypes.func.isRequired,
   state: PropTypes.object.isRequired,
 };

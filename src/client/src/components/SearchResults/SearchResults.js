@@ -56,12 +56,12 @@ const SearchResults = ({
   };
 
   return (
-    <div className="app-search-results container is-fluid">
+    <div className="app-search-results container is-fullhd">
       {pagination.items > 0 && (
         <div className="columns">
           <div className="column is-8 is-offset-2">
             <h2 className="app-search-results__title">
-              {pagination.items} résultat
+              {pagination.items} établissement
               {pagination.items > 1 && "s"}{" "}
               {query && (
                 <>

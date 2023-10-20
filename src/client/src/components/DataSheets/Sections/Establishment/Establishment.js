@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-// import Unsubscribe from "../../../../containers/Unsubscribe";
-import UsersFeedback from "../../../../containers/UsersFeedback";
 import { renderIfSiret } from "../../../../helpers/hoc/renderIfSiret";
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 import { getSirenFromSiret } from "../../../../utils/establishment/establishment";
@@ -37,11 +35,8 @@ const Establishment = ({ siret }) => {
         <Agrements siret={siret} />
         <ListEstablishment siren={siren} isEstablishmentDisplayed={true} />
       </div>
-      <UsersFeedback fullWidth />
       <ScrollToTopButton />
     </div>
-
-    //  <Unsubscribe />
   );
 };
 

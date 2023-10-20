@@ -1,7 +1,7 @@
 @import "../../App/variables";
 
 .info-box {
-    margin: 0 0 $spacing-3 -0.2rem; // -0.2rem = optical trick to align round shape
+    margin: 0 0 $spacing-4 -0.2rem; 
 
     &__pill {
         padding: $spacing-2 $spacing-3;

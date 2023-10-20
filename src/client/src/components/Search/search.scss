@@ -118,7 +118,7 @@
 
         &__reset {
             display: flex;
-            justify-content: end;
+            justify-content: flex-end;
             padding: 0 !important;
             .button {
                 @extend %search-button;
@@ -228,7 +228,7 @@
         }
         .search_btn {
             display: flex;
-            justify-content: end;
+            justify-content: flex-end;
             align-items: center;
             .button {
                 background-color: $dark-blue;

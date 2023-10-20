@@ -27,9 +27,8 @@ export const PsiSiretTable = ({ psi, year, isVisiblePsiTable }) => {
             <thead>
               <tr>
                 <th className="th">SIRET</th>
-                <th className="th table-cell--center-cell">État</th>
-                <th className="th">Commune</th>
-                <th className="th see-details" />
+                <th className="th ">État</th>
+                <th className="th table-cell--center-cell">Commune</th>
               </tr>
             </thead>
             <tbody>
@@ -43,8 +42,12 @@ export const PsiSiretTable = ({ psi, year, isVisiblePsiTable }) => {
                 return (
                   <tr key={psi.siret}>
                     <td className="table-cell--nowrap">
-                      {formatSiret(psi.siret)}
+                      <SeeDetailsLink
+                        text={formatSiret(psi.siret)}
+                        link={`/establishment/${psi.siret}/#psi`}
+                      />
                     </td>
+
                     <td className="table-cell--center-cell">
                       {getState(etab) && (
                         <BadgeWithIcon
@@ -54,11 +57,8 @@ export const PsiSiretTable = ({ psi, year, isVisiblePsiTable }) => {
                         />
                       )}
                     </td>
-                    <td>{getCity(psi.etablissement)}</td>
-                    <td className="table-cell--nowrap see-details">
-                      <SeeDetailsLink
-                        link={`/establishment/${psi.siret}/#psi`}
-                      />
+                    <td className="th table-cell--center-cell">
+                      {getCity(psi.etablissement)}
                     </td>
                   </tr>
                 );

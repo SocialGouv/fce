@@ -6,7 +6,7 @@ const DirigeantFromFilter = ({
   addFilter,
   id,
   filters,
-  toggleMenu,
+  onToggleMenu,
 }) => {
   const [dirigeant, setDirigeant] = useState({
     dmax: "",
@@ -23,14 +23,14 @@ const DirigeantFromFilter = ({
   const submitDirigeant = (e) => {
     e.preventDefault();
     addFilter(id, dirigeant);
-    toggleMenu(e);
+    onToggleMenu(e);
   };
 
   const reset = (e) => {
     e.preventDefault();
     setDirigeant({ dmax: "", dmin: "", nom: "", prenom: "" });
     removeFilter(id);
-    toggleMenu(e);
+    onToggleMenu(e);
   };
   const handleInputChange = (fieldName, e) => {
     e.persist();
@@ -105,7 +105,7 @@ DirigeantFromFilter.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   removeFilter: PropTypes.func.isRequired,
-  toggleMenu: PropTypes.func.isRequired,
+  onToggleMenu: PropTypes.func.isRequired,
 };
 
 export default DirigeantFromFilter;

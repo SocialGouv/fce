@@ -66,7 +66,7 @@ const AccordionTable = ({ procedure, hasTypeColumn = false }) => {
               className="accordion-table__header"
             >
               <Value value={procedure.length} hasNumberFormat />
-              {isActiveAccordion ? <ArrowDown /> : <ArrowUp />}
+              {isActiveAccordion ? <ArrowUp /> : <ArrowDown />}
             </div>
           </td>
         </tr>

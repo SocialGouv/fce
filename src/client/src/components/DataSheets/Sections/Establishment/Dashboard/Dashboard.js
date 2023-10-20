@@ -158,13 +158,16 @@ const Dashboard = ({ siret }) => {
             name="PSI"
             smallText={true}
             value={
-              <div>
-                <ul>
-                  {isEstablishmentWithPsi && <li>Salariés détachés</li>}
-                  {isEnterprisePsiContractor && <li>Entreprise DO</li>}
-                </ul>
+              <>
+                {isEstablishmentWithPsi && (
+                  <div className="has-list-style">Salariés détachés </div>
+                )}
+                {isEnterprisePsiContractor && (
+                  <div className="has-list-style">Entreprise DO</div>
+                )}
+
                 {!isEnterprisePsiContractor && !isEstablishmentWithPsi && "Non"}
-              </div>
+              </>
             }
           />
           <Item

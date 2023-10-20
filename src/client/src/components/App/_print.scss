@@ -144,13 +144,18 @@
         text-align: center;
 
         &__pill {
-            padding: 0.2rem !important;
+            padding: 0.4rem !important;
             color: #000 !important;
             font-size: 1rem !important;
             text-transform: uppercase !important;
             border: 1pt solid #000 !important;
             border-radius: 0 !important;
+            text-align: center !important;
+           
+        
+         
         }
+     
 
         &__print {
             display: inline !important;
@@ -159,6 +164,8 @@
 
     // >>> DATA SHEET BODY
     .data-sheet {
+        width: 100%;
+        margin: auto;
         &-header__siren,
         &-header__siret {
             font-size: 1.2rem !important;

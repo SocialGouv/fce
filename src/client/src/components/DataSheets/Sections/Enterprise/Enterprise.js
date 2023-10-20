@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-// import Unsubscribe from "../../../../containers/Unsubscribe";
-import UsersFeedback from "../../../../containers/UsersFeedback";
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 import withLoading from "../../../../services/withLoading";
 import ListEstablishment from "../Establishment/ListEtablishments/ListEstablishment.jsx";
@@ -34,7 +32,7 @@ const Enterprise = ({ enterprise }) => {
         <Agrements enterprise={enterprise} />
         <ListEstablishment isEstablishmentDisplayed={true} />
       </div>
-      <UsersFeedback fullWidth />
+
       <ScrollToTopButton />
     </div>
 

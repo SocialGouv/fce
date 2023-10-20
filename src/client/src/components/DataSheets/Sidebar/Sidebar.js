@@ -32,6 +32,7 @@ const Sidebar = ({
   isEstablishmentsDisplayed = false,
   isEntrepriseDisplayed = false,
   history,
+  onOpenUserfeedback,
 }) => {
   const { loading, data: entreprise, error } = useEstablishmentData();
 
@@ -219,7 +220,10 @@ const Sidebar = ({
             <PrintSection />
             <button
               className="print-btn data-sheet__print-button"
-              onClick={() => history.push("#user-feedback")}
+              onClick={() => {
+                onOpenUserfeedback();
+                history.push("#user-feedback");
+              }}
             >
               <MessageIcon />
             </button>
@@ -249,11 +253,12 @@ Sidebar.propTypes = {
   isEntrepriseDisplayed: PropTypes.bool,
   isEstablishmentDisplayed: PropTypes.bool,
   isEstablishmentsDisplayed: PropTypes.bool,
+  onOpenUserfeedback: PropTypes.func,
   resetSearch: PropTypes.func.isRequired,
   setSearchFilters: PropTypes.func.isRequired,
   setSearchTerm: PropTypes.func.isRequired,
   siren: PropTypes.string.isRequired,
-  siret: PropTypes.string.isRequired,
+  siret: PropTypes.string,
 };
 
 export default React.memo(

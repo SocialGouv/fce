@@ -106,6 +106,9 @@ const EnterpriseHeader = ({ enterprise }) => {
 
               <div className="data-sheet-header__status-date ">
                 <span>
+                  <span className="data-sheet-header__status__print">
+                    {stateText}
+                  </span>{" "}
                   depuis le{" "}
                   <Value
                     datecreationetablissement

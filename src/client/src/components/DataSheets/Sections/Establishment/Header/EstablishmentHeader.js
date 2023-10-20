@@ -82,7 +82,7 @@ const EstablishmentHeader = ({ siret, siren }) => {
           <span>SIRET : </span>
           <span>
             {formatSiren(siret.slice(0, 9))}
-            <span className="is-bold"> {siret.slice(9)}</span>
+            <span> {siret.slice(9)}</span>
           </span>
         </div>
         <div className="data-sheet-header-address column is-6">
@@ -102,6 +102,9 @@ const EstablishmentHeader = ({ siret, siren }) => {
               </div>
               <div className="data-sheet-header__status-date ">
                 <span>
+                  <span className="data-sheet-header__status__print">
+                    {stateText}
+                  </span>{" "}
                   depuis le{" "}
                   <Value
                     value={

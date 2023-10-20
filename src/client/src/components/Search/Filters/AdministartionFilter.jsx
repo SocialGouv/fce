@@ -20,7 +20,7 @@ const AdministartionFilter = ({
     onFromSubmit(e);
   };
 
-  const toggleMenu = (e) => {
+  const onToggleMenu = (e) => {
     e.preventDefault();
     setShowMenu(!showMenu);
   };
@@ -40,12 +40,12 @@ const AdministartionFilter = ({
   }, []);
 
   const childrenWithProps = React.Children.map(children, (child) =>
-    React.cloneElement(child, { toggleMenu })
+    React.cloneElement(child, { onToggleMenu })
   );
   return (
     <div className="custom-dropdown" id="custom-dropdown" ref={dropdownRef}>
       <div className="control select-control-field">
-        <button className="custom-dropdown-button" onClick={toggleMenu}>
+        <button className="custom-dropdown-button" onClick={onToggleMenu}>
           {label}
           <span>
             <ArrowDown size={18} color="#161616" />

@@ -26,6 +26,17 @@
         .label {
             height: $spacing-5;
         }
+        .description {
+            padding: $spacing-4;
+            margin-bottom: $spacing-4;
+            text-align: center;
+            font-family: $marianne;
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: bold;
+            line-height: 1.5rem;
+            color: $default-text-gey;
+        }
 
         &__search {
             display: flex;
@@ -135,7 +146,6 @@
 
                 &:hover,
                 &::selection {
-                    font-weight: bold;
                     background-color: transparent;
                     border: none;
                 }
@@ -203,13 +213,12 @@
                 }
             }
         }
-        .filters__selects {
-            margin-top: 1.4rem;
-            .horizontal-separator {
-                margin: $spacing-4 0;
-                border-bottom: 1px solid $default-grey;
-            }
+
+        .horizontal-separator {
+            margin: $spacing-4 0;
+            border-bottom: 1px solid $default-grey !important;
         }
+
         .filters__left {
             margin-top: 0 !important;
         }
@@ -256,7 +265,6 @@
 
                 &:hover,
                 &::selection {
-                    font-weight: bold;
                     background-color: transparent;
                     border: none;
                 }

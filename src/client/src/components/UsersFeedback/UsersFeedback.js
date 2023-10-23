@@ -63,7 +63,7 @@ const UsersFeedback = ({
                 className="icon selected"
                 onClick={() => {
                   setIsOpenModal(!isOpenModal);
-                  onOpenUserfeedback();
+                  handleOpenModal;
                 }}
               >
                 {isOpenModal ? (

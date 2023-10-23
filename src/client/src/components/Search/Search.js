@@ -75,7 +75,18 @@ const Search = ({
           {error && <div className="notification is-danger">{error}</div>}
           <div className="form search-form">
             <div className="columns">
-              <div className="column is-half">
+              <div className="column is-three-fifths is-offset-one-fifth">
+                <div className="description">
+                  Découvrez la nouvelle interface graphique du portail FCE,
+                  n’hésitez pas à nous donner votre avis via le bouton en bas de
+                  page ou{" "}
+                  <a
+                    className="is-link"
+                    href={`mailto:${Config.get("contact.mailto")}`}
+                  >
+                    le mail de contact
+                  </a>
+                </div>
                 <div className="field is-grouped is-grouped-centered ">
                   <SearchBar
                     label="Rechercher"
@@ -85,96 +96,96 @@ const Search = ({
                     isLoading={isLoading}
                     onEnterPress={() => sendRequest(searchTerm, options)}
                   />
+                  <div className="search_btn">
+                    <button
+                      className={classNames("action", "button", "is-medium", {
+                        "is-loading": isLoading,
+                      })}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        sendRequest(searchTerm, options);
+                      }}
+                    >
+                      Rechercher
+                    </button>
+
+                    <button
+                      className="reset_button "
+                      onClick={(e) => {
+                        e.preventDefault();
+                        resetSearch();
+                      }}
+                    >
+                      Réinitialiser
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div className="columns filters__selects">
-              <div className="column is-one-third">
-                <LocationFilter
-                  filters={filters}
-                  addFilter={addFilter}
-                  removeFilter={removeFilter}
-                />
-              </div>
-              <div className="column is-one-third">
-                <AdministartionFilter
-                  label="Situation administrative"
-                  onFromSubmit={onFromSubmit}
-                  customFilters={[
-                    "siege",
-                    "etats",
-                    "tranchesEffectifs",
-                    "activites",
-                  ]}
-                  removeFilters={removeFilters}
-                  sendRequest={sendRequest}
-                >
-                  <CheckboxFilter
+            <div className="column is-three-fifths is-offset-one-fifth">
+              <div className="columns  filters__selects">
+                <div className="column is-half">
+                  <LocationFilter
                     filters={filters}
                     addFilter={addFilter}
                     removeFilter={removeFilter}
-                    options={formattedSiege}
-                    id="siege"
-                    label="Siège Social :"
-                    placeholder="Choisir un siège Social"
                   />
-                  <AutoCompleteFilter
-                    filters={filters}
-                    addFilter={addFilter}
-                    removeFilter={removeFilter}
-                    options={formattedEtatsAdministratif}
-                    id="etats"
-                    label="État administratif :"
-                    placeholder="Choisir un état administratif"
-                  />
-                  <div className="horizontal-separator" />
-                  <AutoCompleteFilter
-                    filters={filters}
-                    addFilter={addFilter}
-                    removeFilter={removeFilter}
-                    options={formattedTranchesEffectifs}
-                    id="tranchesEffectifs"
-                    label="Effectif salarié :"
-                    placeholder="Choisir une tranche d’effectif"
-                  />
-                  <div className="horizontal-separator" />
-                  <AutoCompleteFilter
-                    filters={filters}
-                    addFilter={addFilter}
-                    removeFilter={removeFilter}
-                    options={formatDivisionsNaf(divisionsNaf)}
-                    id="activites"
-                    label="Activité (NAF ou libellé)"
-                    placeholder="Choisir un code NAF/APE"
-                  />
-                </AdministartionFilter>
-              </div>
-              <div className="column is-one-third">
-                <div className="search_btn">
-                  <button
-                    className={classNames("action", "button", "is-medium", {
-                      "is-loading": isLoading,
-                    })}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      sendRequest(searchTerm, options);
-                    }}
-                  >
-                    Rechercher
-                  </button>
-
-                  <button
-                    className="reset_button "
-                    onClick={(e) => {
-                      e.preventDefault();
-                      resetSearch();
-                    }}
-                  >
-                    Réinitialiser
-                  </button>
                 </div>
-                {/* <AdministartionFilter
+                <div className="column is-half">
+                  <AdministartionFilter
+                    label="Situation administrative"
+                    onFromSubmit={onFromSubmit}
+                    customFilters={[
+                      "siege",
+                      "etats",
+                      "tranchesEffectifs",
+                      "activites",
+                    ]}
+                    removeFilters={removeFilters}
+                    sendRequest={sendRequest}
+                  >
+                    <CheckboxFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                      options={formattedSiege}
+                      id="siege"
+                      label="Siège Social :"
+                      placeholder="Choisir un siège Social"
+                    />
+                    <AutoCompleteFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                      options={formattedEtatsAdministratif}
+                      id="etats"
+                      label="État administratif :"
+                      placeholder="Choisir un état administratif"
+                    />
+                    <div className="horizontal-separator" />
+                    <AutoCompleteFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                      options={formattedTranchesEffectifs}
+                      id="tranchesEffectifs"
+                      label="Effectif salarié :"
+                      placeholder="Choisir une tranche d’effectif"
+                    />
+                    <div className="horizontal-separator" />
+                    <AutoCompleteFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                      options={formatDivisionsNaf(divisionsNaf)}
+                      id="activites"
+                      label="Activité (NAF ou libellé)"
+                      placeholder="Choisir un code NAF/APE"
+                    />
+                  </AdministartionFilter>
+                </div>
+                {/* <div className="column is-one-third">
+                 <AdministartionFilter
                   id="dirigeant"
                   label="Dirigeant"
                   addSaveClearButton={false}
@@ -186,7 +197,8 @@ const Search = ({
                     id="dirigeant"
                     placeholder="Dirigeant"
                   />
-                </AdministartionFilter> */}
+                </AdministartionFilter> 
+              </div>*/}
               </div>
             </div>
           </div>

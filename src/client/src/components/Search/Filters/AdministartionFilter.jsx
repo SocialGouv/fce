@@ -44,7 +44,7 @@ const AdministartionFilter = ({
   );
   return (
     <div className="custom-dropdown" id="custom-dropdown" ref={dropdownRef}>
-      <div className="control select-control-field">
+      <div className=" select-control-field">
         <button className="custom-dropdown-button" onClick={onToggleMenu}>
           {label}
           <span>

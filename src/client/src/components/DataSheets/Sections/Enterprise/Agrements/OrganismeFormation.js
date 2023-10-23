@@ -22,12 +22,12 @@ const OrganismeFormation = ({ entreprise }) => {
             <thead>
               <tr>
                 <th>Siret</th>
-                <th>Denomination</th>
+                <th>Dénomination</th>
               </tr>
             </thead>
             <tbody>
               {organismes_formation.map(({ siret, denomination }) => (
-                <tr key={siret}>
+                <tr key={denomination}>
                   <td>
                     <SeeDetailsLink
                       link={`/establishment/${siret}/#agrements`}

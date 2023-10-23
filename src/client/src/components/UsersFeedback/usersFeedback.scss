@@ -30,9 +30,11 @@
         font-weight: bold;
         color: $white;
         background: $dark-blue;
+        cursor: pointer;
 
-        legend {
+        .legend-text {
             font-size: $font-size-base;
+            cursor: pointer !important;
         }
     }
 

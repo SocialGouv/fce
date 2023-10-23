@@ -28,7 +28,7 @@ const ListEstablishment = () => {
     return null;
   }
 
-  const rowsPerPage = 4;
+  const rowsPerPage = 10;
   // Calculate the total number of pages
   const totalPages = Math.ceil(
     entreprise?.entreprise_nbr_etablissements_siren?.nb_eta / rowsPerPage

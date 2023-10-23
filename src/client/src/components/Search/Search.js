@@ -124,14 +124,14 @@ const Search = ({
             </div>
             <div className="column is-three-fifths is-offset-one-fifth">
               <div className="columns  filters__selects">
-                <div className="column is-half">
+                <div className="field is-grouped is-grouped-centered ">
                   <LocationFilter
                     filters={filters}
                     addFilter={addFilter}
                     removeFilter={removeFilter}
                   />
-                </div>
-                <div className="column is-half">
+                  {/* </div>
+                <div className="column is-half"> */}
                   <AdministartionFilter
                     label="Situation administrative"
                     onFromSubmit={onFromSubmit}

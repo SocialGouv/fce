@@ -7,7 +7,7 @@ import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
 import LogoFCE from "../../../assets/img/FCE.svg";
-import Logo from "../../../assets/img/GouvernementSVG.svg";
+import Logo from "../../../assets/img/Footer_Logo.svg";
 import { resetSearch } from "../../../services/Store/actions";
 import HeaderLogo from "../Logo/Logo.jsx";
 
@@ -29,8 +29,8 @@ const Header = ({ resetSearch }) => {
                   <HeaderLogo
                     title="république française"
                     className="header__logo_marianne"
-                    width={140}
-                    height={54}
+                    width={200}
+                    height={70}
                     logo={Logo}
                   />
                 </div>

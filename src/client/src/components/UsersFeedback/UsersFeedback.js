@@ -58,7 +58,7 @@ const UsersFeedback = ({
               role="button"
               aria-expanded={isOpenModal}
             >
-              <legend>Donnez-nous votre avis !</legend>
+              <span className="legend-text">Donnez-nous votre avis !</span>
               <button
                 className="icon selected"
                 onClick={() => {

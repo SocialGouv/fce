@@ -18,7 +18,7 @@ import { useSort } from "../../utils/search-table/hooks";
 import divisionsNaf from "./divisions-naf.json";
 import trancheEffectif from "./tranche-effectif.json";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 const XLSX_DOC_TYPE =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";

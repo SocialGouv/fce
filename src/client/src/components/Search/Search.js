@@ -74,8 +74,8 @@ const Search = ({
         <div className="container is-fullhd">
           {error && <div className="notification is-danger">{error}</div>}
           <div className="form search-form">
-            <div className="columns">
-              <div className="column is-three-fifths is-offset-one-fifth">
+            <div className="columns is-centered">
+              <div className="column is-9 ">
                 <div className="description">
                   Découvrez la nouvelle interface graphique du portail FCE,
                   n’hésitez pas à nous donner votre avis via le bouton en bas de
@@ -87,104 +87,109 @@ const Search = ({
                     le mail de contact
                   </a>
                 </div>
-                <div className="field is-grouped is-grouped-centered ">
-                  <SearchBar
-                    label="Rechercher"
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    resetSearch={resetSearch}
-                    isLoading={isLoading}
-                    onEnterPress={() => sendRequest(searchTerm, options)}
-                  />
-                  <div className="search_btn">
-                    <button
-                      className={classNames("action", "button", "is-medium", {
-                        "is-loading": isLoading,
-                      })}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        sendRequest(searchTerm, options);
-                      }}
-                    >
-                      Rechercher
-                    </button>
+              </div>
+            </div>
+            <div className="columns is-centered">
+              <div className="column is-5">
+                {" "}
+                <SearchBar
+                  label="Rechercher"
+                  searchTerm={searchTerm}
+                  setSearchTerm={setSearchTerm}
+                  resetSearch={resetSearch}
+                  isLoading={isLoading}
+                  onEnterPress={() => sendRequest(searchTerm, options)}
+                />
+              </div>
+              <div className="column is-3 ">
+                <div className="search_btn">
+                  <button
+                    className={classNames("action", "button", "is-medium", {
+                      "is-loading": isLoading,
+                    })}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      sendRequest(searchTerm, options);
+                    }}
+                  >
+                    Rechercher
+                  </button>
 
-                    <button
-                      className="reset_button "
-                      onClick={(e) => {
-                        e.preventDefault();
-                        resetSearch();
-                      }}
-                    >
-                      Réinitialiser
-                    </button>
-                  </div>
+                  <button
+                    className="reset_button "
+                    onClick={(e) => {
+                      e.preventDefault();
+                      resetSearch();
+                    }}
+                  >
+                    Réinitialiser
+                  </button>
                 </div>
               </div>
             </div>
-            <div className="column is-three-fifths is-offset-one-fifth">
-              <div className="columns  filters__selects">
-                <div className="field is-grouped is-grouped-centered ">
-                  <LocationFilter
+            <div className="columns is-centered">
+              <div className="column is-4">
+                <LocationFilter
+                  filters={filters}
+                  addFilter={addFilter}
+                  removeFilter={removeFilter}
+                />
+              </div>
+              <div className="column is-4">
+                <AdministartionFilter
+                  label="Situation administrative"
+                  onFromSubmit={onFromSubmit}
+                  customFilters={[
+                    "siege",
+                    "etats",
+                    "tranchesEffectifs",
+                    "activites",
+                  ]}
+                  removeFilters={removeFilters}
+                  sendRequest={sendRequest}
+                >
+                  <CheckboxFilter
                     filters={filters}
                     addFilter={addFilter}
                     removeFilter={removeFilter}
+                    options={formattedSiege}
+                    id="siege"
+                    label="Siège Social :"
+                    placeholder="Choisir un siège Social"
                   />
-                  {/* </div>
-                <div className="column is-half"> */}
-                  <AdministartionFilter
-                    label="Situation administrative"
-                    onFromSubmit={onFromSubmit}
-                    customFilters={[
-                      "siege",
-                      "etats",
-                      "tranchesEffectifs",
-                      "activites",
-                    ]}
-                    removeFilters={removeFilters}
-                    sendRequest={sendRequest}
-                  >
-                    <CheckboxFilter
-                      filters={filters}
-                      addFilter={addFilter}
-                      removeFilter={removeFilter}
-                      options={formattedSiege}
-                      id="siege"
-                      label="Siège Social :"
-                      placeholder="Choisir un siège Social"
-                    />
-                    <AutoCompleteFilter
-                      filters={filters}
-                      addFilter={addFilter}
-                      removeFilter={removeFilter}
-                      options={formattedEtatsAdministratif}
-                      id="etats"
-                      label="État administratif :"
-                      placeholder="Choisir un état administratif"
-                    />
-                    <div className="horizontal-separator" />
-                    <AutoCompleteFilter
-                      filters={filters}
-                      addFilter={addFilter}
-                      removeFilter={removeFilter}
-                      options={formattedTranchesEffectifs}
-                      id="tranchesEffectifs"
-                      label="Effectif salarié :"
-                      placeholder="Choisir une tranche d’effectif"
-                    />
-                    <div className="horizontal-separator" />
-                    <AutoCompleteFilter
-                      filters={filters}
-                      addFilter={addFilter}
-                      removeFilter={removeFilter}
-                      options={formatDivisionsNaf(divisionsNaf)}
-                      id="activites"
-                      label="Activité (NAF ou libellé)"
-                      placeholder="Choisir un code NAF/APE"
-                    />
-                  </AdministartionFilter>
-                </div>
-                {/* <div className="column is-one-third">
+                  <AutoCompleteFilter
+                    filters={filters}
+                    addFilter={addFilter}
+                    removeFilter={removeFilter}
+                    options={formattedEtatsAdministratif}
+                    id="etats"
+                    label="État administratif :"
+                    placeholder="Choisir un état administratif"
+                  />
+                  <div className="horizontal-separator" />
+                  <AutoCompleteFilter
+                    filters={filters}
+                    addFilter={addFilter}
+                    removeFilter={removeFilter}
+                    options={formattedTranchesEffectifs}
+                    id="tranchesEffectifs"
+                    label="Effectif salarié :"
+                    placeholder="Choisir une tranche d’effectif"
+                  />
+                  <div className="horizontal-separator" />
+                  <AutoCompleteFilter
+                    filters={filters}
+                    addFilter={addFilter}
+                    removeFilter={removeFilter}
+                    options={formatDivisionsNaf(divisionsNaf)}
+                    id="activites"
+                    label="Activité (NAF ou libellé)"
+                    placeholder="Choisir un code NAF/APE"
+                  />
+                </AdministartionFilter>
+              </div>
+
+              {/* <div className="column is-one-third">
                  <AdministartionFilter
                   id="dirigeant"
                   label="Dirigeant"
@@ -199,7 +204,6 @@ const Search = ({
                   />
                 </AdministartionFilter> 
               </div>*/}
-              </div>
             </div>
           </div>
         </div>

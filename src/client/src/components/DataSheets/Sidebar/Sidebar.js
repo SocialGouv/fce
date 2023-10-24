@@ -32,7 +32,7 @@ const Sidebar = ({
   isEstablishmentsDisplayed = false,
   isEntrepriseDisplayed = false,
   history,
-  onOpenUserfeedback,
+  onOpenUserFeedbackBox,
 }) => {
   const { loading, data: entreprise, error } = useEstablishmentData();
 
@@ -72,6 +72,10 @@ const Sidebar = ({
     { label: "Agréments", link: "#agrements" },
     { label: "Autres etablissements", link: "#autres-etablissements" },
   ];
+  const handleOpenUserFeedback = () => {
+    onOpenUserFeedbackBox();
+    history.push("#user-feedback");
+  };
   return (
     <>
       <aside className={` aside-contain`}>
@@ -220,10 +224,7 @@ const Sidebar = ({
             <PrintSection />
             <button
               className="print-btn data-sheet__print-button"
-              onClick={() => {
-                onOpenUserfeedback();
-                history.push("#user-feedback");
-              }}
+              onClick={() => handleOpenUserFeedback()}
             >
               <MessageIcon />
             </button>
@@ -253,7 +254,7 @@ Sidebar.propTypes = {
   isEntrepriseDisplayed: PropTypes.bool,
   isEstablishmentDisplayed: PropTypes.bool,
   isEstablishmentsDisplayed: PropTypes.bool,
-  onOpenUserfeedback: PropTypes.func,
+  onOpenUserFeedbackBox: PropTypes.func,
   resetSearch: PropTypes.func.isRequired,
   setSearchFilters: PropTypes.func.isRequired,
   setSearchTerm: PropTypes.func.isRequired,

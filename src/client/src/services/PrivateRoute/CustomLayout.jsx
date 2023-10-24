@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React from "react";
 
 import { EstablishmentProvider } from "../../components/DataSheets/Sections/SharedComponents/EstablishmentContext.jsx";
 import SubHeader from "../../components/DataSheets/Sections/SharedComponents/SubHeader/SubHeader.jsx";
@@ -14,9 +14,13 @@ const CustomLayout = ({
   siret,
   children,
 }) => {
-  const [isOpenUserFeedback, setIsOpenUserFeedback] = useState(false);
-  const onOpenUserfeedback = () => {
-    setIsOpenUserFeedback(!isOpenUserFeedback);
+  const [isOpenUserFeedback, setIsOpenUserFeedback] = React.useState(false);
+
+  const onOpenUserFeedback = (isOpen) => {
+    setIsOpenUserFeedback(isOpen);
+  };
+  const openUserFeedback = () => {
+    setIsOpenUserFeedback(true);
   };
 
   return (
@@ -26,14 +30,14 @@ const CustomLayout = ({
           <SubHeader siren={siren} />
           <section className="data-sheet container is-fluid">
             <div className="columns">
-              <div className="column column-small-screen  aside-box">
+              <div className="column column-small-screen aside-box">
                 <Sidebar
                   siren={siren}
                   isEstablishmentDisplayed={isEstablishmentDisplayed}
                   isEntrepriseDisplayed={isEntrepriseDisplayed}
                   isEstablishmentsDisplayed={isEstablishmentsDisplayed}
                   siret={siret}
-                  onOpenUserfeedback={() => setIsOpenUserFeedback(true)}
+                  onOpenUserFeedbackBox={openUserFeedback}
                 />
               </div>
               <div className="data-sheet__main-content column is-four-fifths is-full-mobile">
@@ -41,7 +45,7 @@ const CustomLayout = ({
                 <UsersFeedback
                   fullWidth
                   isOpenUserFeedback={isOpenUserFeedback}
-                  onOpenUserfeedback={onOpenUserfeedback}
+                  onOpenUserFeedback={onOpenUserFeedback}
                 />
               </div>
             </div>
@@ -51,6 +55,7 @@ const CustomLayout = ({
     </>
   );
 };
+
 CustomLayout.propTypes = {
   children: PropTypes.node,
   isEntrepriseDisplayed: PropTypes.bool.isRequired,
@@ -59,4 +64,5 @@ CustomLayout.propTypes = {
   siren: PropTypes.string.isRequired,
   siret: PropTypes.string,
 };
+
 export default CustomLayout;

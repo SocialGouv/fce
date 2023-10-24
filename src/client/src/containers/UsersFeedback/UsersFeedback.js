@@ -26,7 +26,7 @@ const reducer = (state, action) => {
 const UsersFeedback = ({
   fullWidth,
   isOpenUserFeedback,
-  onOpenUserfeedback,
+  onOpenUserFeedback,
 }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -55,7 +55,7 @@ const UsersFeedback = ({
       sendFeedback={sendFeedback}
       fullWidth={fullWidth}
       isOpenUserFeedback={isOpenUserFeedback}
-      onOpenUserfeedback={onOpenUserfeedback}
+      onOpenUserFeedback={onOpenUserFeedback}
     />
   );
 };
@@ -63,7 +63,7 @@ const UsersFeedback = ({
 UsersFeedback.propTypes = {
   fullWidth: PropTypes.bool,
   isOpenUserFeedback: PropTypes.bool,
-  onOpenUserfeedback: PropTypes.func,
+  onOpenUserFeedback: PropTypes.func,
 };
 
 export default UsersFeedback;

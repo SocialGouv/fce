@@ -18,7 +18,7 @@ const UsersFeedback = ({
   sendFeedback,
   fullWidth,
   isOpenUserFeedback,
-  onOpenUserfeedback,
+  onOpenUserFeedback,
 }) => {
   const handleChange = (action) => (e) => {
     dispatch({ payload: e.target.value, type: action });
@@ -27,7 +27,8 @@ const UsersFeedback = ({
   const [thumbdown, setThumbdown] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const handleOpenModal = () => {
-    onOpenUserfeedback();
+    setIsOpenModal(isOpenUserFeedback ? false : !isOpenModal);
+    onOpenUserFeedback(isOpenUserFeedback ? false : !isOpenModal);
   };
   return (
     <section
@@ -42,16 +43,10 @@ const UsersFeedback = ({
           <fieldset>
             <div
               className="control user-feedback__useful"
-              onClick={() => {
-                setIsOpenModal(!isOpenModal);
-                handleOpenModal;
-              }}
+              onClick={() => handleOpenModal()}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  {
-                    setIsOpenModal(!isOpenModal);
-                    handleOpenModal;
-                  }
+                  handleOpenModal();
                 }
               }}
               tabIndex={0}
@@ -61,12 +56,9 @@ const UsersFeedback = ({
               <span className="legend-text">Donnez-nous votre avis !</span>
               <button
                 className="icon selected"
-                onClick={() => {
-                  setIsOpenModal(!isOpenModal);
-                  handleOpenModal;
-                }}
+                onClick={() => handleOpenModal()}
               >
-                {isOpenModal ? (
+                {isOpenModal || isOpenUserFeedback ? (
                   <ArrowUp color="white" />
                 ) : (
                   <ArrowDown color="white" />
@@ -144,7 +136,7 @@ UsersFeedback.propTypes = {
   dispatch: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool,
   isOpenUserFeedback: PropTypes.bool,
-  onOpenUserfeedback: PropTypes.func,
+  onOpenUserFeedback: PropTypes.func,
   sendFeedback: PropTypes.func.isRequired,
   state: PropTypes.object.isRequired,
 };

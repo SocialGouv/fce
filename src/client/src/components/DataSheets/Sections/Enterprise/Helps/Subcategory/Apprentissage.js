@@ -60,7 +60,7 @@ const Apprentissage = ({ entreprise: { siren } }) => {
                 </tr>
               </thead>
               <tbody>
-                {formattedApprentissage.map((apprentissage) => {
+                {formattedApprentissage?.map((apprentissage) => {
                   const etablissement = apprentissage.etablissement;
                   const etat = getState(etablissement);
                   const etab = etablissement;
@@ -74,7 +74,7 @@ const Apprentissage = ({ entreprise: { siren } }) => {
                   const siret = getSiret(etablissement);
 
                   return (
-                    <tr key={siret}>
+                    <tr key={`${siret}-${codePostal}`}>
                       <td className="table-cell--nowrap">
                         <SeeDetailsLink
                           link={`/establishment/${siret}/#helps`}

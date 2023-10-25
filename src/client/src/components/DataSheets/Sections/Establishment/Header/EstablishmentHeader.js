@@ -3,7 +3,6 @@ import React from "react";
 
 import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import { formatSiren } from "../../../../../helpers/utils";
-// import { formatSiret } from "../../../../../helpers/utils";
 import {
   getNafCode,
   getNafLabel,

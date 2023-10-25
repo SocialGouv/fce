@@ -58,8 +58,8 @@ const AccidentTravail = ({ entreprise: { siren } }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {accidents.map((data) => {
-                      const etab = data.etablissement;
+                    {accidents.map((accidnt) => {
+                      const etab = accidnt.etablissement;
                       const isEtablissementActive = isActive(etab);
                       const stateClass = isEtablissementActive
                         ? "icon--success"
@@ -68,14 +68,14 @@ const AccidentTravail = ({ entreprise: { siren } }) => {
                         ? "ouvert"
                         : "fermé";
                       return (
-                        <tr key={getSiret(data.etablissement)}>
+                        <tr key={getSiret(accidnt.etablissement)}>
                           <td>
                             {" "}
                             <SeeDetailsLink
                               link={`/establishment/${getSiret(
-                                data.etablissement
+                                accidnt.etablissement
                               )}/#work-accidents`}
-                              text={getSiret(data.etablissement)}
+                              text={getSiret(accidnt.etablissement)}
                             />
                           </td>
                           <td className="table-cell--center-cell">
@@ -87,9 +87,9 @@ const AccidentTravail = ({ entreprise: { siren } }) => {
                               />
                             )}
                           </td>
-                          <td>{getCity(data.etablissement)}</td>
+                          <td>{getCity(accidnt.etablissement)}</td>
                           <td className="th table-cell--center-cell">
-                            {data.total}
+                            {accidnt.total}
                           </td>
                         </tr>
                       );

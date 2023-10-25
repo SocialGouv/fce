@@ -3,11 +3,8 @@
 $border-color: var(--border-color);
 .column-small-screen {
     @media (max-width: 768px) {
-       
-          margin-top: $spacing-3;
-          padding: 0;
-         
-        
+        margin-top: $spacing-3;
+        padding: 0;
     }
 }
 .aside-box {
@@ -30,8 +27,7 @@ $border-color: var(--border-color);
             width: 100%;
             margin: 0;
             overflow: hidden;
-            padding:0 $spacing-2;
-           
+            padding: 0 $spacing-2;
         }
     }
 }
@@ -39,12 +35,6 @@ $border-color: var(--border-color);
 .enterprise .sidebar__enterprise {
     border-left: 4px solid $secondary;
     margin-bottom: $spacing-5;
-}
-.sidebar__enterprise {
-    @media (max-width: 768px) {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
 }
 
 .sidebar {
@@ -151,7 +141,10 @@ $border-color: var(--border-color);
     &__enterprise {
         padding: $spacing-4;
         margin-bottom: $spacing-2;
-
+        @media (max-width: 768px) {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
         &-title {
             font-family: $segoe;
             font-size: 1.125rem;

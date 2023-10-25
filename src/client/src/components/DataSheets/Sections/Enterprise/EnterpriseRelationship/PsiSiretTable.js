@@ -32,19 +32,19 @@ export const PsiSiretTable = ({ psi, year, isVisiblePsiTable }) => {
               </tr>
             </thead>
             <tbody>
-              {psi.map((psi) => {
-                const etab = psi.etablissement;
+              {psi.map((psiObj) => {
+                const etab = psiObj.etablissement;
                 const isEtablissementActive = isActive(etab);
                 const stateClass = isEtablissementActive
                   ? "icon--success"
                   : "icon--danger";
                 const stateText = isEtablissementActive ? "ouvert" : "fermé";
                 return (
-                  <tr key={psi.siret}>
+                  <tr key={psiObj.siret}>
                     <td className="table-cell--nowrap">
                       <SeeDetailsLink
-                        text={formatSiret(psi.siret)}
-                        link={`/establishment/${psi.siret}/#psi`}
+                        text={formatSiret(psiObj.siret)}
+                        link={`/establishment/${psiObj.siret}/#psi`}
                       />
                     </td>
 
@@ -58,7 +58,7 @@ export const PsiSiretTable = ({ psi, year, isVisiblePsiTable }) => {
                       )}
                     </td>
                     <td className="th table-cell--center-cell">
-                      {getCity(psi.etablissement)}
+                      {getCity(psiObj.etablissement)}
                     </td>
                   </tr>
                 );

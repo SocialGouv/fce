@@ -59,7 +59,7 @@ const AdministartionFilter = ({
       )}
       {showMenu && (
         <div className="custom-dropdown-menu">
-          <div className="custom-dropdown-menu-filters">
+          <div className="custom-dropdown-menu-filters" id="scrollContainer">
             {" "}
             {childrenWithProps}
           </div>

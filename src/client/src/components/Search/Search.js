@@ -182,6 +182,7 @@ const Search = ({
                     addFilter={addFilter}
                     removeFilter={removeFilter}
                     options={formatDivisionsNaf(divisionsNaf)}
+                    // menuPlacement="top"
                     id="activites"
                     label="Activité (NAF ou libellé)"
                     placeholder="Choisir un code NAF/APE"

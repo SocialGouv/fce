@@ -29,7 +29,7 @@ export const Establishments = () => {
     return null;
   }
 
-  const rowsPerPage = 4;
+  const rowsPerPage = 10;
   // Calculate the total number of pages
   const totalPages = Math.ceil(
     entreprise?.entreprise_nbr_etablissements_siren?.nb_eta / rowsPerPage
@@ -56,6 +56,77 @@ export const Establishments = () => {
   const etablissementsCount = entreprise
     ? getEtablissementsCount(entreprise)
     : 0;
+  const renderTableBody = () => {
+    const data =
+      etablissementsCount > rowsPerPage
+        ? etablissements?.slice(startIndex, endIndex)
+        : etablissements;
+    return data?.map((etablissement) => {
+      const isEtablissementActive = isActive(etablissement);
+      const stateClass = isEtablissementActive
+        ? "icon--success"
+        : "icon--danger";
+      const stateText = isEtablissementActive ? "ouvert" : "fermé";
+      return (
+        <tr
+          className="at__body__tr"
+          key={etablissement?.siret}
+          onClick={() => history.push(`/establishment/${etablissement?.siret}`)}
+        >
+          <td>
+            <Link
+              to={`/establishment/${etablissement?.siret}`}
+              className="establishment__siret_link"
+            >
+              <Value value={formatSiret(etablissement?.siret)} />
+            </Link>
+          </td>
+          <td>
+            <BadgeWithIcon isTableBadge text={stateText} state={stateClass} />
+          </td>
+
+          <td>
+            <Value
+              value={joinNoFalsy(
+                [
+                  etablissement?.codepostaletablissement,
+                  etablissement?.libellecommuneetablissement,
+                ],
+                " - "
+              )}
+            />
+          </td>
+          <td>
+            <Value
+              value={
+                etablissement?.trancheeffectifsetablissement !== "-" &&
+                etablissement?.trancheeffectifsetablissement !== "NN" &&
+                etablissement?.trancheeffectifsetablissement !== "SP"
+                  ? isActiveEstablishment(
+                      etablissement?.etatadministratifetablissement
+                    )
+                    ? staffSizeRanges[
+                        etablissement?.trancheeffectifsetablissement
+                      ]
+                    : "0 salarié"
+                  : staffSizeRanges[
+                      etablissement?.trancheeffectifsetablissement
+                    ]
+              }
+            />
+          </td>
+          <td>
+            <Value value={etablissement?.etb_raisonsociale} />
+          </td>
+          <td>{`${etablissement?.activiteprincipaleetablissement || ""} - ${
+            getLibelletFromCodeNaf(
+              etablissement?.activiteprincipaleetablissement
+            ) || ""
+          }`}</td>
+        </tr>
+      );
+    });
+  };
   return (
     <div className="sheet-container">
       <h2 className="title">
@@ -74,87 +145,9 @@ export const Establishments = () => {
               <th>Activité</th>
             </tr>
           </thead>
-          <tbody>
-            {etablissements
-              ?.slice(startIndex, endIndex)
-              ?.map((etablissement) => {
-                const isEtablissementActive = isActive(etablissement);
-                const stateClass = isEtablissementActive
-                  ? "icon--success"
-                  : "icon--danger";
-                const stateText = isEtablissementActive ? "ouvert" : "fermé";
-                return (
-                  <tr
-                    className="at__body__tr"
-                    key={etablissement?.siret}
-                    onClick={() =>
-                      history.push(`/establishment/${etablissement?.siret}`)
-                    }
-                  >
-                    <td>
-                      <Link
-                        to={`/establishment/${etablissement?.siret}`}
-                        className="establishment__siret_link"
-                      >
-                        <Value value={formatSiret(etablissement?.siret)} />
-                      </Link>
-                    </td>
-                    <td>
-                      <BadgeWithIcon
-                        isTableBadge
-                        text={stateText}
-                        state={stateClass}
-                      />
-                    </td>
-
-                    <td>
-                      <Value
-                        value={joinNoFalsy(
-                          [
-                            etablissement?.codepostaletablissement,
-                            etablissement?.libellecommuneetablissement,
-                          ],
-                          " - "
-                        )}
-                      />
-                    </td>
-                    <td>
-                      <Value
-                        value={
-                          etablissement?.trancheeffectifsetablissement !==
-                            "-" &&
-                          etablissement?.trancheeffectifsetablissement !==
-                            "NN" &&
-                          etablissement?.trancheeffectifsetablissement !== "SP"
-                            ? isActiveEstablishment(
-                                etablissement?.etatadministratifetablissement
-                              )
-                              ? staffSizeRanges[
-                                  etablissement?.trancheeffectifsetablissement
-                                ]
-                              : "0 salarié"
-                            : staffSizeRanges[
-                                etablissement?.trancheeffectifsetablissement
-                              ]
-                        }
-                      />
-                    </td>
-                    <td>
-                      <Value value={etablissement?.etb_raisonsociale} />
-                    </td>
-                    <td>{`${
-                      etablissement?.activiteprincipaleetablissement || ""
-                    } - ${
-                      getLibelletFromCodeNaf(
-                        etablissement?.activiteprincipaleetablissement
-                      ) || ""
-                    }`}</td>
-                  </tr>
-                );
-              })}
-          </tbody>
+          <tbody>{renderTableBody()}</tbody>
         </NonBorderedTable>
-        {etablissementsCount > 4 && (
+        {etablissementsCount > rowsPerPage && (
           <div className="table-pagination">
             <PaginationTable
               currentPage={currentPage}

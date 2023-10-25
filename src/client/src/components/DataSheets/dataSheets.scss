@@ -19,13 +19,12 @@
         @media (max-width: 768px) {
             padding: 0;
         }
-       
     }
     @media print {
         .data-sheet__main-content {
-          width: 100%; /* Set the width to 100% when printing */
+            width: 100%; /* Set the width to 100% when printing */
         }
-      }
+    }
     &.container {
         width: 100%;
         padding: 0 $padding-app-x;
@@ -144,7 +143,6 @@
                 margin-right: $spacing-2;
                 @media print {
                     display: none !important;
-                
                 }
             }
             &__print {
@@ -325,9 +323,6 @@
                 @media print {
                     display: none;
                 }
-            }
-            &__list-item {
-                margin-bottom: $spacing-1;
             }
 
             &__list-item {

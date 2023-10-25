@@ -8,7 +8,6 @@ export const selectCustomStyles = {
     },
     backgroundColor: "#EEEEEE",
     border: "none",
-
     borderBottom: "2px solid black",
     borderBottomLeftRadius: "0",
     borderBottomRightRadius: "0",
@@ -28,10 +27,8 @@ export const selectCustomStyles = {
 
     backgroundColor: "#EEEEEE",
     border: "none",
-
     borderBottomLeftRadius: "0",
     borderBottomRightRadius: "0",
-
     boxShadow: "none",
     cursor: "pointer",
     fontFamily: "Marianne, sans-serif",
@@ -46,6 +43,12 @@ export const selectCustomStyles = {
     color: "#161616",
   }),
 
+  menuPortal: (base) => ({
+    ...base,
+    paddingTop: "5px",
+
+    zIndex: 9999,
+  }),
   multiValue: (styles) => ({
     ...styles,
     backgroundColor: "#dfdff1",
@@ -67,6 +70,7 @@ export const selectCustomStyles = {
     ...provided,
     color: "#353535",
   }),
+
   placeholder: (defaultStyles) => {
     return {
       ...defaultStyles,

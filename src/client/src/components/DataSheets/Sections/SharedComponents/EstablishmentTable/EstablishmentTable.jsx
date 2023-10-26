@@ -138,6 +138,7 @@ const EstablishmentTable = ({ etablissements, entreprise }) => {
             currentPage={currentPage}
             totalPages={totalPages}
             handlePageClick={handlePageClick}
+            displayButtons
           />
         </div>
       )}{" "}

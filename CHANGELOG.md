@@ -1,3 +1,10 @@
+# [27.85.0](https://github.com/SocialGouv/fce/compare/v27.84.0...v27.85.0) (2023-10-29)
+
+
+### Features
+
+* notify users about new design ([#300](https://github.com/SocialGouv/fce/issues/300)) ([c171806](https://github.com/SocialGouv/fce/commit/c1718069f0958068ecef8a9535b212fc812f75cb))
+
 # [27.84.0](https://github.com/SocialGouv/fce/compare/v27.83.0...v27.84.0) (2023-10-18)
 
 

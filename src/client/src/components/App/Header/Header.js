@@ -66,12 +66,12 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
           <div>
             <span className="beta-message__nouveaute">
               {" "}
-              <FontAwesomeIcon icon={faInfoCircle} /> Nouvelle version de notre
-              portail FCE sera déployée le 15 novembre 2023 :{" "}
+              <FontAwesomeIcon icon={faInfoCircle} /> Une nouvelle version de
+              notre portail FCE sera déployée le 15 novembre 2023 :{" "}
             </span>
             {location.pathname !== "/login" && (
               <span>
-                {`Cette mise à jour est une refonte ergonomique visant à aligner notre site avec la charte de l'État.
+                {`Cette mise à jour est une refonte ergonomique visant à aligner notre site avec la charte graphique de l'État.
                   Nous tenons à souligner que cette mise à jour n'affectera en rien le contenu actuel de notre portail,
                   qui restera inchangé. Vous continuerez d'accéder à toutes les informations et fonctionnalités auxquelles
                    vous êtes habitués. `}

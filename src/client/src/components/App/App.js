@@ -67,11 +67,17 @@ const App = () => {
                           <Maintenance />
                         ) : (
                           <Switch>
-                            <PrivateRoute exact path="/" component={Search} />
+                            <PrivateRoute
+                              exact
+                              displayMessage
+                              path="/"
+                              component={Search}
+                            />
                             <PrivateRoute
                               exact
                               path="/search"
                               component={Search}
+                              displayMessage
                             />
                             <PrivateRoute
                               exact

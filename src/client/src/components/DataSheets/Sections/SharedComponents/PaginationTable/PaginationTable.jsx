@@ -4,7 +4,12 @@ import React from "react";
 import LeftArrow from "../../../../shared/Icons/LeftArrow.jsx";
 import RightArrow from "../../../../shared/Icons/RightArrow.jsx";
 
-const PaginationTable = ({ currentPage, totalPages, handlePageClick }) => {
+const PaginationTable = ({
+  currentPage,
+  displayButtons = false,
+  totalPages,
+  handlePageClick,
+}) => {
   const renderPaginationButtons = () => {
     const buttons = [];
     const firstPage = 1;
@@ -59,28 +64,33 @@ const PaginationTable = ({ currentPage, totalPages, handlePageClick }) => {
   };
   return (
     <div className="table-pagination">
-      <button
-        className="prev-btn"
-        disabled={currentPage === 1}
-        onClick={() => handlePageClick(currentPage - 1)}
-      >
-        <LeftArrow />
-        Précédent
-      </button>
+      {displayButtons && (
+        <button
+          className="prev-btn"
+          disabled={currentPage === 1}
+          onClick={() => handlePageClick(currentPage - 1)}
+        >
+          <LeftArrow />
+          Précédent
+        </button>
+      )}
       {renderPaginationButtons()}
-      <button
-        className="prev-btn"
-        disabled={currentPage === totalPages}
-        onClick={() => handlePageClick(currentPage + 1)}
-      >
-        Suivant
-        <RightArrow />
-      </button>
+      {displayButtons && (
+        <button
+          className="prev-btn"
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageClick(currentPage + 1)}
+        >
+          Suivant
+          <RightArrow />
+        </button>
+      )}
     </div>
   );
 };
 PaginationTable.propTypes = {
   currentPage: PropTypes.number.isRequired,
+  displayButtons: PropTypes.bool,
   handlePageClick: PropTypes.func.isRequired,
   totalPages: PropTypes.string.isRequired,
 };

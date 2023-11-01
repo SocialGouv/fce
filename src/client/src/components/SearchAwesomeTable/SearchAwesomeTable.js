@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import { withRouter } from "react-router";
 
+import PaginationTable from "../DataSheets/Sections/SharedComponents/PaginationTable/PaginationTable.jsx";
 import LeftArrow from "../shared/Icons/LeftArrow.jsx";
 import RightArrow from "../shared/Icons/RightArrow.jsx";
 import LoadSpinner from "../shared/LoadSpinner";
-import Pager from "./Pager";
 
 const SearchAwesomeTable = ({
   showPagination = false,
@@ -83,10 +83,10 @@ const SearchAwesomeTable = ({
                 <LeftArrow />
                 {prevText}
               </button>
-              <Pager
-                handlePageChange={pagination.handlePageChange}
+              <PaginationTable
+                handlePageClick={pagination.handlePageChange}
                 currentPage={pagination.current}
-                max={pagination.pages}
+                totalPages={pagination.pages}
               />
 
               <button

@@ -37,6 +37,7 @@ const Layout = ({
 
 Layout.propTypes = {
   children: PropTypes.node,
+  displayMessage: PropTypes.bool,
   hasLandingHeader: PropTypes.bool,
   hasSharedButton: PropTypes.bool,
 };

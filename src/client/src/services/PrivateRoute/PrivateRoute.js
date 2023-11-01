@@ -77,6 +77,7 @@ const PrivateRoute = ({
 
 PrivateRoute.propTypes = {
   component: PropTypes.elementType,
+  displayMessage: PropTypes.bool,
   history: PropTypes.shape({
     push: PropTypes.func,
   }),

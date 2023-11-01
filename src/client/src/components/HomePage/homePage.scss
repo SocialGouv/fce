@@ -16,11 +16,14 @@
 }
 
 .home-page {
+    font-family: $marianne;
+    background-color: white !important;
     h2 {
         font-size: 2.5rem;
         font-weight: 900;
         text-align: center;
         margin-bottom: $spacing-5;
+        font-family: $marianne;
     }
 
     h3 {
@@ -28,18 +31,22 @@
         font-weight: 700;
         text-align: center;
         margin-bottom: $spacing-3;
+        font-family: $marianne;
     }
 
     p {
         font-size: 1.25rem;
+        font-family: $marianne;
     }
 
     &__white-title {
         color: $white;
+        font-family: $marianne;
     }
 
     &__blue-title {
         color: $deep-blue;
+        font-family: $marianne;
     }
 
     .columns {
@@ -53,20 +60,27 @@
     &__summary {
         color: $white;
         text-align: center;
+        font-family: $marianne;
         background-color: $deep-blue;
     }
 
     &__action-links-container {
         display: flex;
         justify-content: center;
+        background-color: #f5f5fe !important ;
+        font-family: $marianne;
+        .column {
+            box-shadow: 0 -1px 0 0 $dark-blue;
+        }
     }
 
     .icons {
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
-        padding: $spacing-4 $spacing-6;
 
+        padding: $spacing-4 $spacing-6;
+        height: 100%;
         text-align: center;
         font-size: 1.65rem;
         font-weight: 600;
@@ -74,6 +88,14 @@
         &__item {
             position: relative;
             justify-content: center;
+            background-color: $white-smoke !important;
+            box-shadow: inset 0 0 0 1px $default-grey,
+                inset 0 -0.25rem 0 0 $dark-blue !important;
+            display: flex;
+            flex-direction: column-reverse;
+            position: relative;
+            cursor: pointer;
+            height: 100%;
         }
 
         &__image-container {
@@ -160,24 +182,36 @@
         }
 
         &__items {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            overflow: auto;
-            overflow-y: hidden;
-            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            grid-gap: 10px;
         }
 
         &__item {
-            border: solid 2px $white;
-            box-shadow: 8px 8px 1px 0 darken($deep-blue, 5%);
-            background-color: $deep-blue;
+            // background-color: $white-smoke !important;
+            box-shadow: inset 0 0 0 1px $default-grey,
+                inset 0 -0.25rem 0 0 $dark-blue !important;
+            display: flex;
+            flex: 1 !important;
+            flex-direction: column-reverse;
+            position: relative;
+            cursor: pointer;
+            &-content {
+                flex: 1 !important;
+            }
+            &:hover {
+                background-color: $background-default-grey-hover;
+            }
 
-            padding: 0.5rem 1rem;
-            margin: 0 2rem 0.5rem 0;
-            height: 18rem;
-            min-width: 24rem;
-            max-width: 24rem;
+            // border: solid 2px $white;
+            // box-shadow: 8px 8px 1px 0 darken($deep-blue, 5%);
+            // background-color: $deep-blue;
+
+            // padding: 0.5rem 1rem;
+            // margin: 0 2rem 0.5rem 0;
+            // height: 18rem;
+            // min-width: 24rem;
+            // max-width: 24rem;
 
             h4 {
                 font-size: 1.15rem;

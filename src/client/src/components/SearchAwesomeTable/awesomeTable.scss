@@ -25,7 +25,7 @@
     .at__head {
         &__tr {
             border-radius: $border-radius-2;
-            background-color: #f6f6f6 !important;
+            background-color: $background-default-grey-hover !important;
             @media not print {
                 box-shadow: $box-shadow-awesome-table;
             }
@@ -34,7 +34,7 @@
         &__th {
             vertical-align: middle;
             white-space: nowrap;
-            background-color: #f6f6f6 !important;
+            background-color: $background-default-grey-hover !important;
             border-bottom: 2px solid #3a3a3a !important;
             border-right: none !important;
             font-family: $marianne;
@@ -147,7 +147,7 @@
                     gap: $spacing-2;
                 }
                 button:hover {
-                    background-color: #f6f6f6;
+                    background-color: $background-default-grey-hover;
                 }
                 .active {
                     background-color: $dark-blue;

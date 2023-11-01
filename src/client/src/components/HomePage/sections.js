@@ -53,7 +53,7 @@ export const IconItems = ({ users, isLoading = false }) => {
         {items.map((item, index) => {
           return (
             <React.Fragment key={item.firstParagraph}>
-              <div className="column is-4 is-hidden-touch icons__item">
+              <div className="column is-3 is-hidden-touch icons__item">
                 <div className="icons__image-container">{item.icon(110)}</div>
                 {isLoading && index === 2 ? (
                   <div className="dots">
@@ -86,19 +86,25 @@ IconItems.propTypes = {
 };
 
 export const Summary = () => (
-  <div className="home-page__summary home-page__section">
-    <h3>
-      Retrouvez les informations légales et administratives des entreprises
-    </h3>
-    <p>
-      {`L'état civil, l'activité et les données de l'administration dans une seule
+  <>
+    <div className="home-page__summary home-page__section">
+      <h3>
+        Retrouvez les informations légales et administratives des entreprises
+      </h3>
+      <p>
+        {`L'état civil, l'activité et les données de l'administration dans une seule
       fiche destinée aux agents publics`}
-    </p>
-    <div className="home-page__action-links-container">
-      <LoginLink />
-      <RequestAccessLink />
+      </p>
     </div>
-  </div>
+    <div className="columns home-page__action-links-container">
+      <div className="column">
+        <LoginLink />
+      </div>
+      <div className="column">
+        <RequestAccessLink />
+      </div>
+    </div>
+  </>
 );
 
 export const HowItWork = () => {
@@ -190,11 +196,13 @@ export const DailyUse = () => {
   return (
     <div className="home-page__daily-use home-page__section is-justify-content-center">
       <h2 className="home-page__blue-title">Quels usages au quotidien ?</h2>
-      <div className="home-page__daily-use__items">
+      <div className="  home-page__daily-use__items">
         {items.map((item) => (
           <div key={item.title} className="home-page__daily-use__item">
-            <h4>{item.title}</h4>
-            <p>{item.paragraph}</p>
+            <div className="home-page__daily-use__item-content">
+              <h4>{item.title}</h4>
+              <p>{item.paragraph}</p>
+            </div>
           </div>
         ))}
       </div>

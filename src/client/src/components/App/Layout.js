@@ -4,7 +4,6 @@ import React from "react";
 
 import { isIE } from "../../helpers/BrowserDetection";
 import Config from "../../services/Config";
-import LandingHeader from "../shared/LandingHeader";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs.jsx";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -19,7 +18,7 @@ const Layout = ({
   return (
     <>
       {hasLandingHeader ? (
-        <LandingHeader hasSharedButton={hasSharedButton} />
+        <Header hasSharedButton={hasSharedButton} />
       ) : (
         <>
           {" "}

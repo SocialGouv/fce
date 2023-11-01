@@ -29,7 +29,7 @@
             gap: $spacing-2;
         }
         button:hover {
-            background-color: #f6f6f6;
+            background-color: $background-default-grey-hover;
         }
         .active {
             background-color: $dark-blue;
@@ -89,7 +89,7 @@
         }
         tbody {
             .sub-table {
-                background-color: #f6f6f6 !important;
+                background-color: $background-default-grey-hover !important;
             }
         }
         tfoot {

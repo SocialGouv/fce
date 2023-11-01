@@ -20,6 +20,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
         flex-wrap: wrap;
     }
 
@@ -53,7 +54,26 @@
             margin-right: 2.5rem;
         }
     }
+    &__mailto {
+        display: flex;
+        justify-content: flex-end;
 
+        a {
+            font-size: .875rem;
+            min-height: 2rem;
+            overflow: initial;
+            padding: 0.25rem 0.75rem;
+            color: $dark-blue;
+            border: none;
+            line-height: 1.5rem;
+            font-weight: 600;
+            transition: background-color 150ms ease-in;
+
+            // &:hover {
+            //     background-color: darken($deep-blue, 5%);
+            // }
+        }
+    }
     &__title {
         font-family: $roboto;
         font-size: $font-size-section-title;

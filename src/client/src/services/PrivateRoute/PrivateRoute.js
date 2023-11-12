@@ -12,6 +12,7 @@ const PrivateRoute = ({
   isEstablishmentDisplayed = false,
   isEntrepriseDisplayed = false,
   isEstablishmentsDisplayed = false,
+  displayMessage = false,
   location,
   ...rest
 }) => {
@@ -48,7 +49,7 @@ const PrivateRoute = ({
       {...rest}
       render={(props) =>
         auth ? (
-          <Layout>
+          <Layout displayMessage={displayMessage}>
             {isEstablishmentDisplayed ||
             isEntrepriseDisplayed ||
             isEstablishmentsDisplayed ? (
@@ -77,6 +78,7 @@ const PrivateRoute = ({
 
 PrivateRoute.propTypes = {
   component: PropTypes.elementType,
+  displayMessage: PropTypes.bool,
   history: PropTypes.shape({
     push: PropTypes.func,
   }),

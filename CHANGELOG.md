@@ -1,3 +1,17 @@
+# [27.85.0](https://github.com/SocialGouv/fce/compare/v27.84.0...v27.85.0) (2023-10-29)
+
+
+### Features
+
+* notify users about new design ([#300](https://github.com/SocialGouv/fce/issues/300)) ([c171806](https://github.com/SocialGouv/fce/commit/c1718069f0958068ecef8a9535b212fc812f75cb))
+
+# [27.84.0](https://github.com/SocialGouv/fce/compare/v27.83.0...v27.84.0) (2023-10-18)
+
+
+### Features
+
+* corriger le lien egapro ([#299](https://github.com/SocialGouv/fce/issues/299)) ([d51c458](https://github.com/SocialGouv/fce/commit/d51c458ea3de23d947f5f6a44168d76fc33d300e))
+
 # [27.83.0](https://github.com/SocialGouv/fce/compare/v27.82.2...v27.83.0) (2023-09-13)
 
 

@@ -55,7 +55,7 @@ const Egapro = ({ enterprise }) => (
       </div>
       <span className="text">
         <a
-          href={`https://egapro.travail.gouv.fr/consulter-index/recherche?q=${enterprise.siren}`}
+          href={`https://egapro.travail.gouv.fr/index-egapro/recherche?query=${enterprise.siren}`}
           rel="noreferrer noopener"
           target="_blank"
         >

@@ -155,7 +155,7 @@ const LoginForm = ({
 
                           {
                             "is-loading": loading,
-                            "is-secondary": !isDisabledCodeSubmit,
+                            "is-tertiary": !isDisabledCodeSubmit,
                           }
                         )}
                       />

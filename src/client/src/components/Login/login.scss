@@ -12,8 +12,8 @@
     &__container {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        font-family: $segoe;
+        justify-content: center;
+        font-family: $marianne;
 
         @include from(425px) {
             text-align: center;
@@ -23,14 +23,20 @@
             max-width: 38rem;
             text-align: left;
         }
+        .access-form {
+            gap: $spacing-4;
+            display: flex;
+            flex-direction: column;
+        }
     }
 
     &__title {
-        color: $deep-blue;
+        color: $dark-blue;
         font-size: 1.2rem;
         font-weight: bold;
         line-height: 1.2;
         max-width: 34rem;
+        font-family: $marianne;
         margin-bottom: $spacing-4;
 
         @include from($tablet) {
@@ -72,11 +78,28 @@
             font-size: 2rem;
         }
     }
-
     &__code-input {
         font-size: 1rem;
         font-weight: bold;
         letter-spacing: 0.2em;
+    }
+    &__code-input,
+    &__mail-input {
+        box-shadow: inset 0 -2px 0 0 $dark-blue !important;
+        margin: 0;
+        max-height: 2.5rem;
+        background-color: #eee;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        &:focus,
+        &:active {
+            outline: 5px solid #0a76f6 !important;
+            outline-offset: 3px !important;
+            outline-width: 2px !important;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
     }
 
     &__button {
@@ -85,7 +108,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-family: $roboto;
+        font-family: $marianne;
         border-radius: $border-radius-1;
 
         &--as-link.button {
@@ -109,7 +132,7 @@
 
             &:hover,
             &:focus {
-                color: #20638f !important;
+                color: $dark-blue !important;
                 text-decoration: underline;
             }
         }
@@ -120,28 +143,41 @@
         flex-direction: column;
         align-items: flex-start;
         margin-top: $spacing-5;
+        > a {
+        
+                gap: $spacing-2;
+            
+            &:hover{
+                color: $dark-blue !important
+            }
+        }
 
         > button,
         > a {
-            padding-left: 0;
+            color: $dark-blue !important;
+            padding-left: 0 !important;
+          
         }
     }
 
     &__link {
         @extend .button;
-        font-family: $roboto;
+        font-family: $marianne;
+        color: $dark-blue !important;
 
         &,
         &:hover,
         &:focus {
             background-color: transparent;
             border: none;
+            color: $dark-blue !important;
         }
 
         &:hover,
         &:focus {
             outline: none;
             text-decoration: underline;
+            color: $dark-blue !important;
 
             &:not(:active) {
                 box-shadow: none;

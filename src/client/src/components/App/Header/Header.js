@@ -54,13 +54,12 @@ const Header = ({ resetSearch, hasSharedButton = false }) => {
 
             {hasSharedButton && (
               <div className="header__mailto">
-                <Tooltip
-                  content="Partager FCE avec un agent"
-                  position={"bottom"}
-                >
-                  <a href="mailto:?subject=FCE - le portail de l'intelligence collective des agents publics&body=https://fce.fabrique.social.gouv.fr/">
-                    <MessageIcon />
-                  </a>
+                <Tooltip content="Partager FCE avec un agent" position={"left"}>
+                  <div className="icon-button-link">
+                    <a href="mailto:?subject=FCE - le portail de l'intelligence collective des agents publics&body=https://fce.fabrique.social.gouv.fr/">
+                      <MessageIcon size={"100%"} />
+                    </a>
+                  </div>
                 </Tooltip>
               </div>
             )}

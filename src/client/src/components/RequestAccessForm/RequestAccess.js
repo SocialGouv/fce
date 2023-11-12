@@ -17,17 +17,23 @@ const RequestAccess = () => {
     if (isLogged) history.push("/");
   }, [isLogged]);
   return (
-    <section className="login">
-      <div className="login__container login__container--form container">
-        <section className="login__head-form">
-          <h1 className="login__title">Demande d&apos;accès</h1>
-          <p>{isSuccess ? successText : formText}</p>
-        </section>
-        {!isSuccess && (
-          <RequestAccessForm onSuccess={() => setIsSuccess(true)} />
-        )}
+    <div className="container">
+      <div className="columns is-centered">
+        <div className="column is-8">
+          <section className="login">
+            <div className="login__container login__container--form container">
+              <section className="login__head-form">
+                <h1 className="login__title">Demande d&apos;accès</h1>
+                <p>{isSuccess ? successText : formText}</p>
+              </section>
+              {!isSuccess && (
+                <RequestAccessForm onSuccess={() => setIsSuccess(true)} />
+              )}
+            </div>
+          </section>
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 

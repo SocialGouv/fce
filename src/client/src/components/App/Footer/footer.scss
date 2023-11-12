@@ -21,6 +21,10 @@
             display: flex;
             flex-direction: row !important;
             padding: 1rem 4.25rem;
+            @media (max-width: 600px) {
+                padding: $spacing-1;
+            }
+            
         }
         &__gouv-logo {
             background: #fff;
@@ -36,6 +40,9 @@
             font-size: $font-size-small !important;
             line-height: 1.25rem !important;
             font-family: $marianne;
+            @media (max-width: 600px) {
+                padding: $spacing-3;
+            }
             a {
                 color: $footer-link !important;
 

@@ -93,11 +93,7 @@
             cursor: pointer;
         }
     }
- 
-    &__titles {
-        @media (max-width: 600px) {
-        }
-    }
+
     &__title {
         font-family: $roboto;
         font-size: $font-size-section-title;

@@ -205,7 +205,11 @@
         &__item {
             display: flex;
             color: $dark-blue !important;
-
+            &_column {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
             h4 {
                 font-size: 1.25rem;
                 font-weight: 700;
@@ -214,20 +218,16 @@
             }
 
             span {
-                font-size: 10rem;
-
-                font-weight: 800;
-                top: -14px;
+                font-size: 5rem;
+                font-family: $marianne;
+                font-weight: 600;
+                text-align: right;
             }
 
             p {
                 font-size: 1rem;
-            }
-
-            &:first-child {
-                span {
-                    right: -16px;
-                }
+                font-family: $marianne;
+                font-weight: 600;
             }
         }
     }

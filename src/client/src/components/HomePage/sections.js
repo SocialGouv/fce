@@ -36,11 +36,11 @@ export const IconItems = ({ users, isLoading = false }) => {
       secondParagraph: "37 millions d’établissements",
     },
     {
-      firstParagraph: "+ 5 millions de données collectées",
+      firstParagraph: "59 millions de fiches​",
       icon: function renderIcon(height) {
         return <NounPlatformIcon height={height} />;
       },
-      secondParagraph: "sur les effectifs, contrôles et aides",
+      secondParagraph: "200 Go de données​",
     },
     {
       firstParagraph: `+ ${users} utilisateurs`,
@@ -136,27 +136,26 @@ export const HowItWork = () => {
   const items = [
     {
       index: "1",
-      paragraph:
-        "J'identifie des entreprises et établissements selon plusieurs critères : nom, raison sociale, SIRET, localisation, activité et effectif",
+      paragraph: "Je recherche un établissement suivants plusieurs critères",
       title: "PRATIQUE",
     },
     {
       index: "2",
       paragraph:
-        "Je consulte les informations enregistrées parles autres services : légales, juridiques, effectifs et données métiers",
+        "Je consulte les fiches associées : établissement et entreprise",
       title: "COLLABORATIF",
     },
     {
       index: "3",
       paragraph:
-        "Je prends des décisions éclairées en ayant une vision à 360° sur l'entreprise et ses établissements",
+        "Je prends des décisions éclairées grâce aux différentes informations",
       title: "DÉCISIF",
     },
   ];
 
   const renderItems = (isTouch = false) =>
     items.map((item) => (
-      <div className="columns" key={item.title}>
+      <div className="column" key={item.title}>
         {isTouch ? (
           <div className="home-page__how-it-work__item">
             <div className="has-text-centered">
@@ -168,14 +167,9 @@ export const HowItWork = () => {
             </div>
           </div>
         ) : (
-          <div className="home-page__how-it-work__item columns">
-            {/* <div className="column is-3 has-text-centered">
+          <div className="home-page__how-it-work__item columns is-centered">
+            <div className="column home-page__how-it-work__item_column">
               <span>{item.index}</span>
-            </div> */}
-            <div className="column is-9 mt-6">
-              <h4>
-                {item.index}- {item.title}
-              </h4>
               <p>{item.paragraph}</p>
             </div>
           </div>

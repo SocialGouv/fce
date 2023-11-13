@@ -1,3 +1,10 @@
+# [27.86.0](https://github.com/SocialGouv/fce/compare/v27.85.0...v27.86.0) (2023-11-13)
+
+
+### Features
+
+* change API entreprise token ([#303](https://github.com/SocialGouv/fce/issues/303)) ([f02a910](https://github.com/SocialGouv/fce/commit/f02a910cbc894ba1e90283fb668c9201cff6a25b))
+
 # [27.85.0](https://github.com/SocialGouv/fce/compare/v27.84.0...v27.85.0) (2023-10-29)
 
 

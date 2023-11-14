@@ -5,7 +5,12 @@ import { Redirect, Route, useHistory } from "react-router-dom";
 import Layout from "../../components/App/Layout";
 import Auth from "../Auth";
 
-const PrivateRoute = ({ component: Component, location, ...rest }) => {
+const PrivateRoute = ({
+  component: Component,
+  displayMessage,
+  location,
+  ...rest
+}) => {
   const history = useHistory();
 
   async function getTempAuthAndRedirect(credential, location) {
@@ -46,7 +51,7 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
       {...rest}
       render={(props) => {
         return authorization.auth ? (
-          <Layout>
+          <Layout displayMessage={displayMessage}>
             <Component {...props} />
           </Layout>
         ) : (
@@ -64,6 +69,7 @@ const PrivateRoute = ({ component: Component, location, ...rest }) => {
 
 PrivateRoute.propTypes = {
   component: PropTypes.elementType,
+  displayMessage: PropTypes.bool,
   history: PropTypes.shape({
     push: PropTypes.func,
   }),

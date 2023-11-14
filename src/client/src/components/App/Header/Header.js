@@ -1,6 +1,10 @@
 import "./header.scss";
 
-import { faChevronLeft, faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faInfoCircle,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
@@ -9,6 +13,7 @@ import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
 import logo from "../../../assets/img/logo_gouv-65w38h.png";
+import Config from "../../../services/Config";
 import { resetSearch } from "../../../services/Store/actions";
 
 const Header = ({ resetSearch, location, showBetaMessage }) => {
@@ -59,16 +64,27 @@ const Header = ({ resetSearch, location, showBetaMessage }) => {
       {showBetaMessage && (
         <div className="beta-message">
           <div>
-            <span>Ce site est en beta-test. </span>
+            <span className="beta-message__nouveaute">
+              {" "}
+              <FontAwesomeIcon icon={faInfoCircle} /> Une nouvelle version de
+              notre portail FCE sera déployée le 15 novembre 2023 :{" "}
+            </span>
             {location.pathname !== "/login" && (
               <span>
-                Aidez-nous à l{"'"}améliorer en{" "}
-                <a
-                  className="beta-message__feedback-link"
-                  href="#user-feedback"
-                >
-                  donnant votre avis
-                </a>
+                {`Cette mise à jour est une refonte ergonomique visant à aligner notre site avec la charte graphique de l'État.
+                  Nous tenons à souligner que cette mise à jour n'affectera en rien le contenu actuel de notre portail,
+                  qui restera inchangé. Vous continuerez d'accéder à toutes les informations et fonctionnalités auxquelles
+                   vous êtes habitués. `}
+                <br />
+                <span>
+                  Questions ou préoccupations ➜
+                  <a
+                    className="beta-message__feedback-link"
+                    href={`mailto:${Config.get("contact.mailto")}`}
+                  >
+                    bce@travail.gouv.fr
+                  </a>
+                </span>
               </span>
             )}
           </div>

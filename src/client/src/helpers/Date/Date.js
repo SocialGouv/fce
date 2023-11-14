@@ -46,6 +46,16 @@ export const getLastDateInteraction = (interactions, format = "DD/MM/YYYY") => {
 export const sortByDate = (sortableList) =>
   sortableList.sort((a, b) => new Date(b.date) - new Date(a.date));
 
+export const sortByPeriode = (sortableList) => {
+  if (sortableList && sortableList.length > 0) {
+    const data = [...sortableList];
+    data.sort(
+      (a, b) => new Date(a.periode_concerne) - new Date(b.periode_concerne)
+    );
+    return data;
+  }
+};
+
 export const getStartDateStatsParam = (months = 1) =>
   Moment().subtract(parseInt(months), "months").format("YYYY-MM-DD");
 
@@ -91,15 +101,16 @@ export const START_DATE_BY_LABEL = {
   },
 };
 
-export const getStartDateEtp = (range) => {
-  if (range) {
-    return Moment()
+export const getStartDateEtp = (date, range) => {
+  if (date && range) {
+    return Moment(date)
       .subtract(START_DATE_BY_LABEL[range].num, START_DATE_BY_LABEL[range].path)
+      .add(1, "months")
       .format("YYYY-MM-DD");
   }
 };
-export const getStartDate = (range) => {
-  const data = getStartDateEtp(range);
+export const getStartDate = (date, range) => {
+  const data = getStartDateEtp(date, range);
   return setYearMonthFormat(data);
 };
 

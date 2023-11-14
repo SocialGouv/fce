@@ -30,6 +30,7 @@ const frenchDateToUSDate = pipe(
 const ISODateToUSDate = pipe(parseISO, format(INTERACTIONS_DATE_FORMAT));
 
 const formatInteractionDate = (date) => {
+  if (!date) return "";
   try {
     return frenchDateToUSDate(date);
   } catch (err) {

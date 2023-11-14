@@ -5,10 +5,11 @@ import { Line } from "react-chartjs-2";
 import { setYearMonthFormat } from "../../../../../../helpers/Date";
 import {
   formatChiffre,
+  sortedApiDataAsc,
   sortedDataAsc,
 } from "../../../../../../utils/donnees-ecofi/donnees-ecofi";
 
-function FinancesGraph({ data }) {
+function FinancesGraph({ data = [], isDataApi = false }) {
   const chartCanvasRef = useRef(null);
   const [datasetsToDisplay, setDatasetsToDisplay] = useState([
     "Chiffre d'affaires ",
@@ -53,91 +54,120 @@ function FinancesGraph({ data }) {
 
     chart.update();
   };
-  const datasets = [
-    {
-      backgroundColor: "#85C1E9",
-      borderColor: "#3498DB",
-      label: "EBITDA-EBE ",
-    },
-    {
-      backgroundColor: "#FCF3CF",
-      borderColor: "#F4D03F",
-      label: "Chiffre d'affaires ",
-    },
-    {
-      backgroundColor: "#ABEBC6",
-      borderColor: "#2ECC71",
-      borderWidth: 2.5,
-      label: "Résultat d'exploitation ",
-    },
-    {
-      backgroundColor: "#F1948A",
-      borderColor: "#B71C1C",
-      borderWidth: 2.5,
-
-      label: "Résultat net ",
-    },
-    {
-      backgroundColor: "#BB8FCE",
-      borderColor: "#5B2C6F",
-      borderWidth: 2.5,
-
-      label: "Marge brute ",
-    },
-  ];
-  const chartData = {
-    datasets: [
-      {
-        backgroundColor: "#85C1E9",
-        borderColor: "#3498DB",
-        borderWidth: 2.5,
-        data: sortedDataAsc(data)?.map(({ EBE }) => EBE),
-        fill: false,
-        label: "EBITDA-EBE ",
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1,
-      },
-      {
-        backgroundColor: "#FCF3CF",
-        borderColor: "#F4D03F",
-        borderWidth: 2.5,
-        data: sortedDataAsc(data)?.map(({ ca }) => ca),
-        label: "Chiffre d'affaires ",
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1,
-      },
-      {
-        backgroundColor: "#ABEBC6",
-        borderColor: "#2ECC71",
-        borderWidth: 2.5,
-        data: sortedDataAsc(data)?.map(({ EBIT }) => EBIT),
-        label: "Résultat d'exploitation ",
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1,
-      },
-      {
-        backgroundColor: "#F1948A",
-        borderColor: "#B71C1C",
-        borderWidth: 2.5,
-        data: sortedDataAsc(data)?.map(({ Resultat_net }) => Resultat_net),
-        label: "Résultat net ",
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1,
-      },
-      {
-        backgroundColor: "#BB8FCE",
-        borderColor: "#5B2C6F",
-        borderWidth: 2.5,
-        data: sortedDataAsc(data)?.map(({ Marge_brute }) => Marge_brute),
-        label: "Marge brute ",
-        pointBackgroundColor: "white",
-        pointBorderWidth: 1,
-      },
-    ],
-    labels: sortedDataAsc(data)?.map(({ date_fin_exercice }) =>
-      setYearMonthFormat(date_fin_exercice)
-    ),
-  };
+  const datasets = isDataApi
+    ? [
+        {
+          backgroundColor: "#FCF3CF",
+          borderColor: "#F4D03F",
+          label: "Chiffre d'affaires ",
+        },
+      ]
+    : [
+        {
+          backgroundColor: "#85C1E9",
+          borderColor: "#3498DB",
+          label: "EBE ",
+        },
+        {
+          backgroundColor: "#FCF3CF",
+          borderColor: "#F4D03F",
+          label: "Chiffre d'affaires ",
+        },
+        {
+          backgroundColor: "#ABEBC6",
+          borderColor: "#2ECC71",
+          borderWidth: 2.5,
+          label: "Résultat d'exploitation ",
+        },
+        {
+          backgroundColor: "#F1948A",
+          borderColor: "#B71C1C",
+          borderWidth: 2.5,
+          label: "Résultat net ",
+        },
+        {
+          backgroundColor: "#BB8FCE",
+          borderColor: "#5B2C6F",
+          borderWidth: 2.5,
+          label: "Marge brute ",
+        },
+      ];
+  const chartData = isDataApi
+    ? {
+        datasets: [
+          {
+            backgroundColor: "#FCF3CF",
+            borderColor: "#F4D03F",
+            borderWidth: 2.5,
+            data: sortedApiDataAsc(data)?.map(({ data }) => data?.ca),
+            label: "Chiffre d'affaires ",
+            pointBackgroundColor: "white",
+            pointBorderWidth: 1,
+            tension: 0.3,
+          },
+        ],
+        labels: sortedApiDataAsc(data)?.map(({ data }) =>
+          setYearMonthFormat(data?.date_fin_exercice)
+        ),
+      }
+    : {
+        datasets: [
+          {
+            backgroundColor: "#85C1E9",
+            borderColor: "#3498DB",
+            borderWidth: 2.5,
+            data: sortedDataAsc(data)?.map(({ EBE }) => EBE),
+            fill: false,
+            label: "EBE ",
+            pointBackgroundColor: "white",
+            pointBorderWidth: 1,
+            tension: 0.3,
+          },
+          {
+            backgroundColor: "#FCF3CF",
+            borderColor: "#F4D03F",
+            borderWidth: 2.5,
+            data: sortedDataAsc(data)?.map(({ ca }) => ca),
+            label: "Chiffre d'affaires ",
+            pointBackgroundColor: "white",
+            pointBorderWidth: 1,
+            tension: 0.3,
+          },
+          {
+            backgroundColor: "#ABEBC6",
+            borderColor: "#2ECC71",
+            borderWidth: 2.5,
+            data: sortedDataAsc(data)?.map(({ EBIT }) => EBIT),
+            label: "Résultat d'exploitation ",
+            pointBackgroundColor: "white",
+            pointBorderWidth: 1,
+            tension: 0.3,
+          },
+          {
+            backgroundColor: "#F1948A",
+            borderColor: "#B71C1C",
+            borderWidth: 2.5,
+            data: sortedDataAsc(data)?.map(({ Resultat_net }) => Resultat_net),
+            label: "Résultat net ",
+            pointBackgroundColor: "white",
+            pointBorderWidth: 1,
+            tension: 0.3,
+          },
+          {
+            backgroundColor: "#BB8FCE",
+            borderColor: "#5B2C6F",
+            borderWidth: 2.5,
+            data: sortedDataAsc(data)?.map(({ Marge_brute }) => Marge_brute),
+            label: "Marge brute ",
+            pointBackgroundColor: "white",
+            pointBorderWidth: 1,
+            tension: 0.3,
+          },
+        ],
+        labels: sortedDataAsc(data)?.map(({ date_fin_exercice }) =>
+          setYearMonthFormat(date_fin_exercice)
+        ),
+      };
   const options = {
     interaction: {
       intersect: false,
@@ -194,22 +224,24 @@ function FinancesGraph({ data }) {
   return (
     <div>
       {data?.length > 0 && (
-        <div className="finance-chart-wrapper">
-          <div className="chart-legend">
-            {datasets.map(({ label, borderColor }) => (
-              <div key={label}>
-                <input
-                  type="checkbox"
-                  value={label}
-                  className="dataset-checkbox"
-                  checked={datasetsToDisplay.includes(label)}
-                  onChange={handleCheckboxChange}
-                />
-                <label>{label}</label>
-                <span style={{ "--border-color": borderColor }} />
-              </div>
-            ))}
-          </div>
+        <div className={isDataApi ? "chart-wrapper" : "finance-chart-wrapper"}>
+          {!isDataApi && (
+            <div className="chart-legend">
+              {datasets.map(({ label, borderColor }) => (
+                <div key={label}>
+                  <input
+                    type="checkbox"
+                    value={label}
+                    className="dataset-checkbox"
+                    checked={datasetsToDisplay.includes(label)}
+                    onChange={handleCheckboxChange}
+                  />
+                  <label>{label}</label>
+                  <span style={{ "--border-color": borderColor }} />
+                </div>
+              ))}
+            </div>
+          )}
           <div>
             <Line
               ref={chartCanvasRef}
@@ -226,6 +258,7 @@ function FinancesGraph({ data }) {
 
 FinancesGraph.propTypes = {
   data: PropTypes.array,
+  isDataApi: PropTypes.bool,
 };
 
 export default FinancesGraph;

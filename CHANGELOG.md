@@ -1,3 +1,122 @@
+# [27.86.0](https://github.com/SocialGouv/fce/compare/v27.85.0...v27.86.0) (2023-11-13)
+
+
+### Features
+
+* change API entreprise token ([#303](https://github.com/SocialGouv/fce/issues/303)) ([f02a910](https://github.com/SocialGouv/fce/commit/f02a910cbc894ba1e90283fb668c9201cff6a25b))
+
+# [27.85.0](https://github.com/SocialGouv/fce/compare/v27.84.0...v27.85.0) (2023-10-29)
+
+
+### Features
+
+* notify users about new design ([#300](https://github.com/SocialGouv/fce/issues/300)) ([c171806](https://github.com/SocialGouv/fce/commit/c1718069f0958068ecef8a9535b212fc812f75cb))
+
+# [27.84.0](https://github.com/SocialGouv/fce/compare/v27.83.0...v27.84.0) (2023-10-18)
+
+
+### Features
+
+* corriger le lien egapro ([#299](https://github.com/SocialGouv/fce/issues/299)) ([d51c458](https://github.com/SocialGouv/fce/commit/d51c458ea3de23d947f5f6a44168d76fc33d300e))
+
+# [27.83.0](https://github.com/SocialGouv/fce/compare/v27.82.2...v27.83.0) (2023-09-13)
+
+
+### Features
+
+* Afficher que le libelle EBE ([#298](https://github.com/SocialGouv/fce/issues/298)) ([d59bbbf](https://github.com/SocialGouv/fce/commit/d59bbbfc7e15ee93088848c8802ef29597752025))
+
+## [27.82.2](https://github.com/SocialGouv/fce/compare/v27.82.1...v27.82.2) (2023-09-13)
+
+
+### Bug Fixes
+
+* update n8n minio psw ([#296](https://github.com/SocialGouv/fce/issues/296)) ([c23defc](https://github.com/SocialGouv/fce/commit/c23defcd3b8aa30ec9b5146aaf4c43f6580e6805))
+
+## [27.82.1](https://github.com/SocialGouv/fce/compare/v27.82.0...v27.82.1) (2023-09-12)
+
+
+### Bug Fixes
+
+* update n8n minio psw ([#295](https://github.com/SocialGouv/fce/issues/295)) ([46fd67a](https://github.com/SocialGouv/fce/commit/46fd67a22c3f71b94f883c3033dbb61f631595dc))
+
+# [27.82.0](https://github.com/SocialGouv/fce/compare/v27.81.0...v27.82.0) (2023-08-28)
+
+
+### Features
+
+* Mise à jour du lien vers le catalogue des données ([#293](https://github.com/SocialGouv/fce/issues/293)) ([2f992f0](https://github.com/SocialGouv/fce/commit/2f992f03fe1f471b5669596659bb15531d223672))
+
+# [27.81.0](https://github.com/SocialGouv/fce/compare/v27.80.0...v27.81.0) (2023-08-01)
+
+
+### Features
+
+* change unite de controle src ([#292](https://github.com/SocialGouv/fce/issues/292)) ([903d40d](https://github.com/SocialGouv/fce/commit/903d40db461f566a68403b34b71b1d517144ce6b))
+
+# [27.80.0](https://github.com/SocialGouv/fce/compare/v27.79.0...v27.80.0) (2023-07-26)
+
+
+### Features
+
+* fix annuaire entreprise link ([#291](https://github.com/SocialGouv/fce/issues/291)) ([b2e91c8](https://github.com/SocialGouv/fce/commit/b2e91c820907ddb298f3e41272b91372ef970da9))
+
+# [27.79.0](https://github.com/SocialGouv/fce/compare/v27.78.0...v27.79.0) (2023-07-20)
+
+
+### Features
+
+* fix echelle temps source graph effectif ([59e3466](https://github.com/SocialGouv/fce/commit/59e34668cdf335f9123c3a4bed87c434fc8ecaa3))
+
+# [27.78.0](https://github.com/SocialGouv/fce/compare/v27.77.0...v27.78.0) (2023-06-20)
+
+
+### Features
+
+* add bilan consolide ([#284](https://github.com/SocialGouv/fce/issues/284)) ([41b9da8](https://github.com/SocialGouv/fce/commit/41b9da8adb0d74cd1de552da037856af12d55690))
+
+# [27.77.0](https://github.com/SocialGouv/fce/compare/v27.76.0...v27.77.0) (2023-06-14)
+
+
+### Features
+
+* fix display etablissement name ([#285](https://github.com/SocialGouv/fce/issues/285)) ([eee5f08](https://github.com/SocialGouv/fce/commit/eee5f0897f4a6222ae4ccdb275480be933d6cc76))
+
+# [27.76.0](https://github.com/SocialGouv/fce/compare/v27.75.0...v27.76.0) (2023-06-09)
+
+
+### Features
+
+* arrondir les courbes ([#283](https://github.com/SocialGouv/fce/issues/283)) ([8b502d5](https://github.com/SocialGouv/fce/commit/8b502d5d838b4a1ad816f32fdb27d0d9e0777e14))
+
+# [27.75.0](https://github.com/SocialGouv/fce/compare/v27.74.0...v27.75.0) (2023-06-09)
+
+
+### Features
+
+* unknown siret/siren ([#281](https://github.com/SocialGouv/fce/issues/281)) ([12e0d8e](https://github.com/SocialGouv/fce/commit/12e0d8eb1e4bc610c66f1ed9dbf39ff127807062))
+
+# [27.74.0](https://github.com/SocialGouv/fce/compare/v27.73.0...v27.74.0) (2023-06-09)
+
+
+### Features
+
+* fix entrprise la redoute bug ([#280](https://github.com/SocialGouv/fce/issues/280)) ([279e58f](https://github.com/SocialGouv/fce/commit/279e58fd25ce36f4df42d5c04f901e9c28b7d844))
+
+# [27.73.0](https://github.com/SocialGouv/fce/compare/v27.72.0...v27.73.0) (2023-06-07)
+
+
+### Features
+
+* finance indicators chart data from api entrprise ([#282](https://github.com/SocialGouv/fce/issues/282)) ([0df09b9](https://github.com/SocialGouv/fce/commit/0df09b9d434a27fb0dece5657c662748400d7773))
+
+# [27.72.0](https://github.com/SocialGouv/fce/compare/v27.71.0...v27.72.0) (2023-06-07)
+
+
+### Features
+
+* fix routing ([#279](https://github.com/SocialGouv/fce/issues/279)) ([5aea44d](https://github.com/SocialGouv/fce/commit/5aea44d2776a472454c10c07a3ff8eb25cbd74e8))
+
 # [27.71.0](https://github.com/SocialGouv/fce/compare/v27.70.1...v27.71.0) (2023-06-05)
 
 

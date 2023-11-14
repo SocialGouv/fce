@@ -12,6 +12,7 @@ const Layout = ({
   hasLandingHeader = false,
   hasSharedButton = false,
   children,
+  displayMessage = false,
 }) => {
   const isActiveMaintenanceMode = Config.get("maintenanceMode");
 
@@ -20,7 +21,7 @@ const Layout = ({
       {hasLandingHeader ? (
         <LandingHeader hasSharedButton={hasSharedButton} />
       ) : (
-        <Header showBetaMessage={!isActiveMaintenanceMode} />
+        <Header showBetaMessage={!isActiveMaintenanceMode && displayMessage} />
       )}
       <div className={classNames("app-container", { ie11: isIE })}>
         {children}
@@ -32,6 +33,7 @@ const Layout = ({
 
 Layout.propTypes = {
   children: PropTypes.node,
+  displayMessage: PropTypes.bool,
   hasLandingHeader: PropTypes.bool,
   hasSharedButton: PropTypes.bool,
 };

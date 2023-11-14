@@ -1,6 +1,6 @@
 import _get from "lodash.get";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 
 import LoginView from "../../components/Login";
@@ -14,6 +14,11 @@ const Login = ({ history }) => {
   const [showSuccessNotif, setShowSuccessNotif] = useState(true);
   const [showMailingListSignup, setShowMailingListSignup] = useState(true);
   const redirectLoginSuccess = "/search";
+  const isLogged = Auth.isLogged();
+
+  useEffect(() => {
+    if (isLogged) history.push("/");
+  }, [isLogged]);
 
   const sendCode = (e, email) => {
     e.preventDefault();

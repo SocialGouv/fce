@@ -13,8 +13,7 @@ function UniteDeControle({ siret }) {
   return (
     <Subcategory
       subtitle="Unité de contrôle"
-      sourceSi={"wikit_uc"}
-      sourceCustom={"DGT / SI Zonage"}
+      sourceSi={"dgt_wikit_uc"}
       hasDateImport
     >
       <div className="section-datas__list">

@@ -15,7 +15,6 @@ const EffectifGraph = ({ chartData }) => {
           backgroundColor: "#2980b9",
           borderColor: "#2980b9",
           borderWidth: 3,
-
           data: chartData?.map((obj) =>
             obj?.effectif !== 0 ? obj?.effectif : null
           ),
@@ -23,7 +22,9 @@ const EffectifGraph = ({ chartData }) => {
           label: "Effectif ETP",
 
           pointBackgroundColor: "white",
+
           pointBorderWidth: 1,
+          tension: 0.3,
         },
       ],
       labels: chartData?.map((obj) =>
@@ -68,7 +69,7 @@ const EffectifGraph = ({ chartData }) => {
               </div>
             </LoadableContent>
           ) : (
-            <div>No data available.</div>
+            <div>Données non disponibles.</div>
           )}
         </>
       </LoadableContent>

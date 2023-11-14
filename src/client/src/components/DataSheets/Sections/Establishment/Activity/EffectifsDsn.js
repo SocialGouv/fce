@@ -32,6 +32,7 @@ const EffectifsDsn = ({ siret }) => {
     { mois: "desc" },
     START_DATE
   );
+
   if (!effectifs || effectifs.length == 0) {
     return (
       <Data
@@ -41,9 +42,11 @@ const EffectifsDsn = ({ siret }) => {
       />
     );
   }
+
   const handleChange = (event) => {
     setDisplayTable(event.target.checked);
   };
+
   return (
     <LoadableContent loading={loading} error={error}>
       {!isExpanded ? (
@@ -97,22 +100,46 @@ const EffectifsDsn = ({ siret }) => {
                       <tr key={`effectif-${effectif?.id}`}>
                         <td>{effectif?.mois}</td>
                         <td>
-                          <Value value={effectif?.eff} empty="-" />
+                          <Value
+                            hasNumberFormat
+                            value={effectif?.eff}
+                            empty="-"
+                          />
                         </td>
                         <td>
-                          <Value value={effectif?.hommes} empty="-" />
+                          <Value
+                            hasNumberFormat
+                            value={effectif?.hommes}
+                            empty="-"
+                          />
                         </td>
                         <td>
-                          <Value value={effectif?.femmes} empty="-" />
+                          <Value
+                            hasNumberFormat
+                            value={effectif?.femmes}
+                            empty="-"
+                          />
                         </td>
                         <td>
-                          <Value value={effectif?.cdd} empty="-" />
+                          <Value
+                            hasNumberFormat
+                            value={effectif?.cdd}
+                            empty="-"
+                          />
                         </td>
                         <td>
-                          <Value value={effectif?.cdi} empty="-" />
+                          <Value
+                            hasNumberFormat
+                            value={effectif?.cdi}
+                            empty="-"
+                          />
                         </td>
                         <td>
-                          <Value value={effectif?.interim} empty="-" />
+                          <Value
+                            hasNumberFormat
+                            value={effectif?.interim}
+                            empty="-"
+                          />
                         </td>
                       </tr>
                     ))}
@@ -121,7 +148,11 @@ const EffectifsDsn = ({ siret }) => {
               )}
             </Subcategory>
             {!displayTable && siret && (
-              <EffectifsGraph isDsnData siret={siret} />
+              <EffectifsGraph
+                isDsnData
+                siret={siret}
+                date={effectifs?.[0]?.mois}
+              />
             )}{" "}
             {isExpanded && (
               <AllEffectifsEtpButton

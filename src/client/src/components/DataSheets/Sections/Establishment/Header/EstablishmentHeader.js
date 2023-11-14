@@ -28,12 +28,11 @@ import { useEstablishmentHeaderData } from "./EstablishmentHeader.gql";
 
 const EstablishmentHeader = ({ siret }) => {
   const { data: etablissement } = useEstablishmentHeaderData(siret);
-  const adresse = etablissement ? getAdresse(etablissement) : "";
+  const adresse = getAdresse(etablissement);
 
   const isEtablissementActive = isActive(etablissement);
 
   const stateClass = isEtablissementActive ? "icon--success" : "icon--danger";
-
   return (
     <section id="header" className="data-sheet-header">
       <EntrepriseName siret={siret} />
@@ -68,7 +67,11 @@ const EstablishmentHeader = ({ siret }) => {
               {isEtablissementActive ? (
                 <span>
                   Ouvert depuis le{" "}
-                  <Value value={getDateCreation(etablissement)} empty="" />
+                  <Value
+                    value={getDateCreation(etablissement)}
+                    empty=""
+                    datecreationetablissement
+                  />
                 </span>
               ) : (
                 <div>
@@ -102,7 +105,7 @@ const EstablishmentHeader = ({ siret }) => {
       <div className="columns data-sheet-header__enterprise-external-link">
         <span className="column">
           <a
-            href={`https://api.avis-situation-sirene.insee.fr/identification/pdf//${siret}`}
+            href={`https://api-avis-situation-sirene.insee.fr/identification/pdf/${siret}`}
             rel="noreferrer noopener"
             target="_blank"
           >

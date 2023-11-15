@@ -38,6 +38,7 @@ const entrepriseQuery = gql`
     }
     fce_organismes_formation(where: { siren: { _eq: $siren } }) {
       siret
+      denomination
     }
     fce_psi_siren(where: { siren: { _eq: $siren } }) {
       salaries_annee_courante

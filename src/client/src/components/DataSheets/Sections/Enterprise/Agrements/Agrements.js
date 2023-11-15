@@ -1,22 +1,25 @@
-import { faFileSignature } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
+import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
 import OrganismeFormation from "./OrganismeFormation";
 
 const Agrements = ({ enterprise }) => {
+  const [accordionOpen, setAccordionOpen] = useState(true);
+
   return (
-    <section id="agrements" className="data-sheet__section">
-      <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faFileSignature} />
-        </span>
-        <h2 className="title">Agréments</h2>
-      </div>
-      <div className="section-datas">
-        <OrganismeFormation entreprise={enterprise} />
-      </div>
+    <section id="agrements" className="data-sheet__bloc_section ">
+      <BlocTitle
+        isOpen={accordionOpen}
+        toggleAccordion={() => setAccordionOpen(!accordionOpen)}
+        text={"Agréments"}
+      />
+
+      {accordionOpen && (
+        <div className="section-datas">
+          <OrganismeFormation entreprise={enterprise} />
+        </div>
+      )}
     </section>
   );
 };

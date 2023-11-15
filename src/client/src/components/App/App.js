@@ -12,10 +12,11 @@ import { Error403, Error404 } from "../../components/Errors";
 import IEChecker from "../../components/IEChecker";
 import Enterprise from "../../containers/Enterprise";
 import LegacyEtablissement from "../../containers/Enterprise/LegacyEtablissement";
+import ListEtablissements from "../../containers/Enterprise/ListEtablissements.jsx";
 import Login from "../../containers/Login";
 import PublicPage from "../../containers/PublicPage";
 import Search from "../../containers/Search";
-import UnsubscribePage from "../../containers/UnsubscribePage";
+// import UnsubscribePage from "../../containers/UnsubscribePage";
 import SetMatomo from "../../helpers/Matomo/SetMatomo";
 import Config from "../../services/Config";
 import { apolloClient } from "../../services/GraphQL/GraphQL";
@@ -52,7 +53,7 @@ const App = () => {
               <div className="app">
                 <Switch>
                   <Switch>
-                    <Route
+                    {/* <Route
                       exact
                       path="/unsubscribe/:hash"
                       render={(props) => (
@@ -60,7 +61,7 @@ const App = () => {
                           <UnsubscribePage {...props} />
                         </Layout>
                       )}
-                    />
+                    /> */}
                     <Route>
                       <IEChecker>
                         {isActiveMaintenanceMode ? (
@@ -83,11 +84,19 @@ const App = () => {
                               exact
                               path="/enterprise/:siren"
                               component={Enterprise}
+                              isEntrepriseDisplayed
                             />
                             <PrivateRoute
                               exact
                               path="/establishment/:siret"
                               component={LegacyEtablissement}
+                              isEstablishmentDisplayed
+                            />
+                            <PrivateRoute
+                              exact
+                              path="/list-establishments/:siren"
+                              component={ListEtablissements}
+                              isEstablishmentsDisplayed
                             />
                             <Route
                               exact

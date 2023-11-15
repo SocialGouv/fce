@@ -28,6 +28,16 @@ const EstablishmentHeaderQuery = gql`
     }
   }
 `;
+const EstablishmentStateNum = gql`
+  query SidebarQuery($siren: String!) {
+    state_num: fce_entreprise_nbr_etablissements(
+      where: { siren: { _eq: $siren } }
+    ) {
+      nb_eta
+      nb_eta_fermes
+    }
+  }
+`;
 
 export const useEstablishmentHeaderData = pipe(
   (siret) =>
@@ -36,4 +46,12 @@ export const useEstablishmentHeaderData = pipe(
       variables: { siret },
     }),
   mapQueryResult(prop("fce_etablissements[0]"))
+);
+export const useEstablishmentHeaderNumData = pipe(
+  (siren) =>
+    useQuery(EstablishmentStateNum, {
+      context: { clientName: BCE_CLIENT },
+      variables: { siren },
+    }),
+  mapQueryResult(prop("state_num[0]"))
 );

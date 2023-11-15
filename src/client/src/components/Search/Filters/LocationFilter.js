@@ -49,34 +49,31 @@ const searchLocation = async (query) => {
 const throttledSearch = pDebounce(searchLocation, 300);
 
 const LocationFilter = ({ filters, addFilter, removeFilter }) => (
-  <div className="field">
-    <div className="control">
-      <label htmlFor="location" className="label">
-        Département ou commune
-      </label>
-      <AsyncSelect
-        id="location"
-        name="location"
-        isMulti
-        defaultOptions={[]}
-        loadOptions={throttledSearch}
-        onChange={(location) => {
-          location ? addFilter("location", location) : removeFilter("location");
-        }}
-        loadingMessage={() => "Chargement..."}
-        noOptionsMessage={(term) =>
-          term.inputValue.length >= Config.get("advancedSearch").minTerms
-            ? "Aucun résultat"
-            : `Veuillez saisir au moins ${
-                Config.get("advancedSearch").minTerms
-              } caractères`
-        }
-        isClearable
-        placeholder=""
-        value={filters.location || []}
-        styles={selectCustomStyles}
-      />
-    </div>
+  <div className="control  is-expanded select-control-field ">
+    <AsyncSelect
+      id="location"
+      name="location"
+      placeholder={<div className="select_placeholder">Zone géographique</div>}
+      isMulti
+      defaultOptions={[]}
+      loadOptions={throttledSearch}
+      onChange={(location) => {
+        location ? addFilter("location", location) : removeFilter("location");
+      }}
+      components={{
+        IndicatorSeparator: () => null,
+      }}
+      loadingMessage={() => "Chargement..."}
+      noOptionsMessage={(term) =>
+        term.inputValue.length >= Config.get("advancedSearch").minTerms
+          ? "Aucun résultat"
+          : `Veuillez saisir au moins ${
+              Config.get("advancedSearch").minTerms
+            } caractères`
+      }
+      value={filters?.location || []}
+      styles={selectCustomStyles}
+    />
   </div>
 );
 

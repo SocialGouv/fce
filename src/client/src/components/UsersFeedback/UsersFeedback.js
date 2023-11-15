@@ -1,78 +1,103 @@
 import "./usersFeedback.scss";
 
-import { faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
 import {
   SET_COMMENT,
   SET_USEFUL,
 } from "../../containers/UsersFeedback/actionTypes";
+import ArrowDown from "../shared/Icons/ArrowDown.jsx";
+import ArrowUp from "../shared/Icons/ArrowUp.jsx";
 import Rating from "./Rating";
 
 const UsersFeedback = ({
-  state: { useful, comment, rate },
+  state: { comment, rate },
   dispatch,
   sendFeedback,
   fullWidth,
+  isOpenUserFeedback,
+  onOpenUserFeedback,
 }) => {
   const handleChange = (action) => (e) => {
     dispatch({ payload: e.target.value, type: action });
   };
-
+  const [thumbup, setThumbup] = useState(false);
+  const [thumbdown, setThumbdown] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const handleOpenModal = () => {
+    setIsOpenModal(isOpenUserFeedback ? false : !isOpenModal);
+    onOpenUserFeedback(isOpenUserFeedback ? false : !isOpenModal);
+  };
   return (
     <section
+      id="user-feedback"
       className={classNames({
         "user-feedback": true,
         "user-feedback--fullwidth": fullWidth,
       })}
     >
-      <div className="container">
-        <form className="user-feedback__panel" onSubmit={sendFeedback}>
+      <div className="container is-fluid">
+        <div className="user-feedback__panel">
           <fieldset>
-            <div className="control user-feedback__useful">
-              <legend>
-                L{"'"}information trouvée vous a-t-elle été utile?
-              </legend>
-              <div id="user-feedback" className="user-feedback__thumbs">
-                <input
-                  id="thumb-up"
-                  type="radio"
-                  name="useful"
-                  value="thumbup"
-                  checked={useful === "thumbup"}
-                  onChange={handleChange(SET_USEFUL)}
-                />
-                <label htmlFor="thumb-up" className="radio" title="Oui">
-                  {useful === "thumbup" ? (
-                    <FontAwesomeIcon icon={faThumbsUp} className="selected" />
-                  ) : (
-                    <FontAwesomeIcon icon={faThumbsUp} />
-                  )}
-                </label>
-                <input
-                  id="thumb-down"
-                  type="radio"
-                  name="useful"
-                  value="thumbdown"
-                  checked={useful === "thumbdown"}
-                  onChange={handleChange(SET_USEFUL)}
-                />
-                <label htmlFor="thumb-down" className="radio" title="Non">
-                  {useful === "thumbdown" ? (
-                    <FontAwesomeIcon icon={faThumbsDown} className="selected" />
-                  ) : (
-                    <FontAwesomeIcon icon={faThumbsDown} />
-                  )}
-                </label>
-              </div>
+            <div
+              className="control user-feedback__useful"
+              onClick={() => handleOpenModal()}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleOpenModal();
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-expanded={isOpenModal}
+            >
+              <span className="legend-text">Donnez-nous votre avis !</span>
+              <button
+                className="icon selected"
+                onClick={() => handleOpenModal()}
+              >
+                {isOpenModal || isOpenUserFeedback ? (
+                  <ArrowUp color="white" />
+                ) : (
+                  <ArrowDown color="white" />
+                )}
+              </button>
             </div>
           </fieldset>
 
-          {useful && (
+          {(isOpenModal || isOpenUserFeedback) && (
             <div className="control user-feedback__comment">
+              <span className="question">{`L'information trouvée vous a-t-elle été utile?`}</span>
+              <div className="yes-no-btns">
+                <button
+                  className={`yes-no-btn ${thumbup ? "active" : ""}`}
+                  id="thumb-up"
+                  value="thumbup"
+                  onClick={() => {
+                    setThumbdown(false);
+                    setThumbup(true);
+                    handleChange(SET_USEFUL);
+                  }}
+                >
+                  Oui
+                </button>
+
+                <button
+                  className={`yes-no-btn ${thumbdown ? "active" : ""}`}
+                  value="thumbdown"
+                  onClick={() => {
+                    setThumbup(false);
+                    setThumbdown(true);
+
+                    handleChange(SET_USEFUL);
+                  }}
+                >
+                  Non
+                </button>
+              </div>
+
               <label htmlFor="comment">
                 Souhaitez vous nous en dire davantage ? (facultatif)
               </label>
@@ -92,8 +117,8 @@ const UsersFeedback = ({
               />
               <div className="user-feedback__buttons">
                 <button
-                  type="submit"
-                  className="button is-primary"
+                  onClick={sendFeedback}
+                  className="button"
                   disabled={!rate}
                 >
                   Envoyer
@@ -101,7 +126,7 @@ const UsersFeedback = ({
               </div>
             </div>
           )}
-        </form>
+        </div>
       </div>
     </section>
   );
@@ -110,6 +135,8 @@ const UsersFeedback = ({
 UsersFeedback.propTypes = {
   dispatch: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool,
+  isOpenUserFeedback: PropTypes.bool,
+  onOpenUserFeedback: PropTypes.func,
   sendFeedback: PropTypes.func.isRequired,
   state: PropTypes.object.isRequired,
 };

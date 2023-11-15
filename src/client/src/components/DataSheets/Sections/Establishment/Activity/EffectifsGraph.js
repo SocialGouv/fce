@@ -52,9 +52,9 @@ const EffectifGraph = ({
     return {
       datasets: [
         {
-          backgroundColor: "#2980b9",
-          borderColor: "#2980b9",
-          borderWidth: 3,
+          backgroundColor: "#000091",
+          borderColor: "#000091",
+          borderWidth: 2,
           data: chartData?.map((obj) =>
             isEtpData && !isDsnData ? obj?.effectif : obj?.eff
           ),
@@ -83,7 +83,18 @@ const EffectifGraph = ({
         position: "top",
       },
       title: {
+        color: "#0063CB",
         display: true,
+        font: {
+          family: "Marianne, sans-serif",
+          size: 14,
+
+          weight: 700,
+        },
+        padding: {
+          bottom: 30,
+          top: 5,
+        },
         text: isEtpData && !isDsnData ? "Effectif ETP" : "Effectif physique",
       },
     },
@@ -93,9 +104,20 @@ const EffectifGraph = ({
     scales: {
       x: {
         border: { display: false },
+        grid: {
+          borderColor: "white",
+          color: "white",
+        },
+        ticks: { color: "#7C8DB5 " },
       },
+
       y: {
         border: { display: false },
+        grid: {
+          borderColor: "#E6EDFF",
+          color: "#E6EDFF",
+        },
+        ticks: { color: "#7C8DB5" },
       },
     },
   };
@@ -105,12 +127,12 @@ const EffectifGraph = ({
   };
 
   return (
-    <>
+    <div className="chart">
       <LoadableContent>
         {(dsn_data?.length > 0 || etp_data?.length > 0) && (
           <>
             {" "}
-            <div>
+            <div className="select-periode">
               <select value={range} onChange={onSelectChange}>
                 <option value={6}>{"6 mois"}</option>
                 <option value={12}>{"1 an"}</option>
@@ -132,7 +154,7 @@ const EffectifGraph = ({
           </>
         )}
       </LoadableContent>
-    </>
+    </div>
   );
 };
 

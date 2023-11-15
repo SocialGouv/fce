@@ -3,6 +3,10 @@
     background-color: $white;
     border-color: $grey !important;
 }
+%is-dark-blue {
+    color: $dark-blue !important;
+    background-color: $white;
+}
 
 %has-first-letter-uppercase {
     &::first-letter {
@@ -14,6 +18,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+%flex-start {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 %success {

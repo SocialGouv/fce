@@ -1,28 +1,14 @@
 import "./awesomeTable.scss";
 
-import {
-  faAngleLeft,
-  faAngleRight,
-  faSort,
-  faSortDown,
-  faSortUp,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 import { withRouter } from "react-router";
 
-import Button from "../shared/Button";
+import PaginationTable from "../DataSheets/Sections/SharedComponents/PaginationTable/PaginationTable.jsx";
+import LeftArrow from "../shared/Icons/LeftArrow.jsx";
+import RightArrow from "../shared/Icons/RightArrow.jsx";
 import LoadSpinner from "../shared/LoadSpinner";
-import Pager from "./Pager";
-
-const getSortIcon = (field, sortField, sortDirection) => {
-  if (field === sortField) {
-    return sortDirection === "asc" ? faSortDown : faSortUp;
-  }
-  return faSort;
-};
 
 const SearchAwesomeTable = ({
   showPagination = false,
@@ -33,33 +19,14 @@ const SearchAwesomeTable = ({
   data,
   fields,
   history,
-  isSortable = false,
-  sortColumn,
-  sortField,
-  sortDirection,
 }) => (
   <table className="table at">
     <thead className="at__head">
       <tr className="at__head__tr">
         {fields.map((field) => {
-          const isSortableField = isSortable && field.sortKey;
-
           return (
-            <th
-              key={field.headName}
-              className={classNames({
-                at__head__th: true,
-                "at__head__th--important": field.importantHead,
-                "at__head__th--is-sortable": isSortableField,
-              })}
-              onClick={() => isSortableField && sortColumn(field.sortKey)}
-            >
+            <th key={field.headName} className="at__head__th">
               {field.headName}
-              {isSortableField && (
-                <FontAwesomeIcon
-                  icon={getSortIcon(field.sortKey, sortField, sortDirection)}
-                />
-              )}
             </th>
           );
         })}
@@ -106,32 +73,32 @@ const SearchAwesomeTable = ({
         <tr className="at__footer__tr">
           <td className="at__footer__td" colSpan={fields.length}>
             <div className="pageNav">
-              <Button
-                value={prevText}
-                icon={faAngleLeft}
-                iconClasses={["fa-2x"]}
-                buttonClasses={["prev-button"]}
-                isDisabled={pagination.current === pagination.min}
-                callback={() => {
-                  pagination.handlePageChange(--pagination.current);
-                }}
-              />
-              <Pager
-                handlePageChange={pagination.handlePageChange}
+              <button
+                className="prev-btn"
+                disabled={pagination.current === pagination.min}
+                onClick={() =>
+                  pagination.handlePageChange(--pagination.current)
+                }
+              >
+                <LeftArrow />
+                {prevText}
+              </button>
+              <PaginationTable
+                handlePageClick={pagination.handlePageChange}
                 currentPage={pagination.current}
-                max={pagination.pages}
+                totalPages={pagination.pages}
               />
-              <Button
-                value={nextText}
-                icon={faAngleRight}
-                iconClasses={["fa-2x"]}
-                rowReverse={true}
-                buttonClasses={["next-button"]}
-                isDisabled={pagination.current === pagination.pages}
-                callback={() => {
-                  pagination.handlePageChange(++pagination.current);
-                }}
-              />
+
+              <button
+                className="prev-btn"
+                disabled={pagination.current === pagination.pages}
+                onClick={() =>
+                  pagination.handlePageChange(++pagination.current)
+                }
+              >
+                {nextText}
+                <RightArrow />
+              </button>
             </div>
           </td>
         </tr>

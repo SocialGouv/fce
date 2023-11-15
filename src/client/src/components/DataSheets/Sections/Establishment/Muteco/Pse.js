@@ -7,12 +7,12 @@ import RupcoTable from "./RupcoTable";
 
 const Pse = ({ pseList, siren, otherRupco }) => {
   const hasPse = !!(pseList && pseList.length);
-
   return (
     <Subcategory subtitle="PSE" sourceSi="SI PSE/RUPCO">
       <ConditionalData
         text="Procédure(s) enregistrée(s) au cours des 36 derniers mois"
         showTable={hasPse}
+        className="has-no-border"
       />
       {hasPse && (
         <RupcoTable list={pseList} siren={siren} otherRupco={otherRupco} />

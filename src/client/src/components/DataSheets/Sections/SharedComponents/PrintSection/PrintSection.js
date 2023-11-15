@@ -1,17 +1,18 @@
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import "./PrintSection.scss";
+
 import React from "react";
 
-import Button from "../../../../shared/Button";
+import PrintIcon from "../../../../shared/Icons/PrintIcon.jsx";
 
 const PrintSection = () => {
   return (
     <div className="data-sheet__print-section">
-      <Button
-        value="Imprimer"
-        buttonClasses={["data-sheet__print-button"]}
-        icon={faPrint}
-        callback={() => window.print()}
-      />
+      <button
+        className="print-btn data-sheet__print-button"
+        onClick={() => window.print()}
+      >
+        <PrintIcon />
+      </button>
     </div>
   );
 };

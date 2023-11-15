@@ -3,15 +3,15 @@
 .page {
     @extend .container;
     padding: $spacing-6;
-    background-color: white;
-
+    li,
     h1,
     h2,
     h3,
     h4,
     h5,
     h6 {
-        @extend .title;
+        font-family: $marianne;
+        color: $title-grey !important;
     }
 
     h1 {
@@ -19,7 +19,16 @@
         @extend .is-size-4-mobile;
         margin-top: 0;
     }
+    a {
+        color: $dark-blue !important;
+        font-family: $marianne;
+        text-decoration: underline !important;
+        text-underline-offset: 4px;
 
+        &:hover {
+            text-decoration-thickness: 2px !important;
+        }
+    }
     h2 {
         @extend .is-size-4;
         @extend .is-size-5-mobile;
@@ -30,7 +39,13 @@
         @extend .is-size-6-mobile;
     }
 
-    p {
+    p{
         margin-bottom: $spacing-4;
+        font-family: $marianne;
+        color: $title-grey !important;
+    }
+    div {
+        font-family: $marianne;
+        color: $title-grey !important;
     }
 }

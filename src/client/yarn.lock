@@ -1976,6 +1976,11 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@socialgouv/codes-naf@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@socialgouv/codes-naf/-/codes-naf-1.1.0.tgz#a84014b226d11afcf56bd581dc005b014730e56a"
+  integrity sha512-Evj6cI5yNw/tZOX9htx35lnK9O36rXnc787F40nE9+SDeReD8LTO4zXKKiB7G/dzCr4uHEDSRSPzapBDsdMceA==
+
 "@socialgouv/eslint-config-react@^1.108.0":
   version "1.108.0"
   resolved "https://registry.yarnpkg.com/@socialgouv/eslint-config-react/-/eslint-config-react-1.108.0.tgz#4ed78951821ec20e4b8be4c3d5d77fbe320fea65"

@@ -14,12 +14,13 @@ import {
   getCodePostal,
   getSiret,
   getState,
+  isActive,
 } from "../../../../../../utils/establishment/establishment";
+import BadgeWithIcon from "../../../../../shared/Badge/BadgeWithIcon.jsx";
 import Data from "../../../SharedComponents/Data";
+import NonBorderedTable from "../../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import SeeDetailsLink from "../../../SharedComponents/SeeDetailsLink";
-import State from "../../../SharedComponents/State";
 import Subcategory from "../../../SharedComponents/Subcategory";
-import Table from "../../../SharedComponents/Table";
 import { useApprentissageBySiren } from "./Apprentissage.gql";
 
 const Apprentissage = ({ entreprise: { siren } }) => {
@@ -45,46 +46,62 @@ const Apprentissage = ({ entreprise: { siren } }) => {
           value={hasApprentissage}
           columnClasses={["is-7", "is-5"]}
           sourceSi="Ari@ne"
+          className="has-no-border"
         />
         {hasApprentissage && (
-          <Table>
-            <thead>
-              <tr>
-                <th className="th">Siret</th>
-                <th className="th table-cell--center-cell">État</th>
-                <th className="th">Commune</th>
-                <th className="th has-text-right">Nombre de contrats</th>
-                <th className="th see-details" />
-              </tr>
-            </thead>
-            <tbody>
-              {formattedApprentissage.map((apprentissage) => {
-                const etablissement = apprentissage.etablissement;
-                const etat = getState(etablissement);
-                const codePostal = getCodePostal(etablissement);
-                const localite = getCity(etablissement);
-                const siret = getSiret(etablissement);
+          <div className="data-sheet--table">
+            <NonBorderedTable isScrollable={formattedApprentissage.length > 6}>
+              <thead>
+                <tr>
+                  <th className="th">Siret</th>
+                  <th className="th table-cell--center-cell">État</th>
+                  <th className="th">Commune</th>
+                  <th>Nombre de contrats</th>
+                </tr>
+              </thead>
+              <tbody>
+                {formattedApprentissage?.map((apprentissage) => {
+                  const etablissement = apprentissage.etablissement;
+                  const etat = getState(etablissement);
+                  const etab = etablissement;
+                  const isEtablissementActive = isActive(etab);
+                  const stateClass = isEtablissementActive
+                    ? "icon--success"
+                    : "icon--danger";
+                  const stateText = isEtablissementActive ? "ouvert" : "fermé";
+                  const codePostal = getCodePostal(etablissement);
+                  const localite = getCity(etablissement);
+                  const siret = getSiret(etablissement);
 
-                return (
-                  <tr key={siret}>
-                    <td className="table-cell--nowrap">{formatSiret(siret)}</td>
-                    <td className="table-cell--center-cell">
-                      {etat && <State state={etat} />}
-                    </td>
-                    <td>{`${codePostal ? codePostal : ""} ${
-                      localite ? localite : ""
-                    }`}</td>
-                    <td className="has-text-right">
-                      {getEstablishmentSignedCount(apprentissage)}
-                    </td>
-                    <td className="see-details">
-                      <SeeDetailsLink link={`/establishment/${siret}/#helps`} />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
+                  return (
+                    <tr key={`${siret}-${codePostal}`}>
+                      <td className="table-cell--nowrap">
+                        <SeeDetailsLink
+                          link={`/establishment/${siret}/#helps`}
+                          text={formatSiret(siret)}
+                        />
+                      </td>
+                      <td className="table-cell--center-cell">
+                        {etat && (
+                          <BadgeWithIcon
+                            isTableBadge
+                            text={stateText}
+                            state={stateClass}
+                          />
+                        )}
+                      </td>
+                      <td>{`${codePostal ? codePostal : ""} ${
+                        localite ? localite : ""
+                      }`}</td>
+                      <td className="th table-cell--center-cell">
+                        {getEstablishmentSignedCount(apprentissage)}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </NonBorderedTable>
+          </div>
         )}
       </Subcategory>
     </>

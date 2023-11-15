@@ -33,6 +33,9 @@ const Value = ({
   if (value === false && empty === "0") {
     return "0";
   }
+  if (value === 0 && empty === "0") {
+    return "0";
+  }
 
   if (value === false && no) {
     return no;
@@ -79,13 +82,16 @@ const Value = ({
         <span className="source">{" (DGFIP)"}</span>
       </div>
     ) : (
-      formatNumber(value, numberFormatOptions)
+      <div className="data-value">
+        {formatNumber(value, numberFormatOptions)}
+      </div>
     );
   }
 
   return isApi ? (
     <div className="sourceApi">
-      {value}
+      <div className="data-value">{value}</div>
+
       <span className="source">{" (DGFIP)"}</span>
     </div>
   ) : (

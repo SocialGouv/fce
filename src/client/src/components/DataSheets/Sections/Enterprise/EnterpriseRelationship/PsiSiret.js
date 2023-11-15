@@ -2,7 +2,9 @@ import { sortBy } from "lodash";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
-import Button from "../../../../shared/Button/Button";
+import ButtonLink from "../../../../shared/Button/ButtonLink";
+import ArrowDown from "../../../../shared/Icons/ArrowDown.jsx";
+import ArrowUp from "../../../../shared/Icons/ArrowUp.jsx";
 import { PsiSiretTable } from "./PsiSiretTable";
 
 export const PsiSiret = ({ psi, years }) => {
@@ -24,7 +26,7 @@ export const PsiSiret = ({ psi, years }) => {
   return (
     <div className="psi-siret">
       <div className="column">
-        <div className="psi-siret__label">
+        <div className="psi__name">
           Établissement(s) identifié(s) comme lieu de réalisation d&apos;au
           moins une PSI en {years.currentYear} ou {years.lastYear}
         </div>
@@ -35,15 +37,17 @@ export const PsiSiret = ({ psi, years }) => {
       </div>
       {numberOfEstablishmentsWithPsi > 9 && (
         <div className="psi-siret__button-wrapper">
-          <Button
+          <ButtonLink
             onClick={() => setIsVisiblePsiTable((prevState) => !prevState)}
-            value={
-              isVisiblePsiTable
-                ? "Cacher la liste des établissements"
-                : "Afficher la liste des établissements"
-            }
             buttonClasses="is-primary"
-          />
+          >
+            {isVisiblePsiTable
+              ? "Cacher la liste des établissements"
+              : "Afficher la liste des établissements"}
+            <span className="icon">
+              {!isVisiblePsiTable ? <ArrowUp /> : <ArrowDown />}
+            </span>
+          </ButtonLink>
         </div>
       )}
 

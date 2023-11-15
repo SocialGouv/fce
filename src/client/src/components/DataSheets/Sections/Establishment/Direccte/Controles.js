@@ -1,10 +1,8 @@
 import "./controles.scss";
 
-import { faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { mapValues } from "lodash";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
 import Source from "../../../../../containers/Source";
 import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
@@ -15,12 +13,14 @@ import {
   getMotifLabel,
 } from "../../../../../utils/interactions/interactions";
 import Value from "../../../../shared/Value";
+import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
+import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table";
 import { useControles } from "./Controles.gql";
 
 const Controles = ({ siret }) => {
   const { loading, data: interactions, error } = useControles(siret);
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
   if (loading || error) {
     return null;
@@ -31,88 +31,85 @@ const Controles = ({ siret }) => {
   return (
     <section
       id="direccte"
-      className="data-sheet__section direccte-interactions-establishment"
+      className="data-sheet__bloc_section direccte-interactions-establishment"
     >
-      <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faCalendarCheck} />
-        </span>
-        <h2 className="title">Visites et Contrôles de la DREETS/DDETS</h2>
-      </div>
-      <div className="section-datas">
-        <Subcategory>
-          <dl className="data dl columns direccte-interactions__title">
-            <dt className={`dt column`}>
-              Dernier contrôle ou visite au cours des 24 derniers mois (Pôle T,
-              Pôle C, Pôle 3E)
-            </dt>
-          </dl>
-          <Table
-            className="direccte-interactions-establishment__table"
-            isBordered
-          >
-            <thead>
-              <tr>
-                <th className="has-text-right">Pôle</th>
-                <th>Date</th>
-                <th>Unité</th>
-                <th>Type</th>
-                <th>Agent</th>
-                <th>
-                  Source
-                  <br />
-                  Date de mise à jour
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.entries(normalizedInteractions).map(
-                ([pole, lastInteraction]) => (
-                  <tr key={pole}>
-                    <td>
-                      <Value value={getControlLabel(pole)} />
-                    </td>
-                    <td>
-                      <Value value={lastInteraction.date} />
-                    </td>
-                    <td>
-                      <Value value={lastInteraction.unite} />
-                    </td>
-                    <td>
-                      <Value value={getMotifLabel(lastInteraction.motif)} />
-                      {lastInteraction.nature && lastInteraction.cible && (
-                        <>
-                          <div className="direccte-interactions-establishment__control-nature">
-                            <span>Nature du contrôle : </span>
-                            <Value
-                              value={`${lastInteraction.cible} - ${lastInteraction.nature}`}
-                            />
-                          </div>
-                          <div className="direccte-interactions-establishment__control-nature">
-                            <Value
-                              value={
-                                lastInteraction.clos
-                                  ? "Contrôle Clos"
-                                  : "Contrôle en cours"
-                              }
-                            />
-                          </div>
-                        </>
-                      )}
-                    </td>
-                    <td>
-                      <Value value={lastInteraction.agent} />
-                    </td>
-                    <td>
-                      <Source si={getInteractionSource(pole)} isTableCell />
-                    </td>
+      <BlocTitle
+        isOpen={accordionOpen}
+        toggleAccordion={() => setAccordionOpen(!accordionOpen)}
+        text={"  Visites et Contrôles de la DREETS/DDETS"}
+      />
+
+      {accordionOpen && (
+        <div className="section-datas">
+          <Subcategory>
+            <div className=" direccte-interactions__title">
+              <span className="text">
+                Dernier contrôle ou visite au cours des 24 derniers mois (Pôle
+                T, Pôle C, Pôle 3E)
+              </span>
+            </div>
+            <div className="data-sheet--table data-sheet--table-to-left">
+              <NonBorderedTable className="direccte-interactions-establishment__table">
+                <thead>
+                  <tr>
+                    <th>Pôle</th>
+                    <th>Date</th>
+                    <th>Unité</th>
+                    <th>Type</th>
+                    <th>Agent</th>
+                    <th>Source Date de mise à jour</th>
                   </tr>
-                )
-              )}
-            </tbody>
-          </Table>
-        </Subcategory>
-      </div>
+                </thead>
+                <tbody>
+                  {Object.entries(normalizedInteractions).map(
+                    ([pole, lastInteraction]) => (
+                      <tr key={pole}>
+                        <td>
+                          <Value value={getControlLabel(pole)} />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.date} />
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.unite} />
+                        </td>
+                        <td>
+                          <Value value={getMotifLabel(lastInteraction.motif)} />
+                          {lastInteraction.nature && lastInteraction.cible && (
+                            <>
+                              <div className="direccte-interactions-establishment__control-nature">
+                                <span>Nature du contrôle : </span>
+                                <Value
+                                  value={`${lastInteraction.cible} - ${lastInteraction.nature}`}
+                                />
+                              </div>
+                              <div className="direccte-interactions-establishment__control-nature">
+                                <Value
+                                  value={
+                                    lastInteraction.clos
+                                      ? "Contrôle Clos"
+                                      : "Contrôle en cours"
+                                  }
+                                />
+                              </div>
+                            </>
+                          )}
+                        </td>
+                        <td>
+                          <Value value={lastInteraction.agent} />
+                        </td>
+                        <td>
+                          <Source si={getInteractionSource(pole)} isTableCell />
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </NonBorderedTable>
+            </div>
+          </Subcategory>
+        </div>
+      )}
     </section>
   );
 };

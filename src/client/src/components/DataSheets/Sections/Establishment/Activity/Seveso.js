@@ -19,7 +19,7 @@ const Seveso = ({ siret }) => {
         name="Niveau Seveso"
         value={seuil}
         emptyValue=""
-        columnClasses={["is-7", "is-5"]}
+        className="has-no-border"
       />
     </Subcategory>
   );

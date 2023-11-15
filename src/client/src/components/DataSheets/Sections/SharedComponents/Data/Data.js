@@ -5,7 +5,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import Source from "../../../../../containers/Source";
+import { formatSiret } from "../../../../../helpers/utils";
 import Value from "../../../../shared/Value";
+import SeeDetailsLink from "../SeeDetailsLink/SeeDetailsLink";
 
 const Data = ({
   name,
@@ -21,6 +23,7 @@ const Data = ({
   sourceDate = null,
   hasNumberFormat = false,
   numberFormatOptions = null,
+  links,
 }) => {
   return (
     <>
@@ -28,15 +31,25 @@ const Data = ({
         <div className={`column ${columnClasses[0]}`}>
           {description ? (
             <div>
-              <div className="dt">{name}</div>
-              <div>{description}</div>
+              <div className={`dt ${columnClasses[2]} `}>
+                {name} {description}
+              </div>
             </div>
           ) : (
-            <div className="dt">{name}</div>
+            <div className="dt dt-title ">{name}</div>
           )}
         </div>
         <div className={`dd column ${columnClasses[1]}`}>
           <div>
+            {links &&
+              links.map(({ siret }) => (
+                <div key={siret}>
+                  <SeeDetailsLink
+                    text={formatSiret(siret)}
+                    link={`/establishment/${siret}/#agrements`}
+                  />
+                </div>
+              ))}
             {link ? (
               <Link to={link}>
                 <Value
@@ -48,13 +61,15 @@ const Data = ({
                 />
               </Link>
             ) : (
-              <Value
-                value={value}
-                empty={emptyValue}
-                nonEmptyValues={nonEmptyValue}
-                hasNumberFormat={hasNumberFormat}
-                numberFormatOptions={numberFormatOptions}
-              />
+              <div className="data-value">
+                <Value
+                  value={value}
+                  empty={emptyValue}
+                  nonEmptyValues={nonEmptyValue}
+                  hasNumberFormat={hasNumberFormat}
+                  numberFormatOptions={numberFormatOptions}
+                />
+              </div>
             )}
           </div>
           {(sourceSi || sourceCustom) && (
@@ -77,6 +92,7 @@ Data.propTypes = {
   emptyValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   hasNumberFormat: PropTypes.bool,
   link: PropTypes.string,
+  links: PropTypes.array,
   name: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.element]),
   nonEmptyValue: PropTypes.oneOfType([
     PropTypes.string,

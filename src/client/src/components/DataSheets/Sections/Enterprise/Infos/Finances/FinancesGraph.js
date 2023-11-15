@@ -2,12 +2,16 @@ import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 
-import { setYearMonthFormat } from "../../../../../../helpers/Date";
+import {
+  setYearFormat,
+  setYearMonthFormat,
+} from "../../../../../../helpers/Date";
 import {
   formatChiffre,
   sortedApiDataAsc,
   sortedDataAsc,
 } from "../../../../../../utils/donnees-ecofi/donnees-ecofi";
+import EllipseIcon from "../../../../../shared/Icons/EllipseIcon.jsx";
 
 function FinancesGraph({ data = [], isDataApi = false }) {
   const chartCanvasRef = useRef(null);
@@ -58,19 +62,19 @@ function FinancesGraph({ data = [], isDataApi = false }) {
     ? [
         {
           backgroundColor: "#FCF3CF",
-          borderColor: "#F4D03F",
+          borderColor: "#FF9500",
           label: "Chiffre d'affaires ",
         },
       ]
     : [
         {
           backgroundColor: "#85C1E9",
-          borderColor: "#3498DB",
+          borderColor: "#000091",
           label: "EBE ",
         },
         {
           backgroundColor: "#FCF3CF",
-          borderColor: "#F4D03F",
+          borderColor: "#FF9500",
           label: "Chiffre d'affaires ",
         },
         {
@@ -81,13 +85,13 @@ function FinancesGraph({ data = [], isDataApi = false }) {
         },
         {
           backgroundColor: "#F1948A",
-          borderColor: "#B71C1C",
+          borderColor: "#E1000F",
           borderWidth: 2.5,
           label: "Résultat net ",
         },
         {
           backgroundColor: "#BB8FCE",
-          borderColor: "#5B2C6F",
+          borderColor: "rgb(155, 25, 245",
           borderWidth: 2.5,
           label: "Marge brute ",
         },
@@ -97,7 +101,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
         datasets: [
           {
             backgroundColor: "#FCF3CF",
-            borderColor: "#F4D03F",
+            borderColor: "#FF9500",
             borderWidth: 2.5,
             data: sortedApiDataAsc(data)?.map(({ data }) => data?.ca),
             label: "Chiffre d'affaires ",
@@ -114,7 +118,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
         datasets: [
           {
             backgroundColor: "#85C1E9",
-            borderColor: "#3498DB",
+            borderColor: "#000091",
             borderWidth: 2.5,
             data: sortedDataAsc(data)?.map(({ EBE }) => EBE),
             fill: false,
@@ -125,7 +129,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
           },
           {
             backgroundColor: "#FCF3CF",
-            borderColor: "#F4D03F",
+            borderColor: "#FF9500",
             borderWidth: 2.5,
             data: sortedDataAsc(data)?.map(({ ca }) => ca),
             label: "Chiffre d'affaires ",
@@ -145,7 +149,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
           },
           {
             backgroundColor: "#F1948A",
-            borderColor: "#B71C1C",
+            borderColor: "#E1000F",
             borderWidth: 2.5,
             data: sortedDataAsc(data)?.map(({ Resultat_net }) => Resultat_net),
             label: "Résultat net ",
@@ -155,7 +159,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
           },
           {
             backgroundColor: "#BB8FCE",
-            borderColor: "#5B2C6F",
+            borderColor: "rgb(155, 25, 245",
             borderWidth: 2.5,
             data: sortedDataAsc(data)?.map(({ Marge_brute }) => Marge_brute),
             label: "Marge brute ",
@@ -165,7 +169,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
           },
         ],
         labels: sortedDataAsc(data)?.map(({ date_fin_exercice }) =>
-          setYearMonthFormat(date_fin_exercice)
+          setYearFormat(date_fin_exercice)
         ),
       };
   const options = {
@@ -174,14 +178,13 @@ function FinancesGraph({ data = [], isDataApi = false }) {
       mode: "index",
     },
     maintainAspectRatio: false,
-
     plugins: {
       legend: {
         display: false,
         position: "bottom",
       },
       title: {
-        display: true,
+        display: false,
         text: "Données financières",
       },
       tooltip: {
@@ -190,7 +193,7 @@ function FinancesGraph({ data = [], isDataApi = false }) {
             const label = tooltipItem.dataset.label || "";
             return (
               label +
-              "(€) :" +
+              "€:" +
               " " +
               formatChiffre(tooltipItem.parsed.y.toString()).toString()
             );
@@ -205,17 +208,29 @@ function FinancesGraph({ data = [], isDataApi = false }) {
         },
       },
     },
+
     responsive: true,
     scales: {
       x: {
-        border: { display: true },
+        border: { display: false },
+        grid: {
+          borderColor: "white",
+          color: "white",
+        },
+        ticks: { color: "#7C8DB5 " },
       },
 
       y: {
+        border: { display: false },
+        grid: {
+          borderColor: "#E6EDFF",
+          color: "#E6EDFF",
+        },
         ticks: {
           callback: (label) => {
-            return formatChiffre(label.toString()) + "(€)";
+            return formatChiffre(label.toString()) + " €";
           },
+          color: "#7C8DB5",
         },
       },
     },
@@ -224,33 +239,51 @@ function FinancesGraph({ data = [], isDataApi = false }) {
   return (
     <div>
       {data?.length > 0 && (
-        <div className={isDataApi ? "chart-wrapper" : "finance-chart-wrapper"}>
+        <>
           {!isDataApi && (
-            <div className="chart-legend">
-              {datasets.map(({ label, borderColor }) => (
-                <div key={label}>
-                  <input
-                    type="checkbox"
-                    value={label}
-                    className="dataset-checkbox"
-                    checked={datasetsToDisplay.includes(label)}
-                    onChange={handleCheckboxChange}
-                  />
-                  <label>{label}</label>
-                  <span style={{ "--border-color": borderColor }} />
-                </div>
-              ))}
+            <div className="horizontal-chart-legend">
+              {datasets.map(
+                ({ label, borderColor }) =>
+                  datasetsToDisplay.includes(label) && (
+                    <div key={label}>
+                      <EllipseIcon color={borderColor} />
+                      <label>{label}</label>
+                    </div>
+                  )
+              )}
             </div>
           )}
-          <div>
-            <Line
-              ref={chartCanvasRef}
-              id="chart"
-              options={options}
-              data={chartData}
-            />
+
+          <div
+            className={isDataApi ? "chart-wrapper" : "finance-chart-wrapper"}
+          >
+            {!isDataApi && (
+              <div className="chart-legend">
+                <span className="text">Afficher la courbe :</span>
+                {datasets.map(({ label }) => (
+                  <div key={label}>
+                    <input
+                      type="checkbox"
+                      value={label}
+                      className="dataset-checkbox"
+                      checked={datasetsToDisplay.includes(label)}
+                      onChange={handleCheckboxChange}
+                    />
+                    <label>{label}</label>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="chart-graph">
+              <Line
+                ref={chartCanvasRef}
+                id="chart"
+                options={options}
+                data={chartData}
+              />
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

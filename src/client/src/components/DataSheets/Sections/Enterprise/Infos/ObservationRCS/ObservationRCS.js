@@ -19,12 +19,13 @@ const ObservationRCS = ({ observations }) => {
   return (
     <Data
       name="Observations RCS"
+      className="has-no-border"
       value={
-        <ul className="rcs-observations">
+        <ul className="rcs-observations text">
           {displayedObservations.map(({ date, libelle }) => (
             <li
               key={`rcs-obs-${date}-${libelle}`}
-              className="rcs-observations__item"
+              className="rcs-observations__item "
             >{`${toI18nDate(date)} - ${libelle}`}</li>
           ))}
 

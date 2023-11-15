@@ -1,15 +1,34 @@
 @import "../../App/variables";
 @import "../../App/placeholders";
-
+$border-color: var(--border-color);
+.column-small-screen {
+    @media (max-width: 768px) {
+        margin-top: $spacing-3;
+        padding: 0;
+    }
+}
 .aside-box {
     > .aside-contain {
-        position: relative;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1;
         display: block;
         padding: $spacing-4 0;
+        padding-top: 0 !important;
+        margin-top: 2rem;
         overflow: auto;
         border-radius: $border-radius-2;
-        background-color: $white;
-        box-shadow: $box-shadow-spread;
+        background-color: #f5f5fe;
+        margin-bottom: $spacing-1;
+    }
+    @media (max-width: 768px) {
+        > .aside-contain {
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+            padding: 0 $spacing-2;
+        }
     }
 }
 
@@ -19,10 +38,113 @@
 }
 
 .sidebar {
+    &-items {
+        display: flex;
+        flex-direction: column;
+        .item {
+            button {
+                background-color: transparent;
+                border: none;
+                padding: $spacing-2;
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 1.5rem;
+                font-family: $marianne !important;
+                text-align: left;
+            }
+            .active {
+                color: $dark-blue;
+            }
+            .selected-item {
+                border-left: 2px solid $dark-blue;
+                color: $dark-blue;
+            }
+            &-title {
+                cursor: pointer;
+            }
+
+            .anchors {
+                display: flex;
+                flex-direction: column;
+                font-family: $marianne !important;
+                margin-left: $spacing-3;
+                list-style-position: outside;
+
+                .etb-name {
+                    padding: $spacing-2 $spacing-1;
+                    margin-left: $spacing-2;
+                    color: $dark-blue;
+                    font-weight: 700;
+                    text-transform: capitalize;
+                    border-left: 2px solid $dark-blue;
+                    font-family: $marianne !important;
+                }
+                div {
+                    display: flex;
+                    align-items: center;
+                    border-left: 1px solid #e3e3fd;
+                    margin-left: $spacing-4;
+                    padding: 0;
+                    @media (max-width: 768px) {
+                        display: none;
+                    }
+
+                    a {
+                        padding: $spacing-2;
+                        color: $title-grey !important;
+                        font-family: $marianne !important;
+                        font-size: 1rem;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 1.5rem;
+                    }
+                    .ellipse-span {
+                        margin-left: -4px;
+                    }
+                    .active-anchor {
+                        color: $dark-blue !important;
+                        font-weight: 700 !important;
+                    }
+
+                    a:active {
+                        color: $dark-blue;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+    }
+    &-btns {
+        display: flex;
+        justify-content: flex-start;
+        gap: $spacing-2;
+        align-items: center;
+        @media (max-width: 768px) {
+            margin-left: $spacing-2 !important;
+        }
+        button {
+            color: inherit;
+            text-decoration: none;
+            background-color: white !important;
+            border: 1px solid $default-grey !important;
+            width: 2.5rem;
+            height: 2.5rem;
+            cursor: pointer;
+            &a:hover {
+                color: inherit !important;
+                text-decoration: none !important;
+                cursor: pointer;
+            }
+        }
+    }
     &__enterprise {
         padding: $spacing-4;
         margin-bottom: $spacing-2;
-
+        @media (max-width: 768px) {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
         &-title {
             font-family: $segoe;
             font-size: 1.125rem;
@@ -62,29 +184,6 @@
         }
     }
 
-    &__establishment {
-        padding: $spacing-1 $spacing-4;
-        border: $border-grey-light;
-        background-color: $sidebar-establishment-bg;
-
-        &:last-child {
-            margin-bottom: $spacing-5;
-        }
-
-        &--current {
-            border: none;
-            border-left: 4px solid $secondary;
-            background-color: $white;
-
-            &.head-office {
-                border-bottom: $border-grey-light;
-            }
-        }
-    }
-
-    &__view-all-button {
-        @extend .sidebar__enterprise-button;
-        margin-top: 0;
-        margin-bottom: $spacing-5;
-    }
+   
+   
 }

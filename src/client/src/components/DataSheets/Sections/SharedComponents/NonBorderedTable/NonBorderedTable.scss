@@ -1,0 +1,110 @@
+@import "../../../../App/variables";
+@import "../../../../App/placeholders";
+
+.data-sheet--table {
+    .establishment__siret_link {
+        color: #3a3a3a !important;
+    }
+    .table-pagination {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        @media print {
+            display: none !important;
+        }
+        button {
+            margin-left: $spacing-4;
+            font-size: 0.875rem !important;
+            font-weight: 500 !important;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem !important;
+            font-family: $marianne;
+        }
+        .prev-btn {
+            align-items: center;
+            display: flex;
+            gap: $spacing-2;
+        }
+        button:hover {
+            background-color: $background-default-grey-hover;
+        }
+        .active {
+            background-color: $dark-blue;
+            color: white;
+        }
+        .active:hover {
+            background-color: $primary;
+        }
+    }
+
+    .bordered {
+        border: 2px solid #dfdff1;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        position: relative;
+        margin: 10px 0 10px;
+        padding: 1rem;
+        width: 100%;
+    }
+    .non-bordered-table-overflow-container {
+        overflow-x: auto !important;
+        border-color: transparent !important;
+        margin: $spacing-5 0 !important;
+    }
+
+    .table {
+        width: 100%;
+        margin-top: 0;
+        background-color: white !important;
+        .at__body__tr {
+            cursor: pointer;
+            &:hover {
+                background-color: #f5f5fe;
+            }
+        }
+
+        th {
+            background: white;
+            position: sticky;
+            top: 0;
+            font-family: $marianne;
+            font-size: $font-size-base-small;
+            font-weight: 700;
+            line-height: 1.5rem;
+        }
+
+        td {
+            padding: $spacing-1 !important;
+            font-family: $marianne;
+            font-size: $font-size-base-small;
+            font-weight: 400;
+            line-height: 1.5rem;
+            @media print {
+                padding: $spacing-1 !important;
+            }
+        }
+        tbody {
+            .sub-table {
+                background-color: $background-default-grey-hover !important;
+            }
+        }
+        tfoot {
+            .tfoot-recour {
+                text-align: start;
+                padding: $spacing-1;
+            }
+        }
+    }
+}
+.is-scrollable {
+    overflow-y: scroll;
+    max-height: 300px;
+    @media print {
+        overflow: visible !important;
+        max-height: max-content;
+    }
+}

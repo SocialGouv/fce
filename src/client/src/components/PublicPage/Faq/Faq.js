@@ -5,6 +5,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import UsersFeedback from "../../../containers/UsersFeedback";
+import ScrollToTopButton from "../../DataSheets/Sections/SharedComponents/ScrollToTopButton/ScrollToTopButton.jsx";
 import LoadSpinner from "../../shared/LoadSpinner";
 import { Question } from "./Question";
 
@@ -57,6 +58,7 @@ const Faq = ({ pageData = null, isLoading, hasError }) => {
         )}
       </div>
       <UsersFeedback fullWidth />
+      <ScrollToTopButton />
     </>
   );
 };

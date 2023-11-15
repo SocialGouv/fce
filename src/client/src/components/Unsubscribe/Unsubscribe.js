@@ -36,7 +36,6 @@ const Unsubscribe = ({ isSubscribed, handleChange, message, hasError }) => {
           <Toggle
             id="mailing-list-subscription-toggle"
             checked={isSubscribed}
-            name="burritoIsReady"
             value="yes"
             onChange={handleChange}
           />

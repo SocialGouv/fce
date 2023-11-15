@@ -13,8 +13,8 @@ import {
 } from "../../../../../../utils/apprentissage/apprentissage";
 import LoadableContent from "../../../../../shared/LoadableContent/LoadableContent";
 import Data from "../../../SharedComponents/Data";
+import NonBorderedTable from "../../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import Subcategory from "../../../SharedComponents/Subcategory";
-import Table from "../../../SharedComponents/Table";
 import { useApprentissageData } from "./Apprentissage.gql";
 
 const LAST_3_YEARS = [
@@ -40,43 +40,46 @@ const Apprentissage = ({ siret }) => {
           value={getSignesTotalFromSignes(apprentissagesSignes)}
           columnClasses={["is-7", "is-5"]}
           sourceSi="Ari@ne"
+          className="has-no-border"
         />
         {data?.length > 0 && (
-          <Table isBordered>
-            <thead>
-              <tr>
-                <th />
-                {displayedYears.map((year) => (
-                  <th className="has-text-right" key={year}>
-                    {year}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Nombre de contrats d{`'`}apprentissage signés</th>
-                {displayedYears.map((year) => (
-                  <td className="has-text-right" key={`signes-${year}`}>
-                    {(apprentissagesSignes[year] &&
-                      formatNumber(apprentissagesSignes[year])) ||
-                      0}
-                  </td>
-                ))}
-              </tr>
+          <div className="data-sheet--table">
+            <NonBorderedTable>
+              <thead>
+                <tr>
+                  <th />
+                  {displayedYears.map((year) => (
+                    <th className="has-text-right" key={year}>
+                      {year}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Nombre de contrats d{`'`}apprentissage signés</th>
+                  {displayedYears.map((year) => (
+                    <td className="has-text-right" key={`signes-${year}`}>
+                      {(apprentissagesSignes[year] &&
+                        formatNumber(apprentissagesSignes[year])) ||
+                        0}
+                    </td>
+                  ))}
+                </tr>
 
-              <tr>
-                <th>Nombre de contrats rompus </th>
-                {displayedYears.map((year) => (
-                  <td className="has-text-right" key={`rompus-${year}`}>
-                    {(apprentissagesRompus[year] &&
-                      formatNumber(apprentissagesRompus[year])) ||
-                      0}
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </Table>
+                <tr>
+                  <th>Nombre de contrats rompus </th>
+                  {displayedYears.map((year) => (
+                    <td className="has-text-right" key={`rompus-${year}`}>
+                      {(apprentissagesRompus[year] &&
+                        formatNumber(apprentissagesRompus[year])) ||
+                        0}
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </NonBorderedTable>
+          </div>
         )}
       </LoadableContent>
     </Subcategory>

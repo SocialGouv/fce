@@ -1,6 +1,7 @@
 import "./searchResults.scss";
 
-import { faFileExcel, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
 import { withRouter } from "react-router-dom";
@@ -10,7 +11,7 @@ import { formatSiret, joinNoFalsy } from "../../helpers/utils";
 import Config from "../../services/Config";
 import SearchAwesomeTable from "../SearchAwesomeTable";
 import TableCellState from "../SearchAwesomeTable/TableCellState";
-import Button from "../shared/Button";
+import Download from "../shared/Icons/Download.jsx";
 import Value from "../shared/Value";
 
 const formatNameData = ({
@@ -43,6 +44,7 @@ const SearchResults = ({
   pagination,
   isLoading,
   sort,
+  query,
   sortField,
   sortDirection,
   generateXlsx,
@@ -60,18 +62,32 @@ const SearchResults = ({
           <div className="column is-8 is-offset-2">
             <h2 className="app-search-results__title">
               {pagination.items} établissement
-              {pagination.items > 1 && "s"} trouvé
-              {pagination.items > 1 && "s"}
+              {pagination.items > 1 && "s"}{" "}
+              {query && (
+                <>
+                  <span className="app-search-results__title2">pour :</span>
+                  {` “${query}”`}
+                </>
+              )}
             </h2>
           </div>
           <div className="column is-2 app-search-results__export-section">
-            <Button
-              value={downloadLoading ? "Export en cours" : "Export Excel"}
-              buttonClasses={["app-search-results__export-button"]}
-              icon={downloadLoading ? faSpinner : faFileExcel}
-              faProps={{ spin: downloadLoading }}
-              callback={() => generateXlsx(pagination)}
-            />
+            <button
+              className={"app-search-results__export-button"}
+              onClick={() => generateXlsx(pagination)}
+            >
+              <span>
+                {downloadLoading ? (
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    {...{ spin: downloadLoading }}
+                  />
+                ) : (
+                  <Download />
+                )}
+              </span>
+              {downloadLoading ? "En cours" : "Exporter"}
+            </button>
           </div>
         </div>
       )}
@@ -80,7 +96,7 @@ const SearchResults = ({
         {results?.length === 0 && (
           <div className="notification is-primary is-light">Aucun résultat</div>
         )}
-        {results?.length ? (
+        {results?.length > 0 ? (
           <div>
             <SearchAwesomeTable
               showPagination={pagination && pagination.pages > 1}
@@ -207,6 +223,7 @@ SearchResults.propTypes = {
   generateXlsx: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
+  query: PropTypes.string,
   results: PropTypes.array,
   sort: PropTypes.func.isRequired,
   sortDirection: PropTypes.string,

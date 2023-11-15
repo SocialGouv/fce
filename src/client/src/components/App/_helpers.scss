@@ -17,13 +17,17 @@
 .is-secondary {
     @extend .is-info;
 }
-
+button.is-disabled {
+    color: #929292 !important;
+    background-color: $white-smoke !important;
+  
+}
 button.is-tertiary {
     color: $white;
-    background-color: $carolina-blue;
+    background-color: $dark-blue !important;
 
     &:hover {
         color: $white;
-        background-color: darken($carolina-blue, 5%);
+        background-color: darken($dark-blue, 5%);
     }
 }

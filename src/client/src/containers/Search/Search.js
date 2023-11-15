@@ -38,12 +38,12 @@ const Search = () => {
   const [searchQuery, setSearchQuery] = useSearchTerms();
   const [searchPage, setSearchPage] = useSearchPage();
 
-  const { filters, addFilter, removeFilter } = useSearchFilters();
+  const { filters, addFilter, removeFilter, removeFilters } =
+    useSearchFilters();
 
   const { sortField, sortDirection, toggleSortField } = useSort();
 
-  const { data, loading, error, makeQuery } = useSearchQuery();
-
+  const { data, loading, error, makeQuery, query } = useSearchQuery();
   const resetSearch = useResetSearch();
 
   useEffect(() => {
@@ -103,6 +103,7 @@ const Search = () => {
       results={data?.results}
       page={searchPage}
       pageSize={PAGE_SIZE}
+      query={query}
       totalResults={data?.total || 0}
       sendRequest={onSearch}
       searchTerm={searchQuery || ""}
@@ -111,6 +112,7 @@ const Search = () => {
       handlePageChange={handlePageChange}
       addFilter={addFilter}
       removeFilter={removeFilter}
+      removeFilters={removeFilters}
       filters={filters}
       sortField={sortField}
       sortDirection={sortDirection}

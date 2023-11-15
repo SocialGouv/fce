@@ -3,7 +3,8 @@
 .accordion-table {
     &__header {
         cursor: pointer;
-        transition: color $duration-1;
+        display: flex;
+        justify-content: space-between;
 
         &:hover {
             color: $dark-blue;
@@ -19,9 +20,8 @@
         border-top: $border-grey-light;
         max-height: 13rem;
         overflow: auto;
-
         tr {
-            background-color: $white-smoke;
+            background-color: $background-default-grey-hover !important;
         }
     }
 }

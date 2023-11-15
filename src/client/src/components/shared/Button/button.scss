@@ -1,17 +1,22 @@
 @import "../../App/variables";
 
 .app .button {
-    height: auto;
-    min-height: 2.5rem;
-    white-space: normal;
-    font-weight: bold;
+    display: flex;
+    height: 2.5rem;
+    padding: 0.625rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
 
     &-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         &--before-label {
             margin-left: $spacing-2;
         }
-        &--after-label {
-            margin-right: $spacing-2;
+        &--center-label {
+            text-align: center;
         }
     }
 }

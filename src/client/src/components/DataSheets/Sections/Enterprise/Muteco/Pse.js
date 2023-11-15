@@ -18,6 +18,7 @@ const Pse = ({ entreprise }) => {
       <ConditionalData
         text="Procédure(s) enregistrée(s) au cours des 36 derniers mois"
         showTable={hasPse}
+        className="has-no-border"
       />
       {hasPse && <RupcoTable list={formattedData} />}
     </Subcategory>

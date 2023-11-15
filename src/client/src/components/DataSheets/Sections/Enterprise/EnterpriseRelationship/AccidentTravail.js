@@ -9,12 +9,13 @@ import {
   getCity,
   getSiret,
   getState,
+  isActive,
 } from "../../../../../utils/establishment/establishment";
+import BadgeWithIcon from "../../../../shared/Badge/BadgeWithIcon.jsx";
 import Data from "../../SharedComponents/Data";
+import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
-import State from "../../SharedComponents/State";
 import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table";
 import { useAccidentsTravailBySiren } from "./AccidentTravail.gql";
 
 const getWorkAccidentsTotal = (workAccidents) =>
@@ -42,39 +43,60 @@ const AccidentTravail = ({ entreprise: { siren } }) => {
             }
             columnClasses={["is-10", "is-2"]}
             value={accidents ? getWorkAccidentsTotal(accidents) : 0}
+            className="has-no-border"
           />
           <div className="section-datas__list-item">
             {accidents && accidents.length > 0 && (
-              <Table>
-                <thead>
-                  <tr>
-                    <th>SIRET</th>
-                    <th>Etat</th>
-                    <th>Commune</th>
-                    <th>{"Nb d'accidents du travail"}</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  {accidents.map((data) => (
-                    <tr key={getSiret(data.etablissement)}>
-                      <td>{getSiret(data.etablissement)}</td>
-                      <td className="table-cell--center-cell">
-                        <State state={getState(data.etablissement)} />
-                      </td>
-                      <td>{getCity(data.etablissement)}</td>
-                      <td>{data.total}</td>
-                      <td className="see-details">
-                        <SeeDetailsLink
-                          link={`/establishment/${getSiret(
-                            data.etablissement
-                          )}/#work-accidents`}
-                        />
-                      </td>
+              <div className="data-sheet--table">
+                <NonBorderedTable isScrollable={accidents.length > 6}>
+                  <thead>
+                    <tr>
+                      <th>SIRET</th>
+                      <th>Etat</th>
+                      <th>Commune</th>
+                      <th>{"Nb d'accidents du travail"}</th>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
+                  </thead>
+                  <tbody>
+                    {accidents.map((accidnt) => {
+                      const etab = accidnt.etablissement;
+                      const isEtablissementActive = isActive(etab);
+                      const stateClass = isEtablissementActive
+                        ? "icon--success"
+                        : "icon--danger";
+                      const stateText = isEtablissementActive
+                        ? "ouvert"
+                        : "fermé";
+                      return (
+                        <tr key={getSiret(accidnt.etablissement)}>
+                          <td>
+                            {" "}
+                            <SeeDetailsLink
+                              link={`/establishment/${getSiret(
+                                accidnt.etablissement
+                              )}/#work-accidents`}
+                              text={getSiret(accidnt.etablissement)}
+                            />
+                          </td>
+                          <td className="table-cell--center-cell">
+                            {getState(etab) && (
+                              <BadgeWithIcon
+                                isTableBadge
+                                text={stateText}
+                                state={stateClass}
+                              />
+                            )}
+                          </td>
+                          <td>{getCity(accidnt.etablissement)}</td>
+                          <td className="th table-cell--center-cell">
+                            {accidnt.total}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </NonBorderedTable>
+              </div>
             )}
           </div>
         </div>

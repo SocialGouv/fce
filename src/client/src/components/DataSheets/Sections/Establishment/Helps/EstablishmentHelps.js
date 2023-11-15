@@ -1,24 +1,26 @@
-import { faMedkit } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
+import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
 import Apprentissage from "./Subcategory/Apprentissage";
 import ContratsAides from "./Subcategory/ContratsAides";
 
 const EstablishmentHelps = ({ siret }) => {
+  const [accordionOpen, setAccordionOpen] = useState(true);
+
   return (
-    <section id="helps" className="data-sheet__section">
-      <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faMedkit} />
-        </span>
-        <h2 className="title">Aides</h2>
-      </div>
-      <div className="section-datas">
-        <ContratsAides siret={siret} />
-        <Apprentissage siret={siret} />
-      </div>
+    <section id="helps" className="data-sheet__bloc_section ">
+      <BlocTitle
+        isOpen={accordionOpen}
+        toggleAccordion={() => setAccordionOpen(!accordionOpen)}
+        text={"Aides"}
+      />
+      {accordionOpen && (
+        <div className="section-datas">
+          <ContratsAides siret={siret} />
+          <Apprentissage siret={siret} />
+        </div>
+      )}
     </section>
   );
 };

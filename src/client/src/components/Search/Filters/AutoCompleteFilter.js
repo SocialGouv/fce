@@ -12,11 +12,13 @@ const AutoCompleteFilter = ({
   options,
   id,
   label,
+  placeholder,
+  menuPlacement = "auto",
 }) => {
   const value = options.filter((option) => filters[id]?.includes(option.value));
 
   return (
-    <div>
+    <div id={id}>
       <label htmlFor={id} className="label">
         {label}
       </label>
@@ -26,11 +28,19 @@ const AutoCompleteFilter = ({
         isMulti
         options={options}
         value={value}
+        closeMenuOnSelect={false}
+        menuPlacement={menuPlacement}
+        menuPortalTarget={document.getElementById("scrollContainer")}
+        menuPosition={"fixed"}
+        menuShouldBlockScroll={true}
         onChange={(option) => {
           option ? addFilter(id, option.map(prop("value"))) : removeFilter(id);
         }}
         isClearable
-        placeholder=""
+        components={{
+          IndicatorSeparator: () => null,
+        }}
+        placeholder={placeholder}
         styles={selectCustomStyles}
       />
     </div>
@@ -42,7 +52,9 @@ AutoCompleteFilter.propTypes = {
   filters: PropTypes.object,
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  menuPlacement: PropTypes.string,
   options: PropTypes.array.isRequired,
+  placeholder: PropTypes.string.isRequired,
   removeFilter: PropTypes.func.isRequired,
 };
 

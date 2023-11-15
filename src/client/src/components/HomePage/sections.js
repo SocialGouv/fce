@@ -9,13 +9,18 @@ const LoginLink = () => (
     className="home-page__link"
     title="Les agents des DDETS(PP), merci d'utiliser votre adresse au format @direccte.gouv.fr"
   >
-    <Link to="/login">Je me connecte</Link>
+    <Link
+      to="/login"
+      title="Les agents des DDETS(PP), merci d'utiliser votre adresse au format @direccte.gouv.fr"
+    >
+      Je me connecte
+    </Link>
   </div>
 );
 
 const RequestAccessLink = () => (
   <div className="home-page__link">
-    <Link to="/request-access">Je demande un accès (agent DDETS)</Link>
+    <Link to="/request-access">{`Je demande l'accès`}</Link>
   </div>
 );
 
@@ -24,18 +29,18 @@ export const IconItems = ({ users, isLoading = false }) => {
   // That's make a lint error
   const items = [
     {
-      firstParagraph: "20 millions d’entreprises",
+      firstParagraph: "22 millions d’entreprises",
       icon: function renderIcon(height) {
         return <NounExcelIcon height={height} />;
       },
-      secondParagraph: "28 millions d’établissements",
+      secondParagraph: "37 millions d’établissements",
     },
     {
-      firstParagraph: "+ 5 millions de données collectées",
+      firstParagraph: "59 millions de fiches​",
       icon: function renderIcon(height) {
         return <NounPlatformIcon height={height} />;
       },
-      secondParagraph: "sur les effectifs, contrôles et aides",
+      secondParagraph: "200 Go de données​",
     },
     {
       firstParagraph: `+ ${users} utilisateurs`,
@@ -47,14 +52,14 @@ export const IconItems = ({ users, isLoading = false }) => {
   ];
 
   return (
-    <div className="home-page__section is-justify-content-center has-text-centered">
+    <div className="home-page__section ">
       <h2 className="home-page__blue-title">FCE en chiffres</h2>
       <div className="columns icons">
         {items.map((item, index) => {
           return (
-            <React.Fragment key={item.firstParagraph}>
-              <div className="column is-4 is-hidden-touch icons__item">
-                <div className="icons__image-container">{item.icon(110)}</div>
+            <div className="column is-3 icons__item" key={item.firstParagraph}>
+              <div>
+                <div className="icons__image-container">{item.icon(40)}</div>
                 {isLoading && index === 2 ? (
                   <div className="dots">
                     <div />
@@ -62,17 +67,11 @@ export const IconItems = ({ users, isLoading = false }) => {
                     <div />
                   </div>
                 ) : (
-                  <p>{item.firstParagraph}</p>
+                  <p className="first-text">{item.firstParagraph}</p>
                 )}
                 <p>{item.secondParagraph}</p>
               </div>
-              <div className="column icons__item is-hidden-desktop">
-                <div className="icons__image-container">{item.icon(70)}</div>
-                <p>
-                  {item.firstParagraph} {item.secondParagraph}
-                </p>
-              </div>
-            </React.Fragment>
+            </div>
           );
         })}
       </div>
@@ -86,46 +85,77 @@ IconItems.propTypes = {
 };
 
 export const Summary = () => (
-  <div className="home-page__summary home-page__section">
-    <h3>
-      Retrouvez les informations légales et administratives des entreprises
-    </h3>
-    <p>
-      {`L'état civil, l'activité et les données de l'administration dans une seule
+  <>
+    <div className="home-page__summary home-page__section">
+      <h3>
+        Retrouvez les informations légales et administratives des entreprises
+      </h3>
+      <p>
+        {`L'état civil, l'activité et les données de l'administration dans une seule
       fiche destinée aux agents publics`}
-    </p>
-    <div className="home-page__action-links-container">
-      <LoginLink />
-      <RequestAccessLink />
+      </p>
     </div>
-  </div>
+    <div className="columns home-page__action-links-container is-centered">
+      <div className="column is-5">
+        <div className="content">
+          <div className="text-title">
+            Je suis un agent en DREETS ou en DDETS ​
+          </div>
+
+          <LoginLink />
+          <div className="text-explicatif">
+            Pour obtenir un code par mail qui ne sera plus demandé pendant 30
+            jours​
+          </div>
+        </div>
+      </div>
+      <div className="column is-1 divider-column">
+        {" "}
+        <div className="divider">
+          <div className="divider-line" />
+          <div className="divider-text">Ou</div>
+          <div className="divider-line" />
+        </div>
+      </div>
+      <div className="column is-5">
+        <div className="content">
+          <div className="text-title">
+            Je suis en agent en DDETS, nouvel utilisateur de FCE​
+          </div>
+          <RequestAccessLink />
+          <div className="text-explicatif">
+            Pour obtenir l’autorisation (par mail) de se connecter au portail.​
+          </div>
+        </div>
+      </div>
+    </div>
+  </>
 );
 
 export const HowItWork = () => {
   const items = [
     {
       index: "1",
-      paragraph:
-        "J'identifie des entreprises et établissements selon plusieurs critères : nom, raison sociale, SIRET, localisation, activité et effectif",
+      paragraph: "Je recherche un établissement suivants plusieurs critères",
       title: "PRATIQUE",
     },
     {
       index: "2",
       paragraph:
-        "Je consulte les informations enregistrées parles autres services : légales, juridiques, effectifs et données métiers",
+        "Je consulte les fiches associées : établissement et entreprise",
       title: "COLLABORATIF",
     },
     {
       index: "3",
       paragraph:
-        "Je prends des décisions éclairées en ayant une vision à 360° sur l'entreprise et ses établissements",
+        "Je prends des décisions éclairées grâce aux différentes informations",
       title: "DÉCISIF",
     },
   ];
 
   const renderItems = (isTouch = false) =>
     items.map((item) => (
-      <React.Fragment key={item.title}>
+      <div className="column" key={item.title}>
         {isTouch ? (
           <div className="home-page__how-it-work__item">
             <div className="has-text-centered">
@@ -137,32 +167,26 @@ export const HowItWork = () => {
             </div>
           </div>
         ) : (
-          <div className="home-page__how-it-work__item columns">
-            <div className="column is-3 has-text-centered">
+          <div className="home-page__how-it-work__item columns is-centered">
+            <div className="column home-page__how-it-work__item_column">
               <span>{item.index}</span>
-            </div>
-            <div className="column is-9 mt-6">
-              <h4>{item.title}</h4>
               <p>{item.paragraph}</p>
             </div>
           </div>
         )}
-      </React.Fragment>
+      </div>
     ));
 
   return (
-    <div
-      className="home-page__how-it-work is-justify-content-center particles"
-      style={{ position: "relative" }}
-    >
-      <div style={{ position: "relative", zIndex: 2 }}>
+    <div className="home-page__how-it-work  particles">
+      <div>
         <h2 className="home-page__white-title">Comment ça marche ?</h2>
-        <div className="columns is-justify-content-center is-hidden-touch">
+        <div className="columns is-justify-content-center ">
           {renderItems()}
         </div>
-        <div className="is-justify-content-center is-hidden-desktop">
+        {/* <div className="is-justify-content-center is-hidden-desktop">
           {renderItems(true)}
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -172,27 +196,27 @@ export const DailyUse = () => {
   const items = [
     {
       paragraph:
-        "Identifier les services qui disposent d’informations sur une entreprise afin d’orienter utilement les demandes.",
-      title: "FACILITER LES ÉCHANGES ENTRE LES SERVICES",
-    },
-    {
-      paragraph:
-        "Bénéficier d'une vision complète des relations entre les services des Dreets et Ddets(PP) et les entreprises pour agir en connaissance de cause.",
+        "Pour un établissement donné, j’accède très rapidement à une vision 360° des informations en provenance des autres services. Ces informations me permettent d’agir en connaissance de cause.",
       title: "AJUSTER LES ACTIONS AUPRÈS DES ENTREPRISES",
     },
     {
       paragraph:
-        "Restituer à un décideur (Préfet, Ministre....), en un minimum de temps, une fiche synthétique sur les (inter)actions menées par les services auprès d’une entreprise.",
+        "Si nécessaire, je complète une information spécifique en demandant directement au service responsable du dispositif associé.",
+      title: "FACILITER LES ÉCHANGES ENTRE LES SERVICES",
+    },
+    {
+      paragraph:
+        "Initier une fiche ministre ou préfet en un minimum de temps, faire émerger des idées d’outils de ciblage ou de tableaux de bords croisant les données de différents dispositifs métiers. ",
       title: "RESTITUER L’INFORMATION AUX DÉCIDEURS",
     },
   ];
 
   return (
-    <div className="home-page__daily-use home-page__section is-justify-content-center">
+    <div className="home-page__daily-use home-page__section ">
       <h2 className="home-page__blue-title">Quels usages au quotidien ?</h2>
-      <div className="home-page__daily-use__items">
+      <div className="columns home-page__daily-use__items">
         {items.map((item) => (
-          <div key={item.title} className="home-page__daily-use__item">
+          <div key={item.title} className="column  home-page__daily-use__item">
             <h4>{item.title}</h4>
             <p>{item.paragraph}</p>
           </div>
@@ -200,8 +224,8 @@ export const DailyUse = () => {
       </div>
       <div className="home-page__daily-use__quote">
         <p>
-          {`"Démocratique, la donnée améliore le service public en interconnectant
-          la puissance publique et l'usager"`}
+          {`« Démocratique, la donnée améliore le service public en interconnectant
+          la puissance publique et l'usager »`}
         </p>
         <p>
           Mission Bothorel, Pour une politique publique de la donnée, décembre

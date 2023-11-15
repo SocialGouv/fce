@@ -21,29 +21,32 @@ const StateFilter = ({ filters, addFilter, id }) => {
     <div className="filter-state">
       <div className="label">État</div>
       <div className="field">
-        <input
-          className="is-checkradio is-light"
-          type="checkbox"
-          name="open"
-          id="open"
-          onChange={onCheckboxCheck(actif)}
-          checked={filters[id]?.includes(actif) || false}
-        />
-        <label htmlFor="open" className="label label--state">
-          Ouverts
-        </label>
-
-        <input
-          className="is-checkradio is-light"
-          type="checkbox"
-          name="closed"
-          id="closed"
-          onChange={onCheckboxCheck(ferme)}
-          checked={filters[id]?.includes(ferme) || false}
-        />
-        <label htmlFor="closed" className="label label--state">
-          Fermés
-        </label>
+        <div className="field-input">
+          <input
+            className="checkradio "
+            type="checkbox"
+            name="open"
+            id="open"
+            onChange={onCheckboxCheck(actif)}
+            checked={filters[id]?.includes(actif) || false}
+          />
+          <label htmlFor="open" className="label label--state">
+            Ouverts
+          </label>
+        </div>
+        <div className="field-input">
+          <input
+            className="checkradio"
+            type="checkbox"
+            name="closed"
+            id="closed"
+            onChange={onCheckboxCheck(ferme)}
+            checked={filters[id]?.includes(ferme) || false}
+          />
+          <label htmlFor="closed" className="label label--state">
+            Fermés
+          </label>
+        </div>
       </div>
     </div>
   );

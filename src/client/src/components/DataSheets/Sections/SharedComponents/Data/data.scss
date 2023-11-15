@@ -9,7 +9,7 @@
         margin: 0;
 
         &:last-child {
-            margin-bottom: $spacing-6;
+            margin-bottom: $spacing-5;
         }
 
         &:not(:last-child) {
@@ -28,6 +28,7 @@
     & .dd {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         padding-right: 0;
     }
 

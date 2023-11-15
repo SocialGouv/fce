@@ -2,5 +2,20 @@
 
 .source {
     font-size: $font-size-small;
+    font-family: $marianne !important;
     word-wrap: nowrap;
+    &__name,
+    &__label,
+    &__updated {
+        @media print {
+            font-size: 0.8rem !important;
+            color: $grey !important;
+        }
+    }
+
+    @media print {
+        font-size: 0.8rem !important;
+        color: $grey !important;
+        color-adjust: exact;
+    }
 }

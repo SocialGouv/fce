@@ -15,7 +15,7 @@ const StatsFilters = ({ range, setRange, isLoading }) => {
   ];
 
   return (
-    <div className="stats-filters">
+    <div className="column is-one-quarter">
       <Select
         id="range"
         name="range"

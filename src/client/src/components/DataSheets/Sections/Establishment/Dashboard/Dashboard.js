@@ -1,15 +1,6 @@
 import "./dashboard.scss";
 
 import {
-  faCalendarCheck,
-  faChild,
-  faExclamationTriangle,
-  faGlobeAmericas,
-  faGraduationCap,
-  faMedkit,
-  faUserInjured,
-} from "@fortawesome/free-solid-svg-icons";
-import {
   entries,
   filter,
   flatten,
@@ -31,6 +22,13 @@ import {
   normalizeInteractionsC,
   normalizeInteractionsT,
 } from "../../../../../utils/interactions/interactions";
+import Calendar from "../../../../shared/Icons/Calendar.jsx";
+import Effectif from "../../../../shared/Icons/EffectifIcon.jsx";
+import HealthIcon from "../../../../shared/Icons/HealthIcon.jsx";
+import Hospital from "../../../../shared/Icons/HospitalIcon.jsx";
+import Network from "../../../../shared/Icons/Network.jsx";
+import SchoolIcon from "../../../../shared/Icons/SchoolIcon.jsx";
+import Warning from "../../../../shared/Icons/Warning.jsx";
 import { useDashboardData, useEffectif } from "./Dashboard.gql";
 import Item from "./Item";
 
@@ -113,33 +111,36 @@ const Dashboard = ({ siret }) => {
       data?.psi_siren[0]?.salaries_annee_precedente
   );
   const isEstablishmentWithPsi = Boolean(establishmentPsiData);
+  const effectifItem = <Effectif size={40} />;
 
   return (
-    <div className="dashboard columns">
-      <div className="column container">
-        <Item
-          icon={faChild}
-          name="Effectif"
-          value={effectifLoading ? "Chargement ..." : effectif}
-        />
-
-        <Item
-          icon={faCalendarCheck}
-          name="Visites"
-          smallText={!hasInteractions}
-          value={hasInteractions ? lastControl : "Pas d'intervention connue"}
-        />
-
-        {(activity.hasPse ||
-          activity.hasRcc ||
-          activity.hasLice ||
-          activity.partialActivity) && (
+    <div className="dashboard ">
+      <div className="column ">
+        <div className="columns  ">
           <Item
-            icon={faExclamationTriangle}
-            name="Mut Eco"
+            icon={effectifItem}
+            name="Effectif"
+            value={effectifLoading ? "Chargement ..." : effectif}
+          />
+
+          <Item
+            icon={<Calendar />}
+            name="Visites"
+            smallText={!hasInteractions}
+            value={hasInteractions ? lastControl : "Pas d'intervention connue"}
+          />
+
+          <Item
+            icon={<Warning />}
+            name="Mutations économiques"
             smallText={true}
             value={
               <>
+                {!activity.hasPse &&
+                  !activity.hasRcc &&
+                  !activity.hasLice &&
+                  !activity.partialActivity &&
+                  "Non"}
                 <div>
                   {activity.hasPse && "PSE-"}
                   {activity.hasRcc && "RCC-"}
@@ -150,33 +151,43 @@ const Dashboard = ({ siret }) => {
               </>
             }
           />
-        )}
-
-        {hasAide(data) && <Item icon={faMedkit} name="Aides" value="Oui" />}
-
-        {(isEnterprisePsiContractor || isEstablishmentWithPsi) && (
+        </div>
+        <div className="columns  ">
           <Item
-            icon={faGlobeAmericas}
+            icon={<Network />}
             name="PSI"
             smallText={true}
             value={
-              <div>
-                {isEstablishmentWithPsi && <div>Salariés détachés</div>}
-                {isEnterprisePsiContractor && <div>Entreprise DO</div>}
-              </div>
+              <>
+                {isEstablishmentWithPsi && (
+                  <div className="has-list-style">Salariés détachés </div>
+                )}
+                {isEnterprisePsiContractor && (
+                  <div className="has-list-style">Entreprise DO</div>
+                )}
+
+                {!isEnterprisePsiContractor && !isEstablishmentWithPsi && "Non"}
+              </>
             }
           />
-        )}
-        {data?.accidents_travail?.[0]?.total > 0 && (
           <Item
-            icon={faUserInjured}
+            icon={<Hospital />}
             name="Accident Travail"
             value={data?.accidents_travail?.[0]?.total}
+            empty="Non"
           />
-        )}
-        {isOrganismeFormation(data) && (
-          <Item icon={faGraduationCap} name="Organisme Formation" value="Oui" />
-        )}
+          <Item
+            icon={<HealthIcon />}
+            name="Aides"
+            value={hasAide(data) ? "Oui" : "Non"}
+          />
+
+          <Item
+            icon={<SchoolIcon />}
+            name="Organisme Formation"
+            value={isOrganismeFormation(data) ? "Oui" : "Non"}
+          />
+        </div>
       </div>
     </div>
   );

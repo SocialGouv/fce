@@ -1,22 +1,37 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const CheckboxFilter = ({ filters, addFilter, removeFilter, id, label }) => {
+const ID = "siege";
+const CheckboxFilter = ({ filters, addFilter, removeFilter, label }) => {
+  const [isChecked, setIsChecked] = useState(!!filters["siege"]);
+  useEffect(() => {
+    setIsChecked(!!filters["siege"]);
+  }, [filters]);
+
+  const handleChange = () => {
+    setIsChecked(!isChecked);
+    if (isChecked) {
+      removeFilter(ID);
+    } else {
+      addFilter(ID, "true");
+    }
+  };
+
   return (
-    <div className="field filter__siege">
-      <input
-        className="is-checkradio is-light"
-        type="checkbox"
-        name={id}
-        id={id}
-        onChange={() => {
-          filters[id] ? removeFilter(id) : addFilter(id, "true");
-        }}
-        checked={!!filters[id]}
-      />
-      <label className="label" htmlFor={id}>
+    <div className="field filter__siege is-centred">
+      <label className="label" htmlFor={ID}>
         {label}
       </label>
+      <div className="filter__siege_button">
+        <input
+          className="checkradio "
+          type="checkbox"
+          name={ID}
+          id={ID}
+          onChange={handleChange}
+          checked={isChecked}
+        />
+      </div>
     </div>
   );
 };
@@ -24,7 +39,6 @@ const CheckboxFilter = ({ filters, addFilter, removeFilter, id, label }) => {
 CheckboxFilter.propTypes = {
   addFilter: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
   label: PropTypes.string,
   removeFilter: PropTypes.func.isRequired,
 };

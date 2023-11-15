@@ -1,3 +1,10 @@
+# [27.87.0](https://github.com/SocialGouv/fce/compare/v27.86.0...v27.87.0) (2023-11-15)
+
+
+### Features
+
+* Refonte design ([#302](https://github.com/SocialGouv/fce/issues/302)) ([111d174](https://github.com/SocialGouv/fce/commit/111d17450dd6d275a53e6ddb91913c19c25b93a6)), closes [#301](https://github.com/SocialGouv/fce/issues/301)
+
 # [27.86.0](https://github.com/SocialGouv/fce/compare/v27.85.0...v27.86.0) (2023-11-13)
 
 

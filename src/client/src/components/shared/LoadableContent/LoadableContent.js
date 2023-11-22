@@ -1,5 +1,5 @@
+import { PropTypes } from "prop-types";
 import React from "react";
-import { propTypes } from "react-widgets/lib/util/Filter";
 
 import LoadSpinner from "../LoadSpinner";
 import Value from "../Value";
@@ -17,9 +17,9 @@ const LoadableContent = ({ loading, error, children }) => {
 };
 
 LoadableContent.propTypes = {
-  children: propTypes.node,
-  error: propTypes.any,
-  loading: propTypes.bool,
+  children: PropTypes.node,
+  error: PropTypes.any,
+  loading: PropTypes.bool,
 };
 
 export default LoadableContent;

@@ -5,18 +5,30 @@
         &__title {
             border-bottom: none;
         }
-
-        &__table {
-            margin-top: 0;
-
-            th:first-child,
-            td:first-child {
-                text-align: right;
-            }
+        .section-header {
+            border-bottom: solid 0.0625rem $default-grey;
+            border-top: solid 0.0625rem $default-grey;
+        }
+        .direccte-interactions__title {
+            padding: $spacing-1 0;
+            font-size: $font-size-base-small !important;
+            font-family: $marianne !important;
+            color: $title-grey;
         }
 
         &__control-nature {
             font-size: $font-size-small;
+        }
+    }
+    &--table-to-left {
+        margin-left: -$spacing-4 !important;
+        @media print {
+            margin: $spacing-2 0 !important;
+            table {
+                td {
+                    padding: $spacing-1;
+                }
+            }
         }
     }
 }

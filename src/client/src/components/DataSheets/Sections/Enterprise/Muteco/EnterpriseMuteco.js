@@ -1,28 +1,31 @@
-import { faUmbrella } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
+import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
 import ActivitePartielle from "./ActivitePartielle";
 import Lice from "./Lice";
 import Pse from "./Pse";
 import Rcc from "./Rcc";
 
 const EnterpriseMuteco = ({ enterprise }) => {
+  const [accordionOpen, setAccordionOpen] = useState(true);
+
   return (
-    <section id="muteco" className="data-sheet__section">
-      <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faUmbrella} />
-        </span>
-        <h2 className="title">Mutations Economiques</h2>
-      </div>
-      <div className="section-datas">
-        <ActivitePartielle enterprise={enterprise} />
-        <Pse entreprise={enterprise} />
-        <Lice entreprise={enterprise} />
-        <Rcc entreprise={enterprise} />
-      </div>
+    <section id="muteco" className="data-sheet__bloc_section">
+      <BlocTitle
+        isOpen={accordionOpen}
+        toggleAccordion={() => setAccordionOpen(!accordionOpen)}
+        text={"Mutations Economiques"}
+      />
+
+      {accordionOpen && (
+        <div className="section-datas">
+          <ActivitePartielle enterprise={enterprise} />
+          <Pse entreprise={enterprise} />
+          <Lice entreprise={enterprise} />
+          <Rcc entreprise={enterprise} />
+        </div>
+      )}
     </section>
   );
 };

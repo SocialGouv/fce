@@ -4,14 +4,13 @@ import React from "react";
 import { getOrganismesFormations } from "../../../../../utils/entreprise/entreprise";
 import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
 import Data from "../../SharedComponents/Data";
-import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
-import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table";
+import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBorderedTable";
+import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink/SeeDetailsLink";
 
 const OrganismeFormation = ({ entreprise }) => {
   const organismes_formation = getOrganismesFormations(entreprise);
   return (
-    <Subcategory subtitle="Organisme de formation">
+    <>
       <Data
         key="OrganismeFormation"
         name="Organisme de formation"
@@ -19,28 +18,30 @@ const OrganismeFormation = ({ entreprise }) => {
       />
       <div className="section-datas__list-item">
         {isOrganismeFormation(organismes_formation) && (
-          <Table>
+          <NonBorderedTable>
             <thead>
               <tr>
                 <th>Siret</th>
+                <th>Dénomination</th>
               </tr>
             </thead>
             <tbody>
-              {organismes_formation.map(({ siret }) => (
-                <tr key={siret}>
-                  <td>{siret}</td>
-                  <td className="see-details">
+              {organismes_formation.map(({ siret, denomination }) => (
+                <tr key={denomination}>
+                  <td>
                     <SeeDetailsLink
                       link={`/establishment/${siret}/#agrements`}
+                      text={siret}
                     />
                   </td>
+                  <td className="see-details"> {denomination}</td>
                 </tr>
               ))}
             </tbody>
-          </Table>
+          </NonBorderedTable>
         )}
       </div>
-    </Subcategory>
+    </>
   );
 };
 

@@ -12,3 +12,19 @@
         margin-right: $spacing-2;
     }
 }
+.details-link {
+    font-family: $marianne;
+    font-size: $font-size-base-small;
+    font-weight: 400;
+    line-height: 1.5rem;
+    color: $title-grey;
+    a {
+        color: $dark-blue !important;
+
+        text-decoration: underline !important;
+        text-underline-offset: 4px;
+        &:hover {
+            text-decoration-thickness: 2px !important;
+        }
+    }
+}

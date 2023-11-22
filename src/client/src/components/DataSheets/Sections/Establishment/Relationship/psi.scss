@@ -4,9 +4,14 @@
     scroll-margin: 3.6rem;
 
     &__data {
+        @media print {
+            display: flex !important;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
         .dd {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         .see-details-link {
@@ -14,13 +19,42 @@
             text-align: left;
         }
     }
-
-    &__description {
-        font-style: italic;
-        font-size: $font-size-small;
+    &__value {
+        font-family: $marianne;
+        font-size: $font-size-base-small;
+        font-weight: 500 !important;
+        line-height: 1.5rem;
+        color: $title-grey;
+    }
+    &__desc {
+        font-family: $marianne !important;
+        font-size: $font-size-base-small;
+        font-weight: 400 !important;
+        line-height: 1.5rem;
+        color: $title-grey;
 
         ul {
             list-style: inside;
+        }
+    }
+}
+.work-accidents {
+    .dd {
+        display: flex;
+        justify-content: flex-start;
+    }
+    .list-item {
+        list-style-type: disc;
+    }
+    .section-datas__list {
+        display: flex;
+        flex-direction: column;
+        .data {
+            @media print {
+                display: flex !important;
+                align-items: flex-start;
+                justify-content: space-between;
+            }
         }
     }
 }

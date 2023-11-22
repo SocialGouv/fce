@@ -21,6 +21,7 @@ const Lice = ({ entreprise }) => {
       <ConditionalData
         text="Procédure(s) enregistrée(s) depuis le 2 décembre 2019"
         showTable={hasLice}
+        className="has-no-border"
       />
       {hasLice && <RupcoTable list={formattedData} hasTypeColumn />}
     </Subcategory>

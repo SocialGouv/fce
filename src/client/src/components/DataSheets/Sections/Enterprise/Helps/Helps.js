@@ -1,25 +1,27 @@
-import { faMedkit } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 
+import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
 import Apprentissage from "./Subcategory/Apprentissage";
 import PlanDeRelance from "./Subcategory/PlanDeRelance";
 
 const Helps = ({ enterprise }) => {
-  return (
-    <section id="helps" className="data-sheet__section">
-      <div className="section-header">
-        <span className="icon">
-          <FontAwesomeIcon icon={faMedkit} />
-        </span>
-        <h2 className="title">Aides</h2>
-      </div>
+  const [accordionOpen, setAccordionOpen] = useState(true);
 
-      <div className="section-datas">
-        <Apprentissage entreprise={enterprise} />
-        <PlanDeRelance entreprise={enterprise} />
-      </div>
+  return (
+    <section id="helps" className="data-sheet__bloc_section">
+      <BlocTitle
+        isOpen={accordionOpen}
+        toggleAccordion={() => setAccordionOpen(!accordionOpen)}
+        text={"Aides"}
+      />
+
+      {accordionOpen && (
+        <div className="section-datas">
+          <Apprentissage entreprise={enterprise} />
+          <PlanDeRelance entreprise={enterprise} />
+        </div>
+      )}
     </section>
   );
 };

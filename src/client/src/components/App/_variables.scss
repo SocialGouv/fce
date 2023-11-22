@@ -1,11 +1,12 @@
 @import "~bulma/sass/helpers/spacing";
 
 /* COLORS */
-$dark-blue: #34495e;
 $deep-blue: #284293;
 $cobalt-blue: #004aad;
 $carolina-blue: #22a1e2;
 $blue: #2980b9;
+$dark-blue: #000091;
+$background-default-grey-hover: #f6f6f6;
 $turquoise: #2aa995;
 $faced-blue: #5499c6;
 $light-sky-blue: #d4e6f1;
@@ -15,11 +16,17 @@ $green-washed: rgba(34, 137, 31, 0.2);
 $green-forest: #22891f;
 $yellow: #ffc107;
 $white-alabaster: #fafafa;
-$white-smoke: #f5f5f5;
+$white-smoke: #ffffff;
 $grey-geyser: #dde1e5;
+$contrast-grey: #eeeeee;
 $grey: #808080;
-$grey-tundora: #4a4a4a;
+$title-grey: #161616;
+$grey-tundora: #666666;
 $dark-grey: #363636;
+$default-grey: #dddddd;
+$default-text-gey: #3a3a3a;
+$black-grey: #4a4a4a;
+$blue-france: #000091;
 
 $primary: $blue;
 $secondary: $turquoise;
@@ -65,12 +72,16 @@ $font-size-datasheet-header: 2rem;
 $font-size-section-title: 1.25rem;
 $font-size-section-subtitle: 1.15rem;
 $font-size-base: 1rem;
+$font-size-naf: 1.125rem;
 $font-size-small: 0.8rem;
+$font-size-base-small: 0.875rem;
+$font-size-title: 1.5rem;
 
 /* TYPOGRAPHY */
 $segoe: "Segoe Pro", sans-serif;
 $evolventa: "Evolventa", sans-serif;
 $roboto: Roboto, sans-serif;
+$marianne: Marianne, arial, sans-serif;
 
 /* SPACING (values from Bulma) */
 $spacing-1: map-get($spacing-values, "1"); // 0.25rem

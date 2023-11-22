@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -8,12 +7,14 @@ import { range } from "../../helpers/utils/utils";
 const Rating = ({ min, max, rate = null, handleChange }) => {
   return (
     <div className="user-feedback__rating">
-      <p>Recommanderiez-vous ce site à un(e) collègue ?</p>
+      <span className="question">
+        Recommanderiez-vous ce site à un(e) collègue ?
+      </span>
       <div className="user-feedback__rates">
-        {range(min, max).map((number, index) => (
+        {range(min, max).map((number) => (
           <label className="user-feedback__rate" key={`rating${number}`}>
             <input
-              className="user-feedback__rate-radio"
+              className={`user-feedback__rate-radio `}
               type="radio"
               name="rate"
               value={`${number}`}
@@ -21,12 +22,11 @@ const Rating = ({ min, max, rate = null, handleChange }) => {
               onChange={handleChange(SET_RATE)}
             />
             <span
-              className={classNames("user-feedback__rate-span", {
-                [`user-feedback__rate-span--${index}`]:
-                  !rate || rate === `${index}`,
-              })}
+              className={` user-feedback__rate-span yes-no-btn ${
+                parseInt(rate) === number ? "active" : ""
+              } `}
             >
-              <strong>{number}</strong>
+              {number}
             </span>
           </label>
         ))}

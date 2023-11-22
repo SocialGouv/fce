@@ -2,7 +2,6 @@
 @import "./../../../../App/placeholders";
 
 .psi {
-    scroll-margin: 3.6rem;
 
     &__data {
         .dd {
@@ -10,10 +9,21 @@
             justify-content: center;
         }
     }
-
+    &__name {
+        font-family: $marianne;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.5rem;
+        color: $title-grey;
+    }
     &__description {
-        font-style: italic;
-        font-size: $font-size-small;
+        font-family: $marianne;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.5rem;
+        color: $title-grey;
 
         ul {
             list-style: inside;
@@ -40,6 +50,11 @@
 
     &__establishment-count {
         padding: $spacing-3 $spacing-3 $spacing-2;
+        font-family: $marianne;
+        font-size: 0.875rem;
+        font-style: normal;
+        line-height: 1.5rem;
+        color: $title-grey;
         font-weight: bold;
     }
 
@@ -53,7 +68,4 @@
         }
     }
 
-    /* & + & {
-        margin-top: $spacing-4;
-    } */
 }

@@ -16,11 +16,15 @@
 }
 
 .home-page {
+    font-family: $marianne;
+    background-color: white !important;
+    margin-top: $spacing-4;
     h2 {
         font-size: 2.5rem;
-        font-weight: 900;
+        font-weight: 600;
         text-align: center;
-        margin-bottom: $spacing-5;
+        margin: $spacing-4;
+        font-family: $marianne;
     }
 
     h3 {
@@ -28,18 +32,25 @@
         font-weight: 700;
         text-align: center;
         margin-bottom: $spacing-3;
+        line-height: 2.5rem;
+        font-family: $marianne;
+        color: $title-grey;
     }
 
     p {
         font-size: 1.25rem;
+        font-family: $marianne;
+        color: $title-grey;
     }
 
     &__white-title {
         color: $white;
+        font-family: $marianne;
     }
 
     &__blue-title {
-        color: $deep-blue;
+        color: $title-grey;
+        font-family: $marianne;
     }
 
     .columns {
@@ -47,38 +58,106 @@
     }
 
     &__section {
-        padding: $spacing-5 6rem;
+        padding: 4rem;
+        @media (max-width: 600px) {
+            padding: $spacing-4 !important;
+        }
     }
 
     &__summary {
-        color: $white;
+        color: $dark-blue;
         text-align: center;
-        background-color: $deep-blue;
+        font-family: $marianne;
+        padding: 6rem;
+
+        @media (max-width: 600px) {
+            padding: $spacing-4 $spacing-1 !important;
+        }
     }
 
     &__action-links-container {
-        display: flex;
-        justify-content: center;
+        flex-wrap: wrap;
+        background-color: transparent;
+        padding: $spacing-2 $spacing-6;
+        font-family: $marianne;
+        @media (max-width: 600px) {
+            padding: $spacing-2 !important;
+        }
+        .home-page__link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .divider-column {
+            align-items: center !important;
+            justify-content: center !important;
+            .divider {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                &-text {
+                    font-size: 1.5em;
+                    color: $dark-blue;
+                    text-align: center;
+                }
+            }
+        }
+
+        .content {
+            flex: 1 1 !important;
+            filter: drop-shadow(0 1px 3px rgba(0, 0, 18, 0.16));
+            background-color: $white-smoke !important;
+        }
+
+        .text-title {
+            color: $white-smoke;
+            font-size: 1rem;
+            font-family: $marianne;
+            line-height: 1.5rem;
+            font-weight: 500;
+            text-align: center;
+            padding: $spacing-2;
+            background-color: $dark-blue;
+        }
+        .text-explicatif {
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1.25rem;
+            color: $title-grey !important;
+            padding: 0 $spacing-4 $spacing-4;
+            text-align: center;
+        }
     }
 
     .icons {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: $spacing-4 $spacing-6;
-
         text-align: center;
         font-size: 1.65rem;
         font-weight: 600;
+        gap: $spacing-3;
+        flex-wrap: wrap;
+        flex: 1 1 1 !important;
 
         &__item {
             position: relative;
             justify-content: center;
+            background-color: $white-smoke !important;
+            filter: drop-shadow(0 1px 3px rgba(0, 0, 18, 0.16));
+            display: flex;
+            cursor: pointer;
+            flex: 1 1 !important;
+            padding: $spacing-5;
         }
-
+        .first-text {
+            color: $dark-blue;
+        }
         &__image-container {
             justify-content: center;
             align-items: center;
+            margin-bottom: $spacing-4;
         }
 
         .dots {
@@ -111,86 +190,81 @@
 
     .particles {
         width: 100%;
-        height: 21rem;
-        background: $landing-page-gradient;
-
-        position: absolute;
-        left: 0;
-        top: 0;
+        background: #f5f5fe;
     }
 
     &__how-it-work {
-        padding: $spacing-5 6rem 0 6rem;
+        padding: $spacing-5 6rem $spacing-6 6rem;
+        @media (max-width: 600px) {
+            padding: $spacing-6 !important;
+        }
 
+        h2 {
+            color: $dark-blue !important;
+        }
         &__item {
             display: flex;
-            color: $white;
-
+            color: $dark-blue !important;
+            &_column {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
             h4 {
                 font-size: 1.25rem;
                 font-weight: 700;
                 padding-bottom: 1rem;
+                color: $dark-blue !important;
             }
 
             span {
-                position: relative;
-                font-size: 10rem;
-                font-weight: 900;
-                top: -14px;
+                font-size: 5rem;
+                font-family: $marianne;
+                font-weight: 600;
+                text-align: right;
             }
 
             p {
-                font-size: 1rem;
-            }
-
-            &:first-child {
-                span {
-                    position: relative;
-                    right: -16px;
-                }
+                font-size: 1.5rem ;
+                font-family: $marianne;
+                font-weight: 700;
             }
         }
     }
 
     &__daily-use {
-        padding-top: 0;
-
-        .columns {
-            margin-top: 0;
-        }
-
         &__items {
             display: flex;
-            justify-content: space-around;
-            align-items: center;
-            overflow: auto;
-            overflow-y: hidden;
-            width: 100%;
+            flex: 1 1 1;
+            gap: $spacing-3;
+            flex-wrap: wrap;
         }
 
         &__item {
-            border: solid 2px $white;
-            box-shadow: 8px 8px 1px 0 darken($deep-blue, 5%);
-            background-color: $deep-blue;
-
-            padding: 0.5rem 1rem;
-            margin: 0 2rem 0.5rem 0;
-            height: 18rem;
-            min-width: 24rem;
-            max-width: 24rem;
-
+            filter: drop-shadow(0 1px 3px rgba(0, 0, 18, 0.16));
+            background-color: $white-smoke !important;
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 !important;
+            position: relative;
+            cursor: pointer;
+            padding: $spacing-6 $spacing-4;
+            &-content {
+                padding: $spacing-1;
+            }
             h4 {
                 font-size: 1.15rem;
                 font-weight: 700;
                 text-align: center;
                 margin-bottom: 3rem;
-                color: $white;
+                color: $dark-blue;
+                padding: $spacing-3;
             }
 
             p {
                 font-size: 1rem;
                 font-weight: 400;
-                color: darken($white, 10%);
+                color: darken($title-grey, 10%);
             }
         }
 
@@ -210,221 +284,45 @@
         justify-content: space-around;
         align-items: center;
         padding: 2rem;
-        background-color: $carolina-blue;
+        box-shadow: inset 0 0 0 0, inset 0 -0.15rem 0 0 $dark-blue !important;
+        background-color: #f5f5fe !important ;
 
         p {
             font-size: 2.25rem;
             font-weight: bolder;
-            color: $white;
+            line-height: 2.5rem;
+            color: $dark-blue;
+            font-family: $marianne;
+            @media (max-width: 600px) {
+                font-size: $font-size-base;
+                font-weight: bolder;
+            }
         }
     }
 
     &__link {
         margin: 2rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
 
         a {
-            padding: $spacing-4;
-            background-color: $yellow;
-            border: none;
-            color: $deep-blue;
-            font-weight: 600;
+            padding: $spacing-2 $spacing-4;
+            color: $dark-blue;
+            border: 1px solid $dark-blue;
+            background-color: $white-smoke;
+            font-weight: 500;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            min-height: 2.5rem;
+            font-family: $marianne;
+            display: inline-flex;
+            flex-direction: row;
             transition: background-color 150ms ease-in;
 
             &:hover {
-                background-color: darken($yellow, 5%);
-                color: $deep-blue;
+                background-color: darken(#f5f5fe, 5%);
             }
-        }
-    }
-}
-
-@media (max-width: $landing-page-breaking) {
-    .home-page {
-        .icons {
-            padding: $spacing-4 0;
-
-            p {
-                font-size: 1rem;
-            }
-        }
-
-        &__how-it-work {
-            padding: $spacing-5 2rem;
-
-            &__item {
-                h4 {
-                    font-size: 1.15rem;
-                    padding-bottom: 0.5rem;
-                }
-
-                span {
-                    font-size: 8rem;
-                    font-weight: 900;
-                    top: 4px;
-                }
-
-                p {
-                    font-size: 0.9rem;
-                }
-            }
-        }
-
-        &__footer {
-            p {
-                font-size: 2rem;
-            }
-        }
-
-        &__daily-use {
-            &__items {
-                justify-content: start;
-
-                &:last-child {
-                    margin-right: 2rem;
-                }
-            }
-
-            &__quote {
-                padding: 2rem 0;
-                p {
-                    font-size: 1rem;
-                }
-
-                :first-child {
-                    font-size: 1.5rem;
-                }
-            }
-        }
-    }
-}
-
-@include touch {
-    .home-page {
-        &__how-it-work {
-            padding: $spacing-5 6rem;
-
-            &__item {
-                h4 {
-                    font-size: 1.1rem;
-                    padding-bottom: 0.3rem;
-                }
-
-                span {
-                    top: 0px;
-                    font-size: 7rem;
-                    font-weight: 900;
-                    margin-right: 2rem;
-                }
-
-                p {
-                    font-size: 1rem;
-                }
-
-                &:first-child {
-                    span {
-                        position: relative;
-                        right: 0;
-                    }
-                }
-            }
-        }
-
-        .particles {
-            height: 40rem;
-        }
-
-        &__daily-use {
-            h2 {
-                position: relative;
-                margin-top: 3rem;
-            }
-        }
-    }
-
-    .icons {
-        flex-direction: column-reverse;
-        padding: $spacing-2;
-
-        p {
-            font-size: 1.1rem;
-        }
-    }
-}
-
-@include mobile {
-    .home-page {
-        h2 {
-            font-size: 2.25rem;
-        }
-
-        h3 {
-            font-size: 1.5rem;
-        }
-
-        &__summary {
-            p {
-                font-size: 1.1rem;
-            }
-        }
-
-        &__section {
-            padding: $spacing-5;
-        }
-
-        .particles {
-            height: 42rem;
-        }
-
-        &__how-it-work {
-            padding: $spacing-5 3rem;
-
-            &__item {
-                span {
-                    top: 10px;
-                    margin-right: 1.5rem;
-                }
-
-                p {
-                    font-size: 0.9rem;
-                }
-
-                &:first-child {
-                    span {
-                        position: relative;
-                        right: 0;
-                    }
-                }
-            }
-        }
-
-        &__daily-use {
-            &__quote {
-                p {
-                    font-size: 0.9rem;
-                }
-
-                :first-child {
-                    font-size: 1.25rem;
-                    padding-bottom: 1rem;
-                }
-            }
-        }
-
-        &__footer {
-            display: block;
-            text-align: center;
-
-            p {
-                font-size: 1.8rem;
-            }
-        }
-    }
-}
-
-@media (max-width: $landing-page-mobile-breaking) {
-    .home-page {
-        .particles {
-            height: 48rem;
         }
     }
 }

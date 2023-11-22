@@ -1,0 +1,31 @@
+@import "../../../../App/variables";
+
+.SubHeader {
+    display: flex;
+    flex-wrap: wrap;
+    color: $white;
+    background-color: $dark-blue;
+    min-height: 96px;
+    gap: 1rem;
+    align-items: center;
+
+    padding-left: 7.5rem;
+
+    font-family: $marianne;
+    @media print {
+        display: none !important;
+    }
+    &-name {
+        font-size: 2rem;
+        font-weight: 700;
+        text-overflow: ellipsis;
+        text-transform: capitalize;
+        font-family: $marianne;
+    }
+    &-naf {
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.75rem;
+    }
+}

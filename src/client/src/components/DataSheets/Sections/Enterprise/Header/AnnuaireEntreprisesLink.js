@@ -8,9 +8,11 @@ const AnnuaireEntreprisesLink = ({ siren }) => {
   return (
     <a
       className="is-link"
+      rel="noreferrer noopener"
+      target="_blank"
       href={`https://annuaire-entreprises.data.gouv.fr/entreprise/${siren}`}
     >
-      l’Annuaire des Entreprises
+      Annuaire des Entreprises
     </a>
   );
 };

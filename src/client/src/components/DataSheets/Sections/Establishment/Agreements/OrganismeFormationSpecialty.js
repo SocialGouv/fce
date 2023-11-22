@@ -16,7 +16,11 @@ const OrganismeFormationSpecialty = ({ organismes_formation }) => {
 
   return (
     <>
-      <Data name="Spécialité(s) de formation" value={data} />
+      <Data
+        className="has-no-border"
+        name="Spécialité(s) de formation"
+        value={data}
+      />
     </>
   );
 };

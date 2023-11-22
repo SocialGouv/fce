@@ -1,3 +1,5 @@
+import "react-toggle/style.css";
+
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import Toggle from "react-toggle";
@@ -7,18 +9,17 @@ import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
-import Subcategory from "../../SharedComponents/Subcategory";
-import Table from "../../SharedComponents/Table";
+import NonBorderedTable from "../../SharedComponents/NonBorderedTable";
 import { useDsnEffectif } from "./EffectifsDsn.gql";
 import EffectifsGraph from "./EffectifsGraph";
 
-const EXPANDED_MAX_EFFECTIFS = 12;
+const EXPANDED_MAX_EFFECTIFS = 60;
 const COLLAPSED_MAX_EFFECTIFS = 1;
 const START_DATE = "2018-01";
 
 const EffectifsDsn = ({ siret }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [displayTable, setDisplayTable] = useState(false);
+  const [displayTable, setDisplayTable] = useState(true);
 
   const {
     loading,
@@ -39,6 +40,7 @@ const EffectifsDsn = ({ siret }) => {
         name={"Effectif physique"}
         emptyValue="Non disponible"
         sourceCustom={`Gip-Mds / DSN`}
+        className="has-no-border"
       />
     );
   }
@@ -49,121 +51,122 @@ const EffectifsDsn = ({ siret }) => {
 
   return (
     <LoadableContent loading={loading} error={error}>
-      {!isExpanded ? (
-        <>
-          <Data
-            name="Effectif physique"
-            value={effectifs?.[0]?.eff}
-            nonEmptyValue=""
-            sourceSi="DSN"
-            hasNumberFormat={true}
+      <>
+        <Data
+          name="Effectif physique"
+          value={effectifs?.[0]?.eff}
+          nonEmptyValue=""
+          sourceSi="DSN"
+          className="has-no-border"
+          hasNumberFormat={true}
+        />
+        {!isExpanded && effectifs?.length >= 1 && (
+          <AllEffectifsEtpButton
+            text="Afficher l'évolution des effectifs physiques"
+            loading={loading}
+            onClick={() => setIsExpanded(true)}
           />
-          {effectifs?.length >= 1 && (
-            <AllEffectifsEtpButton
-              text="Afficher l'évolution des effectifs physiques"
-              loading={loading}
-              onClick={() => setIsExpanded(true)}
+        )}
+        {isExpanded && (
+          <AllEffectifsEtpButton
+            text="Masquer le détail des effectifs"
+            isUp
+            loading={loading}
+            onClick={() => setIsExpanded(false)}
+          />
+        )}
+      </>
+      {!loading && isExpanded && (
+        <>
+          <div className="display_table_chart__switch">
+            <button
+              className="toggle-label "
+              onClick={() => setDisplayTable(!displayTable)}
+            >
+              {!displayTable ? " Affichage Courbe" : "Affichage Tableau"}
+            </button>
+            <Toggle
+              id="display_table_chart-toggle"
+              checked={displayTable}
+              name="burritoIsReady"
+              value={displayTable}
+              onChange={handleChange}
             />
-          )}
-        </>
-      ) : (
-        !loading && (
-          <>
-            <Subcategory subtitle="Effectif physique" sourceSi="DSN">
-              <div className="display_table_chart__switch">
-                <Toggle
-                  id="display_table_chart-toggle"
-                  checked={displayTable}
-                  name="burritoIsReady"
-                  value={displayTable}
-                  onChange={handleChange}
-                />
-                <span className="source" htmlFor="display_table_chart-toggle">
-                  {!displayTable ? " Afficher Tableau" : " Afficher Courbe"}
-                </span>
-              </div>
-              {displayTable && (
-                <Table>
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Effectif Total</th>
-                      <th>Homme</th>
-                      <th>Femme</th>
-                      <th>CDD</th>
-                      <th>CDI</th>
-                      <th>Total Interim</th>
+          </div>
+          {!displayTable && (
+            <div className="data-sheet--table">
+              <NonBorderedTable className="box-shadow" isScrollable>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Effectif Total</th>
+                    <th>Homme</th>
+                    <th>Femme</th>
+                    <th>CDD</th>
+                    <th>CDI</th>
+                    <th>Total Interim</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {effectifs?.map?.((effectif) => (
+                    <tr key={`effectif-${effectif?.id}`}>
+                      <td>{effectif?.mois}</td>
+                      <td>
+                        <Value
+                          hasNumberFormat
+                          value={effectif?.eff}
+                          empty="0"
+                        />
+                      </td>
+                      <td>
+                        <Value
+                          hasNumberFormat
+                          value={effectif?.hommes}
+                          empty="0"
+                        />
+                      </td>
+                      <td>
+                        <Value
+                          hasNumberFormat
+                          value={effectif?.femmes}
+                          empty="0"
+                        />
+                      </td>
+                      <td>
+                        <Value
+                          hasNumberFormat
+                          value={effectif?.cdd}
+                          empty="0"
+                        />
+                      </td>
+                      <td>
+                        <Value
+                          hasNumberFormat
+                          value={effectif?.cdi}
+                          empty="0"
+                        />
+                      </td>
+                      <td>
+                        <Value
+                          hasNumberFormat
+                          value={effectif?.interim}
+                          empty="0"
+                        />
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {effectifs?.map?.((effectif) => (
-                      <tr key={`effectif-${effectif?.id}`}>
-                        <td>{effectif?.mois}</td>
-                        <td>
-                          <Value
-                            hasNumberFormat
-                            value={effectif?.eff}
-                            empty="-"
-                          />
-                        </td>
-                        <td>
-                          <Value
-                            hasNumberFormat
-                            value={effectif?.hommes}
-                            empty="-"
-                          />
-                        </td>
-                        <td>
-                          <Value
-                            hasNumberFormat
-                            value={effectif?.femmes}
-                            empty="-"
-                          />
-                        </td>
-                        <td>
-                          <Value
-                            hasNumberFormat
-                            value={effectif?.cdd}
-                            empty="-"
-                          />
-                        </td>
-                        <td>
-                          <Value
-                            hasNumberFormat
-                            value={effectif?.cdi}
-                            empty="-"
-                          />
-                        </td>
-                        <td>
-                          <Value
-                            hasNumberFormat
-                            value={effectif?.interim}
-                            empty="-"
-                          />
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              )}
-            </Subcategory>
-            {!displayTable && siret && (
-              <EffectifsGraph
-                isDsnData
-                siret={siret}
-                date={effectifs?.[0]?.mois}
-              />
-            )}{" "}
-            {isExpanded && (
-              <AllEffectifsEtpButton
-                text="Afficher moins"
-                isUp
-                loading={loading}
-                onClick={() => setIsExpanded(false)}
-              />
-            )}
-          </>
-        )
+                  ))}
+                </tbody>
+              </NonBorderedTable>
+            </div>
+          )}
+          {displayTable && (
+            <EffectifsGraph
+              date={effectifs?.[0]?.mois}
+              isDsnData
+              siret={siret}
+            />
+          )}{" "}
+        </>
       )}
     </LoadableContent>
   );

@@ -15,7 +15,7 @@
     border-radius: $border-radius-2;
 
     th {
-        color: $grey-tundora;
+        color: $title-grey;
 
         &:not(:last-of-type) {
             border-right: $border-grey-light;
@@ -23,13 +23,9 @@
     }
 
     .at__head {
-        background: linear-gradient(to bottom, #ffffff 15%, $grey-geyser);
-
         &__tr {
-            border: $border-grey-light;
-            border-bottom: 0;
             border-radius: $border-radius-2;
-
+            background-color: $background-default-grey-hover !important;
             @media not print {
                 box-shadow: $box-shadow-awesome-table;
             }
@@ -38,7 +34,16 @@
         &__th {
             vertical-align: middle;
             white-space: nowrap;
-            color: $grey-tundora;
+            background-color: $background-default-grey-hover !important;
+            border-bottom: 2px solid #3a3a3a !important;
+            border-right: none !important;
+            font-family: $marianne;
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 1.5rem;
+            color: $title-grey;
+            padding: $spacing-4;
 
             &--important {
                 color: $primary;
@@ -65,14 +70,13 @@
     .at__body {
         &__tr {
             cursor: pointer;
-            border-left: $border-grey-light;
-            border-right: $border-grey-light;
-            border-radius: $border-radius-2;
+            border-left: none !important;
+            border-right: none !important;
             height: 2.7rem;
             margin: auto 0;
 
             &:hover {
-                background-color: $light-sky-blue;
+                background-color: #f5f5fe;
             }
         }
 
@@ -80,12 +84,17 @@
         &__td {
             padding: $spacing-3;
             border-top: $border-grey-light;
-            color: #555;
+            font-family: $marianne;
+            font-size: 0.875rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.5rem;
+            color: $default-text-gey;
             vertical-align: middle;
 
             a {
-                font-weight: 700;
-                color: $faced-blue;
+                font-weight: 700 !important;
+                color: $default-text-gey;
             }
 
             &:nth-of-type(4) {
@@ -106,9 +115,8 @@
 
     .at__footer {
         &__tr {
-            border: $border-grey-light;
+            border: none !important;
             border-top: 0;
-            border-radius: $border-radius-2;
         }
 
         &__td {
@@ -117,9 +125,37 @@
 
             .pageNav {
                 display: flex;
-                justify-content: space-between;
+                flex-wrap: wrap;
                 align-items: center;
-                width: 100%;
+                justify-content: center;
+                @media print {
+                    display: none !important;
+                }
+                button {
+                    margin-left: $spacing-4;
+                    font-size: 0.875rem !important;
+                    font-weight: 500 !important;
+                    background-color: transparent;
+                    border: none;
+                    cursor: pointer;
+                    padding: 0.5rem 0.75rem !important;
+                    font-family: $marianne;
+                }
+                .prev-btn {
+                    align-items: center;
+                    display: flex;
+                    gap: $spacing-2;
+                }
+                button:hover {
+                    background-color: $background-default-grey-hover;
+                }
+                .active {
+                    background-color: $dark-blue;
+                    color: white;
+                }
+                .active:hover {
+                    background-color: $primary;
+                }
 
                 .prev-button .button-icon {
                     margin-right: $spacing-2;

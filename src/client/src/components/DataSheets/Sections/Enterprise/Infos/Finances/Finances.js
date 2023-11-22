@@ -16,7 +16,7 @@ import {
 } from "../../../../../../utils/donnees-ecofi/donnees-ecofi";
 import LoadSpinner from "../../../../../shared/LoadSpinner";
 import Value from "../../../../../shared/Value";
-import Table from "../../../SharedComponents/Table";
+import NonBorderedTable from "../../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import { useFinanceData, useFinanceDataApiEntreprise } from "./Finances.gql";
 import FinancesGraph from "./FinancesGraph";
 
@@ -116,7 +116,7 @@ const Finances = ({ siret, siren }) => {
     datesApi = donneesEcofiApi?.map((donneeEcofi) => {
       return (
         <th
-          className="has-text-right"
+          className="th table-cell--center-cell"
           key={getKey("data.date_fin_exercice", donneeEcofi?.data)}
         >
           <Value value={getDateDeclaration(donneeEcofi?.data)} empty="-" />
@@ -126,7 +126,7 @@ const Finances = ({ siret, siren }) => {
     caListApi = donneesEcofiApi?.map((donneeEcofi) => {
       return (
         <td
-          className="has-text-right"
+          className="th table-cell--center-cell"
           key={getKey("data.ca", donneeEcofi.data)}
         >
           <Value
@@ -141,7 +141,7 @@ const Finances = ({ siret, siren }) => {
   return (
     <>
       {hasBilan_K && (
-        <>
+        <span className="text">
           Cette entreprise déclare un bilan consolidé, voir sur{" "}
           <a
             rel="noreferrer noopener"
@@ -150,61 +150,72 @@ const Finances = ({ siret, siren }) => {
           >
             l’Annuaire des Entreprises
           </a>
-        </>
+        </span>
       )}
       {donneesEcofiBce?.length > 0 ? (
         <>
-          <Table className="enterprise-finances">
-            <thead>
-              <tr>
-                <th>Date fin exercice</th>
-                {dates}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Chiffre d{"'"}affaires (€)</th>
-                {caList}
-              </tr>
-              <tr>
-                <th scope="row">Marge brute (€)</th>
-                {margeBrute}
-              </tr>
-              <tr>
-                <th scope="row">EBE (€)</th>
-                {EBE}
-              </tr>
-              <tr>
-                <th scope="row">{`Résultat d'exploitation (€)`}</th>
-                {resultExploi}
-              </tr>
-              <tr>
-                <th scope="row">Résultat net (€)</th>
-                {resultats}
-              </tr>
-            </tbody>
-          </Table>
-          <FinancesGraph
-            data={concatApiEntrepriseBceData(donneesEcofiBce, donneesEcofiApi)}
-          />
+          <div className="data-sheet--table">
+            <NonBorderedTable>
+              <thead>
+                <tr>
+                  <th>Date fin exercice</th>
+                  {dates}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Chiffre d{"'"}affaires (€)</th>
+                  {caList}
+                </tr>
+                <tr>
+                  <th scope="row">Marge brute (€)</th>
+                  {margeBrute}
+                </tr>
+                <tr>
+                  <th scope="row">EBITDA-EBE (€)</th>
+                  {EBE}
+                </tr>
+                <tr>
+                  <th scope="row">{`Résultat d'exploitation (€)`}</th>
+                  {resultExploi}
+                </tr>
+                <tr>
+                  <th scope="row">Résultat net (€)</th>
+                  {resultats}
+                </tr>
+              </tbody>
+            </NonBorderedTable>
+          </div>
+          <div className="box-shadow">
+            <FinancesGraph
+              data={concatApiEntrepriseBceData(
+                donneesEcofiBce,
+                donneesEcofiApi
+              )}
+            />
+          </div>
         </>
       ) : donneesEcofiBce.length === 0 && donneesEcofiApi ? (
         <>
-          <Table className="enterprise-finances">
-            <thead>
-              <tr>
-                <th>Date fin exercice</th>
-                {datesApi}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Chiffre d{"'"}affaires (€)</th>
-                {caListApi}
-              </tr>
-            </tbody>
-          </Table>
-          <FinancesGraph data={donneesEcofiApi} isDataApi={true} />
+          <div className="data-sheet--table">
+            <NonBorderedTable>
+              <thead>
+                <tr>
+                  <th>Date fin exercice</th>
+                  {datesApi}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Chiffre d{"'"}affaires (€)</th>
+                  {caListApi}
+                </tr>
+              </tbody>
+            </NonBorderedTable>
+          </div>
+          <div className={!donneesEcofiApi ? "box-shadow" : ""}>
+            <FinancesGraph data={donneesEcofiApi} isDataApi={true} />
+          </div>
         </>
       ) : (
         <p className="enterprise-finances__not-available has-text-centered">

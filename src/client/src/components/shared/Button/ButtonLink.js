@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 import React from "react";
 
 const ButtonLink = ({ children, onClick }) => (
-  <button className="button-link" onClick={onClick}>
-    {children}
-  </button>
+  <div className="all_effectifs_etp_button is-link-text">
+    <button className="button-link" onClick={onClick}>
+      {children}
+    </button>
+  </div>
 );
 
 ButtonLink.propTypes = {

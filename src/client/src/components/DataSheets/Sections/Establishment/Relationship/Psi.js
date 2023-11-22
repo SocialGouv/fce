@@ -41,28 +41,28 @@ const Psi = ({ siret }) => {
           <Data
             name={`Etablissement identifié comme lieu d'une ou plusieurs PSI`}
             description={
-              <p className="psi__description">
+              <span className="psi__desc">
                 (directement pour le compte de l&apos;entreprise et/ou pour une
                 autre entreprise donneur d&apos;ordre)
-              </p>
+              </span>
             }
-            className="psi__data"
-            columnClasses={["is-10", "is-2"]}
+            className="has-no-border psi__data"
+            columnClasses={["is-6", "is-6", "psi__value"]}
             value={hasPsi ? "Oui" : "Non"}
           />
           {!!data.psi_siret?.salaries_annee_courante && (
             <Data
               name={`Nombre de salariés distincts détachés en ${currentYear}`}
-              className="psi__data"
-              columnClasses={["is-10", "is-2"]}
+              className=" has-no-border psi__data"
+              columnClasses={["is-6", "is-6"]}
               value={data.psi_siret?.salaries_annee_courante}
             />
           )}
           {!!data.psi_siret?.salaries_annee_precedente && (
             <Data
               name={`Nombre de salariés distincts détachés en ${lastYear}`}
-              className="psi__data"
-              columnClasses={["is-10", "is-2"]}
+              className="has-no-border psi__data"
+              columnClasses={["is-6", "is-6"]}
               value={data.psi_siret?.salaries_annee_precedente}
             />
           )}
@@ -78,8 +78,8 @@ const Psi = ({ siret }) => {
                 />
               )
             }
-            className="psi__data"
-            columnClasses={["is-10", "is-2"]}
+            className=" has-no-border psi__data"
+            columnClasses={["is-6", "is-6", "psi__value"]}
             value={isEnterpriseWithPsi ? "Oui" : "Non"}
           />
         </PgApiDataHandler>

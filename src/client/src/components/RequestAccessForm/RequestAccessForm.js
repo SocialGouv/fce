@@ -191,7 +191,7 @@ const RequestAccessForm = ({ onSuccess }) => {
   };
 
   return (
-    <StepForm onSubmit={onSubmit}>
+    <StepForm onSubmit={onSubmit} className={"access-form"}>
       {hasErrors(errors) &&
         Object.entries(errors).map(([key, message]) => (
           <FormError key={`error-${key}`} errorMessage={message} />

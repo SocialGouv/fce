@@ -1,0 +1,27 @@
+@import "../../../../App/variables";
+.scroll-to-top {
+    @media print {
+        display: none !important;
+    }
+    &-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: white;
+        color: $dark-blue;
+        font-family: $marianne;
+        border: none;
+        border-bottom: 1.5px solid $dark-blue;
+        cursor: pointer !important;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg {
+            margin: 0 5px 5px 0 !important;
+        }
+    }
+}

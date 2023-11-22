@@ -1,3 +1,5 @@
+// Cette fonction affiche les informations de développement économique en fonction d'un numéro de SIRET.
+// À SUPPRIMER : Vérifier si cette fonction est toujours utilisée et si elle peut être supprimée en toute sécurité.
 import PropTypes from "prop-types";
 import React from "react";
 

@@ -44,7 +44,7 @@ const HomePage = () => {
       />
     );
   return (
-    <div className="home-page">
+    <div className="home-page ">
       <Summary />
       <IconItems users={users} isLoading={isLoading} />
       <HowItWork />

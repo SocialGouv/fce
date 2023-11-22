@@ -21,7 +21,7 @@ const Subcategory = ({
     <div className={classNames("subcategory", className)}>
       {subtitle && (
         <div className="subcategory__header">
-          <h3 className="subcategory__title">{subtitle}</h3>
+          <h3 className="subcategory__title has-text-dark-blue">{subtitle}</h3>
           {(sourceCustom || sourceSi) && (
             <Source
               si={sourceSi}

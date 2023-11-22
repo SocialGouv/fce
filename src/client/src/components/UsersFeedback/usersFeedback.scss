@@ -16,7 +16,7 @@
 
     &__panel {
         background: $white;
-        border: $border-grey-light;
+        border: 1px solid #dfdff1;
     }
 
     &__useful {
@@ -24,13 +24,17 @@
         justify-content: space-between;
         align-items: center;
         padding: $spacing-2 $spacing-4;
-        font-size: 1.2rem;
+        font-size: 1.75rem;
+        font-family: "Marianne", sans-serif;
+        font-style: normal;
         font-weight: bold;
         color: $white;
-        background: $primary;
+        background: $dark-blue;
+        cursor: pointer;
 
-        legend {
+        .legend-text {
             font-size: $font-size-base;
+            cursor: pointer !important;
         }
     }
 
@@ -61,16 +65,59 @@
             }
         }
     }
-
+    .icon {
+        background: transparent;
+        border: none;
+        width: 2rem;
+        height: 2rem;
+        cursor: pointer;
+    }
+    .question {
+        margin: $spacing-4 0;
+        padding: $spacing-2 0;
+        font-size: $font-size-base-small;
+        color: $dark-grey;
+        font-family: $marianne;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+    .yes-no-btns {
+        display: flex;
+        align-items: center;
+        padding: $spacing-4 0;
+        gap: $spacing-2;
+        button {
+            color: $dark-blue;
+            padding: 4px 10px;
+            font-size: 1rem;
+            font-family: $marianne;
+            font-weight: 400;
+            background: #e5e5f4;
+            line-height: 1.5rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+        }
+        .active {
+            border: 2px solid $dark-blue;
+        }
+        button:hover {
+            border: 2px solid $dark-blue;
+            border-style: dashed;
+        }
+    }
     &__comment {
         padding: $spacing-4;
+        font-size: $font-size-base-small;
+        color: $dark-grey;
+        font-family: $marianne;
 
         label {
             font-weight: bold;
         }
 
         textarea {
-            margin-bottom: $spacing-4;
+            margin: $spacing-4 0;
         }
     }
 
@@ -89,6 +136,8 @@
     &__rates {
         display: flex;
         flex-wrap: wrap;
+        padding: 1rem 0;
+        gap: 0.5rem;
     }
 
     &__rate {
@@ -115,18 +164,20 @@
             align-items: center;
             width: 2.5rem;
             height: 2.5rem;
+            color: $dark-blue !important;
             border: $border-grey-light;
-            border-radius: $border-radius-1;
-            background-color: $grey-geyser;
+            border-radius: 6px;
+            background: #e5e5f4;
+            font-family: $marianne;
             cursor: pointer;
             transition: background-color $duration-2;
 
-            // gradient colors for each rate from 0 to 10
-            // SASS list index starts at 1, to start with 0 : index - 1
-            @each $current-color in $rating-gradient {
-                &--#{index($rating-gradient, $current-color) - 1} {
-                    background-color: $current-color;
-                }
+            &.active {
+                border: 2px solid $dark-blue;
+            }
+            &:hover {
+                border: 2px solid $dark-blue;
+                border-style: dashed;
             }
         }
     }
@@ -136,7 +187,19 @@
         justify-content: flex-end;
 
         .button {
-            border: $border-grey-light;
+            font-size: 1rem;
+            line-height: 1.2rem;
+            color: white;
+            font-weight: 400;
+            background-color: $dark-blue;
+        }
+        .button:hover{
+            color: white;
+            font-weight: 500;
+        }
+        .button:disabled{
+            color: $dark-blue;
+            background-color: #dfdff1;
         }
     }
 }

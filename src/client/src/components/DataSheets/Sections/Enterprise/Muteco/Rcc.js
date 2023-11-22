@@ -21,6 +21,7 @@ const Rcc = ({ entreprise }) => {
       <ConditionalData
         text="Procédure(s) enregistrée(s) depuis le 22 décembre 2017"
         showTable={hasRcc}
+        className="has-no-border"
       />
       {hasRcc && <RupcoTable list={formattedData} />}
     </Subcategory>

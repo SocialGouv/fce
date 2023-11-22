@@ -5,18 +5,20 @@ import { Link } from "react-router-dom";
 import Value from "../../../../shared/Value";
 
 const SuccessionData = ({ name, values }) => (
-  <div className="data dl columns">
+  <div className="data dl columns has-no-border">
     <div className="column">
-      <div className="dt">{name} (Date Succession)</div>
+      <div className="dt dt-title">{name} (Date Succession)</div>
     </div>
     <div className="dd column">
       <div>
         {values.map(({ siret, dateliensuccession }, index) => (
-          <div key={index}>
+          <div key={index} className="is-link-text ">
             <Link to={`/establishment/${siret}`}>
               <Value value={siret} />
             </Link>{" "}
-            ({dateliensuccession ? <Value value={dateliensuccession} /> : ""})
+            <span className="date-text">
+              ({dateliensuccession ? <Value value={dateliensuccession} /> : ""})
+            </span>
           </div>
         ))}
       </div>

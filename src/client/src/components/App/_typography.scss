@@ -1,10 +1,10 @@
 body {
-    font-family: $roboto;
+    font-family: $marianne;
 }
 
 h1,
 h2 {
-    font-family: $evolventa;
+    font-family: $marianne;
     font-weight: bold;
     letter-spacing: normal;
 }
@@ -13,18 +13,64 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: $roboto;
+    font-family: $marianne;
     letter-spacing: normal;
     font-weight: bold;
 }
 
 button {
-    font-family: $roboto;
+    font-family: $marianne;
     font-weight: bold;
 }
 
 .has-text-segoe {
     font-family: $segoe;
+}
+.data-value {
+    font-size: $font-size-base-small !important;
+    font-family: $marianne !important;
+    font-weight: 400 !important;
+    line-height: 1.5rem;
+    color: $dark-grey !important;
+}
+.has-no-border {
+    border: none !important;
+}
+.has-text-dark-blue {
+    color: $blue-france !important;
+}
+.dt-title {
+    font-size: $font-size-base-small !important;
+    font-family: $marianne !important;
+    font-weight: 500 !important;
+    line-height: 1.5rem;
+    color: $title-grey;
+}
+.is-link-text {
+    .date-text {
+        font-family: $marianne;
+        font-size: $font-size-base-small;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.5rem;
+        color: #363636;
+    }
+    a {
+        color: $dark-blue !important;
+        font-family: $marianne;
+        font-size: $font-size-base-small;
+        font-weight: 400 !important;
+        line-height: 1.5rem;
+        text-decoration: underline !important;
+        text-underline-offset: 4px;
+
+        &:hover {
+            text-decoration-thickness: 2px !important;
+        }
+    }
+}
+.is-link {
+    color: $dark-blue !important;
 }
 
 .has-text-evolventa-bold {
@@ -35,3 +81,4 @@ button {
 .has-text-evolventa {
     font-family: Evolventa Pro, sans-serif;
 }
+

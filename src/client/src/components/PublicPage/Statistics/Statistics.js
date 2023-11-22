@@ -90,14 +90,16 @@ const Statistics = () => {
   ];
 
   return (
-    <div className="page content">
+    <div className=" container page content is-fluid ">
       <h1>Statistiques</h1>
-      <StatsFilters
-        setRange={setRange}
-        range={range}
-        setStats={setStats}
-        isLoading={isLoading}
-      />
+      <div className="columns">
+        <StatsFilters
+          setRange={setRange}
+          range={range}
+          setStats={setStats}
+          isLoading={isLoading}
+        />
+      </div>
       {error && (
         <div className="error">
           Une erreur est survenue lors de la récupération des données Matomo

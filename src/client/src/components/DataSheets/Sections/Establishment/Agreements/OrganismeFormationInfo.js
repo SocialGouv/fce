@@ -19,12 +19,18 @@ const OrganismeFormationInfo = ({ organismes_formation }) => {
       <Data
         name="Numéro de déclaration d'activité"
         value={getNumeroDeclaration(organismes_formation)}
+        className="has-no-border"
       />
 
-      <Data name="Dénomination" value={getDenomination(organismes_formation)} />
+      <Data
+        name="Dénomination"
+        className="has-no-border"
+        value={getDenomination(organismes_formation)}
+      />
 
       <Data
         name="Dénomination de l'organisme étranger représenté"
+        className="has-no-border"
         value={getDenominationOrganismeEtranger(organismes_formation)}
       />
     </>

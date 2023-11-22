@@ -1,0 +1,19 @@
+@import "../../../App/variables";
+.sheet {
+    &-container {
+        width: 100%;
+        padding: $padding-app-x;
+        .column {
+            padding-top: 0.25rem 0.75rem;
+        }
+        .-title {
+            color: #000;
+            font-family: $marianne;
+            font-size: 1.75rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 2.25rem;
+        }
+      
+    }
+}

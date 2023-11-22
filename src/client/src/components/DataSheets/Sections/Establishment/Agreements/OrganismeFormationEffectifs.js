@@ -18,16 +18,19 @@ const AgrementSpecialty = ({ organismes_formation }) => {
     <>
       <Data
         name="Nombre de stagiaires"
+        className="has-no-border"
         value={getNombreStagiaires(organismes_formation)}
       />
 
       <Data
         name="Nombre de stagiaires confiés par un autre organisme"
+        className="has-no-border"
         value={getNombreStagiairesAutreOrganisme(organismes_formation)}
       />
 
       <Data
         name="Effectif formateur"
+        className="has-no-border"
         value={getEffectifFormateur(organismes_formation)}
       />
     </>

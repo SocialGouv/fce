@@ -21,13 +21,13 @@ const Finess = ({ siret }) => {
         name="Finess Juridique"
         value={finessEJ}
         emptyValue=""
-        columnClasses={["is-7", "is-5"]}
+        className="has-no-border"
       />
       <Data
         name="Finess Etablissement"
         value={finessET}
         emptyValue=""
-        columnClasses={["is-7", "is-5"]}
+        className="has-no-border"
       />
     </Subcategory>
   );

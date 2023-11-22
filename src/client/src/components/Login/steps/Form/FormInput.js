@@ -14,7 +14,7 @@ const FormInput = ({ name, label, type, input, required }) => (
           id={name}
           name={name}
           type={type}
-          className="input"
+          className="input login__mail-input"
           required={required}
         />
       )}

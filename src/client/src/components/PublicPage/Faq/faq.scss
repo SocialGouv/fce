@@ -13,8 +13,8 @@
 
         &__title {
             padding: $spacing-2 $spacing-2 $spacing-1;
-            color: #fff;
-            background: $primary;
+            color: #fff !important;
+            background: $dark-blue;
         }
 
         &__question {
@@ -24,6 +24,9 @@
             background: transparent;
             border: none;
             border-radius: $border-radius-1;
+            cursor: pointer;
+            text-decoration: underline;
+
 
             &:focus {
                 outline: none;

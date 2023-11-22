@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import UsersFeedback from "../../containers/UsersFeedback";
+import ScrollToTopButton from "../DataSheets/Sections/SharedComponents/ScrollToTopButton/ScrollToTopButton.jsx";
 import LoadSpinner from "../shared/LoadSpinner";
 
 const PublicPage = ({ pageData = null, isLoading, hasError }) => {
@@ -17,7 +18,7 @@ const PublicPage = ({ pageData = null, isLoading, hasError }) => {
   }
 
   return (
-    <>
+    <div className="container is-fluid">
       <div className="page content">
         {isLoading ? (
           <LoadSpinner />
@@ -31,7 +32,8 @@ const PublicPage = ({ pageData = null, isLoading, hasError }) => {
         )}
       </div>
       <UsersFeedback fullWidth />
-    </>
+      <ScrollToTopButton />
+    </div>
   );
 };
 

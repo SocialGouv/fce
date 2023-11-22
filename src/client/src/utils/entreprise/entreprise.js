@@ -26,7 +26,10 @@ import {
   normalizeInteractionsT,
 } from "../interactions/interactions";
 
-export const isActive = pipe(prop("etatadministratifunitelegale"), equals("A"));
+export const isActiveEntreprise = pipe(
+  prop("etatadministratifunitelegale"),
+  equals("A")
+);
 
 export const getOrganismesFormations = prop("organismes_formation");
 export const getRupco = prop("rupco");

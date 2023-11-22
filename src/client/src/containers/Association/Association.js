@@ -18,9 +18,17 @@ const Association = ({ siret }) => {
   const { association } = data;
   return (
     <>
-      <Data name="Association" value={isAssociation(association)} />
+      <Data
+        name="Association"
+        value={isAssociation(association)}
+        className="has-no-border"
+      />
       {isAssociation(association) && (
-        <Data name="Numéro RNA" value={getNumeroRna(association)} />
+        <Data
+          name="Numéro RNA"
+          value={getNumeroRna(association)}
+          className="has-no-border"
+        />
       )}
     </>
   );

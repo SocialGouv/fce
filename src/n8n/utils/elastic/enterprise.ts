@@ -1,6 +1,12 @@
 export type BceEtablissement = {
   eta_nic: string;
   eta_siren: string;
+  dirigeants:
+    | {
+        nom: string;
+        prenoms: string;
+      }[]
+    | string;
   eta_siret: string;
   eta_statutDiffusionEtablissement: string;
   eta_dateCreationEtablissement: string;
@@ -155,6 +161,21 @@ export type Enterprise = {
 export const mappings = {
   properties: {
     siren: { type: "keyword" },
+    dirigeants: {
+      type: "nested",
+      properties: {
+        nom: {
+          type: "text",
+          analyzer: "french_indexing",
+          similarity: "bm25_no_norm_length",
+        },
+        prenoms: {
+          type: "text",
+          analyzer: "french_indexing",
+          similarity: "bm25_no_norm_length",
+        },
+      },
+    },
     siret: { type: "keyword" },
     siretRank: { type: "rank_feature" },
 
@@ -214,25 +235,24 @@ const getTrancheEffectif = (effectif: string): string => {
   if (numEffectif > 4999) return "51";
 
   return "00";
-}
+};
 
 const removeEmpty = (document: any): object =>
-  Object.keys(document)
-    .reduce((res: any, key: string) => {
-      const value = document[key];
+  Object.keys(document).reduce((res: any, key: string) => {
+    const value = document[key];
 
-      if (value !== undefined && value !== null && value !== "") {
-        res[key] = value
-      }
+    if (value !== undefined && value !== null && value !== "") {
+      res[key] = value;
+    }
 
-      return res;
-    }, {});
+    return res;
+  }, {});
 
 const getRank = (effectif: string) => {
   const effectifNumber = +effectif;
 
   return isNaN(effectifNumber) ? 0.1 : Math.max(effectifNumber, 0.1);
-}
+};
 
 export const mapEnterprise = (enterprise: BceEtablissement) => {
   const naming = Array.from(
@@ -255,19 +275,20 @@ export const mapEnterprise = (enterprise: BceEtablissement) => {
   )
     .filter((t) => t)
     .join(" ");
-
   const codeActivitePrincipale = [
     enterprise.eta_activitePrincipaleEtablissement,
     enterprise.ent_activitePrincipaleUniteLegale,
-  ]
-    .find((s) => !s.startsWith("00.00")); // 00.00Z is a temporary code
+  ].find((s) => !s?.startsWith("00.00")); // 00.00Z is a temporary code
 
   const adresseEtablissement = [
     enterprise.eta_numeroVoieEtablissement,
     enterprise.eta_indiceRepetitionEtablissement,
     enterprise.eta_typeVoieEtablissement,
     enterprise.eta_libelleVoieEtablissement,
-  ].join(' ').trim().replace(/  /, ' ');
+  ]
+    .join(" ")
+    .trim()
+    .replace(/  /, " ");
 
   const departementEtablissement = enterprise.eta_codePostalEtablissement.slice(
     0,
@@ -277,17 +298,67 @@ export const mapEnterprise = (enterprise: BceEtablissement) => {
   const domaineActivite = codeActivitePrincipale?.slice(0, 2);
 
   // ranking feature cannot be 0
-  const trancheEffectifsUniteLegale = getTrancheEffectif(enterprise.ent_trancheEffectifsUniteLegale);
-  const trancheEffectifsEtablissement = getTrancheEffectif(enterprise.eff_EFF_TOTAL);
+  const trancheEffectifsUniteLegale = getTrancheEffectif(
+    enterprise.ent_trancheEffectifsUniteLegale
+  );
+  const trancheEffectifsEtablissement = getTrancheEffectif(
+    enterprise.eff_EFF_TOTAL
+  );
+  let dirigeants = [];
+
+  // Check if 'dirigeants' exists and is a non-empty string
+
+  if (
+    typeof enterprise?.dirigeants === "string" &&
+    enterprise?.dirigeants?.trim() !== ""
+  ) {
+    try {
+      dirigeants = JSON.parse(enterprise.dirigeants);
+    } catch (error) {
+      console.error(
+        "Error parsing dirigeants:",
+        error,
+        "String:",
+        enterprise.dirigeants
+      );
+      // Set dirigeants to an empty array if parsing fails
+      dirigeants = [];
+    }
+  }
+
+  // Safe mapping
+  const dirigeantsMapped = Array.isArray(dirigeants)
+    ? dirigeants.map((d) => ({
+        nom: d.nom,
+        prenom: d.prenoms,
+      }))
+    : [];
+
+  // Now you can safely use map on dirigeants
 
   const document = {
     siren: enterprise.ent_siren,
     siret: enterprise.eta_siret,
     siretRank: enterprise.eta_siret,
+    dirigeants: dirigeantsMapped,
+    categorieEntreprise: enterprise?.ent_categorieEntreprise,
+    etablissements: enterprise?.Nombre_Eta,
+    pseudo: enterprise?.ent_pseudonymeUniteLegale,
+
+    categorieJuridiqueUniteLegale:
+      enterprise?.ent_categorieJuridiqueUniteLegale,
+    activitePrincipaleUniteLegale:
+      enterprise?.ent_activitePrincipaleUniteLegale,
+    activitePrincipaleEtablissement:
+      enterprise?.eta_activitePrincipaleEtablissement,
+
+    nomenclatureActivitePrincipaleUniteLegale:
+      enterprise?.ent_nomenclatureActivitePrincipaleUniteLegale,
 
     naming,
     denominationUniteLegale: enterprise.ent_denominationUniteLegale,
-    denominationUsuelleUniteLegale: enterprise.ent_denominationUsuelle1UniteLegale,
+    denominationUsuelleUniteLegale:
+      enterprise.ent_denominationUsuelle1UniteLegale,
     prenomUniteLegale: enterprise.ent_prenom1UniteLegale,
     nomUniteLegale: enterprise.ent_nomUniteLegale,
     enseigneEtablissement: enterprise.eta_enseigne1Etablissement,
@@ -302,19 +373,24 @@ export const mapEnterprise = (enterprise: BceEtablissement) => {
     domaineActivite,
 
     adresseEtablissement: adresseEtablissement,
-    complementAdresseEtablissement: enterprise.eta_complementAdresseEtablissement,
+    complementAdresseEtablissement:
+      enterprise.eta_complementAdresseEtablissement,
     codePostalEtablissement: enterprise.eta_codePostalEtablissement,
     libelleCommuneEtablissement: enterprise.eta_libelleCommuneEtablissement,
-    codeCommuneEtablissement: enterprise.eta_codeCommuneEtablissement || enterprise.eta_codeCommune2Etablissement,
+    codeCommuneEtablissement:
+      enterprise.eta_codeCommuneEtablissement ||
+      enterprise.eta_codeCommune2Etablissement,
     departementEtablissement,
 
-    etatAdministratifEtablissement: enterprise.eta_etatAdministratifEtablissement,
+    etatAdministratifEtablissement:
+      enterprise.eta_etatAdministratifEtablissement,
     etablissementSiege: enterprise.eta_etablissementSiege === "true",
 
-    caractereEmployeurEtablissementRank: enterprise.eta_caractereEmployeurEtablissement === "O" ? 1 : 0.1,
+    caractereEmployeurEtablissementRank:
+      enterprise.eta_caractereEmployeurEtablissement === "O" ? 1 : 0.1,
 
     etablissementsUniteLegaleRank: getRank(enterprise.Nombre_Eta),
-    statutDiffusionEtablissement: enterprise.eta_statutDiffusionEtablissement
+    statutDiffusionEtablissement: enterprise.eta_statutDiffusionEtablissement,
   };
 
   return removeEmpty(document);

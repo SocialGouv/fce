@@ -105,8 +105,8 @@ function HeaderInfoBloc({
             <span className="data-sheet-header-address-icon">
               <BuildingIcon />
             </span>
-            <span className="is-bold"> {code}</span>
             <span className=" has-list-style">{adresse ? adresse : ""}</span>
+            <span className="is-bold"> {code}</span>
           </div>
         )}
         {enterprise && (

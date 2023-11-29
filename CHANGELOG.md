@@ -1,3 +1,10 @@
+## [27.87.1](https://github.com/SocialGouv/fce/compare/v27.87.0...v27.87.1) (2023-11-29)
+
+
+### Bug Fixes
+
+* fix dev DB ([#309](https://github.com/SocialGouv/fce/issues/309)) ([cd59bf2](https://github.com/SocialGouv/fce/commit/cd59bf2b164ae5324b0efad1034c841f23d20f9d))
+
 # [27.87.0](https://github.com/SocialGouv/fce/compare/v27.86.0...v27.87.0) (2023-11-15)
 
 

@@ -53,14 +53,6 @@ export const IconItems = ({ users, isLoading = false }) => {
 
   return (
     <div className="home-page__section ">
-      <iframe
-        title="Report Section"
-        // width="600"
-        height="373.5"
-        src="https://app.powerbi.com/view?r=eyJrIjoiNzdiNjg5YzgtNzk2OC00ZTkwLWEwOWYtNTBlOGM1ODc2ZjFlIiwidCI6IjAzNWU1MjkyLTVhMjUtNDUwOS1iYjA4LWE1NTVmN2QzMWE4YiJ9"
-        frameBorder="0"
-        allowFullScreen="true"
-      />
       <h2 className="home-page__blue-title">FCE en chiffres</h2>
       <div className="columns icons">
         {items.map((item, index) => {

@@ -212,7 +212,6 @@
     }
     &__bloc_section {
         scroll-margin: $spacing-6;
-        cursor: pointer;
         .data {
             @media print {
                 display: flex !important;
@@ -251,6 +250,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            cursor: pointer;
             .icon {
                 background-color: transparent;
                 border: none;

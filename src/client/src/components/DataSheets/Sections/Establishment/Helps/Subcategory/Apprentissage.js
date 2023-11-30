@@ -39,7 +39,7 @@ const Apprentissage = ({ siret }) => {
           name={`Embauche en contrat d'apprentissage depuis ${minYear}`}
           value={getSignesTotalFromSignes(apprentissagesSignes)}
           columnClasses={["is-7", "is-5"]}
-          sourceSi="Ari@ne"
+          sourceSi="DECA"
           className="has-no-border"
         />
         {data?.length > 0 && (

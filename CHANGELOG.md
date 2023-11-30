@@ -1,3 +1,10 @@
+# [27.88.0](https://github.com/SocialGouv/fce/compare/v27.87.1...v27.88.0) (2023-11-30)
+
+
+### Features
+
+* change apprentissage source table & intervertir adresse etablis… ([#307](https://github.com/SocialGouv/fce/issues/307)) ([130a29b](https://github.com/SocialGouv/fce/commit/130a29b34d4a0fda18df74d1aec86056d7967ac2))
+
 ## [27.87.1](https://github.com/SocialGouv/fce/compare/v27.87.0...v27.87.1) (2023-11-29)
 
 

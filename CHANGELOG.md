@@ -1,3 +1,10 @@
+# [27.89.0](https://github.com/SocialGouv/fce/compare/v27.88.0...v27.89.0) (2023-12-03)
+
+
+### Features
+
+* add dirigeant field to mapping file ([#310](https://github.com/SocialGouv/fce/issues/310)) ([1c2423d](https://github.com/SocialGouv/fce/commit/1c2423d7aaf77aebfdd72e392b312e152d2fa5a0))
+
 # [27.88.0](https://github.com/SocialGouv/fce/compare/v27.87.1...v27.88.0) (2023-11-30)
 
 

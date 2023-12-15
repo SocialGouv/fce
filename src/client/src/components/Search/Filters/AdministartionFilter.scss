@@ -73,6 +73,7 @@
     -moz-border-radius: 3px;
     border-radius: 3px;
     width: 480px;
+    max-width: 100%;
     z-index: 1000;
     .filter__siege_button {
         input {
@@ -92,6 +93,8 @@
         overflow-y: auto;
         padding:4px ;
         margin-bottom: $spacing-5;
+        width: 100%;
+
     }
     .form-inputs {
         display: flex;

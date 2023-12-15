@@ -36,7 +36,7 @@ const Breadcrumbs = () => {
           <span>
             {location.pathname.includes("establishment")
               ? "Fiche établissement"
-              : location.pathname.includes("entreprise") && "Fiche entreprise"}
+              : location.pathname.includes("enterprise") && "Fiche entreprise"}
           </span>
         </div>
       )}

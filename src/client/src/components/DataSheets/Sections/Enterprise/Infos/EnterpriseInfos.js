@@ -1,6 +1,7 @@
 import { merge } from "lodash";
 import PropTypes from "prop-types";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router";
 
 import Association from "../../../../../containers/Association/Association";
 import { formatSiret, formatTva } from "../../../../../helpers/utils";
@@ -38,6 +39,45 @@ import ObservationRCS from "./ObservationRCS";
 
 const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
   const [accordionOpen, setAccordionOpen] = useState(true);
+  const location = useLocation();
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (location.pathname.includes("enterprise") && hash === "#mandataires") {
+      const checkAndScroll = () => {
+        const element = document.getElementById("mandataires");
+        const headerOffset =
+          document.getElementById("header")?.offsetHeight || 0; // Dynamic header height
+        console.log(document.getElementById("header"));
+        if (element) {
+          const position = element.offsetTop - headerOffset; // Subtract header height
+          window.scrollTo({
+            behavior: "smooth",
+            top: position,
+          });
+          return true;
+        }
+        return false;
+      };
+
+      // Check if element is available and scroll to it
+      if (!checkAndScroll()) {
+        // If element is not available, set an interval to check again
+        const interval = setInterval(() => {
+          if (checkAndScroll()) {
+            clearInterval(interval); // Clear interval once the element is found
+          }
+        }, 100); // Check every 100ms
+      }
+
+      // Add resize event listener
+      window.addEventListener("resize", checkAndScroll);
+
+      // Clean up interval and remove event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", checkAndScroll);
+      };
+    }
+  }, [location]);
 
   const siren = getSiren(baseEntreprise);
 

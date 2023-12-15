@@ -144,6 +144,41 @@ const SearchResults = ({
                   sortKey: "enterprise_name",
                 },
                 {
+                  accessor: (fields) => {
+                    const formatName = (dirigeant) =>
+                      `${
+                        dirigeant.prenom.charAt(0).toUpperCase() +
+                        dirigeant.prenom.slice(1).toLowerCase()
+                      } ${
+                        dirigeant.nom.charAt(0).toUpperCase() +
+                        dirigeant.nom.slice(1).toLowerCase()
+                      }`;
+                    if (fields?.dirigeants == 0) return " - ";
+
+                    return (
+                      <>
+                        {fields.dirigeants
+                          ?.slice(0, 2)
+                          .map((dirigeant, index) => (
+                            <span key={index}>
+                              {index > 0 && ", "}
+                              {formatName(dirigeant)}
+                            </span>
+                          ))}
+                        <a href={`/enterprise/${fields?.siren}#mandataires`}>
+                          {" ..." + "voir plus"}
+                        </a>
+                      </>
+                    );
+                  },
+
+                  headName: "Dirigeants",
+                  importantHead: true,
+                  link: ({ fields }) =>
+                    `/enterprise/${fields?.siren}#mandataires`,
+                  sortKey: "dirigeants",
+                },
+                {
                   accessor: ({ etablissementSiege }) => {
                     return Value({
                       value: etablissementSiege
@@ -221,6 +256,7 @@ const SearchResults = ({
 SearchResults.propTypes = {
   downloadLoading: PropTypes.bool.isRequired,
   generateXlsx: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
   query: PropTypes.string,

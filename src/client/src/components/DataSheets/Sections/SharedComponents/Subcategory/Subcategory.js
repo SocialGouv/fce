@@ -16,9 +16,10 @@ const Subcategory = ({
   sourceCustom = null,
   sourceDate = null,
   className = "",
+  id = "",
 }) => {
   return (
-    <div className={classNames("subcategory", className)}>
+    <div id={id} className={classNames("subcategory", className)}>
       {subtitle && (
         <div className="subcategory__header">
           <h3 className="subcategory__title has-text-dark-blue">{subtitle}</h3>
@@ -61,6 +62,7 @@ Subcategory.propTypes = {
   className: PropTypes.string,
   datas: PropTypes.arrayOf(PropTypes.object),
   hasDateImport: PropTypes.bool,
+  id: PropTypes.string,
   sourceCustom: PropTypes.string,
   sourceDate: PropTypes.string,
   sourceSi: PropTypes.string,

@@ -13,6 +13,7 @@ import {
   useSearchTerms,
 } from "../../services/Store/hooks/search";
 import { normalizeCodeCommunes } from "../../utils/code-commune/code-commune";
+import { normalizeCodeDepartement } from "../../utils/code-departement/code-departement";
 import { useFileDownload } from "../../utils/file-download/hooks";
 import { useSort } from "../../utils/search-table/hooks";
 import divisionsNaf from "./divisions-naf.json";
@@ -30,7 +31,9 @@ const formatLocationFilter = (filters) => {
     codesCommunes: normalizeCodeCommunes(
       locationFilters?.commune?.map(prop("value")) || []
     ),
-    departements: locationFilters?.departement?.map(prop("value")) || [],
+    departements: normalizeCodeDepartement(
+      locationFilters?.departement?.map(prop("value")) || []
+    ),
   };
 };
 

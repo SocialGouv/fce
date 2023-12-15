@@ -67,20 +67,20 @@ const Search = ({
     { label: "En activité", value: actif },
     { label: "Cessée", value: ferme },
   ];
-  const categoriesEntreprisesOptions = [
-    {
-      label: "Petite ou Moyenne Entreprise",
-      value: "PME",
-    },
-    {
-      label: "Entreprise de Taille Intermédiaire",
-      value: "ETI",
-    },
-    {
-      label: "Grande Entreprise",
-      value: "GE",
-    },
-  ];
+  // const categoriesEntreprisesOptions = [
+  //   {
+  //     label: "Petite ou Moyenne Entreprise",
+  //     value: "PME",
+  //   },
+  //   {
+  //     label: "Entreprise de Taille Intermédiaire",
+  //     value: "ETI",
+  //   },
+  //   {
+  //     label: "Grande Entreprise",
+  //     value: "GE",
+  //   },
+  // ];
 
   return (
     <div className="app-search">

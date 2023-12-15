@@ -179,7 +179,7 @@ const Search = ({
                     label="État administratif :"
                     placeholder="Choisir un état administratif"
                   />
-                  <AutoCompleteFilter
+                  {/* <AutoCompleteFilter
                     filters={filters}
                     addFilter={addFilter}
                     removeFilter={removeFilter}
@@ -187,7 +187,7 @@ const Search = ({
                     id="categorieEntreprise"
                     label="Taille d'entreprise :"
                     placeholder="Choisir une categorie d'entreprise"
-                  />
+                  /> */}
                   <div className="horizontal-separator" />
                   <AutoCompleteFilter
                     filters={filters}

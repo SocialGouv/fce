@@ -218,6 +218,7 @@ export const mappings = {
 
     codeCommuneEtablissement: { type: "keyword" },
     departementEtablissement: { type: "keyword" },
+    Departement: { type: "keyword" },
 
     etatAdministratifEtablissement: { type: "keyword" },
     etablissementSiege: { type: "boolean" },
@@ -395,6 +396,7 @@ export const mapEnterprise = (enterprise: BceEtablissement) => {
       enterprise.eta_codeCommuneEtablissement ||
       enterprise.eta_codeCommune2Etablissement,
     departementEtablissement,
+    departement:enterprise.Departement,
 
     etatAdministratifEtablissement:
       enterprise.eta_etatAdministratifEtablissement,

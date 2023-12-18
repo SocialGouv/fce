@@ -86,10 +86,8 @@ DirigeantFromFilter.propTypes = {
   addFilter: PropTypes.func.isRequired,
   filters: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
   onToggleMenu: PropTypes.func.isRequired,
-  placeholder: PropTypes.string.isRequired,
   removeFilter: PropTypes.func.isRequired,
 };
 

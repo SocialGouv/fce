@@ -49,12 +49,12 @@ const AdministartionFilter = ({
   const getButtonLabel = () => {
     if (id === "dirigeant") {
       if (
-        filters["dirigeant"]?.nom !== "" ||
-        filters["dirigeant"]?.prenom !== ""
+        filters["dirigeant"]?.prenom !== "" ||
+        filters["dirigeant"]?.nom !== ""
       )
         return (
           (filters["dirigeant"] &&
-            `${filters["dirigeant"].nom} ${filters["dirigeant"].prenom}`) ||
+            `${filters["dirigeant"].prenom} ${filters["dirigeant"].nom}`) ||
           label
         );
     }

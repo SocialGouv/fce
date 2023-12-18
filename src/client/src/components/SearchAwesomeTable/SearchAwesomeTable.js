@@ -52,12 +52,12 @@ const SearchAwesomeTable = ({
               className="at__body__tr"
               onClick={(e) => handleRowClick(e, element)}
             >
-              {fields.map((field, index) => {
+              {fields.map((field, key) => {
                 return (
                   <td
-                    key={`${index}-${element?.siret}`}
+                    key={`${key}-${element?.siret}`}
                     className={classNames("at__body__td", {
-                      "table-cell--nowrap": index === 0,
+                      "table-cell--nowrap": key === 0,
                     })}
                   >
                     {field.html ? (

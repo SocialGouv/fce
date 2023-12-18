@@ -67,20 +67,6 @@ const Search = ({
     { label: "En activité", value: actif },
     { label: "Cessée", value: ferme },
   ];
-  // const categoriesEntreprisesOptions = [
-  //   {
-  //     label: "Petite ou Moyenne Entreprise",
-  //     value: "PME",
-  //   },
-  //   {
-  //     label: "Entreprise de Taille Intermédiaire",
-  //     value: "ETI",
-  //   },
-  //   {
-  //     label: "Grande Entreprise",
-  //     value: "GE",
-  //   },
-  // ];
 
   return (
     <div className="app-search">
@@ -179,15 +165,6 @@ const Search = ({
                     label="État administratif :"
                     placeholder="Choisir un état administratif"
                   />
-                  {/* <AutoCompleteFilter
-                    filters={filters}
-                    addFilter={addFilter}
-                    removeFilter={removeFilter}
-                    options={categoriesEntreprisesOptions}
-                    id="categorieEntreprise"
-                    label="Taille d'entreprise :"
-                    placeholder="Choisir une categorie d'entreprise"
-                  /> */}
                   <div className="horizontal-separator" />
                   <AutoCompleteFilter
                     filters={filters}

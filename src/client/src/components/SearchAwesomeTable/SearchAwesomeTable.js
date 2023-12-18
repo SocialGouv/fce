@@ -55,7 +55,7 @@ const SearchAwesomeTable = ({
               {fields.map((field, index) => {
                 return (
                   <td
-                    key={index - index}
+                    key={`${index}-${element?.siret}`}
                     className={classNames("at__body__td", {
                       "table-cell--nowrap": index === 0,
                     })}

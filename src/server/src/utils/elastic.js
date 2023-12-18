@@ -32,8 +32,59 @@ const codesNafLabelIndex = codesNaf.reduce(
   new Map()
 );
 
-const makeQuery = ({ query, siege, ...filters }) => {
+const makeQuery = ({ query, siege, dirigeant, ...filters }) => {
   const siretOrSirenQuery = query.replace(/\s/g, "");
+  const dirigeantConditions = [];
+
+  if (dirigeant) {
+    if (dirigeant.nom && dirigeant.prenom) {
+      dirigeantConditions.push({
+        nested: {
+          path: "dirigeants",
+          query: {
+            bool: {
+              must: [
+                {
+                  match: {
+                    "dirigeants.nom": {
+                      query: dirigeant.nom,
+                    },
+                  },
+                },
+                {
+                  match: {
+                    "dirigeants.prenom": {
+                      query: dirigeant.prenom,
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      });
+    }
+    if (dirigeant.nom && !dirigeant.prenom) {
+      dirigeantConditions.push({
+        nested: {
+          path: "dirigeants",
+          query: {
+            match: { "dirigeants.nom": dirigeant.nom },
+          },
+        },
+      });
+    }
+    if (dirigeant.prenom && !dirigeant.nom) {
+      dirigeantConditions.push({
+        nested: {
+          path: "dirigeants",
+          query: {
+            match: { "dirigeants.prenom": dirigeant.prenom },
+          },
+        },
+      });
+    }
+  }
   return {
     ...(query ? { min_score: 20 } : {}),
     query: {
@@ -41,70 +92,103 @@ const makeQuery = ({ query, siege, ...filters }) => {
         filter: [
           ...(siege !== ""
             ? [
-              {
-                term: { etablissementSiege: siege === "true" },
-              },
-            ]
+                {
+                  term: { etablissementSiege: siege === "true" },
+                },
+              ]
             : []),
         ],
         must: [
+          ...dirigeantConditions,
           ...Object.keys(filtersFieldMap).flatMap((key) =>
             filters[key]?.length > 0
               ? [
-                {
-                  terms: { [filtersFieldMap[key]]: filters[key] },
-                },
-              ]
+                  {
+                    terms: { [filtersFieldMap[key]]: filters[key] },
+                  },
+                ]
               : []
           ),
+
           ...(query
             ? [
-              {
-                bool: {
-                  should: [
-                    {
-                      multi_match: {
-                        query,
-                        type: "phrase",
-                        fields: [
-                          "raisonSociale",
-                          "denominationUsuelleUniteLegale",
-                          "enseigneEtablissement"
-                        ],
-                      }
-                    },
-                    ...(siretOrSirenQuery
-                      ? [
-                        {
-                          term: {
-                            siret: {
-                              value: query.replace(/\s/g, ""),
-                              boost: 100,
-                            },
-                          },
+                {
+                  bool: {
+                    should: [
+                      {
+                        multi_match: {
+                          query,
+                          type: "phrase",
+                          fields: [
+                            "naming",
+                            "denominationUsuelleUniteLegale",
+                            "raisonSociale",
+                          ],
+                          minimum_should_match: "100%",
+                          boost: 100,
                         },
-                        {
-                          term: {
-                            siren: {
-                              value: query.replace(/\s/g, ""),
-                              boost: 100,
-                            },
-                          },
+                      },
+
+                      {
+                        multi_match: {
+                          query,
+                          fields: [
+                            "denominationUsuelleUniteLegale",
+                            "raisonSociale",
+                          ],
+                          fuzziness: "AUTO",
+                          minimum_should_match: "100%",
                         },
-                      ]
-                      : []),
-                  ],
+                      },
+
+                      ...(siretOrSirenQuery
+                        ? [
+                            {
+                              term: {
+                                siret: {
+                                  value: query.replace(/\s/g, ""),
+                                  boost: 100,
+                                },
+                              },
+                            },
+                            {
+                              term: {
+                                siren: {
+                                  value: query.replace(/\s/g, ""),
+                                  boost: 100,
+                                },
+                              },
+                            },
+                          ]
+                        : []),
+                    ],
+                  },
                 },
-              },
-            ]
+              ]
             : []),
         ],
         should: [
-          { rank_feature: { boost: 5, field: "trancheEffectifsUniteLegaleRank" } },
-          { rank_feature: { boost: 5, field: "etablissementsUniteLegaleRank" } },
-          { rank_feature: { boost: 5, field: "caractereEmployeurEtablissementRank" } },
+          {
+            rank_feature: {
+              boost: 5,
+              field: "trancheEffectifsUniteLegaleRank",
+            },
+          },
+          {
+            rank_feature: { boost: 5, field: "etablissementsUniteLegaleRank" },
+          },
+          {
+            rank_feature: {
+              boost: 5,
+              field: "caractereEmployeurEtablissementRank",
+            },
+          },
           { match: { etablissementSiege: { boost: 10, query: "true" } } },
-          { match: { etatAdministratifEtablissement: { boost: 10, query: "A" } } },
+          {
+            match: {
+              etatAdministratifEtablissement: { boost: 10, query: "A" },
+            },
+          },
         ],
       },
     },
@@ -132,6 +216,10 @@ export const getElasticQueryParams = (req) => {
   const codesPostaux = req.query["codesPostaux"] || [];
   const departements = req.query["departements"] || [];
   const tranchesEffectifs = req.query["tranchesEffectifs"] || [];
+  const dirigeant = req.query["dirigeant"]
+    ? JSON.parse(req.query["dirigeant"])
+    : null;
+
   let etats = req.query["etats"] || [];
   const siege = (req.query["siege"] || "").trim();
 
@@ -148,6 +236,7 @@ export const getElasticQueryParams = (req) => {
     departements,
     codesPostaux,
     tranchesEffectifs,
+    dirigeant,
   };
 };
 

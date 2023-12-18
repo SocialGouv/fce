@@ -11,7 +11,7 @@ import SearchResults from "../SearchResults";
 import AdministartionFilter from "./Filters/AdministartionFilter.jsx";
 import AutoCompleteFilter from "./Filters/AutoCompleteFilter";
 import CheckboxFilter from "./Filters/CheckboxFilter";
-// import DirigeantFromFilter from "./Filters/DirigeantFromFilter";
+import DirigeantFromFilter from "./Filters/DirigeantFromFilter";
 import LocationFilter from "./Filters/LocationFilter";
 import SearchBar from "./SearchBar";
 
@@ -53,7 +53,7 @@ const Search = ({
   generateXlsx,
   downloadLoading,
 }) => {
-  const onFromSubmit = (e) => {
+  const onFormSubmit = (e) => {
     e.preventDefault();
     sendRequest(searchTerm, options);
   };
@@ -138,7 +138,7 @@ const Search = ({
               <div className="column is-4">
                 <AdministartionFilter
                   label="Situation administrative"
-                  onFromSubmit={onFromSubmit}
+                  onFormSubmit={onFormSubmit}
                   customFilters={[
                     "siege",
                     "etats",
@@ -146,7 +146,6 @@ const Search = ({
                     "activites",
                   ]}
                   removeFilters={removeFilters}
-                  sendRequest={sendRequest}
                 >
                   <CheckboxFilter
                     filters={filters}
@@ -182,7 +181,6 @@ const Search = ({
                     addFilter={addFilter}
                     removeFilter={removeFilter}
                     options={formatDivisionsNaf(divisionsNaf)}
-                    // menuPlacement="top"
                     id="activites"
                     label="Activité (NAF ou libellé)"
                     placeholder="Choisir un code NAF/APE"
@@ -190,11 +188,16 @@ const Search = ({
                 </AdministartionFilter>
               </div>
 
-              {/* <div className="column is-one-third">
-                 <AdministartionFilter
+              <div className="column is-one-third">
+                <AdministartionFilter
                   id="dirigeant"
                   label="Dirigeant"
+                  onFormSubmit={onFormSubmit}
                   addSaveClearButton={false}
+                  filters={filters}
+                  removeFilters={removeFilters}
+                  sendRequest={sendRequest}
+                  customFilters={["dirigeant"]}
                 >
                   <DirigeantFromFilter
                     filters={filters}
@@ -202,9 +205,10 @@ const Search = ({
                     removeFilter={removeFilter}
                     id="dirigeant"
                     placeholder="Dirigeant"
+                    onFormSubmit={onFormSubmit}
                   />
-                </AdministartionFilter> 
-              </div>*/}
+                </AdministartionFilter>
+              </div>
             </div>
           </div>
         </div>

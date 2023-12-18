@@ -110,6 +110,8 @@ export const formatInteractions = pipe(
   reverse
 );
 export const formatUpperCase = (data) => {
-  if (!data) return "";
-  return data.toUpperCase();
+  if (typeof data === "string" && data.length > 0) {
+    return data.charAt(0).toUpperCase() + data.slice(1).toLowerCase();
+  }
+  return data;
 };

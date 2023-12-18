@@ -16,10 +16,17 @@ const SPREAD_ARRONDISSEMENT_CODES = {
   ],
 };
 
-const getCodeCommuneForArrondissement = (codeCommune) =>
-  VILLES_ARRONDISSEMENT.includes(+codeCommune)
-    ? SPREAD_ARRONDISSEMENT_CODES[+codeCommune]
-    : [+codeCommune];
+const getCodeCommuneForArrondissement = (codeCommune) => {
+  const numericCode = parseInt(codeCommune, 10);
+
+  // Vérifie si le code est numérique et s'il correspond à une ville avec des arrondissements
+  if (!isNaN(numericCode) && VILLES_ARRONDISSEMENT.includes(numericCode)) {
+    return SPREAD_ARRONDISSEMENT_CODES[numericCode];
+  }
+
+  // Retourne le code original s'il ne correspond pas à Paris, Marseille, ou Lyon
+  return [codeCommune];
+};
 
 // Replace Paris, Marseille and Lyon codeCommune with each of their arrondissements.
 export const normalizeCodeCommunes = (codeCommunes) =>

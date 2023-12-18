@@ -6,23 +6,26 @@ import React, { useEffect, useRef, useState } from "react";
 import ArrowDown from "../../shared/Icons/ArrowDown.jsx";
 
 const AdministartionFilter = ({
-  onFromSubmit,
+  onFormSubmit,
   removeFilters,
+  id,
   label,
   children,
   customFilters,
   addSaveClearButton = true,
+  filters,
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const dropdownRef = useRef(null);
+
   const handleSubmit = (e) => {
-    setShowMenu(!showMenu);
-    onFromSubmit(e);
+    setShowMenu((prevShowMenu) => !prevShowMenu);
+    onFormSubmit(e);
   };
 
   const onToggleMenu = (e) => {
     e.preventDefault();
-    setShowMenu(!showMenu);
+    setShowMenu((prevShowMenu) => !prevShowMenu);
   };
 
   const handleClickOutside = (e) => {
@@ -42,11 +45,27 @@ const AdministartionFilter = ({
   const childrenWithProps = React.Children.map(children, (child) =>
     React.cloneElement(child, { onToggleMenu })
   );
+
+  const getButtonLabel = () => {
+    if (id === "dirigeant") {
+      if (
+        filters["dirigeant"]?.prenom !== "" ||
+        filters["dirigeant"]?.nom !== ""
+      )
+        return (
+          (filters["dirigeant"] &&
+            `${filters["dirigeant"].prenom} ${filters["dirigeant"].nom}`) ||
+          label
+        );
+    }
+    return label;
+  };
+
   return (
     <div className="custom-dropdown" id="custom-dropdown" ref={dropdownRef}>
       <div className=" select-control-field">
         <button className="custom-dropdown-button" onClick={onToggleMenu}>
-          {label}
+          {getButtonLabel()}
           <span>
             <ArrowDown size={18} color="#161616" />
           </span>
@@ -69,7 +88,7 @@ const AdministartionFilter = ({
                 onClick={(e) => {
                   e.preventDefault();
                   removeFilters(customFilters);
-                  setShowMenu(!showMenu);
+                  setShowMenu((prevShowMenu) => !prevShowMenu);
                 }}
               >
                 Supprimer
@@ -94,8 +113,10 @@ AdministartionFilter.propTypes = {
   addSaveClearButton: PropTypes.bool,
   children: PropTypes.node,
   customFilters: PropTypes.arrayOf(PropTypes.string),
+  filters: PropTypes.object,
+  id: PropTypes.string,
   label: PropTypes.string,
-  onFromSubmit: PropTypes.func,
+  onFormSubmit: PropTypes.func,
   removeFilters: PropTypes.func.isRequired,
 };
 

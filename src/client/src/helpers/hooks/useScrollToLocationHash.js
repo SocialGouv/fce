@@ -9,5 +9,5 @@ export const useScrollToLocationHash = ({ location, offset = -50 }) => {
         ? scrollTarget.getBoundingClientRect().top + window.pageYOffset + offset
         : 0,
     });
-  }, [location, offset]);
+  }, [location, location.hash, offset]);
 };

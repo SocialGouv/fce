@@ -1,3 +1,10 @@
+# [27.90.0](https://github.com/SocialGouv/fce/compare/v27.89.0...v27.90.0) (2023-12-18)
+
+
+### Features
+
+* search by dirigeant & fix location filter(CORSE) ([#312](https://github.com/SocialGouv/fce/issues/312)) ([be4a781](https://github.com/SocialGouv/fce/commit/be4a78120e871cd67d1c89f15b28d6b69ae0266d))
+
 # [27.89.0](https://github.com/SocialGouv/fce/compare/v27.88.0...v27.89.0) (2023-12-03)
 
 

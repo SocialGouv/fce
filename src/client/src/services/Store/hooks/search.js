@@ -42,7 +42,7 @@ export const useSearchFilters = () => {
   const validFilters = savedFilters.etats
     ? savedFilters
     : {
-        etats: ["A", "F"],
+        etats: ["A"],
       };
 
   const addFilter = (key, value) => {

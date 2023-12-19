@@ -186,7 +186,7 @@ const makeQuery = ({ query, siege, dirigeant, ...filters }) => {
           { match: { etablissementSiege: { boost: 10, query: "true" } } },
           {
             match: {
-              etatAdministratifEtablissement: { boost: 10, query: "A" },
+              etatAdministratifEtablissement: { boost: 101, query: "A" },
             },
           },
         ],

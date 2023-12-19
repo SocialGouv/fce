@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   filters: {
-    etats: ["A", "F"],
+    etats: ["A"],
   },
   page: 1,
   results: {

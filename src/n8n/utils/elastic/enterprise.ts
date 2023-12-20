@@ -218,7 +218,8 @@ export const mappings = {
 
     codeCommuneEtablissement: { type: "keyword" },
     departementEtablissement: { type: "keyword" },
-    Departement: { type: "keyword" },
+    departement: { type: "keyword" },
+    categorieEntreprise: { type: "keyword"},
 
     etatAdministratifEtablissement: { type: "keyword" },
     etablissementSiege: { type: "boolean" },

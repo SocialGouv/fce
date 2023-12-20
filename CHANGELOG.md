@@ -1,3 +1,10 @@
+# [27.91.0](https://github.com/SocialGouv/fce/compare/v27.90.0...v27.91.0) (2023-12-19)
+
+
+### Features
+
+* fix search result orders ([#313](https://github.com/SocialGouv/fce/issues/313)) ([7f440fb](https://github.com/SocialGouv/fce/commit/7f440fb90942a3f024e1cd984f0f676fbdb93371))
+
 # [27.90.0](https://github.com/SocialGouv/fce/compare/v27.89.0...v27.90.0) (2023-12-18)
 
 

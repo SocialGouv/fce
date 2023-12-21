@@ -1,3 +1,10 @@
+# [27.92.0](https://github.com/SocialGouv/fce/compare/v27.91.0...v27.92.0) (2023-12-20)
+
+
+### Features
+
+* Update n8n mapping ([#314](https://github.com/SocialGouv/fce/issues/314)) ([94e2a77](https://github.com/SocialGouv/fce/commit/94e2a773f726e79be69ba3eba55a01cc277478c2))
+
 # [27.91.0](https://github.com/SocialGouv/fce/compare/v27.90.0...v27.91.0) (2023-12-19)
 
 

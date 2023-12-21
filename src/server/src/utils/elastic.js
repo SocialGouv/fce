@@ -14,7 +14,7 @@ const filtersFieldMap = {
   etats: "etatAdministratifEtablissement",
   activites: "domaineActivite",
   codesCommunes: "codeCommuneEtablissement",
-  departements: "departementEtablissement",
+  departement: "departement",
   codesPostaux: "codesPostalEtablissement",
   tranchesEffectifs: "trancheEffectifsEtablissement",
 };
@@ -214,7 +214,7 @@ export const getElasticQueryParams = (req) => {
   const activites = req.query["activites"] || [];
   const codesCommunes = req.query["codesCommunes"] || [];
   const codesPostaux = req.query["codesPostaux"] || [];
-  const departements = req.query["departements"] || [];
+  const departement = req.query["departements"] || [];
   const tranchesEffectifs = req.query["tranchesEffectifs"] || [];
   const dirigeant = req.query["dirigeant"]
     ? JSON.parse(req.query["dirigeant"])
@@ -233,7 +233,7 @@ export const getElasticQueryParams = (req) => {
     etats,
     activites,
     codesCommunes,
-    departements,
+    departement,
     codesPostaux,
     tranchesEffectifs,
     dirigeant,

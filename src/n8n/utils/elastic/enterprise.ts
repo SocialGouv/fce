@@ -217,7 +217,6 @@ export const mappings = {
     domaineActivite: { type: "keyword" },
 
     codeCommuneEtablissement: { type: "keyword" },
-    departementEtablissement: { type: "keyword" },
     departement: { type: "keyword" },
     categorieEntreprise: { type: "keyword"},
 
@@ -306,10 +305,6 @@ export const mapEnterprise = (enterprise: BceEtablissement) => {
     .trim()
     .replace(/  /, " ");
 
-  const departementEtablissement = enterprise.eta_codePostalEtablissement.slice(
-    0,
-    +enterprise.eta_codePostalEtablissement.slice(0, 2) > 95 ? 3 : 2
-  );
 
   const domaineActivite = codeActivitePrincipale?.slice(0, 2);
 
@@ -396,7 +391,6 @@ export const mapEnterprise = (enterprise: BceEtablissement) => {
     codeCommuneEtablissement:
       enterprise.eta_codeCommuneEtablissement ||
       enterprise.eta_codeCommune2Etablissement,
-    departementEtablissement,
     departement:enterprise.Departement,
 
     etatAdministratifEtablissement:

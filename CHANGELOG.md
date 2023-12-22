@@ -1,3 +1,10 @@
+# [27.93.0](https://github.com/SocialGouv/fce/compare/v27.92.0...v27.93.0) (2023-12-22)
+
+
+### Features
+
+* fix search by corse  departement ([#316](https://github.com/SocialGouv/fce/issues/316)) ([f9fa642](https://github.com/SocialGouv/fce/commit/f9fa642e96ed80f820b5024f4cfed6be4e1627cb))
+
 # [27.92.0](https://github.com/SocialGouv/fce/compare/v27.91.0...v27.92.0) (2023-12-20)
 
 

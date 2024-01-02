@@ -26,21 +26,21 @@ export const IconItems = () => {
   return (
     <div className="home-page__section ">
       {/* <h2 className="home-page__blue-title">FCE en chiffres</h2> */}
-      <div className="columns icons" style={{ height: "60vh" }}>
+      <div
+        className="columns icons "
+        style={{ height: "28VW", margin: "auto" }}
+      >
         <iframe
           title="Report Section"
           width="100%"
-          height="100%"
-          userScalable="no"
+          // height="90%"
           src="https://app.powerbi.com/view?r=eyJrIjoiNzdiNjg5YzgtNzk2OC00ZTkwLWEwOWYtNTBlOGM1ODc2ZjFlIiwidCI6IjAzNWU1MjkyLTVhMjUtNDUwOS1iYjA4LWE1NTVmN2QzMWE4YiJ9"
-          frameBorder="0"
           allowFullScreen="true"
           style={{
             backgroundColor: "#ffffff !important",
             filter: "drop-shadow(0 1px 3px rgba(0, 0, 18, 0.16))",
             overflow: "hidden",
             padding: 0,
-            color: "black",
           }}
         />
       </div>
@@ -181,7 +181,7 @@ export const DailyUse = () => {
   ];
 
   return (
-    <div className="home-page__daily-use home-page__section ">
+    <div className="home-page__daily-use home-page__section-iframe ">
       <h2 className="home-page__blue-title">Quels usages au quotidien ?</h2>
       <div className="columns home-page__daily-use__items">
         {items.map((item) => (

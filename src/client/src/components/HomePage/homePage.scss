@@ -63,6 +63,13 @@
             padding: $spacing-4 !important;
         }
     }
+    &__section-iframe {
+        padding: $spacing-4;
+        @media (max-width: 600px) {
+            padding: $spacing-4 !important;
+            margin: auto !important;
+        }
+    }
 
     &__summary {
         color: $dark-blue;

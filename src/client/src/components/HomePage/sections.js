@@ -26,11 +26,12 @@ export const IconItems = () => {
   return (
     <div className="home-page__section ">
       {/* <h2 className="home-page__blue-title">FCE en chiffres</h2> */}
-      <div className="columns icons">
+      <div className="columns icons" style={{ height: "60vh" }}>
         <iframe
           title="Report Section"
           width="100%"
-          height="373.5"
+          height="100%"
+          userScalable="no"
           src="https://app.powerbi.com/view?r=eyJrIjoiNzdiNjg5YzgtNzk2OC00ZTkwLWEwOWYtNTBlOGM1ODc2ZjFlIiwidCI6IjAzNWU1MjkyLTVhMjUtNDUwOS1iYjA4LWE1NTVmN2QzMWE4YiJ9"
           frameBorder="0"
           allowFullScreen="true"
@@ -39,6 +40,7 @@ export const IconItems = () => {
             filter: "drop-shadow(0 1px 3px rgba(0, 0, 18, 0.16))",
             overflow: "hidden",
             padding: 0,
+            color: "black",
           }}
         />
       </div>

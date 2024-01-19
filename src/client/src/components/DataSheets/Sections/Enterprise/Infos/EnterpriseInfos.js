@@ -40,6 +40,7 @@ import ObservationRCS from "./ObservationRCS";
 const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
   const [accordionOpen, setAccordionOpen] = useState(true);
   const location = useLocation();
+
   useEffect(() => {
     const hash = window.location.hash;
 

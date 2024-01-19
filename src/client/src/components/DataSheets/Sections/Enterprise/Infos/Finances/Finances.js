@@ -139,7 +139,7 @@ const Finances = ({ siret, siren }) => {
     });
   }
   return (
-    <>
+    <div id="finance-data">
       {hasBilan_K && (
         <span className="text">
           Cette entreprise déclare un bilan consolidé, voir sur{" "}
@@ -222,7 +222,7 @@ const Finances = ({ siret, siren }) => {
           Non disponible
         </p>
       )}
-    </>
+    </div>
   );
 };
 

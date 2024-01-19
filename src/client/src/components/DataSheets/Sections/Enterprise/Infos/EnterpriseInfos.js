@@ -42,40 +42,41 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
   const location = useLocation();
   useEffect(() => {
     const hash = window.location.hash;
-    if (location.pathname.includes("enterprise") && hash === "#mandataires") {
-      const checkAndScroll = () => {
-        const element = document.getElementById("mandataires");
-        const headerOffset =
-          document.getElementById("header")?.offsetHeight || 0; // Dynamic header height
-        console.log(document.getElementById("header"));
-        if (element) {
-          const position = element.offsetTop - headerOffset; // Subtract header height
-          window.scrollTo({
-            behavior: "smooth",
-            top: position,
-          });
-          return true;
-        }
-        return false;
-      };
 
-      // Check if element is available and scroll to it
-      if (!checkAndScroll()) {
-        // If element is not available, set an interval to check again
-        const interval = setInterval(() => {
-          if (checkAndScroll()) {
-            clearInterval(interval); // Clear interval once the element is found
-          }
-        }, 100); // Check every 100ms
+    const checkAndScroll = (elementId) => {
+      const element = document.getElementById(elementId);
+      const headerOffset = document.getElementById("header")?.offsetHeight || 0;
+      if (element) {
+        const position = element.offsetTop - headerOffset;
+        window.scrollTo({
+          behavior: "smooth",
+          top: position,
+        });
+        return true;
       }
+      return false;
+    };
 
-      // Add resize event listener
-      window.addEventListener("resize", checkAndScroll);
+    const setupScroll = (targetId) => {
+      if (!checkAndScroll(targetId)) {
+        const interval = setInterval(() => {
+          if (checkAndScroll(targetId)) {
+            clearInterval(interval);
+          }
+        }, 100);
+      }
+      window.addEventListener("resize", () => checkAndScroll(targetId));
+      return () =>
+        window.removeEventListener("resize", () => checkAndScroll(targetId));
+    };
 
-      // Clean up interval and remove event listener on component unmount
-      return () => {
-        window.removeEventListener("resize", checkAndScroll);
-      };
+    if (location.pathname.includes("enterprise")) {
+      if (hash === "#mandataires") {
+        return setupScroll("mandataires");
+      }
+      if (hash === "#finance-data") {
+        return setupScroll("finance-data");
+      }
     }
   }, [location]);
 

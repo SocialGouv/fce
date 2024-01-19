@@ -4,6 +4,7 @@ const API_BASE_URL = "https://geo.api.gouv.fr";
 
 const DEPARTEMENTS_URL = `${API_BASE_URL}/departements`;
 const COMMUNES_URL = `${API_BASE_URL}/communes`;
+const REGIONS_URL = `${API_BASE_URL}/regions`;
 
 const requestApi = async (url, params) => {
   try {
@@ -24,9 +25,24 @@ const searchDepartementByName = (nom) =>
     limit: 5,
     nom,
   });
-
+export const serachDepartementsByRegion = (code) => {
+  return requestApi(`${REGIONS_URL}/${code}/departements`);
+};
 const searchDepartmentByCodePostal = (code) =>
   requestApi(DEPARTEMENTS_URL, {
+    code,
+    fields: "nom,code",
+    limit: 5,
+  });
+const searchRegionByName = (nom) =>
+  requestApi(REGIONS_URL, {
+    fields: "nom,code",
+    limit: 5,
+    nom,
+  });
+
+const searchRegionByCodePostal = (code) =>
+  requestApi(REGIONS_URL, {
     code,
     fields: "nom,code",
     limit: 5,
@@ -44,6 +60,8 @@ const searchCommuneByName = (nom) =>
     limit: 30,
     nom,
   });
+export const searchRegion = (query) =>
+  isNaN(query) ? searchRegionByName(query) : searchRegionByCodePostal(query);
 
 const searchCommuneByCodePostal = (codePostal) =>
   requestApi(COMMUNES_URL, {

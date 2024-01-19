@@ -92,6 +92,43 @@ const Sidebar = ({
                 }}
               >
                 Entreprise
+                {!isEntrepriseDisplayed && (
+                  <div className="anchors">
+                    <div>
+                      <span className="ellipse-span">
+                        <EllipseIconAside color={"#e3e3fd"} />
+                      </span>
+                      <a
+                        href={`/enterprise/${siren}#finance-data`}
+                        className={"active-anchor"}
+                      >
+                        {"Données financières"}
+                      </a>
+                    </div>
+                    <div>
+                      <span className="ellipse-span">
+                        <EllipseIconAside color={"#e3e3fd"} />
+                      </span>
+                      <a
+                        href={`/enterprise/${siren}#mandataires`}
+                        className={"active-anchor"}
+                      >
+                        {"Mandataires"}
+                      </a>
+                    </div>
+                    <div>
+                      <span className="ellipse-span">
+                        <EllipseIconAside color={"#e3e3fd"} />
+                      </span>
+                      <a
+                        href={`/enterprise/${siren}`}
+                        className={"active-anchor"}
+                      >
+                        {"..."}
+                      </a>
+                    </div>
+                  </div>
+                )}
               </button>
               {isEntrepriseDisplayed && (
                 <div className="anchors">

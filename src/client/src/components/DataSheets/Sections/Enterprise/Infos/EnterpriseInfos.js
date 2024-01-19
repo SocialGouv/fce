@@ -47,7 +47,6 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
         const element = document.getElementById("mandataires");
         const headerOffset =
           document.getElementById("header")?.offsetHeight || 0; // Dynamic header height
-        console.log(document.getElementById("header"));
         if (element) {
           const position = element.offsetTop - headerOffset; // Subtract header height
           window.scrollTo({
@@ -73,6 +72,36 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
       window.addEventListener("resize", checkAndScroll);
 
       // Clean up interval and remove event listener on component unmount
+      return () => {
+        window.removeEventListener("resize", checkAndScroll);
+      };
+    }
+    if (location.pathname.includes("enterprise") && hash === "#finance-data") {
+      const checkAndScroll = () => {
+        const element = document.getElementById("finance-data");
+        const headerOffset =
+          document.getElementById("header")?.offsetHeight || 0; // Dynamic header height
+        if (element) {
+          const position = element.offsetTop - headerOffset; // Subtract header height
+          window.scrollTo({
+            behavior: "smooth",
+            top: position,
+          });
+          return true;
+        }
+        return false;
+      };
+
+      if (!checkAndScroll()) {
+        const interval = setInterval(() => {
+          if (checkAndScroll()) {
+            clearInterval(interval);
+          }
+        }, 100);
+      }
+
+      window.addEventListener("resize", checkAndScroll);
+
       return () => {
         window.removeEventListener("resize", checkAndScroll);
       };

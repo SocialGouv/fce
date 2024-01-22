@@ -1,3 +1,10 @@
+# [27.94.0](https://github.com/SocialGouv/fce/compare/v27.93.0...v27.94.0) (2024-01-22)
+
+
+### Features
+
+* add search by region& add anchors ([#318](https://github.com/SocialGouv/fce/issues/318)) ([0bab05e](https://github.com/SocialGouv/fce/commit/0bab05e080be1d6582094ea49efe1355c84cabd0))
+
 # [27.93.0](https://github.com/SocialGouv/fce/compare/v27.92.0...v27.93.0) (2023-12-22)
 
 

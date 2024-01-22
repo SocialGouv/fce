@@ -25,12 +25,18 @@ const XLSX_DOC_TYPE =
 
 const formatLocationFilter = (filters) => {
   const locationFilters = groupBy(filters.location, "type");
+  const codesCommunes = locationFilters?.commune?.map(prop("value")) || [];
+  const departements = [
+    ...(locationFilters?.departement?.map(prop("value")) || []),
+    ...(locationFilters?.region?.flatMap((regionItem) =>
+      regionItem.regions.map((region) => region.value)
+    ) || []),
+  ];
+
   return {
     ...omit(filters, "location"),
-    codesCommunes: normalizeCodeCommunes(
-      locationFilters?.commune?.map(prop("value")) || []
-    ),
-    departements: locationFilters?.departement?.map(prop("value")) || [],
+    codesCommunes: normalizeCodeCommunes(codesCommunes),
+    departements,
   };
 };
 
@@ -40,7 +46,6 @@ const Search = () => {
 
   const { filters, addFilter, removeFilter, removeFilters } =
     useSearchFilters();
-
   const { sortField, sortDirection, toggleSortField } = useSort();
 
   const { data, loading, error, makeQuery, query } = useSearchQuery();

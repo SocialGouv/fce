@@ -45,7 +45,7 @@ const Controles = ({ siret }) => {
             <div className=" direccte-interactions__title">
               <span className="text">
                 Dernier contrôle ou visite au cours des 24 derniers mois (Pôle
-                T, Pôle C, Pôle 3E)
+                T, Pôle C, Pôle ES)
               </span>
             </div>
             <div className="data-sheet--table data-sheet--table-to-left">

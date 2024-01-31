@@ -1,3 +1,10 @@
+# [27.95.0](https://github.com/SocialGouv/fce/compare/v27.94.0...v27.95.0) (2024-01-31)
+
+
+### Features
+
+* fix searcg by region ([#319](https://github.com/SocialGouv/fce/issues/319)) ([80a630b](https://github.com/SocialGouv/fce/commit/80a630bfd2597518e84f68cfd71fb5b11d2af43d))
+
 # [27.94.0](https://github.com/SocialGouv/fce/compare/v27.93.0...v27.94.0) (2024-01-22)
 
 

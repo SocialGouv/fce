@@ -36,15 +36,13 @@ const searchLocation = async (query) => {
   }));
 
   const options = [];
-
+  if (formattedRegions.length > 0) {
+    options.push({
+      label: "REGIONS",
+      options: formattedRegions,
+    });
+  }
   if (formattedDepartements.length > 0) {
-    if (formattedRegions.length > 0) {
-      options.push({
-        label: "REGIONS",
-        options: formattedRegions,
-      });
-    }
-
     options.push({
       label: "DÉPARTEMENTS",
       options: formattedDepartements,

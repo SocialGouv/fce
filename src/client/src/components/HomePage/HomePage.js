@@ -1,5 +1,7 @@
 import "./homePage.scss";
 
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 
@@ -45,6 +47,17 @@ const HomePage = () => {
     );
   return (
     <div className="home-page ">
+      <div className="beta-message">
+        <div>
+          <span className="beta-message__nouveaute">
+            {" "}
+            <FontAwesomeIcon icon={faInfoCircle} />{" "}
+            {` Nous
+            rencontrons un problème sur l'envoi de mail pour les agents en DD.
+            Nous vous tenons au courant sur le rétablissement du service`}
+          </span>
+        </div>
+      </div>
       <Summary />
       <IconItems users={users} isLoading={isLoading} />
       <HowItWork />

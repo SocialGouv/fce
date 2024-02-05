@@ -1,4 +1,7 @@
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronRight,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import PropTypes from "prop-types";
@@ -43,6 +46,17 @@ const LoginForm = ({
     <div className="container">
       <div className="columns is-centered">
         <div className="column is-8">
+          <div className="beta-message">
+            <div>
+              <span className="beta-message__nouveaute">
+                {" "}
+                <FontAwesomeIcon icon={faInfoCircle} />{" "}
+                {` Nous
+            rencontrons un problème sur l'envoi de mail pour les agents en DD.
+            Nous vous tenons au courant sur le rétablissement du service`}
+              </span>
+            </div>
+          </div>
           <HeadForm step={step} />
           {step === "login-form-email" && (
             <StepForm

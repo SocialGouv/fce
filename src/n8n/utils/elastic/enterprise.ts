@@ -215,10 +215,11 @@ export const mappings = {
     trancheEffectifsEtablissementRank: { type: "rank_feature" },
 
     domaineActivite: { type: "keyword" },
+    codeActivitePrincipale: { type: "keyword" },
 
     codeCommuneEtablissement: { type: "keyword" },
     departement: { type: "keyword" },
-    categorieEntreprise: { type: "keyword"},
+    categorieEntreprise: { type: "keyword" },
 
     etatAdministratifEtablissement: { type: "keyword" },
     etablissementSiege: { type: "boolean" },
@@ -305,7 +306,6 @@ export const mapEnterprise = (enterprise: BceEtablissement) => {
     .trim()
     .replace(/  /, " ");
 
-
   const domaineActivite = codeActivitePrincipale?.slice(0, 2);
 
   // ranking feature cannot be 0
@@ -391,7 +391,7 @@ export const mapEnterprise = (enterprise: BceEtablissement) => {
     codeCommuneEtablissement:
       enterprise.eta_codeCommuneEtablissement ||
       enterprise.eta_codeCommune2Etablissement,
-    departement:enterprise.Departement,
+    departement: enterprise.Departement,
 
     etatAdministratifEtablissement:
       enterprise.eta_etatAdministratifEtablissement,

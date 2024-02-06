@@ -1,3 +1,10 @@
+# [27.96.0](https://github.com/SocialGouv/fce/compare/v27.95.0...v27.96.0) (2024-02-06)
+
+
+### Features
+
+* update domaine Activite mapping ([#322](https://github.com/SocialGouv/fce/issues/322)) ([8413303](https://github.com/SocialGouv/fce/commit/8413303e592bacd57310e31c54d8ebdea92bd5b6))
+
 # [27.95.0](https://github.com/SocialGouv/fce/compare/v27.94.0...v27.95.0) (2024-01-31)
 
 

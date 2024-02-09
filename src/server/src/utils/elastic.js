@@ -17,6 +17,7 @@ const filtersFieldMap = {
   departement: "departement",
   codesPostaux: "codesPostalEtablissement",
   tranchesEffectifs: "trancheEffectifsEtablissement",
+  naf:"codeActivitePrincipale"
 };
 
 const getCodeNafLibelle = (code) =>
@@ -212,6 +213,7 @@ const formatElasticResult = (hit) => {
 export const getElasticQueryParams = (req) => {
   const query = (req.query["q"] || "").trim();
   const activites = req.query["activites"] || [];
+  const naf=req.query["naf"] || [];
   const codesCommunes = req.query["codesCommunes"] || [];
   const codesPostaux = req.query["codesPostaux"] || [];
   const departement = req.query["departements"] || [];
@@ -237,10 +239,12 @@ export const getElasticQueryParams = (req) => {
     codesPostaux,
     tranchesEffectifs,
     dirigeant,
+    naf
   };
 };
 
 export const requestElastic = async (params, { from, size }) => {
+  console.log(params);
   const body = makeQuery(params);
   const {
     body: {

@@ -8,18 +8,13 @@ import trancheEffectif from "../../containers/Search/tranche-effectif.json";
 import UsersFeedback from "../../containers/UsersFeedback";
 import Config from "../../services/Config";
 import SearchResults from "../SearchResults";
+import { useCodeNaf } from "./codeNaf.gql.js";
 import AdministartionFilter from "./Filters/AdministartionFilter.jsx";
 import AutoCompleteFilter from "./Filters/AutoCompleteFilter";
 import CheckboxFilter from "./Filters/CheckboxFilter";
 import DirigeantFromFilter from "./Filters/DirigeantFromFilter";
 import LocationFilter from "./Filters/LocationFilter";
 import SearchBar from "./SearchBar";
-
-const formatDivisionsNaf = (divisionsNaf) =>
-  divisionsNaf.map(({ code, libelle }) => ({
-    label: `${code} - ${libelle}`,
-    value: code,
-  }));
 
 const formatTrancheEffectifs = (trancheEffectifs) =>
   trancheEffectifs.map(({ code, libelle }) => ({
@@ -49,10 +44,11 @@ const Search = ({
   sortField,
   sortDirection,
   options,
-  divisionsNaf,
   generateXlsx,
   downloadLoading,
 }) => {
+  const { data: codesNaf } = useCodeNaf();
+
   const onFormSubmit = (e) => {
     e.preventDefault();
     sendRequest(searchTerm, options);
@@ -176,12 +172,13 @@ const Search = ({
                     placeholder="Choisir une tranche d’effectif"
                   />
                   <div className="horizontal-separator" />
+
                   <AutoCompleteFilter
                     filters={filters}
                     addFilter={addFilter}
                     removeFilter={removeFilter}
-                    options={formatDivisionsNaf(divisionsNaf)}
-                    id="activites"
+                    options={codesNaf}
+                    id="naf"
                     label="Activité (NAF ou libellé)"
                     placeholder="Choisir un code NAF/APE"
                   />

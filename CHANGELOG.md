@@ -1,3 +1,10 @@
+# [27.97.0](https://github.com/SocialGouv/fce/compare/v27.96.0...v27.97.0) (2024-02-13)
+
+
+### Features
+
+* add search by code naf ([#323](https://github.com/SocialGouv/fce/issues/323)) ([0af9a79](https://github.com/SocialGouv/fce/commit/0af9a79dc1c1b34d0b5e5997fb06bc177ac5f889))
+
 # [27.96.0](https://github.com/SocialGouv/fce/compare/v27.95.0...v27.96.0) (2024-02-06)
 
 

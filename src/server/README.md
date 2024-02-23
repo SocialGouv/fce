@@ -14,3 +14,4 @@ You can fix it by installing the extension :
 ```
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 ```
+Run yarn watch 

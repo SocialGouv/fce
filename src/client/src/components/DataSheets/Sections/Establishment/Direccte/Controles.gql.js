@@ -12,21 +12,21 @@ import {
 
 const controlesQuery = gql`
   query getControles($siret: String!) {
-    fce_interactions_pole_c(where: { siret: { _eq: $siret } }) {
-      unite
-      siret
-      date
-      interactions_pole_c_siret {
-        denominationusuelleetablissement
-      }
-    }
-    # fce_interactions_pole_t(where: { siret: { _eq: $siret } }) {
-    #   date
-    #   intervenant
-    #   action_sur
-    #   realise_pour
+    # fce_interactions_pole_c(where: { siret: { _eq: $siret } }) {
+    #   unite
     #   siret
+    #   date
+    #   interactions_pole_c_siret {
+    #     denominationusuelleetablissement
+    #   }
     # }
+    fce_interactions_pole_t(where: { siret: { _eq: $siret } }) {
+      date
+      intervenant
+      action_sur
+      realise_pour
+      siret
+    }
     # fce_interactions_pole_3e(where: { siret: { _eq: $siret } }) {
     #   inspecteurs
     #   date_visite

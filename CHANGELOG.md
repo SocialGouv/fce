@@ -1,3 +1,10 @@
+## [27.97.1](https://github.com/SocialGouv/fce/compare/v27.97.0...v27.97.1) (2024-03-04)
+
+
+### Bug Fixes
+
+* fix visites et controle table source ([#324](https://github.com/SocialGouv/fce/issues/324)) ([4783d09](https://github.com/SocialGouv/fce/commit/4783d09a3bd54645ff2a58bab88982287b6377ab))
+
 # [27.97.0](https://github.com/SocialGouv/fce/compare/v27.96.0...v27.97.0) (2024-02-13)
 
 

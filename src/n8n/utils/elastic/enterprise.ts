@@ -105,6 +105,7 @@ export type BceEtablissement = {
   Tranche_effectif_DSN: string;
   Departement: string;
   Nombre_Eta: string;
+  last_eff_rcd:string;
 };
 
 export type Enterprise = {
@@ -402,6 +403,7 @@ export const mapEnterprise = (enterprise: BceEtablissement) => {
 
     etablissementsUniteLegaleRank: getRank(enterprise.Nombre_Eta),
     statutDiffusionEtablissement: enterprise.eta_statutDiffusionEtablissement,
+    last_eff_rec:enterprise.last_eff_rcd
   };
 
   return removeEmpty(document);

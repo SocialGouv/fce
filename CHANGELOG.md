@@ -1,3 +1,10 @@
+# [27.98.0](https://github.com/SocialGouv/fce/compare/v27.97.1...v27.98.0) (2024-03-06)
+
+
+### Features
+
+* add last effectif ETP field to elastic data ([#325](https://github.com/SocialGouv/fce/issues/325)) ([0322c9c](https://github.com/SocialGouv/fce/commit/0322c9ca0a7cbedf2b017552af9d6b892dac6b93))
+
 ## [27.97.1](https://github.com/SocialGouv/fce/compare/v27.97.0...v27.97.1) (2024-03-04)
 
 

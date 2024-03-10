@@ -89,6 +89,7 @@ router.get("/downloadXlsx", withAuth, async (req, res) => {
         adresseEtablissement,
         complementAdresseEtablissement,
         libelleActivitePrincipale,
+        last_eff_rec
       }) => ({
         Siret: siret,
         Etat: xlsxConfig.establishmentState[etatAdministratifEtablissement],
@@ -107,6 +108,7 @@ router.get("/downloadXlsx", withAuth, async (req, res) => {
         "Code postal": codePostalEtablissement,
         Ville: libelleCommuneEtablissement,
         "Dernier effectif DSN connu": getTrancheLibelleFromCode(trancheEffectifsEtablissement),
+        "Dernier effectif ETP ": last_eff_rec,
         Activité: `${codeActivitePrincipale} - ${libelleActivitePrincipale}`,
       })
     );

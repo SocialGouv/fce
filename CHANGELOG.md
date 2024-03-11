@@ -1,3 +1,10 @@
+# [27.99.0](https://github.com/SocialGouv/fce/compare/v27.98.0...v27.99.0) (2024-03-11)
+
+
+### Features
+
+* add effectif ETP to export search result file ([#326](https://github.com/SocialGouv/fce/issues/326)) ([1eee08d](https://github.com/SocialGouv/fce/commit/1eee08d9efa0bfe43440355d92318ffb0ea6bd8d))
+
 # [27.98.0](https://github.com/SocialGouv/fce/compare/v27.97.1...v27.98.0) (2024-03-06)
 
 

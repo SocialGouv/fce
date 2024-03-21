@@ -3,7 +3,7 @@ front:
   ~needs: [build-front]
   imagePackage: front
   probesPath: /healthz
-  containerPort: 80
+  containerPort: 8080
   envFrom:
     - configMapRef:
         name: client-env

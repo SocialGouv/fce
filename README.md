@@ -18,7 +18,7 @@
 
 ## Environnements
 
-- un environnement de prod
+- un environnement de production
 - un environnement par branche de review
 - pas de preprod
 

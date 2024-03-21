@@ -25,7 +25,7 @@ graphiql:
   ~needs: [build-graphiql]
   imagePackage: graphiql
   probesPath: /healthz
-  containerPort: 80
+  containerPort: 8080
 
 n8n:
   ~chart: app

@@ -36,6 +36,4 @@ RUN yarn --frozen-lockfile --production --silent
 
 COPY --from=builder /app/dist /home/node/custom
 
-USER root
-
-ENTRYPOINT ["tini", "--", "su-exec", "node", "n8n"]
+ENTRYPOINT ["node", "n8n"]

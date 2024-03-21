@@ -1,0 +1,6 @@
+projectName: fce
+
+dependencies:
+  fabrique:
+    extends:
+      - name: ovh

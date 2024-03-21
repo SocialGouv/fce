@@ -10,11 +10,11 @@ COPY . .
 ENV REACT_APP_MAINTENANCE=false
 RUN yarn build
 
-FROM nginxinc/nginx-unprivileged:1.25
+FROM bitnami/nginx:1.12
+
+USER 1001
 
 COPY --from=builder /app/build /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.conf /opt/bitnami/nginx/conf/nginx.conf
 
 EXPOSE 8080
-
-CMD ["nginx", "-g", "daemon off;"]

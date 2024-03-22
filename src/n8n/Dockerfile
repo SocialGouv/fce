@@ -36,4 +36,4 @@ RUN yarn --frozen-lockfile --production --silent
 
 COPY --from=builder /app/dist /home/node/custom
 
-ENTRYPOINT ["node", "n8n"]
+ENTRYPOINT ["node", "node_modules/.bin/n8n"]

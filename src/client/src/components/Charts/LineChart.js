@@ -24,16 +24,17 @@ ChartJS.register(
   Legend
 );
 
-function LineChart({ data, options = {} }) {
+function LineChart({ data, options = {}, chartCanvasRef = null }) {
   if (!data) return null;
   return (
     <div className="chart-graph">
-      {data && <Line options={options} data={data} />}
+      {data && <Line options={options} data={data} ref={chartCanvasRef} />}
     </div>
   );
 }
 
 LineChart.propTypes = {
+  chartCanvasRef: PropTypes.any,
   data: PropTypes.array,
   options: PropTypes.array,
 };

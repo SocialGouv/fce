@@ -152,25 +152,29 @@ const Search = ({
                     label="Siège Social :"
                     placeholder="Choisir un siège Social"
                   />
-                  <AutoCompleteFilter
-                    filters={filters}
-                    addFilter={addFilter}
-                    removeFilter={removeFilter}
-                    options={formattedEtatsAdministratif}
-                    id="etats"
-                    label="État administratif :"
-                    placeholder="Choisir un état administratif"
-                  />
+                  {formattedEtatsAdministratif && (
+                    <AutoCompleteFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                      options={formattedEtatsAdministratif}
+                      id="etats"
+                      label="État administratif :"
+                      placeholder="Choisir un état administratif"
+                    />
+                  )}
                   <div className="horizontal-separator" />
-                  <AutoCompleteFilter
-                    filters={filters}
-                    addFilter={addFilter}
-                    removeFilter={removeFilter}
-                    options={formattedTranchesEffectifs}
-                    id="tranchesEffectifs"
-                    label="Effectif salarié :"
-                    placeholder="Choisir une tranche d’effectif"
-                  />
+                  {formattedTranchesEffectifs && (
+                    <AutoCompleteFilter
+                      filters={filters}
+                      addFilter={addFilter}
+                      removeFilter={removeFilter}
+                      options={formattedTranchesEffectifs}
+                      id="tranchesEffectifs"
+                      label="Effectif salarié :"
+                      placeholder="Choisir une tranche d’effectif"
+                    />
+                  )}
                   <div className="horizontal-separator" />
 
                   <AutoCompleteFilter
@@ -249,7 +253,7 @@ Search.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   options: PropTypes.object.isRequired,
   page: PropTypes.number,
-  query: PropTypes.string.isRequired,
+  query: PropTypes.string,
   removeFilter: PropTypes.func.isRequired,
   removeFilters: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,

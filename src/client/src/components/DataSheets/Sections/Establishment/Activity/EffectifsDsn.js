@@ -105,6 +105,7 @@ const EffectifsDsn = ({ siret }) => {
                     <th>CDD</th>
                     <th>CDI</th>
                     <th>Total Interim</th>
+                    <th>Apprenti</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -150,6 +151,13 @@ const EffectifsDsn = ({ siret }) => {
                         <Value
                           hasNumberFormat
                           value={effectif?.interim}
+                          empty="0"
+                        />
+                      </td>
+                      <td>
+                        <Value
+                          hasNumberFormat
+                          value={effectif?.apprenti}
                           empty="0"
                         />
                       </td>

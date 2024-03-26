@@ -29,7 +29,7 @@ RUN apk del make gcc g++ python
 
 RUN chown -R node /home/node
 
-USER node
+USER 1000
 COPY --from=builder /app/package.json /app/yarn.lock ./
 
 RUN yarn --frozen-lockfile --production --silent

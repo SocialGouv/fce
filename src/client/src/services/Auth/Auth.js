@@ -7,17 +7,29 @@ const AUTH_USER_ID = "user_id";
 
 export default class Auth {
   static sendCode(email) {
-    return Http.post("/requestAuthCode", {
-      email,
-    });
+    return Http.post(
+      "/requestAuthCode",
+      {
+        email,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 
   static login(email, code, isCheckedSubscription) {
-    return Http.post("/login", {
-      code,
-      email,
-      isCheckedSubscription,
-    }).then((response) => {
+    return Http.post(
+      "/login",
+      {
+        code,
+        email,
+        isCheckedSubscription,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    ).then((response) => {
       if (response.data && response.data.success) {
         Local.set(AUTH_KEY, response.data.token);
         Local.set(AUTH_USER_ID, response.data.saltedEmail);
@@ -33,9 +45,15 @@ export default class Auth {
   }
 
   static tempLogin(credential) {
-    return Http.post("/tempLogin", {
-      credential,
-    }).then((response) => {
+    return Http.post(
+      "/tempLogin",
+      {
+        credential,
+      },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    ).then((response) => {
       if (response.data && response.data.success) {
         Local.set(AUTH_KEY, response.data.token);
         Local.set(AUTH_USER_ID, response.data.saltedEmail);

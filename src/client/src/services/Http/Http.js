@@ -1,5 +1,4 @@
 import axios from "axios";
-import buildURL from "axios/lib/helpers/buildURL";
 
 import Auth from "../Auth";
 import Config from "../Config";
@@ -12,7 +11,7 @@ Http.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";
 
 Http.setAuthorization = (token) => {
-  Http.defaults.headers.common["Authorization"] = token;
+  Http.defaults.headers["Authorization"] = token;
   return Http;
 };
 
@@ -25,7 +24,7 @@ Http.formData = (data) => {
 Http.interceptors.request.use(
   (config) => {
     if (Auth.isLogged()) {
-      config.headers.common["Authorization"] = `Bearer ${Auth.getToken()}`;
+      config.headers["Authorization"] = `Bearer ${Auth.getToken()}`;
     }
     return config;
   },
@@ -45,7 +44,5 @@ Http.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-Http.buildURL = buildURL;
 
 export default Http;

@@ -33,13 +33,19 @@ const UsersFeedback = ({
   const sendFeedback = (e) => {
     e.preventDefault();
 
-    Http.post("/feedback", {
-      params: {
-        comment: state.comment,
-        rate: state.rate,
-        useful: state.useful === "thumbup",
+    Http.post(
+      "/feedback",
+      {
+        params: {
+          comment: state.comment,
+          rate: state.rate,
+          useful: state.useful === "thumbup",
+        },
       },
-    })
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    )
       .catch((e) => {
         handleError(e);
       })

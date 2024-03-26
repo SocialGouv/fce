@@ -43,6 +43,13 @@ n8n:
   volumeMounts:
     - name: downloads
       mountPath: /tmp/download
+  resources:
+    requests:
+      cpu: 30m
+      memory: 256Mi
+    limits:
+      cpu: 2
+      memory: 1G
 
 redis:
   ~chart: redis

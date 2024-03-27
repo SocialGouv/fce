@@ -2,8 +2,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { NounExcelIcon, NounPeopleIcon, NounPlatformIcon } from "./Icons";
-
 const LoginLink = () => (
   <div
     className="home-page__link"
@@ -24,56 +22,27 @@ const RequestAccessLink = () => (
   </div>
 );
 
-export const IconItems = ({ users, isLoading = false }) => {
-  // I can't use anonymous function without a display name for icon.
-  // That's make a lint error
-  const items = [
-    {
-      firstParagraph: "22 millions d’entreprises",
-      icon: function renderIcon(height) {
-        return <NounExcelIcon height={height} />;
-      },
-      secondParagraph: "37 millions d’établissements",
-    },
-    {
-      firstParagraph: "59 millions de fiches​",
-      icon: function renderIcon(height) {
-        return <NounPlatformIcon height={height} />;
-      },
-      secondParagraph: "200 Go de données​",
-    },
-    {
-      firstParagraph: `+ ${users} utilisateurs`,
-      icon: function renderIcon(height) {
-        return <NounPeopleIcon height={height} />;
-      },
-      secondParagraph: "dans les Dreets et Ddets(PP)",
-    },
-  ];
-
+export const IconItems = () => {
   return (
     <div className="home-page__section ">
-      <h2 className="home-page__blue-title">FCE en chiffres</h2>
-      <div className="columns icons">
-        {items.map((item, index) => {
-          return (
-            <div className="column is-3 icons__item" key={item.firstParagraph}>
-              <div>
-                <div className="icons__image-container">{item.icon(40)}</div>
-                {isLoading && index === 2 ? (
-                  <div className="dots">
-                    <div />
-                    <div />
-                    <div />
-                  </div>
-                ) : (
-                  <p className="first-text">{item.firstParagraph}</p>
-                )}
-                <p>{item.secondParagraph}</p>
-              </div>
-            </div>
-          );
-        })}
+      {/* <h2 className="home-page__blue-title">FCE en chiffres</h2> */}
+      <div
+        className="columns icons "
+        style={{ height: "28VW", margin: "auto" }}
+      >
+        <iframe
+          title="Report Section"
+          width="100%"
+          // height="90%"
+          src="https://app.powerbi.com/view?r=eyJrIjoiNzdiNjg5YzgtNzk2OC00ZTkwLWEwOWYtNTBlOGM1ODc2ZjFlIiwidCI6IjAzNWU1MjkyLTVhMjUtNDUwOS1iYjA4LWE1NTVmN2QzMWE4YiJ9"
+          allowFullScreen="true"
+          style={{
+            backgroundColor: "#ffffff !important",
+            filter: "drop-shadow(0 1px 3px rgba(0, 0, 18, 0.16))",
+            overflow: "hidden",
+            padding: 0,
+          }}
+        />
       </div>
     </div>
   );
@@ -212,7 +181,7 @@ export const DailyUse = () => {
   ];
 
   return (
-    <div className="home-page__daily-use home-page__section ">
+    <div className="home-page__daily-use home-page__section-iframe ">
       <h2 className="home-page__blue-title">Quels usages au quotidien ?</h2>
       <div className="columns home-page__daily-use__items">
         {items.map((item) => (

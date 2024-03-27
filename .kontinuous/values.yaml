@@ -19,34 +19,6 @@ server:
         name: server-env
     - configMapRef:
         name: server-env
-  env:
-    - name: PG_DB
-      valueFrom:
-        secretKeyRef:
-          key: PGDATABASE
-          name: pg-app
-    - name: PG_HOST
-      valueFrom:
-        secretKeyRef:
-          key: host
-          name: pg-superuser
-    - name: PG_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: password
-          name: pg-superuser
-    - name: PG_PORT
-      valueFrom:
-        secretKeyRef:
-          key: port
-          name: pg-superuser
-    - name: PG_USER
-      valueFrom:
-        secretKeyRef:
-          key: user
-          name: pg-superuser
-    - name: PG_SSL_SELF_SIGNED
-      value: "true"
 
 graphiql:
   ~chart: app
@@ -78,57 +50,6 @@ n8n:
     limits:
       cpu: 2
       memory: 1G
-  env:
-    - name: DB_POSTGRESDB_DATABASE
-      valueFrom:
-        secretKeyRef:
-          key: PGDATABASE
-          name: pg-n8n-app
-    - name: DB_POSTGRESDB_HOST
-      valueFrom:
-        secretKeyRef:
-          key: host
-          name: pg-n8n-superuser
-    - name: DB_POSTGRESDB_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: password
-          name: pg-n8n-superuser
-    - name: DB_POSTGRESDB_PORT
-      valueFrom:
-        secretKeyRef:
-          key: port
-          name: pg-n8n-superuser
-    - name: DB_POSTGRESDB_USER
-      valueFrom:
-        secretKeyRef:
-          key: user
-          name: pg-n8n-superuser
-    - name: PG_DATABASE
-      valueFrom:
-        secretKeyRef:
-          key: PGDATABASE
-          name: pg-app
-    - name: PG_HOST
-      valueFrom:
-        secretKeyRef:
-          key: host
-          name: pg-superuser
-    - name: PG_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: password
-          name: pg-superuser
-    - name: PG_PORT
-      valueFrom:
-        secretKeyRef:
-          key: port
-          name: pg-superuser
-    - name: PG_USERNAME
-      valueFrom:
-        secretKeyRef:
-          key: user
-          name: pg-superuser
 
 redis:
   ~chart: redis
@@ -144,43 +65,6 @@ strapi:
         name: strapi-env
     - configMapRef:
         name: strapi-env
-  env:
-    - name: DATABASE_NAME
-      valueFrom:
-        secretKeyRef:
-          key: PGDATABASE
-          name: pg-strapi-app
-    - name: DATABASE_HOST
-      valueFrom:
-        secretKeyRef:
-          key: host
-          name: pg-strapi-superuser
-    - name: DATABASE_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: password
-          name: pg-strapi-superuser
-    - name: DATABASE_PORT
-      valueFrom:
-        secretKeyRef:
-          key: port
-          name: pg-strapi-superuser
-    - name: DATABASE_USERNAME
-      valueFrom:
-        secretKeyRef:
-          key: user
-          name: pg-strapi-superuser
-    - name: DATABASE_SSL
-      value: "true"
-
-pg:
-  ~chart: pg
-
-pg-n8n:
-  ~chart: pg
-
-pg-strapi:
-  ~chart: pg
 
 jobs:
   ~chart: jobs

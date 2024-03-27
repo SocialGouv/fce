@@ -1,8 +1,34 @@
+strapi:
+  env:
+    - name: DATABASE_NAME
+      valueFrom:
+        secretKeyRef:
+          key: PGDATABASE
+          name: pg-strapi-app
+    - name: DATABASE_HOST
+      valueFrom:
+        secretKeyRef:
+          key: host
+          name: pg-strapi-superuser
+    - name: DATABASE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          key: password
+          name: pg-strapi-superuser
+    - name: DATABASE_PORT
+      valueFrom:
+        secretKeyRef:
+          key: port
+          name: pg-strapi-superuser
+    - name: DATABASE_USERNAME
+      valueFrom:
+        secretKeyRef:
+          key: user
+          name: pg-strapi-superuser
+    - name: DATABASE_SSL
+      value: "true"
+
 n8n:
-  resources:
-    limits:
-      cpu: "4"
-      memory: 1280Mi
   env:
     - name: DB_POSTGRESDB_DATABASE
       valueFrom:
@@ -55,17 +81,7 @@ n8n:
           key: user
           name: pg-superuser
 
-redis:
-  resources:
-    limits:
-      cpu: "1"
-      memory: 1Gi
-
 server:
-  resources:
-    limits:
-      cpu: "500m"
-      memory: 1280Mi
   env:
     - name: PG_DB
       valueFrom:
@@ -93,40 +109,6 @@ server:
           key: user
           name: pg-superuser
     - name: PG_SSL_SELF_SIGNED
-      value: "true"
-
-strapi:
-  resources:
-    limits:
-      cpu: "500m"
-      memory: 512Mi
-  env:
-    - name: DATABASE_NAME
-      valueFrom:
-        secretKeyRef:
-          key: PGDATABASE
-          name: pg-strapi-app
-    - name: DATABASE_HOST
-      valueFrom:
-        secretKeyRef:
-          key: host
-          name: pg-strapi-superuser
-    - name: DATABASE_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: password
-          name: pg-strapi-superuser
-    - name: DATABASE_PORT
-      valueFrom:
-        secretKeyRef:
-          key: port
-          name: pg-strapi-superuser
-    - name: DATABASE_USERNAME
-      valueFrom:
-        secretKeyRef:
-          key: user
-          name: pg-strapi-superuser
-    - name: DATABASE_SSL
       value: "true"
 
 pg:

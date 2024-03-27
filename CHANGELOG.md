@@ -1,3 +1,10 @@
+# [27.100.0](https://github.com/SocialGouv/fce/compare/v27.99.0...v27.100.0) (2024-03-27)
+
+
+### Features
+
+* ci on kontinuous ([#327](https://github.com/SocialGouv/fce/issues/327)) ([2454756](https://github.com/SocialGouv/fce/commit/2454756b0b41bd097b0303ee6e4e8605bcfb2d65))
+
 # [27.99.0](https://github.com/SocialGouv/fce/compare/v27.98.0...v27.99.0) (2024-03-11)
 
 

@@ -1,9 +1,9 @@
-FROM node:16-alpine AS deps
+FROM node:16 AS deps
 WORKDIR /app
 COPY ./package.json ./yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-FROM node:16-alpine AS builder
+FROM node:16 AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -29,13 +29,11 @@ RUN apk del make gcc g++ python
 
 RUN chown -R node /home/node
 
-USER node
+USER 1000
 COPY --from=builder /app/package.json /app/yarn.lock ./
 
 RUN yarn --frozen-lockfile --production --silent
 
 COPY --from=builder /app/dist /home/node/custom
 
-USER root
-
-ENTRYPOINT ["tini", "--", "su-exec", "node", "n8n"]
+ENTRYPOINT ["tini", "--", "n8n"]

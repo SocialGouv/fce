@@ -15,4 +15,6 @@ RUN yarn build
 
 RUN yarn install --production
 
+USER 1000
+
 CMD ["yarn", "start"]

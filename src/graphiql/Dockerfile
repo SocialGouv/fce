@@ -9,11 +9,11 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN yarn build
 
-FROM nginx:1.12-alpine
+FROM bitnami/nginx:1.12
+
+USER 1001
 
 COPY --from=builder /app/build /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.conf /opt/bitnami/nginx/conf/nginx.conf
 
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 8080

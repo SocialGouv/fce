@@ -1,3 +1,10 @@
+## [27.100.1](https://github.com/SocialGouv/fce/compare/v27.100.0...v27.100.1) (2024-03-27)
+
+
+### Bug Fixes
+
+* secrets and configmap ([c9726b0](https://github.com/SocialGouv/fce/commit/c9726b088a21e89748a066157672835c986bc04f))
+
 # [27.100.0](https://github.com/SocialGouv/fce/compare/v27.99.0...v27.100.0) (2024-03-27)
 
 

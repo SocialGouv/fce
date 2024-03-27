@@ -66,6 +66,9 @@ strapi:
     - configMapRef:
         name: strapi-env
 
+pg:
+  ~chart: pg
+
 jobs:
   ~chart: jobs
   runs:

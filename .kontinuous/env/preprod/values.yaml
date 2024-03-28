@@ -1,4 +1,5 @@
 strapi:
+  strategyType: Recreate
   ~needs: [build-strapi, pg-strapi]
   env:
     - name: DATABASE_NAME

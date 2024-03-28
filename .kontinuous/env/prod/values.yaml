@@ -99,6 +99,7 @@ server:
 
 strapi:
   ~needs: [build-strapi, pg-strapi]
+  strategyType: Recreate
   resources:
     limits:
       cpu: "500m"

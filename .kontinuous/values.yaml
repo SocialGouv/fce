@@ -62,7 +62,6 @@ redis:
 
 strapi:
   replicas: 1
-  strategyType: Recreate
   volumes:
     - name: uploads
       persistentVolumeClaim:

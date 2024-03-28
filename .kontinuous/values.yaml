@@ -61,6 +61,17 @@ redis:
   ~chart: redis
 
 strapi:
+  replicas: 1
+  strategyType: Recreate
+  volumes:
+    - name: uploads
+      persistentVolumeClaim:
+        claimName: uploads
+  volumeMounts:
+    - name: uploads
+      mountPath: /app/public/uploads
+  securityContext:
+    fsGroup: 1000
   ~chart: app
   ~needs: [build-strapi]
   imagePackage: strapi

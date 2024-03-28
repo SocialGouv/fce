@@ -1,4 +1,7 @@
 strapi:
+  volumes:
+    - name: uploads
+      emptyDir: {}
   env:
     - name: DATABASE_NAME
       valueFrom:

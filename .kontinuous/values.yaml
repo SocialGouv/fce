@@ -1,4 +1,5 @@
 front:
+  host: "{{ .Values.global.host }}"
   ~chart: app
   ~needs: [build-front]
   imagePackage: front
@@ -9,6 +10,10 @@ front:
         name: client-env
 
 server:
+  host: "{{ .Values.global.host }}"
+  ingress:
+    paths:
+      - /api
   ~chart: app
   ~needs: [build-server]
   imagePackage: server

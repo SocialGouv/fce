@@ -1,3 +1,11 @@
+## [27.100.8](https://github.com/SocialGouv/fce/compare/v27.100.7...v27.100.8) (2024-03-28)
+
+
+### Bug Fixes
+
+* certSecretName for server ([54150df](https://github.com/SocialGouv/fce/commit/54150df3b8381d2c9fd6334d6a86e6c5f48f10d5))
+* sealed MAGIC_KEY_ALLOWED_EMAILS ([3bd379d](https://github.com/SocialGouv/fce/commit/3bd379d09620a451cde4fde0505ffb95aee03d60))
+
 ## [27.100.7](https://github.com/SocialGouv/fce/compare/v27.100.6...v27.100.7) (2024-03-28)
 
 

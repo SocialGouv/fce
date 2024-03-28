@@ -21,6 +21,7 @@ const effectifsDsnQuery = gql`
       cdd
       cdi
       cdi_inter
+      apprenti
       femmes
       hommes
       interim

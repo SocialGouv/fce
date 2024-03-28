@@ -15,7 +15,9 @@ const AutoCompleteFilter = ({
   placeholder,
   menuPlacement = "auto",
 }) => {
-  const value = options.filter((option) => filters[id]?.includes(option.value));
+  const value = options?.filter((option) =>
+    filters[id]?.includes(option.value)
+  );
 
   return (
     <div id={id}>
@@ -53,7 +55,7 @@ AutoCompleteFilter.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   menuPlacement: PropTypes.string,
-  options: PropTypes.array.isRequired,
+  options: PropTypes.array,
   placeholder: PropTypes.string.isRequired,
   removeFilter: PropTypes.func.isRequired,
 };

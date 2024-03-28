@@ -1,3 +1,11 @@
+## [27.100.10](https://github.com/SocialGouv/fce/compare/v27.100.9...v27.100.10) (2024-03-28)
+
+
+### Bug Fixes
+
+* storage url ([fba6e46](https://github.com/SocialGouv/fce/commit/fba6e463fe368f65e1786514daa620cfb4469f97))
+* strategyType: Recreate ([fc19e8d](https://github.com/SocialGouv/fce/commit/fc19e8d9c304d1a87015c983636e717c425a0913))
+
 ## [27.100.9](https://github.com/SocialGouv/fce/compare/v27.100.8...v27.100.9) (2024-03-28)
 
 

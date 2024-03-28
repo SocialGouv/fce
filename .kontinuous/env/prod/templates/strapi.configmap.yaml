@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: strapi-env
 data:
-  STORAGE_URL: https://fceprod2.blob.core.windows.net/strapi
+  STORAGE_URL: https://strapi-fce.fabrique.social.gouv.fr/uploads/
   DATABASE_SSL: "true"
   DATABASE_SSL_SELF: "true"
   FCE_SERVER_URL: "http://server:80"

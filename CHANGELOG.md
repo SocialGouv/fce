@@ -1,3 +1,10 @@
+## [27.100.6](https://github.com/SocialGouv/fce/compare/v27.100.5...v27.100.6) (2024-03-28)
+
+
+### Bug Fixes
+
+* add host to front package ([842a4b1](https://github.com/SocialGouv/fce/commit/842a4b1b9d5e89f36a93d685715c3dcf81f1e2a7))
+
 ## [27.100.5](https://github.com/SocialGouv/fce/compare/v27.100.4...v27.100.5) (2024-03-28)
 
 

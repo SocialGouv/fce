@@ -22,8 +22,6 @@ strapi:
         secretKeyRef:
           key: user
           name: pg-strapi-superuser
-    - name: DATABASE_SSL
-      value: "true"
 
 n8n:
   env:

@@ -1,4 +1,5 @@
 n8n:
+  ~needs: [build-n8n, pg-n8n]
   resources:
     limits:
       cpu: "4"
@@ -62,6 +63,7 @@ redis:
       memory: 1Gi
 
 server:
+  ~needs: [build-server, pg]
   resources:
     limits:
       cpu: "500m"
@@ -96,6 +98,7 @@ server:
       value: "true"
 
 strapi:
+  ~needs: [build-strapi, pg-strapi]
   resources:
     limits:
       cpu: "500m"
@@ -126,8 +129,6 @@ strapi:
         secretKeyRef:
           key: user
           name: pg-strapi-superuser
-    - name: DATABASE_SSL
-      value: "true"
 
 pg:
   ~chart: pg

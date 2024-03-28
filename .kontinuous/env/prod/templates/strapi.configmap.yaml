@@ -5,4 +5,5 @@ metadata:
 data:
   STORAGE_URL: https://fceprod2.blob.core.windows.net/strapi
   DATABASE_SSL: "true"
+  DATABASE_SSL_SELF: "true"
   FCE_SERVER_URL: "http://server:80"

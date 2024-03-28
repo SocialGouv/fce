@@ -1,3 +1,10 @@
+## [27.100.11](https://github.com/SocialGouv/fce/compare/v27.100.10...v27.100.11) (2024-03-28)
+
+
+### Bug Fixes
+
+* ingress limit for strapi ([ae7b30d](https://github.com/SocialGouv/fce/commit/ae7b30db5cfbed78666ed6c3704cf4dfd8b8b8a8))
+
 ## [27.100.10](https://github.com/SocialGouv/fce/compare/v27.100.9...v27.100.10) (2024-03-28)
 
 

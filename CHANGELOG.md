@@ -1,3 +1,10 @@
+## [27.100.5](https://github.com/SocialGouv/fce/compare/v27.100.4...v27.100.5) (2024-03-28)
+
+
+### Bug Fixes
+
+* add needs and ssl for pg ([56e0de8](https://github.com/SocialGouv/fce/commit/56e0de8acdc4e9e16855715c44c103bd31146f50))
+
 ## [27.100.4](https://github.com/SocialGouv/fce/compare/v27.100.3...v27.100.4) (2024-03-28)
 
 

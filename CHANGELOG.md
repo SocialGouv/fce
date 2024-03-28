@@ -1,3 +1,10 @@
+## [27.100.9](https://github.com/SocialGouv/fce/compare/v27.100.8...v27.100.9) (2024-03-28)
+
+
+### Bug Fixes
+
+* move strapi filesystem ([1724a07](https://github.com/SocialGouv/fce/commit/1724a073a9d8ee25f9b7cc44a369fcc5bd51dff3))
+
 ## [27.100.8](https://github.com/SocialGouv/fce/compare/v27.100.7...v27.100.8) (2024-03-28)
 
 

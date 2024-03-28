@@ -62,13 +62,15 @@ Le repo suit les conventions de [semantic-release](https://github.com/semantic-r
 
 ### Kubernetes
 
-Les composants/environnements kubernetes sont définis dans le dossier `.k8s` et utilisent [kosko](https://kosko.dev).
-
-`yarn k8s generate --env dev` permet de produire des manifests YAML pour kubernetes.
-
 Le déploiement par environnement est automatisé via les GitHub actions.
 
 ![deploiement](./deployment.png)
+
+Les déploiements sont effectués par [Kontinuous](https://socialgouv.github.io/kontinuous/#/), la solution de CI/CD de la Fabrique Numérique des ministères sociaux.
+
+```shell
+npx kontinuous build --open --debug # permet de produire des manifests YAML pour kubernetes.
+```
 
 #### Encrypting secrets
 

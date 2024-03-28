@@ -1,3 +1,10 @@
+## [27.100.7](https://github.com/SocialGouv/fce/compare/v27.100.6...v27.100.7) (2024-03-28)
+
+
+### Bug Fixes
+
+* ingress ([7b05e56](https://github.com/SocialGouv/fce/commit/7b05e561428c1db4f725c9f42e18fce9d14c2568))
+
 ## [27.100.6](https://github.com/SocialGouv/fce/compare/v27.100.5...v27.100.6) (2024-03-28)
 
 

@@ -1,3 +1,6 @@
+front:
+  host: fce.fabrique.social.gouv.fr
+
 n8n:
   ~needs: [build-n8n, pg-n8n]
   resources:

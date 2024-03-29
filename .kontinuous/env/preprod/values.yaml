@@ -115,9 +115,15 @@ server:
 
 pg:
   ~chart: pg
+  backup:
+    enabled: false
 
 pg-n8n:
   ~chart: pg
+  backup:
+    enabled: false
 
 pg-strapi:
   ~chart: pg
+  backup:
+    enabled: false

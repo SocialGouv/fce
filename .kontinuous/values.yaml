@@ -36,6 +36,7 @@ graphiql:
 n8n:
   ~chart: app
   ~needs: [build-n8n]
+  replicas: 1
   imagePackage: n8n
   probesPath: /healthz
   containerPort: 5678
@@ -96,7 +97,6 @@ strapi:
 jobs:
   ~chart: jobs
   runs:
-
     build-front:
       use: build
       with:

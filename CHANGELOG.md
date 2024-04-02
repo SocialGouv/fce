@@ -1,3 +1,10 @@
+## [27.100.14](https://github.com/SocialGouv/fce/compare/v27.100.13...v27.100.14) (2024-04-02)
+
+
+### Bug Fixes
+
+* scale down n8n to avoid duplicate jobs ([#330](https://github.com/SocialGouv/fce/issues/330)) ([5b98236](https://github.com/SocialGouv/fce/commit/5b982365675600d324e6ea43d4063f6ee4cde977))
+
 ## [27.100.13](https://github.com/SocialGouv/fce/compare/v27.100.12...v27.100.13) (2024-03-29)
 
 

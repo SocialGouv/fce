@@ -1,3 +1,10 @@
+# [27.101.0](https://github.com/SocialGouv/fce/compare/v27.100.17...v27.101.0) (2024-04-03)
+
+
+### Features
+
+* Add the number of apprentices ([#328](https://github.com/SocialGouv/fce/issues/328)) ([db8a307](https://github.com/SocialGouv/fce/commit/db8a30732a283b4c12f29dd466d3b9e271fba270))
+
 ## [27.100.17](https://github.com/SocialGouv/fce/compare/v27.100.16...v27.100.17) (2024-04-02)
 
 

@@ -52,11 +52,11 @@ n8n:
       mountPath: /tmp/download
   resources:
     requests:
-      cpu: 30m
+      cpu: 10m
       memory: 256Mi
     limits:
-      cpu: 2
-      memory: 1G
+      cpu: 300m
+      memory: 512Mi
 
 redis:
   ~chart: redis

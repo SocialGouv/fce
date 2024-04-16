@@ -1,3 +1,10 @@
+## [27.101.3](https://github.com/SocialGouv/fce/compare/v27.101.2...v27.101.3) (2024-04-16)
+
+
+### Bug Fixes
+
+* adapt n8n resource values on dev/preprod (currently unused) ([#333](https://github.com/SocialGouv/fce/issues/333)) ([f0dee98](https://github.com/SocialGouv/fce/commit/f0dee98d93880d948bccb6281b769ef52dc387e3))
+
 ## [27.101.2](https://github.com/SocialGouv/fce/compare/v27.101.1...v27.101.2) (2024-04-16)
 
 

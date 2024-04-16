@@ -1,3 +1,10 @@
+## [27.101.1](https://github.com/SocialGouv/fce/compare/v27.101.0...v27.101.1) (2024-04-16)
+
+
+### Bug Fixes
+
+* remove obsolete azure pg credentials ([ae674f4](https://github.com/SocialGouv/fce/commit/ae674f44182a30902d60ff6d5778ad03be1b2ac6))
+
 # [27.101.0](https://github.com/SocialGouv/fce/compare/v27.100.17...v27.101.0) (2024-04-03)
 
 

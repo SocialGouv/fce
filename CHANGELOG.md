@@ -1,3 +1,10 @@
+## [27.101.2](https://github.com/SocialGouv/fce/compare/v27.101.1...v27.101.2) (2024-04-16)
+
+
+### Bug Fixes
+
+* explain the cpu limits on n8n service on prod ([7258ad8](https://github.com/SocialGouv/fce/commit/7258ad86724396db996b69890fa9e4eb166fdbe8))
+
 ## [27.101.1](https://github.com/SocialGouv/fce/compare/v27.101.0...v27.101.1) (2024-04-16)
 
 

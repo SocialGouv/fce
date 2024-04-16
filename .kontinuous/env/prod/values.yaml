@@ -55,6 +55,8 @@ n8n:
         secretKeyRef:
           key: user
           name: pg-superuser
+    - name: PG_SSL 
+      value: "true"
 
 redis:
   resources:

@@ -1,9 +1,12 @@
 n8n:
   ~needs: [build-n8n, pg-n8n]
   resources:
+  # We're not setting limit=request as : 
+  # - usually n8n process consumes almost no resource
+  # - a cron runs every night but does nothing except once a month when a new file is added. Then it can use up to 2cpu.
     limits:
-      cpu: "4"
-      memory: 1280Mi
+      cpu: "2"
+      memory: 1024Mi
   env:
     - name: DB_POSTGRESDB_DATABASE
       valueFrom:

@@ -135,6 +135,7 @@ pgadmin:
   ~chart: app
   ~needs: ["build-pgadmin"]
   imagePackage: pgadmin
+  containerPort: 80
   envFrom:
     - secretRef:
         name: pgadmin

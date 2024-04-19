@@ -136,6 +136,7 @@ pgadmin:
   ~needs: ["build-pgadmin"]
   imagePackage: pgadmin
   containerPort: 80
+  probesPath: /
   envFrom:
     - secretRef:
         name: pgadmin

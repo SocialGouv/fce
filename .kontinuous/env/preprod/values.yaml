@@ -135,6 +135,10 @@ pgadmin:
   ~chart: app
   ~needs: ["build-pgadmin"]
   imagePackage: pgadmin
+  envFrom:
+    - secretRef:
+        name: pgadmin
+
   env:
     - name: POSTGRES_DATABASE
       valueFrom:

@@ -161,7 +161,7 @@ pgadmin:
         secretKeyRef:
           name: pg-app
           key: PGPORT
-    - name: POSTGRES_DATABASE
+    - name: POSTGRES_DATABASE_2
       valueFrom:
         secretKeyRef:
           name: pg-n8n-app
@@ -186,7 +186,7 @@ pgadmin:
         secretKeyRef:
           name: pg-n8n-app
           key: PGPORT
-    - name: POSTGRES_DATABASE
+    - name: POSTGRES_DATABASE_3
       valueFrom:
         secretKeyRef:
           name: pg-strapi-app

@@ -11,10 +11,10 @@ ENV POSTGRES_PORT="5432"
 ENV POSTGRES_DB="*"
 
 USER root
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh && \
-    touch /pgadmin4/servers.json && \
-    chown pgadmin:root /pgadmin4/servers.json
-USER pgadmin
+COPY primary_entrypoint.sh /primary_entrypoint.sh
+RUN chmod +x /primary_entrypoint.sh && \
+  touch /pgadmin4/servers.json && \
+  chown pgadmin:root /pgadmin4/servers.json
+USER 5050
 
-ENTRYPOINT /entrypoint.sh
+ENTRYPOINT /primary_entrypoint.sh

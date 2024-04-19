@@ -162,3 +162,35 @@ pgadmin:
         host: PGHOST
         port: PGPORT
         database: PGDATABASE
+
+pgadmin:
+  ~chart: pgadmin
+  oauth2-proxy:
+    host: pgadmin-{{ .Values.global.host }}
+    config:
+      OAUTH2_PROXY_GITHUB_ORG: "SocialGouv"
+      OAUTH2_PROXY_GITHUB_TEAM: "admins-fce,sre"
+    envFrom:
+      - secretRef:
+          name: oauth2-proxy
+  secrets:
+    - name: pg-app
+      keys:
+        user: PGUSER
+        password: PGPASSWORD
+        host: PGHOST
+        port: PGPORT
+        database: PGDATABASE
+    - name: pg-strapi-superuser
+      keys:
+        user: user
+        password: password
+        host: host
+        port: port
+    - name: pg-n8n-app
+      keys:
+        user: PGUSER
+        password: PGPASSWORD
+        host: PGHOST
+        port: PGPORT
+        database: PGDATABASE

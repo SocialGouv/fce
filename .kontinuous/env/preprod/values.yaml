@@ -138,62 +138,62 @@ pgadmin:
   env:
     - name: POSTGRES_USER
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-app
           key: PGUSER
     - name: POSTGRES_PASSWORD
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-app
           key: PGPASSWORD
     - name: POSTGRES_HOST
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-app
           key: PGHOST
     - name: POSTGRES_PORT
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-app
           key: PGPORT
     - name: POSTGRES_USER_2
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-n8n
           key: PGUSER
     - name: POSTGRES_PASSWORD_2
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-n8n
           key: PGPASSWORD
     - name: POSTGRES_HOST_2
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-n8n
           key: PGHOST
     - name: POSTGRES_PORT_2
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-n8n
           key: PGPORT
     - name: POSTGRES_USER_3
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-strapi
           key: PGUSER
     - name: POSTGRES_PASSWORD_3
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-strapi
           key: PGPASSWORD
     - name: POSTGRES_HOST_3
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-strapi
           key: PGHOST
     - name: POSTGRES_PORT_3
       valueFrom:
-        secretRef:
+        secretKeyRef:
           name: pg-strapi
           key: PGPORT
 

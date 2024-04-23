@@ -137,6 +137,8 @@ pgadmin:
   image: dpage/pgadmin4:8.5
   containerPort: 80
   probesPath: /
+  securityContext:
+    runAsUser: 5050
   envFrom:
     - secretRef:
         name: pgadmin

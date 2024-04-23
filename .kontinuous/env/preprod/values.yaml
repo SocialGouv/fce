@@ -133,7 +133,6 @@ pg-strapi:
 
 pgadmin:
   ~chart: app
-  ~needs: ["build-pgadmin"]
   imagePackage: pgadmin
   image: dpage/pgadmin4:8.5
   containerPort: 80

@@ -135,94 +135,22 @@ pgadmin:
   ~chart: app
   ~needs: ["build-pgadmin"]
   imagePackage: pgadmin
+  image: dpage/pgadmin4:8.5
   containerPort: 80
   probesPath: /
   envFrom:
     - secretRef:
         name: pgadmin
-
-  env:
-    - name: POSTGRES_DATABASE
-      valueFrom:
-        secretKeyRef:
-          name: pg-app
-          key: PGDATABASE
-    - name: POSTGRES_USER
-      valueFrom:
-        secretKeyRef:
-          name: pg-app
-          key: PGUSER
-    - name: POSTGRES_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: pg-app
-          key: PGPASSWORD
-    - name: POSTGRES_HOST
-      valueFrom:
-        secretKeyRef:
-          name: pg-app
-          key: PGHOST
-    - name: POSTGRES_PORT
-      valueFrom:
-        secretKeyRef:
-          name: pg-app
-          key: PGPORT
-    - name: POSTGRES_DATABASE_2
-      valueFrom:
-        secretKeyRef:
-          name: pg-n8n-app
-          key: PGDATABASE
-    - name: POSTGRES_USER_2
-      valueFrom:
-        secretKeyRef:
-          name: pg-n8n-app
-          key: PGUSER
-    - name: POSTGRES_PASSWORD_2
-      valueFrom:
-        secretKeyRef:
-          name: pg-n8n-app
-          key: PGPASSWORD
-    - name: POSTGRES_HOST_2
-      valueFrom:
-        secretKeyRef:
-          name: pg-n8n-app
-          key: PGHOST
-    - name: POSTGRES_PORT_2
-      valueFrom:
-        secretKeyRef:
-          name: pg-n8n-app
-          key: PGPORT
-    - name: POSTGRES_DATABASE_3
-      valueFrom:
-        secretKeyRef:
-          name: pg-strapi-app
-          key: PGDATABASE
-    - name: POSTGRES_USER_3
-      valueFrom:
-        secretKeyRef:
-          name: pg-strapi-app
-          key: PGUSER
-    - name: POSTGRES_PASSWORD_3
-      valueFrom:
-        secretKeyRef:
-          name: pg-strapi-app
-          key: PGPASSWORD
-    - name: POSTGRES_HOST_3
-      valueFrom:
-        secretKeyRef:
-          name: pg-strapi-app
-          key: PGHOST
-    - name: POSTGRES_PORT_3
-      valueFrom:
-        secretKeyRef:
-          name: pg-strapi-app
-          key: PGPORT
-
-jobs:
-  ~chart: jobs
-  runs:
-    build-pgadmin:
-      use: build
-      with:
-        imagePackage: pgadmin
-        context: src/pgadmin
+  vars:
+    PGADMIN_CONFIG_SERVER_MODE: "False"
+    PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+  volumeMounts:
+    - mountPath: /pgadmin
+      name: servers
+  volumes:
+    - name: servers
+      secret:
+        secretName: pgadmin-servers
+        items:
+          - key: servers
+            path: servers.json

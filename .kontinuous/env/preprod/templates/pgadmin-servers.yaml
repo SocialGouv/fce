@@ -12,18 +12,18 @@ spec:
   template:
     data:
       servers: |
-      {
-        "Servers": {
-          "1": {
-            "Name": "$(.app.metadata.name)",
-            "Group": "Servers",
-            "Host": "$(.app.data.PGHOST)",
-            "Port": $(.app.data.PGPORT),
-            "MaintenanceDB": "postgres",
-            "Username": "$(.app.data.PGUSER)",
-            "SSLMode": "prefer",
-            "PassFile": "/var/lib/pgadmin/$(.app.metadata.name)"
+        {
+          "Servers": {
+            "1": {
+              "Name": "$(.app.metadata.name)",
+              "Group": "Servers",
+              "Host": "$(.app.data.PGHOST)",
+              "Port": $(.app.data.PGPORT),
+              "MaintenanceDB": "postgres",
+              "Username": "$(.app.data.PGUSER)",
+              "SSLMode": "prefer",
+              "PassFile": "/var/lib/pgadmin/$(.app.metadata.name)"
+            }
           }
         }
-      }
 

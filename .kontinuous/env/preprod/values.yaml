@@ -137,8 +137,8 @@ pgadmin:
   imagePackage: pgadmin
   containerPort: 80
   probesPath: /
-  securityContext:
-    allowPrivilegeEscalation: true
+  # securityContext:
+  #   allowPrivilegeEscalation: true
   envFrom:
     - secretRef:
         name: pgadmin

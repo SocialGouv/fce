@@ -142,7 +142,6 @@ pgadmin:
   envFrom:
     - secretRef:
         name: pgadmin
-
   env:
     - name: POSTGRES_DATABASE
       valueFrom:
@@ -202,23 +201,23 @@ pgadmin:
     - name: POSTGRES_USER_3
       valueFrom:
         secretKeyRef:
-          name: pg-strapi-app
-          key: PGUSER
+          name: pg-strapi-superuser
+          key: user
     - name: POSTGRES_PASSWORD_3
       valueFrom:
         secretKeyRef:
-          name: pg-strapi-app
-          key: PGPASSWORD
+          name: pg-strapi-superuser
+          key: password
     - name: POSTGRES_HOST_3
       valueFrom:
         secretKeyRef:
-          name: pg-strapi-app
-          key: PGHOST
+          name: pg-strapi-superuser
+          key: host
     - name: POSTGRES_PORT_3
       valueFrom:
         secretKeyRef:
-          name: pg-strapi-app
-          key: PGPORT
+          name: pg-strapi-superuser
+          key: port
 
 jobs:
   ~chart: jobs

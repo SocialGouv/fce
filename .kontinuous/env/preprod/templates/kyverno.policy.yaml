@@ -1,9 +1,7 @@
 apiVersion: kyverno.io/v1
 kind: Policy
 metadata:
-  name: template-secret-amqp
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
+  name: generate-pgadmin-servers
 spec:
   background: true
   rules:
@@ -39,8 +37,8 @@ spec:
       generate:
         apiVersion: v1
         kind: Secret
-        name: amqp
-        namespace: {{ .Release.Namespace }}
+        name: pgadmin-servers
+        namespace: {{ .Values.global.namespace }}
         data:
           stringData:
             servers: '{ Servers: { "1": { "Username": {{`{{`}}base64_decode(user){{`}}`}} } } }'

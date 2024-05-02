@@ -131,27 +131,5 @@ pg-strapi:
     backup:
       ~tpl~enabled: "false"
 
-# pgadmin:
-#   ~chart: app
-#   imagePackage: pgadmin
-#   image: dpage/pgadmin4:8.5
-#   containerPort: 80
-#   probesPath: /
-#   securityContext:
-#     runAsUser: 5050
-#   envFrom:
-#     - secretRef:
-#         name: pgadmin
-#   vars:
-#     PGADMIN_CONFIG_SERVER_MODE: "False"
-#     PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
-#   volumeMounts:
-#     - mountPath: /pgadmin
-#       name: servers
-#   volumes:
-#     - name: servers
-#       secret:
-#         secretName: pgadmin-servers
-#         items:
-#           - key: servers
-#             path: servers.json
+pgadmin:
+  ~chart: pgadmin

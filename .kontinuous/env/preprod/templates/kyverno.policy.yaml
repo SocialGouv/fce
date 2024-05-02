@@ -1,0 +1,47 @@
+apiVersion: kyverno.io/v1
+kind: Policy
+metadata:
+  name: template-secret-amqp
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  background: true
+  rules:
+    - name: gensecret
+      match:
+        any:
+        - resources:
+            kinds:
+              - Secret
+            names:
+              - pg-app
+      context:
+      - name: user
+        apiCall:
+          urlPath: "/api/v1/namespaces/{{`{{`}}request.namespace{{`}}`}}/secrets/pg-app"
+          jmesPath: 'data."PGUSER"'
+      - name: host
+        apiCall:
+          urlPath: "/api/v1/namespaces/{{`{{`}}request.namespace{{`}}`}}/secrets/pg-app"
+          jmesPath: 'data."PGHOST"'
+      - name: port
+        apiCall:
+          urlPath: "/api/v1/namespaces/{{`{{`}}request.namespace{{`}}`}}/secrets/pg-app"
+          jmesPath: 'data."PGPORT"'
+      - name: password
+        apiCall:
+          urlPath: "/api/v1/namespaces/{{`{{`}}request.namespace{{`}}`}}/secrets/pg-app"
+          jmesPath: 'data."PGPASSWORD"'
+      - name: database
+        apiCall:
+          urlPath: "/api/v1/namespaces/{{`{{`}}request.namespace{{`}}`}}/secrets/pg-app"
+          jmesPath: 'data."PGDATABASE"'
+      generate:
+        apiVersion: v1
+        kind: Secret
+        name: amqp
+        namespace: {{ .Release.Namespace }}
+        data:
+          data:
+            servers: '{ Servers: { "1": { "Username": {{`{{`}}base64_decode(user){{`}}`}} } } }'
+

@@ -43,7 +43,7 @@ spec:
           stringData:
             servers: |
               {
-                Servers: {
+                "Servers": {
                   "1": {
                     "Username": "{{`{{`}}base64_decode(user){{`}}`}}"
                     "Host": "{{`{{`}}base64_decode(host){{`}}`}}"

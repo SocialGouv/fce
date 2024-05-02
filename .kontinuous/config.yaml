@@ -4,14 +4,15 @@ dependencies:
   fabrique:
     extends:
       - name: ovh
-  contrib:
-    validators:
-      kubeconform:
-        options:
-          skip:
-            - postgresql.cnpg.io/v1/Pooler
-            - postgresql.cnpg.io/v1/Cluster
-            - postgresql.cnpg.io/v1/ScheduledBackup
-            - bitnami.com/v1alpha1/SealedSecret
-            - monitoring.coreos.com/v1/PodMonitor
-            - kyverno.io/v1/Policy
+    dependencies:
+      contrib:
+        validators:
+          kubeconform:
+            options:
+              skip:
+                - postgresql.cnpg.io/v1/Pooler
+                - postgresql.cnpg.io/v1/Cluster
+                - postgresql.cnpg.io/v1/ScheduledBackup
+                - bitnami.com/v1alpha1/SealedSecret
+                - monitoring.coreos.com/v1/PodMonitor
+                - kyverno.io/v1/Policy

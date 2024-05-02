@@ -41,5 +41,15 @@ spec:
         namespace: {{ .Values.global.namespace }}
         data:
           stringData:
-            servers: '{ Servers: { "1": { "Username": {{`{{`}}base64_decode(user){{`}}`}} } } }'
-
+            servers: |
+              {
+                Servers: {
+                  "1": {
+                    "Username": "{{`{{`}}base64_decode(user){{`}}`}}"
+                    "Host": "{{`{{`}}base64_decode(host){{`}}`}}"
+                    "Port": "{{`{{`}}base64_decode(port){{`}}`}}"
+                    "Password": "{{`{{`}}base64_decode(password){{`}}`}}"
+                    "Name": "{{`{{`}}base64_decode(database){{`}}`}}"
+                  }
+                }
+              }

@@ -42,6 +42,6 @@ spec:
         name: amqp
         namespace: {{ .Release.Namespace }}
         data:
-          data:
+          stringData:
             servers: '{ Servers: { "1": { "Username": {{`{{`}}base64_decode(user){{`}}`}} } } }'
 

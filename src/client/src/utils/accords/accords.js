@@ -1,4 +1,4 @@
-import { format, getUnixTime, isAfter, parse } from "date-fns";
+import { format, getUnixTime, isAfter, isValid, parse } from "date-fns";
 import {
   entries,
   fromPairs,
@@ -73,6 +73,13 @@ const addAccordToRecord = (record, accord) =>
     ]),
     fromPairs
   )(record);
+const safeParseDate = (dateString) => {
+  if (!dateString) {
+    return null;
+  }
+  const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
+  return isValid(parsedDate) ? parsedDate : null;
+};
 
 export const groupAccordsByType = pipe(
   reduce((acc, accord) => addAccordToRecord(acc, accord), accordsRecord),
@@ -89,5 +96,6 @@ export const getGroupedAccordsSum = pipe(values, map(prop("count")), sum);
 export const getGroupedAccordsLastSigning = pipe(
   values,
   map(prop("lastSignDate")),
-  maxBy((date) => getUnixTime(parse(date, "dd/MM/yyyy", new Date())))
+  map(safeParseDate),
+  maxBy((date) => (date ? getUnixTime(date) : 0))
 );

@@ -1,4 +1,4 @@
-import { format, parse, parseISO } from "date-fns/fp";
+import { format, parse, parseISO } from "date-fns";
 import { isEmpty, map, maxBy, negate, pipe, prop, trim } from "lodash/fp";
 
 import Config from "../../services/Config";
@@ -23,12 +23,30 @@ const FRENCH_DATE_FORMAT = "dd/MM/yyyy";
 const INTERACTIONS_DATE_FORMAT = "yyyy-MM-dd";
 
 const frenchDateToUSDate = pipe(
-  parse(new Date(), FRENCH_DATE_FORMAT),
-  format(INTERACTIONS_DATE_FORMAT)
+  (dateString) => {
+    if (typeof dateString !== "string") {
+      throw new TypeError(
+        `Expected a string, but received a ${typeof dateString}`
+      );
+    }
+    // Parse the French date string into a Date object
+    return parse(dateString, FRENCH_DATE_FORMAT, new Date());
+  },
+  // Format the Date object into a US date string
+  (date) => format(date, INTERACTIONS_DATE_FORMAT)
 );
-
-const ISODateToUSDate = pipe(parseISO, format(INTERACTIONS_DATE_FORMAT));
-
+const ISODateToUSDate = pipe(
+  (dateString) => {
+    if (typeof dateString !== "string") {
+      throw new TypeError(
+        `Expected a string, but received a ${typeof dateString}`
+      );
+    }
+    // Parse the ISO date string into a Date object
+    return parseISO(dateString);
+  },
+  (date) => format(date, INTERACTIONS_DATE_FORMAT)
+);
 const formatInteractionDate = (date) => {
   if (!date) return "";
   try {

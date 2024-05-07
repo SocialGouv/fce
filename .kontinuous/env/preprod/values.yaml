@@ -133,6 +133,14 @@ pg-strapi:
 
 pgadmin:
   ~chart: pgadmin
+  oauth2-proxy:
+    host: pgadmin-{{ .Values.global.host }}
+    config:
+      OAUTH2_PROXY_GITHUB_ORG: "SocialGouv"
+      OAUTH2_PROXY_GITHUB_TEAM: "admins-fce,sre"
+    envFrom:
+      - secretRef:
+          name: oauth2-proxy
   secrets:
     - name: pg-app
       keys:

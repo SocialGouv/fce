@@ -1,3 +1,10 @@
+## [27.101.4](https://github.com/SocialGouv/fce/compare/v27.101.3...v27.101.4) (2024-05-27)
+
+
+### Reverts
+
+* Revert "chore: pgadmin" (#338) ([8ce62bb](https://github.com/SocialGouv/fce/commit/8ce62bb14ed57f149dce5c4babe1dfec443d1ffa)), closes [#338](https://github.com/SocialGouv/fce/issues/338)
+
 ## [27.101.3](https://github.com/SocialGouv/fce/compare/v27.101.2...v27.101.3) (2024-04-16)
 
 

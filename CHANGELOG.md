@@ -1,3 +1,10 @@
+## [27.101.5](https://github.com/SocialGouv/fce/compare/v27.101.4...v27.101.5) (2024-05-31)
+
+
+### Bug Fixes
+
+* autoscale prod ([#339](https://github.com/SocialGouv/fce/issues/339)) ([dca4964](https://github.com/SocialGouv/fce/commit/dca49641430799fe1fbef2318a0338b36946bee0))
+
 ## [27.101.4](https://github.com/SocialGouv/fce/compare/v27.101.3...v27.101.4) (2024-05-27)
 
 

@@ -67,8 +67,18 @@ redis:
       cpu: "1"
       memory: 1Gi
 
+graphiql:
+  autoscale:
+    enabled: true
+
+front:
+  autoscale:
+    enabled: true
+
 server:
   ~needs: [build-server, pg]
+  autoscale:
+    enabled: true
   resources:
     limits:
       cpu: "500m"

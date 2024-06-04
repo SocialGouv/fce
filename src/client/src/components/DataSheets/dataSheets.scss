@@ -265,6 +265,14 @@
         .section-datas {
             padding: 0 $spacing-4;
             align-self: stretch;
+            &-marches {
+                display: flex;
+                justify-content: end;
+                
+            }
+            .is-centred {
+                text-align: center;
+            }
             .text {
                 font-family: $marianne;
                 font-size: 0.875rem;

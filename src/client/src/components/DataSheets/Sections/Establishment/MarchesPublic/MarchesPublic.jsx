@@ -51,6 +51,7 @@ const MarchesPublic = ({ siret }) => {
                       <th>Acheteur</th>
                       <th>Objet</th>
                       <th>CPV</th>
+                      <th>Offres Recues</th>
                       <th>Procédure</th>
                       <th>Montant</th>
                       <th>Notifié le</th>
@@ -64,6 +65,7 @@ const MarchesPublic = ({ siret }) => {
                         objet,
                         cpv_libelle,
                         procedure,
+                        offresRecues,
                         montant,
                         dateNotification,
                         dureeMois,
@@ -82,9 +84,11 @@ const MarchesPublic = ({ siret }) => {
                           <td>
                             <Value value={formatUpperCase(cpv_libelle)} />
                           </td>
+                          <td>{offresRecues}</td>
                           <td>
                             <Value value={formatUpperCase(procedure)} />
                           </td>
+
                           <td>
                             <Value value={formatChiffre(montant)} />
                           </td>

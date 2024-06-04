@@ -7,6 +7,7 @@ const marchesPublicQuery = gql`
     marches: fce_marches_valides(where: { siret: { _eq: $siret } }) {
       acheteur_id
       codeCPV
+      offresRecues
       cpv_libelle
       dateNotification
       dureeMois

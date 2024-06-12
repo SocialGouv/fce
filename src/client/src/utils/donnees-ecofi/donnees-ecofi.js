@@ -1,12 +1,12 @@
-import { format, parse } from "date-fns/fp";
+import { format, parse } from "date-fns";
 import { pipe, prop } from "lodash/fp";
 
 import { getDateYear } from "../../helpers/Date";
 
 export const getDateDeclaration = pipe(
-  prop("date_fin_exercice"),
-  parse(new Date(), "yyyy-MM-dd"),
-  format("dd/MM/yyyy")
+  prop("date_fin_exercice"), // Extracts the date string from an object
+  (dateString) => parse(dateString, "yyyy-MM-dd", new Date()), // Parses the date string into a Date object
+  (date) => format(date, "dd/MM/yyyy") // Formats the Date object into the desired format
 );
 
 const getChiffreAffaire = prop("ca");

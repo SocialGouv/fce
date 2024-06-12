@@ -1,4 +1,4 @@
-import { differenceInMonths, parse } from "date-fns/fp";
+import { differenceInMonths, parse } from "date-fns";
 import {
   filter,
   groupBy,
@@ -38,7 +38,8 @@ const isLice = pipe(getType, toLower, startsWith("lice"));
 
 const isPse = pipe(getType, toLower, startsWith("pse"));
 
-const parseRupcoDate = parse(new Date(), "yyyy-MM-dd");
+const parseRupcoDate = (dateString) =>
+  parse(dateString, "yyyy-MM-dd", new Date());
 
 const isExpiredPse = pipe(
   prop("date_enregistrement"),

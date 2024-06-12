@@ -57,6 +57,7 @@ const Sidebar = ({
     { label: "Mutations économiques", link: "#muteco" },
     { label: "Aides", link: "#helps" },
     { label: "Agréments", link: "#agrements" },
+    { label: "Appels D'offres", link: "#marches" },
     { label: "Autres etablissements", link: "#autres-etablissements" },
   ];
 

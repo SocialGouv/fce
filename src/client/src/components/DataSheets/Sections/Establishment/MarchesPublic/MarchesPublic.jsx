@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import Source from "../../../../../containers/Source/Source.js";
-import { formatSiret } from "../../../../../helpers/utils/format.js";
 import { convertirMoisEnAnnees } from "../../../../../helpers/utils/utils.js";
 import { formatChiffre } from "../../../../../utils/donnees-ecofi/donnees-ecofi.js";
 import { formatUpperCase } from "../../../../../utils/entreprise/entreprise.js";
@@ -73,7 +72,7 @@ const MarchesPublic = ({ siret }) => {
                         <tr key={acheteur_id + dateNotification}>
                           <td className="table-cell--nowrap">
                             <SeeDetailsLink
-                              text={formatSiret(acheteur_id)}
+                              text={acheteur_id}
                               link={`/establishment/${acheteur_id}/`}
                             />
                           </td>

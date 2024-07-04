@@ -1,3 +1,10 @@
+## [27.101.6](https://github.com/SocialGouv/fce/compare/v27.101.5...v27.101.6) (2024-07-04)
+
+
+### Bug Fixes
+
+* fce updates-resources ([#345](https://github.com/SocialGouv/fce/issues/345)) ([ab6d2b6](https://github.com/SocialGouv/fce/commit/ab6d2b6ee5d25e214fff8a71a776c7d6eef0b13a))
+
 ## [27.101.5](https://github.com/SocialGouv/fce/compare/v27.101.4...v27.101.5) (2024-05-31)
 
 

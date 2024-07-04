@@ -170,6 +170,7 @@ strapi:
           name: pg-strapi-superuser
 
 pg:
+  ~chart: pg
   cnpg-cluster:
     resources:
       requests:
@@ -179,6 +180,7 @@ pg:
         memory: 1Gi
 
 pg-n8n:
+  ~chart: pg
   cnpg-cluster:
     resources:
       requests:
@@ -188,6 +190,7 @@ pg-n8n:
         memory: 1Gi
 
 pg-strapi:
+  ~chart: pg
   cnpg-cluster:
     resources:
       requests:

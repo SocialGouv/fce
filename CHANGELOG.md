@@ -1,3 +1,10 @@
+## [27.101.7](https://github.com/SocialGouv/fce/compare/v27.101.6...v27.101.7) (2024-07-04)
+
+
+### Bug Fixes
+
+* chart pg ([#346](https://github.com/SocialGouv/fce/issues/346)) ([d0f825b](https://github.com/SocialGouv/fce/commit/d0f825bdf9cc15ae2f3732db2eaa5bc8bc54cffb))
+
 ## [27.101.6](https://github.com/SocialGouv/fce/compare/v27.101.5...v27.101.6) (2024-07-04)
 
 

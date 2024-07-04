@@ -78,8 +78,6 @@ graphiql:
     limits:
       cpu: 200m
       memory: 2566Mi
-  autoscale:
-    enabled: true
 
 front:
   resources:
@@ -89,8 +87,6 @@ front:
     limits:
       cpu: 200m
       memory: 256Mi
-  autoscale:
-    enabled: true
 
 server:
   ~needs: [build-server, pg]
@@ -101,8 +97,6 @@ server:
     limits:
       cpu: 200m
       memory: 512Mi
-  autoscale:
-    enabled: true
   env:
     - name: PG_DB
       valueFrom:

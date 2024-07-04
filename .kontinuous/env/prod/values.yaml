@@ -78,8 +78,6 @@ graphiql:
     limits:
       cpu: 200m
       memory: 2566Mi
-  autoscale:
-    enabled: true
 
 front:
   resources:
@@ -89,8 +87,6 @@ front:
     limits:
       cpu: 200m
       memory: 256Mi
-  autoscale:
-    enabled: true
 
 server:
   ~needs: [build-server, pg]
@@ -101,8 +97,6 @@ server:
     limits:
       cpu: 200m
       memory: 512Mi
-  autoscale:
-    enabled: true
   env:
     - name: PG_DB
       valueFrom:
@@ -170,6 +164,7 @@ strapi:
           name: pg-strapi-superuser
 
 pg:
+  ~chart: pg
   cnpg-cluster:
     resources:
       requests:
@@ -179,6 +174,7 @@ pg:
         memory: 1Gi
 
 pg-n8n:
+  ~chart: pg
   cnpg-cluster:
     resources:
       requests:
@@ -188,6 +184,7 @@ pg-n8n:
         memory: 1Gi
 
 pg-strapi:
+  ~chart: pg
   cnpg-cluster:
     resources:
       requests:

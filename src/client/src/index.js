@@ -3,7 +3,7 @@ import "./assets/stylesheets/styles.css";
 
 import * as Sentry from "@sentry/browser";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import smoothscroll from "smoothscroll-polyfill";
 
 import App from "./components/App";
@@ -13,23 +13,18 @@ smoothscroll.polyfill();
 
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.getRegistrations().then((workers) => {
-    Array.isArray(workers) &&
-      (console.log(`Found ${workers.length} service workers...`) || true) &&
-      workers.forEach(
-        (worker) =>
-          worker &&
-          worker.unregister &&
-          console.log(
-            "Removing service worker :",
-            worker
-              .unregister()
-              .then(
-                (...args) =>
-                  document.location.reload(true) && console.log(...args),
-                console.error
-              ) && worker
-          )
-      );
+    if (Array.isArray(workers)) {
+      console.log(`Found ${workers.length} service workers...`);
+      workers.forEach((worker) => {
+        if (worker && worker.unregister) {
+          console.log("Removing service worker:", worker);
+          worker.unregister().then((...args) => {
+            console.log(...args);
+            window.location.reload(true);
+          }, console.error);
+        }
+      });
+    }
   }, console.error);
 }
 
@@ -41,4 +36,9 @@ if (SENTRY_URL) {
   });
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+// Create the root for rendering
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+// Render the App component
+root.render(<App />);

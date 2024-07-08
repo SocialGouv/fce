@@ -1,7 +1,6 @@
 import { get } from "lodash";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { connect } from "react-redux";
 
 import Config from "../../../../../services/Config";
 import {
@@ -27,7 +26,9 @@ const EstablishmentRelationship = ({ siret }) => {
 
   const accords = groupAccordsByType(data || []);
   const nbAccords = getGroupedAccordsSum(accords);
-  const lastDate = getGroupedAccordsLastSigning(accords);
+  const lastDate = getGroupedAccordsLastSigning(accords)
+    ? getGroupedAccordsLastSigning(accords)
+    : " ";
 
   return (
     <section id="relation" className="data-sheet__bloc_section ">
@@ -117,14 +118,7 @@ const EstablishmentRelationship = ({ siret }) => {
 };
 
 EstablishmentRelationship.propTypes = {
-  agreements: PropTypes.object.isRequired,
   siret: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    agreements: state.agreements,
-  };
-};
-
-export default connect(mapStateToProps, null)(EstablishmentRelationship);
+export default EstablishmentRelationship;

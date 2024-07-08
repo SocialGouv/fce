@@ -10,7 +10,7 @@ import {
   getDateYear,
   setYearMonthFormat,
 } from "../../../../../helpers/Date";
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
@@ -38,6 +38,13 @@ const EffectifsEtp = ({ siret }) => {
     { periode_concerne: "desc" },
     start_date
   );
+  const shouldNotRender = useRenderIfSiret({
+    siret,
+  });
+
+  if (error || loading || shouldNotRender) {
+    return null;
+  }
   const handleChange = (event) => {
     setDisplayTable(event.target.checked);
   };
@@ -153,4 +160,4 @@ EffectifsEtp.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(EffectifsEtp);
+export default EffectifsEtp;

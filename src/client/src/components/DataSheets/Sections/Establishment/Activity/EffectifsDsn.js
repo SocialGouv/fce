@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import Toggle from "react-toggle";
 
 import AllEffectifsEtpButton from "../../../../../containers/AllEffectifsEtpButton/AllEffectifsEtpButton";
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
@@ -33,6 +33,11 @@ const EffectifsDsn = ({ siret }) => {
     { mois: "desc" },
     START_DATE
   );
+  const shouldNotRender = useRenderIfSiret({ siret });
+
+  if (error || loading || shouldNotRender) {
+    return null;
+  }
 
   if (!effectifs || effectifs.length == 0) {
     return (
@@ -184,4 +189,4 @@ EffectifsDsn.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(EffectifsDsn);
+export default EffectifsDsn;

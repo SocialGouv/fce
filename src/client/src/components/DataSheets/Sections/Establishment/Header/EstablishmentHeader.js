@@ -24,14 +24,16 @@ const EstablishmentHeader = ({ siret, siren }) => {
   return (
     <section id="header" className="data-sheet-header">
       <EntrepriseName siret={siret} />
-      <HeaderInfoBloc
-        etablissement={etablissement}
-        etablissementCount={etablissementCount}
-        infoBoxValue={getCategoryLabel(etablissement)}
-        siret={siret}
-        adresse={adresse}
-        code={code}
-      />{" "}
+      {etablissement && (
+        <HeaderInfoBloc
+          etablissement={etablissement}
+          etablissementCount={etablissementCount}
+          infoBoxValue={getCategoryLabel(etablissement)}
+          siret={siret}
+          adresse={adresse}
+          code={code}
+        />
+      )}{" "}
       <Dashboard siret={siret} />
     </section>
   );

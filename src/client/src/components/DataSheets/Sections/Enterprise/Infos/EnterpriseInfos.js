@@ -1,7 +1,7 @@
 import { merge } from "lodash";
 import PropTypes from "prop-types";
 import React, { useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
 import Association from "../../../../../containers/Association/Association";
 import { formatSiret, formatTva } from "../../../../../helpers/utils";
@@ -235,7 +235,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             subtitle="Mandataires sociaux"
             sourceCustom="Infogreffe - RCS"
           >
-            <Mandataires mandataires={mandataires} />
+            {mandataires && <Mandataires mandataires={mandataires} />}
           </Subcategory>
         </div>
       )}

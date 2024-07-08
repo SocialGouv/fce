@@ -3,9 +3,16 @@ import "./app.scss";
 import { ApolloProvider } from "@apollo/client";
 import { createBrowserHistory } from "history";
 import PiwikReactRouter from "piwik-react-router";
+import PropTypes from "prop-types";
 import React from "react";
 import { Provider } from "react-redux";
-import { Redirect, Route, Router, Switch } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useParams,
+} from "react-router-dom";
 import { PersistGate } from "redux-persist/lib/integration/react";
 
 import { Error403, Error404 } from "../../components/Errors";
@@ -16,12 +23,13 @@ import ListEtablissements from "../../containers/Enterprise/ListEtablissements.j
 import Login from "../../containers/Login";
 import PublicPage from "../../containers/PublicPage";
 import Search from "../../containers/Search";
-// import UnsubscribePage from "../../containers/UnsubscribePage";
-import SetMatomo from "../../helpers/Matomo/SetMatomo";
+import SetMatomo from "../../helpers/Matomo/SetMatomo.js";
+import Auth from "../../services/Auth/Auth.js";
 import Config from "../../services/Config";
 import { apolloClient } from "../../services/GraphQL/GraphQL";
-import PrivateRoute from "../../services/PrivateRoute";
+import CustomLayout from "../../services/PrivateRoute/CustomLayout.jsx";
 import configureStore from "../../services/Store";
+import { getSirenFromSiret } from "../../utils/establishment/establishment.js";
 import HomePage from "../HomePage";
 import Maintenance from "../Maintenance";
 import Statistics from "../PublicPage/Statistics";
@@ -30,201 +38,260 @@ import Layout from "./Layout";
 import ScrollToTop from "./ScrollToTop";
 
 const { store, persistor } = configureStore();
+
 const history = createBrowserHistory();
 const isActiveMaintenanceMode = Config.get("maintenanceMode");
 const matomoConfig = Config.get("matomo");
 
-const getHistory = (matomoConfig) => {
-  if (!matomoConfig) {
-    return createBrowserHistory();
+const setupMatomo = (history, matomoConfig) => {
+  if (matomoConfig) {
+    const piwik = PiwikReactRouter(matomoConfig);
+    piwik.connectToHistory(history, SetMatomo(matomoConfig));
   }
-
-  const piwik = PiwikReactRouter(matomoConfig);
-  return piwik.connectToHistory(history, SetMatomo(matomoConfig));
+};
+const ProtectedRoute = ({ children, redirectTo = "/login" }) => {
+  const auth = Auth.isLogged();
+  return auth ? children : <Navigate to={redirectTo} />;
+};
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  redirectTo: PropTypes.string.isRequired,
 };
 
 const App = () => {
+  setupMatomo(history, matomoConfig);
+
   return (
     <Provider store={store}>
       <ApolloProvider client={apolloClient}>
         <PersistGate loading={null} persistor={persistor}>
-          <Router history={getHistory(matomoConfig)}>
+          <BrowserRouter>
             <ScrollToTop>
               <div className="app">
-                <Switch>
-                  <Switch>
-                    {/* <Route
-                      exact
-                      path="/unsubscribe/:hash"
-                      render={(props) => (
-                        <Layout>
-                          <UnsubscribePage {...props} />
-                        </Layout>
-                      )}
-                    /> */}
-                    <Route>
-                      <IEChecker>
-                        {isActiveMaintenanceMode ? (
-                          <Maintenance />
-                        ) : (
-                          <Switch>
-                            <PrivateRoute
-                              exact
-                              displayMessage
-                              path="/"
-                              component={Search}
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/search"
-                              component={Search}
-                              displayMessage
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/enterprise/:siren"
-                              component={Enterprise}
-                              isEntrepriseDisplayed
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/establishment/:siret"
-                              component={LegacyEtablissement}
-                              isEstablishmentDisplayed
-                            />
-                            <PrivateRoute
-                              exact
-                              path="/list-establishments/:siren"
-                              component={ListEtablissements}
-                              isEstablishmentsDisplayed
-                            />
-                            <Route
-                              exact
-                              path="/home"
-                              render={() => (
-                                <Layout
-                                  hasLandingHeader={true}
-                                  hasSharedButton={true}
-                                >
-                                  <HomePage />
-                                </Layout>
-                              )}
-                            />
-
-                            <Route
-                              exact
-                              path="/login"
-                              render={() => (
-                                <Layout hasLandingHeader={true}>
-                                  <Login />
-                                </Layout>
-                              )}
-                            />
-
-                            <Route
-                              exact
-                              path="/request-access"
-                              render={() => (
-                                <Layout hasLandingHeader={true}>
-                                  <RequestAccess />
-                                </Layout>
-                              )}
-                            />
-
-                            <Route
-                              exact
-                              path="/mentions-legales"
-                              render={() => (
-                                <Layout>
-                                  <PublicPage />
-                                </Layout>
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/faq"
-                              render={() => (
-                                <Layout>
-                                  <PublicPage />
-                                </Layout>
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/aide"
-                              render={() => (
-                                <Layout>
-                                  <PublicPage />
-                                </Layout>
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/a-propos"
-                              render={() => (
-                                <Layout>
-                                  <PublicPage />
-                                </Layout>
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/politique-de-confidentialite"
-                              render={() => (
-                                <Layout>
-                                  <PublicPage />
-                                </Layout>
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/sources-des-donnees"
-                              render={() => (
-                                <Layout>
-                                  <PublicPage />
-                                </Layout>
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/statistics"
-                              render={() => (
-                                <Layout>
-                                  <Statistics />
-                                </Layout>
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/403"
-                              render={() => (
-                                <Layout>
-                                  <Error403 />
-                                </Layout>
-                              )}
-                            />
-                            <Route
-                              exact
-                              path="/404"
-                              render={() => (
-                                <Layout>
-                                  <Error404 />
-                                </Layout>
-                              )}
-                            />
-                            <Redirect to="/404" />
-                          </Switch>
-                        )}
-                      </IEChecker>
-                    </Route>
-                  </Switch>
-                </Switch>
+                <Routes>
+                  {isActiveMaintenanceMode ? (
+                    <Route path="/" element={<Maintenance />} />
+                  ) : (
+                    <>
+                      <Route
+                        path="/"
+                        element={
+                          <ProtectedRoute redirectTo="/home">
+                            <IEChecker>
+                              <Layout displayMessage>
+                                <Search />
+                              </Layout>
+                            </IEChecker>
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/search"
+                        element={
+                          <ProtectedRoute redirectTo="/home">
+                            <IEChecker>
+                              <Layout displayMessage>
+                                <Search />
+                              </Layout>
+                            </IEChecker>
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/enterprise/:siren"
+                        element={
+                          <ProtectedRoute redirectTo="/home">
+                            <EnterpriseWrapper />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/establishment/:siret"
+                        element={
+                          <ProtectedRoute redirectTo="/home">
+                            <EstablishmentWrapper />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/list-establishments/:siren"
+                        element={
+                          <ProtectedRoute redirectTo="/home">
+                            <ListEstablishmentsWrapper />
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/home"
+                        element={
+                          <IEChecker>
+                            <Layout hasLandingHeader hasSharedButton>
+                              <HomePage />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/login"
+                        element={
+                          <IEChecker>
+                            <Layout hasLandingHeader>
+                              <Login />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/request-access"
+                        element={
+                          <IEChecker>
+                            <Layout hasLandingHeader>
+                              <RequestAccess />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/mentions-legales"
+                        element={
+                          <IEChecker>
+                            <Layout>
+                              <PublicPage />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/faq"
+                        element={
+                          <IEChecker>
+                            <Layout>
+                              <PublicPage />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/aide"
+                        element={
+                          <IEChecker>
+                            <Layout>
+                              <PublicPage />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/a-propos"
+                        element={
+                          <IEChecker>
+                            <Layout>
+                              <PublicPage />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/politique-de-confidentialite"
+                        element={
+                          <IEChecker>
+                            <Layout>
+                              <PublicPage />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/sources-des-donnees"
+                        element={
+                          <IEChecker>
+                            <Layout>
+                              <PublicPage />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/statistics"
+                        element={
+                          <IEChecker>
+                            <Layout>
+                              <Statistics />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/403"
+                        element={
+                          <IEChecker>
+                            <Layout>
+                              <Error403 />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/404"
+                        element={
+                          <IEChecker>
+                            <Layout>
+                              <Error404 />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route path="*" element={<Navigate to="/404" />} />
+                    </>
+                  )}
+                </Routes>
               </div>
             </ScrollToTop>
-          </Router>
+          </BrowserRouter>
         </PersistGate>
       </ApolloProvider>
     </Provider>
+  );
+};
+
+const EnterpriseWrapper = () => {
+  const { siren } = useParams();
+  const siret = getSirenFromSiret(siren);
+  return (
+    <IEChecker>
+      <Layout>
+        <CustomLayout isEntrepriseDisplayed siren={siren} siret={siret}>
+          <Enterprise siren={siren} />
+        </CustomLayout>
+      </Layout>
+    </IEChecker>
+  );
+};
+
+const EstablishmentWrapper = () => {
+  const { siret } = useParams();
+  const siren = getSirenFromSiret(siret);
+  return (
+    <IEChecker>
+      <Layout>
+        <CustomLayout isEstablishmentDisplayed siren={siren} siret={siret}>
+          <LegacyEtablissement siret={siret} />
+        </CustomLayout>
+      </Layout>
+    </IEChecker>
+  );
+};
+
+const ListEstablishmentsWrapper = () => {
+  const { siren } = useParams();
+  return (
+    <IEChecker>
+      <Layout>
+        <CustomLayout isEstablishmentsDisplayed siren={siren}>
+          <ListEtablissements siren={siren} />
+        </CustomLayout>
+      </Layout>
+    </IEChecker>
   );
 };
 

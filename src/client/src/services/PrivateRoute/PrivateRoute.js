@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Redirect, Route, useHistory } from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 
 import Layout from "../../components/App/Layout";
 import { getSirenFromSiret } from "../../utils/establishment/establishment";
@@ -16,14 +16,14 @@ const PrivateRoute = ({
   location,
   ...rest
 }) => {
-  const history = useHistory();
+  // const history = useHistory();
 
   const getTempAuthAndRedirect = async (credential, location) => {
     try {
       await Auth.tempLogin(credential);
-      history.push(location.pathname);
+      redirect(location.pathname);
     } catch (error) {
-      history.push("/login");
+      redirect("/login");
     }
   };
 
@@ -67,7 +67,7 @@ const PrivateRoute = ({
             )}
           </Layout>
         ) : (
-          <Redirect
+          <Navigate
             to={{ pathname: redirect, state: { from: props.location } }}
           />
         )
@@ -79,9 +79,9 @@ const PrivateRoute = ({
 PrivateRoute.propTypes = {
   component: PropTypes.elementType,
   displayMessage: PropTypes.bool,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
+  // history: PropTypes.shape({
+  //   push: PropTypes.func,
+  // }),
   isEntrepriseDisplayed: PropTypes.bool,
   isEstablishmentDisplayed: PropTypes.bool,
   isEstablishmentsDisplayed: PropTypes.bool,

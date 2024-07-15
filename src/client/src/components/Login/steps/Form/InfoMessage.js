@@ -11,7 +11,7 @@ const InfoMessage = ({ children }) => (
 );
 
 InfoMessage.propTypes = {
-  children: PropTypes.oneOfType(PropTypes.element, PropTypes.string),
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
 };
 
 export default InfoMessage;

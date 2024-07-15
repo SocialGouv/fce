@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import { getCustomPastYear } from "../../../../../../helpers/Date";
-import { renderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
+import { useRenderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren.js";
 import { formatSiret } from "../../../../../../helpers/utils";
 import {
   formatApprentissage,
@@ -23,10 +23,12 @@ import SeeDetailsLink from "../../../SharedComponents/SeeDetailsLink";
 import Subcategory from "../../../SharedComponents/Subcategory";
 import { useApprentissageBySiren } from "./Apprentissage.gql";
 
-const Apprentissage = ({ entreprise: { siren } }) => {
+const Apprentissage = ({ entreprise }) => {
+  const { siren } = entreprise;
   const { data, loading, error } = useApprentissageBySiren(siren);
+  const shouldNotRender = useRenderIfSiren({ entreprise, siren });
 
-  if (loading || error) {
+  if (loading || error || shouldNotRender) {
     return null;
   }
 
@@ -114,4 +116,4 @@ Apprentissage.propTypes = {
   }),
 };
 
-export default renderIfSiren(Apprentissage);
+export default Apprentissage;

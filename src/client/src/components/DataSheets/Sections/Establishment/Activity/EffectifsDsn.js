@@ -10,8 +10,8 @@ import LoadableContent from "../../../../shared/LoadableContent/LoadableContent"
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import NonBorderedTable from "../../SharedComponents/NonBorderedTable";
+import EffectifsGraph from "./EffectifGraph";
 import { useDsnEffectif } from "./EffectifsDsn.gql";
-import EffectifsGraph from "./EffectifsGraph";
 
 const EXPANDED_MAX_EFFECTIFS = 60;
 const COLLAPSED_MAX_EFFECTIFS = 1;

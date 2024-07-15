@@ -6,7 +6,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { renderIfSiren } from "../../../helpers/hoc/renderIfSiren";
+import { useRenderIfSiren } from "../../../helpers/hoc/renderIfSiren.js";
 import {
   resetSearch,
   setSearchFilters,
@@ -34,7 +34,14 @@ const Sidebar = ({
 }) => {
   const { loading, data: entreprise, error } = useEstablishmentData();
   const navigate = useNavigate();
+  const shouldNotRender = useRenderIfSiren({
+    entreprise,
+    siren,
+  });
 
+  if (shouldNotRender) {
+    return null;
+  }
   if (loading || error) {
     return null;
   }
@@ -299,4 +306,4 @@ Sidebar.propTypes = {
 
 const ConnectedSidebar = connect(null, mapDispatchToProps)(Sidebar);
 
-export default React.memo(renderIfSiren(ConnectedSidebar));
+export default React.memo(ConnectedSidebar);

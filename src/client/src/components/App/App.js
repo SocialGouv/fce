@@ -39,9 +39,9 @@ import ScrollToTop from "./ScrollToTop";
 
 const { store, persistor } = configureStore();
 
-const history = createBrowserHistory();
+const browserHistory = createBrowserHistory();
 const isActiveMaintenanceMode = Config.get("maintenanceMode");
-const matomoConfig = Config.get("matomo");
+const globalMatomoConfig = Config.get("matomo");
 
 const setupMatomo = (history, matomoConfig) => {
   if (matomoConfig) {
@@ -49,17 +49,19 @@ const setupMatomo = (history, matomoConfig) => {
     piwik.connectToHistory(history, SetMatomo(matomoConfig));
   }
 };
+
 const ProtectedRoute = ({ children, redirectTo = "/login" }) => {
   const auth = Auth.isLogged();
   return auth ? children : <Navigate to={redirectTo} />;
 };
+
 ProtectedRoute.propTypes = {
   children: PropTypes.node.isRequired,
   redirectTo: PropTypes.string.isRequired,
 };
 
 const App = () => {
-  setupMatomo(history, matomoConfig);
+  setupMatomo(browserHistory, globalMatomoConfig);
 
   return (
     <Provider store={store}>

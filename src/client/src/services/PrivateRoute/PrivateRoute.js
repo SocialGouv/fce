@@ -16,8 +16,6 @@ const PrivateRoute = ({
   location,
   ...rest
 }) => {
-  // const history = useHistory();
-
   const getTempAuthAndRedirect = async (credential, location) => {
     try {
       await Auth.tempLogin(credential);
@@ -79,9 +77,6 @@ const PrivateRoute = ({
 PrivateRoute.propTypes = {
   component: PropTypes.elementType,
   displayMessage: PropTypes.bool,
-  // history: PropTypes.shape({
-  //   push: PropTypes.func,
-  // }),
   isEntrepriseDisplayed: PropTypes.bool,
   isEstablishmentDisplayed: PropTypes.bool,
   isEstablishmentsDisplayed: PropTypes.bool,

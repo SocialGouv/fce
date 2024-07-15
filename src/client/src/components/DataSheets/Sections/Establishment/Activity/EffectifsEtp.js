@@ -15,8 +15,8 @@ import LoadableContent from "../../../../shared/LoadableContent/LoadableContent"
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
 import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBorderedTable";
+import EffectifGraph from "./EffectifGraph";
 import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
-import EffectifGraph from "./EffectifsGraph";
 
 const MAX_EFFECTIF_COUNT = 60;
 const MIN_EFFECTIFS_COUNT = 1;

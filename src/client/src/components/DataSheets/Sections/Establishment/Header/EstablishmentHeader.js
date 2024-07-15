@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import {
   getAdresse,
   getCategoryLabel,
@@ -18,6 +18,11 @@ import HeaderInfoBloc from "./HeaderInfoBloc.jsx";
 const EstablishmentHeader = ({ siret, siren }) => {
   const { data: etablissement } = useEstablishmentHeaderData(siret);
   const { data: etablissementCount } = useEstablishmentHeaderNumData(siren);
+  const shouldNotRender = useRenderIfSiret({ siret });
+
+  if (shouldNotRender) {
+    return null;
+  }
   const adresse = getAdresse(etablissement);
   const code = getCodePostalAndCity(etablissement);
 
@@ -44,4 +49,4 @@ EstablishmentHeader.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(EstablishmentHeader);
+export default EstablishmentHeader;

@@ -4,9 +4,12 @@ n8n:
   # We're not setting limit=request as : 
   # - usually n8n process consumes almost no resource
   # - a cron runs every night but does nothing except once a month when a new file is added. Then it can use up to 2cpu.
+    requests:
+      cpu: 100m
+      memory: 256Mi
     limits:
       cpu: "2"
-      memory: 1024Mi
+      memory: 1.5Gi
   env:
     - name: DB_POSTGRESDB_DATABASE
       valueFrom:
@@ -68,21 +71,32 @@ redis:
       memory: 1Gi
 
 graphiql:
-  autoscale:
-    enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 2566Mi
 
 front:
-  autoscale:
-    enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
 
 server:
   ~needs: [build-server, pg]
-  autoscale:
-    enabled: true
   resources:
+    requests:
+      cpu: 100m
+      memory: 386Mi
     limits:
-      cpu: "500m"
-      memory: 1280Mi
+      cpu: 200m
+      memory: 512Mi
   env:
     - name: PG_DB
       valueFrom:
@@ -116,8 +130,11 @@ strapi:
   ~needs: [build-strapi, pg-strapi]
   strategyType: Recreate
   resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
     limits:
-      cpu: "500m"
+      cpu: 200m
       memory: 512Mi
   env:
     - name: DATABASE_NAME
@@ -148,9 +165,30 @@ strapi:
 
 pg:
   ~chart: pg
+  cnpg-cluster:
+    resources:
+      requests:
+        memory: 1Gi
+      limits:
+        cpu: "1"
+        memory: 1Gi
 
 pg-n8n:
   ~chart: pg
+  cnpg-cluster:
+    resources:
+      requests:
+        memory: 1Gi
+      limits:
+        cpu: "1"
+        memory: 1Gi
 
 pg-strapi:
   ~chart: pg
+  cnpg-cluster:
+    resources:
+      requests:
+        memory: 1Gi
+      limits:
+        cpu: "1"
+        memory: 1Gi

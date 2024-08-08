@@ -1,3 +1,10 @@
+# [27.102.0](https://github.com/SocialGouv/fce/compare/v27.101.7...v27.102.0) (2024-08-08)
+
+
+### Features
+
+* Ajout des dates de contrôles du pôle C au niveau de la fiche établissement ([#342](https://github.com/SocialGouv/fce/issues/342)) ([6e4c86e](https://github.com/SocialGouv/fce/commit/6e4c86eec9cb2c5981359beb285d8119896756d9))
+
 ## [27.101.7](https://github.com/SocialGouv/fce/compare/v27.101.6...v27.101.7) (2024-07-04)
 
 

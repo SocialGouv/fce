@@ -36,10 +36,10 @@ const interactionsQuery = gql`
         libellecommune2etablissement
       }
     }
-    interactions_C: fce_interactions_pole_c(where: { siren: { _eq: $siren } }) {
-      siret
-      date
-      unite
+    interactions_C: fce_interactions_pole_c(where: { SIRNE: { _eq: $siren } }) {
+      siret: SIRET
+      date: DATE_DERNIER_CONTROLE
+      unite: LIB_UC
       etablissement: interactions_pole_c_siret {
         etatadministratifetablissement
         siret

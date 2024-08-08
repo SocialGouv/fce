@@ -43,11 +43,11 @@ const dashboardQuery = gql`
       siret
     }
     fce_interactions_pole_c(
-      where: { siret: { _eq: $siret } }
-      order_by: { mois: desc }
+      where: { SIRET: { _eq: $siret } }
+      order_by: { DATE_DERNIER_CONTROLE: desc }
       limit: 1
     ) {
-      date
+      date: DATE_DERNIER_CONTROLE
     }
     fce_interactions_pole_t(
       where: { siret: { _eq: $siret } }

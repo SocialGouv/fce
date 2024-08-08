@@ -23,7 +23,7 @@ const PAGE_SIZE = 10;
 const XLSX_DOC_TYPE =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-const formatLocationFilter = (filters) => {
+const formatLocationFilter = (filters, sortDirection, sortField) => {
   const locationFilters = groupBy(filters.location, "type");
   const codesCommunes = locationFilters?.commune?.map(prop("value")) || [];
   const departements = [
@@ -32,11 +32,12 @@ const formatLocationFilter = (filters) => {
       regionItem.regions.map((region) => region.value)
     ) || []),
   ];
-
   return {
     ...omit(filters, "location"),
     codesCommunes: normalizeCodeCommunes(codesCommunes),
     departements,
+    sortField: sortField,
+    sortOrder: sortDirection,
   };
 };
 
@@ -50,13 +51,18 @@ const Search = () => {
 
   const { data, loading, error, makeQuery, query } = useSearchQuery();
   const resetSearch = useResetSearch();
-
   useEffect(() => {
     if (searchQuery) {
       onSearch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    if (sortField && sortDirection) {
+      onSearch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortField, sortDirection]);
 
   const downloadQuery = async () => {
     const trimmedQuery = searchQuery?.trim();
@@ -97,7 +103,7 @@ const Search = () => {
     setSearchPage(1);
     makeQuery(searchQuery, {
       page: { current: 0, size: PAGE_SIZE },
-      params: formatLocationFilter(filters),
+      params: formatLocationFilter(filters, sortDirection, sortField),
     });
   };
 

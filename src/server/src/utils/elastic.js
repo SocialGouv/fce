@@ -17,7 +17,7 @@ const filtersFieldMap = {
   departement: "departement",
   codesPostaux: "codesPostalEtablissement",
   tranchesEffectifs: "trancheEffectifsEtablissement",
-  naf:"codeActivitePrincipale"
+  naf: "codeActivitePrincipale",
 };
 
 const getCodeNafLibelle = (code) =>
@@ -213,7 +213,7 @@ const formatElasticResult = (hit) => {
 export const getElasticQueryParams = (req) => {
   const query = (req.query["q"] || "").trim();
   const activites = req.query["activites"] || [];
-  const naf=req.query["naf"] || [];
+  const naf = req.query["naf"] || [];
   const codesCommunes = req.query["codesCommunes"] || [];
   const codesPostaux = req.query["codesPostaux"] || [];
   const departement = req.query["departements"] || [];
@@ -221,6 +221,8 @@ export const getElasticQueryParams = (req) => {
   const dirigeant = req.query["dirigeant"]
     ? JSON.parse(req.query["dirigeant"])
     : null;
+  const sortField = req.query["sortField"] || "etatAdministratifEtablissement";
+  const sortOrder = req.query["sortOrder"] || "asc"; // Default sorting order
 
   let etats = req.query["etats"] || [];
   const siege = (req.query["siege"] || "").trim();
@@ -239,13 +241,23 @@ export const getElasticQueryParams = (req) => {
     codesPostaux,
     tranchesEffectifs,
     dirigeant,
-    naf
+    naf,
+    sortField,
+    sortOrder,
   };
 };
 
 export const requestElastic = async (params, { from, size }) => {
   console.log(params);
   const body = makeQuery(params);
+  body.sort = [
+    {
+      [params.sortField]: {
+        order: params.sortOrder,
+      },
+    },
+  ];
+
   const {
     body: {
       hits: { total, hits },

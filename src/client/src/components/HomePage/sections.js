@@ -99,7 +99,7 @@ export const Summary = () => (
       <div className="column is-5">
         <div className="content">
           <div className="text-title">
-            Je suis un agent en DREETS ou en DDETS ​
+            Je suis un agent en DREETS, en DDETS ou en DDPP{" "}
           </div>
 
           <LoginLink />
@@ -120,7 +120,7 @@ export const Summary = () => (
       <div className="column is-5">
         <div className="content">
           <div className="text-title">
-            Je suis en agent en DDETS, nouvel utilisateur de FCE​
+            Je suis en agent en DDETS ou en DDPP, nouvel utilisateur de FCE
           </div>
           <RequestAccessLink />
           <div className="text-explicatif">

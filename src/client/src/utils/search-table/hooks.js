@@ -21,17 +21,22 @@ export const useFilters = (defaultValue) => {
 
 export const useSort = () => {
   const [sortDirection, setSortDirection] = useState("desc");
-  const [sortField, setSortField] = useState(null);
-
+  const [sortField, setSortField] = useState("siret");
+  const { addFilter } = useFilters();
   const toggleSortField = (field) => {
     if (field !== sortField) {
       setSortDirection("desc");
       setSortField(field);
+      addFilter("sortField", field);
+      addFilter("sortDirection", "desc");
+
       return;
     }
 
     if (sortDirection === "desc") {
       setSortDirection("asc");
+      addFilter("sortDirection", "asc");
+
       return;
     }
 

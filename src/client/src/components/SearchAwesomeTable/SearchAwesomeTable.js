@@ -1,15 +1,26 @@
 import "./awesomeTable.scss";
 
+import {
+  faSort,
+  faSortDown,
+  faSortUp,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import { withRouter } from "react-router";
 
 import PaginationTable from "../DataSheets/Sections/SharedComponents/PaginationTable/PaginationTable.jsx";
 import LeftArrow from "../shared/Icons/LeftArrow.jsx";
 import RightArrow from "../shared/Icons/RightArrow.jsx";
 import LoadSpinner from "../shared/LoadSpinner";
 
+const getSortIcon = (field, sortField, sortDirection) => {
+  if (field === sortField) {
+    return sortDirection === "asc" ? faSortDown : faSortUp;
+  }
+  return faSort;
+};
 const SearchAwesomeTable = ({
   showPagination = false,
   pagination,
@@ -18,6 +29,10 @@ const SearchAwesomeTable = ({
   isLoading = false,
   data,
   fields,
+  // isSortable = true,
+  sortColumn,
+  sortField,
+  sortDirection,
 }) => {
   const handleRowClick = (event, element) => {
     if (event.target.tagName === "A") {
@@ -30,9 +45,23 @@ const SearchAwesomeTable = ({
       <thead className="at__head">
         <tr className="at__head__tr">
           {fields.map((field) => {
+            const isSortableField = field.sortKey;
             return (
-              <th key={field.headName} className="at__head__th">
+              <th
+                key={field.headName}
+                className={classNames({
+                  at__head__th: true,
+                  "at__head__th--important": field.importantHead,
+                  "at__head__th--is-sortable": !!isSortableField,
+                })}
+                onClick={() => isSortableField && sortColumn(field.sortKey)}
+              >
                 {field.headName}
+                {isSortableField && (
+                  <FontAwesomeIcon
+                    icon={getSortIcon(field.sortKey, sortField, sortDirection)}
+                  />
+                )}
               </th>
             );
           })}
@@ -119,7 +148,6 @@ const SearchAwesomeTable = ({
 SearchAwesomeTable.propTypes = {
   data: PropTypes.array.isRequired,
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
-  history: PropTypes.object.isRequired,
   isLoading: PropTypes.bool,
   isSortable: PropTypes.bool,
   nextPage: PropTypes.func,
@@ -128,10 +156,11 @@ SearchAwesomeTable.propTypes = {
   prevPage: PropTypes.func,
   prevText: PropTypes.string,
   selectedPage: PropTypes.func,
+
   showPagination: PropTypes.bool,
   sortColumn: PropTypes.func,
   sortDirection: PropTypes.string,
   sortField: PropTypes.string,
 };
 
-export default withRouter(SearchAwesomeTable);
+export default SearchAwesomeTable;

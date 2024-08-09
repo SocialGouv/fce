@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import { getCustomPastYear } from "../../../../../../helpers/Date/Date";
-import { renderIfSiret } from "../../../../../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../../../../../helpers/hoc/renderIfSiret";
 import { formatNumber } from "../../../../../../helpers/utils";
 import {
   getBreakCounts,
@@ -27,6 +27,11 @@ const displayedYears = LAST_3_YEARS;
 
 const Apprentissage = ({ siret }) => {
   const { loading, data, error } = useApprentissageData(siret);
+  const shouldNotRender = useRenderIfSiret({ siret });
+
+  if (error || loading || shouldNotRender) {
+    return null;
+  }
   const minYear = getCustomPastYear(2);
   const dataAfterMinYear = getDataAfterYear(data || [], minYear);
   const apprentissagesSignes = getSignCounts(dataAfterMinYear || []);
@@ -90,4 +95,4 @@ Apprentissage.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(Apprentissage);
+export default Apprentissage;

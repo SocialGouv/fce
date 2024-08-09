@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { hideIf } from "../../../../../helpers/hoc/hideIf";
+import { useRenderIfSiren } from "../../../../../helpers/hoc/renderIfSiren.js";
 import { formatNumber, formatSiret } from "../../../../../helpers/utils";
 import {
   formatActivitePartielle,
@@ -20,10 +20,15 @@ import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink";
 import Subcategory from "../../SharedComponents/Subcategory";
 import { useActivitePartielle } from "./ActivitePartielle.gql";
 
-const ActivitePartielle = ({ enterprise: { siren } }) => {
+const ActivitePartielle = ({ enterprise }) => {
+  const { siren } = enterprise;
   const { data, loading, error } = useActivitePartielle(siren);
+  const shouldNotRender = useRenderIfSiren({
+    entreprise: enterprise,
+    siren,
+  });
 
-  if (loading || error) {
+  if (loading || error || shouldNotRender) {
     return null;
   }
 
@@ -135,6 +140,4 @@ ActivitePartielle.propTypes = {
   enterprise: PropTypes.object.isRequired,
 };
 
-export default hideIf(({ enterprise }) => !enterprise?.siren)(
-  ActivitePartielle
-);
+export default ActivitePartielle;

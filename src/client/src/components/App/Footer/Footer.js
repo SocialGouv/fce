@@ -9,7 +9,6 @@ import HeaderLogo from "../Logo/Logo.jsx";
 
 const Footer = () => {
   const [communicationKitLink, setCommunicationKitLink] = useState(null);
-
   useEffect(() => {
     const fetchCommunicationKitUrl = () => {
       fetch(`${Config.get("strapi.domain")}/kit-de-communication`)

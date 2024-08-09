@@ -1,15 +1,10 @@
-$font-path: "~react-widgets/lib/fonts";
-$img-path: "~react-widgets/lib/img";
-
-@import "react-widgets/lib/scss/react-widgets";
-
 .rw-multiselect {
-  .rw-widget-container {
-    input {
-      padding-top: 0.3em;
+    .rw-widget-container {
+        input {
+            padding-top: 0.3em;
+        }
+        .rw-multiselect-tag {
+            margin-left: 0.857em;
+        }
     }
-    .rw-multiselect-tag {
-      margin-left: 0.857em;
-    }
-  }
 }

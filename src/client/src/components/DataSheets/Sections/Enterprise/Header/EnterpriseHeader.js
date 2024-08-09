@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Helmet } from "react-helmet";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 
 import {
   resetSearch,
@@ -62,7 +61,6 @@ const EnterpriseHeader = ({ enterprise }) => {
 
 EnterpriseHeader.propTypes = {
   enterprise: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -79,4 +77,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(EnterpriseHeader));
+export default connect(null, mapDispatchToProps)(EnterpriseHeader);

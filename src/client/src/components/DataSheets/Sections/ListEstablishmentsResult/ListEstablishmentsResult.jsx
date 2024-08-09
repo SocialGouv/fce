@@ -1,7 +1,7 @@
 import "./ListEstablishmentsResult.scss";
 
 import React from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
 import { useScrollToLocationHash } from "../../../../helpers/hooks/useScrollToLocationHash";
 import { Establishments } from "./Establishments.jsx";

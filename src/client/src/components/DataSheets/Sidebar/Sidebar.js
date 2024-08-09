@@ -1,13 +1,12 @@
 import "./sidebar.scss";
 
 import classNames from "classnames";
-import { compose } from "lodash/fp";
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { renderIfSiren } from "../../../helpers/hoc/renderIfSiren";
+import { useRenderIfSiren } from "../../../helpers/hoc/renderIfSiren.js";
 import {
   resetSearch,
   setSearchFilters,
@@ -31,11 +30,18 @@ const Sidebar = ({
   isEstablishmentDisplayed = false,
   isEstablishmentsDisplayed = false,
   isEntrepriseDisplayed = false,
-  history,
   onOpenUserFeedbackBox,
 }) => {
   const { loading, data: entreprise, error } = useEstablishmentData();
+  const navigate = useNavigate();
+  const shouldNotRender = useRenderIfSiren({
+    entreprise,
+    siren,
+  });
 
+  if (shouldNotRender) {
+    return null;
+  }
   if (loading || error) {
     return null;
   }
@@ -74,7 +80,7 @@ const Sidebar = ({
   ];
   const handleOpenUserFeedback = () => {
     onOpenUserFeedbackBox();
-    history.push("#user-feedback");
+    navigate.push("#user-feedback");
   };
   return (
     <>
@@ -88,7 +94,7 @@ const Sidebar = ({
                   `${isEntrepriseDisplayed && "active selected-item "}`,
                 ])}
                 onClick={() => {
-                  history.push(`/enterprise/${siren}`);
+                  navigate(`/enterprise/${siren}`);
                 }}
               >
                 Entreprise
@@ -169,7 +175,7 @@ const Sidebar = ({
                     }`,
                   ])}
                   onClick={() => {
-                    history.push(`/establishment/${headOffice?.siret}`);
+                    navigate(`/establishment/${headOffice?.siret}`);
                   }}
                 >
                   Siège social
@@ -214,7 +220,7 @@ const Sidebar = ({
                 onClick={() => {
                   return !etablissementsCount
                     ? null
-                    : history.push(`/list-establishments/${siren}`);
+                    : navigate(`/list-establishments/${siren}`);
                 }}
               >
                 {" "}
@@ -287,7 +293,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 Sidebar.propTypes = {
-  history: PropTypes.object.isRequired,
   isEntrepriseDisplayed: PropTypes.bool,
   isEstablishmentDisplayed: PropTypes.bool,
   isEstablishmentsDisplayed: PropTypes.bool,
@@ -299,6 +304,6 @@ Sidebar.propTypes = {
   siret: PropTypes.string,
 };
 
-export default React.memo(
-  compose(withRouter, connect(null, mapDispatchToProps), renderIfSiren)(Sidebar)
-);
+const ConnectedSidebar = connect(null, mapDispatchToProps)(Sidebar);
+
+export default React.memo(ConnectedSidebar);

@@ -1,7 +1,7 @@
 import "./homePage.scss";
 
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router";
+import { Navigate } from "react-router-dom";
 
 import Auth from "../../services/Auth";
 import Http from "../../services/Http";
@@ -36,7 +36,7 @@ const HomePage = () => {
 
   if (isLogged)
     return (
-      <Redirect
+      <Navigate
         to={{
           pathname: "/",
         }}

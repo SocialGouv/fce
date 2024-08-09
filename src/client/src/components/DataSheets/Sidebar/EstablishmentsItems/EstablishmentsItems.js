@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import { withRouter } from "react-router";
 
 import { getSiret } from "../../../../utils/establishment/establishment";
 import Establishment from "../Establishment";
@@ -39,4 +38,4 @@ EstablishmentsItems.propTypes = {
   match: PropTypes.object.isRequired,
 };
 
-export default withRouter(EstablishmentsItems);
+export default EstablishmentsItems;

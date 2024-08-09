@@ -3,7 +3,6 @@ import "./header.scss";
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
 import LogoFCE from "../../../assets/img/FCE.svg";
@@ -57,7 +56,7 @@ const Header = ({ resetSearch, hasSharedButton = false }) => {
                 <Tooltip content="Partager FCE avec un agent" position={"left"}>
                   <div className="icon-button-link">
                     <a href="mailto:?subject=FCE - le portail de l'intelligence collective des agents publics&body=https://fce.fabrique.social.gouv.fr/">
-                      <MessageIcon size={"100%"} />
+                      <MessageIcon />
                     </a>
                   </div>
                 </Tooltip>
@@ -84,4 +83,4 @@ Header.propTypes = {
   resetSearch: PropTypes.func,
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(Header));
+export default connect(null, mapDispatchToProps)(Header);

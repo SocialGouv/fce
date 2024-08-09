@@ -109,6 +109,8 @@ Data.propTypes = {
     PropTypes.number,
     PropTypes.bool,
     PropTypes.node,
+    PropTypes.instanceOf(Date),
+    PropTypes.oneOf([undefined, null]),
   ]),
 };
 

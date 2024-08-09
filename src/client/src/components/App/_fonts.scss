@@ -24,27 +24,87 @@
 
 @font-face {
     font-family: "Roboto";
-    src: url("../../assets/fonts/Roboto-Regular.eot");
-    src: url("../../assets/fonts/Roboto-Regular.eot?#iefix")
-            format("embedded-opentype"),
-        url("../../assets/fonts/Roboto-Regular.woff2") format("woff2"),
-        url("../../assets/fonts/Roboto-Regular.woff") format("woff"),
-        url("../../assets/fonts/Roboto-Regular.ttf") format("truetype");
+    src: url("../../assets/fonts/Roboto-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
-}
-
-@font-face {
+  }
+  
+  @font-face {
     font-family: "Roboto";
-    src: url("../../assets/fonts/Roboto-Bold.eot");
-    src: url("../../assets/fonts/Roboto-Bold.eot?#iefix")
-            format("embedded-opentype"),
-        url("../../assets/fonts/Roboto-Bold.woff2") format("woff2"),
-        url("../../assets/fonts/Roboto-Bold.woff") format("woff"),
-        url("../../assets/fonts/Roboto-Bold.ttf") format("truetype");
+    src: url("../../assets/fonts/Roboto-Bold.ttf") format("truetype");
     font-weight: bold;
     font-style: normal;
-}
+  }
+  
+  @font-face {
+    font-family: "Roboto";
+    src: url("../../assets/fonts/Roboto-Italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Roboto";
+    src: url("../../assets/fonts/Roboto-BoldItalic.ttf") format("truetype");
+    font-weight: bold;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Roboto";
+    src: url("../../assets/fonts/Roboto-Light.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Roboto";
+    src: url("../../assets/fonts/Roboto-LightItalic.ttf") format("truetype");
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Roboto";
+    src: url("../../assets/fonts/Roboto-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Roboto";
+    src: url("../../assets/fonts/Roboto-MediumItalic.ttf") format("truetype");
+    font-weight: 500;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Roboto";
+    src: url("../../assets/fonts/Roboto-Black.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Roboto";
+    src: url("../../assets/fonts/Roboto-BlackItalic.ttf") format("truetype");
+    font-weight: 900;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Roboto";
+    src: url("../../assets/fonts/Roboto-Thin.ttf") format("truetype");
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Roboto";
+    src: url("../../assets/fonts/Roboto-ThinItalic.ttf") format("truetype");
+    font-weight: 100;
+    font-style: italic;
+  }
 
 @font-face {
     font-family: "Evolventa";
@@ -69,3 +129,98 @@
     font-weight: bold;
     font-style: normal;
 }
+@font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-Regular.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-Regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-Bold.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-Bold.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-Regular_Italic.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-Regular_Italic.woff") format("woff");
+    font-weight: normal;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-Bold_Italic.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-Bold_Italic.woff") format("woff");
+    font-weight: bold;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-ExtraBold.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-ExtraBold.woff") format("woff");
+    font-weight: 800;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-ExtraBold_Italic.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-ExtraBold_Italic.woff") format("woff");
+    font-weight: 800;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-Light.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-Light.woff") format("woff");
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-Light_Italic.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-Light_Italic.woff") format("woff");
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-Medium.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-Medium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-Medium_Italic.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-Medium_Italic.woff") format("woff");
+    font-weight: 500;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-Thin.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-Thin.woff") format("woff");
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "Marianne";
+    src: url("../../assets/fonts/Marianne-Thin_Italic.woff2") format("woff2"),
+         url("../../assets/fonts/Marianne-Thin_Italic.woff") format("woff");
+    font-weight: 100;
+    font-style: italic;
+  }

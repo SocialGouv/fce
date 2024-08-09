@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import Data from "../../components/DataSheets/Sections/SharedComponents/Data";
-import { renderIfSiret } from "../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../helpers/hoc/renderIfSiret";
 import {
   getNumeroRna,
   isAssociation,
@@ -11,7 +11,12 @@ import { useAssociationData } from "./Association.gql";
 
 const Association = ({ siret }) => {
   const { loading, data, error } = useAssociationData(siret);
-  if (error || loading) {
+  const shouldNotRender = useRenderIfSiret({
+    etablissement: data?.association,
+    siret,
+  });
+
+  if (error || loading || shouldNotRender) {
     return null;
   }
 
@@ -38,4 +43,4 @@ Association.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(Association);
+export default Association;

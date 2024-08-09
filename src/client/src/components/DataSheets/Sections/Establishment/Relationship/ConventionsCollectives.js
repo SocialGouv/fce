@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import Config from "../../../../../services/Config";
 import {
   getConventionCode,
@@ -15,8 +15,9 @@ import { useConventionsCollectives } from "./ConventionsCollectives.gql";
 
 const ConventionsCollectives = ({ siret }) => {
   const { loading, data, error } = useConventionsCollectives(siret);
+  const shouldNotRender = useRenderIfSiret({ siret });
 
-  if (loading || error) {
+  if (loading || error || shouldNotRender) {
     return null;
   }
 
@@ -68,4 +69,4 @@ ConventionsCollectives.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(ConventionsCollectives);
+export default ConventionsCollectives;

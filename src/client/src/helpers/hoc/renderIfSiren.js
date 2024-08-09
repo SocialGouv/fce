@@ -1,5 +1,3 @@
-import { hideIf } from "./hideIf";
-
-export const renderIfSiren = hideIf(
-  ({ entreprise, siren }) => !entreprise?.siren && !siren
-);
+export const useRenderIfSiren = ({ entreprise, siren }) => {
+  return !entreprise?.siren && !siren;
+};

@@ -1,12 +1,11 @@
 import _get from "lodash.get";
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import LoginView from "../../components/Login";
 import Auth from "../../services/Auth";
 
-const Login = ({ history }) => {
+const Login = () => {
   const [step, setStep] = useState("login-form-email");
   const [errorMessage, setErrorMessage] = useState(null);
   const [infoMessage, setInfoMessage] = useState(null);
@@ -15,9 +14,10 @@ const Login = ({ history }) => {
   const [showMailingListSignup, setShowMailingListSignup] = useState(true);
   const redirectLoginSuccess = "/search";
   const isLogged = Auth.isLogged();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLogged) history.push("/");
+    if (isLogged) navigate("/");
   }, [isLogged]);
 
   const sendCode = (e, email) => {
@@ -61,7 +61,7 @@ prendre plusieurs minutes dans certains services.`);
           throw new Error(_get(response, "data.message"));
         }
 
-        history.push(redirectLoginSuccess);
+        navigate(redirectLoginSuccess);
       })
       .catch((e) => {
         const message = _get(e, "response.data.error", e.message);
@@ -102,10 +102,4 @@ prendre plusieurs minutes dans certains services.`);
   );
 };
 
-Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-};
-
-export default withRouter(Login);
+export default Login;

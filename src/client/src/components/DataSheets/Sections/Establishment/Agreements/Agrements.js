@@ -26,7 +26,7 @@ const Agrements = ({ siret }) => {
 };
 
 Agrements.propTypes = {
-  siret: PropTypes.object.isRequired,
+  siret: PropTypes.string.isRequired,
 };
 
 export default Agrements;

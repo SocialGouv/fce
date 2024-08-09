@@ -1,13 +1,15 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import Subcategory from "../../SharedComponents/Subcategory";
 import { useUniteDeControle } from "./UniteDeControle.gql";
 
 function UniteDeControle({ siret }) {
   const { loading, data, error } = useUniteDeControle(siret);
-  if (loading || error) {
+  const shouldNotRender = useRenderIfSiret({ siret });
+
+  if (loading || error || shouldNotRender) {
     return "error";
   }
   return (
@@ -31,4 +33,4 @@ function UniteDeControle({ siret }) {
 
 UniteDeControle.propTypes = { siret: PropTypes.string.isRequired };
 
-export default renderIfSiret(UniteDeControle);
+export default UniteDeControle;

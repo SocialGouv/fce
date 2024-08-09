@@ -4,7 +4,7 @@ import { prop, sum } from "lodash/fp";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { renderIfSiren } from "../../../../../helpers/hoc/renderIfSiren";
+import { useRenderIfSiren } from "../../../../../helpers/hoc/renderIfSiren.js";
 import {
   getCity,
   getSiret,
@@ -21,10 +21,12 @@ import { useAccidentsTravailBySiren } from "./AccidentTravail.gql";
 const getWorkAccidentsTotal = (workAccidents) =>
   sum(workAccidents.map(prop("total")));
 
-const AccidentTravail = ({ entreprise: { siren } }) => {
+const AccidentTravail = ({ entreprise }) => {
+  const { siren } = entreprise;
   const { data, error, loading } = useAccidentsTravailBySiren(siren);
+  const shouldNotRender = useRenderIfSiren({ entreprise, siren });
 
-  if (error || loading) {
+  if (loading || error || shouldNotRender) {
     return null;
   }
 
@@ -111,4 +113,4 @@ AccidentTravail.propTypes = {
   }),
 };
 
-export default renderIfSiren(AccidentTravail);
+export default AccidentTravail;

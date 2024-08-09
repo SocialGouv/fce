@@ -1,4 +1,4 @@
-import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
@@ -8,7 +8,7 @@ const StepForm = ({ errorMessage, onSubmit, children, className }) => {
     <form onSubmit={onSubmit} className={className}>
       {errorMessage && (
         <div className="login__notif login__notif--error shake-horizontal">
-          <FontAwesomeIcon icon={faExclamationTriangle} />
+          <FontAwesomeIcon icon={faTriangleExclamation} />
           <p>{errorMessage}</p>
         </div>
       )}

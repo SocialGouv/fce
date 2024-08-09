@@ -1,18 +1,24 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { renderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
+import { useRenderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
 import Data from "../../../SharedComponents/Data";
 import NonBorderedTable from "../../../SharedComponents/NonBorderedTable/NonBorderedTable";
 import Subcategory from "../../../SharedComponents/Subcategory";
 import { usePlanRelanceBySiren } from "./PlanDeRelance.gql";
 
-const PlanDeRelance = ({ entreprise: { siren } }) => {
+const PlanDeRelance = ({ entreprise }) => {
+  const { siren } = entreprise;
   const {
     data: planRelanceData,
     loading,
     error,
   } = usePlanRelanceBySiren(siren);
+  const shouldNotRender = useRenderIfSiren({ entreprise, siren });
+
+  if (loading || error || shouldNotRender) {
+    return null;
+  }
 
   if (loading || error) {
     return null;
@@ -63,4 +69,4 @@ PlanDeRelance.propTypes = {
   }),
 };
 
-export default renderIfSiren(PlanDeRelance);
+export default PlanDeRelance;

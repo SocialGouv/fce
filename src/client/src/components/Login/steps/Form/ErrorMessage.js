@@ -11,7 +11,7 @@ const ErrorMessage = ({ children }) => (
 );
 
 ErrorMessage.propTypes = {
-  children: PropTypes.oneOfType(PropTypes.element, PropTypes.string),
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
 };
 
 export default ErrorMessage;

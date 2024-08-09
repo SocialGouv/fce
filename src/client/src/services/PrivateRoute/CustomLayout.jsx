@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 import { EstablishmentProvider } from "../../components/DataSheets/Sections/SharedComponents/EstablishmentContext.jsx";
 import SubHeader from "../../components/DataSheets/Sections/SharedComponents/SubHeader/SubHeader.jsx";
@@ -7,9 +8,9 @@ import Sidebar from "../../components/DataSheets/Sidebar/Sidebar";
 import UsersFeedback from "../../containers/UsersFeedback/UsersFeedback.js";
 
 const CustomLayout = ({
-  isEstablishmentDisplayed,
-  isEntrepriseDisplayed,
-  isEstablishmentsDisplayed,
+  isEstablishmentDisplayed = false,
+  isEntrepriseDisplayed = false,
+  isEstablishmentsDisplayed = false,
   siren,
   siret,
   children,
@@ -22,6 +23,13 @@ const CustomLayout = ({
   const openUserFeedback = () => {
     setIsOpenUserFeedback(true);
   };
+
+  if (
+    !isEntrepriseDisplayed &&
+    !isEstablishmentsDisplayed &&
+    !isEstablishmentDisplayed
+  )
+    return null;
 
   return (
     <>
@@ -51,6 +59,7 @@ const CustomLayout = ({
             </div>
           </section>
         </div>
+        <Outlet />
       </EstablishmentProvider>
     </>
   );
@@ -58,10 +67,10 @@ const CustomLayout = ({
 
 CustomLayout.propTypes = {
   children: PropTypes.node,
-  isEntrepriseDisplayed: PropTypes.bool.isRequired,
-  isEstablishmentDisplayed: PropTypes.bool.isRequired,
-  isEstablishmentsDisplayed: PropTypes.bool.isRequired,
-  siren: PropTypes.string.isRequired,
+  isEntrepriseDisplayed: PropTypes.bool,
+  isEstablishmentDisplayed: PropTypes.bool,
+  isEstablishmentsDisplayed: PropTypes.bool,
+  siren: PropTypes.string,
   siret: PropTypes.string,
 };
 

@@ -92,7 +92,7 @@ PaginationTable.propTypes = {
   currentPage: PropTypes.number.isRequired,
   displayButtons: PropTypes.bool,
   handlePageClick: PropTypes.func.isRequired,
-  totalPages: PropTypes.string.isRequired,
+  totalPages: PropTypes.number.isRequired,
 };
 
 export default PaginationTable;

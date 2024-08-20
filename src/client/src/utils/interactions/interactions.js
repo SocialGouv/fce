@@ -12,7 +12,7 @@ const interactionsSources = {
   interactions_pole_3e: "EOS",
   interactions_pole_3e_src: "MDF",
   interactions_pole_c: "SORA",
-  interactions_pole_t: "Wiki'T",
+  interactions_pole_t: "interactions_pole_t",
 };
 
 export const getInteractionSource = (pole) => {

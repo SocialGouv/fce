@@ -1,5 +1,4 @@
 import config from "config";
-
 import { Client } from "@elastic/elasticsearch";
 import codesNaf from "@socialgouv/codes-naf";
 
@@ -45,27 +44,14 @@ const makeQuery = ({ query, siege, dirigeant, ...filters }) => {
           query: {
             bool: {
               must: [
-                {
-                  match: {
-                    "dirigeants.nom": {
-                      query: dirigeant.nom,
-                    },
-                  },
-                },
-                {
-                  match: {
-                    "dirigeants.prenom": {
-                      query: dirigeant.prenom,
-                    },
-                  },
-                },
+                { match: { "dirigeants.nom": dirigeant.nom } },
+                { match: { "dirigeants.prenom": dirigeant.prenom } },
               ],
             },
           },
         },
       });
-    }
-    if (dirigeant.nom && !dirigeant.prenom) {
+    } else if (dirigeant.nom) {
       dirigeantConditions.push({
         nested: {
           path: "dirigeants",
@@ -74,8 +60,7 @@ const makeQuery = ({ query, siege, dirigeant, ...filters }) => {
           },
         },
       });
-    }
-    if (dirigeant.prenom && !dirigeant.nom) {
+    } else if (dirigeant.prenom) {
       dirigeantConditions.push({
         nested: {
           path: "dirigeants",
@@ -86,6 +71,7 @@ const makeQuery = ({ query, siege, dirigeant, ...filters }) => {
       });
     }
   }
+
   return {
     ...(query ? { min_score: 20 } : {}),
     query: {
@@ -110,7 +96,6 @@ const makeQuery = ({ query, siege, dirigeant, ...filters }) => {
                 ]
               : []
           ),
-
           ...(query
             ? [
                 {
@@ -129,7 +114,6 @@ const makeQuery = ({ query, siege, dirigeant, ...filters }) => {
                           boost: 100,
                         },
                       },
-
                       {
                         multi_match: {
                           query,
@@ -141,7 +125,6 @@ const makeQuery = ({ query, siege, dirigeant, ...filters }) => {
                           minimum_should_match: "100%",
                         },
                       },
-
                       ...(siretOrSirenQuery
                         ? [
                             {
@@ -221,8 +204,8 @@ export const getElasticQueryParams = (req) => {
   const dirigeant = req.query["dirigeant"]
     ? JSON.parse(req.query["dirigeant"])
     : null;
-  const sortField = req.query["sortField"] || "etatAdministratifEtablissement";
-  const sortOrder = req.query["sortOrder"] || "asc"; // Default sorting order
+  const sortField = req.query["sortField"];
+  const sortOrder = req.query["sortOrder"];
 
   let etats = req.query["etats"] || [];
   const siege = (req.query["siege"] || "").trim();
@@ -248,15 +231,18 @@ export const getElasticQueryParams = (req) => {
 };
 
 export const requestElastic = async (params, { from, size }) => {
-  console.log(params);
   const body = makeQuery(params);
-  body.sort = [
-    {
-      [params.sortField]: {
-        order: params.sortOrder,
+
+  // Ajouter le tri après avoir construit la requête de filtrage
+  if (params.sortField && params.sortOrder) {
+    body.sort = [
+      {
+        [params.sortField]: {
+          order: params.sortOrder,
+        },
       },
-    },
-  ];
+    ];
+  }
 
   const {
     body: {

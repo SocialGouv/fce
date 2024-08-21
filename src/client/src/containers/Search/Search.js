@@ -2,6 +2,7 @@ import { groupBy, omit } from "lodash";
 import { prop } from "lodash/fp";
 import moment from "moment";
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import SearchView from "../../components/Search";
 import Http from "../../services/Http";
@@ -44,6 +45,12 @@ const formatLocationFilter = (filters, sortDirection, sortField) => {
 const Search = () => {
   const [searchQuery, setSearchQuery] = useSearchTerms();
   const [searchPage, setSearchPage] = useSearchPage();
+  const sortFieldFromStore = useSelector(
+    (state) => state?.search?.sort?.sortField
+  );
+  const sortOrderFromStore = useSelector(
+    (state) => state?.search?.sort?.sortOrder
+  );
 
   const { filters, addFilter, removeFilter, removeFilters } =
     useSearchFilters();
@@ -70,7 +77,11 @@ const Search = () => {
     const response = await Http.get("/downloadXlsx", {
       params: {
         q: trimmedQuery,
-        ...formatLocationFilter(filters),
+        ...formatLocationFilter(
+          filters,
+          sortOrderFromStore != null ? sortDirection : null,
+          sortFieldFromStore != null ? sortField : null
+        ),
       },
       responseType: "blob",
     });
@@ -95,7 +106,11 @@ const Search = () => {
     setSearchPage(nextCurrentPage);
     makeQuery(searchQuery, {
       page: { current: nextCurrentPage - 1, size: PAGE_SIZE },
-      params: formatLocationFilter(filters),
+      params: formatLocationFilter(
+        filters,
+        sortOrderFromStore != null ? sortDirection : null,
+        sortFieldFromStore != null ? sortField : null
+      ),
     });
   };
 
@@ -103,7 +118,11 @@ const Search = () => {
     setSearchPage(1);
     makeQuery(searchQuery, {
       page: { current: 0, size: PAGE_SIZE },
-      params: formatLocationFilter(filters, sortDirection, sortField),
+      params: formatLocationFilter(
+        filters,
+        sortOrderFromStore != null ? sortDirection : null,
+        sortFieldFromStore != null ? sortField : null
+      ),
     });
   };
 

@@ -24,8 +24,12 @@ export const useFilters = (defaultValue) => {
 
 export const useSort = () => {
   const [setSearchSortOrder, setSearchSortField] = useSearchSortTerms();
-  const sortFieldFromStore = useSelector((state) => state?.sort?.sortField);
-  const sortOrderFromStore = useSelector((state) => state?.sort?.sortOrder);
+  const sortFieldFromStore = useSelector(
+    (state) => state?.search?.sort?.sortField
+  );
+  const sortOrderFromStore = useSelector(
+    (state) => state?.search?.sort?.sortOrder
+  );
   const [sortDirection, setSortDirection] = useState(sortOrderFromStore);
   const [sortField, setSortField] = useState(sortFieldFromStore);
   const { addFilter } = useFilters();
@@ -39,8 +43,9 @@ export const useSort = () => {
 
   const toggleSortField = (field) => {
     if (field !== sortField) {
-      setSearchSortField(field);
       setSortField(field);
+      setSearchSortField(field);
+
       addFilter("sortField", field);
       addFilter("sortDirection", "desc");
       setSortDirection("desc");
@@ -64,6 +69,7 @@ export const useSort = () => {
     }
 
     setSortField(null);
+    setSortDirection(null);
   };
 
   return {

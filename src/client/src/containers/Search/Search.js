@@ -37,6 +37,7 @@ const formatLocationFilter = (filters, sortDirection, sortField) => {
     ...omit(filters, "location"),
     codesCommunes: normalizeCodeCommunes(codesCommunes),
     departements,
+
     sortField: sortField,
     sortOrder: sortDirection,
   };
@@ -48,6 +49,7 @@ const Search = () => {
   const sortFieldFromStore = useSelector(
     (state) => state?.search?.sort?.sortField
   );
+
   const sortOrderFromStore = useSelector(
     (state) => state?.search?.sort?.sortOrder
   );

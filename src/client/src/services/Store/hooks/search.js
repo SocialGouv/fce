@@ -27,7 +27,6 @@ export const useSearchTerms = () => {
 };
 export const useSearchSortTerms = () => {
   const dispatch = useDispatch();
-  const searchSortTerm = useSelector((state) => getSearchState(state).sort);
   const setSearchSortOrder = (term) => {
     dispatch(setSearchSortOrderAction(term));
   };
@@ -35,7 +34,7 @@ export const useSearchSortTerms = () => {
     dispatch(setSearchSortFieldAction(term));
   };
 
-  return [searchSortTerm, setSearchSortOrder, setSearchSortField];
+  return [setSearchSortOrder, setSearchSortField];
 };
 
 export const useSearchPage = () => {

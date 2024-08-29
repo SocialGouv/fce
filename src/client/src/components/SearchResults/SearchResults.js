@@ -120,7 +120,6 @@ const SearchResults = ({
                   },
                   headName: "SIRET",
                   link: ({ siret }) => `/establishment/${siret}`,
-                  sortKey: "siret",
                 },
                 {
                   accessor: ({ etatAdministratifEtablissement, siret }) => {

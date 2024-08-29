@@ -45,3 +45,9 @@ export const resetSearch = () => (dispatch) => {
     type: types.RESET_SEARCH,
   });
 };
+
+export const resetSort = () => (dispatch) => {
+  dispatch({
+    type: types.RESET_SORT,
+  });
+};

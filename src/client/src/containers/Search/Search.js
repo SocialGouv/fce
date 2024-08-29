@@ -8,6 +8,7 @@ import SearchView from "../../components/Search";
 import Http from "../../services/Http";
 import {
   useResetSearch,
+  useResetSort,
   useSearchFilters,
   useSearchPage,
   useSearchQuery,
@@ -60,6 +61,7 @@ const Search = () => {
 
   const { data, loading, error, makeQuery, query } = useSearchQuery();
   const resetSearch = useResetSearch();
+  const resetSort = useResetSort();
   useEffect(() => {
     if (searchQuery) {
       onSearch();
@@ -67,10 +69,7 @@ const Search = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
-    if (sortField && sortDirection) {
-      onSearch();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    onSearch();
   }, [sortField, sortDirection]);
 
   const downloadQuery = async () => {
@@ -141,6 +140,7 @@ const Search = () => {
       searchTerm={searchQuery || ""}
       setSearchTerm={setSearchQuery}
       resetSearch={resetSearch}
+      resetSort={resetSort}
       handlePageChange={handlePageChange}
       addFilter={addFilter}
       removeFilter={removeFilter}

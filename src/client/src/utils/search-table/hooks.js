@@ -43,33 +43,29 @@ export const useSort = () => {
 
   const toggleSortField = (field) => {
     if (field !== sortField) {
+      // Set a new sort field and default direction to "desc"
       setSortField(field);
       setSearchSortField(field);
-
+      setSortDirection("desc");
+      setSearchSortOrder("desc");
       addFilter("sortField", field);
       addFilter("sortDirection", "desc");
-      setSortDirection("desc");
-      setSearchSortOrder("desc");
-      return;
+    } else {
+      // Toggling sort direction if field is the same
+      if (sortDirection === "desc") {
+        setSortDirection("asc");
+        setSearchSortOrder("asc");
+        addFilter("sortDirection", "asc");
+      } else if (sortDirection === "asc") {
+        // Reset on the third click
+        setSortField(null);
+        setSortDirection(null);
+        setSearchSortField(null);
+        setSearchSortOrder(null);
+        addFilter("sortField", null);
+        addFilter("sortDirection", null);
+      }
     }
-
-    if (sortDirection === "desc") {
-      setSortDirection("asc");
-      setSearchSortOrder("asc");
-      addFilter("sortDirection", "asc");
-
-      return;
-    }
-    if (sortDirection === "asc") {
-      setSortDirection("desc");
-      setSearchSortOrder("desc");
-      addFilter("sortDirection", "desc");
-
-      return;
-    }
-
-    setSortField(null);
-    setSortDirection(null);
   };
 
   return {

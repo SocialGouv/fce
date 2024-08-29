@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useElasticQuery } from "../../Elastic/elastic";
 import {
   resetSearch,
+  resetSort,
   setSearchFilters,
   setSearchPage as setSearchPageAction,
   setSearchResults,
@@ -116,4 +117,9 @@ export const useResetSearch = () => {
   const dispatch = useDispatch();
 
   return () => dispatch(resetSearch());
+};
+export const useResetSort = () => {
+  const dispatch = useDispatch();
+
+  return () => dispatch(resetSort());
 };

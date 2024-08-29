@@ -1,5 +1,6 @@
 import {
   RESET_SEARCH,
+  RESET_SORT,
   SET_SEARCH_FILTERS,
   SET_SEARCH_PAGE,
   SET_SEARCH_RESULTS,
@@ -50,6 +51,15 @@ const search = (state = initialState, action) => {
         sort: {
           ...state.sort,
           sortField: action.sortField,
+        },
+      };
+    case RESET_SORT:
+      return {
+        ...state,
+        sort: {
+          ...state.sort,
+          sortField: null,
+          sortOrder: null,
         },
       };
 

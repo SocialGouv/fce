@@ -95,7 +95,10 @@ const Search = ({
                   setSearchTerm={setSearchTerm}
                   resetSearch={resetSearch}
                   isLoading={isLoading}
-                  onEnterPress={() => sendRequest(searchTerm, options)}
+                  onEnterPress={() => {
+                    resetSort();
+                    sendRequest(searchTerm, options);
+                  }}
                 />
               </div>
               <div className="column is-3 ">

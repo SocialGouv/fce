@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+import NotFound from "../../components/DataSheets/NotFound/NotFound.jsx";
 import { EstablishmentProvider } from "../../components/DataSheets/Sections/SharedComponents/EstablishmentContext.jsx";
 import SubHeader from "../../components/DataSheets/Sections/SharedComponents/SubHeader/SubHeader.jsx";
 import Sidebar from "../../components/DataSheets/Sidebar/Sidebar";
@@ -13,6 +14,7 @@ const CustomLayout = ({
   siren,
   siret,
   children,
+  isNotFound = false,
 }) => {
   const [isOpenUserFeedback, setIsOpenUserFeedback] = React.useState(false);
 
@@ -22,6 +24,7 @@ const CustomLayout = ({
   const openUserFeedback = () => {
     setIsOpenUserFeedback(true);
   };
+  if (isNotFound) return <NotFound />;
 
   return (
     <>
@@ -61,6 +64,7 @@ CustomLayout.propTypes = {
   isEntrepriseDisplayed: PropTypes.bool.isRequired,
   isEstablishmentDisplayed: PropTypes.bool.isRequired,
   isEstablishmentsDisplayed: PropTypes.bool.isRequired,
+  isNotFound: PropTypes.bool,
   siren: PropTypes.string.isRequired,
   siret: PropTypes.string,
 };

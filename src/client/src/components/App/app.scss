@@ -67,6 +67,10 @@ a {
         &--nowrap a {
             white-space: nowrap;
         }
+        &--sm-cell {
+            font-size: 0.5rem !important;
+            align-items: center !important;
+        }
     }
 }
 

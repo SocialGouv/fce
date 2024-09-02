@@ -67,9 +67,6 @@ const Search = () => {
       onSearch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
-    onSearch();
   }, [sortField, sortDirection]);
 
   const downloadQuery = async () => {

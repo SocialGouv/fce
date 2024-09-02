@@ -233,7 +233,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
           </Subcategory>
           <Subcategory
             subtitle="Mandataires sociaux"
-            sourceCustom="Infogreffe - RCS"
+            sourceSi="inpi_imr_rep_pp"
           >
             <Mandataires mandataires={mandataires} />
           </Subcategory>

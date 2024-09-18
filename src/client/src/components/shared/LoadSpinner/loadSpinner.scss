@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $spinner: #d4e6f1;
 $size: 5rem;
 
@@ -6,8 +8,8 @@ $size: 5rem;
 
     .spinner {
         position: absolute;
-        top: calc(50% - #{$size / 2});
-        left: calc(50% - #{$size / 2});
+        top: calc(50% - #{math.div($size, 2)});
+        left: calc(50% - #{math.div($size, 2)});
         width: $size;
         height: $size;
         animation: spinner 0.75s linear infinite;

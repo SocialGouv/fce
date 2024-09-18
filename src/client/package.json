@@ -53,7 +53,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.2.0",
     "remark-gfm": "1.0.0",
-    "sass": "^1.43.3",
+    "sass": "^1.79.1",
     "smoothscroll-polyfill": "^0.4.3",
     "ua-parser-js": "^0.7.21",
     "zod": "^3.13.4"

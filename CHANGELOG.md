@@ -1,3 +1,10 @@
+# [27.105.0](https://github.com/SocialGouv/fce/compare/v27.104.0...v27.105.0) (2024-09-19)
+
+
+### Features
+
+* upgrade client libraries versions ([#329](https://github.com/SocialGouv/fce/issues/329)) ([62aff28](https://github.com/SocialGouv/fce/commit/62aff28bab5084e1d927e7a22da38a08cce40840))
+
 # [27.104.0](https://github.com/SocialGouv/fce/compare/v27.103.0...v27.104.0) (2024-08-21)
 
 

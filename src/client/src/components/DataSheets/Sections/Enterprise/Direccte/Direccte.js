@@ -1,16 +1,18 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
-import { renderIfSiren } from "../../../../../helpers/hoc/renderIfSiren";
+import { useRenderIfSiren } from "../../../../../helpers/hoc/renderIfSiren.js";
 import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
 import { useInteractionsBySiren } from "./Interactions.gql";
 import InteractionType from "./InteractionType";
 
-const Direccte = ({ entreprise: { siren } }) => {
+const Direccte = ({ entreprise }) => {
+  const { siren } = entreprise;
   const { loading, data, error } = useInteractionsBySiren(siren);
   const [direccteAccordionOpen, setDireccteAccordionOpen] = useState(true);
+  const shouldNotRender = useRenderIfSiren({ entreprise, siren });
 
-  if (loading || error) {
+  if (loading || error || shouldNotRender) {
     return null;
   }
 
@@ -39,4 +41,4 @@ Direccte.propTypes = {
   entreprise: PropTypes.object.isRequired,
 };
 
-export default renderIfSiren(Direccte);
+export default Direccte;

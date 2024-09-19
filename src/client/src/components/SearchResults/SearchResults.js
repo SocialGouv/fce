@@ -4,7 +4,6 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import React from "react";
-import { withRouter } from "react-router-dom";
 
 import { isActiveEstablishment } from "../../helpers/Search";
 import { formatSiret, joinNoFalsy } from "../../helpers/utils";
@@ -256,7 +255,6 @@ const SearchResults = ({
 SearchResults.propTypes = {
   downloadLoading: PropTypes.bool.isRequired,
   generateXlsx: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
   isLoading: PropTypes.bool.isRequired,
   pagination: PropTypes.object.isRequired,
   query: PropTypes.string,
@@ -266,4 +264,4 @@ SearchResults.propTypes = {
   sortField: PropTypes.string,
 };
 
-export default withRouter(SearchResults);
+export default SearchResults;

@@ -3,7 +3,6 @@ import "./awesomeTable.scss";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import { withRouter } from "react-router";
 
 import PaginationTable from "../DataSheets/Sections/SharedComponents/PaginationTable/PaginationTable.jsx";
 import LeftArrow from "../shared/Icons/LeftArrow.jsx";
@@ -119,7 +118,6 @@ const SearchAwesomeTable = ({
 SearchAwesomeTable.propTypes = {
   data: PropTypes.array.isRequired,
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
-  history: PropTypes.object.isRequired,
   isLoading: PropTypes.bool,
   isSortable: PropTypes.bool,
   nextPage: PropTypes.func,
@@ -128,10 +126,11 @@ SearchAwesomeTable.propTypes = {
   prevPage: PropTypes.func,
   prevText: PropTypes.string,
   selectedPage: PropTypes.func,
+
   showPagination: PropTypes.bool,
   sortColumn: PropTypes.func,
   sortDirection: PropTypes.string,
   sortField: PropTypes.string,
 };
 
-export default withRouter(SearchAwesomeTable);
+export default SearchAwesomeTable;

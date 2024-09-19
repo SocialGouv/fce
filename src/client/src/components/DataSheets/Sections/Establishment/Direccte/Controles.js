@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import Source from "../../../../../containers/Source";
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import {
   getControlLabel,
   getInteractionSource,
@@ -22,10 +22,11 @@ const Controles = ({ siret }) => {
   const { loading, data: interactions, error } = useControles(siret);
   const [accordionOpen, setAccordionOpen] = useState(true);
 
-  if (loading || error) {
+  const shouldNotRender = useRenderIfSiret({ siret });
+
+  if (error || loading || shouldNotRender) {
     return null;
   }
-
   const normalizedInteractions = mapValues(interactions, getLatestInteraction);
 
   return (
@@ -117,4 +118,4 @@ const Controles = ({ siret }) => {
 Controles.propTypes = {
   siret: PropTypes.string.isRequired,
 };
-export default renderIfSiret(Controles);
+export default Controles;

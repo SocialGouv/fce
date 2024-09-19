@@ -9,12 +9,12 @@ import {
   getStartDate,
   getStartDateEtp,
   setYearMonthFormat,
-} from "../../../../../helpers/Date";
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+} from "../../../../../helpers/Date/index.js";
+import { useRenderIfSiret } from "../../../../../helpers/hoc/renderIfSiret.js";
 import EllipseIcon from "../../../../shared/Icons/EllipseIcon.jsx";
-import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
-import { useDsnEffectif } from "./EffectifsDsn.gql";
-import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql";
+import LoadableContent from "../../../../shared/LoadableContent/LoadableContent.js";
+import { useDsnEffectif } from "./EffectifsDsn.gql.js";
+import { useEffectifsEtablissementsEtpData } from "./EffectifsEtp.gql.js";
 
 const RANGE = 12;
 const EffectifGraph = ({
@@ -290,6 +290,11 @@ const EffectifGraph = ({
       label: "total",
     },
   ];
+  const shouldNotRender = useRenderIfSiret({ siret });
+
+  if (shouldNotRender) {
+    return null;
+  }
   return (
     <div className="chart">
       <LoadableContent>
@@ -359,4 +364,4 @@ EffectifGraph.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(EffectifGraph);
+export default EffectifGraph;

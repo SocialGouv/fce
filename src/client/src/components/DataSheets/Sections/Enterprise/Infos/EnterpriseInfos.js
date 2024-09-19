@@ -1,9 +1,10 @@
 import { merge } from "lodash";
 import PropTypes from "prop-types";
 import React, { useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
 import Association from "../../../../../containers/Association/Association";
+import { useRenderIfSiren } from "../../../../../helpers/hoc/renderIfSiren.js";
 import { formatSiret, formatTva } from "../../../../../helpers/utils";
 import Config from "../../../../../services/Config";
 import {
@@ -111,6 +112,14 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
   const siegeSocial = getSiegeSocial(enterprise);
   const nafCode = getNafCode(enterprise);
   const nafLabel = getNafLabel(enterprise);
+  const shouldNotRender = useRenderIfSiren({
+    entreprise: baseEntreprise,
+    siren,
+  });
+
+  if (shouldNotRender) {
+    return null;
+  }
   return (
     <section id="infos" className="data-sheet__bloc_section">
       <BlocTitle
@@ -235,7 +244,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
             subtitle="Mandataires sociaux"
             sourceSi="inpi_imr_rep_pp"
           >
-            <Mandataires mandataires={mandataires} />
+            {mandataires && <Mandataires mandataires={mandataires} />}
           </Subcategory>
         </div>
       )}

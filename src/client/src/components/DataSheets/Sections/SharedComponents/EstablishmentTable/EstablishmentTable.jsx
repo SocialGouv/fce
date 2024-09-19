@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { isActiveEstablishment } from "../../../../../helpers/Search/Search.js";
 import { formatSiret } from "../../../../../helpers/utils/format.js";
@@ -17,7 +17,7 @@ import NonBorderedTable from "../NonBorderedTable/NonBorderedTable.js";
 import PaginationTable from "../PaginationTable/PaginationTable.jsx";
 
 const EstablishmentTable = ({ etablissements, entreprise }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
 
   const staffSizeRanges = {
@@ -61,7 +61,7 @@ const EstablishmentTable = ({ etablissements, entreprise }) => {
         <tr
           className="at__body__tr"
           key={etablissement?.siret}
-          onClick={() => history.push(`/establishment/${etablissement?.siret}`)}
+          onClick={() => navigate(`/establishment/${etablissement?.siret}`)}
         >
           <td>
             <Link

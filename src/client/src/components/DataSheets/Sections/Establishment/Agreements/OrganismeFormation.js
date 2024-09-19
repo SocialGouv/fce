@@ -1,7 +1,7 @@
 import * as PropTypes from "prop-types";
 import React, { useState } from "react";
 
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import { useOrganismeFormationBySiret } from "../../../../../services/OrganismeFormation/hooks";
 import { isOrganismeFormation } from "../../../../../utils/organisme-formation/organisme-formation";
 import ButtonLink from "../../../../shared/Button/ButtonLink";
@@ -18,6 +18,13 @@ import OrganismeFormationTypes from "./OrganismeFormationTypes";
 const OrganismeFormation = ({ siret }) => {
   const { loading, error, data } = useOrganismeFormationBySiret(siret);
   const [showMore, setShowMore] = useState(false);
+  const shouldNotRender = useRenderIfSiret({
+    siret,
+  });
+
+  if (error || loading || shouldNotRender) {
+    return null;
+  }
 
   return (
     <Subcategory subtitle="Organisme de formation" sourceSi="OF">
@@ -68,4 +75,4 @@ OrganismeFormation.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(OrganismeFormation);
+export default OrganismeFormation;

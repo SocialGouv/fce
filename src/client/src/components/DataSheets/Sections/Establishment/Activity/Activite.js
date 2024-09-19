@@ -3,7 +3,7 @@ import "./establishmentActivity.scss";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
 import Subcategory from "../../SharedComponents/Subcategory";
@@ -18,6 +18,14 @@ import TrancheEffectifsInsee from "./TrancheEffectifsInsee";
 const Activite = ({ siret }) => {
   const { loading, data, error } = useSuccessionData(siret);
   const [accordionOpen, setAccordionOpen] = useState(true);
+
+  const shouldNotRender = useRenderIfSiret({
+    siret,
+  });
+
+  if (error || loading || shouldNotRender) {
+    return null;
+  }
 
   return (
     <section id="activity" className="data-sheet__bloc_section">
@@ -62,4 +70,4 @@ Activite.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiret(Activite);
+export default Activite;

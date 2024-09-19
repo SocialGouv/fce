@@ -8,7 +8,7 @@ import {
   getDateYear,
   sortByPeriode,
 } from "../../../../../helpers/Date";
-import { renderIfSiren } from "../../../../../helpers/hoc/renderIfSiren";
+import { useRenderIfSiren } from "../../../../../helpers/hoc/renderIfSiren";
 import LoadableContent from "../../../../shared/LoadableContent/LoadableContent";
 import Value from "../../../../shared/Value";
 import Data from "../../SharedComponents/Data";
@@ -32,6 +32,11 @@ const Effectis = ({ siren }) => {
   const handleChange = (event) => {
     setDisplayTable(event.target.checked);
   };
+  const shouldNotRender = useRenderIfSiren({ siren });
+
+  if (shouldNotRender) {
+    return null;
+  }
   if (!effectifsMensuels || effectifsMensuels.length == 0) {
     return (
       <Data
@@ -149,4 +154,4 @@ Effectis.propTypes = {
   siren: PropTypes.string.isRequired,
 };
 
-export default renderIfSiren(Effectis);
+export default Effectis;

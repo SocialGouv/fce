@@ -176,9 +176,9 @@ function HeaderInfoBloc({
 HeaderInfoBloc.propTypes = {
   adresse: PropTypes.string,
   code: PropTypes.string,
-  enterprise: PropTypes.object.isRequired,
+  enterprise: PropTypes.object,
   etablissement: PropTypes.object,
-  etablissementCount: PropTypes.string,
+  etablissementCount: PropTypes.object,
   infoBoxValue: PropTypes.string,
   siret: PropTypes.string,
 };

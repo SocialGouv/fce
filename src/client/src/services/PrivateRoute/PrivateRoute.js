@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
-import { Redirect, Route, useHistory } from "react-router-dom";
+import React from "react";
+import { Navigate, Route } from "react-router-dom";
 
 import Layout from "../../components/App/Layout";
 import { getSirenFromSiret } from "../../utils/establishment/establishment";
 import Auth from "../Auth";
-import { useElasticQuery } from "../Elastic/elastic.js";
 import CustomLayout from "./CustomLayout.jsx";
 
 const PrivateRoute = ({
@@ -17,14 +16,12 @@ const PrivateRoute = ({
   location,
   ...rest
 }) => {
-  const history = useHistory();
-
   const getTempAuthAndRedirect = async (credential, location) => {
     try {
       await Auth.tempLogin(credential);
-      history.push(location.pathname);
+      redirect(location.pathname);
     } catch (error) {
-      history.push("/login");
+      redirect("/login");
     }
   };
 
@@ -44,22 +41,13 @@ const PrivateRoute = ({
   const { auth, redirect } = checkAuthorization();
   const siret = rest?.computedMatch?.params?.siret;
   const siren = rest?.computedMatch?.params?.siren || getSirenFromSiret(siret);
-  const { data, error, loading, makeQuery } = useElasticQuery();
 
-  useEffect(() => {
-    makeQuery(siret || siren, {
-      page: { current: 0, size: 10 },
-      params: null,
-    });
-  }, [siren, makeQuery]);
-  const isNotFound =
-    !loading && (error || !data?.results || data.results.length === 0);
   return (
     <Route
       {...rest}
       render={(props) =>
         auth ? (
-          <Layout isNotFound={isNotFound} displayMessage={displayMessage}>
+          <Layout displayMessage={displayMessage}>
             {isEstablishmentDisplayed ||
             isEntrepriseDisplayed ||
             isEstablishmentsDisplayed ? (
@@ -67,18 +55,17 @@ const PrivateRoute = ({
                 isEstablishmentDisplayed={isEstablishmentDisplayed}
                 isEntrepriseDisplayed={isEntrepriseDisplayed}
                 isEstablishmentsDisplayed={isEstablishmentsDisplayed}
-                isNotFound={isNotFound}
                 siren={siren}
                 siret={siret}
               >
-                {!isNotFound && <Component {...props} />}
+                <Component {...props} />
               </CustomLayout>
             ) : (
               <Component {...props} />
             )}
           </Layout>
         ) : (
-          <Redirect
+          <Navigate
             to={{ pathname: redirect, state: { from: props.location } }}
           />
         )
@@ -90,9 +77,6 @@ const PrivateRoute = ({
 PrivateRoute.propTypes = {
   component: PropTypes.elementType,
   displayMessage: PropTypes.bool,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
   isEntrepriseDisplayed: PropTypes.bool,
   isEstablishmentDisplayed: PropTypes.bool,
   isEstablishmentsDisplayed: PropTypes.bool,

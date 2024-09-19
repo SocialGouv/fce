@@ -3,7 +3,7 @@ import "./finances.scss";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { renderIfSiren } from "../../../../../../helpers/hoc/renderIfSiren";
+import { useRenderIfSiret } from "../../../../../../helpers/hoc/renderIfSiret";
 import {
   concatApiEntrepriseBceData,
   getDateDeclaration,
@@ -26,6 +26,11 @@ const getKey = (label, donneeEcofi) =>
 const Finances = ({ siret, siren }) => {
   const { loading, data, error } = useFinanceData(siren);
   const { data: donneesEcofiApi } = useFinanceDataApiEntreprise(siret);
+  const shouldNotRender = useRenderIfSiret({ siret });
+
+  if (shouldNotRender) {
+    return null;
+  }
   let donneesEcofiBce = [];
 
   let hasBilan_K = false;
@@ -231,4 +236,4 @@ Finances.propTypes = {
   siret: PropTypes.string.isRequired,
 };
 
-export default renderIfSiren(Finances);
+export default Finances;

@@ -3,13 +3,12 @@ import React from "react";
 
 import { Establishment } from "../../components/DataSheets";
 
-const EstablishementContainer = ({ siret, history }) => {
-  return <Establishment siret={siret} history={history} />;
+const EstablishementContainer = (siret) => {
+  return <Establishment siret={siret} />;
 };
 
 EstablishementContainer.propTypes = {
-  history: PropTypes.object,
-  siret: PropTypes.object.isRequired,
+  siret: PropTypes.string.isRequired,
 };
 
 export default EstablishementContainer;

@@ -1,3 +1,17 @@
+# [27.105.0](https://github.com/SocialGouv/fce/compare/v27.104.0...v27.105.0) (2024-09-19)
+
+
+### Features
+
+* upgrade client libraries versions ([#329](https://github.com/SocialGouv/fce/issues/329)) ([62aff28](https://github.com/SocialGouv/fce/commit/62aff28bab5084e1d927e7a22da38a08cce40840))
+
+# [27.104.0](https://github.com/SocialGouv/fce/compare/v27.103.0...v27.104.0) (2024-08-21)
+
+
+### Features
+
+* Update mandataires sociaux source ([#354](https://github.com/SocialGouv/fce/issues/354)) ([3f37f30](https://github.com/SocialGouv/fce/commit/3f37f30f32174b2c5d243364dca61ca80b643827))
+
 # [27.103.0](https://github.com/SocialGouv/fce/compare/v27.102.0...v27.103.0) (2024-08-09)
 
 

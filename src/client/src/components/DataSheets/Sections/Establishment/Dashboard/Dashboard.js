@@ -12,9 +12,8 @@ import {
 } from "lodash/fp";
 import PropTypes from "prop-types";
 import React from "react";
-import { connect } from "react-redux";
 
-import { renderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
+import { useRenderIfSiret } from "../../../../../helpers/hoc/renderIfSiret";
 import {
   getLatestInteraction,
   normalizeInteractions3E,
@@ -91,7 +90,11 @@ const Dashboard = ({ siret }) => {
   const { data } = useDashboardData(siret);
 
   const { data: effectif, loading: effectifLoading } = useEffectif(siret);
+  const shouldNotRender = useRenderIfSiret({ siret });
 
+  if (shouldNotRender) {
+    return null;
+  }
   const hasInteractions = dataHasInteractions(data);
 
   const activity = {
@@ -194,14 +197,7 @@ const Dashboard = ({ siret }) => {
 };
 
 Dashboard.propTypes = {
-  psi: PropTypes.object.isRequired,
   siret: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    psi: state.psi,
-  };
-};
-
-export default renderIfSiret(connect(mapStateToProps, null)(Dashboard));
+export default Dashboard;

@@ -1,7 +1,14 @@
-import { format, parse } from "date-fns/fp";
+import { format, parse } from "date-fns";
 import { pipe } from "lodash/fp";
 
 export const usDateToFrenchDate = pipe(
-  parse(new Date(), "yyyy-MM-dd"),
-  format("dd/MM/yyyy")
+  (dateString) => {
+    if (typeof dateString !== "string") {
+      throw new TypeError(
+        `Expected a string, but received a ${typeof dateString}`
+      );
+    }
+    return parse(dateString, "yyyy-MM-dd", new Date());
+  },
+  (date) => format(date, "dd/MM/yyyy")
 );

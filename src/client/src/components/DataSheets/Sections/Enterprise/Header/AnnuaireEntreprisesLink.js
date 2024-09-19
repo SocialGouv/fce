@@ -2,9 +2,15 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { renderIfSiren } from "../../../../../helpers/hoc/renderIfSiren";
+import { useRenderIfSiren } from "../../../../../helpers/hoc/renderIfSiren";
 
 const AnnuaireEntreprisesLink = ({ siren }) => {
+  const shouldNotRender = useRenderIfSiren({ siren });
+
+  if (shouldNotRender) {
+    return null;
+  }
+
   return (
     <a
       className="is-link"
@@ -21,4 +27,4 @@ AnnuaireEntreprisesLink.propTypes = {
   siren: PropTypes.string.isRequired,
 };
 
-export default renderIfSiren(AnnuaireEntreprisesLink);
+export default AnnuaireEntreprisesLink;

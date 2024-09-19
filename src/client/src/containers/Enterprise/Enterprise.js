@@ -5,24 +5,20 @@ import { Enterprise } from "../../components/DataSheets";
 import LoadableContent from "../../components/shared/LoadableContent/LoadableContent";
 import { useEntrepriseBySiren } from "../../services/Entreprise/hooks";
 
-const EnterpriseContainer = ({ history, siren }) => {
+const EnterpriseContainer = ({ siren }) => {
   const { loading, data, error } = useEntrepriseBySiren(siren);
 
   return (
     <LoadableContent loading={loading} error={error}>
-      <Enterprise
-        enterprise={data}
-        isLoaded={!loading}
-        error={error}
-        history={history}
-      />
+      {data && (
+        <Enterprise enterprise={data} isLoaded={!loading} error={error} />
+      )}{" "}
     </LoadableContent>
   );
 };
 
 EnterpriseContainer.propTypes = {
-  history: PropTypes.object,
-  siren: PropTypes.string,
+  siren: PropTypes.string.isRequired,
 };
 
 export default EnterpriseContainer;

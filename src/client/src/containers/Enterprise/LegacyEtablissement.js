@@ -1,17 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { withRouter } from "react-router";
 
-import EstablishmentView from "./Establishment";
+import { Establishment } from "../../components/DataSheets";
 
-const LegacyEnterprise = ({ match, history }) => {
-  const siret = match.params.siret;
-  return <EstablishmentView siret={siret} history={history} />;
+const LegacyEtablissement = ({ siret }) => {
+  return <Establishment siret={siret} />;
 };
 
-LegacyEnterprise.propTypes = {
-  history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
+LegacyEtablissement.propTypes = {
+  siret: PropTypes.string.isRequired,
 };
 
-export default withRouter(LegacyEnterprise);
+export default LegacyEtablissement;

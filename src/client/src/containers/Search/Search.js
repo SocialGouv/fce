@@ -2,11 +2,13 @@ import { groupBy, omit } from "lodash";
 import { prop } from "lodash/fp";
 import moment from "moment";
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import SearchView from "../../components/Search";
 import Http from "../../services/Http";
 import {
   useResetSearch,
+  useResetSort,
   useSearchFilters,
   useSearchPage,
   useSearchQuery,
@@ -23,7 +25,7 @@ const PAGE_SIZE = 10;
 const XLSX_DOC_TYPE =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-const formatLocationFilter = (filters) => {
+const formatLocationFilter = (filters, sortDirection, sortField) => {
   const locationFilters = groupBy(filters.location, "type");
   const codesCommunes = locationFilters?.commune?.map(prop("value")) || [];
   const departements = [
@@ -32,17 +34,26 @@ const formatLocationFilter = (filters) => {
       regionItem.regions.map((region) => region.value)
     ) || []),
   ];
-
   return {
     ...omit(filters, "location"),
     codesCommunes: normalizeCodeCommunes(codesCommunes),
     departements,
+
+    sortField: sortField,
+    sortOrder: sortDirection,
   };
 };
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useSearchTerms();
   const [searchPage, setSearchPage] = useSearchPage();
+  const sortFieldFromStore = useSelector(
+    (state) => state?.search?.sort?.sortField
+  );
+
+  const sortOrderFromStore = useSelector(
+    (state) => state?.search?.sort?.sortOrder
+  );
 
   const { filters, addFilter, removeFilter, removeFilters } =
     useSearchFilters();
@@ -50,13 +61,13 @@ const Search = () => {
 
   const { data, loading, error, makeQuery, query } = useSearchQuery();
   const resetSearch = useResetSearch();
-
+  const resetSort = useResetSort();
   useEffect(() => {
     if (searchQuery) {
       onSearch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [sortField, sortDirection]);
 
   const downloadQuery = async () => {
     const trimmedQuery = searchQuery?.trim();
@@ -64,7 +75,11 @@ const Search = () => {
     const response = await Http.get("/downloadXlsx", {
       params: {
         q: trimmedQuery,
-        ...formatLocationFilter(filters),
+        ...formatLocationFilter(
+          filters,
+          sortOrderFromStore != null ? sortDirection : null,
+          sortFieldFromStore != null ? sortField : null
+        ),
       },
       responseType: "blob",
     });
@@ -89,7 +104,11 @@ const Search = () => {
     setSearchPage(nextCurrentPage);
     makeQuery(searchQuery, {
       page: { current: nextCurrentPage - 1, size: PAGE_SIZE },
-      params: formatLocationFilter(filters),
+      params: formatLocationFilter(
+        filters,
+        sortOrderFromStore != null ? sortDirection : null,
+        sortFieldFromStore != null ? sortField : null
+      ),
     });
   };
 
@@ -97,7 +116,11 @@ const Search = () => {
     setSearchPage(1);
     makeQuery(searchQuery, {
       page: { current: 0, size: PAGE_SIZE },
-      params: formatLocationFilter(filters),
+      params: formatLocationFilter(
+        filters,
+        sortOrderFromStore != null ? sortDirection : null,
+        sortFieldFromStore != null ? sortField : null
+      ),
     });
   };
 
@@ -114,6 +137,7 @@ const Search = () => {
       searchTerm={searchQuery || ""}
       setSearchTerm={setSearchQuery}
       resetSearch={resetSearch}
+      resetSort={resetSort}
       handlePageChange={handlePageChange}
       addFilter={addFilter}
       removeFilter={removeFilter}

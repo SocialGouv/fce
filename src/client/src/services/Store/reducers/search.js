@@ -1,15 +1,20 @@
 import {
   RESET_SEARCH,
+  RESET_SORT,
   SET_SEARCH_FILTERS,
   SET_SEARCH_PAGE,
   SET_SEARCH_RESULTS,
   SET_SEARCH_SORT,
+  SET_SEARCH_SORT_FIELD,
+  SET_SEARCH_SORT_ORDER,
   SET_SEARCH_TERM,
 } from "../constants/ActionTypes";
 
 const initialState = {
   filters: {
     etats: ["A"],
+    sortField: null,
+    sortOrder: null,
   },
   page: 1,
   results: {
@@ -19,6 +24,8 @@ const initialState = {
   sort: {
     ascDirection: false,
     field: null,
+    sortField: null,
+    sortOrder: null,
   },
   term: null,
 };
@@ -29,6 +36,31 @@ const search = (state = initialState, action) => {
       return {
         ...state,
         term: action.term,
+      };
+    case SET_SEARCH_SORT_ORDER:
+      return {
+        ...state,
+        sort: {
+          ...state.sort,
+          sortOrder: action.sortOrder,
+        },
+      };
+    case SET_SEARCH_SORT_FIELD:
+      return {
+        ...state,
+        sort: {
+          ...state.sort,
+          sortField: action.sortField,
+        },
+      };
+    case RESET_SORT:
+      return {
+        ...state,
+        sort: {
+          ...state.sort,
+          sortField: null,
+          sortOrder: null,
+        },
       };
 
     case SET_SEARCH_PAGE:

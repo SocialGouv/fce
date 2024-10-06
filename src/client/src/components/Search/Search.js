@@ -35,6 +35,7 @@ const Search = ({
   searchTerm,
   setSearchTerm,
   resetSearch,
+  resetSort,
   handlePageChange,
   addFilter,
   removeFilter,
@@ -94,7 +95,10 @@ const Search = ({
                   setSearchTerm={setSearchTerm}
                   resetSearch={resetSearch}
                   isLoading={isLoading}
-                  onEnterPress={() => sendRequest(searchTerm, options)}
+                  onEnterPress={() => {
+                    resetSort();
+                    sendRequest(searchTerm, options);
+                  }}
                 />
               </div>
               <div className="column is-3 ">
@@ -105,6 +109,7 @@ const Search = ({
                     })}
                     onClick={(e) => {
                       e.preventDefault();
+                      resetSort();
                       sendRequest(searchTerm, options);
                     }}
                   >
@@ -257,6 +262,7 @@ Search.propTypes = {
   removeFilter: PropTypes.func.isRequired,
   removeFilters: PropTypes.func.isRequired,
   resetSearch: PropTypes.func.isRequired,
+  resetSort: PropTypes.func.isRequired,
   results: PropTypes.array,
   searchTerm: PropTypes.string.isRequired,
   sendRequest: PropTypes.func.isRequired,

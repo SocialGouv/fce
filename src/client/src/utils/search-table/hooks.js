@@ -1,5 +1,8 @@
 import { omit } from "lodash";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
+import { useSearchSortTerms } from "../../services/Store/hooks/search";
 
 export const useFilters = (defaultValue) => {
   const [filters, setFilters] = useState(defaultValue);
@@ -20,22 +23,49 @@ export const useFilters = (defaultValue) => {
 };
 
 export const useSort = () => {
-  const [sortDirection, setSortDirection] = useState("desc");
-  const [sortField, setSortField] = useState(null);
+  const [setSearchSortOrder, setSearchSortField] = useSearchSortTerms();
+  const sortFieldFromStore = useSelector(
+    (state) => state?.search?.sort?.sortField
+  );
+  const sortOrderFromStore = useSelector(
+    (state) => state?.search?.sort?.sortOrder
+  );
+  const [sortDirection, setSortDirection] = useState(sortOrderFromStore);
+  const [sortField, setSortField] = useState(sortFieldFromStore);
+  const { addFilter } = useFilters();
+
+  useEffect(() => {
+    if (sortFieldFromStore == null && sortOrderFromStore == null) {
+      setSortField(sortFieldFromStore);
+      setSortDirection(sortOrderFromStore);
+    }
+  }, [sortFieldFromStore, sortOrderFromStore]);
 
   const toggleSortField = (field) => {
     if (field !== sortField) {
-      setSortDirection("desc");
+      // Set a new sort field and default direction to "desc"
       setSortField(field);
-      return;
+      setSearchSortField(field);
+      setSortDirection("desc");
+      setSearchSortOrder("desc");
+      addFilter("sortField", field);
+      addFilter("sortDirection", "desc");
+    } else {
+      // Toggling sort direction if field is the same
+      if (sortDirection === "desc") {
+        setSortDirection("asc");
+        setSearchSortOrder("asc");
+        addFilter("sortDirection", "asc");
+      } else if (sortDirection === "asc") {
+        // Reset on the third click
+        setSortField(null);
+        setSortDirection(null);
+        setSearchSortField(null);
+        setSearchSortOrder(null);
+        addFilter("sortField", null);
+        addFilter("sortDirection", null);
+      }
     }
-
-    if (sortDirection === "desc") {
-      setSortDirection("asc");
-      return;
-    }
-
-    setSortField(null);
   };
 
   return {

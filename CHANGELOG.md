@@ -1,3 +1,10 @@
+# [27.106.0](https://github.com/SocialGouv/fce/compare/v27.105.0...v27.106.0) (2024-09-25)
+
+
+### Features
+
+* Sort search result ([#351](https://github.com/SocialGouv/fce/issues/351)) ([f4d2f0b](https://github.com/SocialGouv/fce/commit/f4d2f0b782075efe6d71a70f63b2416ab3e98b32))
+
 # [27.105.0](https://github.com/SocialGouv/fce/compare/v27.104.0...v27.105.0) (2024-09-19)
 
 

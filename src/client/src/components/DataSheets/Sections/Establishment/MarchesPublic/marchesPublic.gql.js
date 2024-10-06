@@ -13,6 +13,7 @@ const marchesPublicQuery = gql`
       dateNotification
       dureeMois
       montant
+      cpv_libelle
       objet
       procedure
     }

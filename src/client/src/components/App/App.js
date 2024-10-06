@@ -26,6 +26,7 @@ import Search from "../../containers/Search";
 import SetMatomo from "../../helpers/Matomo/SetMatomo.js";
 import Auth from "../../services/Auth/Auth.js";
 import Config from "../../services/Config";
+import { useIsNotFound } from "../../services/Elastic/elastic.js";
 import { apolloClient } from "../../services/GraphQL/GraphQL";
 import CustomLayout from "../../services/PrivateRoute/CustomLayout.jsx";
 import configureStore from "../../services/Store";
@@ -259,10 +260,17 @@ const App = () => {
 const EnterpriseWrapper = () => {
   const { siren } = useParams();
   const siret = getSirenFromSiret(siren);
+  const isNotFound = useIsNotFound(siret, siren);
+
   return (
     <IEChecker>
       <Layout>
-        <CustomLayout isEntrepriseDisplayed siren={siren} siret={siret}>
+        <CustomLayout
+          isNotFound={isNotFound}
+          isEntrepriseDisplayed
+          siren={siren}
+          siret={siret}
+        >
           <Enterprise siren={siren} />
         </CustomLayout>
       </Layout>
@@ -273,10 +281,17 @@ const EnterpriseWrapper = () => {
 const EstablishmentWrapper = () => {
   const { siret } = useParams();
   const siren = getSirenFromSiret(siret);
+  const isNotFound = useIsNotFound(siret, siren);
+
   return (
     <IEChecker>
       <Layout>
-        <CustomLayout isEstablishmentDisplayed siren={siren} siret={siret}>
+        <CustomLayout
+          isNotFound={isNotFound}
+          isEstablishmentDisplayed
+          siren={siren}
+          siret={siret}
+        >
           <LegacyEtablissement siret={siret} />
         </CustomLayout>
       </Layout>
@@ -286,10 +301,16 @@ const EstablishmentWrapper = () => {
 
 const ListEstablishmentsWrapper = () => {
   const { siren } = useParams();
+  const isNotFound = useIsNotFound("", siren);
+
   return (
     <IEChecker>
       <Layout>
-        <CustomLayout isEstablishmentsDisplayed siren={siren}>
+        <CustomLayout
+          isNotFound={isNotFound}
+          isEstablishmentsDisplayed
+          siren={siren}
+        >
           <ListEtablissements siren={siren} />
         </CustomLayout>
       </Layout>

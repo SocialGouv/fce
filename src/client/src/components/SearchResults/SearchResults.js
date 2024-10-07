@@ -118,9 +118,7 @@ const SearchResults = ({
                     });
                   },
                   headName: "SIRET",
-                  importantHead: true,
                   link: ({ siret }) => `/establishment/${siret}`,
-                  sortKey: "siret",
                 },
                 {
                   accessor: ({ etatAdministratifEtablissement, siret }) => {
@@ -130,7 +128,7 @@ const SearchResults = ({
                     });
                   },
                   headName: "État",
-                  sortKey: "etatadministratifetablissement",
+                  sortKey: "etatAdministratifEtablissement",
                 },
                 {
                   accessor: (etablissement) => {
@@ -140,7 +138,6 @@ const SearchResults = ({
                   },
                   headName: "Raison sociale / Nom",
                   html: true,
-                  sortKey: "enterprise_name",
                 },
                 {
                   accessor: (fields) => {
@@ -172,10 +169,8 @@ const SearchResults = ({
                   },
 
                   headName: "Dirigeants",
-                  importantHead: true,
                   link: ({ fields }) =>
                     `/enterprise/${fields?.siren}#mandataires`,
-                  sortKey: "dirigeants",
                 },
                 {
                   accessor: ({ etablissementSiege }) => {
@@ -186,7 +181,6 @@ const SearchResults = ({
                     });
                   },
                   headName: "Catégorie établissement",
-                  sortKey: "etablissementsiege",
                 },
                 {
                   accessor: ({
@@ -201,8 +195,8 @@ const SearchResults = ({
                     });
                   },
                   headName: "Code postal",
-                  sortKey: "codepostaletablissement",
                 },
+
                 {
                   accessor: ({
                     trancheEffectifsEtablissement,
@@ -222,7 +216,7 @@ const SearchResults = ({
                     });
                   },
                   headName: "Effectif (DSN)",
-                  sortKey: "lastdsntrancheeffectifsetablissement",
+                  sortKey: "trancheEffectifsEtablissement",
                 },
                 {
                   accessor: ({
@@ -239,7 +233,7 @@ const SearchResults = ({
                     );
                   },
                   headName: "Activité",
-                  sortKey: "activiteprincipaleetablissement",
+                  sortKey: "codeActivitePrincipale",
                 },
               ]}
             />

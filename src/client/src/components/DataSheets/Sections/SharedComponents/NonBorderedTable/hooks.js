@@ -31,7 +31,6 @@ export const useSortableData = (items, config = null) => {
           aValue = a[sortConfig.key];
           bValue = b[sortConfig.key];
         }
-        console.log(aValue, bValue, a, b);
 
         if (aValue < bValue) {
           return sortConfig.direction === "ascending" ? -1 : 1;

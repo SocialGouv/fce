@@ -5,9 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useElasticQuery } from "../../Elastic/elastic";
 import {
   resetSearch,
+  resetSort,
   setSearchFilters,
   setSearchPage as setSearchPageAction,
   setSearchResults,
+  setSearchSortField as setSearchSortFieldAction,
+  setSearchSortOrder as setSearchSortOrderAction,
   setSearchTerm as setSearchTermAction,
 } from "../actions";
 
@@ -22,6 +25,17 @@ export const useSearchTerms = () => {
   };
 
   return [searchTerm, setSearchTerm];
+};
+export const useSearchSortTerms = () => {
+  const dispatch = useDispatch();
+  const setSearchSortOrder = (term) => {
+    dispatch(setSearchSortOrderAction(term));
+  };
+  const setSearchSortField = (term) => {
+    dispatch(setSearchSortFieldAction(term));
+  };
+
+  return [setSearchSortOrder, setSearchSortField];
 };
 
 export const useSearchPage = () => {
@@ -39,12 +53,12 @@ export const useSearchFilters = () => {
   const dispatch = useDispatch();
   const savedFilters = useSelector((state) => getSearchState(state).filters);
   // cache busting mechanism
+
   const validFilters = savedFilters.etats
     ? savedFilters
     : {
         etats: ["A"],
       };
-
   const addFilter = (key, value) => {
     dispatch(setSearchFilters({ ...savedFilters, [key]: value }));
   };
@@ -103,4 +117,9 @@ export const useResetSearch = () => {
   const dispatch = useDispatch();
 
   return () => dispatch(resetSearch());
+};
+export const useResetSort = () => {
+  const dispatch = useDispatch();
+
+  return () => dispatch(resetSort());
 };

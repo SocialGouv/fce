@@ -8,7 +8,6 @@ import { useEntrepriseBySiren } from "../../services/Entreprise/hooks";
 
 const EnterpriseContainer = ({ siren }) => {
   const { loading, data, error } = useEntrepriseBySiren(siren);
-  console.log("loading, data, error", useEntrepriseBySiren(siren));
 
   if (loading) return <Error404 />;
   return (

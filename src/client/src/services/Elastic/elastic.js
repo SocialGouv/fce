@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Http from "../Http";
 
@@ -55,4 +55,28 @@ export const useElasticQuery = () => {
     makeQuery,
     query,
   };
+};
+
+export const useIsNotFound = (siret, siren) => {
+  const { data, error, loading, makeQuery } = useElasticQuery();
+  const [isNotFound, setIsNotFound] = useState(false);
+
+  useEffect(() => {
+    // Trigger the query whenever siret or siren changes
+    if (siret || siren) {
+      makeQuery(siret || siren, {
+        page: { current: 0, size: 10 },
+        params: null,
+      });
+    }
+  }, [siren, siret, makeQuery]);
+
+  useEffect(() => {
+    // Set the isNotFound flag based on data, error, and loading
+    if (!loading) {
+      setIsNotFound(error || !data?.results || data?.results?.length === 0);
+    }
+  }, [loading, error, data]);
+
+  return isNotFound;
 };

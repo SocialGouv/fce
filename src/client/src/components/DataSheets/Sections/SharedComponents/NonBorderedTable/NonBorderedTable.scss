@@ -108,3 +108,10 @@
         max-height: max-content;
     }
 }
+.sortable-btn{
+    background-color: transparent !important;
+    border: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}

@@ -13,12 +13,12 @@ const Layout = ({
   hasSharedButton = false,
   children,
   displayMessage = false,
+  isNotFound = false,
 }) => {
   const isActiveMaintenanceMode = Config.get("maintenanceMode");
-
   return (
     <>
-      {hasLandingHeader ? (
+      {!isNotFound && hasLandingHeader ? (
         <Header hasSharedButton={hasSharedButton} />
       ) : (
         <>
@@ -42,6 +42,7 @@ Layout.propTypes = {
   displayMessage: PropTypes.bool,
   hasLandingHeader: PropTypes.bool,
   hasSharedButton: PropTypes.bool,
+  isNotFound: PropTypes.bool,
 };
 
 export default Layout;

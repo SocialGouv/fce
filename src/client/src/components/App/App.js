@@ -260,7 +260,7 @@ const App = () => {
 const EnterpriseWrapper = () => {
   const { siren } = useParams();
   const siret = getSirenFromSiret(siren);
-  const isNotFound = useIsNotFound(siret, siren);
+  const { isNotFound, loading } = useIsNotFound(siret, siren);
 
   return (
     <IEChecker>
@@ -270,6 +270,7 @@ const EnterpriseWrapper = () => {
           isEntrepriseDisplayed
           siren={siren}
           siret={siret}
+          loading={loading}
         >
           <Enterprise siren={siren} />
         </CustomLayout>
@@ -281,7 +282,7 @@ const EnterpriseWrapper = () => {
 const EstablishmentWrapper = () => {
   const { siret } = useParams();
   const siren = getSirenFromSiret(siret);
-  const isNotFound = useIsNotFound(siret, siren);
+  const { isNotFound, loading } = useIsNotFound(siret, siren);
 
   return (
     <IEChecker>
@@ -291,6 +292,7 @@ const EstablishmentWrapper = () => {
           isEstablishmentDisplayed
           siren={siren}
           siret={siret}
+          loading={loading}
         >
           <LegacyEtablissement siret={siret} />
         </CustomLayout>
@@ -301,7 +303,7 @@ const EstablishmentWrapper = () => {
 
 const ListEstablishmentsWrapper = () => {
   const { siren } = useParams();
-  const isNotFound = useIsNotFound("", siren);
+  const { isNotFound, loading } = useIsNotFound("", siren);
 
   return (
     <IEChecker>
@@ -310,6 +312,7 @@ const ListEstablishmentsWrapper = () => {
           isNotFound={isNotFound}
           isEstablishmentsDisplayed
           siren={siren}
+          loading={loading}
         >
           <ListEtablissements siren={siren} />
         </CustomLayout>

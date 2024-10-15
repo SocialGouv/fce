@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 
 import { formatSiret } from "../../../../../helpers/utils";
 import { formatUpperCase } from "../../../../../utils/entreprise/entreprise";
+import { getCodePostal } from "../../../../../utils/establishment/establishment";
 
 // Suppose this function is imported or defined
 export const getCity = (marche) =>
@@ -22,8 +23,9 @@ export const useSortableData = (items, config = null) => {
 
         // Check if the key is "city" and use getCity function
         if (sortConfig.key === "city") {
-          aValue = getCity(a); // Retrieve city using getCity
-          bValue = getCity(b);
+          aValue = getCodePostal(a?.etablissement); // Retrieve city using getCity
+          bValue = getCodePostal(b?.etablissement);
+          console.log(bValue);
         } else if (sortConfig.key === "acheteur") {
           aValue = getAcheteur(a);
           bValue = getAcheteur(b);

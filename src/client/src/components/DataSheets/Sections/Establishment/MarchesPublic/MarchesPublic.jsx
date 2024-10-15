@@ -26,7 +26,7 @@ import NonBorderedTable from "../../SharedComponents/NonBorderedTable/NonBordere
 import SortableButton from "../../SharedComponents/NonBorderedTable/SortableButton.jsx";
 import SeeDetailsLink from "../../SharedComponents/SeeDetailsLink/SeeDetailsLink.js";
 import Subcategory from "../../SharedComponents/Subcategory/index.js";
-import { exportToCSV } from "./hooks.js";
+import { exportToXLSX } from "./hooks.js";
 import { useMarchesPublicWithEtablissements } from "./marchesPublic.gql.js";
 
 const MarchesPublic = ({ siret }) => {
@@ -56,7 +56,7 @@ const MarchesPublic = ({ siret }) => {
   }
 
   const handleExport = () => {
-    exportToCSV(items, "exported_data.xlsx");
+    exportToXLSX(items, `commandes_publiques${siret}.xlsx`);
   };
 
   const handleColumnChange = (selectedOptions) => {
@@ -76,7 +76,7 @@ const MarchesPublic = ({ siret }) => {
       <BlocTitle
         isOpen={accordionOpen}
         toggleAccordion={() => setAccordionOpen(!accordionOpen)}
-        text={" Appels d'offres"}
+        text={" Commandes publiques"}
       />
 
       {accordionOpen && (
@@ -326,7 +326,7 @@ const MarchesPublic = ({ siret }) => {
               </div>
               {items?.length === 0 && (
                 <div className="data-value is-centred">
-                  {"Aucun appel d'offres connu"}
+                  {"Aucune commande publique connue"}
                 </div>
               )}
             </LoadableContent>

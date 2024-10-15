@@ -1,3 +1,5 @@
+import * as XLSX from "xlsx";
+
 import {
   convertirMoisEnAnnees,
   joinNoFalsy,
@@ -10,7 +12,7 @@ import {
   getCity,
 } from "../../SharedComponents/NonBorderedTable/hooks";
 
-export const exportToCSV = (items, filename = "marches.csv") => {
+export const exportToXLSX = (items, filename = "marches.xlsx") => {
   const headers = [
     "Acheteur",
     "Departement",
@@ -22,9 +24,9 @@ export const exportToCSV = (items, filename = "marches.csv") => {
     "Durée",
   ];
 
-  // Create CSV content
-  const csvContent = [
-    headers.join(","),
+  // Créer les données pour l'export
+  const data = [
+    headers, // En-têtes
     ...items.map((marche) => {
       const adresse = joinNoFalsy(
         [getCodePostal(marche?.etablissement), getCity(marche?.etablissement)],
@@ -34,24 +36,40 @@ export const exportToCSV = (items, filename = "marches.csv") => {
       const acheteurText = getAcheteur(marche);
       const acheteurLink = `https://fce.fabrique.social.gouv.fr/establishment/${marche?.acheteur_id}/`;
 
-      // Format the link as a clickable hyperlink for French Excel (with semicolon)
-      const clickableAcheteur = `=HYPERLINK("${acheteurLink}"; "${acheteurText}")`;
+      // Cette formule sera reconnue dans un fichier .xlsx natif
+      const clickableAcheteur = {
+        f: `HYPERLINK("${acheteurLink}", "${acheteurText}")`,
+      };
 
       return [
-        `${clickableAcheteur}`,
-        `"${formatUpperCase(adresse)}"`,
-        `"${formatUpperCase(marche?.objet)}"`,
-        `"${formatUpperCase(marche?.cpv_libelle)}"`,
-        `"${formatUpperCase(marche?.procedure)}"`,
-        `"${formatChiffre(marche?.montant)}"`,
-        `"${marche?.dateNotification}"`,
-        `"${convertirMoisEnAnnees(marche?.dureeMois)}"`,
-      ].join(",");
+        clickableAcheteur,
+        formatUpperCase(adresse),
+        formatUpperCase(marche?.objet),
+        formatUpperCase(marche?.cpv_libelle),
+        formatUpperCase(marche?.procedure),
+        formatChiffre(marche?.montant),
+        marche?.dateNotification,
+        convertirMoisEnAnnees(marche?.dureeMois),
+      ];
     }),
-  ].join("\n");
+  ];
 
-  // Create a Blob and trigger download
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  // Créer un nouveau classeur
+  const wb = XLSX.utils.book_new();
+
+  // Convertir les données en feuille de calcul
+  const ws = XLSX.utils.aoa_to_sheet(data);
+
+  // Ajouter la feuille de calcul au classeur
+  XLSX.utils.book_append_sheet(wb, ws, "Marchés");
+
+  // Générer le fichier XLSX
+  const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+
+  // Créer un Blob et déclencher le téléchargement
+  const blob = new Blob([wbout], {
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  });
   const link = document.createElement("a");
   const url = URL.createObjectURL(blob);
   link.href = url;

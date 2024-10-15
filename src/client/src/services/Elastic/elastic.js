@@ -74,9 +74,9 @@ export const useIsNotFound = (siret, siren) => {
   useEffect(() => {
     // Set the isNotFound flag based on data, error, and loading
     if (!loading) {
-      setIsNotFound(error || !data?.results || data?.results?.length === 0);
+      setIsNotFound(error || data?.results?.length === 0);
     }
   }, [loading, error, data]);
 
-  return isNotFound;
+  return { isNotFound, loading };
 };

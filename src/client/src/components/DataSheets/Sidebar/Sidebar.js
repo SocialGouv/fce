@@ -4,7 +4,7 @@ import classNames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useRenderIfSiren } from "../../../helpers/hoc/renderIfSiren.js";
 import {
@@ -32,6 +32,7 @@ const Sidebar = ({
   isEntrepriseDisplayed = false,
   onOpenUserFeedbackBox,
 }) => {
+  const location = useLocation();
   const { loading, data: entreprise, error } = useEstablishmentData();
   const navigate = useNavigate();
   const shouldNotRender = useRenderIfSiren({
@@ -63,6 +64,7 @@ const Sidebar = ({
     { label: "Mutations économiques", link: "#muteco" },
     { label: "Aides", link: "#helps" },
     { label: "Agréments", link: "#agrements" },
+    { label: "Commandes publiques", link: "#marches" },
     { label: "Autres etablissements", link: "#autres-etablissements" },
   ];
 
@@ -82,6 +84,7 @@ const Sidebar = ({
     onOpenUserFeedbackBox();
     navigate.push("#user-feedback");
   };
+
   return (
     <>
       <aside className={` aside-contain`}>
@@ -142,17 +145,13 @@ const Sidebar = ({
                     <div key={label}>
                       <span className="ellipse-span">
                         <EllipseIconAside
-                          color={
-                            history?.location?.hash == link
-                              ? "#000091"
-                              : "#e3e3fd"
-                          }
+                          color={location?.hash == link ? "#000091" : "#e3e3fd"}
                         />
                       </span>
                       <a
                         href={link}
                         className={`${
-                          history?.location?.hash == link ? "active-anchor" : ""
+                          location?.hash == link ? "active-anchor" : ""
                         }`}
                       >
                         {" "}
@@ -187,18 +186,14 @@ const Sidebar = ({
                         <span className="ellipse-span">
                           <EllipseIconAside
                             color={
-                              history?.location?.hash == link
-                                ? "#000091"
-                                : "#e3e3fd"
+                              location?.hash == link ? "#000091" : "#e3e3fd"
                             }
                           />
                         </span>
                         <a
                           href={link}
                           className={`${
-                            history?.location?.hash == link
-                              ? "active-anchor"
-                              : ""
+                            location?.hash == link ? "active-anchor" : ""
                           }`}
                         >
                           {" "}
@@ -241,17 +236,13 @@ const Sidebar = ({
                     <div key={label}>
                       <span className="ellipse-span">
                         <EllipseIconAside
-                          color={
-                            history?.location?.hash == link
-                              ? "#000091"
-                              : "#e3e3fd"
-                          }
+                          color={location?.hash == link ? "#000091" : "#e3e3fd"}
                         />
                       </span>
                       <a
                         href={link}
                         className={`${
-                          history?.location?.hash == link ? "active-anchor" : ""
+                          location?.hash == link ? "active-anchor" : ""
                         }`}
                       >
                         {" "}

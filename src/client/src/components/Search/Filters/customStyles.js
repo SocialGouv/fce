@@ -49,22 +49,26 @@ export const selectCustomStyles = {
 
     zIndex: 9999,
   }),
-  multiValue: (styles) => ({
-    ...styles,
-    backgroundColor: "#dfdff1",
-    borderRadius: "6px",
-  }),
+  multiValue: (styles, { data }) => {
+    return {
+      ...styles,
+      backgroundColor: data.isFixed ? "gray" : "#dfdff1", // Si c'est fixé, fond gris sinon une autre couleur
+      borderRadius: "6px",
+    };
+  },
+
   multiValueLabel: (styles) => ({
     ...styles,
     color: "#000091",
   }),
-  multiValueRemove: (styles) => ({
+  multiValueRemove: (styles, { data }) => ({
     ...styles,
     ":hover": {
       backgroundColor: "#000091",
       color: "white",
     },
     color: "#000091",
+    display: data.isFixed ? "none" : "flex",
   }),
   option: (provided) => ({
     ...provided,

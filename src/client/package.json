@@ -48,6 +48,7 @@
     "react-scrollspy": "^3.4.2",
     "react-select": "^5.8.0",
     "react-toggle": "^4.1.1",
+    "react-top-loading-bar": "^2.3.1",
     "react-transition-group": "^4.4.1",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
@@ -56,6 +57,7 @@
     "sass": "^1.79.1",
     "smoothscroll-polyfill": "^0.4.3",
     "ua-parser-js": "^0.7.21",
+    "xlsx": "^0.18.5",
     "zod": "^3.13.4"
   },
   "scripts": {

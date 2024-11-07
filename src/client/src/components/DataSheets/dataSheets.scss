@@ -265,6 +265,31 @@
         .section-datas {
             padding: 0 $spacing-4;
             align-self: stretch;
+            &-marches-actions {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            &-marches {
+                display: flex;
+                justify-content: end;
+                .export-button {
+                    @extend %is-dark-blue;
+                    font-family: $marianne;
+                    font-size: $font-size-base-small;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 1.75rem;
+                    display: flex;
+                    gap: $spacing-1;
+                    margin-top: $spacing-2;
+                    cursor: pointer;
+                    border: 1px solid $dark-blue !important;
+                }
+            }
+            .is-centred {
+                text-align: center;
+            }
             .text {
                 font-family: $marianne;
                 font-size: 0.875rem;

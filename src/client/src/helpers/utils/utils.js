@@ -40,3 +40,19 @@ export const arraySum = (array) =>
 
 export const range = (min, max) =>
   min === max ? [min] : [min, ...range(min + 1, max)];
+export const convertirMoisEnAnnees = (mois) => {
+  const annees = Math.floor(mois / 12);
+  const moisRestants = mois % 12;
+
+  let result = "";
+  if (annees > 0) {
+    result += `${annees} an${annees > 1 ? "s" : ""}`;
+  }
+  if (moisRestants > 0) {
+    if (annees > 0) {
+      result += " ";
+    }
+    result += `${moisRestants} mois`;
+  }
+  return result || "__";
+};

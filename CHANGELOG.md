@@ -1,3 +1,10 @@
+## [27.106.1](https://github.com/SocialGouv/fce/compare/v27.106.0...v27.106.1) (2024-10-14)
+
+
+### Bug Fixes
+
+* remove unused azure variables ([4c8d1ab](https://github.com/SocialGouv/fce/commit/4c8d1ab41cca6657427a0fa693d6af36ade9745a))
+
 # [27.106.0](https://github.com/SocialGouv/fce/compare/v27.105.0...v27.106.0) (2024-09-25)
 
 

@@ -9,15 +9,21 @@ export default class Mail {
   }
 
   async send(to, subject, message, options = {}) {
-    return await this.transport.sendMail({
-      from: this.from,
-      to,
-      subject,
-      text: stripHtml(message),
-      html: message,
-      ...options
-    });
+    try {
+      return await this.transport.sendMail({
+        from: this.from,
+        to,
+        subject,
+        text: stripHtml(message).result,
+        html: message,
+        ...options,
+      });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      throw error; 
+    }
   }
+  
 
 
 }

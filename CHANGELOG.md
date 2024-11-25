@@ -1,3 +1,10 @@
+## [27.106.2](https://github.com/SocialGouv/fce/compare/v27.106.1...v27.106.2) (2024-11-07)
+
+
+### Bug Fixes
+
+* fix marche publiques sort ([#356](https://github.com/SocialGouv/fce/issues/356)) ([36f4ed5](https://github.com/SocialGouv/fce/commit/36f4ed5bc609d0264bbd23a73af08be2c643e8d2))
+
 ## [27.106.1](https://github.com/SocialGouv/fce/compare/v27.106.0...v27.106.1) (2024-10-14)
 
 

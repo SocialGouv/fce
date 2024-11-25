@@ -5,9 +5,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import UsersFeedback from "../../../containers/UsersFeedback";
+import Config from "../../../services/Config";
 import LoadSpinner from "../../shared/LoadSpinner";
 
 const Help = ({ pageData = null, isLoading, hasError }) => {
+  const strapiPath = Config.get("strapi.domain");
   if (hasError) {
     return (
       <div className="page content">
@@ -41,7 +43,10 @@ const Help = ({ pageData = null, isLoading, hasError }) => {
                     <div className="help-video__title">{item.titre}</div>
                     {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                     <video className="help-video__video" controls>
-                      <source src={item.video.url} type="video/mp4" />
+                      <source
+                        src={`${strapiPath}${item.video.url}`}
+                        type="video/mp4"
+                      />
                       <p>
                         Votre navigateur ne prend pas en charge les vidéos
                         HTML5. Voici{" "}

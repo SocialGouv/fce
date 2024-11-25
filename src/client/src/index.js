@@ -7,6 +7,7 @@ import { createRoot } from "react-dom/client";
 import smoothscroll from "smoothscroll-polyfill";
 
 import App from "./components/App";
+import { UserProvider } from "./components/Login/UserContext";
 import Config from "./services/Config";
 
 smoothscroll.polyfill();
@@ -41,4 +42,8 @@ const container = document.getElementById("root");
 const root = createRoot(container);
 
 // Render the App component
-root.render(<App />);
+root.render(
+  <UserProvider>
+    <App />
+  </UserProvider>
+);

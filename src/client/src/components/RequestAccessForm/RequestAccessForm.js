@@ -13,9 +13,16 @@ import FormSubmit from "../Login/steps/Form/FormSubmit";
 import StepForm from "../Login/steps/Form/StepForm";
 
 const submitForm = async (data) => {
-  const response = await Http.post("/createAccount", data);
-
-  return response.data;
+  try {
+    const response = await Http.post("/createAccount", data);
+    return response.data;
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    return {
+      error: error.response?.data || "An unknown error occurred",
+      success: false,
+    };
+  }
 };
 
 const alreadyAcceptedEmailDomains = [

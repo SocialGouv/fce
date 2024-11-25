@@ -10,6 +10,7 @@ const Breadcrumbs = () => {
   const invalidPaths = [
     "",
     "/",
+    "/compte",
     "/search",
     "/a-propos",
     "/faq",

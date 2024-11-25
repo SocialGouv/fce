@@ -23,7 +23,7 @@ const UsersFeedback = ({
   const handleChange = (action) => (e) => {
     dispatch({ payload: e.target.value, type: action });
   };
-  const [thumbup, setThumbup] = useState(false);
+  const [thumbup, setThumbup] = useState(true);
   const [thumbdown, setThumbdown] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const handleOpenModal = () => {

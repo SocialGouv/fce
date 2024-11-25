@@ -17,19 +17,19 @@ export default class FceUser {
     try {
       const response = await axios.post(LOGIN_ENDPOINT, {
         identifier: strapiUser,
-        password: strapiPassword
+        password: strapiPassword,
       });
       this.token = response.data.jwt;
-    } catch(err) {
+    } catch (err) {
       console.log(err);
       throw err;
     }
   }
 
   isTokenExpired() {
-    const { payload: {
-      exp
-    }} = decodeJWT(this.token);
+    const {
+      payload: { exp },
+    } = decodeJWT(this.token);
 
     return exp > getUnixTime(new Date());
   }
@@ -47,8 +47,8 @@ export default class FceUser {
 
     return axios.create({
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
 
@@ -57,8 +57,8 @@ export default class FceUser {
 
     const response = await request.get(USERS_ENDPOINT, {
       params: {
-        email_eq: email
-      }
+        email_eq: email,
+      },
     });
 
     return response?.data[0] || null;
@@ -71,24 +71,32 @@ export default class FceUser {
       await request.post(USERS_ENDPOINT, {
         email,
         structure,
-        published_at: null
+        published_at: null,
       });
       return {
-        success: true
+        success: true,
+        data: response.data,
       };
-    } catch(err) {
-      if (err.response.data.statusCode === 500) {
+    } catch (err) {
+      // Vérifier si err.response existe
+      const errorDetails =
+        err.response?.data || err.message || "Erreur inconnue";
+
+      console.error("Erreur API :", errorDetails);
+
+      if (err.response?.data?.statusCode === 500) {
         return {
-          success: true,
-        }
-      } else {
-        return {
-          success: false,
-          error: {
-            structure: "Structure inconnue"
-          }
-        }
+          success: true, // Supposé comme un succès en cas d'erreur 500
+        };
       }
+
+      return {
+        success: false,
+        error: {
+          message: "Erreur de création de l'utilisateur",
+          details: errorDetails,
+        },
+      };
     }
   }
 }

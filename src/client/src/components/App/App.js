@@ -1,10 +1,11 @@
 import "./app.scss";
 
 import { ApolloProvider } from "@apollo/client";
+import axios from "axios";
 import { createBrowserHistory } from "history";
 import PiwikReactRouter from "piwik-react-router";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import {
   BrowserRouter,
@@ -21,6 +22,7 @@ import Enterprise from "../../containers/Enterprise";
 import LegacyEtablissement from "../../containers/Enterprise/LegacyEtablissement";
 import ListEtablissements from "../../containers/Enterprise/ListEtablissements.jsx";
 import Login from "../../containers/Login";
+import Compte from "../../containers/ProConnectCompte/Compte.jsx";
 import PublicPage from "../../containers/PublicPage";
 import Search from "../../containers/Search";
 import SetMatomo from "../../helpers/Matomo/SetMatomo.js";
@@ -32,6 +34,7 @@ import CustomLayout from "../../services/PrivateRoute/CustomLayout.jsx";
 import configureStore from "../../services/Store";
 import { getSirenFromSiret } from "../../utils/establishment/establishment.js";
 import HomePage from "../HomePage";
+import { UserContext } from "../Login/UserContext.js";
 import Maintenance from "../Maintenance";
 import Statistics from "../PublicPage/Statistics";
 import RequestAccess from "../RequestAccessForm/RequestAccess";
@@ -50,19 +53,50 @@ const setupMatomo = (history, matomoConfig) => {
     piwik.connectToHistory(history, SetMatomo(matomoConfig));
   }
 };
+const SERVER_URL = Config.get("api_endpoint");
 
-const ProtectedRoute = ({ children, redirectTo = "/login" }) => {
+const ProtectedRoute = ({
+  children,
+  redirectTo = "/login",
+  isProConnected = true,
+  isProLoading = true,
+}) => {
+  if (isProLoading) {
+    return <p>Checking Authentication...</p>;
+  }
   const auth = Auth.isLogged();
-  return auth ? children : <Navigate to={redirectTo} />;
+
+  return isProConnected || auth ? children : <Navigate to={redirectTo} />;
 };
 
 ProtectedRoute.propTypes = {
   children: PropTypes.node.isRequired,
+  isProConnected: PropTypes.bool,
+  isProLoading: PropTypes.bool,
   redirectTo: PropTypes.string.isRequired,
 };
 
 const App = () => {
   setupMatomo(browserHistory, globalMatomoConfig);
+  const { updateUser, user } = useContext(UserContext);
+  const [isProConnected, setIsProConnected] = useState(false);
+  const [isProLoading, setIsProLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get(`${SERVER_URL}/current_user`, { withCredentials: true })
+      .then((response) => {
+        setIsProLoading(true);
+        console.log("response current_user", response, user);
+        updateUser(response.data.user);
+        setIsProConnected(true);
+      })
+      .catch((error) => {
+        console.log("Utilisateur non connecté", error);
+        setIsProConnected(false);
+      })
+      .finally(() => setIsProLoading(false));
+  }, []);
 
   return (
     <Provider store={store}>
@@ -79,7 +113,11 @@ const App = () => {
                       <Route
                         path="/"
                         element={
-                          <ProtectedRoute redirectTo="/home">
+                          <ProtectedRoute
+                            redirectTo="/home"
+                            isProConnected={isProConnected}
+                            isProLoading={isProLoading}
+                          >
                             <IEChecker>
                               <Layout displayMessage>
                                 <Search />
@@ -89,9 +127,29 @@ const App = () => {
                         }
                       />
                       <Route
+                        path="/compte"
+                        element={
+                          <ProtectedRoute
+                            redirectTo="/home"
+                            isProConnected={isProConnected}
+                            isProLoading={isProLoading}
+                          >
+                            <IEChecker>
+                              <Layout>
+                                <Compte />
+                              </Layout>
+                            </IEChecker>
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
                         path="/search"
                         element={
-                          <ProtectedRoute redirectTo="/home">
+                          <ProtectedRoute
+                            redirectTo="/home"
+                            isProConnected={isProConnected}
+                            isProLoading={isProLoading}
+                          >
                             <IEChecker>
                               <Layout displayMessage>
                                 <Search />
@@ -103,7 +161,11 @@ const App = () => {
                       <Route
                         path="/enterprise/:siren"
                         element={
-                          <ProtectedRoute redirectTo="/home">
+                          <ProtectedRoute
+                            redirectTo="/home"
+                            isProConnected={isProConnected}
+                            isProLoading={isProLoading}
+                          >
                             <EnterpriseWrapper />
                           </ProtectedRoute>
                         }
@@ -111,15 +173,24 @@ const App = () => {
                       <Route
                         path="/establishment/:siret"
                         element={
-                          <ProtectedRoute redirectTo="/home">
+                          <ProtectedRoute
+                            redirectTo="/home"
+                            isProConnected={isProConnected}
+                            isProLoading={isProLoading}
+                          >
                             <EstablishmentWrapper />
                           </ProtectedRoute>
                         }
                       />
+
                       <Route
                         path="/list-establishments/:siren"
                         element={
-                          <ProtectedRoute redirectTo="/home">
+                          <ProtectedRoute
+                            redirectTo="/home"
+                            isProConnected={isProConnected}
+                            isProLoading={isProLoading}
+                          >
                             <ListEstablishmentsWrapper />
                           </ProtectedRoute>
                         }

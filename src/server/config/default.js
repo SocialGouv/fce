@@ -1,4 +1,3 @@
-
 require("dotenv").config();
 
 const process = require("process");
@@ -27,23 +26,24 @@ const config = {
     user: process.env.PG_USER,
     password: process.env.PG_PASSWORD,
     database: process.env.PG_DB,
-    ssl: process.env.PG_SSL_SELF_SIGNED === "true" ?
-      { rejectUnauthorized: false } :
-      process.env.PG_SSL === "true",
+    ssl:
+      process.env.PG_SSL_SELF_SIGNED === "true"
+        ? { rejectUnauthorized: false }
+        : process.env.PG_SSL === "true",
     port: process.env.PG_PORT,
   },
   bce: {
     url: process.env.BCE_URL,
-    token: process.env.BCE_TOKEN
+    token: process.env.BCE_TOKEN,
   },
   cache: {
     type: process.env.CACHE_TYPE,
-    redisUrl: process.env.REDIS_URL
+    redisUrl: process.env.REDIS_URL,
   },
   strapi: {
     url: process.env.STRAPI_URL,
     user: process.env.STRAPI_USERNAME,
-    password: process.env.STRAPI_PASSWORD
+    password: process.env.STRAPI_PASSWORD,
   },
   sentryUrlKey:
     "https://fecf5988311f413c9bba70e80454cc3a@sentry.fabrique.social.gouv.fr/35",
@@ -167,7 +167,17 @@ const config = {
   port: process.env.PORT || 80,
   api: {
     requestsPer10Seconds: 20,
-    token: process.env.API_TOKEN
+    token: process.env.API_TOKEN,
+  },
+  proconnect: {
+    clientId: process.env.PROCONNECT_CLIENT_ID,
+    clientSecret: process.env.PROCONNECT_CLIENT_SECRET,
+    redirectUri: process.env.PROCONNECT_REDIRECT_URI,
+    postLogoutredirectUri: process.env.PROCONNECT_POST_LOGOUT_REDIRECT_URI,
+    urlDiscover: process.env.PROCONNECT_URL_DISCOVER,
+  },
+  session: {
+    secret: process.env.SESSION_SECRET,
   },
 };
 

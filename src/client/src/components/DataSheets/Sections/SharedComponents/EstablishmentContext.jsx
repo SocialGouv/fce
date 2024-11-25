@@ -7,13 +7,8 @@ import { useSidebarData } from "../../Sidebar/Sidebar.gql";
 const EstablishmentContext = createContext();
 
 export const EstablishmentProvider = ({ siren, children }) => {
-  const {
-    loading,
-    data: entreprise,
-    error,
-  } = useSidebarData(siren, {
-    limit: undefined,
-  });
+  const { loading, data: entreprise, error } = useSidebarData(siren);
+
   if (loading || error) {
     return null;
   }

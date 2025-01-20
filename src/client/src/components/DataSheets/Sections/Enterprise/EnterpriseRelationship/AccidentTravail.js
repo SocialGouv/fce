@@ -34,10 +34,7 @@ const AccidentTravail = ({ entreprise }) => {
 
   return (
     <div>
-      <Subcategory
-        subtitle="Accidents du travail"
-        sourceCustom="DGT / WikiT - 01/10/2021"
-      >
+      <Subcategory subtitle="Accidents du travail" sourceSi="DAT'IA">
         <div className="section-datas__list">
           <Data
             name={

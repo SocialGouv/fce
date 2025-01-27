@@ -15,8 +15,8 @@ export const useSortableData = (items, config = null) => {
   const [sortConfig, setSortConfig] = useState(config);
 
   const sortedItems = useMemo(() => {
-    const sortableItems = [...items];
-    if (sortConfig !== null) {
+    const sortableItems = [...(items || [])];
+    if (items && sortConfig !== null) {
       sortableItems.sort((a, b) => {
         let aValue, bValue;
 

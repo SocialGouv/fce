@@ -13,10 +13,7 @@ const WorkAccident = ({ siret }) => {
 
   return (
     <div id="work-accidents" className="work-accidents">
-      <Subcategory
-        subtitle="Accidents du travail"
-        sourceCustom="DGT / WikiT - 01/10/2021"
-      >
+      <Subcategory subtitle="Accidents du travail" sourceSi="DAT'IA">
         <PgApiDataHandler isLoading={loading} error={error}>
           <div className="section-datas__list ">
             <Data

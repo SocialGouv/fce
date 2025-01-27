@@ -1,3 +1,10 @@
+## [27.106.3](https://github.com/SocialGouv/fce/compare/v27.106.2...v27.106.3) (2025-01-20)
+
+
+### Bug Fixes
+
+* **ci-cd:** use token-bureau ([#360](https://github.com/SocialGouv/fce/issues/360)) ([304cd39](https://github.com/SocialGouv/fce/commit/304cd395444920e520fa3975e411d54dedaed392))
+
 ## [27.106.2](https://github.com/SocialGouv/fce/compare/v27.106.1...v27.106.2) (2024-11-07)
 
 

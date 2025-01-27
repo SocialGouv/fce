@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import BlocTitle from "../../SharedComponents/BlocTitle/BlocTitle.jsx";
+import AidesFinancieres from "./Subcategory/AidesFinancieres.jsx";
 import Apprentissage from "./Subcategory/Apprentissage";
 import ContratsAides from "./Subcategory/ContratsAides";
 
@@ -19,6 +20,7 @@ const EstablishmentHelps = ({ siret }) => {
         <div className="section-datas">
           <ContratsAides siret={siret} />
           <Apprentissage siret={siret} />
+          <AidesFinancieres siret={siret} />
         </div>
       )}
     </section>

@@ -39,7 +39,7 @@ function generateRandomString(length) {
 }
 
 async function init() {
-  console.log(CLIENT_BASE_URL, "CLIENT_BASE_URL");
+  app.set("trust proxy", 1);
 
   //  Middleware CORS
   app.use(
@@ -62,11 +62,6 @@ async function init() {
       },
     })
   );
-  app.use((req, res, next) => {
-    console.log("[DEBUG] sessionID:", req.sessionID);
-    console.log("[DEBUG] session content:", req.session);
-    next();
-  });
   app.use((req, res, next) => {
     next();
   });
@@ -102,12 +97,15 @@ async function init() {
 
   // Route pour initier l'authentification avec ProConnect
   app.get("/api/auth/proconnect", (req, res) => {
+    console.log("Before setting state in session:", req.session);
+
     const state = generateRandomString(16);
     const nonce = generateRandomString(16);
 
     // Stocker dans la session
     req.session.state = state;
     req.session.nonce = nonce;
+    console.log("After setting state in session:", req.session);
 
     const authorizationUrl = proconnectClient.authorizationUrl({
       scope:
@@ -129,17 +127,19 @@ async function init() {
 
   // Route de callback pour gérer la réponse de ProConnect
   app.get("/api/callback", async (req, res, next) => {
-    console.log("callback was called");
+    console.log("Callback called. Session is:", req.session);
     try {
       const params = proconnectClient.callbackParams(req);
 
+      // On récupère state et nonce depuis la session
+      const { state, nonce } = req.session;
       // Appel à proconnectClient.callback avec les checks appropriés
       const tokenSet = await proconnectClient.callback(
         PROCONNECT_REDIRECT_URI,
         params,
         {
-          nonce: req.session.nonce,
-          state: req.session.state,
+          nonce,
+          state,
         }
       );
 
@@ -155,7 +155,7 @@ async function init() {
       req.session.user = userInfo;
 
       // Rediriger vers le frontend après l'authentification
-      res.redirect(process.env.CLIENT_BASE_URL);
+      res.redirect("/");
     } catch (error) {
       console.error("Erreur lors de l'authentification :", error);
       next(error);

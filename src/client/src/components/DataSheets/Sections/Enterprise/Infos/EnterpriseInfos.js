@@ -159,7 +159,7 @@ const EnterpriseInfos = ({ enterprise: baseEntreprise }) => {
               } fermé(s)`}
               className="has-no-border"
             />
-            <Association siret={getSiret(siegeSocial)} />
+            <Association siren={siren} />
             <Data
               name="Tranche d'effectif"
               value={trancheEffectifs && dashboardSizeRanges[trancheEffectifs]}

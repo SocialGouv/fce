@@ -4,7 +4,7 @@ import ApiEntreprise from "../../models/ApiEntreprise";
 export const entrepriseTypes = buildSchema(`
   type Query {
     extraitsRcsInfogreffe(siren: String!): ExtraitRcs
-    association(siret: String!): Association
+    association(siren: String!): Association
     finance(siret:String!):[DonneeEcofi]
     tva_intracommunautaire(siren:String!):TvaIntracommunautaire
     mandataires(siren:String!):[MandataireData]
@@ -72,13 +72,13 @@ export const entrepriseResolvers = {
         return null;
       }
     },
-    association: async (_, { siret }) => {
+    association: async (_, { siren }) => {
       try {
-        const association = await api.getAssociation(siret);
+        const association = await api.getAssociation(siren);
         return association;
       } catch (error) {
         console.error(
-          `Failed to fetch association data for siret ${siret}: ${error}`
+          `Failed to fetch association data for siret ${siren}: ${error}`
         );
         return null;
       }

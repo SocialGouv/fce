@@ -1,12 +1,12 @@
 import { gql, useQuery } from "@apollo/client";
 
 const associationQuery = gql`
-  query GetAssociation($siret: String!) {
-    association(siret: $siret) {
+  query GetAssociation($siren: String!) {
+    association(siren: $siren) {
       rna
     }
   }
 `;
 
-export const useAssociationData = (siret) =>
-  useQuery(associationQuery, { variables: { siret } });
+export const useAssociationData = (siren) =>
+  useQuery(associationQuery, { variables: { siren } });

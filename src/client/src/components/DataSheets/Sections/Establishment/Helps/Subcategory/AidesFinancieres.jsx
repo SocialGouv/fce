@@ -25,7 +25,7 @@ const AidesFinancieres = ({ siret }) => {
   }
 
   return (
-    <Subcategory subtitle="Aides financières" sourceSi="DataGouv">
+    <Subcategory subtitle="Aides financières" sourceSi="ADEME">
       <LoadableContent loading={loading} error={error}>
         {items?.length > 0 && (
           <div className="data-sheet--table">

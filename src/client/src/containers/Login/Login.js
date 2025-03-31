@@ -1,8 +1,9 @@
 import _get from "lodash.get";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import LoginView from "../../components/Login";
+import { UserContext } from "../../components/Login/UserContext";
 import Auth from "../../services/Auth";
 
 const Login = () => {
@@ -15,10 +16,11 @@ const Login = () => {
   const redirectLoginSuccess = "/search";
   const isLogged = Auth.isLogged();
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    if (isLogged) navigate("/");
-  }, [isLogged]);
+    if (isLogged || user) navigate("/");
+  }, [isLogged, user]);
 
   const sendCode = (e, email) => {
     e.preventDefault();

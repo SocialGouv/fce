@@ -12,6 +12,7 @@ const interactionsSources = {
   interactions_pole_3e: "EOS",
   interactions_pole_3e_src: "MDF",
   interactions_pole_c: "SORA",
+  interactions_pole_c_metrologie: "SPARC",
   interactions_pole_t: "interactions_pole_t",
 };
 
@@ -124,13 +125,19 @@ const normalizeInteraction3ESRC = ({
 
 export const normalizeInteractions3ESRC = map(normalizeInteraction3ESRC);
 
-const normalizeInteractionC = ({ unite, siret, date, etablissement }) => ({
+const normalizeInteractionC = ({
+  unite,
+  siret,
+  date,
+  etablissement,
+  type,
+}) => ({
   agent: "",
   date: formatInteractionDate(date),
   etablissement: etablissement || {},
   pole: "C",
   siret,
-  type: INTERACTION_TYPE.CONTROL,
+  type: type || INTERACTION_TYPE.CONTROL,
   unite,
 });
 
@@ -143,6 +150,7 @@ export const getControlLabel = (tableName) =>
     interactions_pole_3e: "3E_SEER",
     interactions_pole_3e_src: "3E_SRC",
     interactions_pole_c: "C",
+    interactions_pole_c_metrologie: "C",
     interactions_pole_t: "T",
   }[tableName]);
 

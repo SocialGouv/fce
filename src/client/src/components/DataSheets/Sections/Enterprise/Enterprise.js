@@ -35,8 +35,6 @@ const Enterprise = ({ enterprise }) => {
 
       <ScrollToTopButton />
     </div>
-
-    // <Unsubscribe />
   );
 };
 

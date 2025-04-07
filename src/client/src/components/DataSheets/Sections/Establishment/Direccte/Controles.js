@@ -57,53 +57,60 @@ const Controles = ({ siret }) => {
                     <th>Date</th>
                     <th>Unité</th>
                     <th>Type</th>
-                    <th>Agent</th>
                     <th>Source Date de mise à jour</th>
                   </tr>
                 </thead>
                 <tbody>
                   {Object.entries(normalizedInteractions).map(
-                    ([pole, lastInteraction]) => (
-                      <tr key={pole}>
-                        <td>
-                          <Value value={getControlLabel(pole)} />
-                        </td>
-                        <td>
-                          <Value value={lastInteraction.date} />
-                        </td>
-                        <td>
-                          <Value value={lastInteraction.unite} />
-                        </td>
-                        <td>
-                          <Value value={getMotifLabel(lastInteraction.motif)} />
-                          {lastInteraction.nature && lastInteraction.cible && (
-                            <>
-                              <div className="direccte-interactions-establishment__control-nature">
-                                <span>Nature du contrôle : </span>
-                                <Value
-                                  value={`${lastInteraction.cible} - ${lastInteraction.nature}`}
-                                />
-                              </div>
-                              <div className="direccte-interactions-establishment__control-nature">
-                                <Value
-                                  value={
-                                    lastInteraction.clos
-                                      ? "Contrôle Clos"
-                                      : "Contrôle en cours"
-                                  }
-                                />
-                              </div>
-                            </>
-                          )}
-                        </td>
-                        <td>
-                          <Value value={lastInteraction.agent} />
-                        </td>
-                        <td>
-                          <Source si={getInteractionSource(pole)} isTableCell />
-                        </td>
-                      </tr>
-                    )
+                    ([pole, lastInteraction]) => {
+                      return (
+                        <tr key={pole}>
+                          <td>
+                            <Value value={getControlLabel(pole)} />
+                          </td>
+                          <td>
+                            <Value value={lastInteraction.date} />
+                          </td>
+                          <td>
+                            <Value value={lastInteraction.unite} />
+                          </td>
+                          <td>
+                            <Value
+                              value={
+                                pole == "interactions_pole_c_metrologie"
+                                  ? lastInteraction?.type
+                                  : getMotifLabel(lastInteraction.motif)
+                              }
+                            />
+                            {lastInteraction.nature && lastInteraction.cible && (
+                              <>
+                                <div className="direccte-interactions-establishment__control-nature">
+                                  <span>Nature du contrôle : </span>
+                                  <Value
+                                    value={`${lastInteraction.cible} - ${lastInteraction.nature}`}
+                                  />
+                                </div>
+                                <div className="direccte-interactions-establishment__control-nature">
+                                  <Value
+                                    value={
+                                      lastInteraction.clos
+                                        ? "Contrôle Clos"
+                                        : "Contrôle en cours"
+                                    }
+                                  />
+                                </div>
+                              </>
+                            )}
+                          </td>
+                          <td>
+                            <Source
+                              si={getInteractionSource(pole)}
+                              isTableCell
+                            />
+                          </td>
+                        </tr>
+                      );
+                    }
                   )}
                 </tbody>
               </NonBorderedTable>

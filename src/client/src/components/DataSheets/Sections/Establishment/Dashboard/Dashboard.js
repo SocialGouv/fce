@@ -36,6 +36,7 @@ const interactionKeys = [
   "interactions_pole_3e_src",
   "interactions_pole_c",
   "interactions_pole_t",
+  "interactions_pole_c_metrologie",
 ];
 
 const getInteractions = pipe(
@@ -45,12 +46,16 @@ const getInteractions = pipe(
     interactions_pole_3e_src,
     interactions_pole_t,
     interactions_pole_c,
+    interactions_pole_c_metrologie,
   }) => ({
     interactions_pole_3e: normalizeInteractions3E(interactions_pole_3e),
     interactions_pole_3e_src: normalizeInteractions3ESRC(
       interactions_pole_3e_src
     ),
     interactions_pole_c: normalizeInteractionsC(interactions_pole_c),
+    interactions_pole_c_metrologie: normalizeInteractionsC(
+      interactions_pole_c_metrologie
+    ),
     interactions_pole_t: normalizeInteractionsT(interactions_pole_t),
   }),
   values,

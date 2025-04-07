@@ -49,6 +49,13 @@ const dashboardQuery = gql`
     ) {
       date: DATE_DERNIER_CONTROLE
     }
+    fce_interactions_pole_c_metrologie: fce_metrologie(
+      where: { siret: { _eq: $siret } }
+      order_by: { date_controle: desc }
+      limit: 1
+    ) {
+      date: date_controle
+    }
     fce_interactions_pole_t(
       where: { siret: { _eq: $siret } }
       order_by: { date: desc }
@@ -116,6 +123,7 @@ export const useDashboardData = pipe(
     ({
       fce_etablissements_activite_partielle,
       fce_interactions_pole_c,
+      fce_interactions_pole_c_metrologie,
       fce_interactions_pole_t,
       fce_interactions_pole_3e,
       fce_interactions_pole_3e_src,
@@ -137,6 +145,7 @@ export const useDashboardData = pipe(
       interactions_pole_3e: fce_interactions_pole_3e,
       interactions_pole_3e_src: fce_interactions_pole_3e_src,
       interactions_pole_c: fce_interactions_pole_c,
+      interactions_pole_c_metrologie: fce_interactions_pole_c_metrologie,
       interactions_pole_t: fce_interactions_pole_t,
       organismes_formation: fce_organismes_formation,
       psi_siren: fce_psi_siren.map(({ SIRET, ...rest }) => ({

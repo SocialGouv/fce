@@ -20,6 +20,17 @@ const controlesQuery = gql`
         denominationusuelleetablissement
       }
     }
+    fce_metrologie(
+      where: { siret: { _eq: $siret } }
+      order_by: { date_controle: desc }
+      limit: 1
+    ) {
+      siret
+      date: date_controle
+      unite: libelle_region
+      type: libelle_categorie
+    }
+
     fce_interactions_pole_t(where: { siret: { _eq: $siret } }) {
       date
       intervenant
@@ -51,12 +62,15 @@ const normalizeResponsesToInteraction = ({
   // fce_interactions_pole_3e_src,
   fce_interactions_pole_c,
   fce_interactions_pole_t,
+  fce_metrologie,
 }) => ({
   // interactions_pole_3e: normalizeInteractions3E(fce_interactions_pole_3e),
   // interactions_pole_3e_src: normalizeInteractions3ESRC(
   //   fce_interactions_pole_3e_src
   // ),
   interactions_pole_c: normalizeInteractionsC(fce_interactions_pole_c),
+
+  interactions_pole_c_metrologie: normalizeInteractionsC(fce_metrologie),
   interactions_pole_t: normalizeInteractionsT(fce_interactions_pole_t),
 });
 

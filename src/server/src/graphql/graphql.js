@@ -1,6 +1,9 @@
 import { ApolloServer } from "apollo-server-express";
-import {entrepriseResolvers, entrepriseTypes} from "./Domain/Entreprise";
-import {etablissementResolvers, etablissementTypes} from "./Domain/Etablissement";
+import { entrepriseResolvers, entrepriseTypes } from "./Domain/Entreprise";
+import {
+  etablissementResolvers,
+  etablissementTypes,
+} from "./Domain/Etablissement";
 
 const path = "/api/graphql";
 
@@ -13,4 +16,4 @@ export const setupGraphql = async (app) => {
   await server.start();
 
   server.applyMiddleware({ app, path });
-}
+};

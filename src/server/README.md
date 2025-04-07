@@ -8,6 +8,7 @@ You can initialize the database by running :
 yarn migrate up --latest
 ```
 
+
 You may encounter the following error : `function uuid_generate_v4()`.
 
 You can fix it by installing the extension :

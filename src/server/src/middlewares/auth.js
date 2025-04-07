@@ -1,7 +1,19 @@
-import Auth, {getTokenFromRequest} from "../utils/auth";
+import Auth, { getTokenFromRequest } from "../utils/auth";
 
-export default async function withAuth (req, res, next) {
+export default async function withAuth(req, res, next) {
   try {
+    console.log(req.session);
+
+    // Vérifier si l'utilisateur est déjà authentifié via la session (ProConnect)
+    if (req.session && req.session.user) {
+      console.log("req.session && req.session.user true");
+
+      // Utilisateur connecté via ProConnect
+      req.user = req.session.user;
+      return next();
+    }
+
+    // Sinon, vérifier l'authentification via token (Auth classique)
     const token = getTokenFromRequest(req);
     if (!token) {
       throw new Error("Missing Authorization header");

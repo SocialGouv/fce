@@ -5,6 +5,7 @@ import Config from "../Config";
 
 const Http = axios.create({
   baseURL: Config.get("api_endpoint"),
+  withCredentials: true,
 });
 
 Http.defaults.headers.post["Content-Type"] =

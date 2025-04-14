@@ -13,7 +13,7 @@ import ArrowUp from "../shared/Icons/ArrowUp.jsx";
 import Rating from "./Rating";
 
 const UsersFeedback = ({
-  state: { comment, rate },
+  state: { comment, rate, useful },
   dispatch,
   sendFeedback,
   fullWidth,
@@ -23,8 +23,11 @@ const UsersFeedback = ({
   const handleChange = (action) => (e) => {
     dispatch({ payload: e.target.value, type: action });
   };
-  const [thumbup, setThumbup] = useState(true);
-  const [thumbdown, setThumbdown] = useState(false);
+  const handleChangeThumb = (action, value) => {
+    dispatch({ payload: value, type: action });
+  };
+  const [thumbup, setThumbup] = useState(useful);
+  const [thumbdown, setThumbdown] = useState(!useful);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const handleOpenModal = () => {
     setIsOpenModal(isOpenUserFeedback ? false : !isOpenModal);
@@ -74,11 +77,11 @@ const UsersFeedback = ({
                 <button
                   className={`yes-no-btn ${thumbup ? "active" : ""}`}
                   id="thumb-up"
-                  value="thumbup"
+                  value={thumbup}
                   onClick={() => {
                     setThumbdown(false);
                     setThumbup(true);
-                    handleChange(SET_USEFUL);
+                    handleChangeThumb(SET_USEFUL, true);
                   }}
                 >
                   Oui
@@ -86,12 +89,12 @@ const UsersFeedback = ({
 
                 <button
                   className={`yes-no-btn ${thumbdown ? "active" : ""}`}
-                  value="thumbdown"
+                  value={thumbdown ? false : true}
                   onClick={() => {
                     setThumbup(false);
                     setThumbdown(true);
 
-                    handleChange(SET_USEFUL);
+                    handleChangeThumb(SET_USEFUL, false);
                   }}
                 >
                   Non

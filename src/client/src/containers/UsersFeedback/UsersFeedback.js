@@ -6,7 +6,7 @@ import { handleError } from "../../helpers/utils";
 import Http from "../../services/Http";
 import { RESET, SET_COMMENT, SET_RATE, SET_USEFUL } from "./actionTypes";
 
-const initialState = { comment: "", rate: null, useful: "" };
+const initialState = { comment: "", rate: null, useful: true };
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -39,7 +39,7 @@ const UsersFeedback = ({
         params: {
           comment: state.comment,
           rate: state.rate,
-          useful: state.useful === "thumbup",
+          useful: state.useful,
         },
       },
       {

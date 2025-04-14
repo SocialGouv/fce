@@ -1,3 +1,10 @@
+# [27.108.0](https://github.com/SocialGouv/fce/compare/v27.107.0...v27.108.0) (2025-04-14)
+
+
+### Features
+
+* fix defaut feedback value ([#368](https://github.com/SocialGouv/fce/issues/368)) ([f0b92ca](https://github.com/SocialGouv/fce/commit/f0b92caa3ef399da04f05fddf1bea8f5815c48b2))
+
 # [27.107.0](https://github.com/SocialGouv/fce/compare/v27.106.3...v27.107.0) (2025-04-07)
 
 

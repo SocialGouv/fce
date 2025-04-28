@@ -13,7 +13,8 @@ import { Issuer } from "openid-client";
 import dotenv from "dotenv";
 import config from "config";
 import crypto from "crypto";
-import session from "express-session";
+import cookieSession from "cookie-session";
+
 dotenv.config();
 
 const app = express();
@@ -51,15 +52,13 @@ async function init() {
 
   //  Middleware de session
   app.use(
-    session({
+    cookieSession({
+      name: "pc_session",
       secret: SESSION, // Clé secrète pour signer le cookie de session
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        secure: true,
-        httpOnly: true,
-        sameSite: "none",
-      },
+      secure: !isDev(),
+      httpOnly: true,
+      sameSite: isDev() ? "lax" : "none",
+      maxAge: 60 * 60 * 1000,
     })
   );
   app.use((req, res, next) => {
@@ -124,10 +123,7 @@ async function init() {
       },
     });
 
-    req.session.save((err) => {
-      if (err) return next(err);
-      res.redirect(authorizationUrl);
-    });
+    res.redirect(authorizationUrl);
   });
 
   // Route de callback pour gérer la réponse de ProConnect
@@ -155,8 +151,8 @@ async function init() {
       // Stocker tokenSet dans la session pour une utilisation ultérieure (par exemple, pour le logout)
       req.session.tokenSet = tokenSet;
       // Supprimer le state et le nonce de la session après l'appel réussi
-      delete req.session.state;
-      delete req.session.nonce;
+      req.session.state = undefined;
+      req.session.nonce = undefined;
 
       // Récupérer les informations utilisateur
       const userInfo = await proconnectClient.userinfo(tokenSet.access_token);
@@ -189,27 +185,21 @@ async function init() {
       return res.redirect("/");
     }
 
+    //  Récupère l’id_token pour la déconnexion OIDC
     const { tokenSet } = req.session;
 
-    let endSessionUrl = "/";
-    if (tokenSet && tokenSet.id_token) {
-      endSessionUrl = proconnectClient.endSessionUrl({
-        id_token_hint: tokenSet.id_token,
-        post_logout_redirect_uri: PROCONNECT_POST_LOGOUT_REDIRECT_URI, // ou config.get("...")
-      });
-    }
+    const endSessionUrl = tokenSet?.id_token
+      ? proconnectClient.endSessionUrl({
+          id_token_hint: tokenSet.id_token,
+          post_logout_redirect_uri: PROCONNECT_POST_LOGOUT_REDIRECT_URI,
+        })
+      : "/";
 
-    // Détruire la session côté serveur
-    req.session.destroy((err) => {
-      if (err) {
-        console.error("Session destroy error:", err);
-        return res.status(500).json({ error: "Erreur lors de la déconnexion" });
-      }
-      res.clearCookie("connect.sid");
+    //  Efface entièrement la session (cookie-session)
+    req.session = null;
 
-      // Ne pas rediriger ici, juste renvoyer un succès
-      res.json({ success: true });
-    });
+    //  Redirige l’utilisateur vers le fournisseur
+    res.redirect(endSessionUrl);
   });
 }
 

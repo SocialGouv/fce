@@ -99,14 +99,15 @@ async function init() {
   app.get("/api/auth/proconnect", (req, res) => {
     console.log("Before setting state in session:", req.session);
 
-    const state = generateRandomString(16);
-    const nonce = generateRandomString(16);
+    const state = generateRandomString(32);
+    const nonce = generateRandomString(32);
 
     // Stocker dans la session
     req.session.state = state;
     req.session.nonce = nonce;
-    console.log("After setting state in session:", req.session);
-
+    if (isDev()) {
+      logger.debug({ state, nonce }, "Init ProConnect auth");
+    }
     const authorizationUrl = proconnectClient.authorizationUrl({
       scope:
         "openid given_name usual_name email siret profile organization custom idp_id",
@@ -127,33 +128,39 @@ async function init() {
 
   // Route de callback pour gérer la réponse de ProConnect
   app.get("/api/callback", async (req, res, next) => {
-    console.log("Callback called. Session is:", req.session);
     try {
+      const storedState = req.session?.state;
+      const storedNonce = req.session?.nonce;
+
+      if (!storedState || !storedNonce) {
+        return res
+          .status(400)
+          .send("Session perdue : state ou nonce manquant.");
+      }
       const params = proconnectClient.callbackParams(req);
 
-      // On récupère state et nonce depuis la session
-      const { state, nonce } = req.session;
       // Appel à proconnectClient.callback avec les checks appropriés
       const tokenSet = await proconnectClient.callback(
         PROCONNECT_REDIRECT_URI,
         params,
         {
-          nonce,
-          state,
+          state: storedState,
+          nonce: storedNonce,
         }
       );
-
-      // Stocker tokenSet dans la session pour une utilisation ultérieure (par exemple, pour le logout)
-      req.session.tokenSet = tokenSet;
-
       // Supprimer le state et le nonce de la session après l'appel réussi
       delete req.session.state;
       delete req.session.nonce;
 
+      // Stocker tokenSet dans la session pour une utilisation ultérieure (par exemple, pour le logout)
+      req.session.tokenSet = tokenSet;
+
       // Récupérer les informations utilisateur
       const userInfo = await proconnectClient.userinfo(tokenSet.access_token);
       req.session.user = userInfo;
-
+      if (isDev()) {
+        logger.debug({ tokenSet }, "TokenSet received from ProConnect");
+      }
       // Rediriger vers le frontend après l'authentification
       res.redirect("/");
     } catch (error) {

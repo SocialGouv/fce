@@ -1,15 +1,18 @@
 import "./homePage.scss";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
 import Auth from "../../services/Auth";
 import Http from "../../services/Http";
+import { UserContext } from "../Login/UserContext";
 import Search from "../Search/Search";
 import { DailyUse, Footer, HowItWork, IconItems, Summary } from "./sections";
 
 const HomePage = () => {
   const isLogged = Auth.isLogged();
+  const { user } = useContext(UserContext);
+
   const [users, setUsers] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,7 +37,7 @@ const HomePage = () => {
     getUsers();
   }, [setUsers, setIsLoading]);
 
-  if (isLogged)
+  if (isLogged || user)
     return (
       <Navigate
         to={{

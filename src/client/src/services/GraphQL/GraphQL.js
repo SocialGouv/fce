@@ -10,16 +10,29 @@ import Auth from "../Auth";
 import config from "../Config";
 
 const fceGraphqlLink = createHttpLink({
+  fetchOptions: {
+    credentials: "include",
+  },
+  headers: {
+    "Content-Type": "application/json",
+  },
   uri: `${config.get("api_endpoint")}/graphql`,
 });
 
 const bceGraphqlLink = createHttpLink({
+  fetchOptions: {
+    credentials: "include",
+  },
+  headers: {
+    "Content-Type": "application/json",
+  },
   uri: `${config.get("api_endpoint")}/bce/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = Auth.getToken();
+
   // return the headers to the context so httpLink can read them
   return {
     headers: {

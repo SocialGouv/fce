@@ -31,11 +31,23 @@ const Association = ({ siren }) => {
         className="has-no-border"
       />
       {isAssociation(association) && (
-        <Data
-          name="Numéro RNA"
-          value={getNumeroRna(association)}
-          className="has-no-border"
-        />
+        <>
+          {" "}
+          <Data
+            name="Numéro RNA"
+            value={getNumeroRna(association)}
+            className="has-no-border"
+          />
+          <div className="is-link-text ">
+            {"Consulter sur "}
+            <a
+              href={`https://app.datasubvention.beta.gouv.fr/association/${siren}`}
+            >
+              {"Data.Subvention"}
+            </a>
+            {}
+          </div>
+        </>
       )}
     </>
   );

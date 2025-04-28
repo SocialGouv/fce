@@ -164,6 +164,9 @@ async function init() {
       if (isDev()) {
         logger.debug({ tokenSet }, "TokenSet received from ProConnect");
       }
+      if (isDev()) {
+        logger.debug({ tokenSet }, "TokenSet received from ProConnect");
+      }
       // Rediriger vers le frontend après l'authentification
       res.redirect("/");
     } catch (error) {

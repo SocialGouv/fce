@@ -23,6 +23,7 @@ import LegacyEtablissement from "../../containers/Enterprise/LegacyEtablissement
 import ListEtablissements from "../../containers/Enterprise/ListEtablissements.jsx";
 import Login from "../../containers/Login";
 import Compte from "../../containers/ProConnectCompte/Compte.jsx";
+import LoginWithProconnect from "../../containers/ProConnectCompte/LoginWithProconnect.jsx";
 import PublicPage from "../../containers/PublicPage";
 import Search from "../../containers/Search";
 import SetMatomo from "../../helpers/Matomo/SetMatomo.js";
@@ -211,6 +212,16 @@ const App = () => {
                           <IEChecker>
                             <Layout hasLandingHeader>
                               <Login />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/login-proconnect"
+                        element={
+                          <IEChecker>
+                            <Layout hasLandingHeader>
+                              <LoginWithProconnect />
                             </Layout>
                           </IEChecker>
                         }

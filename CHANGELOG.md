@@ -1,3 +1,10 @@
+# [27.110.0](https://github.com/SocialGouv/fce/compare/v27.109.0...v27.110.0) (2025-04-28)
+
+
+### Features
+
+* add proconnect prod secret ([#370](https://github.com/SocialGouv/fce/issues/370)) ([3398dbf](https://github.com/SocialGouv/fce/commit/3398dbfee9f3625b94e2cef5c5ba06ea6b529491))
+
 # [27.109.0](https://github.com/SocialGouv/fce/compare/v27.108.0...v27.109.0) (2025-04-28)
 
 

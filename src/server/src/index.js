@@ -44,7 +44,7 @@ async function init() {
   //  Middleware CORS
   app.use(
     cors({
-      origin: process.env.CLIENT_BASE_URL, // Remplacez par l'URL de votre frontend
+      origin: process.env.CLIENT_BASE_URL,
       credentials: true, // Autorise l'envoi des cookies avec les requêtes
     })
   );
@@ -52,7 +52,7 @@ async function init() {
   //  Middleware de session
   app.use(
     session({
-      secret: SESSION, // Utilisez une chaîne sécurisée
+      secret: SESSION, // Clé secrète pour signer le cookie de session
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -63,6 +63,7 @@ async function init() {
     })
   );
   app.use((req, res, next) => {
+    console.log("SESSION-ID:", req.sessionID, "route:", req.path);
     next();
   });
   //  Body parsers
@@ -105,15 +106,15 @@ async function init() {
     // Stocker dans la session
     req.session.state = state;
     req.session.nonce = nonce;
+
     if (isDev()) {
       logger.debug({ state, nonce }, "Init ProConnect auth");
     }
     const authorizationUrl = proconnectClient.authorizationUrl({
-      scope:
-        "openid given_name usual_name email siret profile organization custom idp_id",
-      state: state,
-      nonce: nonce,
-      acr_values: "eidas1",
+      scope: "openid given_name usual_name email siret idp_id",
+      state,
+      nonce,
+      // acr_values: "eidas1",
       claims: {
         id_token: {
           amr: {
@@ -123,7 +124,10 @@ async function init() {
       },
     });
 
-    res.redirect(authorizationUrl);
+    req.session.save((err) => {
+      if (err) return next(err);
+      res.redirect(authorizationUrl);
+    });
   });
 
   // Route de callback pour gérer la réponse de ProConnect
@@ -148,16 +152,18 @@ async function init() {
           nonce: storedNonce,
         }
       );
+      // Stocker tokenSet dans la session pour une utilisation ultérieure (par exemple, pour le logout)
+      req.session.tokenSet = tokenSet;
       // Supprimer le state et le nonce de la session après l'appel réussi
       delete req.session.state;
       delete req.session.nonce;
 
-      // Stocker tokenSet dans la session pour une utilisation ultérieure (par exemple, pour le logout)
-      req.session.tokenSet = tokenSet;
-
       // Récupérer les informations utilisateur
       const userInfo = await proconnectClient.userinfo(tokenSet.access_token);
       req.session.user = userInfo;
+      if (isDev()) {
+        logger.debug({ tokenSet }, "TokenSet received from ProConnect");
+      }
       if (isDev()) {
         logger.debug({ tokenSet }, "TokenSet received from ProConnect");
       }

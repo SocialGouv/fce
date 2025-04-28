@@ -1,3 +1,10 @@
+## [27.110.2](https://github.com/SocialGouv/fce/compare/v27.110.1...v27.110.2) (2025-04-28)
+
+
+### Bug Fixes
+
+* use cookieSession ([#373](https://github.com/SocialGouv/fce/issues/373)) ([1891ed4](https://github.com/SocialGouv/fce/commit/1891ed4d4c36d022466fcf5abe4d8f1fffde6f27))
+
 ## [27.110.1](https://github.com/SocialGouv/fce/compare/v27.110.0...v27.110.1) (2025-04-28)
 
 

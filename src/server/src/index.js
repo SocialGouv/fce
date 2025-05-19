@@ -14,6 +14,7 @@ import dotenv from "dotenv";
 import config from "config";
 import crypto from "crypto";
 import cookieSession from "cookie-session";
+import { extractDomain } from "./models/ProconnectUser";
 
 dotenv.config();
 
@@ -157,6 +158,12 @@ async function init() {
       // Récupérer les informations utilisateur
       const userInfo = await proconnectClient.userinfo(tokenSet.access_token);
       req.session.user = userInfo;
+      const isLikelyValidDomain = isValidDomain(userInfo.email);
+      if (!isLikelyValidDomain) {
+        return res
+          .status(400)
+          .send("Domaine de l'email non autorisé : " + userInfo.email);
+      }
       if (isDev()) {
         logger.debug({ tokenSet }, "TokenSet received from ProConnect");
       }

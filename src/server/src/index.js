@@ -14,7 +14,7 @@ import dotenv from "dotenv";
 import config from "config";
 import crypto from "crypto";
 import cookieSession from "cookie-session";
-import { extractDomain } from "./models/ProconnectUser";
+import { isValidDomain } from "./models/ProconnectUser";
 
 dotenv.config();
 
@@ -158,6 +158,7 @@ async function init() {
       // Récupérer les informations utilisateur
       const userInfo = await proconnectClient.userinfo(tokenSet.access_token);
       req.session.user = userInfo;
+      console.log({ userInfo }, "userInfo received from ProConnect");
       const isLikelyValidDomain = isValidDomain(userInfo.email);
       if (!isLikelyValidDomain) {
         return res

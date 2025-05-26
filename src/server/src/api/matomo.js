@@ -3,7 +3,7 @@ import qs from "query-string";
 
 import UsersFeedback from "../models/UsersFeedback";
 
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
 const checkConfig = () => {

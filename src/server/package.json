@@ -5,11 +5,11 @@
   "license": "MIT",
   "private": true,
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=20.12.2"
   },
   "scripts": {
     "start": "node build/server.js",
-    "watch": "concurrently \"webpack --color --watch\" \"nodemon --expose-gc --inspect=0.0.0.0\"",
+    "watch": "concurrently \"webpack --color --watch\" \"nodemon --inspect=0.0.0.0 --enable-source-maps\"",
     "nodemon": "nodemon build/server.js",
     "build": "cross-env NODE_ENV=production webpack --color",
     "test": "jest",
@@ -18,15 +18,15 @@
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore src"
   },
   "dependencies": {
+    "@apollo/server": "^4.12.1",
+    "@as-integrations/express5": "^1.0.0",
     "@elastic/elasticsearch": "^7.15.0",
     "@sentry/node": "^5.17.0",
     "@socialgouv/codes-naf": "^1.0.5",
-    "apollo-server-express": "^3.6.7",
     "array.prototype.flatmap": "^1.2.3",
     "axios": "^0.21.1",
     "axios-cache-adapter": "^2.7.3",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.2",
     "concurrently": "^7.6.0",
     "config": "3.3.6",
     "cookie-session": "^2.1.0",
@@ -34,9 +34,9 @@
     "date-fns": "^2.11.0",
     "dotenv": "^8.2.0",
     "email-validator": "^2.0.4",
-    "express": "^4.16.2",
+    "express": "^5.1.0",
     "express-http-proxy": "^1.6.3",
-    "graphql": "^16.3.0",
+    "graphql": "^16",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "lodash.get": "^4.4.2",
@@ -74,7 +74,6 @@
     "fs-extra": "^8.1.0",
     "jest": "^27.4.5",
     "jest-express": "^1.11.3",
-    "node-debug": "^0.1.0",
     "nodemon": "^2.0.6",
     "post-compile-webpack-plugin": "^0.1.1",
     "prettier": "^2.0.3",

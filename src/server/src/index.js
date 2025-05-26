@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 import * as Sentry from "@sentry/node";
 import cors from "cors";
 
@@ -66,8 +65,8 @@ async function init() {
     next();
   });
   //  Body parsers
-  app.use(bodyParser.json()); // support json encoded bodies
-  app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+  app.use(express.json()); // support json encoded bodies
+  app.use(express.urlencoded({ extended: true })); // support encoded bodies
 
   //  Intégration de ProConnect avec openid-client
   const proconnectIssuer = await Issuer.discover(ISSUER_URL);
@@ -107,7 +106,7 @@ async function init() {
     req.session.nonce = nonce;
 
     if (isDev()) {
-      logger.debug({ state, nonce }, "Init ProConnect auth");
+      console.log({ state, nonce }, "Init ProConnect auth");
     }
     const authorizationUrl = proconnectClient.authorizationUrl({
       scope: "openid given_name usual_name email siret idp_id",
@@ -158,10 +157,10 @@ async function init() {
       const userInfo = await proconnectClient.userinfo(tokenSet.access_token);
       req.session.user = userInfo;
       if (isDev()) {
-        logger.debug({ tokenSet }, "TokenSet received from ProConnect");
+        console.log({ tokenSet }, "TokenSet received from ProConnect");
       }
       if (isDev()) {
-        logger.debug({ tokenSet }, "TokenSet received from ProConnect");
+        console.log({ tokenSet }, "TokenSet received from ProConnect");
       }
       // Rediriger vers le frontend après l'authentification
       res.redirect("/");

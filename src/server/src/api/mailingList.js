@@ -3,7 +3,7 @@ import withAuth from "../middlewares/auth";
 import jwt from "jsonwebtoken";
 import HttpError from "../utils/HttpError";
 
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
 router.get("/mailing-list/user", withAuth, async (req, res) => {

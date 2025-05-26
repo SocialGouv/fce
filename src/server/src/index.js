@@ -14,7 +14,7 @@ import dotenv from "dotenv";
 import config from "config";
 import crypto from "crypto";
 import cookieSession from "cookie-session";
-import { isValidDomain } from "./models/ProconnectUser";
+import { isAuthorizedUser } from "./models/ProconnectUser";
 
 dotenv.config();
 
@@ -157,21 +157,13 @@ async function init() {
 
       // Récupérer les informations utilisateur
       const userInfo = await proconnectClient.userinfo(tokenSet.access_token);
-      req.session.user = userInfo;
       console.log({ userInfo }, "userInfo received from ProConnect");
-      const isLikelyValidDomain = isValidDomain(userInfo.email);
-      if (!isLikelyValidDomain) {
-        return res
-          .status(400)
-          .send("Domaine de l'email non autorisé : " + userInfo.email);
+      if (!isAuthorizedUser(userInfo)) {
+        console.warn("Accès refusé (domaine/SIRET non autorisé)", userInfo);
+        return res.redirect("/connexion-requise");
       }
-      if (isDev()) {
-        logger.debug({ tokenSet }, "TokenSet received from ProConnect");
-      }
-      if (isDev()) {
-        logger.debug({ tokenSet }, "TokenSet received from ProConnect");
-      }
-      // Rediriger vers le frontend après l'authentification
+      req.session.user = userInfo;
+      console.log("User authenticated:", req.session.user);
       res.redirect("/");
     } catch (error) {
       console.error("Erreur lors de l'authentification :", error);

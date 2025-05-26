@@ -7,7 +7,6 @@ const Domains = [
   "finances.gouv.fr",
   "sg.social.gouv.fr",
   "travail.gouv.fr",
-  "ouidou.fr",
 ];
 const AllowedSirets = [
   "13000816200021",
@@ -184,6 +183,19 @@ const AllowedSirets = [
   "13002933300080",
   "13002935800012",
 ];
+export const isValidSiret = (siret) => {
+  if (typeof siret !== "string") return false;
+
+  const cleanedSiret = siret.replace(/\s+/g, "");
+
+  if (!/^\d{14}$/.test(cleanedSiret)) return false;
+
+  try {
+    return AllowedSirets.includes(cleanedSiret);
+  } catch {
+    return false;
+  }
+};
 export const isValidDomain = (email) => {
   try {
     const domain = extractDomain(email);
@@ -199,3 +211,20 @@ export const extractDomain = (email) => {
     return "";
   }
 };
+export function isAuthorizedUser(user) {
+  // Vérif domaine e-mail
+  const domain = extractDomain(user.email);
+  if (domain && isValidDomain(domain)) {
+    console.log(`Domaine autorisé: ${domain}`);
+    return true;
+  }
+
+  //  Vérif SIRET
+  if (user?.siret && isValidSiret(user.siret)) {
+    console.log(`SIRET autorisé: ${user.siret}`);
+    return true;
+  }
+
+  // Refus par défaut
+  return false;
+}

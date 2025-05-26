@@ -6,7 +6,7 @@ import { getElasticQueryParams, requestElastic } from "../utils/elastic";
 import xlsx from "xlsx";
 import {getTrancheLibelleFromCode} from "../utils/trancheEffectif";
 
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
 const fetchAllResults = async (params) => {

@@ -1,7 +1,8 @@
 import withAuth from "../middlewares/auth";
 import { getElasticQueryParams, requestElastic } from "../utils/elastic";
 
-const express = require("express");
+import express from "express";
+
 const router = express.Router();
 
 router.get("/elastic", withAuth, async (req, res) => {

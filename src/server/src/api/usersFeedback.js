@@ -5,7 +5,7 @@ import UsersFeedback from "../models/UsersFeedback";
 import Mail from "../utils/mail";
 import sendUserFeedbacklTpl from "../templates/email/sendUserFeedback";
 
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
 router.post("/feedback", withAuth, async (req, res) => {

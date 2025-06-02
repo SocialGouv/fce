@@ -19,6 +19,7 @@ const Breadcrumbs = () => {
     "/statistics",
     "/mentions-legales",
     "/politique-de-confidentialite",
+    "/connexion-requise",
   ];
 
   if (invalidPaths.includes(location.pathname)) return null;

@@ -14,6 +14,7 @@ import dotenv from "dotenv";
 import config from "config";
 import crypto from "crypto";
 import cookieSession from "cookie-session";
+import { isAuthorizedUser } from "./models/ProconnectUser";
 
 dotenv.config();
 
@@ -156,14 +157,13 @@ async function init() {
 
       // Récupérer les informations utilisateur
       const userInfo = await proconnectClient.userinfo(tokenSet.access_token);
+      console.log({ userInfo }, "userInfo received from ProConnect");
+      if (!isAuthorizedUser(userInfo)) {
+        console.warn("Accès refusé (domaine/SIRET non autorisé)", userInfo);
+        return res.redirect("/connexion-requise");
+      }
       req.session.user = userInfo;
-      if (isDev()) {
-        logger.debug({ tokenSet }, "TokenSet received from ProConnect");
-      }
-      if (isDev()) {
-        logger.debug({ tokenSet }, "TokenSet received from ProConnect");
-      }
-      // Rediriger vers le frontend après l'authentification
+      console.log("User authenticated:", req.session.user);
       res.redirect("/");
     } catch (error) {
       console.error("Erreur lors de l'authentification :", error);

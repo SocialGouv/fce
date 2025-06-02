@@ -23,6 +23,7 @@ import LegacyEtablissement from "../../containers/Enterprise/LegacyEtablissement
 import ListEtablissements from "../../containers/Enterprise/ListEtablissements.jsx";
 import Login from "../../containers/Login";
 import Compte from "../../containers/ProConnectCompte/Compte.jsx";
+import LoginFailed from "../../containers/ProConnectCompte/LoginFailed.jsx";
 import LoginWithProconnect from "../../containers/ProConnectCompte/LoginWithProconnect.jsx";
 import PublicPage from "../../containers/PublicPage";
 import Search from "../../containers/Search";
@@ -63,7 +64,7 @@ const ProtectedRoute = ({
   isProLoading = true,
 }) => {
   if (isProLoading) {
-    return <p>Checking Authentication...</p>;
+    return <p>{"Vérification de l'authentification..."}</p>;
   }
   const auth = Auth.isLogged();
 
@@ -160,6 +161,55 @@ const App = () => {
                         }
                       />
                       <Route
+                        path="/search"
+                        element={
+                          <ProtectedRoute
+                            redirectTo="/home"
+                            isProConnected={isProConnected}
+                            isProLoading={isProLoading}
+                          >
+                            <IEChecker>
+                              <Layout displayMessage>
+                                <Search />
+                              </Layout>
+                            </IEChecker>
+                          </ProtectedRoute>
+                        }
+                      />
+
+                      <Route
+                        path="/search"
+                        element={
+                          <ProtectedRoute
+                            redirectTo="/home"
+                            isProConnected={isProConnected}
+                            isProLoading={isProLoading}
+                          >
+                            <IEChecker>
+                              <Layout displayMessage>
+                                <Search />
+                              </Layout>
+                            </IEChecker>
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
+                        path="/search"
+                        element={
+                          <ProtectedRoute
+                            redirectTo="/home"
+                            isProConnected={isProConnected}
+                            isProLoading={isProLoading}
+                          >
+                            <IEChecker>
+                              <Layout displayMessage>
+                                <Search />
+                              </Layout>
+                            </IEChecker>
+                          </ProtectedRoute>
+                        }
+                      />
+                      <Route
                         path="/enterprise/:siren"
                         element={
                           <ProtectedRoute
@@ -212,6 +262,16 @@ const App = () => {
                           <IEChecker>
                             <Layout hasLandingHeader>
                               <Login />
+                            </Layout>
+                          </IEChecker>
+                        }
+                      />
+                      <Route
+                        path="/connexion-requise"
+                        element={
+                          <IEChecker>
+                            <Layout>
+                              <LoginFailed />
                             </Layout>
                           </IEChecker>
                         }

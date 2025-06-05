@@ -1,6 +1,6 @@
 strapi:
   strategyType: Recreate
-  ~needs: [build-strapi, pg-strapi]
+  ~needs: [pg-strapi]
   env:
     - name: DATABASE_NAME
       valueFrom:
@@ -29,7 +29,7 @@ strapi:
           name: pg-strapi-superuser
 
 n8n:
-  ~needs: [build-n8n, pg-n8n]
+  ~needs: [pg-n8n]
   env:
     - name: DB_POSTGRESDB_DATABASE
       valueFrom:
@@ -83,7 +83,7 @@ n8n:
           name: pg-superuser
 
 server:
-  ~needs: [build-server, pg]
+  ~needs: [pg]
   env:
     - name: PG_DB
       valueFrom:

@@ -14,7 +14,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+&_cnx_requise{
+    margin-top: 4rem;
+    text-align: center;
+}
     &__wrapper {
         & .container {
             padding: $padding-app-x;

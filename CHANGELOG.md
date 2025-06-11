@@ -1,3 +1,10 @@
+# [27.111.0](https://github.com/SocialGouv/fce/compare/v27.110.2...v27.111.0) (2025-06-02)
+
+
+### Features
+
+* integrate pro connect btn ([#374](https://github.com/SocialGouv/fce/issues/374)) ([47251ef](https://github.com/SocialGouv/fce/commit/47251ef71d08cd6747823c20b207158f4667cda1))
+
 ## [27.110.2](https://github.com/SocialGouv/fce/compare/v27.110.1...v27.110.2) (2025-04-28)
 
 

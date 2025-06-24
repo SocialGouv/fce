@@ -1,3 +1,10 @@
+## [27.111.1](https://github.com/SocialGouv/fce/compare/v27.111.0...v27.111.1) (2025-06-24)
+
+
+### Bug Fixes
+
+* buildkit in gh ([#376](https://github.com/SocialGouv/fce/issues/376)) ([3b282b9](https://github.com/SocialGouv/fce/commit/3b282b9131dd3a2bd56e00d4ecf73f85755653c4))
+
 # [27.111.0](https://github.com/SocialGouv/fce/compare/v27.110.2...v27.111.0) (2025-06-02)
 
 

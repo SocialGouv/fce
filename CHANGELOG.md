@@ -1,3 +1,10 @@
+# [27.112.0](https://github.com/SocialGouv/fce/compare/v27.111.1...v27.112.0) (2025-07-28)
+
+
+### Features
+
+* Activate proconnect btn ([#379](https://github.com/SocialGouv/fce/issues/379)) ([77aadbb](https://github.com/SocialGouv/fce/commit/77aadbb3c384db37e3925a89fd1e573da9bd67da))
+
 ## [27.111.1](https://github.com/SocialGouv/fce/compare/v27.111.0...v27.111.1) (2025-06-24)
 
 

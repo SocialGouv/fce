@@ -27,7 +27,7 @@ import LoginFailed from "../../containers/ProConnectCompte/LoginFailed.jsx";
 import LoginWithProconnect from "../../containers/ProConnectCompte/LoginWithProconnect.jsx";
 import PublicPage from "../../containers/PublicPage";
 import Search from "../../containers/Search";
-import SetMatomo from "../../helpers/Matomo/SetMatomo.js";
+import { SetMatomo } from "../../helpers/Matomo/SetMatomo.js";
 import Auth from "../../services/Auth/Auth.js";
 import Config from "../../services/Config";
 import { useIsNotFound } from "../../services/Elastic/elastic.js";

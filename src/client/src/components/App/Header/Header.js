@@ -3,10 +3,11 @@ import "./header.scss";
 import PropTypes from "prop-types";
 import React, { useContext } from "react";
 import { connect } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import LogoFCE from "../../../assets/img/FCE.svg";
 import Logo from "../../../assets/img/Footer_Logo.svg";
+import { trackEvent } from "../../../helpers/Matomo/SetMatomo.js";
 import Auth from "../../../services/Auth/index.js";
 import Config from "../../../services/Config/Config.js";
 import { resetSearch } from "../../../services/Store/actions";
@@ -18,9 +19,6 @@ import HeaderLogo from "../Logo/Logo.jsx";
 
 const Header = ({ resetSearch, hasSharedButton = false }) => {
   const { user, logout } = useContext(UserContext);
-  const { pathname } = useLocation();
-
-  const isProConnectLoginPage = pathname === "/login-proconnect";
 
   const auth = Auth.isLogged();
   const handleLogoutClick = (event) => {
@@ -68,11 +66,18 @@ const Header = ({ resetSearch, hasSharedButton = false }) => {
 
             {
               <div className="header__mailto">
-                {!auth && !user && isProConnectLoginPage && (
+                {!auth && !user && (
                   <div className="header__proConnect">
                     <a
                       href={`${SERVER_URL}/auth/proconnect`}
                       className="proconnect-button"
+                      onClick={() =>
+                        trackEvent(
+                          "Login",
+                          "Login with ProConnect",
+                          "Click ProConnect Button"
+                        )
+                      }
                     >
                       <span className="proconnect-sr-only">
                         S’identifier avec ProConnect
@@ -159,7 +164,6 @@ const mapDispatchToProps = (dispatch) => {
 
 Header.propTypes = {
   hasSharedButton: PropTypes.bool,
-  location: PropTypes.object,
   resetSearch: PropTypes.func,
 };
 

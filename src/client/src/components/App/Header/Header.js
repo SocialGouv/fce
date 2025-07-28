@@ -3,7 +3,7 @@ import "./header.scss";
 import PropTypes from "prop-types";
 import React, { useContext } from "react";
 import { connect } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import LogoFCE from "../../../assets/img/FCE.svg";
 import Logo from "../../../assets/img/Footer_Logo.svg";
@@ -18,9 +18,6 @@ import HeaderLogo from "../Logo/Logo.jsx";
 
 const Header = ({ resetSearch, hasSharedButton = false }) => {
   const { user, logout } = useContext(UserContext);
-  const { pathname } = useLocation();
-
-  const isProConnectLoginPage = pathname === "/login-proconnect";
 
   const auth = Auth.isLogged();
   const handleLogoutClick = (event) => {
@@ -68,7 +65,7 @@ const Header = ({ resetSearch, hasSharedButton = false }) => {
 
             {
               <div className="header__mailto">
-                {!auth && !user && isProConnectLoginPage && (
+                {!auth && !user && (
                   <div className="header__proConnect">
                     <a
                       href={`${SERVER_URL}/auth/proconnect`}

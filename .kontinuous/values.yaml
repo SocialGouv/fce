@@ -27,7 +27,7 @@ server:
 graphiql:
   ~chart: app
   imagePackage: graphiql
-  probesPath: /healthz
+  probesPath: /
   containerPort: 8080
 
 n8n:

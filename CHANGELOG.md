@@ -1,3 +1,10 @@
+# [27.113.0](https://github.com/SocialGouv/fce/compare/v27.112.0...v27.113.0) (2025-11-19)
+
+
+### Features
+
+* update allowed siret list ([#380](https://github.com/SocialGouv/fce/issues/380)) ([2d31fb8](https://github.com/SocialGouv/fce/commit/2d31fb8982db1b7d7747956d30eb7b7807a2df24))
+
 # [27.112.0](https://github.com/SocialGouv/fce/compare/v27.111.1...v27.112.0) (2025-07-28)
 
 

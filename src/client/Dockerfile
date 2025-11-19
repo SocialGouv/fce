@@ -10,7 +10,7 @@ COPY . .
 ENV REACT_APP_MAINTENANCE=false
 RUN yarn build
 
-FROM nginx:alpine
+FROM nginxinc/nginx-unprivileged
 
 USER 1001
 

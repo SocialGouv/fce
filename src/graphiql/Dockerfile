@@ -9,7 +9,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN yarn build
 
-FROM bitnami/nginx:1.12
+FROM nginxinc/nginx-unprivileged
 
 USER 1001
 

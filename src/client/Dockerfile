@@ -10,7 +10,7 @@ COPY . .
 ENV REACT_APP_MAINTENANCE=false
 RUN yarn build
 
-FROM bitnami/nginx:1.12
+FROM nginx:alpine
 
 USER 1001
 

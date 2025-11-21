@@ -1,3 +1,10 @@
+## [27.113.2](https://github.com/SocialGouv/fce/compare/v27.113.1...v27.113.2) (2025-11-21)
+
+
+### Bug Fixes
+
+* nginx pid ([a0233a7](https://github.com/SocialGouv/fce/commit/a0233a738e3b7b3438229852e661a701e949cf6d))
+
 ## [27.113.1](https://github.com/SocialGouv/fce/compare/v27.113.0...v27.113.1) (2025-11-21)
 
 

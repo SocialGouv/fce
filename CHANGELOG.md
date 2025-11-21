@@ -1,3 +1,10 @@
+## [27.113.1](https://github.com/SocialGouv/fce/compare/v27.113.0...v27.113.1) (2025-11-21)
+
+
+### Bug Fixes
+
+* nginx conf path ([69b3dba](https://github.com/SocialGouv/fce/commit/69b3dba4b5897b3151d15a60c2934f1300163a5a))
+
 # [27.113.0](https://github.com/SocialGouv/fce/compare/v27.112.0...v27.113.0) (2025-11-19)
 
 

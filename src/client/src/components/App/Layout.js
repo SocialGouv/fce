@@ -20,14 +20,16 @@ const Layout = ({
   return (
     <>
       {!isNotFound && hasLandingHeader ? (
-        <Header hasSharedButton={hasSharedButton} />
+        <>
+          <Header hasSharedButton={hasSharedButton} />
+          <PortalClosureAlert />
+        </>
       ) : (
         <>
           {" "}
           <Header
             showBetaMessage={!isActiveMaintenanceMode && displayMessage}
           />
-          <PortalClosureAlert />
           <Breadcrumbs />
         </>
       )}

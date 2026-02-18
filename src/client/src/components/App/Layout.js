@@ -4,6 +4,7 @@ import React from "react";
 
 import { isIE } from "../../helpers/BrowserDetection";
 import Config from "../../services/Config";
+import PortalClosureAlert from "../shared/PortalClosure/PortalClosureAlerte.jsx";
 import Breadcrumbs from "./Breadcrumbs/Breadcrumbs.jsx";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -26,6 +27,7 @@ const Layout = ({
           <Header
             showBetaMessage={!isActiveMaintenanceMode && displayMessage}
           />
+          <PortalClosureAlert />
           <Breadcrumbs />
         </>
       )}

@@ -3,4 +3,9 @@ projectName: fce
 dependencies:
   fabrique:
     extends:
-      - name: ovh
+      - name: ovh 
+  contrib:
+    preDeploy:
+      cleanOrphan:
+        enabled: false
+  

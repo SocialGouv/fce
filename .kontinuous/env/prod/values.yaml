@@ -126,42 +126,42 @@ server:
     - name: PG_SSL_SELF_SIGNED
       value: "true"
 
-strapi:
-  ~needs: [pg-strapi]
-  strategyType: Recreate
-  resources:
-    requests:
-      cpu: 100m
-      memory: 512Mi
-    limits:
-      cpu: 200m
-      memory: 512Mi
-  env:
-    - name: DATABASE_NAME
-      valueFrom:
-        secretKeyRef:
-          key: PGDATABASE
-          name: pg-strapi-app
-    - name: DATABASE_HOST
-      valueFrom:
-        secretKeyRef:
-          key: host
-          name: pg-strapi-superuser
-    - name: DATABASE_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: password
-          name: pg-strapi-superuser
-    - name: DATABASE_PORT
-      valueFrom:
-        secretKeyRef:
-          key: port
-          name: pg-strapi-superuser
-    - name: DATABASE_USERNAME
-      valueFrom:
-        secretKeyRef:
-          key: user
-          name: pg-strapi-superuser
+# strapi:
+#   ~needs: [pg-strapi]
+#   strategyType: Recreate
+#   resources:
+#     requests:
+#       cpu: 100m
+#       memory: 512Mi
+#     limits:
+#       cpu: 200m
+#       memory: 512Mi
+#   env:
+#     - name: DATABASE_NAME
+#       valueFrom:
+#         secretKeyRef:
+#           key: PGDATABASE
+#           name: pg-strapi-app
+#     - name: DATABASE_HOST
+#       valueFrom:
+#         secretKeyRef:
+#           key: host
+#           name: pg-strapi-superuser
+#     - name: DATABASE_PASSWORD
+#       valueFrom:
+#         secretKeyRef:
+#           key: password
+#           name: pg-strapi-superuser
+#     - name: DATABASE_PORT
+#       valueFrom:
+#         secretKeyRef:
+#           key: port
+#           name: pg-strapi-superuser
+#     - name: DATABASE_USERNAME
+#       valueFrom:
+#         secretKeyRef:
+#           key: user
+#           name: pg-strapi-superuser
 
 pg:
   ~chart: pg

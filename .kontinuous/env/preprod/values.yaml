@@ -1,32 +1,32 @@
-strapi:
-  strategyType: Recreate
-  ~needs: [pg-strapi]
-  env:
-    - name: DATABASE_NAME
-      valueFrom:
-        secretKeyRef:
-          key: PGDATABASE
-          name: pg-strapi-app
-    - name: DATABASE_HOST
-      valueFrom:
-        secretKeyRef:
-          key: host
-          name: pg-strapi-superuser
-    - name: DATABASE_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: password
-          name: pg-strapi-superuser
-    - name: DATABASE_PORT
-      valueFrom:
-        secretKeyRef:
-          key: port
-          name: pg-strapi-superuser
-    - name: DATABASE_USERNAME
-      valueFrom:
-        secretKeyRef:
-          key: user
-          name: pg-strapi-superuser
+# strapi:
+#   strategyType: Recreate
+#   ~needs: [pg-strapi]
+#   env:
+#     - name: DATABASE_NAME
+#       valueFrom:
+#         secretKeyRef:
+#           key: PGDATABASE
+#           name: pg-strapi-app
+#     - name: DATABASE_HOST
+#       valueFrom:
+#         secretKeyRef:
+#           key: host
+#           name: pg-strapi-superuser
+#     - name: DATABASE_PASSWORD
+#       valueFrom:
+#         secretKeyRef:
+#           key: password
+#           name: pg-strapi-superuser
+#     - name: DATABASE_PORT
+#       valueFrom:
+#         secretKeyRef:
+#           key: port
+#           name: pg-strapi-superuser
+#     - name: DATABASE_USERNAME
+#       valueFrom:
+#         secretKeyRef:
+#           key: user
+#           name: pg-strapi-superuser
 
 n8n:
   ~needs: [pg-n8n]

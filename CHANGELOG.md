@@ -1,3 +1,10 @@
+# [27.114.0](https://github.com/SocialGouv/fce/compare/v27.113.2...v27.114.0) (2026-02-23)
+
+
+### Features
+
+* Add portal closure alert ([#381](https://github.com/SocialGouv/fce/issues/381)) ([34ac58e](https://github.com/SocialGouv/fce/commit/34ac58ed97458b4c5b8f414b21168456d1873b61))
+
 ## [27.113.2](https://github.com/SocialGouv/fce/compare/v27.113.1...v27.113.2) (2025-11-21)
 
 

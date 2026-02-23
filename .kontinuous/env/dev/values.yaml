@@ -1,30 +1,30 @@
-strapi:
-  volumes:
-    - name: uploads
-      emptyDir: {}
-  env:
-    - name: DATABASE_NAME
-      valueFrom:
-        secretKeyRef:
-          key: PGDATABASE
-          name: pg-strapi-app
-    - name: DATABASE_HOST
-      value: pg-strapi-rw.fce-preprod.svc
-    - name: DATABASE_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: password
-          name: pg-strapi-superuser
-    - name: DATABASE_PORT
-      valueFrom:
-        secretKeyRef:
-          key: port
-          name: pg-strapi-superuser
-    - name: DATABASE_USERNAME
-      valueFrom:
-        secretKeyRef:
-          key: user
-          name: pg-strapi-superuser
+# strapi:
+#   volumes:
+#     - name: uploads
+#       emptyDir: {}
+#   env:
+#     - name: DATABASE_NAME
+#       valueFrom:
+#         secretKeyRef:
+#           key: PGDATABASE
+#           name: pg-strapi-app
+#     - name: DATABASE_HOST
+#       value: pg-strapi-rw.fce-preprod.svc
+#     - name: DATABASE_PASSWORD
+#       valueFrom:
+#         secretKeyRef:
+#           key: password
+#           name: pg-strapi-superuser
+#     - name: DATABASE_PORT
+#       valueFrom:
+#         secretKeyRef:
+#           key: port
+#           name: pg-strapi-superuser
+#     - name: DATABASE_USERNAME
+#       valueFrom:
+#         secretKeyRef:
+#           key: user
+#           name: pg-strapi-superuser
 
 n8n:
   env:

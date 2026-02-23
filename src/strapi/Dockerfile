@@ -1,4 +1,4 @@
-FROM strapi/base:14
+FROM node:14-alpine
 
 WORKDIR /app
 
@@ -15,6 +15,6 @@ RUN yarn build
 
 RUN yarn install --production
 
-USER 1000
+USER node
 
 CMD ["yarn", "start"]

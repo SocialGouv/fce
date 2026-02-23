@@ -1,0 +1,50 @@
+.pca-alert {
+  position: relative;
+  padding: 14px 18px;
+  background: #f6dada;          /* rose pâle */
+  color: #b00020;               /* rouge */
+  border: 1px solid #efc1c1;    /* léger contour */
+  border-radius: 2px;           /* quasi carré comme l’image */
+  line-height: 1.35;
+  font-size: 14px;
+}
+
+.pca-alert p {  
+  margin: 0 0 12px; /* espacement entre les paragraphes */
+ 
+}
+.pca-alert span {
+font-size: 12px;
+margin-bottom: 12px;
+}
+
+.pca-title {
+  margin-bottom: 12px;
+}
+
+.pca-alert a {
+  color: #b00020;
+  text-decoration: underline;
+}
+
+.pca-signature {
+  margin-bottom: 0;
+}
+
+.pca-close {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  border: 0;
+  background: transparent;
+  color: #b00020;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+.pca-close:focus {
+  outline: 2px solid #b00020;
+  outline-offset: 2px;
+}

@@ -34,26 +34,7 @@ export default function PortalClosureAlert({
       <p>
         Dans le cadre de la simplification des outils numériques de l’État et de
         la mutualisation des services, l’accès aux données relatives aux
-        entreprises est désormais proposé via le portail interministériel
-        Annuaire des Entreprises, accessible à l’adresse suivante :{" "}
-        <a
-          href="https://annuaire-entreprises.data.gouv.fr/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          https://annuaire-entreprises.data.gouv.fr/
-        </a>
-      </p>
-
-      <span>
-        Remarque : Pour consulter certaines données réservées aux agents
-        publics, cliquez sur « Espace agent public » en haut à droite du site,
-        puis authentifiez-vous et demandez les accès aux données nécessaires.
-      </span>
-
-      <p>
-        Nous vous invitons à privilégier dès à présent l’utilisation de ce
-        portail.
+        entreprises via le portail FCE ne sera plus proposé au 31 mars.
       </p>
 
       <p className="pca-signature">

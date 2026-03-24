@@ -8,6 +8,7 @@ export default function PortalClosureAlert({
   defaultOpen = true,
 }) {
   const [open, setOpen] = useState(defaultOpen);
+  const [expanded, setExpanded] = useState(false);
 
   if (!open) return null;
 
@@ -24,29 +25,65 @@ export default function PortalClosureAlert({
         </button>
       )}
 
-      <p className="pca-title">
-        <strong>
-          Information importante : fermeture définitive du portail au 31 mars
-          2026.
-        </strong>
-      </p>
+      <div
+        className={`pca-content ${expanded ? "is-expanded" : "is-collapsed"}`}
+      >
+        <p className="pca-title">
+          <strong>
+            Information importante : report de la fermeture du portail FCE
+          </strong>
+        </p>
 
-      <p>
-        Dans le cadre de la simplification des outils numériques de l’État et de
-        la mutualisation des services, l’accès aux données relatives aux
-        entreprises via le portail FCE ne sera plus proposé au 31 mars.
-      </p>
+        <p>
+          Suite à vos premiers retours, la fermeture du portail Fiche Commune
+          Entreprise (FCE), initialement prévue au 31 mars 2026, est reportée de
+          deux mois.
+        </p>
 
-      <p className="pca-signature">
-        Merci de votre compréhension.
-        <br />
-        L’équipe FCE
-      </p>
+        <p>
+          Ce délai supplémentaire vise à finaliser la transition vers le portail
+          Annuaire Entreprises de la DINUM dans les meilleures conditions
+          possibles, en simplifiant notamment l’accès aux données aujourd’hui
+          soumises à des restrictions via le dispositif DataPass.
+        </p>
+
+        <p>
+          Une coordination est en cours avec l’équipe Annuaire Entreprises afin
+          de faciliter cette migration et de vous garantir une continuité de
+          service.
+        </p>
+
+        <p className="pca-signature">
+          Nous vous tiendrons informés des prochaines étapes.
+        </p>
+
+        <p>
+          <strong>Important :</strong> dans l’attente de cette transition, nous
+          vous recommandons vivement d’utiliser le bouton ProConnect (en haut à
+          droite du portail) pour vous authentifier sur le portail FCE. La
+          création de nouveaux comptes FCE n’est désormais plus possible.
+        </p>
+
+        <p className="pca-signature">
+          Merci de votre compréhension,
+          <br />
+          L’équipe FCE
+        </p>
+      </div>
+
+      <button
+        type="button"
+        className="pca-toggle"
+        aria-expanded={expanded}
+        onClick={() => setExpanded((value) => !value)}
+      >
+        {expanded ? "Voir moins" : "Voir plus"}
+      </button>
     </div>
   );
 }
 
 PortalClosureAlert.propTypes = {
-  dismissible: PropTypes.bool,
   defaultOpen: PropTypes.bool,
+  dismissible: PropTypes.bool,
 };

@@ -1,34 +1,81 @@
 .pca-alert {
+  --pca-blue: #000091;
+  --pca-blue-light: #f5f5fe;
+  --pca-blue-border: #c5c5fe;
+  --pca-text: #1e1e1e;
   position: relative;
-  padding: 14px 18px;
-  background: #f6dada;          /* rose pâle */
-  color: #b00020;               /* rouge */
-  border: 1px solid #efc1c1;    /* léger contour */
-  border-radius: 2px;           /* quasi carré comme l’image */
-  line-height: 1.35;
+  padding: 14px 18px 12px;
+  background: var(--pca-blue-light);
+  color: var(--pca-text);
+  border: 1px solid var(--pca-blue-border);
+  border-left: 4px solid var(--pca-blue);
+  border-radius: 4px;
+  line-height: 1.45;
   font-size: 14px;
+  font-family: Marianne, "Segoe UI", Arial, sans-serif;
 }
 
 .pca-alert p {  
-  margin: 0 0 12px; /* espacement entre les paragraphes */
- 
+  margin: 0 0 12px;
 }
 .pca-alert span {
-font-size: 12px;
-margin-bottom: 12px;
+  font-size: 12px;
+  margin-bottom: 12px;
 }
 
 .pca-title {
   margin-bottom: 12px;
+  color: var(--pca-blue);
 }
 
 .pca-alert a {
-  color: #b00020;
+  color: var(--pca-blue);
   text-decoration: underline;
 }
 
 .pca-signature {
   margin-bottom: 0;
+}
+
+.pca-content {
+  position: relative;
+}
+
+.pca-content.is-collapsed {
+  max-height: 11.5em;
+  overflow: hidden;
+}
+
+.pca-content.is-collapsed::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3.2em;
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 245, 254, 0),
+    rgba(245, 245, 254, 0.98)
+  );
+  pointer-events: none;
+}
+
+.pca-toggle {
+  margin-top: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--pca-blue);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.pca-toggle:focus {
+  outline: 2px solid var(--pca-blue);
+  outline-offset: 2px;
 }
 
 .pca-close {
@@ -37,7 +84,7 @@ margin-bottom: 12px;
   right: 10px;
   border: 0;
   background: transparent;
-  color: #b00020;
+  color: var(--pca-blue);
   font-size: 22px;
   line-height: 1;
   cursor: pointer;
@@ -45,6 +92,6 @@ margin-bottom: 12px;
 }
 
 .pca-close:focus {
-  outline: 2px solid #b00020;
+  outline: 2px solid var(--pca-blue);
   outline-offset: 2px;
 }

@@ -1,3 +1,10 @@
+# [27.117.0](https://github.com/SocialGouv/fce/compare/v27.116.0...v27.117.0) (2026-04-22)
+
+
+### Features
+
+* update closure text ([#386](https://github.com/SocialGouv/fce/issues/386)) ([9404152](https://github.com/SocialGouv/fce/commit/9404152f73c7316ce906a145821008c26116de42))
+
 # [27.116.0](https://github.com/SocialGouv/fce/compare/v27.115.0...v27.116.0) (2026-03-24)
 
 

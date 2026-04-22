@@ -35,27 +35,18 @@ export default function PortalClosureAlert({
         </p>
 
         <p>
-          Suite à vos premiers retours, la fermeture du portail Fiche Commune
-          Entreprise (FCE), initialement prévue au 31 mars 2026, est reportée de
-          deux mois.
+          Suite à vos retours, la fermeture du portail Fiche Commune Entreprise
+          (FCE), initialement prévue au 31 mars 2026, est reportée de deux mois.
         </p>
 
         <p>
-          Ce délai supplémentaire vise à finaliser la transition vers le portail
-          Annuaire Entreprises de la DINUM dans les meilleures conditions
-          possibles, en simplifiant notamment l’accès aux données aujourd’hui
-          soumises à des restrictions via le dispositif DataPass.
+          Cette période vise à organiser la transition : seule une partie des
+          données sera accessible via l’Espace Agent de l’Annuaire des
+          Entreprises, tandis que d’autres feront l’objet de modalités de
+          diffusion distinctes.
         </p>
 
-        <p>
-          Une coordination est en cours avec l’équipe Annuaire Entreprises afin
-          de faciliter cette migration et de vous garantir une continuité de
-          service.
-        </p>
-
-        <p className="pca-signature">
-          Nous vous tiendrons informés des prochaines étapes.
-        </p>
+        <p>Une coordination est en cours afin d’accompagner cette évolution.</p>
 
         <p>
           <strong>Important :</strong> dans l’attente de cette transition, nous
